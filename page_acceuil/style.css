@@ -1,0 +1,82 @@
+/*
+#5C748F bleu
+#404E58 bleu foncé
+#BDBFBB gris
+*/
+
+/* Quand on scroll, retirer catégories éventuellement, ca peut etre cool */
+
+@font-face {
+	font-family: "Expletus Sans";
+	src: url("./fonts/ExpletusSans-Bold.ttf") format("truetype")
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("./fonts/Montserrat-Regular.ttf") format("truetype")
+}
+
+body {
+    margin: 0;
+}
+
+#logo {
+    width: 6em;
+}
+
+#profil {
+    width: 3em;
+    padding: .5em;
+}
+
+header {
+    background-color: #404E58;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+}
+
+header > div, header > div > a {
+    display: flex;
+    align-items : center;
+}
+
+hr {
+    background-color: #BDBFBB;
+    height: 3px;
+    border: none;
+    width: 100%;
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+header a:link, a:hover, a:active, a:visited {
+    color: #BDBFBB;
+    text-decoration: none;
+}
+
+footer {
+    background-color: #404E58;
+    text-align: center;
+    position: relative;
+    margin-bottom: 0;
+}
+
+footer > div {
+    display: flex;
+    justify-content: space-around;
+}
+
+h1 {
+    color: #BDBFBB;
+    font-family: "Expletus Sans";
+}
+
+h2, p {
+    color: #BDBFBB;
+    font-family: "Montserrat";
+}

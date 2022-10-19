@@ -7,22 +7,29 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="stylesheet" type="text/css" href="style.css" />
         <title>Page d'accueil</title>
+        <script src="./script.js"></script>
     </head>
     <body>
         <header>
             <div>
-                <a href="index.html"> <!-- Lien accueil -->
-                    <img src="./images/logo.png" alt="logo" title="Accueil" id="logo">
+                <a class="Alizon" href="index.html"> <!-- Lien accueil -->
+                    <img src="./images/logo.png" alt="logoAlizon" title="Accueil" class="logoAlizon">
                     <h1>Alizon</h1>
                 </a>
-                <input id="recherche" type="text" name="recherche" placeholder="Recherche.."> 
-                <img src="./images/loupe.png" alt="recherche" title="Recherche">
-                <a href=""> <!-- Lien panier -->
-                    <h2>Panier</h2>
-                </a>
-                <a href=""> <!-- Lien profil -->
-                    <img src="./images/profil.png" alt="profil" title="Profil" id="profil">
-                </a>
+                <div class="divRecherche">
+                    <input class="champsRecherche" type="text" name="recherche" placeholder=" Recherche.."> 
+                    <a href="">
+                        <img class="logoLoupe" src="./images/loupe.png" alt="recherche" title="Rechercher">
+                    </a>
+                </div>
+                <div class="divPanierProfil">
+                    <a href=""> <!-- Lien panier -->
+                        <h2>Panier</h2>
+                    </a>
+                    <a href=""> <!-- Lien profil -->
+                        <img class="logoProfil" src="./images/profil.png" onmouseover=passageDeLaSouris(this); onmouseout=departDeLaSouris(this); />
+                    </a>
+                </div>
             </div>
             <hr>
             <nav>
@@ -48,7 +55,7 @@
         <main>
             <!-- Articles vedette, ./images qui défilent -->
             <img src="./images/fleche_gauche.png" alt="flèche gauche">
-            <div> <!-- Menu ./images -->
+            <div id="defiler"> <!-- Menu ./images -->
                 <a href="">
                     <img src="./images/art1.png" alt="article 1" title="Article 1">
                 </a>
@@ -63,17 +70,7 @@
                 </a>
             </div>
             <img src="./images/fleche_droite.png" alt="flèche droite">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In a arcu vitae velit rutrum tempus. Sed consequat bibendum tortor, eu volutpat purus viverra eget. Aenean vestibulum dolor ac vehicula molestie. Aenean non metus maximus, tincidunt nulla id, elementum diam. Etiam imperdiet dolor ut semper maximus. Sed a urna lacinia, auctor nunc sit amet, consectetur felis. Etiam auctor justo lorem, non vehicula tellus imperdiet in. Aenean fermentum leo ut ex malesuada, at feugiat sem dictum.
-
-                Pellentesque dapibus sed turpis ut ullamcorper. Nullam a sapien in ipsum faucibus dignissim. Quisque ullamcorper orci eget ultricies cursus. Praesent vel mi ac nibh efficitur mattis id sed massa. Ut gravida justo non nibh volutpat, eget cursus elit vestibulum. Integer enim sem, malesuada vitae molestie sed, porttitor nec nulla. Donec rutrum lacus nisi, a elementum urna tristique interdum. Fusce et vulputate est, in malesuada enim. Sed diam diam, iaculis quis bibendum in, condimentum id sapien. Donec molestie dapibus semper. Donec porta felis eu ligula luctus, ac bibendum diam tempus. Donec ac nunc volutpat, luctus orci nec, sollicitudin elit. Praesent ut vestibulum lectus. Proin eget dapibus magna.
-                
-                Aenean volutpat elit ex, eu rutrum ante semper ut. Duis luctus eget urna id ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam porta sem vitae porttitor maximus. In luctus a tortor eu tempus. Donec a lobortis dolor. Sed sed mattis metus, sit amet facilisis massa. Mauris dictum, elit eget sagittis rhoncus, magna lectus vestibulum enim, ac bibendum nibh velit quis erat. Quisque quis euismod neque. Praesent dignissim neque id tincidunt pharetra. Curabitur malesuada blandit sollicitudin. Sed pretium congue euismod. Donec sem elit, porta vitae purus sed, consequat aliquet ligula. Suspendisse ac quam sit amet risus efficitur tempor nec sit amet dui. Etiam dignissim sapien eget tortor ornare, facilisis aliquam enim iaculis.
-                
-                Aenean ac purus nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam faucibus eleifend felis, eu convallis velit. Nunc vestibulum, turpis in tempor dignissim, eros nulla rhoncus lacus, at tincidunt ante turpis in ex. Phasellus non convallis augue, in tincidunt quam. Proin diam leo, accumsan nec viverra a, interdum in tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed fringilla neque sed felis volutpat condimentum. Pellentesque posuere, quam nec commodo tincidunt, lacus metus suscipit ligula, non porttitor dolor quam a nisi. Nunc lobortis blandit ipsum ut porta. Sed volutpat nisi mi, et cursus urna aliquet ac. Aliquam nec congue eros. Pellentesque ipsum nulla, tempus sed erat nec, laoreet imperdiet felis. Suspendisse in elementum ligula, eu placerat lorem.
-                
-                Cras sodales nec nisl non efficitur. In et nisl at arcu dictum dapibus. Quisque gravida lacus vel efficitur dictum. Nullam nec pharetra eros, id maximus quam. Nam hendrerit sapien ac sagittis cursus. Proin pellentesque molestie tempus. Vivamus nec odio nisl. Praesent faucibus iaculis nulla ac vestibulum. Nullam scelerisque blandit mi. Duis pharetra diam neque, nec mollis ligula ultricies vel. Nunc ullamcorper metus id nibh viverra, id cursus lacus lobortis. Ut vel enim a risus gravida interdum. Aliquam scelerisque scelerisque lectus, in ultrices leo. Nullam vitae lacinia sem.
-                
-                </p>
+            
         </main>
         <footer>
             <div>

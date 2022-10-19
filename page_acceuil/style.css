@@ -1,7 +1,7 @@
 /*
 #5C748F bleu
 #404E58 bleu foncé
-#BDBFBB gris
+#BDBFBB creme
 */
 
 /* Quand on scroll, retirer catégories éventuellement, ca peut etre cool */
@@ -18,27 +18,71 @@
 
 body {
     margin: 0;
+    background-color: #404E58;
 }
 
-#logo {
-    width: 6em;
+h1 {
+    color: #BDBFBB;
+    font-family: "Expletus Sans";
 }
 
-#profil {
-    width: 3em;
-    padding: .5em;
+main {
+    background-color: white;
 }
 
 header {
     background-color: #404E58;
-    flex-direction: column;
     position: sticky;
     top: 0;
 }
 
-header > div, header > div > a {
+header > div {
     display: flex;
-    align-items : center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Alizon {
+    display: flex;
+    margin-right: auto;
+}
+
+.divRecherche {
+    background-color: #BDBFBB;
+    padding: 0.3em 0.5em;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    height: 2em;
+    max-width: 40%;
+}
+
+.champsRecherche {
+    border-radius: 25px;
+    flex-grow: 1;
+    border-style: none;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.divPanierProfil {
+    display: flex;
+    margin-left: auto;
+}
+
+.logoAlizon {
+    max-width: 5em;
+    max-height: 5em;
+}
+
+.logoLoupe {
+    max-width: 1.8em;
+}
+
+.logoProfil {
+    width: 3em;
+    margin: .5em;
 }
 
 hr {
@@ -46,6 +90,7 @@ hr {
     height: 3px;
     border: none;
     width: 100%;
+    margin: 0;
 }
 
 ul {
@@ -63,7 +108,9 @@ footer {
     background-color: #404E58;
     text-align: center;
     position: relative;
-    margin-bottom: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 footer > div {
@@ -71,12 +118,14 @@ footer > div {
     justify-content: space-around;
 }
 
-h1 {
-    color: #BDBFBB;
-    font-family: "Expletus Sans";
+p, header h2 {
+    font-family: "Montserrat";
 }
 
-h2, p {
+header h2:hover {
+    color: #6F98C7;
+}
+
+h2, footer > p {
     color: #BDBFBB;
-    font-family: "Montserrat";
 }

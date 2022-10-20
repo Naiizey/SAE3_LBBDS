@@ -13,7 +13,7 @@
 
 @font-face {
     font-family: "Montserrat";
-    src: url("./fonts/Montserrat-Regular.ttf") format("truetype")
+    src: url("./fonts/Montserrat-Medium.ttf") format("truetype");
 }
 
 body {
@@ -25,11 +25,6 @@ h1 {
     color: #BDBFBB;
     font-family: "Expletus Sans";
 }
-
-main {
-    background-color: white;
-}
-
 header {
     background-color: #404E58;
     position: sticky;
@@ -40,6 +35,10 @@ header > div {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+header h2:hover {
+    color: #6F98C7;
 }
 
 .Alizon {
@@ -64,6 +63,12 @@ header > div {
     border-style: none;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
+    padding-left: .5em;
+    margin-right: .3em;
+}
+
+.champsRecherche:focus {
+    outline: none;
 }
 
 .divPanierProfil {
@@ -93,15 +98,43 @@ hr {
     margin: 0;
 }
 
-ul {
+header h2, header nav {
+    font-family: "Montserrat";
+    font-size: 1.2em;
+}
+
+p {
+    font-family: "Montserrat";
+}
+
+header ul {
     list-style-type: none;
     display: flex;
     justify-content: space-around;
+    padding: 0;
+}
+
+header ul li a {
+    width: 10em;
+    padding: .5em 4em 1em;
+    text-align: center;
+}
+
+header ul a:hover {
+    background-color: white;
+    color: #404E58;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 header a:link, a:hover, a:active, a:visited {
     color: #BDBFBB;
     text-decoration: none;
+}
+
+main {
+    padding: 4em;
+    background-color: white;
 }
 
 footer {
@@ -116,14 +149,6 @@ footer {
 footer > div {
     display: flex;
     justify-content: space-around;
-}
-
-p, header h2 {
-    font-family: "Montserrat";
-}
-
-header h2:hover {
-    color: #6F98C7;
 }
 
 h2, footer > p {

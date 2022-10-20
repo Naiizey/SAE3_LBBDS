@@ -114,15 +114,15 @@ header ul {
     padding: 0;
 }
 
-header ul li a {
+.categorie {
     width: 10em;
     padding: .5em 4em 1em;
     text-align: center;
 }
 
-header ul a:hover {
-    background-color: white;
-    color: #404E58;
+.categorie:hover {
+    color: #67727a;
+    background: #f3f3f3;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
@@ -134,7 +134,7 @@ header a:link, a:hover, a:active, a:visited {
 
 main {
     padding: 4em;
-    background-color: white;
+    background-color: #f3f3f3;
 }
 
 footer {

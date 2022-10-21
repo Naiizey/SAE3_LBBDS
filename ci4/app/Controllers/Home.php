@@ -8,4 +8,9 @@ class Home extends BaseController
     {
         return view('page_accueil/index.php');
     }
+
+    public function connexion()
+    {
+        return view('page_accueil/connexion.php');
+    }
 }

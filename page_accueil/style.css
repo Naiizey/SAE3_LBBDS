@@ -133,8 +133,85 @@ header a:link, a:hover, a:active, a:visited {
 }
 
 main {
-    padding: 4em;
+    padding: 2em;
     background-color: #f3f3f3;
+}
+
+.logoInscription {
+    text-align: center;
+}
+
+.logoInscription img {
+    height: 10em;
+}
+
+.divCredit {
+    margin: 0 30% 0 30%;
+}
+
+.sectionCredit {
+    border: solid 2px;
+    border-color: #C6C6C6;
+    background-color: white;
+    color: #404E58;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 3em 2em 3em;
+    text-align: left;
+    margin-bottom: .5em;
+}
+
+.sectionCredit h2 {
+    color: #404E58;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: xx-large;
+    margin-bottom: 0;
+}
+
+.sectionCredit input, label, a {
+    font-family: "Montserrat";
+    font-size: larger;
+}
+
+.sectionCredit form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.sectionCredit input[type="submit"] {
+    background-color: #404E58;
+    color: white;
+    margin: 2.5em 25% 1em 25%;
+    height: 2.5em;
+    font-size: x-large;
+    border-radius: 10px;
+}
+
+.sectionCredit input[type="text"], input[type="submit"], input[type="password"] {
+    background-color: #F3F3F3;
+    margin: 1% 0 0 0;
+    height: 2.5em;
+    border: solid 1px;
+    border-color: #C6C6C6;
+}
+
+.sectionCredit label {
+    margin-top: 10%;
+}
+
+.sectionCredit input[type="checkbox"] {
+    width: 1.2em;
+    height: 1.2em;
+    margin: 2% 0 0 0;
+}
+
+.divCredit a {
+    color: #404E58;
+    text-decoration: none;
+    margin-left: 2px;
 }
 
 footer {

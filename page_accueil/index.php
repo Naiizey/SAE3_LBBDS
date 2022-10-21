@@ -41,6 +41,4 @@
                 <img src="./images/fleche_droite.png" alt="flèche droite">
             </div>
         </main>
-        <?php require("footer.php"); ?>
-    </body>
-</html>
+<?php require("footer.php"); ?>

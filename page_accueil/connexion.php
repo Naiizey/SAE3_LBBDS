@@ -1,7 +1,7 @@
 <?php require("header.php"); ?>
         </header>
         <main>
-            <div class="logoInscription">
+            <div class="divAlizon">
                 <img src="./images/logo_noir.png" alt="logoAlizon" title="Accueil">
             </div>
             <div class="divCredit">
@@ -18,7 +18,7 @@
                         </div>
                         <input type="submit" value="Se connecter"/>
                     </form>
-                    <a href="incription.php">Je n'ai pas de compte</a>
+                    <a href="inscription.php">Je n'ai pas de compte</a>
                 </div>
                 <a href="">Mot de passe oublié ?</a>
             </div>

@@ -1,17 +1,7 @@
 <!-- faire liens -->
 <!--dans le imput de recherche : onkeyup="fonction de recherche en js"-->
 <!-- ajuster les logos -->
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <link rel="stylesheet" type="text/css" href="style.css" />
-        <title>Page d'accueil</title>
-        <script src="./script.js"></script>
-    </head>
-    <body>
-        <header>
-            <?php require("header.php"); ?>
+<?php require("header.php"); ?>
             <nav>
                 <ul>
                     <li>
@@ -51,6 +41,4 @@
                 <img src="./images/fleche_droite.png" alt="flèche droite">
             </div>
         </main>
-        <?php require("footer.php"); ?>
-    </body>
-</html>
+<?php require("footer.php"); ?>

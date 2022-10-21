@@ -83,3 +83,104 @@ in APPPATH/Views/index.php on line 4.
  9 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
 10 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
 11 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 17:58:32 --> Invalid file: page_accueil/connection.php
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 33.
+ 1 SYSTEMPATH/View/View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1142): CodeIgniter\View\View->render()
+ 3 APPPATH/Controllers/Home.php(14): view()
+ 4 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 5 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 7 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 18:08:07 --> Too few arguments to function App\Controllers\Home::connection(), 0 passed in /home/na0barre/Bureau/Alizon/ci4/system/CodeIgniter.php on line 902 and exactly 1 expected
+in APPPATH/Controllers/Home.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 18:08:08 --> Too few arguments to function App\Controllers\Home::connection(), 0 passed in /home/na0barre/Bureau/Alizon/ci4/system/CodeIgniter.php on line 902 and exactly 1 expected
+in APPPATH/Controllers/Home.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 18:08:18 --> Too few arguments to function App\Controllers\Home::connection(), 0 passed in /home/na0barre/Bureau/Alizon/ci4/system/CodeIgniter.php on line 902 and exactly 1 expected
+in APPPATH/Controllers/Home.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 18:08:21 --> Too few arguments to function App\Controllers\Home::connection(), 0 passed in /home/na0barre/Bureau/Alizon/ci4/system/CodeIgniter.php on line 902 and exactly 1 expected
+in APPPATH/Controllers/Home.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 18:08:34 --> Too few arguments to function App\Controllers\Home::connection(), 0 passed in /home/na0barre/Bureau/Alizon/ci4/system/CodeIgniter.php on line 902 and exactly 1 expected
+in APPPATH/Controllers/Home.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 18:10:07 --> Too few arguments to function App\Controllers\Home::connection(), 0 passed in /home/na0barre/Bureau/Alizon/ci4/system/CodeIgniter.php on line 902 and exactly 1 expected
+in APPPATH/Controllers/Home.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 18:10:08 --> Too few arguments to function App\Controllers\Home::connection(), 0 passed in /home/na0barre/Bureau/Alizon/ci4/system/CodeIgniter.php on line 902 and exactly 1 expected
+in APPPATH/Controllers/Home.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 18:10:31 --> Too few arguments to function App\Controllers\Home::connection(), 0 passed in /home/na0barre/Bureau/Alizon/ci4/system/CodeIgniter.php on line 902 and exactly 1 expected
+in APPPATH/Controllers/Home.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 18:11:33 --> Too few arguments to function App\Controllers\Home::connection(), 0 passed in /home/na0barre/Bureau/Alizon/ci4/system/CodeIgniter.php on line 902 and exactly 1 expected
+in APPPATH/Controllers/Home.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 18:11:41 --> Too few arguments to function App\Controllers\Home::connection(), 0 passed in /home/na0barre/Bureau/Alizon/ci4/system/CodeIgniter.php on line 902 and exactly 1 expected
+in APPPATH/Controllers/Home.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 18:12:14 --> Too few arguments to function App\Controllers\Home::connection(), 0 passed in /home/na0barre/Bureau/Alizon/ci4/system/CodeIgniter.php on line 902 and exactly 1 expected
+in APPPATH/Controllers/Home.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 18:12:47 --> Too few arguments to function App\Controllers\Home::connection(), 0 passed in /home/na0barre/Bureau/Alizon/ci4/system/CodeIgniter.php on line 902 and exactly 1 expected
+in APPPATH/Controllers/Home.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-21 18:22:36 --> Too few arguments to function App\Controllers\Home::connection(), 0 passed in /home/na0barre/Bureau/Alizon/ci4/system/CodeIgniter.php on line 902 and exactly 1 expected
+in APPPATH/Controllers/Home.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Home->connection()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')

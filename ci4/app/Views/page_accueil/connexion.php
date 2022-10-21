@@ -2,7 +2,7 @@
         </header>
         <main>
             <div class="logoInscription">
-                <img src="./images/logo_noir.png" alt="logoAlizon" title="Accueil">
+                <img src="<?= base_url() ?>/images/logo_noir.png" alt="logoAlizon" title="Accueil">
             </div>
             <div class="divCredit">
                 <div class="sectionCredit">

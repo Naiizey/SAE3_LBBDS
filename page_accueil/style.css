@@ -6,6 +6,12 @@
 
 /* Quand on scroll, retirer catégories éventuellement, ca peut etre cool */
 
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Commun à toutes les pages                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
 @font-face {
 	font-family: "Expletus Sans";
 	src: url("./fonts/ExpletusSans-Bold.ttf") format("truetype")
@@ -25,13 +31,14 @@ h1 {
     color: #BDBFBB;
     font-family: "Expletus Sans";
 }
+
 header {
     background-color: #404E58;
     position: sticky;
     top: 0;
 }
 
-header > div {
+.divHeaderAlizon {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -41,7 +48,7 @@ header h2:hover {
     color: #6F98C7;
 }
 
-.Alizon {
+.lienAlizon {
     display: flex;
     margin-right: auto;
 }
@@ -107,6 +114,40 @@ p {
     font-family: "Montserrat";
 }
 
+header a:link, a:hover, a:active, a:visited {
+    color: #BDBFBB;
+    text-decoration: none;
+}
+
+main {
+    padding: 2em;
+    background-color: #f3f3f3;
+}
+
+footer {
+    background-color: #404E58;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+footer > div {
+    display: flex;
+    justify-content: space-around;
+}
+
+h2, footer > p {
+    color: #BDBFBB;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Page d'accueil (index.php)                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
 header ul {
     list-style-type: none;
     display: flex;
@@ -127,21 +168,17 @@ header ul {
     border-top-right-radius: 10px;
 }
 
-header a:link, a:hover, a:active, a:visited {
-    color: #BDBFBB;
-    text-decoration: none;
-}
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃      Page d'inscription et de connexion (inscription.php & connexion.php)       ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
-main {
-    padding: 2em;
-    background-color: #f3f3f3;
-}
-
-.logoInscription {
+.divAlizon {
     text-align: center;
 }
 
-.logoInscription img {
+.divAlizon img {
     height: 10em;
 }
 
@@ -190,7 +227,7 @@ main {
     border-radius: 10px;
 }
 
-.sectionCredit input[type="text"], input[type="submit"], input[type="password"] {
+.sectionCredit input[type="text"], input[type="submit"], input[type="password"], input[type="email"] {
     background-color: #F3F3F3;
     margin: 1% 0 0 0;
     height: 2.5em;
@@ -214,20 +251,23 @@ main {
     margin-left: 2px;
 }
 
-footer {
-    background-color: #404E58;
-    text-align: center;
-    position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-footer > div {
+.nomPrenom {
     display: flex;
-    justify-content: space-around;
+    margin-top: 10%;
 }
 
-h2, footer > p {
-    color: #BDBFBB;
+.nomPrenom > div {
+    width: 50%;
+}
+
+/* Nom */
+.nomPrenom input {
+    padding: 0;
+    width: 90%;
+}
+
+/* Prénom */
+.nomPrenom > div + div > input {
+    padding: 0;
+    width: 100%;
 }

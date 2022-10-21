@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <?php 
+            if ($_SERVER['SCRIPT_NAME'] == "panier.php")
+            {
+                $newDivHeader = '<p>ya rien pck on est dans panier</p>';
+            } 
+            else
+            {
+                $newDivHeader = '<div class="divRecherche">
+                                    <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche.."> 
+                                    <a href="">
+                                        <img class="logoLoupe" src="./images/loupe.png" alt="recherche" title="Rechercher">
+                                    </a>
+                                </div>';
+            }    
+        ?>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="stylesheet" type="text/css" href="style.css" />
         <title>Page d'accueil</title>
@@ -8,22 +23,17 @@
     </head>
     <body>
         <header>
-            <div>
-                <a class="Alizon" href="index.php"> <!-- Lien accueil -->
+            <div class="divHeaderAlizon">
+                <a class="lienAlizon" href="index.php"> <!-- Lien accueil -->
                     <img src="./images/logo.png" alt="logoAlizon" title="Accueil" class="logoAlizon">
                     <h1>Alizon</h1>
                 </a>
-                <div class="divRecherche">
-                    <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche.."> 
-                    <a href="">
-                        <img class="logoLoupe" src="./images/loupe.png" alt="recherche" title="Rechercher">
-                    </a>
-                </div>
+                <?php echo $newDivHeader; ?>
                 <div class="divPanierProfil">
                     <a href=""> <!-- Lien panier -->
                         <h2>Panier</h2>
                     </a>
-                    <a href="connexion.php"> <!-- Lien profil -->
+                    <a href="connexion.php">
                         <img class="logoProfil" src="./images/profil.png" onmouseover=passageDeLaSouris(this); onmouseout=departDeLaSouris(this); />
                     </a>
                 </div>

@@ -1,0 +1,233 @@
+/*
+#5C748F bleu
+#404E58 bleu foncé
+#BDBFBB creme
+*/
+
+/* Quand on scroll, retirer catégories éventuellement, ca peut etre cool */
+
+@font-face {
+	font-family: "Expletus Sans";
+	src: url("./fonts/ExpletusSans-Bold.ttf") format("truetype")
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("./fonts/Montserrat-Medium.ttf") format("truetype");
+}
+
+body {
+    margin: 0;
+    background-color: #404E58;
+}
+
+h1 {
+    color: #BDBFBB;
+    font-family: "Expletus Sans";
+}
+header {
+    background-color: #404E58;
+    position: sticky;
+    top: 0;
+}
+
+header > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h2:hover {
+    color: #6F98C7;
+}
+
+.Alizon {
+    display: flex;
+    margin-right: auto;
+}
+
+.divRecherche {
+    background-color: #BDBFBB;
+    padding: 0.3em 0.5em;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    height: 2em;
+    max-width: 40%;
+}
+
+.champsRecherche {
+    border-radius: 25px;
+    flex-grow: 1;
+    border-style: none;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: .5em;
+    margin-right: .3em;
+}
+
+.champsRecherche:focus {
+    outline: none;
+}
+
+.divPanierProfil {
+    display: flex;
+    margin-left: auto;
+}
+
+.logoAlizon {
+    max-width: 5em;
+    max-height: 5em;
+}
+
+.logoLoupe {
+    max-width: 1.8em;
+}
+
+.logoProfil {
+    width: 3em;
+    margin: .5em;
+}
+
+hr {
+    background-color: #BDBFBB;
+    height: 3px;
+    border: none;
+    width: 100%;
+    margin: 0;
+}
+
+header h2, header nav {
+    font-family: "Montserrat";
+    font-size: 1.2em;
+}
+
+p {
+    font-family: "Montserrat";
+}
+
+header ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    padding: 0;
+}
+
+.categorie {
+    width: 10em;
+    padding: .5em 4em 1em;
+    text-align: center;
+}
+
+.categorie:hover {
+    color: #67727a;
+    background: #f3f3f3;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+header a:link, a:hover, a:active, a:visited {
+    color: #BDBFBB;
+    text-decoration: none;
+}
+
+main {
+    padding: 2em;
+    background-color: #f3f3f3;
+}
+
+.logoInscription {
+    text-align: center;
+}
+
+.logoInscription img {
+    height: 10em;
+}
+
+.divCredit {
+    margin: 0 30% 0 30%;
+}
+
+.sectionCredit {
+    border: solid 2px;
+    border-color: #C6C6C6;
+    background-color: white;
+    color: #404E58;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 3em 2em 3em;
+    text-align: left;
+    margin-bottom: .5em;
+}
+
+.sectionCredit h2 {
+    color: #404E58;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: xx-large;
+    margin-bottom: 0;
+}
+
+.sectionCredit input, label, a {
+    font-family: "Montserrat";
+    font-size: larger;
+}
+
+.sectionCredit form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.sectionCredit input[type="submit"] {
+    background-color: #404E58;
+    color: white;
+    margin: 2.5em 25% 1em 25%;
+    height: 2.5em;
+    font-size: x-large;
+    border-radius: 10px;
+}
+
+.sectionCredit input[type="text"], input[type="submit"], input[type="password"] {
+    background-color: #F3F3F3;
+    margin: 1% 0 0 0;
+    height: 2.5em;
+    border: solid 1px;
+    border-color: #C6C6C6;
+}
+
+.sectionCredit label {
+    margin-top: 10%;
+}
+
+.sectionCredit input[type="checkbox"] {
+    width: 1.2em;
+    height: 1.2em;
+    margin: 2% 0 0 0;
+}
+
+.divCredit a {
+    color: #404E58;
+    text-decoration: none;
+    margin-left: 2px;
+}
+
+footer {
+    background-color: #404E58;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+footer > div {
+    display: flex;
+    justify-content: space-around;
+}
+
+h2, footer > p {
+    color: #BDBFBB;
+}

@@ -11,7 +11,7 @@
                 $newDivHeader = '<div class="divRecherche">
                                     <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche.."> 
                                     <a href="">
-                                        <img class="logoLoupe" src="./images/loupe.png" alt="recherche" title="Rechercher">
+                                        <img class="logoLoupe" src="./images/header/loupe.png" alt="recherche" title="Rechercher">
                                     </a>
                                 </div>';
             }    
@@ -25,7 +25,7 @@
         <header>
             <div class="divHeaderAlizon">
                 <a class="lienAlizon" href="index.php"> <!-- Lien accueil -->
-                    <img src="./images/logo.png" alt="logoAlizon" title="Accueil" class="logoAlizon">
+                    <img src="./images/header/logo.png" alt="logoAlizon" title="Accueil" class="logoAlizon">
                     <h1>Alizon</h1>
                 </a>
                 <?php echo $newDivHeader; ?>
@@ -34,7 +34,7 @@
                         <h2>Panier</h2>
                     </a>
                     <a href="connexion.php">
-                        <img class="logoProfil" src="./images/profil.png" onmouseover=passageDeLaSouris(this); onmouseout=departDeLaSouris(this); />
+                        <img class="logoProfil" src="./images/header/profil.png" onmouseover=passageDeLaSouris(this); onmouseout=departDeLaSouris(this); />
                     </a>
                 </div>
             </div>

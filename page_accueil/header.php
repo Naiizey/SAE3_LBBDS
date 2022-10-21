@@ -14,7 +14,7 @@
                     <h1>Alizon</h1>
                 </a>
                 <div class="divRecherche">
-                    <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche.."> 
+                    <input class="champsRecherche" type="search" name="recherche" placeholder="Recherche.."> 
                     <a href="">
                         <img class="logoLoupe" src="./images/loupe.png" alt="recherche" title="Rechercher">
                     </a>

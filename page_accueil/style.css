@@ -28,7 +28,7 @@ body {
 }
 
 h1 {
-    color: #BDBFBB;
+    color: #D9D9D9;
     font-family: "Expletus Sans";
 }
 
@@ -54,7 +54,7 @@ header h2:hover {
 }
 
 .divRecherche {
-    background-color: #BDBFBB;
+    background-color: #D9D9D9;
     padding: 0.3em 0.5em;
     border-radius: 10px;
     display: flex;
@@ -98,7 +98,7 @@ header h2:hover {
 }
 
 hr {
-    background-color: #BDBFBB;
+    background-color: #D9D9D9;
     height: 3px;
     border: none;
     width: 100%;
@@ -110,12 +110,17 @@ header h2, header nav {
     font-size: 1.2em;
 }
 
+nav{
+    background-color: #5C748F;
+    padding: .75em 0;
+}
+
 p {
     font-family: "Montserrat";
 }
 
 header a:link, a:hover, a:active, a:visited {
-    color: #BDBFBB;
+    color: #D9D9D9;
     text-decoration: none;
 }
 
@@ -139,7 +144,7 @@ footer > div {
 }
 
 h2, footer > p {
-    color: #BDBFBB;
+    color: #D9D9D9;
 }
 
 /*
@@ -153,19 +158,20 @@ header ul {
     display: flex;
     justify-content: space-around;
     padding: 0;
+    margin: 0;
 }
 
 .categorie {
     width: 10em;
-    padding: .5em 4em 1em;
+    padding: .5em 0 1em;
     text-align: center;
 }
 
 .categorie:hover {
-    color: #67727a;
-    background: #f3f3f3;
+    color: #FFD9A1;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    text-decoration: underline;
 }
 
 /*

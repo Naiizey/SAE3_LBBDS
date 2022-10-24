@@ -218,9 +218,9 @@ CREATE TABLE _pouce
     pouce_fav BOOLEAN NOT NULL
 );
 
-CREATE TABLE _avoirs
+CREATE TABLE _avoir
 (
-    num_avoirs SERIAL PRIMARY KEY,
+    num_avoir SERIAL PRIMARY KEY,
     montant_valid FLOAT NOT NULL,
     duree_valid DATE NOT NULL
 );
@@ -309,9 +309,9 @@ ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_fk FOREIGN KEY (id_a) REF
 ALTER TABLE _retour ADD COLUMN num_compte INT NOT NULL;
 ALTER TABLE _retour ADD CONSTRAINT _retour_commande_fk FOREIGN KEY (num_compte) REFERENCES _commande(num_compte);
 
---Association 1..* entre _compte et _avoirs () ✅
-ALTER TABLE _avoirs ADD COLUMN num_compte INT NOT NULL;
-ALTER TABLE _avoirs ADD CONSTRAINT _avoirs_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+--Association 1..* entre _compte et _avoir () ✅
+ALTER TABLE _avoir ADD COLUMN num_compte INT NOT NULL;
+ALTER TABLE _avoir ADD CONSTRAINT _avoir_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
 --Classe association entre _panier * - * _produit qui se nomme _refere ✅
 ALTER TABLE _refere ADD COLUMN id_prod INT NOT NULL;
@@ -583,7 +583,7 @@ SELECT * FROM _avis NATURAL JOIN _pouce;
 
 -- ❌ Avis-Réponse
 CREATE VIEW v_avis_reponse AS
-SELECT * FROM _avis inner join _reponse on _avis.num_avis = _reponse.num_avis_link; Client-panier
+SELECT * FROM _avis inner join _reponse on _avis.num_avis = _reponse.num_avis_link; 
 
 
 -- ❌ Client-commande
@@ -613,30 +613,10 @@ SELECT * FROM _compte NATURAL JOIN _adresse_livraison;
 
 -- ❌ Client-adresse-facturation
 
-
-
--- VISITEUR
-
--- ❌ Client-Note-Produit
-
-
--- ❌ Produit-Catégorie-Sous-Catégorie
-
-
--- ❌ Avis-Réponse-Image
-
-
+CREATE VIEW v_client_adresse_facturation AS
+SELECT * FROM _compte NATURAL JOIN _adresse_facturation;
 
 -- VENDEUR
-
--- ❌ Client-Note-Produit
-
-
--- ❌ Produit-Catégorie-Sous-Catégorie
-
-
--- ❌ Avis-Réponse-Image
-
-
 -- ❌ Commande-Retour-Refere_ret
-
+CREATE VIEW v_commande_retour_refere_ret AS
+SELECT * FROM _commande NATURAL JOIN _retour NATURAL JOIN _refere_ret;

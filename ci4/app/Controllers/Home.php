@@ -13,4 +13,9 @@ class Home extends BaseController
     {
         return view('page_accueil/connexion.php');
     }
+
+    public function test()
+    {
+        return view('card-produit.php');
+    }
 }

@@ -37,6 +37,7 @@ $routes->set404Override();
 // route since we don't have to scan directories.
     $routes->get('/', 'Home');
     $routes->get('/connexion', 'Home::connexion');
+    $routes->get('/test', 'Home::test');
 ##param uri (:any) et dans methode /$1
 
 /*

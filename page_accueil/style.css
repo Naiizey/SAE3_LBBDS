@@ -183,15 +183,17 @@ header ul {
 
 .categorie {
     width: 10em;
-    padding: .5em 0 1em;
+    padding: .5em 3em 0.7em;
     text-align: center;
 }
 
 .categorie:hover {
-    color: #FFD9A1;
+    /*color: #FFD9A1;
+    text-decoration: underline;*/
+    color: #404E58;
+    background-color: #f3f3f3;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    text-decoration: underline;
 }
 
 /*

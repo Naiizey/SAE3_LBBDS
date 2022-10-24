@@ -1,10 +1,13 @@
 <?php require("header.php"); ?>
         </header>
-        <main>
+        <main class="mainPanier">
             <section class="sectionPanier">
-                <h2>Votre panier</h2>
+                <div class="divPanierHeader">
+                    <h2>Votre panier</h2>
+                    <h3>Prix</h3>
+                </div>
                 <hr>
-                <article class="articleProduit">
+                <article class="articlePanierProduit">
                 <a href="">
                     <img src="./images/art1.png" alt="article 1" title="Article 1">
                 </a>
@@ -18,11 +21,11 @@
                     <a href="">Supprimer</a>
                 </div>
                 <div>
-                    <h3>100$</h3>
+                    <h3>35.55€</h3>
                 </div>
                 <hr>
                 </article>
-                <article class="articleProduit">
+                <article class="articlePanierProduit">
                 <a href="">
                     <img src="./images/art1.png" alt="article 1" title="Article 1">
                 </a>
@@ -36,14 +39,14 @@
                     <a href="">Supprimer</a>
                 </div>
                 <div>
-                    <h3>100$</h3>
+                    <h3>19.45€</h3>
                 </div>
                 <hr>
                 </article>
-                <h2>Sous-total : 55,00€</h2>
+                <h2>Sous-total (2 articles) : 55,00€</h2>
             </section>
             <aside>
-                <h2>Sous-total : 55,00€</h2>
+                <h2>Sous-total (2 articles) : 55,00€</h2>
                 <a href="">Valider le panier</a>
             </aside>
         </main>

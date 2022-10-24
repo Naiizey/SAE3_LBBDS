@@ -17,14 +17,16 @@
 - ✅ table Panier_visiteur
 - ✅ table Avoir
 - ✅ table Retour
-- ✅ Image_avis
+- ✅ table Image_avis
+- ✅ table Reponse
 
 ### classes associations
 - ✅ Réfère
 - ✅ Liste_souhait
 - ✅ Pouce
 - ✅ Note
-- ✅ Enregistre  
+- ✅ Enregistre   
+- ✅ Réfère_Ret
 
 
 ### relations
@@ -43,6 +45,7 @@
 - ✅ Panier-Compte
 - ✅ Adresse_livraison-Compte
 - ✅ Adresse_facturation-Compte
+- ✅ Avis-Reponse
 
 
 ### héritage
@@ -62,10 +65,31 @@
 - ❌ Avis-réponse-Image-Pouce
 
 #### Client
+- ❌ Client-Note-Produit
+- ❌ Produit-Catégorie-Sous-Catégorie
+- ❌ Client-Avis-Image_avis
+- ❌ Avis-Réponse
+- ❌ Avis-Pouce
+- ❌ Client-panier
+- ❌ Client-commande
+- ❌ Client-Retour-Commande
+- ❌ Client-avoir
+- ❌ Cleint-liste-avoir
+- ❌ Client-adresse-livraison
+- ❌ Client-adresse-facturation
 
 #### Visiteur
 
+- ❌ Client-Note-Produit
+- ❌ Produit-Catégorie-Sous-Catégorie
+- ❌ Avis-Réponse-Image
+
 #### vendeur
+
+- ❌ Client-Note-Produit
+- ❌ Produit-Catégorie-Sous-Catégorie
+- ❌ Avis-Réponse-Image
+- ❌ Commande-Retour-Refere_ret
 -- SQLBook: Code
 DROP SCHEMA IF EXISTS sae3 CASCADE;
 CREATE SCHEMA sae3; 
@@ -216,7 +240,15 @@ CREATE TABLE _avis(
 CREATE TABLE _image_avis(
     num_image SERIAL PRIMARY KEY,
     lien_image_avis VARCHAR NOT NULL
-)
+);
+
+CREATE TABLE _refere_ret(
+    qte_retour INT NOT NULL
+);
+
+CREATE TABLE _reponse(
+    reponse_av VARCHAR NOT NULL
+);
 -- SQLBook: Markup
 # Clés étrangères
 -- SQLBook: Code
@@ -227,6 +259,16 @@ ALTER TABLE _note ADD CONSTRAINT _note_produit_fk FOREIGN KEY (id_prod) REFERENC
 ALTER TABLE _note ADD CONSTRAINT _note_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 ALTER TABLE _note ADD CONSTRAINT _note_pk PRIMARY KEY (id_prod, num_compte);
 
+
+--Classe association entre _retour * - *_produit qui se nomme _refere_ret ✅
+ALTER TABLE _refere_ret ADD COLUMN id_prod INT NOT NULL;
+ALTER TABLE _refere_ret ADD COLUMN etiq_ret INT NOT NULL;
+ALTER TABLE _refere_ret ADD PRIMARY KEY (id_prod, etiq_ret);
+ALTER TABLE _refere_ret ADD CONSTRAINT _refere_ret_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod);
+ALTER TABLE _refere_ret ADD CONSTRAINT _refere_ret_retour_fk FOREIGN KEY (etiq_ret) REFERENCES _retour(etiq_ret);
+
+
+
 --Classe association entre _compte * - *_produit qui se nomme _liste_souhait ✅
 ALTER TABLE _liste_souhait ADD COLUMN id_prod INT NOT NULL;
 ALTER TABLE _liste_souhait ADD COLUMN num_compte INT NOT NULL;
@@ -234,7 +276,7 @@ ALTER TABLE _liste_souhait ADD CONSTRAINT _liste_souhait_produit_fk FOREIGN KEY 
 ALTER TABLE _liste_souhait ADD CONSTRAINT _liste_souhait_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 ALTER TABLE _liste_souhait ADD CONSTRAINT _liste_souhait_pk PRIMARY KEY (id_prod, num_compte);
 
---Association 1..* entre _pdt et _categorie ✅ (contenu_dans)
+--Association 1..* entre _pdt et _categorie ✅ (contenu_dans) 
 ALTER TABLE _produit ADD COLUMN code_cat INT NOT NULL;
 ALTER TABLE _produit ADD CONSTRAINT _produit_categorie_fk FOREIGN KEY (code_cat) REFERENCES _categorie(code_cat);
 
@@ -297,13 +339,13 @@ ALTER TABLE _avis ADD CONSTRAINT _avis_compte_fk FOREIGN KEY (num_compte) REFERE
 
 -- Association *..1 entre catégorie et catégorie ✅
 ALTER TABLE _sous_categorie ADD CONSTRAINT _sous_categorie_categorie_code_cat_fk FOREIGN KEY (code_cat) REFERENCES _categorie(code_cat);
-ALTER TABLE _sous_categorie ADD CONSTRAINT sous_categorie_categorie_code_sous_cat_fk FOREIGN KEY (code_sous_cat) REFERENCES _categorie(code_cat); 
+-- ALTER TABLE _sous_categorie ADD CONSTRAINT sous_categorie_categorie_code_sous_cat_fk FOREIGN KEY (code_sous_cat) REFERENCES _categorie(code_cat); 
 
 -- Association *..1 entre adresse_livraison et commande ✅
 ALTER TABLE _commande ADD COLUMN id_adresse INT NOT NULL;
 ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY (id_adresse) REFERENCES _adresse_livraison(id_a);
 
---Classe association entre _compte 1 - *_avis qui se nomme _pouce :white_check_mark: ✅
+--Classe association entre _compte 1 - *_avis qui se nomme _pouce ✅
 ALTER TABLE _pouce ADD COLUMN num_avis INT NOT NULL;
 ALTER TABLE _pouce ADD COLUMN num_compte INT NOT NULL;
 ALTER TABLE _pouce ADD CONSTRAINT _pouce_produit_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
@@ -326,6 +368,11 @@ LANGUAGE PLPGSQL;
 -- Association 1..0.3 entre avis et image_avis
 ALTER TABLE _image_avis ADD COLUMN num_avis INT NOT NULL;
 ALTER TABLE _image_avis ADD CONSTRAINT _image_avis_avis_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
+
+-- Association 1..1 entre _avis et _reponse
+ALTER TABLE _reponse ADD COLUMN num_avis_link INT NOT NULL;
+ALTER TABLE _reponse ADD CONSTRAINT _reponse_pk PRIMARY KEY (num_avis_link);
+ALTER TABLE _reponse ADD CONSTRAINT _reponse_avis_fk FOREIGN KEY (num_avis_link) REFERENCES _avis(num_avis);
 -- SQLBook: Markup
 # Données
 
@@ -492,3 +539,104 @@ INSERT INTO _liste_souhait (etat_stock, id_prod, num_compte) VALUES (true, 17, 2
 -- SQLBook: Markup
 # VUES
 -- SQLBook: Code
+-- ADMIN
+
+-- ❌ Compte-Commentaire-Avis
+CREATE VIEW v_compte_commentaire_avis AS
+SELECT * FROM _compte NATURAL JOIN _avis;
+-- ❌ Compte-Commentaire-Pouce
+
+CREATE VIEW v_compte_commentaire_pouce AS
+SELECT * FROM _compte NATURAL JOIN _avis NATURAL JOIN _pouce;
+
+-- ❌ Avis-réponse-Image-Pouce
+CREATE VIEW v_avis_reponse_image_pouce AS
+SELECT * FROM _avis NATURAL JOIN _reponse NATURAL JOIN _image_avis NATURAL JOIN _pouce;
+
+-- CLIENT
+
+-- ❌ Client-Note-Produit
+
+CREATE VIEW v_client_note_produit AS
+SELECT * FROM _compte NATURAL JOIN _note NATURAL JOIN _produit;
+
+
+-- ❌ Produit-Catégorie-Sous-Catégorie
+
+CREATE VIEW v_produit_categorie_sous_categorie AS
+SELECT * FROM _produit NATURAL JOIN _categorie NATURAL JOIN _sous_categorie;
+
+
+-- ❌ Client-Avis-Image_avis
+
+CREATE VIEW v_client_avis_image_avis AS
+SELECT * FROM _compte NATURAL JOIN _avis NATURAL JOIN _image_avis;
+
+
+
+
+
+-- ❌ Avis-Pouce
+CREATE VIEW v_avis_pouce AS
+SELECT * FROM _avis NATURAL JOIN _pouce;
+
+
+-- ❌ Avis-Réponse
+CREATE VIEW v_avis_reponse AS
+SELECT * FROM _avis inner join _reponse on _avis.num_avis = _reponse.num_avis_link; Client-panier
+
+
+-- ❌ Client-commande
+CREATE VIEW v_client_commande AS
+SELECT * FROM _compte NATURAL JOIN _commande;
+
+
+-- ❌ Client-Retour-Commande
+CREATE VIEW v_client_retour_commande AS
+SELECT * FROM _compte NATURAL JOIN _commande NATURAL JOIN _retour;
+
+
+-- ❌ Client-avoir
+CREATE VIEW v_client_avoir AS
+SELECT * FROM _compte NATURAL JOIN _avoir;
+
+
+-- ❌ Client-liste-avoir
+CREATE VIEW v_client_liste_avoir AS
+SELECT * FROM _compte NATURAL JOIN _avoir NATURAL JOIN _liste_souhait;
+
+
+-- ❌ Client-adresse-livraison
+CREATE VIEW v_client_adresse_livraison AS
+SELECT * FROM _compte NATURAL JOIN _adresse_livraison;
+
+
+-- ❌ Client-adresse-facturation
+
+
+
+-- VISITEUR
+
+-- ❌ Client-Note-Produit
+
+
+-- ❌ Produit-Catégorie-Sous-Catégorie
+
+
+-- ❌ Avis-Réponse-Image
+
+
+
+-- VENDEUR
+
+-- ❌ Client-Note-Produit
+
+
+-- ❌ Produit-Catégorie-Sous-Catégorie
+
+
+-- ❌ Avis-Réponse-Image
+
+
+-- ❌ Commande-Retour-Refere_ret
+

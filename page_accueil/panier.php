@@ -12,7 +12,7 @@
                     <img src="./images/art1.png" alt="article 1" title="Article 1">
                 </a>
                 <div>
-                    <h3>Titre de l'article</h3>
+                    <h2>Titre de l'article</h3>
                     <p>description de l'article</p>
                 </div>
                 <div>
@@ -23,14 +23,14 @@
                 <div>
                     <h3>35.55€</h3>
                 </div>
-                <hr>
                 </article>
+                <hr>
                 <article class="articlePanierProduit">
                 <a href="">
                     <img src="./images/art1.png" alt="article 1" title="Article 1">
                 </a>
                 <div>
-                    <h3>Titre de l'article</h3>
+                    <h2>Titre de l'article</h3>
                     <p>description de l'article</p>
                 </div>
                 <div>
@@ -41,8 +41,8 @@
                 <div>
                     <h3>19.45€</h3>
                 </div>
-                <hr>
                 </article>
+                <hr>
                 <h2>Sous-total (2 articles) : 55,00€</h2>
             </section>
             <aside>

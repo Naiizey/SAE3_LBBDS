@@ -105,3 +105,5 @@ _modules/*
 /phpunit*.xml
 /.phpunit.*.cache
 
+# Faire gaffe
+##app/Config/App.php

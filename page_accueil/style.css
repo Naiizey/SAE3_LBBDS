@@ -57,6 +57,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 5em;
 }
 
 header h2:hover {
@@ -67,6 +68,7 @@ header h2:hover {
     display: flex;
     align-items: center;
     margin-right: auto;
+    height: 70%;
 }
 
 .divRecherche {
@@ -98,20 +100,21 @@ header h2:hover {
     display: flex;
     align-items: center;
     margin-left: auto;
-}
-
-.logoAlizon {
-    max-width: 5em;
-    max-height: 5em;
+    height: 70%;
 }
 
 .logoLoupe {
     max-width: 1.8em;
 }
 
-.logoProfil {
-    width: 3em;
-    margin: .5em;
+.logoProfil, .logoAlizon {
+    height: 100%;
+    width: auto;
+    margin: 0 0.5em;
+}
+
+.lienConnexion {
+    height: 100%;
 }
 
 hr {

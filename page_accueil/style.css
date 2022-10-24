@@ -18,8 +18,18 @@
 }
 
 @font-face {
-    font-family: "Montserrat";
+    font-family: "Montserrat-Medium";
     src: url("./fonts/Montserrat-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Montserrat-Regular";
+    src: url("./fonts/Montserrat-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Montserrat-Bold";
+    src: url("./fonts/Montserrat-Bold.ttf") format("truetype");
 }
 
 body {
@@ -106,7 +116,7 @@ hr {
 }
 
 header h2, header nav {
-    font-family: "Montserrat";
+    font-family: "Montserrat-Medium";
     font-size: 1.2em;
 }
 
@@ -116,7 +126,7 @@ nav{
 }
 
 p {
-    font-family: "Montserrat";
+    font-family: "Montserrat-Regular";
 }
 
 header a:link, a:hover, a:active, a:visited {
@@ -208,13 +218,13 @@ header ul {
 .sectionCredit h2 {
     color: #404E58;
     text-align: center;
-    font-family: "Montserrat";
+    font-family: "Montserrat-Medium";
     font-size: xx-large;
     margin-bottom: 0;
 }
 
 .sectionCredit input, label, a {
-    font-family: "Montserrat";
+    font-family: "Montserrat-Regular";
     font-size: larger;
 }
 
@@ -276,4 +286,61 @@ header ul {
 .nomPrenom > div + div > input {
     padding: 0;
     width: 100%;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Page panier (panier.php)                               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.mainPanier{
+    background-color: white;
+    display: flex;
+    color: #404E58;
+    font-family: "Montserrat-Medium";
+}
+
+.sectionPanier{
+    border-radius: 15px;
+    background-color: #E7E8E6;
+    color: #404E58;
+}
+
+.sectionPanier h2{
+    font-weight: medium;
+    font-size: 1.4em;
+    color: #404E58;
+}
+
+.divPanierHeader{
+    font-weight: medium;
+    color: #404E58;
+    display: flex;
+    font-size: 1.4em;
+}
+
+.sectionPanier hr{
+    background-color: #404E58;
+}
+
+.sectionPanier + aside, .sectionPanier + aside a, .sectionPanier + aside h2{
+    margin-left: 2em;
+    border-radius: 15px;
+    background-color: #E7E8E6;
+    color: #404E58;
+}
+
+.sectionPanier + aside a{
+    background-color: #6F98C7;
+    text-decoration: none;
+    border-radius: 20px;
+    padding: 0.5em 01em 0.5em 1em;
+    text-align: center;
+}
+
+.sectionPanier + aside a:hover{
+    background-color: #404E58;
+    text-decoration: none;
+    color: #E7E8E6;
 }

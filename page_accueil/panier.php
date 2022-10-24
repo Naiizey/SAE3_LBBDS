@@ -1,8 +1,11 @@
 <?php require("header.php"); ?>
         </header>
-        <main>
+        <main class="mainPanier">
             <section class="sectionPanier">
-                <h2>Votre panier</h2>
+                <div class="divPanierHeader">
+                    <h2>Votre panier</h2>
+                    <h3>Prix</h3>
+                </div>
                 <hr>
                 <article class="articleProduit">
                 <a href="">

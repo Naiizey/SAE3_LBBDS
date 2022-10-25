@@ -455,12 +455,33 @@ header ul {
     border-color: #C6C6C6;
 }
 
+.sectionProduit {
+    margin: 0 20%;
+}
+
+.sectionProduit > article {
+    background-color: white;
+}
+
+.sectionProduit > ul {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0;
+}
+
 .sectionProduit > ul li {
     width: 12%;
 }
 
 .sectionProduit > ul figure {
     margin: 0;
+}
+
+.divImagesProduits {
+    display: flex;
+    flex-direction: row;
+    padding: 0 1em 1em 0;
 }
 
 .divImagesProduits ul {
@@ -499,26 +520,6 @@ header ul {
     color: #404E58;
 }
 
-.divImagesProduits {
-    display: flex;
-    flex-direction: row;
-    padding: 0 1em 1em 0;
-}
-
-.sectionProduit {
-    margin: 0 20%;
-}
-
-.sectionProduit > article {
-    background-color: white;
-}
-
-.sectionProduit > ul {
-    display: flex;
-    justify-content: space-between;
-    padding: 0;
-}
-
-.sectionProduit ul {
-    list-style-type: none;
+.avisEtLogos {
+    text-align: center;
 }

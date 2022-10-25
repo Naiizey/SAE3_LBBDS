@@ -45,10 +45,12 @@
                         <h2>Galettes saucisses</h2>
                         <h3>Prix: 0.01€</h3>
                         <h4>Avis clients:</h4>
-                        <img src="images/"/>
-                        <div>
-                            <img src="images/" />
-                            <img src="images/" />
+                        <div class="avisEtLogos">
+                            <img src="images/"/>
+                            <div>
+                                <img src="images/" />
+                                <img src="images/" />
+                            </div>
                         </div>
                         <div>
                             <p>Faites vite, il n'en reste que 3</p>

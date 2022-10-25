@@ -234,7 +234,7 @@ header ul {
 }
 
 .divCredit {
-    margin: 0 30% 0 30%;
+    margin: 0 30%;
 }
 
 .sectionCredit {
@@ -433,4 +433,98 @@ header ul {
 .sectionPanier hr + h2{
     text-align: end;
     margin: 1em 1em 0.5em 0;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Page produit (produit.php)                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.mainProduit {
+    background-color: #f3f3f3;
+    font-family: 'Montserrat-Medium';
+}
+
+.mainProduit img {
+    width: 100%;
+    height: auto;
+    border: solid 2px;
+    border-color: #404E58;
+    border-radius: 3px;
+}
+
+.mainProduit article {
+    display: flex;
+    padding: 2em;
+    border: solid 2px;
+    border-color: #C6C6C6;
+}
+
+.sectionProduit > ul li {
+    width: 12%;
+}
+
+.sectionProduit > ul figure {
+    margin: 0;
+}
+
+.divImagesProduits ul {
+    width: 20%;
+    margin: 0;
+    padding: 0;
+    padding-right: 1em;
+}
+
+.divImagesProduits div {
+    width: 80%;
+}
+
+.divGauche {
+    width: 60%;
+}
+
+.divGauche p {
+    text-align: justify;
+    margin-right: 1em;
+    font-family: 'Montserrat-Regular';
+}
+
+.divDroite {
+    width: 40%;
+    margin-left: 1em;
+}
+
+.divDroite img {
+    width: 3em;
+    height: auto;
+}
+
+.divDroite h2 {
+    text-align: center;
+    color: #404E58;
+}
+
+.divImagesProduits {
+    display: flex;
+    flex-direction: row;
+    padding: 0 1em 1em 0;
+}
+
+.sectionProduit {
+    margin: 0 20%;
+}
+
+.sectionProduit > article {
+    background-color: white;
+}
+
+.sectionProduit > ul {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.sectionProduit ul {
+    list-style-type: none;
 }

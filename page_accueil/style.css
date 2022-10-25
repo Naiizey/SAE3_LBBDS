@@ -340,6 +340,7 @@ header ul {
     display: flex;
     color: #404E58;
     font-family: "Montserrat-Medium";
+    justify-content: space-between;
 }
 
 .sectionPanier{
@@ -349,13 +350,13 @@ header ul {
 }
 
 .sectionPanier h2{
-    font-weight: medium;
+    font-family: "Montserrat-Medium";
     font-size: 1.4em;
     color: #404E58;
 }
 
 .divPanierHeader{
-    font-weight: medium;
+    font-family: "Montserrat-Medium";
     color: #404E58;
     display: flex;
     font-size: 1.4em;
@@ -363,20 +364,39 @@ header ul {
 
 .sectionPanier hr{
     background-color: #404E58;
+    width: 97%;
+    margin: auto;
 }
 
-.sectionPanier + aside, .sectionPanier + aside a, .sectionPanier + aside h2{
-    margin-left: 2em;
-    border-radius: 15px;
-    background-color: #E7E8E6;
+.sectionPanier input + a{
+    color: #404E58;
+    font-family: "Montserrat-Regular";
+    font-size: 1em;
+}
+
+.sectionPanier + aside h2{ 
     color: #404E58;
 }
 
+.sectionPanier + aside{
+    border-radius: 15px;
+    background-color: #E7E8E6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5em 1em;
+    align-self: center;
+}
+
 .sectionPanier + aside a{
+    color: #404E58;
+    border-radius: 15px;
     background-color: #6F98C7;
     text-decoration: none;
-    border-radius: 20px;
-    padding: 0.5em 01em 0.5em 1em;
+    padding: 0.5em 1em 0.5em 1em;
+    margin-top: 1em;
+    display: inline-block;
+    width: auto;
     text-align: center;
 }
 
@@ -384,4 +404,14 @@ header ul {
     background-color: #404E58;
     text-decoration: none;
     color: #E7E8E6;
+}
+
+.articlePanierProduit{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.articlePanierProduit p{
+    font-family: "Montserrat-Regular";
 }

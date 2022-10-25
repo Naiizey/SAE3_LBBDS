@@ -1,3 +1,4 @@
 <?php
- echo phpinfo();
+//print_r(pdo_drivers());
+echo phpinfo();
  ?>

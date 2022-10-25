@@ -1,25 +1,26 @@
 <?php
-$prod['lienimage'] = 'ressources/images.jpg';
-if (str_contains($prod['intitule'],"\n"))
+$prod->lienimage = 'ressources/images.jpg';
+if (str_contains($prod->intitule,"\n"))
 {
-    if(str_contains($prod['intitule'],"\n"))
+    if(str_contains($prod->intitule,"\n"))
     {
-        $exploded=explode("\n",$prod['intitule'],4);
+        $exploded=explode("\n",$prod->intitule,4);
         if (sizeof($exploded)===4 && strlen($exploded[3])!==0){
             
-            $prod['intitule']= $exploded[0].$exploded[1].$exploded[2]."...";
+            $prod->intitule= $exploded[0].$exploded[1].$exploded[2]."...";
 
         }else{
-            $prod['intitule']=implode("\n",$exploded);
+            $prod->intitule=implode("\n",$exploded);
         }
     }
 
-    if($prod['intitule']>51){
-        $prod['intitule']=str_split($prod['intitule'],51)."...";  
+    if($prod->intitule>51){
+        $prod->intitule=str_split($prod->intitule,51)."...";  
     }
 
 }
-$prod['prixttc']=sprintf("%5.2f",floor($prod['prixttc']*100)/100); 
+$prod->prixttc
+=sprintf("%5.2f",floor($prod->prixttc*100)/100); 
 
 function notationEtoile(){
     $retour="";
@@ -34,11 +35,12 @@ function cardProduit($prod){
     <div class="card-produit-ext">
     <div class="card-produit">
 
-        <div class="image-card" style="background-image: url(<?= base_url().'/'.$prod['lienimage']?>);"></div>
+        <div class="image-card" style="background-image: url(<?= base_url().'/'.$prod->lienimage
+?>);"></div>
 
         <div class="notation-card"><?= notationEtoile() ?></div>
-        <div class="contain-libelle"><p class="libelle"><?= $prod['intitule']?></p></div>
-        <p class="prix-card"><?= $prod['prixttc']?>€</p>
+        <div class="contain-libelle"><p class="libelle"><?= $prod->intitule?></p></div>
+        <p class="prix-card"><?= $prod->prixttc?>€</p>
 
     </div>
     </div>

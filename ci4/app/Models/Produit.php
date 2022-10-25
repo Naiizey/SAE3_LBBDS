@@ -11,7 +11,7 @@ class Produit extends Model
 
     protected $useAutoIncrement = false;
 
-    protected $returnType     = 'array';
+    protected $returnType     = \App\Entities\ProduitCatalogue::class;
     protected $useSoftDeletes = false;
 
     protected $allowedFields = ['intitule', 'prixttc','lienimage','isaffiche'];

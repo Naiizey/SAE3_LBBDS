@@ -30,7 +30,7 @@
                 </a>
                 <?php echo $newDivHeader; ?>
                 <div class="divPanierProfil">
-                    <a href=""> <!-- Lien panier -->
+                    <a href="panier.php"> <!-- Lien panier -->
                         <h2>Panier</h2>
                     </a>
                     <a class="lienConnexion" href="connexion.php">

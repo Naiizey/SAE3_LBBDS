@@ -489,6 +489,7 @@ header ul {
     margin: 0;
     padding: 0;
     padding-right: 1em;
+    list-style-type: none;
 }
 
 .divImagesProduits div {

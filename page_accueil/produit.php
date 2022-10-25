@@ -46,10 +46,10 @@
                         <h3>Prix: 0.01€</h3>
                         <h4>Avis clients:</h4>
                         <div class="avisEtLogos">
-                            <img src="images/"/>
+                            <img src="images/produit/avis.png"/>
                             <div>
-                                <img src="images/" />
-                                <img src="images/" />
+                                <img src="images/produit/produits_locaux.png" />
+                                <img src="images/produit/livraison_gratuite.png" />
                             </div>
                         </div>
                         <div>

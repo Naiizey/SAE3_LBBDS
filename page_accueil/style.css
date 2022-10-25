@@ -287,7 +287,7 @@ header ul {
 }
 
 .sectionCredit label {
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 .sectionCredit input[type="checkbox"] {
@@ -304,7 +304,7 @@ header ul {
 
 .nomPrenom {
     display: flex;
-    margin-top: 10%;
+    margin-top: 3%;
 }
 
 .nomPrenom > div {

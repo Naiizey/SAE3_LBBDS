@@ -350,6 +350,11 @@ header ul {
     font-family: "Montserrat-Medium";
     font-size: 1.4em;
     color: #404E58;
+    max-width: 20em;
+}
+
+.panierDescription{
+    max-width: 30em;
 }
 
 .sectionPanier h3{
@@ -376,10 +381,69 @@ header ul {
     margin: auto;
 }
 
-.sectionPanier select + a{
+.sectionPanier a{
     color: #404E58;
     font-family: "Montserrat-Regular";
     font-size: 1em;
+    text-decoration: none;
+}
+
+.sectionPanier select + a{
+    text-decoration: underline;
+}
+
+.articlePanierProduit{
+    display: flex;
+    flex-direction: row;
+    padding: 1em;
+}
+
+.articlePanierProduit a{
+    align-self: center;
+    color: #404E58;
+    text-decoration: none;
+}
+
+.articlePanierProduit p{
+    font-family: "Montserrat-Regular";
+}
+
+.articlePanierProduit img{
+    width: 10em;
+    height: 10em;
+}
+
+.articlePanierProduit > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-grow: 1;
+    padding: 1em 0 0 1em;
+}
+
+.divQté{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.divQté select{
+    max-width: 4em;
+    margin: 0 0 0.5em 0;
+}
+
+.divQté p{
+    margin: 0 0 0.5em 0;
+}
+
+.articlePanierProduit h3{
+    margin: 0;
+}
+
+.sectionPanier hr + h2{
+    text-align: end;
+    margin: 1em 1em 0.5em 0;
+    max-width: 100%;
 }
 
 .sectionPanier + aside h2{ 
@@ -399,7 +463,7 @@ header ul {
 .sectionPanier + aside a{
     color: #404E58;
     border-radius: 15px;
-    background-color: #6F98C7;
+    background-color: #24a064;
     text-decoration: none;
     padding: 0.5em 1em 0.5em 1em;
     margin-top: 1em;
@@ -409,28 +473,7 @@ header ul {
 }
 
 .sectionPanier + aside a:hover{
-    background-color: #404E58;
+    background-color: #6F98C7;
     text-decoration: none;
     color: #E7E8E6;
-}
-
-.articlePanierProduit{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 1em;
-}
-
-.articlePanierProduit img{
-    width: 10em;
-    height: 10em;
-}
-
-.articlePanierProduit p{
-    font-family: "Montserrat-Regular";
-}
-
-.sectionPanier hr + h2{
-    text-align: end;
-    margin: 1em 1em 0.5em 0;
 }

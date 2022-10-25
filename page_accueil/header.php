@@ -2,9 +2,9 @@
 <html>
     <head>
         <?php 
-            if ($_SERVER['SCRIPT_NAME'] == "panier.php")
+            if ($_SERVER['SCRIPT_NAME'] == "/panier.php")
             {
-                $newDivHeader = '<p>ya rien pck on est dans panier</p>';
+                $newDivHeader = '';
             } 
             else
             {

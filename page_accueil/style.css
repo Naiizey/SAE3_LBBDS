@@ -1,9 +1,3 @@
-/*
-#5C748F bleu
-#404E58 bleu foncé
-#BDBFBB creme
-*/
-
 /* Quand on scroll, retirer catégories éventuellement, ca peut etre cool */
 
 /*
@@ -34,7 +28,7 @@
 
 body {
     margin: 0;
-    background-color: #404E58;
+    background-color: #164F57;
 }
 
 h1 {
@@ -48,7 +42,7 @@ h2 {
 }
 
 header {
-    background-color: #404E58;
+    background-color: #164F57;
     position: sticky;
     top: 0;
 }
@@ -131,7 +125,7 @@ header h2, header nav {
 }
 
 nav{
-    background-color: #5C748F;
+    background-color: #3997A3;
 }
 
 p {
@@ -149,7 +143,7 @@ main {
 }
 
 footer {
-    background-color: #404E58;
+    background-color: #164F57;
     text-align: center;
     position: relative;
     bottom: 0;
@@ -187,7 +181,7 @@ header ul {
 }
 
 .liCategorie:before {
-    color: #404e58;
+    color: #164F57;
     position: absolute;
     left: 0;
     bottom: -1em;
@@ -204,7 +198,7 @@ header ul {
 }
 
 .liCategorie:hover .categorie {
-    color: #404e58;
+    color: #164F57;
 }
 
 .liCategorie:hover:before {
@@ -234,14 +228,14 @@ header ul {
 }
 
 .divCredit {
-    margin: 0 30% 0 30%;
+    margin: 0 30%;
 }
 
 .sectionCredit {
     border: solid 2px;
     border-color: #C6C6C6;
     background-color: white;
-    color: #404E58;
+    color: #164F57;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -251,7 +245,7 @@ header ul {
 }
 
 .sectionCredit h2 {
-    color: #404E58;
+    color: #164F57;
     text-align: center;
     font-family: "Montserrat-Medium";
     font-size: xx-large;
@@ -270,7 +264,7 @@ header ul {
 }
 
 .sectionCredit input[type="submit"] {
-    background-color: #404E58;
+    background-color: #24a064;
     color: white;
     margin: 2.5em 25% 1em 25%;
     height: 2.5em;
@@ -297,7 +291,7 @@ header ul {
 }
 
 .divCredit a {
-    color: #404E58;
+    color: #164F57;
     text-decoration: none;
     margin-left: 2px;
 }
@@ -334,7 +328,7 @@ header ul {
 .mainPanier{
     background-color: white;
     display: flex;
-    color: #404E58;
+    color: #164F57;
     font-family: "Montserrat-Medium";
     justify-content: space-between;
 }
@@ -342,7 +336,7 @@ header ul {
 .sectionPanier{
     border-radius: 15px;
     background-color: #E7E8E6;
-    color: #404E58;
+    color: #164F57;
     width: 70%;
 }
 
@@ -355,17 +349,18 @@ header ul {
 
 .panierDescription{
     max-width: 30em;
+    color: #164F57;
 }
 
 .sectionPanier h3{
     font-family: "Montserrat-Medium";
     font-size: 1.1em;
-    color: #404E58;
+    color: #164F57;
 }
 
 .divPanierHeader{
     font-family: "Montserrat-Medium";
-    color: #404E58;
+    color: #164F57;
     display: flex;
     font-size: 1.4em;
     justify-content: space-between;
@@ -376,13 +371,13 @@ header ul {
 }
 
 .sectionPanier hr{
-    background-color: #404E58;
+    background-color: #164F57;
     width: 97%;
     margin: auto;
 }
 
 .sectionPanier a{
-    color: #404E58;
+    color: #164F57;
     font-family: "Montserrat-Regular";
     font-size: 1em;
     text-decoration: none;
@@ -398,19 +393,22 @@ header ul {
     padding: 1em;
 }
 
-.articlePanierProduit a{
+.articlePanierProduit > a{
     align-self: center;
-    color: #404E58;
-    text-decoration: none;
 }
 
-.articlePanierProduit p{
-    font-family: "Montserrat-Regular";
+.articlePanierProduit a{
+    color: #404E58;
+    text-decoration: none;
 }
 
 .articlePanierProduit img{
     width: 10em;
     height: 10em;
+}
+
+.articlePanierProduit p{
+    font-family: "Montserrat-Regular";
 }
 
 .articlePanierProduit > div{
@@ -447,7 +445,7 @@ header ul {
 }
 
 .sectionPanier + aside h2{ 
-    color: #404E58;
+    color: #164F57;
 }
 
 .sectionPanier + aside{
@@ -461,7 +459,7 @@ header ul {
 }
 
 .sectionPanier + aside a{
-    color: #404E58;
+    color: #164F57;
     border-radius: 15px;
     background-color: #24a064;
     text-decoration: none;
@@ -473,7 +471,102 @@ header ul {
 }
 
 .sectionPanier + aside a:hover{
-    background-color: #6F98C7;
+    background-color: #164F57;
     text-decoration: none;
     color: #E7E8E6;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Page produit (produit.php)                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.mainProduit {
+    background-color: #f3f3f3;
+    font-family: 'Montserrat-Medium';
+}
+
+.mainProduit img {
+    width: 100%;
+    height: auto;
+    border: solid 2px;
+    border-color: #404E58;
+    border-radius: 3px;
+}
+
+.mainProduit article {
+    display: flex;
+    padding: 2em;
+    border: solid 2px;
+    border-color: #C6C6C6;
+}
+
+.sectionProduit {
+    margin: 0 20%;
+}
+
+.sectionProduit > article {
+    background-color: white;
+}
+
+.sectionProduit > ul {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0;
+}
+
+.sectionProduit > ul li {
+    width: 12%;
+}
+
+.sectionProduit > ul figure {
+    margin: 0;
+}
+
+.divImagesProduits {
+    display: flex;
+    flex-direction: row;
+    padding: 0 1em 1em 0;
+}
+
+.divImagesProduits ul {
+    width: 20%;
+    margin: 0;
+    padding: 0;
+    padding-right: 1em;
+}
+
+.divImagesProduits div {
+    width: 80%;
+}
+
+.divGauche {
+    width: 60%;
+}
+
+.divGauche p {
+    text-align: justify;
+    margin-right: 1em;
+    font-family: 'Montserrat-Regular';
+}
+
+.divDroite {
+    width: 40%;
+    margin-left: 1em;
+}
+
+.divDroite img {
+    width: 3em;
+    height: auto;
+}
+
+.divDroite h2 {
+    text-align: center;
+    color: #404E58;
+}
+
+.avisEtLogos {
+    text-align: center;
 }

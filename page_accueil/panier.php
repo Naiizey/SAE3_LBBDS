@@ -10,6 +10,8 @@
                 <article class="articlePanierProduit">
                     <a href="">
                         <img src="./images/art1.png" alt="article 1" title="Article 1">
+                    </a>
+                    <a href="">
                         <div>
                             <div>
                                 <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis ut optio ...</h3>
@@ -19,7 +21,7 @@
                             <div class="divQté">
                                 <p>Quantité</p>
                                 <select name="quantite" id="tabQuant">
-                                    <option value="0">0</option>
+                                    <option value="0">0 (Supprimer)</option>
                                     <option value="1" selected>1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -50,7 +52,7 @@
                             <div class="divQté">
                                 <p>Quantité</p>
                                 <select name="quantite" id="tabQuant">
-                                    <option value="0">0</option>
+                                    <option value="0">0 (Supprimer)</option>
                                     <option value="1" selected>1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>

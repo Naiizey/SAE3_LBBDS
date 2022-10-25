@@ -16,6 +16,9 @@ class Home extends BaseController
 
     public function test()
     {
-        return view('card-produit.php');
+        $prodModel=model("\App\Models\Produit");
+        
+        $data['prod']=$prodModel->find(17); 
+        return view('card-produit.php',$data);
     }
 }

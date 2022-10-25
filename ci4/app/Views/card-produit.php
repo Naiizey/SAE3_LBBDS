@@ -1,25 +1,25 @@
 <?php
-$prod=array('lien'=>'ressources/images.jpg','contenu'=>"ddddddddd", 'prix'=>3.90);
-if (str_contains($prod['contenu'],"\n"))
+$prod['lienimage'] = 'ressources/images.jpg';
+if (str_contains($prod['intitule'],"\n"))
 {
-    if(str_contains($prod['contenu'],"\n"))
+    if(str_contains($prod['intitule'],"\n"))
     {
-        $exploded=explode("\n",$prod['contenu'],4);
+        $exploded=explode("\n",$prod['intitule'],4);
         if (sizeof($exploded)===4 && strlen($exploded[3])!==0){
             
-            $prod['contenu']= $exploded[0].$exploded[1].$exploded[2]."...";
+            $prod['intitule']= $exploded[0].$exploded[1].$exploded[2]."...";
 
         }else{
-            $prod['contenu']=implode("\n",$exploded);
+            $prod['intitule']=implode("\n",$exploded);
         }
     }
 
-    if($prod['contenu']>51){
-        $prod['contenu']=str_split($prod['contenu'],51)."...";  
+    if($prod['intitule']>51){
+        $prod['intitule']=str_split($prod['intitule'],51)."...";  
     }
 
 }
-$prod['prix']=sprintf("%5.2f",floor($prod['prix']*100)/100); 
+$prod['prixttc']=sprintf("%5.2f",floor($prod['prixttc']*100)/100); 
 
 function notationEtoile(){
     $retour="";
@@ -34,11 +34,11 @@ function cardProduit($prod){
     <div class="card-produit-ext">
     <div class="card-produit">
 
-        <div class="image-card" style="background-image: url(<?= base_url().'/'.$prod['lien']?>);"></div>
+        <div class="image-card" style="background-image: url(<?= base_url().'/'.$prod['lienimage']?>);"></div>
 
         <div class="notation-card"><?= notationEtoile() ?></div>
-        <div class="contain-libelle"><p class="libelle"><?= $prod['contenu']?></p></div>
-        <p class="prix-card"><?= $prod['prix']?>€</p>
+        <div class="contain-libelle"><p class="libelle"><?= $prod['intitule']?></p></div>
+        <p class="prix-card"><?= $prod['prixttc']?>€</p>
 
     </div>
     </div>

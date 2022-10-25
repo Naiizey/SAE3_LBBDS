@@ -69,3 +69,6 @@ ci4/.env:
 ```bash
 CI_ENVIRONMENT = development
 ```
+
+
+**De manière général attentio à la majuscule pour les nom de fichier de classes et au namspaces !!**

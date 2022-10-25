@@ -126,7 +126,7 @@ hr {
 }
 
 header h2, header nav {
-    font-family: "Montserrat";
+    font-family: "Montserrat-Medium";
     font-size: 1.2em;
 }
 
@@ -135,7 +135,7 @@ nav{
 }
 
 p {
-    font-family: "Montserrat";
+    font-family: "Montserrat-Regular";
 }
 
 header a:link, a:hover, a:active, a:visited {

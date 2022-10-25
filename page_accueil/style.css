@@ -347,6 +347,7 @@ header ul {
     border-radius: 15px;
     background-color: #E7E8E6;
     color: #404E58;
+    width: 70%;
 }
 
 .sectionPanier h2{
@@ -355,11 +356,22 @@ header ul {
     color: #404E58;
 }
 
+.sectionPanier h3{
+    font-family: "Montserrat-Medium";
+    font-size: 1.1em;
+    color: #404E58;
+}
+
 .divPanierHeader{
     font-family: "Montserrat-Medium";
     color: #404E58;
     display: flex;
     font-size: 1.4em;
+    justify-content: space-between;
+    padding-top: 0.2em;
+    height: 2.6em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
 }
 
 .sectionPanier hr{
@@ -368,7 +380,7 @@ header ul {
     margin: auto;
 }
 
-.sectionPanier input + a{
+.sectionPanier select + a{
     color: #404E58;
     font-family: "Montserrat-Regular";
     font-size: 1em;
@@ -410,8 +422,19 @@ header ul {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 1em;
+}
+
+.articlePanierProduit img{
+    width: 10em;
+    height: 10em;
 }
 
 .articlePanierProduit p{
     font-family: "Montserrat-Regular";
+}
+
+.sectionPanier hr + h2{
+    text-align: end;
+    margin: 1em 1em 0.5em 0;
 }

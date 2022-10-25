@@ -17,7 +17,20 @@
                 </div>
                 <div>
                     <p>Quantité</p>
-                    <input type="number" name="quantite" id="quantite" min="0" max="10" value="1">
+                    <select name="quantite" id="tabQuant">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10+">10+</option>
+                    </select>
+                    <!-- si jamais l'utilisateur choisie 10+ il se transforme en number à partir de 10 -->
                     <a href="">Supprimer</a>
                 </div>
                 <div>
@@ -35,7 +48,20 @@
                 </div>
                 <div>
                     <p>Quantité</p>
-                    <input type="number" name="quantite" id="quantite" min="0" max="10" value="1">
+                    <select name="quantite" id="tabQte">
+                        <option value="0">Qté : 0 (Supprimer)</option>
+                        <option selected value="1">Qté : 1</option>
+                        <option value="2">Qté : 2</option>
+                        <option value="3">Qté : 3</option>
+                        <option value="4">Qté : 4</option>
+                        <option value="5">Qté : 5</option>
+                        <option value="6">Qté : 6</option>
+                        <option value="7">Qté : 7</option>
+                        <option value="8">Qté : 8</option>
+                        <option value="9">Qté : 9</option>
+                        <option value="10+">Qté : 10+</option>
+                    </select>
+                    <!-- si jamais l'utilisateur choisie 10+ il se transforme en number à partir de 10 -->
                     <a href="">Supprimer</a>
                 </div>
                 <div>

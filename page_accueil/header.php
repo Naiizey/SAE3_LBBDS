@@ -2,9 +2,9 @@
 <html>
     <head>
         <?php 
-            if ($_SERVER['SCRIPT_NAME'] == "panier.php")
+            if ($_SERVER['SCRIPT_NAME'] == "/panier.php")
             {
-                $newDivHeader = '<p>ya rien pck on est dans panier</p>';
+                $newDivHeader = '';
             } 
             else
             {
@@ -29,10 +29,10 @@
                 </a>
                 <?php echo $newDivHeader; ?>
                 <div class="divPanierProfil">
-                    <a href=""> <!-- Lien panier -->
+                    <a href="panier.php"> <!-- Lien panier -->
                         <h2>Panier</h2>
                     </a>
-                    <a href="connexion.php">
+                    <a class="lienConnexion" href="connexion.php">
                         <img class="logoProfil" src="./images/header/profil.png" onmouseover=passageDeLaSouris(this); onmouseout=departDeLaSouris(this); />
                     </a>
                 </div>

@@ -34,6 +34,8 @@ class UserModel extends Model
 }
 ```
 
+**Attention, pour ma part en tout cas,tous les noms de colonnes sont tranformé en minuscule**
+
 ### $table
 
 définit table utilisé
@@ -55,6 +57,12 @@ colonne qui seront modifiable par notre model.
 ### L’entité:
 
 ```php
+
+
+namespace App\Entities;
+
+use CodeIgniter\Entity\Entity;
+
 class User extends Entity
 {
     // ...déjà utilisable sans rien

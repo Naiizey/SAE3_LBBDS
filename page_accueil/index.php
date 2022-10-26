@@ -4,19 +4,19 @@
 <?php require("header.php"); ?>
             <nav>
                 <ul>
-                    <li>
+                    <li class="liCategorie">
                         <a class="categorie" href="">Catégorie 1</a>
                     </li>
-                    <li>
+                    <li class="liCategorie">
                         <a class="categorie" href="">Catégorie 2</a>
                     </li>
-                    <li>
+                    <li class="liCategorie">
                         <a class="categorie" href="">Catégorie 3</a>
                     </li>
-                    <li>
+                    <li class="liCategorie">
                         <a class="categorie" href="">Catégorie 4</a>
                     </li>
-                    <li>
+                    <li class="liCategorie">
                         <a class="categorie" href="">Catégorie 5</a>
                     </li>
                 </ul>

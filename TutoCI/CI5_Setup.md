@@ -9,9 +9,13 @@ php spark serve
 ```
 
 ### BaseURL
+*ci4/.env*
+```
+app.baseURL = http://localhost:8080/
+```
 *ci4/app/Config/App.php*
 ```php
-public $baseURL = 'http://localhost:8080/';
+public $baseURL = '';
 ```
 Utilisé à la place de php -S. Nécessite ”intl”  pour cette commande.
 
@@ -25,15 +29,23 @@ php -S localhost:8080
 ```
 
 ### BaseURL avec php -S
+*ci4/.env*
+```
+    app.baseURL =http://localhost/public/
+```
 *ci4/app/Config/App.php*
 ```php
-public $baseURL = 'http://localhost:8080/public/';
+    public $baseURL = '';
 ```
 
 ### BaseURL avec apache
+*ci4/.env*
+```
+    app.baseURL =http://localhost/public/
+```
 *ci4/app/Config/App.php*
 ```php
-public $baseURL = 'http://localhost/public/';
+    public $baseURL = '';
 ```
 
 **Très important** sinon il sera difficle d'accéder au fichier css, js, aux images et à faire des liens entre les pages.
@@ -57,3 +69,6 @@ ci4/.env:
 ```bash
 CI_ENVIRONMENT = development
 ```
+
+
+**De manière général attentio à la majuscule pour les nom de fichier de classes et au namspaces !!**

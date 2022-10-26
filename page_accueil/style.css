@@ -41,14 +41,13 @@ h2 {
     margin: 0;
 }
 
-header {
-    background-color: #164F57;
-    position: sticky;
-    top: 0;
-}
-
 .divHeaderAlizon {
+    background-color: #164F57;
     display: flex;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
     justify-content: space-between;
     align-items: center;
     height: 5em;
@@ -124,7 +123,9 @@ header h2, header nav {
     font-size: 1.2em;
 }
 
-nav{
+nav {
+    position: relative;
+    top : 4.2em;
     background-color: #3997A3;
 }
 

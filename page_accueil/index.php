@@ -3,6 +3,7 @@
 <!-- ajuster les logos -->
 <?php require("header.php"); ?>
             <nav>
+                <hr>
                 <ul>
                     <li class="liCategorie">
                         <a class="categorie" href="">Catégorie 1</a>

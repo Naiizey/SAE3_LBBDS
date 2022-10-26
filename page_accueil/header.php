@@ -19,7 +19,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="stylesheet" type="text/css" href="style.css" />
         <title>Page d'accueil</title>
-        <script src="./script.js"></script>
     </head>
     <body>
         <header>

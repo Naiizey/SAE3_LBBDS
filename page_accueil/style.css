@@ -16,6 +16,9 @@
     src: url("./fonts/Montserrat-Medium.ttf") format("truetype");
 }
 
+html {
+    height : 100%;
+}
 @font-face {
     font-family: "Montserrat-Regular";
     src: url("./fonts/Montserrat-Regular.ttf") format("truetype");
@@ -29,6 +32,9 @@
 body {
     margin: 0;
     background-color: #164F57;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 }
 
 h1 {
@@ -141,15 +147,13 @@ header a:link, a:hover, a:active, a:visited {
 main {
     padding: 2em;
     background-color: #f3f3f3;
+    flex : 1;
 }
 
 footer {
     background-color: #164F57;
     text-align: center;
-    position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    z-index: 100;
 }
 
 footer > div {
@@ -213,6 +217,70 @@ header ul {
 	font-weight: 700;
 	line-height: 1.333;
 	transition: .4s ease-out;
+}
+
+#carousel-container {
+    height : 30vh;
+    width: 96vw;
+    padding: 0;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    --slide-count: 3;
+
+    /* Suppression de la scroll bar*/
+    -ms-overflow-style: none; /* pour Internet Explorer, Edge */
+    scrollbar-width: none; /* pour Firefox */
+}
+
+#carousel-container::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}
+
+#carousel {
+    width: calc(100% * var(--slide-count));
+    height: 100%;
+    display: flex;
+}
+
+.slide {
+    width : 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+    scroll-snap-align: center;
+}
+
+.slide > img {
+    width : 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.btn {
+    position: absolute;
+    cursor: pointer;
+    background-color: white;
+    opacity: 0.5;
+    border-radius: 50%;
+    padding: .8%;
+    transition: 0.2s ease-in-out;
+    width: 1.5%;
+    top : 34%;
+}
+
+.btn:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.btn-prev {
+    left: 4%;
+}
+
+.btn-suiv {
+    right: 4%;
 }
 
 /*

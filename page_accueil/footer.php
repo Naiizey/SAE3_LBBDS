@@ -15,5 +15,6 @@
             </div>
             <p>&copy; 2022 Alizon.bzh et ses affiliés</p>
         </footer>
+        <script src="./script.js"></script> 
     </body>
 </html>

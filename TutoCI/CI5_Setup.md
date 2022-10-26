@@ -1,6 +1,7 @@
 # Setup
 
 ## prérequis :
+
 - php8 
 ```bash
 sudo apt-get update && sudo apt-get install php8.0

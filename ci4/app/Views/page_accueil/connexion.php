@@ -7,7 +7,7 @@
             <div class="divCredit">
                 <div class="sectionCredit">
                     <h2>Connexion</h2>
-                    <form action="credits.php" method="post">
+                    <form action="<?= base_url() ?>/credits/connexion" method="post">
                         <label>Nom d'utilisateur ou adresse mail:</label>
                         <input type="text" name="identifiant" required="required"/>
                         <label>Mot de passe: </label>

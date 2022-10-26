@@ -2,14 +2,15 @@
 
 namespace App\Controllers;
 
-class Home extends BaseController
+class UserHandler extends BaseController
 {
 
     public function connexion()
     {
         $clientModel = model("\App\Models\Client");
-        $data['prod'] = $clientModel->find(1);
-        return view('page_accueil/connexion.php',$data);
+        $entree=$this->request->getPost();
+        print_r($clientModel->where('pseudo',$entree['identifiant'])->where('mdp',$entree['motDePasse'])->findAll()[0]);
+        
     }
 
 

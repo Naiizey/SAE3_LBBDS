@@ -19,15 +19,5 @@ class Home extends BaseController
         return view('page_accueil/connexion.php',$data);
     }
 
-    public function test()
-    {
-        $prodModel=model("\App\Models\Produit");
-        return view('card-produit.php');
-    }
-
-    public function test2()
-    {
-        $session= session();
-        $session->get('identifiant');
-    }
+    
 }

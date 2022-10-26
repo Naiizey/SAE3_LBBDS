@@ -120,6 +120,15 @@ On peut aussi ajouter des méthode à notre entité.
 
 ## Voir plus
 
+### DataMapping
+```php
+    #Permet de changer le nom d'une variable obtenu par la bdd
+    #'nom_colonne' => 'nom_renomme'
+    public $datamap= [
+        'motDePasse' => 'motdepasse'
+    ];
+```
+
 Voir property mapping, le data mapping ou autre
 
 [https://codeigniter4.github.io/CodeIgniter4/models/entities.html](https://codeigniter4.github.io/CodeIgniter4/models/entities.html)

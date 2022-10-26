@@ -23,7 +23,7 @@
                     <a href=""> <!-- Lien panier -->
                         <h2>Panier</h2>
                     </a>
-                    <a href="connexion.php"> <!-- Lien profil -->
+                    <a href="<?= base_url() ?>/connexion"> <!-- Lien profil -->
                         <img class="logoProfil" src="<?= base_url() ?>/images/profil.png" onmouseover=passageDeLaSouris(this); onmouseout=departDeLaSouris(this); />
                     </a>
                 </div>

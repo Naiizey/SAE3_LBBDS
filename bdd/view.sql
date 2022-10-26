@@ -7,4 +7,4 @@ CREATE OR REPLACE VIEW produit_catalogue AS
     SELECT id_prod  id, intitule_prod intitule, prix_ttc prixTTC,lien_image_prod lienImage,publication_prod  isAffiche FROM _produit NATURAL JOIN moyenne;
 
 CREATE OR REPLACE VIEW client AS
-    SELECT num_compte numero, nom_compte nom, prenom_compte prenom, pseudo, mot_de_passe mdp FROM _compte;
+    SELECT num_compte numero, nom_compte nom, prenom_compte prenom, pseudo identifiant, mot_de_passe motDePasse FROM _compte;

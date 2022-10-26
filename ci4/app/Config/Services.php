@@ -29,4 +29,9 @@ class Services extends BaseService
      *     return new \CodeIgniter\Example();
      * }
      */
+
+    public static function authentification()
+    {
+       return new \App\Services\Authentification();
+    }
 }

@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class Client extends Model
 {
-    protected $table      = 'client';
+    protected $table      = 'sae3.client';
     protected $primaryKey = 'numero';
 
     protected $useAutoIncrement = false;

@@ -36,9 +36,11 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
     $routes->get('/', 'Home');
+  
+    $routes->get('/connexion/(400)', 'Home::connexion/$1');
     $routes->get('/connexion', 'Home::connexion');
     $routes->get('/test', 'Home::test');
-    $routes->post('/credits/connexion', 'UserHandler::connexion');
+    $routes->post('/credits/connexion', 'EspaceClient::verification');
 
 ##param uri (:any) et dans methode /$1
 

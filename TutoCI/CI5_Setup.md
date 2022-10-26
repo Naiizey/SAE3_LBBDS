@@ -2,15 +2,25 @@
 
 ## prérequis :
 - php8 
-commande : `sudo apt-get update && sudo apt-get install php8.0`
+```bash
+sudo apt-get update && sudo apt-get install php8.0
+```
 - mbstring 
-commande : `sudo apt-get install php-mbstring`
+```bash
+sudo apt-get install php-mbstring
+```
 - curl
-commande : `sudo apt-get install php-curl`
+```bash
+sudo apt-get install curl
+```
 - intl
-commande : `sudo apt-get install php-intl`
+```bash
+sudo apt-get install php-intl
+```
 - xml
-commande : `sudo apt-get install php-xml`
+```bash
+sudo apt-get install php-xml
+```
 
 
 ## Démarrage en local avec spark

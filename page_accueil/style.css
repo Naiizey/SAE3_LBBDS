@@ -320,12 +320,7 @@ header ul {
     text-align: left;
     margin-bottom: .5em;
 }
-
-.sectionCredit h2 {
-    color: #164F57;
-    text-align: center;
-    font-family: "Montserrat-Medium";
-    font-size: xx-large;
+produit
     margin-bottom: 0;
 }
 
@@ -636,7 +631,8 @@ header ul {
 }
 
 .divDroite img {
-    width: 3em;
+    border: none;
+    width: 6em;
     height: auto;
 }
 
@@ -645,6 +641,21 @@ header ul {
     color: #164F57;
 }
 
-.avisEtLogos {
+.divAvisLogos {
     text-align: center;
+}
+
+.divQuantitePanier {
+    text-align: right;
+}
+
+.divQuantitePanier > div {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.divQuantitePanier select {
+    max-height: 2em;
+    margin-left: 1em;
 }

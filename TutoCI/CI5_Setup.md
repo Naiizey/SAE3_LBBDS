@@ -1,5 +1,30 @@
 # Setup
 
+## prérequis :
+
+- php8 
+```bash
+sudo apt-get update && sudo apt-get install php8.0
+```
+- mbstring 
+```bash
+sudo apt-get install php-mbstring
+```
+- curl
+```bash
+sudo apt-get install curl
+```
+- intl
+```bash
+sudo apt-get install php-intl
+```
+- xml
+```bash
+sudo apt-get install php-xml
+```
+
+
+
 ## Démarrage en local avec spark
 
 ### Commande
@@ -69,3 +94,6 @@ ci4/.env:
 ```bash
 CI_ENVIRONMENT = development
 ```
+
+
+**De manière général attentio à la majuscule pour les nom de fichier de classes et au namspaces !!**

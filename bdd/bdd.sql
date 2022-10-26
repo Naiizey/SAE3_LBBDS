@@ -150,7 +150,7 @@ CREATE TABLE _avis(
 CREATE TABLE _image_avis(
     num_image SERIAL PRIMARY KEY,
     lien_image_avis VARCHAR NOT NULL
-)
+);
 
 /* -----------------------------------------------------------
 -                                                            -
@@ -251,7 +251,7 @@ ALTER TABLE _pouce ADD CONSTRAINT _pouce_pk PRIMARY KEY (num_avis, num_compte);
 CREATE OR REPLACE FUNCTION pouce_check() RETURNS TRIGGER AS
 $$
 BEGIN
-    PERFORM num_compte FROM _avis inner join pouce on avis.num_compte = _pouce.num_compte WHERE avis.num_avis = _pouce.num_avis;
+    PERFORM num_compte FROM _avis inner join _pouce on _avis.num_compte = _pouce.num_compte WHERE _avis.num_avis = _pouce.num_avis;
     IF FOUND THEN
         RAISE EXCEPTION 'IMPOSSIBLE DE S''AUTO LIKE CLOCHARD VA';
     END IF;

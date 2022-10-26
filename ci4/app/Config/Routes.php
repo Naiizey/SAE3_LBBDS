@@ -38,6 +38,8 @@ $routes->set404Override();
     $routes->get('/', 'Home');
     $routes->get('/connexion', 'Home::connexion');
     $routes->get('/test', 'Home::test');
+    $routes->get('/credits/connexion', 'Home::connexion');
+
 ##param uri (:any) et dans methode /$1
 
 /*

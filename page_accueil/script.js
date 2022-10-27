@@ -18,6 +18,7 @@ const nextSlide = document.querySelector(".btn-suiv");
 let windowWidth = Math.round(carouselContainer.offsetWidth);
 const prevSlide = document.querySelector(".btn-prev");
 let scrollValue = (carouselContainer.scrollLeft-40);
+var autoScrollCar = setInterval(autoScroll, 5000);
 
 function scrollToSlide(slide) {
     windowWidth = Math.round(carouselContainer.offsetWidth);
@@ -26,6 +27,8 @@ function scrollToSlide(slide) {
 
 // Ajout d'un event listener au clic du bouton afin de déplacer les images vers la droite
 nextSlide.addEventListener("click", function () {
+    clearInterval(autoScrollCar);
+    autoScrollCar = setInterval(autoScroll, 5000);
     curSlide++;
     scrollToSlide(curSlide);
 });
@@ -34,6 +37,8 @@ nextSlide.addEventListener("click", function () {
 
 // Ajout d'un event listener au clic du bouton afin de déplacer les images vers la gauche
 prevSlide.addEventListener("click", function () {
+    clearInterval(autoScrollCar);
+    autoScrollCar = setInterval(autoScroll, 5000);
     curSlide--; 
     scrollToSlide(curSlide);
 });
@@ -53,7 +58,6 @@ carouselContainer.addEventListener("scroll", (event) => {
     }
 });
 
-setInterval(autoScroll, 3500);
 
 function autoScroll() {
     if (curSlide === (nbSlide-1)) {

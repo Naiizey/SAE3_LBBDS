@@ -41,9 +41,23 @@ class Home extends BaseController
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }
         $clientModel = model("\App\Models\ProduitDetail");
-        $data['prod'] = $clientModel->find($idProduit)[0];
+        $result = $clientModel->find($idProduit);
+        if($result == null)
+        {
+            
+            return view(
+                'errors/html/error_404.php'
+                , array('message' => "Ce produit n'existe pas")
+            );
+        }
+        else
+        {
+            $data['prod']=$result;
+            return view('page_accueil/produit.php',$data);
+        }
+        #TODO: pensez à mettre le prix HT dans la vue et aussi indiquer que la livraisin est gratuite
         
-        return view('page_accueil/produit.php',$data);
+        
     }
 
     public function panier($context = null)

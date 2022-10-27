@@ -40,8 +40,9 @@ class Home extends BaseController
         {
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }
-        $clientModel = model("\App\Models\Produit");
-        $data['prod'] = $clientModel->find($idProduit);
+        $clientModel = model("\App\Models\ProduitDetail");
+        $data['prod'] = $clientModel->find($idProduit)[0];
+        
         return view('page_accueil/produit.php',$data);
     }
 

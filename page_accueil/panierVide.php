@@ -1,18 +1,21 @@
 <?php require("header.php"); ?>
         <main class="mainPanier">
-            <section class="sectionPanier sectionPanierVide">
+            <section class="sectionPanier">
                 <div class="divPanierHeader">
                     <h2>Votre panier est vide</h2>
                 </div>
                 <hr>
-                <h3 class="h3PasArticlePanier">Vous n’avez aucun article dans votre panier. <br> <a href="index.php" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>
-                <?php
-                    $connecte=false;
-                    if ($connecte==false){
-                        echo "<h3 class='h3PasArticlePanier'>Connectez-vous pour récupérer votre panier.</h3>";
-                        echo "<a href=connexion.php class='lienPanier lienConnexionPanier'>Se connecter</a>";
-                    }
-                ?>
+                <div>
+                    <h3 class="h3PasArticlePanier">Vous n’avez aucun article dans votre panier. <br> <a href="index.php" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>
+                    <?php
+                        $connecte=false;
+                        if ($connecte==false)
+                        {
+                            echo "<h3 class='h3PasArticlePanier'>Connectez-vous pour récupérer votre panier.</h3>";
+                            echo "<a href=connexion.php class='lienPanier'>Se connecter</a>";
+                        }
+                    ?>
+                </div>
             </section>
             <aside>
                 <h2>Sous-total (0 article) : 00,00€</h2>

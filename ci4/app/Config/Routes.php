@@ -50,6 +50,7 @@ $routes->set404Override();
     $routes->get('/panierVide', 'Home::panierVide');
 
     $routes->get('/test', 'Test::test');
+    $routes->get('/panier', 'Panier');
     $routes->post('/credits/connexion', 'EspaceClient::verification');
 
     $routes->get('/destroy', 'Test::destroySession');

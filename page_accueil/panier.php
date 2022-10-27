@@ -6,7 +6,7 @@
                     <h3>Prix</h3>
                 </div>
                 <hr>
-                <article class="articlePanierProduit">
+                <article class="articlePanier">
                     <a href="">
                         <img src="./images/art1.png" alt="article 1" title="Article 1">
                         <div>
@@ -35,7 +35,7 @@
                         <h3>19,45€</h3>
                 </article>
                 <hr>
-                <article class="articlePanierProduit">
+                <article class="articlePanier">
                     <a href="">
                         <img src="./images/art2.png" alt="article 2" title="Article 2">
                         <div>

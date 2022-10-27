@@ -4,6 +4,14 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+
+/** 
+ * Model de classe client qui permet de récuperer un client, ainsi qu'insérer et mettre à jour.
+ * 
+ * 
+ * @see TutoCI/CI5_BDD
+ * @return \App\Entities\Client
+ */
 class Client extends Model
 {
     protected $table      = 'sae3.client';

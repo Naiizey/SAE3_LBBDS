@@ -214,7 +214,6 @@ ALTER TABLE _refere ADD COLUMN num_compte INT NOT NULL;
 ALTER TABLE _refere ADD CONSTRAINT _refere_panier_fk FOREIGN KEY (num_compte) REFERENCES _panier(num_compte);
 ALTER TABLE _refere ADD CONSTRAINT _refere_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod);
 ALTER TABLE _refere ADD CONSTRAINT _refere_pk PRIMARY KEY (id_prod, num_compte);
-
 --Association 1..* entre _compte et _adresse_facturation (possedeF) ✅
 ALTER TABLE _adresse_facturation ADD COLUMN num_compte INT NOT NULL;
 ALTER TABLE _adresse_facturation ADD CONSTRAINT _adresse_facturation_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);

@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html lang=fr>
     <head>
-<<<<<<< HEAD
         <?php 
-            if ($_SERVER['SCRIPT_NAME'] == "/panier.php" || $_SERVER['SCRIPT_NAME'] == "/panierVide.php")
+            if ($_SERVER['SCRIPT_NAME'] == "/panier.php" | $_SERVER['SCRIPT_NAME'] == "/panierVide.php")
             {
                 $newDivHeader = '<div class="divHeaderPanier">
-                                    <div class="divSuivie1">
+                                    <div class="divSuivie divSuivie1">
                                         <img class="imgSuivie1" src="./images/header/logo.png" alt="Panier" title="Panier">
-                                        <h3 class="h3Suivie">1. Panier</h3>
+                                        <h3>1. Panier</h3>
+                                    </div>
+                                    <div class="divSeparationSuivie "></div>
+                                    <div class="divSuivie divSuivie2">
+                                        <img class="imgSuivie2" src="./images/header/profil.png" alt="Identification" title="Identification">
+                                        <h3>2. Identification</h3>
                                     </div>
                                     <div class="divSeparationSuivie"></div>
-                                    <div class="divSuivie2">
-                                        <img class="imgSuivie2" src="./images/header/loupe.png" alt="Identification" title="Identification">
-                                        <h3 class="h3Suivie">2. Identification</h3>
+                                    <div class="divSuivie divSuivie3">
+                                        <img class="imgSuivie3" src="./images/header/carton.svg" alt="Livraison" title="Livraison">
+                                        <h3>3. Livraison</h3>
                                     </div>
                                     <div class="divSeparationSuivie"></div>
-                                    <div class="divSuivie3">
-                                        <img class="imgSuivie1" src="./images/header/profil.png" alt="Livraison" title="Livraison">
-                                        <h3 class="h3Suivie">3. Livraison</h3>
-                                    </div>
-                                    <div class="divSeparationSuivie"></div>
-                                    <div class="divSuivie4">
-                                        <img class="imgSuivie1" src="./images/header/logo.png" alt="panier" title="panier">
-                                        <h3 class="h3Suivie">4. Paiement</h3>
+                                    <div class="divSuivie divSuivie4">
+                                        <img class="imgSuivie4" src="./images/header/argentBlanc.png" alt="Paiement" title="Paiement">
+                                        <h3>4. Paiement</h3>
                                     </div>
                                 </div>';
             } 
@@ -39,10 +38,6 @@
         ?>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" type="text/css" href="style.css">
-=======
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <link rel="stylesheet" type="text/css" href="style.css" />
->>>>>>> 2618ae9ebb99e8add9af99e7ec024fdc587bb978
         <title>Page d'accueil</title>
     </head>
     <body>
@@ -53,15 +48,7 @@
                     <h1>Alizon</h1>
                 </a>
                 <?php 
-                    if ($_SERVER['SCRIPT_NAME'] != "/panier.php")
-                    {
-                        echo   '<div class="divRecherche">
-                                    <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche.."> 
-                                    <a href="">
-                                        <img class="logoLoupe" src="./images/header/loupe.png" alt="recherche" title="Rechercher">
-                                    </a>
-                                </div>';
-                    } 
+                    echo $newDivHeader;
                 ?>
                 <div class="divPanierProfil">
                     <a href="panier.php"> <!-- Lien panier -->

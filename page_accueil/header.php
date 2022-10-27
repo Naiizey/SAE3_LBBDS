@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang=fr>
     <head>
+<<<<<<< HEAD
         <?php 
             if ($_SERVER['SCRIPT_NAME'] == "/panier.php" || $_SERVER['SCRIPT_NAME'] == "/panierVide.php")
             {
@@ -38,6 +39,10 @@
         ?>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" type="text/css" href="style.css">
+=======
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+>>>>>>> 2618ae9ebb99e8add9af99e7ec024fdc587bb978
         <title>Page d'accueil</title>
     </head>
     <body>
@@ -47,7 +52,17 @@
                     <img src="./images/header/logo.png" alt="logoAlizon" title="Accueil" class="logoAlizon">
                     <h1>Alizon</h1>
                 </a>
-                <?php echo $newDivHeader; ?>
+                <?php 
+                    if ($_SERVER['SCRIPT_NAME'] != "/panier.php")
+                    {
+                        echo   '<div class="divRecherche">
+                                    <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche.."> 
+                                    <a href="">
+                                        <img class="logoLoupe" src="./images/header/loupe.png" alt="recherche" title="Rechercher">
+                                    </a>
+                                </div>';
+                    } 
+                ?>
                 <div class="divPanierProfil">
                     <a href="panier.php"> <!-- Lien panier -->
                         <h2>Panier</h2>
@@ -56,4 +71,30 @@
                         <img class="logoProfil" src="./images/header/profil.png" title="logo_connexion" alt="logo_connexion" onmouseover=passageDeLaSouris(this); onmouseout=departDeLaSouris(this);>
                     </a>
                 </div>
-            </div>
+            </div> 
+            <?php 
+                if ($_SERVER['SCRIPT_NAME'] == "/index.php" || $_SERVER['SCRIPT_NAME'] == "/produit.php")
+                {
+                    echo    '<nav>
+                                <hr>
+                                <ul>
+                                    <li class="liCategorie">
+                                        <a class="categorie" href="">Catégorie 1</a>
+                                    </li>
+                                    <li class="liCategorie">
+                                        <a class="categorie" href="">Catégorie 2</a>
+                                    </li>
+                                    <li class="liCategorie">
+                                        <a class="categorie" href="">Catégorie 3</a>
+                                    </li>
+                                    <li class="liCategorie">
+                                        <a class="categorie" href="">Catégorie 4</a>
+                                    </li>
+                                    <li class="liCategorie">
+                                        <a class="categorie" href="">Catégorie 5</a>
+                                    </li>
+                                </ul>
+                            </nav>';
+                }  
+            ?>
+        </header>

@@ -44,6 +44,7 @@ h1 {
 }
 
 h2 {
+    font-family: 'Montserrat-Regular';
     text-align: center;
     margin: 0;
 }
@@ -299,6 +300,7 @@ header ul {
 
 .divAlizon {
     text-align: center;
+    padding-bottom: 1em;
 }
 
 .divAlizon img {
@@ -340,6 +342,7 @@ header ul {
     height: 2.5em;
     font-size: x-large;
     border-radius: 10px;
+	cursor: pointer;
 }
 
 .sectionCredit input[type="text"], input[type="submit"], input[type="password"], input[type="email"] {
@@ -380,6 +383,7 @@ header ul {
 /* Nom */
 .nomPrenom input {
     padding: 0;
+    margin: 2% 0 0 0;
     width: 90%;
 }
 
@@ -387,6 +391,46 @@ header ul {
 .nomPrenom > div + div > input {
     padding: 0;
     width: 100%;
+}
+
+@media (max-width: 1000px) {
+    .divCredit {
+        font-size: xx-large;
+        margin: 0;
+        padding: 10% 0;
+    }
+
+    .divAlizon + .divCredit {
+        padding-top: 0;
+    }
+
+    .divAlizon {
+        padding-bottom: 1.5em;
+    }
+
+    .divCredit h2 {
+        font-size: 1.8em;
+    }
+
+    .sectionCredit a {
+        text-align: center;
+    }
+
+    .nomPrenom {
+        display: block;
+    }
+
+    .nomPrenom div {
+        width: 100%;
+    }
+
+    .nomPrenom div input {
+        width: 100%;
+    }
+
+    .sectionCredit input[type="submit"] {
+        font-size: 1.3em;
+    }
 }
 
 /*
@@ -418,7 +462,7 @@ header ul {
 }
 
 .sectionPanier h2{
-    font-family: "Montserrat-Medium";
+    font-family: "Montserrat-Regular";
     font-size: 1.4em;
     color: #164F57;
     max-width: 20em;
@@ -457,7 +501,7 @@ header ul {
 
 .sectionPanier a{
     color: #164F57;
-    font-family: "Montserrat-Regular";
+    font-family: "Montserrat-Medium";
     font-size: 1em;
     text-decoration: none;
 }
@@ -490,10 +534,6 @@ header ul {
     align-self: center;
     width: 10em;
     height: 10em;
-}
-
-.articlePanierProduit p{
-    font-family: "Montserrat-Regular";
 }
 
 .divQté{

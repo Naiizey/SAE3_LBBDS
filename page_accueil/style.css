@@ -382,6 +382,7 @@ header ul {
 .nomPrenom input {
     padding: 0;
     margin: 2% 0 0 0;
+    width: 90%;
 }
 
 /* Prénom */

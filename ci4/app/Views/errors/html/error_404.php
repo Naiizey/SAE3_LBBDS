@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <title>404 Page Not Found</title>
@@ -70,8 +70,7 @@
 </head>
 <body>
     <div class="wrap">
-        <h1>404 - File Not Found</h1>
-
+        <h1>404 - File Not Found /!\ Page Temporaire</h1>
         <p>
             <?php if (ENVIRONMENT !== 'production') : ?>
                 <?= nl2br(esc($message)) ?>
@@ -80,5 +79,23 @@
             <?php endif ?>
         </p>
     </div>
+    <!-- include john travolta -->
+    <div class="tenor-gif-embed" data-postid="10251428" data-share-method="host" data-aspect-ratio="1.03734" data-width="100%">
+        <a href="https://tenor.com/view/pulp-fiction-john-travolta-lost-where-wtf-gif-10251428">Pulp Fiction John Travolta GIF</a>from <a href="https://tenor.com/search/pulp+fiction-gifs">Pulp Fiction GIFs</a>
+    </div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+    <!-- reduce the size of the gif -->
+    <style>
+        .tenor-gif-embed {
+            width: 25%;
+            height: 25%;
+            max-width: 25%;
+            max-height: 25%;
+        }
+
+        /* center */
+        .tenor-gif-embed {
+            margin: 0 auto;
+        }
+    </style>
 </body>
 </html>

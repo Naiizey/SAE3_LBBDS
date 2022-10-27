@@ -44,18 +44,18 @@ h1 {
 }
 
 h2 {
+    font-family: 'Montserrat-Regular';
+    text-align: center;
     margin: 0;
 }
 
-header {
+.divHeaderAlizon {
     background-color: #164F57;
-    position: sticky;
+    display: flex;
+    position: fixed;
+    width: 100%;
     top: 0;
     z-index: 100;
-}
-
-.divHeaderAlizon {
-    display: flex;
     justify-content: space-between;
     align-items: center;
     height: 5em;
@@ -81,6 +81,10 @@ header h2:hover {
     flex-grow: 1;
     height: 2em;
     max-width: 40%;
+}
+
+.divRecherche a, .divRecherche img {
+    height: 100%;
 }
 
 .champsRecherche {
@@ -131,7 +135,9 @@ header h2, header nav {
     font-size: 1.2em;
 }
 
-nav{
+nav {
+    position: relative;
+    top : 4.17em;
     background-color: #3997A3;
 }
 
@@ -139,12 +145,13 @@ p {
     font-family: "Montserrat-Regular";
 }
 
-header a:link, a:hover, a:active, a:visited {
+header a:link, header a:hover, header a:active, header a:visited {
     color: #D9D9D9;
     text-decoration: none;
 }
 
 main {
+    margin-top: 5em;
     padding: 2em;
     background-color: #f3f3f3;
     flex : 1;
@@ -162,13 +169,13 @@ footer > div {
     justify-content: space-around;
 }
 
-h2, footer > p {
+footer > p {
     color: #D9D9D9;
 }
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                          Page d'accueil (index.php)                             ┃
+┃           Page d'accueil et détail produit (index.php & produit.php)            ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
@@ -190,7 +197,7 @@ header ul {
     color: #164F57;
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -1px;
     content: "";
     display: block;
     width: 100%;
@@ -219,6 +226,12 @@ header ul {
 	line-height: 1.333;
 	transition: .4s ease-out;
 }
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Page d'accueil (index.php)                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
 #carousel-container {
     position: relative;
@@ -295,6 +308,7 @@ header ul {
 
 .divAlizon {
     text-align: center;
+    padding-bottom: 1em;
 }
 
 .divAlizon img {
@@ -318,14 +332,6 @@ header ul {
     margin-bottom: .5em;
 }
 
-.sectionCredit h2 {
-    color: #164F57;
-    text-align: center;
-    font-family: "Montserrat-Medium";
-    font-size: xx-large;
-    margin-bottom: 0;
-}
-
 .sectionCredit input, label, a {
     font-family: "Montserrat-Regular";
     font-size: larger;
@@ -344,6 +350,7 @@ header ul {
     height: 2.5em;
     font-size: x-large;
     border-radius: 10px;
+	cursor: pointer;
 }
 
 .sectionCredit input[type="text"], input[type="submit"], input[type="password"], input[type="email"] {
@@ -361,7 +368,17 @@ header ul {
 .sectionCredit input[type="checkbox"] {
     width: 1.2em;
     height: 1.2em;
-    margin: 2% 0 0 0;
+    margin: 0 1% 0 0;
+}
+
+.souvenir label {
+    margin-top: 0;
+}
+
+.souvenir {
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
 }
 
 .divCredit a {
@@ -384,6 +401,7 @@ header ul {
 /* Nom */
 .nomPrenom input {
     padding: 0;
+    margin: 2% 0 0 0;
     width: 90%;
 }
 
@@ -391,6 +409,46 @@ header ul {
 .nomPrenom > div + div > input {
     padding: 0;
     width: 100%;
+}
+
+@media (max-width: 1000px) {
+    .divCredit {
+        font-size: xx-large;
+        margin: 0;
+        padding: 10% 0;
+    }
+
+    .divAlizon + .divCredit {
+        padding-top: 0;
+    }
+
+    .divAlizon {
+        padding-bottom: 1.5em;
+    }
+
+    .divCredit h2 {
+        font-size: 1.8em;
+    }
+
+    .sectionCredit a {
+        text-align: center;
+    }
+
+    .nomPrenom {
+        display: block;
+    }
+
+    .nomPrenom div {
+        width: 100%;
+    }
+
+    .nomPrenom div input {
+        width: 100%;
+    }
+
+    .sectionCredit input[type="submit"] {
+        font-size: 1.3em;
+    }
 }
 
 /*
@@ -415,15 +473,16 @@ header ul {
 }
 
 .sectionPanier h2{
-    font-family: "Montserrat-Medium";
+    font-family: "Montserrat-Regular";
     font-size: 1.4em;
     color: #404E58;
-    max-width: 20em;
+   max-width: 20em;
 }
 
 .panierDescription{
-    max-width: 30em;
+    width: 20em;
     color: #164F57;
+    margin-bottom: 0;
 }
 
 .sectionPanier h3{
@@ -452,23 +511,28 @@ header ul {
 
 .sectionPanier a{
     color: #164F57;
-    font-family: "Montserrat-Regular";
+    font-family: "Montserrat-Medium";
     font-size: 1em;
     text-decoration: none;
-}
-
-.sectionPanier select + a{
-    text-decoration: underline;
 }
 
 .articlePanierProduit{
     display: flex;
     flex-direction: row;
-    padding: 1em;
+    padding: 1em; 
+    justify-content: space-between;   
 }
 
 .articlePanierProduit > a{
-    align-self: center;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.articlePanierProduit > a > div{
+    padding-left: 1em;
+    flex-grow: 1;
+    max-width: 25em;
 }
 
 .articlePanierProduit a{
@@ -477,31 +541,25 @@ header ul {
 }
 
 .articlePanierProduit img{
+    align-self: center;
     width: 10em;
     height: 10em;
-}
-
-.articlePanierProduit p{
-    font-family: "Montserrat-Regular";
-}
-
-.articlePanierProduit > div{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-grow: 1;
-    padding: 1em 0 0 1em;
 }
 
 .divQté{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 0.1em;
 }
 
 .divQté select{
     max-width: 4em;
     margin: 0 0 0.5em 0;
+}
+
+.articlePanierProduit select + a{
+    text-decoration: underline;
 }
 
 .divQté p{
@@ -512,17 +570,27 @@ header ul {
     margin: 0;
 }
 
-.sectionPanier hr + h2{
-    text-align: end;
-    margin: 1em 1em 0.5em 0;
-    max-width: 100%;
+.divPanierFooter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1em 1em 0.5em 1em;
+
 }
 
-.sectionPanier + aside h2{ 
-    color: #164F57;
+.divPanierFooter a{
+    border-radius: 15px;
+    padding: 0.5em 1em 0.5em 1em;
+    border: #404E58 1px solid;
+}
+
+.divPanierFooter a:hover{
+    background-color: #C63636;
+    color: white;
 }
 
 .sectionPanier + aside{
+    width: 25%;
     border-radius: 15px;
     background-color: #E7E8E6;
     display: flex;
@@ -532,8 +600,14 @@ header ul {
     align-self: center;
 }
 
-.sectionPanier + aside a{
+.sectionPanier + aside h2{ 
     color: #164F57;
+    font-size: 1.4em;
+    text-align: center;
+}
+
+.btnPanierNonVide{
+    color: #E7E8E6;
     border-radius: 15px;
     background-color: #24a064;
     text-decoration: none;
@@ -544,10 +618,27 @@ header ul {
     text-align: center;
 }
 
-.sectionPanier + aside a:hover{
+.btnPanierNonVide:hover{
     background-color: #164F57;
     text-decoration: none;
     color: #E7E8E6;
+}
+
+.btnPanierVide{
+    background-color: #BDBFBB;
+    color: #404E58;
+    border-radius: 15px;
+    text-decoration: none;
+    padding: 0.5em 1em 0.5em 1em;
+    margin-top: 1em;
+    display: inline-block;
+    width: auto;
+    text-align: center; 
+}
+
+.btnPanierVide:hover{
+    background-color: #BDBFBB;
+    color: #404E58;
 }
 
 /*
@@ -628,12 +719,14 @@ header ul {
 }
 
 .divDroite {
+    text-align: center;
     width: 40%;
     margin-left: 1em;
 }
 
 .divDroite img {
-    width: 3em;
+    border: none;
+    width: 6em;
     height: auto;
 }
 
@@ -642,6 +735,36 @@ header ul {
     color: #164F57;
 }
 
-.avisEtLogos {
+.divDroite > div {
+    text-align: left;
+    height: 95%;
+}
+
+.divDroite > a {
+    display: inline-block;
+    color: white;
+    border-radius: 5px;
+    background-color: #24a064;
+    text-decoration: none;
+    padding: 0.5em 0;
+    width: 100%;
+}
+
+.divAvisLogos {
     text-align: center;
+}
+
+.divQuantitePanier {
+    text-align: right;
+}
+
+.divQuantitePanier > div {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.divQuantitePanier select {
+    max-height: 2em;
+    margin-left: 1em;
 }

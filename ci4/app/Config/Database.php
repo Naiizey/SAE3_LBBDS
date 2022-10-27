@@ -37,7 +37,7 @@ class Database extends Config
         'password' => '',# a definir dans .env
         'database' => 'postgres',
         'DBDriver' => 'Postgre',
-        'DBPrefix' => 'sae3.',
+        'DBPrefix' => '',
         'pConnect' => false,
         'DBDebug'  => (ENVIRONMENT !== 'production'),
         'charset'  => 'utf8',

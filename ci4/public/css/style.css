@@ -1,53 +1,60 @@
-/*
-#5C748F bleu
-#404E58 bleu foncé
-#BDBFBB creme
-*/
-
 /* Quand on scroll, retirer catégories éventuellement, ca peut etre cool */
 
-@font-face {
-	font-family: "Expletus Sans";
-	src: url("./fonts/ExpletusSans-Bold.ttf") format("truetype")
-}
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Commun à toutes les pages                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
-@font-face {
-    font-family: "Montserrat";
-    src: url("./fonts/Montserrat-Medium.ttf") format("truetype");
+html {
+    height : 100%;
 }
 
 body {
     margin: 0;
-    background-color: #404E58;
+    background-color: #164F57;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 }
 
 h1 {
-    color: #BDBFBB;
+    color: #D9D9D9;
     font-family: "Expletus Sans";
-}
-header {
-    background-color: #404E58;
-    position: sticky;
-    top: 0;
+    margin: 0;
 }
 
-header > div {
+h2 {
+    font-family: 'Montserrat-Medium';
+    text-align: center;
+    margin: 0;
+}
+
+.divHeaderAlizon {
+    background-color: #164F57;
     display: flex;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
     justify-content: space-between;
     align-items: center;
+    height: 5em;
 }
 
 header h2:hover {
     color: #6F98C7;
 }
 
-.Alizon {
+.lienAlizon {
     display: flex;
+    align-items: center;
     margin-right: auto;
+    height: 70%;
 }
 
 .divRecherche {
-    background-color: #BDBFBB;
+    background-color: #D9D9D9;
     padding: 0.3em 0.5em;
     border-radius: 10px;
     display: flex;
@@ -73,25 +80,27 @@ header h2:hover {
 
 .divPanierProfil {
     display: flex;
+    align-items: center;
     margin-left: auto;
-}
-
-.logoAlizon {
-    max-width: 5em;
-    max-height: 5em;
+    height: 70%;
 }
 
 .logoLoupe {
     max-width: 1.8em;
 }
 
-.logoProfil {
-    width: 3em;
-    margin: .5em;
+.logoProfil, .logoAlizon {
+    height: 100%;
+    width: auto;
+    margin: 0 0.5em;
+}
+
+.lienConnexion {
+    height: 100%;
 }
 
 hr {
-    background-color: #BDBFBB;
+    background-color: #D9D9D9;
     height: 3px;
     border: none;
     width: 100%;
@@ -99,79 +108,204 @@ hr {
 }
 
 header h2, header nav {
-    font-family: "Montserrat";
+    font-family: "Montserrat-Medium";
     font-size: 1.2em;
 }
 
-p {
-    font-family: "Montserrat";
+nav {
+    position: relative;
+    top : 4.17em;
+    background-color: #3997A3;
 }
+
+p {
+    font-family: "Montserrat-Regular";
+}
+
+header a:link, header a:hover, header a:active, header a:visited {
+    color: #D9D9D9;
+    text-decoration: none;
+}
+
+main {
+    margin-top: 5em;
+    padding: 2em;
+    background-color: #f3f3f3;
+    flex : 1;
+}
+
+footer {
+    background-color: #164F57;
+    text-align: center;
+    z-index: 100;
+}
+
+footer > div {
+    display: flex;
+    justify-content: space-around;
+}
+
+footer > p {
+    color: #D9D9D9;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃           Page d'accueil et détail produit (index.php & produit.php)            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
 header ul {
     list-style-type: none;
     display: flex;
     justify-content: space-around;
     padding: 0;
+    margin: 0;
 }
 
-.categorie {
-    width: 10em;
-    padding: .5em 4em 1em;
-    text-align: center;
+.liCategorie {
+    text-decoration: none;
+    position: relative;
+    padding: .5em 2em .7em;
 }
 
-.categorie:hover {
-    color: #67727a;
-    background: #f3f3f3;
+.liCategorie:before {
+    color: #164F57;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2.3em;
+    background-color: #f3f3f3;
+    transform-origin: 0 bottom 0;
+    transform: scaleY(0);
+    transition: 0.4s ease-out;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
 
-header a:link, a:hover, a:active, a:visited {
-    color: #BDBFBB;
-    text-decoration: none;
+.liCategorie:hover .categorie {
+    color: #164F57;
 }
 
-main {
-    padding: 2em;
-    background-color: #f3f3f3;
+.liCategorie:hover:before {
+    transform: scaleY(1);
 }
 
-.logoInscription {
+.categorie {
+	position: relative;
+    white-space: nowrap;
+	font-size: 110%;
+	font-weight: 700;
+	line-height: 1.333;
+	transition: .4s ease-out;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Page d'accueil (index.php)                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+#carousel-container {
+    height: 30vh;
+    width: 96vw;
+    padding: 0;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    --slide-count: 3;
+
+    /* Suppression de la scroll bar*/
+    -ms-overflow-style: none; /* pour Internet Explorer, Edge */
+    scrollbar-width: none; /* pour Firefox */
+}
+
+#carousel-container::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}
+
+#carousel {
+    width: calc(100% * var(--slide-count));
+    height: 100%;
+    display: flex;
+}
+
+.slide {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+    scroll-snap-align: center;
+}
+
+.slide > img {
+    width : 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.btn {
+    position: absolute;
+    cursor: pointer;
+    background-color: white;
+    opacity: 0.5;
+    border-radius: 50%;
+    padding: .8%;
+    transition: 0.2s ease-in-out;
+    width: 1.5%;
+    top : 34%;
+}
+
+.btn:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.btn-prev {
+    left: 4%;
+}
+
+.btn-suiv {
+    right: 4%;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃      Page d'inscription et de connexion (inscription.php & connexion.php)       ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.divAlizon {
     text-align: center;
 }
 
-.logoInscription img {
+.divAlizon img {
     height: 10em;
 }
 
 .divCredit {
-    margin: 0 30% 0 30%;
+    margin: 0 30%;
 }
 
 .sectionCredit {
     border: solid 2px;
     border-color: #C6C6C6;
     background-color: white;
-    color: #404E58;
+    color: #164F57;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding: 0 3em 2em 3em;
+    padding: 2em 3em;
     text-align: left;
     margin-bottom: .5em;
 }
 
-.sectionCredit h2 {
-    color: #404E58;
-    text-align: center;
-    font-family: "Montserrat";
-    font-size: xx-large;
-    margin-bottom: 0;
-}
-
 .sectionCredit input, label, a {
-    font-family: "Montserrat";
+    font-family: "Montserrat-Regular";
     font-size: larger;
 }
 
@@ -182,7 +316,7 @@ main {
 }
 
 .sectionCredit input[type="submit"] {
-    background-color: #404E58;
+    background-color: #24a064;
     color: white;
     margin: 2.5em 25% 1em 25%;
     height: 2.5em;
@@ -190,7 +324,7 @@ main {
     border-radius: 10px;
 }
 
-.sectionCredit input[type="text"], input[type="submit"], input[type="password"] {
+.sectionCredit input[type="text"], input[type="submit"], input[type="password"], input[type="email"] {
     background-color: #F3F3F3;
     margin: 1% 0 0 0;
     height: 2.5em;
@@ -199,7 +333,7 @@ main {
 }
 
 .sectionCredit label {
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 .sectionCredit input[type="checkbox"] {
@@ -209,25 +343,381 @@ main {
 }
 
 .divCredit a {
-    color: #404E58;
+    color: #164F57;
     text-decoration: none;
     margin-left: 2px;
 }
 
-footer {
-    background-color: #404E58;
-    text-align: center;
-    position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-footer > div {
+.nomPrenom {
     display: flex;
-    justify-content: space-around;
+    margin-top: 3%;
 }
 
-h2, footer > p {
-    color: #BDBFBB;
+.nomPrenom > div {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Nom */
+.nomPrenom input {
+    padding: 0;
+    margin: 2% 0 0 0;
+    width: 90%;
+}
+
+/* Prénom */
+.nomPrenom > div + div > input {
+    padding: 0;
+    width: 100%;
+}
+
+@media (max-width: 1000px) {
+    .divCredit {
+        font-size: xx-large;
+        margin: 0;
+    }
+
+    .divCredit h2 {
+        font-size: 1.8em;
+        font-family: "Montserrat-Regular";
+    }
+
+    .sectionCredit a {
+        text-align: center;
+    }
+
+    .nomPrenom {
+        display: block;
+    }
+
+    .nomPrenom div {
+        width: 100%;
+    }
+
+    .sectionCredit input[type="submit"] {
+        font-size: 1.3em;
+    }
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Page panier (panier.php)                               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.mainPanier{
+    background-color: white;
+    display: flex;
+    color: #164F57;
+    font-family: "Montserrat-Medium";
+    justify-content: space-between;
+}
+
+.sectionPanier{
+    border-radius: 15px;
+    background-color: #E7E8E6;
+    color: #164F57;
+    width: 70%;
+}
+
+.sectionPanier h2{
+    font-family: "Montserrat-Medium";
+    font-size: 1.4em;
+    color: #404E58;
+   max-width: 20em;
+}
+
+.panierDescription{
+    width: 20em;
+    color: #164F57;
+    margin-bottom: 0;
+}
+
+.sectionPanier h3{
+    font-family: "Montserrat-Medium";
+    font-size: 1.1em;
+    color: #164F57;
+}
+
+.divPanierHeader{
+    font-family: "Montserrat-Medium";
+    color: #164F57;
+    display: flex;
+    font-size: 1.4em;
+    justify-content: space-between;
+    padding-top: 0.2em;
+    height: 2.6em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+}
+
+.sectionPanier hr{
+    background-color: #164F57;
+    width: 97%;
+    margin: auto;
+}
+
+.sectionPanier a{
+    color: #164F57;
+    font-family: "Montserrat-Regular";
+    font-size: 1em;
+    text-decoration: none;
+}
+
+.articlePanierProduit{
+    display: flex;
+    flex-direction: row;
+    padding: 1em; 
+    justify-content: space-between;   
+}
+
+.articlePanierProduit > a{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.articlePanierProduit > a > div{
+    padding-left: 1em;
+    flex-grow: 1;
+    max-width: 25em;
+}
+
+.articlePanierProduit a{
+    color: #404E58;
+    text-decoration: none;
+}
+
+.articlePanierProduit img{
+    align-self: center;
+    width: 10em;
+    height: 10em;
+}
+
+.articlePanierProduit p{
+    font-family: "Montserrat-Regular";
+}
+
+.divQté{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 0.1em;
+}
+
+.divQté select{
+    max-width: 4em;
+    margin: 0 0 0.5em 0;
+}
+
+.articlePanierProduit select + a{
+    text-decoration: underline;
+}
+
+.divQté p{
+    margin: 0 0 0.5em 0;
+}
+
+.articlePanierProduit h3{
+    margin: 0;
+}
+
+.divPanierFooter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1em 1em 0.5em 1em;
+
+}
+
+.divPanierFooter a{
+    border-radius: 15px;
+    padding: 0.5em 1em 0.5em 1em;
+    border: #404E58 1px solid;
+}
+
+.divPanierFooter a:hover{
+    background-color: #C63636;
+    color: white;
+}
+
+.sectionPanier + aside{
+    width: 25%;
+    border-radius: 15px;
+    background-color: #E7E8E6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5em 1em;
+    align-self: center;
+}
+
+.sectionPanier + aside h2{ 
+    color: #164F57;
+    font-size: 1.4em;
+    text-align: center;
+}
+
+.btnPanierNonVide{
+    color: #E7E8E6;
+    border-radius: 15px;
+    background-color: #24a064;
+    text-decoration: none;
+    padding: 0.5em 1em 0.5em 1em;
+    margin-top: 1em;
+    display: inline-block;
+    width: auto;
+    text-align: center;
+}
+
+.btnPanierNonVide:hover{
+    background-color: #164F57;
+    text-decoration: none;
+    color: #E7E8E6;
+}
+
+.btnPanierVide{
+    background-color: #BDBFBB;
+    color: #404E58;
+    border-radius: 15px;
+    text-decoration: none;
+    padding: 0.5em 1em 0.5em 1em;
+    margin-top: 1em;
+    display: inline-block;
+    width: auto;
+    text-align: center; 
+}
+
+.btnPanierVide:hover{
+    background-color: #BDBFBB;
+    color: #404E58;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Page produit (produit.php)                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.mainProduit {
+    background-color: #f3f3f3;
+    font-family: 'Montserrat-Medium';
+}
+
+.mainProduit img {
+    width: 100%;
+    height: auto;
+    border: solid 2px;
+    border-color: #164F57;
+    border-radius: 3px;
+}
+
+.mainProduit article {
+    display: flex;
+    padding: 2em;
+    border: solid 2px;
+    border-color: #C6C6C6;
+}
+
+.sectionProduit {
+    margin: 0 20%;
+}
+
+.sectionProduit > article {
+    background-color: white;
+}
+
+.sectionProduit > ul {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0;
+}
+
+.sectionProduit > ul li {
+    width: 12%;
+}
+
+.sectionProduit > ul figure {
+    margin: 0;
+}
+
+.divImagesProduits {
+    display: flex;
+    flex-direction: row;
+    padding: 0 1em 1em 0;
+}
+
+.divImagesProduits ul {
+    width: 20%;
+    margin: 0;
+    padding: 0;
+    padding-right: 1em;
+    list-style-type: none;
+}
+
+.divImagesProduits div {
+    width: 80%;
+}
+
+.divGauche {
+    width: 60%;
+}
+
+.divGauche p {
+    text-align: justify;
+    margin-right: 1em;
+    font-family: 'Montserrat-Regular';
+}
+
+.divDroite {
+    text-align: center;
+    width: 40%;
+    margin-left: 1em;
+}
+
+.divDroite img {
+    border: none;
+    width: 6em;
+    height: auto;
+}
+
+.divDroite h2 {
+    text-align: center;
+    color: #164F57;
+}
+
+.divDroite > div {
+    text-align: left;
+    height: 95%;
+}
+
+.divDroite > a {
+    display: inline-block;
+    color: white;
+    border-radius: 5px;
+    background-color: #24a064;
+    text-decoration: none;
+    padding: 0.5em 0;
+    width: 100%;
+}
+
+.divAvisLogos {
+    text-align: center;
+}
+
+.divQuantitePanier {
+    text-align: right;
+}
+
+.divQuantitePanier > div {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.divQuantitePanier select {
+    max-height: 2em;
+    margin-left: 1em;
 }

@@ -9,7 +9,7 @@
                 <hr>
                 <article class="articlePanierProduit">
                     <a href="">
-                        <img src="./images/art1.png" alt="article 1" title="Article 1">
+                        <img src="<?= base_url() ?>/images/art1.png" alt="article 1" title="Article 1">
                         <div>
                             <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum a ad qui cumque ...</h3>
                             <p class="panierDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus eveniet facilis maxime veniam ... </p>
@@ -38,7 +38,7 @@
                 <hr>
                 <article class="articlePanierProduit">
                     <a href="">
-                        <img src="./images/art2.png" alt="article 2" title="Article 2">
+                        <img src="<?= base_url() ?>/images/art2.png" alt="article 2" title="Article 2">
                         <div>
                             <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
                             <p class="panierDescription">Lorem ipsum dolor sit amet consectetur, adipisicing elit. </p>

@@ -70,7 +70,7 @@
 </head>
 <body>
     <div class="wrap">
-        <h1>404 - File Not Found /!\ Page temporaire</h1>
+        <h1>404 - File Not Found /!\ Page Temporaire</h1>
         <p>
             <?php if (ENVIRONMENT !== 'production') : ?>
                 <?= nl2br(esc($message)) ?>

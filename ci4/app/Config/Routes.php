@@ -40,6 +40,7 @@ $routes->set404Override();
     $routes->get('/connexion/(400)', 'Home::connexion/$1');
     $routes->get('/connexion', 'Home::connexion');
     $routes->get('/test', 'Test::test');
+    $routes->get('/panier', 'Panier');
     $routes->post('/credits/connexion', 'EspaceClient::verification');
 
     $routes->get('/destroy', 'Test::destroySession');

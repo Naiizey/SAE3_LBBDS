@@ -24,11 +24,24 @@ class Home extends BaseController
     public function inscription($context = null)
     {
         $data['controller']= "connexion";
-        if($context == 400){
+        if($context == 400)
+        {
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }
         $clientModel = model("\App\Models\Client");
         $data['prod'] = $clientModel->find(1);
         return view('page_accueil/inscription.php',$data);
+    }
+
+    public function produit($idProduit = null)
+    {
+        $data['controller']= "produit";
+        if($idProduit == null)
+        {
+            $data['error']="<p class='erreur'>Erreur d'authentification</p>";
+        }
+        $clientModel = model("\App\Models\Produit");
+        $data['prod'] = $clientModel->find($idProduit);
+        return view('page_accueil/produit.php',$data);
     }
 }

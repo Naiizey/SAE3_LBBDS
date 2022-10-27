@@ -44,7 +44,7 @@ h1 {
 }
 
 h2 {
-    font-family: 'Montserrat-Regular';
+    font-family: "Montserrat-Regular";
     text-align: center;
     margin: 0;
 }
@@ -52,17 +52,15 @@ h2 {
 .divHeaderAlizon {
     background-color: #164F57;
     display: flex;
+    padding-left: 1%;
+    padding-right: 1%;
     position: fixed;
-    width: 100%;
+    width: 98%;
     top: 0;
     z-index: 100;
     justify-content: space-between;
     align-items: center;
     height: 5em;
-}
-
-header h2{
-    color: #D9D9D9;
 }
 
 header h2:hover {
@@ -72,33 +70,30 @@ header h2:hover {
 .lienAlizon {
     display: flex;
     align-items: center;
-    margin-right: auto;
+    justify-content: space-around;
     height: 70%;
+    width: 15%;
 }
 
 .divRecherche {
     background-color: #D9D9D9;
     padding: 0.3em 0.5em;
-    border-radius: 10px;
+    border-radius: 1.5ex;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     flex-grow: 1;
     height: 2em;
     max-width: 40%;
 }
 
-.divRecherche a, .divRecherche img {
-    height: 100%;
-}
-
 .champsRecherche {
-    border-radius: 25px;
-    flex-grow: 1;
+    border-radius: 1ex;
+    flex-grow: .99;
     border-style: none;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    padding-left: .5em;
-    margin-right: .3em;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 1%;
 }
 
 .champsRecherche:focus {
@@ -108,18 +103,35 @@ header h2:hover {
 .divPanierProfil {
     display: flex;
     align-items: center;
-    margin-left: auto;
+    justify-content: space-between;
     height: 70%;
+    width: 10%;
 }
 
-.logoLoupe {
-    max-width: 1.8em;
+.divRecherche > a{
+    display: flex;
+    align-items: center;
 }
 
-.logoProfil, .logoAlizon {
+.logoLoupe{
+    max-width: 1.7em;
+}
+
+.logoProfil, .logoAlizon{
     height: 100%;
     width: auto;
-    margin: 0 0.5em;
+}
+
+path{
+    fill: #d9d9d9;
+}
+
+.logoLoupe path{
+    fill: black;
+}
+
+.logoProfil:hover path, .logoPanier:hover path, .logoContact:hover path{
+    fill: #6f98bd;
 }
 
 .lienConnexion {
@@ -145,11 +157,61 @@ nav {
     background-color: #3997A3;
 }
 
+/* Media query téléphone header */
+@media screen and (max-width:991px){
+    .divPanierProfil{
+        display: none;
+    }
+    
+    .lienAlizon h1{
+        display: none;
+    }
+
+    nav{
+        display: none;
+    }
+    
+    .divHeaderAlizon{
+        height: 10%;
+        justify-content: space-around;
+    }
+
+    .lienAlizon{
+        margin-right: 0;
+        height: 50%;
+    }
+
+    .divRecherche{
+        max-width: 75%;
+        height: 50%;
+        border-radius: 2.5ex;
+    }
+
+    .champsRecherche{
+        height: 75%;
+        font-size: 2em;
+        border-radius: 1ex;
+        flex-grow: .95;
+    }
+
+    .logoLoupe{
+        max-width: 2.5em;
+    }
+}
+
+/* Format paysage */
+@media screen and (max-width: 991px) and (orientation:landscape){
+    .divHeaderAlizon{
+        height: 20%
+    }
+}
+
+
 p {
     font-family: "Montserrat-Regular";
 }
 
-header a:link, header a:hover, header a:active, header a:visited, footer a:hover, footer a:active, footer a:visited {
+header a:link, header a:hover, header a:active, header a:visited {
     color: #D9D9D9;
     text-decoration: none;
 }
@@ -168,13 +230,106 @@ footer {
     z-index: 100;
 }
 
-footer > div {
+footer .pc {
     display: flex;
     justify-content: space-around;
 }
 
+footer .mobile{
+    display: none;
+}
+
 footer > p {
     color: #D9D9D9;
+}
+
+footer a{
+    color: #D9D9D9;
+}
+
+/* Media query téléphone footer */
+@media screen and (max-width:991px){
+    footer .pc{
+        display: none;
+    }
+
+    footer .mobile{
+        width: 100%;
+        height: auto;
+        display: flex;
+    }
+
+    footer .mobile ul{
+        display: flex;
+        justify-content: space-evenly;
+        list-style: none;
+        padding: 0;
+        width: 100%;
+    }
+
+    footer .mobile li{
+        width: 7.5%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    footer .mobile svg{
+        width: 100%;
+        height: auto;
+    }
+
+    footer .mobile li div:not(.menu){
+        display: block;
+        background-color: #D9D9D9;
+        width: 100%;
+        height: 7.5%;
+        border-radius: 15ex;
+    }
+
+    footer .mobile li:last-child:hover div:not(.menu){
+        background-color: #6F98C7;
+    }
+
+    footer .mobile ul > div{
+        display: none;
+    }
+
+    .menu{
+        position: absolute;
+        height: 81.5%;
+        width: 100%;
+        top: 10%;
+        left: 0%;
+        background-color: #D9D9D9;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .menu a{
+        text-decoration: underline !important;
+    }
+
+    .menu p{
+        font-size: 3em;
+        color: #164f57;
+    }
+}
+
+@media screen and (max-width: 991px) and (orientation:landscape){
+    footer .mobile li{
+        width: 5%;
+    }
+
+    footer > p{
+        margin: 1%;
+    }
+
+    footer ul{
+        margin: 0;
+    }
 }
 
 /*

@@ -83,6 +83,10 @@ header h2:hover {
     max-width: 40%;
 }
 
+.divRecherche a, .divRecherche img {
+    height: 100%;
+}
+
 .champsRecherche {
     border-radius: 25px;
     flex-grow: 1;
@@ -192,7 +196,7 @@ header ul {
     color: #164F57;
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -1px;
     content: "";
     display: block;
     width: 100%;
@@ -360,7 +364,17 @@ header ul {
 .sectionCredit input[type="checkbox"] {
     width: 1.2em;
     height: 1.2em;
-    margin: 2% 0 0 0;
+    margin: 0 1% 0 0;
+}
+
+.souvenir label {
+    margin-top: 0;
+}
+
+.souvenir {
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
 }
 
 .divCredit a {

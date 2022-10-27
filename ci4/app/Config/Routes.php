@@ -46,6 +46,8 @@ $routes->set404Override();
     $routes->get('/produit', 'Home::produit');
     $routes->get('/produit/(:num)', 'Home::produit/$1');
 
+    $routes->get('/panier', 'Home::panier');
+    $routes->get('/panierVide', 'Home::panierVide');
 
     $routes->get('/test', 'Test::test');
     $routes->post('/credits/connexion', 'EspaceClient::verification');

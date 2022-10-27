@@ -1,5 +1,4 @@
 <?php require("header.php"); ?>
-        </header>
         <main class="mainPanier">
             <section class="sectionPanier sectionPanierVide">
                 <div class="divPanierHeader">

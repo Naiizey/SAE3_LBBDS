@@ -322,6 +322,7 @@ header ul {
     height: 2.5em;
     font-size: x-large;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .sectionCredit input[type="text"], input[type="submit"], input[type="password"], input[type="email"] {

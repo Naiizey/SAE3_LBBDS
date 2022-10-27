@@ -34,7 +34,7 @@
                     <h1>Alizon</h1>
                 </a>
                 <?php 
-                    if ($_SERVER['SCRIPT_NAME'] != "/panier.php")
+                    if ($controller != "panier")
                     {
                         echo   '<div class="divRecherche">
                                     <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche.."> 
@@ -54,7 +54,7 @@
                 </div>
             </div> 
             <?php 
-                if ($_SERVER['SCRIPT_NAME'] == "/index.php" || $_SERVER['SCRIPT_NAME'] == "/produit.php")
+                if ($controller == "index" || $controller == "produit")
                 {
                     echo    '<nav>
                                 <hr>

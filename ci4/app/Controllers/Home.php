@@ -6,11 +6,13 @@ class Home extends BaseController
 {
     public function index()
     {
+        $data['controller']= "connexion";
         return view('page_accueil/index.php');
     }
 
     public function connexion($context = null)
     {
+        $data['controller']= "connexion";
         if($context == 400){
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }

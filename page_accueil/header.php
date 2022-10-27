@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html lang=fr>
     <head>
-        <?php 
+        <?php
+            $logo = file_get_contents("images/header/logo.svg");
+            $profil = file_get_contents("images/header/profil.svg");
+            //$carton = file_get_contents("images/header/carton.svg");
+            //$argentBlanc = file_get_contents("images/header/argentBlanc.svg");
+
             if ($_SERVER['SCRIPT_NAME'] == "/panier.php" | $_SERVER['SCRIPT_NAME'] == "/panierVide.php")
             {
                 $newDivHeader = '<div class="divHeaderPanier">
                                     <div class="divSuivie divSuivie1">
-                                        <img class="imgSuivie1" src="./images/header/logo.png" alt="Panier" title="Panier">
+                                        '.$logo.'
                                         <h3>1. Panier</h3>
                                     </div>
                                     <div class="divSeparationSuivie "></div>
                                     <div class="divSuivie divSuivie2">
-                                        <img class="imgSuivie2" src="./images/header/profil.png" alt="Identification" title="Identification">
+                                        '.$profil.'
                                         <h3>2. Identification</h3>
                                     </div>
                                     <div class="divSeparationSuivie"></div>
-                                    <div class="divSuivie divSuivie3">
-                                        <img class="imgSuivie3" src="./images/header/carton.svg" alt="Livraison" title="Livraison">
+                                    /*<div class="divSuivie divSuivie3">
+                                        '.$carton.'
                                         <h3>3. Livraison</h3>
                                     </div>
                                     <div class="divSeparationSuivie"></div>
                                     <div class="divSuivie divSuivie4">
-                                        <img class="imgSuivie4" src="./images/header/argentBlanc.png" alt="Paiement" title="Paiement">
+                                        '.$argentBlanc.'
                                         <h3>4. Paiement</h3>
-                                    </div>
+                                    </div>*/
                                 </div>';
             } 
             else
             {
-                $test = file_get_contents("images/header/loupe.svg");
+                $loupe = file_get_contents("images/header/loupe.svg");
                 $newDivHeader = "<div class='divRecherche'>
                                     <input class='champsRecherche' type='text' name='recherche' placeholder='Recherche..'>
-                                    <a href=''>".$test."</a>
+                                    <a href=''>".$loupe."</a>
                                 </div>";
             }
         ?>

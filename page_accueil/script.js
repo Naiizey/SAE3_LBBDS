@@ -12,15 +12,40 @@ function departDeLaSouris(element) {
 // Variable qui stock l'index de l'image
 let curSlide = 0;
 const slides = document.querySelectorAll(".slide");
-const carouselContainer = document.getElementById("carousel-container");
-// selection de la slide suivante
+let nbSlide = slides.length;
+const carouselContainer = document.getElementById("carousel");
 const nextSlide = document.querySelector(".btn-suiv");
+let windowWidth = Math.round(carouselContainer.offsetWidth);
+const prevSlide = document.querySelector(".btn-prev");
+let scrollValue = (carouselContainer.scrollLeft-40);
+
+function scrollToSlide(slide) {
+    windowWidth = Math.round(carouselContainer.offsetWidth);
+    carouselContainer.scroll((windowWidth) * slide, 0);
+}
 
 // Ajout d'un event listener au clic du bouton afin de déplacer les images vers la droite
 nextSlide.addEventListener("click", function () {
     curSlide++;
-    carouselContainer.scroll(2000 * curSlide, 0);
-    if (curSlide == slides.length - 1) {
+    scrollToSlide(curSlide);
+});
+
+// selection de la slide précedente
+
+// Ajout d'un event listener au clic du bouton afin de déplacer les images vers la gauche
+prevSlide.addEventListener("click", function () {
+    curSlide--; 
+    scrollToSlide(curSlide);
+});
+
+// ajout d'un event listener au scroll dans le carousel
+carouselContainer.addEventListener("scroll", (event) => {
+    scrollValue = (carouselContainer.scrollLeft-40);
+    windowWidth = Math.round(carouselContainer.offsetWidth);
+    curSlide = Math.round(scrollValue/windowWidth);
+    if (curSlide === 0) {
+        prevSlide.style.display = "none";
+    } else if (curSlide === (nbSlide-1)){
         nextSlide.style.display = "none";
     } else {
         prevSlide.style.display = "inline";
@@ -28,22 +53,13 @@ nextSlide.addEventListener("click", function () {
     }
 });
 
-// selection de la slide précedente
-const prevSlide = document.querySelector(".btn-prev");
+setInterval(autoScroll, 3500);
 
-// Ajout d'un event listener au clic du bouton afin de déplacer les images vers la gauche
-prevSlide.addEventListener("click", function () {
-    curSlide--;
-    carouselContainer.scroll(2000 * curSlide, 0);
-    if (curSlide == 0) {
-        prevSlide.style.display = "none";
+function autoScroll() {
+    if (curSlide === (nbSlide-1)) {
+        scrollToSlide(0);
     } else {
-        nextSlide.style.display = "inline";
-        prevSlide.style.display = "inline";
+        curSlide++;
+        scrollToSlide(curSlide);
     }
-});
-
-// ajout d'un event listener au scroll dans le carousel
-carouselContainer.addEventListener("scroll", (event) => {
-  console.log(carouselContainer.scrollLeft);
-});
+}

@@ -49,7 +49,6 @@ header h2:hover {
 .lienAlizon {
     display: flex;
     align-items: center;
-    margin-right: auto;
     height: 70%;
 }
 
@@ -85,7 +84,6 @@ header h2:hover {
 .divPanierProfil {
     display: flex;
     align-items: center;
-    margin-left: auto;
     height: 70%;
 }
 
@@ -118,6 +116,55 @@ nav {
     background-color: #3997A3;
 }
 
+/* Media query téléphone header */
+@media screen and (max-width:991px) {
+    .divPanierProfil {
+        display: none;
+    }
+
+    .lienAlizon h1 {
+        display: none;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .divHeaderAlizon {
+        height: 10%;
+        justify-content: space-around;
+    }
+
+    .lienAlizon {
+        margin-right: 0;
+        height: 50%;
+    }
+
+    .divRecherche {
+        max-width: 75%;
+        height: 50%;
+        border-radius: 2.5ex;
+    }
+
+    .champsRecherche {
+        height: 75%;
+        font-size: 2em;
+        border-radius: 1ex;
+        flex-grow: .95;
+    }
+
+    .logoLoupe {
+        max-width: 2.5em;
+    }
+}
+
+/* Format paysage */
+@media screen and (max-width: 991px) and (orientation:landscape) {
+    .divHeaderAlizon {
+        height: 20%
+    }
+}
+
 p {
     font-family: "Montserrat-Regular";
 }
@@ -128,6 +175,37 @@ header a, footer a {
 
 header a {
     text-decoration: none;
+}
+
+.divSuivi {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: #D9D9D9;
+    height: 90%;
+    width: 42%;
+}
+
+.divSuivi h3 {
+    margin: 0;
+}
+
+.divSuivi img {
+    height: 100%;
+}
+
+.divSuivi div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.divSuivi hr {
+    height: 3px;
+    width: 12%;
+    background-color: #D9D9D9;
 }
 
 main {
@@ -150,6 +228,91 @@ footer > div {
 
 footer > p {
     color: #D9D9D9;
+}
+
+/* Media query téléphone footer */
+@media screen and (max-width:991px) {
+    footer .pc {
+        display: none;
+    }
+
+    footer .mobile {
+        width: 100%;
+        height: auto;
+        display: flex;
+    }
+
+    footer .mobile ul {
+        display: flex;
+        justify-content: space-evenly;
+        list-style: none;
+        padding: 0;
+        width: 100%;
+    }
+
+    footer .mobile li {
+        width: 7.5%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    footer .mobile svg {
+        width: 100%;
+        height: auto;
+    }
+
+    footer .mobile li div:not(.menu) {
+        display: block;
+        background-color: #D9D9D9;
+        width: 100%;
+        height: 7.5%;
+        border-radius: 15ex;
+    }
+
+    footer .mobile li:last-child:hover div:not(.menu) {
+        background-color: #6F98C7;
+    }
+
+    footer .mobile ul>div {
+        display: none;
+    }
+
+    .menu {
+        position: absolute;
+        height: 81.5%;
+        width: 100%;
+        top: 10%;
+        left: 0%;
+        background-color: #D9D9D9;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .menu a {
+        text-decoration: underline !important;
+    }
+
+    .menu p {
+        font-size: 3em;
+        color: #164f57;
+    }
+}
+
+@media screen and (max-width: 991px) and (orientation:landscape) {
+    footer .mobile li {
+        width: 5%;
+    }
+
+    footer>p {
+        margin: 1%;
+    }
+
+    footer ul {
+        margin: 0;
+    }
 }
 
 /*
@@ -390,11 +553,19 @@ header ul {
     .divCredit {
         font-size: xx-large;
         margin: 0;
+        padding: 10% 0;
+    }
+
+    .divAlizon+.divCredit {
+        padding-top: 0;
+    }
+
+    .divAlizon {
+        padding-bottom: 1.5em;
     }
 
     .divCredit h2 {
         font-size: 1.8em;
-        font-family: "Montserrat-Regular";
     }
 
     .sectionCredit a {
@@ -409,6 +580,10 @@ header ul {
         width: 100%;
     }
 
+    .nomPrenom div input {
+        width: 100%;
+    }
+
     .sectionCredit input[type="submit"] {
         font-size: 1.3em;
     }
@@ -420,45 +595,10 @@ header ul {
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-.divHeaderPanier {
-    display: flex;
-    flex-direction: row;
-    color: #D9D9D9;
-}
-
-.divHeaderPanier img {
-    width: 3em;
-    height: 3em;
-}
-
-.divSuivie {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.divSeparationSuivie{
-    height: 0.2em;
-    width: 7.5em;
-    background-color: #D9D9D9;
-    align-self: center;
-    border-radius: 15px;
-}
-
-.divSuivie h3{
-    margin: 0;
-}
-
-/*-----------------*/
-
 .mainPanier {
     background-color: white;
-    display: flex;
     color: #164F57;
     font-family: "Montserrat-Medium";
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
 }
 
 .mainPanier hr {
@@ -470,6 +610,13 @@ header ul {
     border: solid 2px;
     border-color: #164F57;
     border-radius: 3px;
+}
+
+.divPanierEtAside {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .sectionPanier {
@@ -516,13 +663,14 @@ header ul {
 
 aside {
     height: 25%;
-    width: 25%;
     border-radius: 15px;
     background-color: #E7E8E6;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1em;
+    margin-left: 2em;
+    flex-grow: 1;
 }
 
 aside .lienPanierVide {
@@ -642,57 +790,26 @@ aside .lienPanierVide:hover {
     color: #164F57;
     margin-top: 2em;
     padding: 1em;
+    flex-grow: 1;
 }
 
-.divRecommandationsPanier {
+.sectionRecommandationsPanier ul {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     list-style: none;
+    margin-top: 2em;
     padding: 0;
 }
 
-.divRecommandationsPanier li {
+.sectionRecommandationsPanier li {
     width: 12%;
 }
 
-.divRecommandationsPanier img {
+.sectionRecommandationsPanier img {
     width: 100%;
     height: auto;
 }
-
-/*
-
-.articlePanierProduit select + a{
-    text-decoration: underline;
-}
-
-.divQté p{
-    margin: 0 0 0.5em 0;
-}
-
-.articlePanierProduit h3{
-    margin: 0;
-}
-
-.sectionPanier + aside h2{ 
-    color: #164F57;
-    font-size: 1.4em;
-    text-align: center;
-}
-
-.sectionPanierVide {
-    display: flex;
-    flex-direction: column;
-}
-
-.sectionPanier .lienPasArticlePanier{
-    color: black;
-    text-decoration: underline;
-    font-family: "Montserrat-Medium";
-}
-
- */
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

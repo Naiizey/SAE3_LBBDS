@@ -80,6 +80,6 @@ class Home extends BaseController
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }
         
-        return view('page_accueil/panierVide.php',$data);
+        return view('page_accueil/panier.php',$data);
     }
 }

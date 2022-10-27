@@ -122,8 +122,11 @@ p {
     font-family: "Montserrat-Regular";
 }
 
-header a:link, header a:hover, header a:active, header a:visited {
+header a, footer a {
     color: #D9D9D9;
+}
+
+header a {
     text-decoration: none;
 }
 

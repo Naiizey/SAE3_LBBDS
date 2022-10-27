@@ -11,13 +11,13 @@
                     <a href="">
                         <img src="./images/art1.png" alt="article 1" title="Article 1">
                         <div>
-                            <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum a ad qui cumque ...</h3>
+                            <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum a ad qui cumque ...</h2>
                             <p class="panierDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus eveniet facilis maxime veniam ... </p>
                         </div>
                     </a>
                         <div class="divQté">
                             <p>Quantité</p>
-                            <select name="quantite" id="tabQuant">
+                            <select name="quantite" id="tabQuant1">
                                 <option value="0">0 (Supprimer)</option>
                                 <option value="1" selected>1</option>
                                 <option value="2">2</option>
@@ -40,13 +40,13 @@
                     <a href="">
                         <img src="./images/art2.png" alt="article 2" title="Article 2">
                         <div>
-                            <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
+                            <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
                             <p class="panierDescription">Lorem ipsum dolor sit amet consectetur, adipisicing elit. </p>
                         </div>
                     </a>
                         <div class="divQté">
                             <p>Quantité</p>
-                            <select name="quantite" id="tabQuant">
+                            <select name="quantite" id="tabQuant2">
                                 <option value="0">0 (Supprimer)</option>
                                 <option value="1" selected>1</option>
                                 <option value="2">2</option>
@@ -72,7 +72,7 @@
             </section>
             <aside>
                 <h2>Sous-total (2 articles) : 55,00€</h2>
-                <a class="btnPanierNonVide" href="">Valider le panier</a>
+                <a class="lienPanier" href="">Valider le panier</a>
             </aside>
         </main>
 <?php require("footer.php"); ?>

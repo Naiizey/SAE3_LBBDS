@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang=fr>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/css/style.css" />
@@ -34,7 +34,31 @@
                     <h1>Alizon</h1>
                 </a>
                 <?php 
-                    if ($controller != "panier")
+                    if ($controller == "panier" || $controller == "panierVide")
+                    {
+                        echo   '<div class="divSuivi">
+                                    <div>
+                                        <img class="imgSuivie1" src="./images/header/logo.png" alt="Panier" title="Panier">
+                                        <h3>1. Panier</h3>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img class="imgSuivie2" src="./images/header/profil.png" alt="Identification" title="Identification">
+                                        <h3>2. Identification</h3>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img class="imgSuivie3" src="./images/header/carton.svg" alt="Livraison" title="Livraison">
+                                        <h3>3. Livraison</h3>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img class="imgSuivie4" src="./images/header/argentBlanc.png" alt="Paiement" title="Paiement">
+                                        <h3>4. Paiement</h3>
+                                    </div>
+                                </div>';
+                    } 
+                    else 
                     {
                         echo   '<div class="divRecherche">
                                     <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche.."> 
@@ -42,10 +66,10 @@
                                         <img src="' . base_url() . '/images/header/loupe.png" alt="recherche" title="Rechercher">
                                     </a>
                                 </div>';
-                    } 
+                    }
                 ?>
                 <div class="divPanierProfil">
-                    <a href="<?= base_url() ?>/panier.php"> <!-- Lien panier -->
+                    <a href="<?= base_url() ?>/panier"> 
                         <h2>Panier</h2>
                     </a>
                     <a class="lienConnexion" href="<?= base_url() ?>/connexion">

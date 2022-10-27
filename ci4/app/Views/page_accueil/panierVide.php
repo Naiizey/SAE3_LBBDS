@@ -1,30 +1,32 @@
 <?php require("header.php"); ?>
         <main class="mainPanier">
-            <section class="sectionPanier">
-                <div class="divPanierHeader">
-                    <h2>Votre panier est vide</h2>
-                </div>
-                <hr>
-                <div>
-                    <h3 class="h3PasArticlePanier">Vous n’avez aucun article dans votre panier. <br> <a href="index.php" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>
-                    <?php
-                        $connecte=true;
-                        if ($connecte==false)
-                        {
-                            echo "<h3 class='h3PasArticlePanier'>Connectez-vous pour récupérer votre panier.</h3>";
-                            echo "<a href=connexion.php class='lienPanier'>Se connecter</a>";
-                        }
-                    ?>
-                </div>
-            </section>
-            <aside>
-                <h2>Sous-total (0 article) : 00,00€</h2>
-                <a href="" class="lienPanierVide">Valider le panier</a>
-            </aside>
+            <div class="divPanierEtAside">
+                <section class="sectionPanier">
+                    <div class="divPanierHeader">
+                        <h2>Votre panier est vide</h2>
+                    </div>
+                    <hr>
+                    <div>
+                        <h3 class="h3PasArticlePanier">Vous n’avez aucun article dans votre panier. <br> <a href="index.php" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>
+                        <?php
+                            $connecte=true;
+                            if ($connecte==false)
+                            {
+                                echo "<h3 class='h3PasArticlePanier'>Connectez-vous pour récupérer votre panier.</h3>";
+                                echo "<a href=connexion.php class='lienPanier'>Se connecter</a>";
+                            }
+                        ?>
+                    </div>
+                </section>
+                <aside>
+                    <h2>Sous-total (0 article) : 00,00€</h2>
+                    <a href="" class="lienPanierVide">Valider le panier</a>
+                </aside>
+            </div>
             <section class="sectionRecommandationsPanier">
                 <h2>Recommandations</h2>
                 <hr>
-                <ul class="divRecommandationsPanier">
+                <ul>
                     <li>
                         <a href="">
                             <img src="./images/art1.png" alt="article 1" title="Article 1">

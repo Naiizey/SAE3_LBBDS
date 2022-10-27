@@ -49,7 +49,6 @@ header h2:hover {
 .lienAlizon {
     display: flex;
     align-items: center;
-    margin-right: auto;
     height: 70%;
 }
 
@@ -85,7 +84,6 @@ header h2:hover {
 .divPanierProfil {
     display: flex;
     align-items: center;
-    margin-left: auto;
     height: 70%;
 }
 
@@ -128,6 +126,37 @@ header a, footer a {
 
 header a {
     text-decoration: none;
+}
+
+.divSuivi {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: #D9D9D9;
+    height: 90%;
+    width: 40%;
+}
+
+.divSuivi h3 {
+    margin: 0;
+}
+
+.divSuivi img {
+    height: 100%;
+}
+
+.divSuivi div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.divSuivi hr {
+    height: 3px;
+    width: 12%;
+    background-color: #D9D9D9;
 }
 
 main {
@@ -420,45 +449,10 @@ header ul {
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-.divHeaderPanier {
-    display: flex;
-    flex-direction: row;
-    color: #D9D9D9;
-}
-
-.divHeaderPanier img {
-    width: 3em;
-    height: 3em;
-}
-
-.divSuivie {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.divSeparationSuivie{
-    height: 0.2em;
-    width: 7.5em;
-    background-color: #D9D9D9;
-    align-self: center;
-    border-radius: 15px;
-}
-
-.divSuivie h3{
-    margin: 0;
-}
-
-/*-----------------*/
-
 .mainPanier {
     background-color: white;
-    display: flex;
     color: #164F57;
     font-family: "Montserrat-Medium";
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
 }
 
 .mainPanier hr {
@@ -470,6 +464,13 @@ header ul {
     border: solid 2px;
     border-color: #164F57;
     border-radius: 3px;
+}
+
+.divPanierEtAside {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .sectionPanier {
@@ -516,13 +517,14 @@ header ul {
 
 aside {
     height: 25%;
-    width: 25%;
     border-radius: 15px;
     background-color: #E7E8E6;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1em;
+    margin-left: 2em;
+    flex-grow: 1;
 }
 
 aside .lienPanierVide {
@@ -642,57 +644,26 @@ aside .lienPanierVide:hover {
     color: #164F57;
     margin-top: 2em;
     padding: 1em;
+    flex-grow: 1;
 }
 
-.divRecommandationsPanier {
+.sectionRecommandationsPanier ul {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     list-style: none;
+    margin-top: 2em;
     padding: 0;
 }
 
-.divRecommandationsPanier li {
+.sectionRecommandationsPanier li {
     width: 12%;
 }
 
-.divRecommandationsPanier img {
+.sectionRecommandationsPanier img {
     width: 100%;
     height: auto;
 }
-
-/*
-
-.articlePanierProduit select + a{
-    text-decoration: underline;
-}
-
-.divQté p{
-    margin: 0 0 0.5em 0;
-}
-
-.articlePanierProduit h3{
-    margin: 0;
-}
-
-.sectionPanier + aside h2{ 
-    color: #164F57;
-    font-size: 1.4em;
-    text-align: center;
-}
-
-.sectionPanierVide {
-    display: flex;
-    flex-direction: column;
-}
-
-.sectionPanier .lienPasArticlePanier{
-    color: black;
-    text-decoration: underline;
-    font-family: "Montserrat-Medium";
-}
-
- */
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

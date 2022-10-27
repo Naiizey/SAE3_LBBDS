@@ -1,14 +1,19 @@
-//Fonctions pour le changement d'images lors du hover sur le profil
-//Affecte la nouvelle image lorsque la souris survole l'élément
-function passageDeLaSouris(element) {
-    element.setAttribute("src", "./images/header/profil_hover.png");
-}
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                    Footer                                       ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+const footerLiList = document.querySelectorAll('footer li');
+const burger = footerLiList[footerLiList.length-1];
+const menu = document.querySelector('footer ul > div');
 
-//Affecte l'image de départ lorsque la souris ne survole plus l'élément
-function departDeLaSouris(element) {
-    element.setAttribute("src", "./images/header/profil.png");
-}
+burger.addEventListener('click', () => {if(menu.classList.contains('menu')){menu.classList.remove('menu');menu.style['display']='none'}else{menu.classList.add('menu');menu.style['display']='flex'}});
 
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                   Caroussel                                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 // Variable qui stock l'index de l'image
 let curSlide = 0;
 const slides = document.querySelectorAll(".slide");

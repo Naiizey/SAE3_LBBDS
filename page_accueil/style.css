@@ -381,6 +381,7 @@ header ul {
 /* Nom */
 .nomPrenom input {
     padding: 0;
+    margin: 2% 0 0 0;
     width: 90%;
 }
 
@@ -388,6 +389,34 @@ header ul {
 .nomPrenom > div + div > input {
     padding: 0;
     width: 100%;
+}
+
+@media (max-width: 1000px) {
+    .divCredit {
+        font-size: xx-large;
+        margin: 0;
+    }
+
+    .divCredit h2 {
+        font-size: 1.8em;
+        font-family: "Montserrat-Regular";
+    }
+
+    .sectionCredit a {
+        text-align: center;
+    }
+
+    .nomPrenom {
+        display: block;
+    }
+
+    .nomPrenom div {
+        width: 100%;
+    }
+
+    .sectionCredit input[type="submit"] {
+        font-size: 1.3em;
+    }
 }
 
 /*

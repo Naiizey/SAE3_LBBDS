@@ -44,7 +44,7 @@ h1 {
 }
 
 h2 {
-    font-family: 'Montserrat-Medium';
+    font-family: 'Montserrat-Regular';
     text-align: center;
     margin: 0;
 }
@@ -300,6 +300,7 @@ header ul {
 
 .divAlizon {
     text-align: center;
+    padding-bottom: 1em;
 }
 
 .divAlizon img {
@@ -395,11 +396,19 @@ header ul {
     .divCredit {
         font-size: xx-large;
         margin: 0;
+        padding: 10% 0;
+    }
+
+    .divAlizon + .divCredit {
+        padding-top: 0;
+    }
+
+    .divAlizon {
+        padding-bottom: 1.5em;
     }
 
     .divCredit h2 {
         font-size: 1.8em;
-        font-family: "Montserrat-Regular";
     }
 
     .sectionCredit a {
@@ -411,6 +420,10 @@ header ul {
     }
 
     .nomPrenom div {
+        width: 100%;
+    }
+
+    .nomPrenom div input {
         width: 100%;
     }
 

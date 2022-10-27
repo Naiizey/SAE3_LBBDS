@@ -4,5 +4,8 @@ use CodeIgniter\Entity\Entity;
 
 class Produit extends Entity
 {
-    // ...déjà utilisable sans rien
+   public function __toString()
+   {
+    return "Id: $this->id, Intitule: $this->intitule";
+   }
 }

@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class ProduitCatalogue extends Model
 {
-    protected $table      = 'produit_catalogue';
+    protected $table      = 'sae3.produit_catalogue';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = false;

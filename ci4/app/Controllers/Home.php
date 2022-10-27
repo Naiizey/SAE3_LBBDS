@@ -52,7 +52,8 @@ class Home extends BaseController
         }
         else
         {
-            $data['prod']=$result;
+            
+            $data['prod']=$result[0];
             return view('page_accueil/produit.php',$data);
         }
         #TODO: pensez à mettre le prix HT dans la vue et aussi indiquer que la livraisin est gratuite

@@ -1,5 +1,14 @@
 <?php namespace App\Services;
 
+
+/**
+ * Service pouvant être importé de cette façon : $auth = service('authentification');
+ * 
+ * Ce service permet la vérification qu'un utilisateur est bienn connecté et existant dans la base, permet aussi à la connexion 
+ * d'un client à partir de ses identifiants
+ * //TODO: Implémetation avec token cookie ?
+ */
+
 class Authentification
 {
 
@@ -8,10 +17,10 @@ class Authentification
         if(! empty($entree))
         {
             $clientModel = model("\App\Models\Client");
-            $user = new \App\Entities\Client();
-            $user=$clientModel->where('identifiant',$entree['identifiant'])->where('motdepasse',$entree['motDePasse'])->findAll();
+            $user = $clientModel->getClientByCredentials($entree['identifiant'],$entree['identifiant']);
+           
             
-            if(sizeof($user)==0)
+            if($user==null)
             {
                
                 return False;
@@ -26,6 +35,23 @@ class Authentification
         }
         
     }
+
+    public function estConnectee() : bool
+    {   
+        $session = session();
+        if($session->has('identifiant') && $session->has('motDePasse')){
+            $clientModel = model("\App\Models\Client");
+            if($clientModel->getClientByCredentials($session->get('identifiant'),$session->get('motDePasse')) != null)
+            {
+                return true;
+            }
+            else return false;
+        }
+        else return false;
+        
+        
+    }
+
 
 
 }

@@ -32,4 +32,15 @@ class Client extends Model
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
+
+    public function getClientByCredentials($identifiant, $motDePasse) : \App\Entities\Client | null
+    {
+        
+        $retour = $this->where('identifiant',$identifiant)->where('motdepasse',$motDePasse)->findAll();
+        if(sizeof($retour) != 0){
+            return $retour[0];
+        }
+        else return null;
+        
+    }
 }

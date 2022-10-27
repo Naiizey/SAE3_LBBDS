@@ -4,6 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+
+/** 
+ * Model de classe Produit le plus détaillé pour un accès aux clients.
+ * Read-only ?
+ * 
+ * 
+ * @see TutoCI/CI5_BDD
+ * @return \App\Entities\Client
+ */
+
 class ProduitDetail extends Model
 {
     protected $table      = 'sae3.produit_detail';

@@ -620,3 +620,730 @@ SELECT * FROM _compte NATURAL JOIN _adresse_facturation;
 -- ❌ Commande-Retour-Refere_ret
 CREATE VIEW v_commande_retour_refere_ret AS
 SELECT * FROM _commande NATURAL JOIN _retour NATURAL JOIN _refere_ret;
+
+-- SQLBook: Markup
+## Données Générées
+-- SQLBook: Code
+DROP SCHEMA IF EXISTS sae3 CASCADE;
+CREATE SCHEMA sae3; 
+SET SCHEMA 'sae3';
+
+DROP TABLE IF EXISTS _tva CASCADE;
+DROP TABLE IF EXISTS _categorie CASCADE;
+DROP TABLE IF EXISTS _note CASCADE;
+DROP TABLE IF EXISTS _compte CASCADE;
+DROP TABLE IF EXISTS _adresse CASCADE;
+DROP TABLE IF EXISTS _commande CASCADE;
+DROP TABLE IF EXISTS _panier CASCADE;
+DROP TABLE IF EXISTS _panier_visiteur CASCADE;
+DROP TABLE IF EXISTS _refere CASCADE;
+DROP TABLE IF EXISTS _produit CASCADE;
+DROP TABLE IF EXISTS _liste_souhait CASCADE;
+DROP TABLE IF EXISTS _pouce CASCADE;
+DROP TABLE IF EXISTS _enregistre CASCADE;
+DROP TABLE IF EXISTS _sous_categorie CASCADE;
+DROP TABLE IF EXISTS _avis CASCADE;
+DROP TABLE IF EXISTS _image_avis CASCADE;
+
+-- Active: 1653463239562@@127.0.0.1@5432@postgres@sae3
+CREATE TABLE _tva
+(
+    cat_tva INT PRIMARY KEY
+);
+
+CREATE TABLE _categorie
+(
+    code_cat INT PRIMARY KEY,
+    libelle_cat VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE _sous_categorie(
+    code_cat INT,
+    code_sous_cat INT,
+    CONSTRAINT _sous_categorie_pk PRIMARY KEY (code_cat, code_sous_cat)
+);
+
+CREATE TABLE _note
+(
+    note_prod FLOAT NOT NULL
+);
+
+CREATE TABLE _compte
+(
+    num_compte SERIAL PRIMARY KEY,
+    nom_compte VARCHAR(50) NOT NULL,
+    prenom_compte VARCHAR(50) NOT NULL,
+    pseudo VARCHAR(30) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    mot_de_passe VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE _adresse
+(
+    id_a SERIAL PRIMARY KEY,
+    nom_a VARCHAR(50) NOT NULL,
+    prenom_a VARCHAR(50) NOT NULL,
+    num_rue INT NOT NULL,
+    nom_rue VARCHAR(50) NOT NULL,
+    code_postal INT NOT NULL,
+    ville VARCHAR(50) NOT NULL,
+    comp_a1 VARCHAR(150) NULL,
+    comp_a2 VARCHAR(150) NULL
+);
+
+CREATE TABLE _adresse_livraison(
+    infos_comp VARCHAR NOT NULL,
+    CONSTRAINT _adresse_livraison_pk PRIMARY KEY (id_a)
+)INHERITS (_adresse);
+
+CREATE TABLE _adresse_facturation(
+    CONSTRAINT _adresse_facturation_pk PRIMARY KEY (id_a)
+)INHERITS (_adresse);
+
+CREATE TABLE _panier
+(
+    num_panier SERIAL
+);
+
+CREATE TABLE _panier_visiteur 
+(
+    date_suppression DATE NOT NULL
+)INHERITS (_panier);
+
+CREATE TABLE _commande
+(
+    num_commande VARCHAR(50),
+    date_dep DATE NOT NULL,
+    date_arriv DATE NOT NULL,
+    etat_livraison VARCHAR(50) NOT NULL
+)INHERITS (_panier);
+
+
+CREATE TABLE _refere 
+(
+    qte_panier INT NOT NULL
+);
+
+CREATE TABLE _produit
+(
+    id_prod SERIAL PRIMARY KEY,
+    intitule_prod VARCHAR(50) UNIQUE NOT NULL,
+    prix_ht FLOAT NOT NULL,
+    prix_ttc FLOAT NOT NULL,
+    description_prod VARCHAR UNIQUE NOT NULL,
+    lien_image_prod VARCHAR NOT NULL,
+    publication_prod BOOLEAN NOT NULL,
+    stock_prod INT NOT NULL,
+    moyenne_note_prod FLOAT NOT NULL,
+    seuil_alerte_prod INT,
+    alerte_prod BOOLEAN NOT NULL
+);
+
+CREATE TABLE _liste_souhait
+(
+    etat_stock BOOLEAN NOT NULL
+);
+
+CREATE TABLE _pouce
+(
+    pouce_fav BOOLEAN NOT NULL
+);
+
+CREATE TABLE _avoir
+(
+    num_avoir SERIAL PRIMARY KEY,
+    montant_valid FLOAT NOT NULL,
+    duree_valid DATE NOT NULL
+);
+
+CREATE TABLE _retour(
+    etiq_ret INT PRIMARY KEY,
+    motif VARCHAR(50) NOT NULL,
+    etat_remb BOOLEAN NOT NULL,
+    conf_ret BOOLEAN NOT NULL
+);
+
+CREATE TABLE _avis(
+    num_avis SERIAL,
+    contenu_av VARCHAR NOT NULL
+);
+
+CREATE TABLE _image_avis(
+    num_image SERIAL PRIMARY KEY,
+    lien_image_avis VARCHAR NOT NULL
+);
+
+CREATE TABLE _refere_ret(
+    qte_retour INT NOT NULL
+);
+
+CREATE TABLE _reponse(
+    reponse_av VARCHAR NOT NULL
+);
+
+--Classe association entre _compte * - *_produit qui se nomme note ✅
+ALTER TABLE _note ADD COLUMN id_prod INT NOT NULL;
+ALTER TABLE _note ADD COLUMN num_compte INT NOT NULL;
+ALTER TABLE _note ADD CONSTRAINT _note_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod);
+ALTER TABLE _note ADD CONSTRAINT _note_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+ALTER TABLE _note ADD CONSTRAINT _note_pk PRIMARY KEY (id_prod, num_compte);
+
+
+--Classe association entre _retour * - *_produit qui se nomme _refere_ret ✅
+ALTER TABLE _refere_ret ADD COLUMN id_prod INT NOT NULL;
+ALTER TABLE _refere_ret ADD COLUMN etiq_ret INT NOT NULL;
+ALTER TABLE _refere_ret ADD PRIMARY KEY (id_prod, etiq_ret);
+ALTER TABLE _refere_ret ADD CONSTRAINT _refere_ret_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod);
+ALTER TABLE _refere_ret ADD CONSTRAINT _refere_ret_retour_fk FOREIGN KEY (etiq_ret) REFERENCES _retour(etiq_ret);
+
+
+
+--Classe association entre _compte * - *_produit qui se nomme _liste_souhait ✅
+ALTER TABLE _liste_souhait ADD COLUMN id_prod INT NOT NULL;
+ALTER TABLE _liste_souhait ADD COLUMN num_compte INT NOT NULL;
+ALTER TABLE _liste_souhait ADD CONSTRAINT _liste_souhait_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod);
+ALTER TABLE _liste_souhait ADD CONSTRAINT _liste_souhait_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+ALTER TABLE _liste_souhait ADD CONSTRAINT _liste_souhait_pk PRIMARY KEY (id_prod, num_compte);
+
+--Association 1..* entre _pdt et _categorie ✅ (contenu_dans) 
+ALTER TABLE _produit ADD COLUMN code_cat INT NOT NULL;
+ALTER TABLE _produit ADD CONSTRAINT _produit_categorie_fk FOREIGN KEY (code_cat) REFERENCES _categorie(code_cat);
+
+--Association 1..* entre _tva et _categorie ✅ (dans_cat_tva)
+ALTER TABLE _categorie ADD COLUMN cat_tva INT NOT NULL;
+ALTER TABLE _categorie ADD CONSTRAINT _categorie_tva_fk FOREIGN KEY (cat_tva) REFERENCES _tva(cat_tva);
+
+
+/*--Association 1..* entre _panier et _compte (possede) ✅
+ALTER TABLE _compte ADD COLUMN num_panier INT;
+ALTER TABLE _compte ADD CONSTRAINT _compte_panier_fk FOREIGN KEY (num_panier) REFERENCES _panier(num_panier);
+*/
+
+--Association 0.1..1.0 entre _panier et _compte (utilise) ✅
+ALTER TABLE _panier ADD COLUMN num_compte INT NOT NULL;
+ALTER TABLE _panier ADD CONSTRAINT _panier_pk PRIMARY KEY (num_compte);
+ALTER TABLE _panier ADD CONSTRAINT _panier_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+
+-- PRIMARY KEY _panier_visiteur
+ALTER TABLE _panier_visiteur ADD CONSTRAINT _panier_visiteur_pk PRIMARY KEY (num_compte);
+
+-- PRIMARY KEY _commande
+ALTER TABLE _commande ADD CONSTRAINT _commande_pk PRIMARY KEY (num_compte);
+
+--Association 1..* entre _adresse et _commande ✅ (attendu_a)
+ALTER TABLE _commande ADD COLUMN id_a INT NOT NULL;
+ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_fk FOREIGN KEY (id_a) REFERENCES _adresse(id_a);
+
+--Association 1..* entre _commande et _retour (rembourse) ✅
+ALTER TABLE _retour ADD COLUMN num_compte INT NOT NULL;
+ALTER TABLE _retour ADD CONSTRAINT _retour_commande_fk FOREIGN KEY (num_compte) REFERENCES _commande(num_compte);
+
+--Association 1..* entre _compte et _avoir () ✅
+ALTER TABLE _avoir ADD COLUMN num_compte INT NOT NULL;
+ALTER TABLE _avoir ADD CONSTRAINT _avoir_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+
+--Classe association entre _panier * - * _produit qui se nomme _refere ✅
+ALTER TABLE _refere ADD COLUMN id_prod INT NOT NULL;
+ALTER TABLE _refere ADD COLUMN num_compte INT NOT NULL;
+ALTER TABLE _refere ADD CONSTRAINT _refere_panier_fk FOREIGN KEY (num_compte) REFERENCES _panier(num_compte);
+ALTER TABLE _refere ADD CONSTRAINT _refere_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod);
+ALTER TABLE _refere ADD CONSTRAINT _refere_pk PRIMARY KEY (id_prod, num_compte);
+
+--Association 1..* entre _compte et _adresse_facturation (possedeF) ✅
+ALTER TABLE _adresse_facturation ADD COLUMN num_compte INT NOT NULL;
+ALTER TABLE _adresse_facturation ADD CONSTRAINT _adresse_facturation_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+--Association 1..* entre _compte et _adresse_livraison ✅
+ALTER TABLE _adresse_livraison ADD COLUMN num_compte INT NOT NULL;
+ALTER TABLE _adresse_livraison ADD CONSTRAINT _adresse_facturation_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+
+--Association 1..* entre _produit et _avis (sur) ✅
+ALTER TABLE _avis ADD COLUMN id_prod INT NOT NULL;
+ALTER TABLE _avis ADD CONSTRAINT _avis_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod);
+
+-- Association *..1 entre _compte et _avis (auteur) ✅
+ALTER TABLE _avis ADD COLUMN num_compte INT NOT NULL;
+-- ALTER TABLE _avis ADD CONSTRAINT _avis_pk PRIMARY KEY (id_prod,num_compte);
+ALTER TABLE _avis ADD CONSTRAINT _avis_pk PRIMARY KEY (num_avis);
+ALTER TABLE _avis ADD CONSTRAINT _avis_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+
+-- Association *..1 entre catégorie et catégorie ✅
+ALTER TABLE _sous_categorie ADD CONSTRAINT _sous_categorie_categorie_code_cat_fk FOREIGN KEY (code_cat) REFERENCES _categorie(code_cat);
+-- ALTER TABLE _sous_categorie ADD CONSTRAINT sous_categorie_categorie_code_sous_cat_fk FOREIGN KEY (code_sous_cat) REFERENCES _categorie(code_cat); 
+
+-- Association *..1 entre adresse_livraison et commande ✅
+ALTER TABLE _commande ADD COLUMN id_adresse INT NOT NULL;
+ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY (id_adresse) REFERENCES _adresse_livraison(id_a);
+
+--Classe association entre _compte 1 - *_avis qui se nomme _pouce ✅
+ALTER TABLE _pouce ADD COLUMN num_avis INT NOT NULL;
+ALTER TABLE _pouce ADD COLUMN num_compte INT NOT NULL;
+ALTER TABLE _pouce ADD CONSTRAINT _pouce_produit_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
+ALTER TABLE _pouce ADD CONSTRAINT _pouce_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+ALTER TABLE _pouce ADD CONSTRAINT _pouce_pk PRIMARY KEY (num_avis, num_compte);
+
+-- ajout d'un check : un compte ne peut pas mettre un pouce à son propre avis ✅
+CREATE OR REPLACE FUNCTION pouce_check() RETURNS TRIGGER AS
+$$
+BEGIN
+    PERFORM num_compte FROM _avis inner join pouce on avis.num_compte = _pouce.num_compte WHERE avis.num_avis = _pouce.num_avis;
+    IF FOUND THEN
+        RAISE EXCEPTION 'IMPOSSIBLE DE S''AUTO LIKE CLOCHARD VA';
+    END IF;
+    return new;
+END
+$$
+LANGUAGE PLPGSQL;
+
+-- Association 1..0.3 entre avis et image_avis
+ALTER TABLE _image_avis ADD COLUMN num_avis INT NOT NULL;
+ALTER TABLE _image_avis ADD CONSTRAINT _image_avis_avis_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
+
+-- Association 1..1 entre _avis et _reponse
+ALTER TABLE _reponse ADD COLUMN num_avis_link INT NOT NULL;
+ALTER TABLE _reponse ADD CONSTRAINT _reponse_pk PRIMARY KEY (num_avis_link);
+ALTER TABLE _reponse ADD CONSTRAINT _reponse_avis_fk FOREIGN KEY (num_avis_link) REFERENCES _avis(num_avis);
+
+INSERT INTO _tva(cat_tva)
+VALUES 
+(5),
+(10),
+(15),
+(20);
+
+
+
+INSERT INTO _categorie(code_cat, libelle_cat, cat_tva)
+VALUES 
+-- main catégories
+       (1, 'Alimentation', 20),
+       (2, 'Bricolage', 10),
+       (3, 'High-Tech', 20),
+       (4, 'Jardinage', 10),
+       (5, 'Jeux vidéo', 20),
+       (6, 'Livres', 5),
+       (7, 'Musique', 20),
+       (8, 'Vêtements', 20),
+       (9, 'Sports et loisirs', 20),
+-- sous catégories
+       (11,'fruits',20),
+       (12,'légumes',20),
+       (13,'boissons',20),
+       (14,'viandes',20),
+       (15,'poissons',20),
+
+       (21,'bois',10),
+       (22,'outils',10),
+       (23,'ciments',10),
+       (24,'electricité',10),
+       (25,'suppléments',10),
+ 
+       (31,'ordinateurs',20),
+       (32,'téléphones',20),
+       (33,'tablettes',20),
+       (34,'televisions',20),
+       (35,'appareils photo',20),
+
+       (41,'plantes',10),
+       (42,'pesticides',10),
+       (43,'engrais',10),
+       (44,'outils',10),
+       (45,'pots',10),
+
+       (51,'consoles',20),
+       (52,'jeux',20),
+       (53,'accessoires',20),
+
+       (61,'livres scolaires',5),
+       (62,'livres de fiction',5),
+       (63,'livres techniques',5),
+       (64,'livres de cuisine',5),
+       (65,'livres d''art',5),
+
+       (71,'CD',20),
+       (72,'DVD',20),
+       (73,'livres audio',20),
+
+       (81,'hommes',20),
+       (82,'femmes',20),
+       (83,'enfants',20),
+       (84,'chaussures',20),
+       (85,'sacs',20),
+
+       (91,'fitness',20),
+       (92,'musculation',20),
+       (93,'cardio',20),
+       (94,'sport de raquette',20),
+       (95,'sports d''hiver',20);
+
+
+       INSERT INTO _sous_categorie(code_cat, code_sous_cat)
+VALUES 
+-- alimentation
+       (1, 11),(1, 12),(1, 13),(1, 14),(1, 15),
+-- bricolage
+       (2, 21),(2, 22),(2, 23),(2, 24),(2, 25),
+-- high-tech
+       (3, 31),(3, 32),(3, 33),(3, 34),(3, 35),
+-- jardinage
+       (4, 41),(4, 42),(4, 43),(4, 44),(4, 45),
+-- jeux vidéo
+       (5, 51),(5, 52),(5, 53),
+-- livres
+       (6, 61),(6, 62),(6, 63),(6, 64),(6, 65),
+-- musique
+       (7, 71),(7, 72),(7, 73),
+-- vêtements
+       (8, 81),(8, 82),(8, 83),(8, 84),(8, 85),
+-- sports et loisirs
+       (9, 91),(9, 92),(9, 93),(9, 94),(9, 95);
+
+
+INSERT INTO _produit(intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod, moyenne_note_prod, seuil_alerte_prod, alerte_prod, code_cat)
+VALUES 
+-- alimentation
+       ('pomme', 1.5, 1.8, 'pomme rouge', 'pomme.jpg', true, 100, 4.5, 10, false, 11),
+       ('poire', 1.2, 1.44, 'poire jaune', 'poire.jpg', true, 150, 4.8, 20, false, 11),
+       ('banane', 1.8, 2.16, 'banane verte', 'banane.jpg', false, 0, 0, 30, true, 11),
+       ('cerise', 2.5, 3, 'cerise noire', 'cerise.jpg', true, 200, 4.2, 40, false, 11),
+       ('pomme de terre', 2, 2.4, 'pomme de terre rouge', 'abricot.jpg', true, 250, 4.7, 50, false, 12),
+       ('coca cola' , 2.5, 3, 'coca cola', 'coca.jpg', true, 300, 4.5, 60, false, 13),
+       ('fanta', 2.5, 3, 'fanta', 'fanta.jpg', true, 350, 5, 70, false, 13),
+       ('sprite', 2.5, 3, 'sprite', 'sprite.jpg', true, 400, 4.8, 80, false, 13),
+       ('orangina', 2.5, 3, 'orangina', 'orangina.jpg', true, 450, 4.6, 90, false, 13),
+       ('jus d''orange', 3, 3.6, 'jus d''orange', 'jus_orange.jpg', true, 500, 4.9, 100, false, 13),
+       ('jus de pomme', 3, 3.6, 'jus de pomme', 'jus_pomme.jpg', true, 550, 4.7, 110, false, 13),
+       ('perrier', 2, 2.4, 'perrier', 'perrier.jpg', true, 600, 4.5, 120, false, 13),
+       ('aquarius', 2, 2.4, 'aquarius', 'aquarius.jpg', false, 0, 0, 130, true, 13),
+       ('milka', 3, 3.6, 'milka', 'milka.jpg', true, 650, 5, 140, false, 14),
+       ('danette', 2, 2.4, 'danette', 'danette.jpg', true, 700, 4.8, 150, false, 14),
+       ('nutella', 4, 4.8, 'nutella', 'nutella.jpg', true, 750, 4.9, 160, false, 14),
+       ('kindersurprise', 2, 2.4, 'kindersurprise', 'kindersurprise.jpg', true, 800, 4.6, 170, false, 14),
+       ('poulet', 5, 6, 'poulet', 'poulet.jpg', true, 850, 4.7, 180, false, 15),
+       ('dinde', 6, 7.2, 'dinde', 'dinde.jpg', true, 900, 4.8, 190, false, 15),
+       ('canard', 7, 8.4, 'canard', 'canard.jpg', true, 950, 4.9, 200, false, 15),
+       ('saumon', 8, 9.6, 'saumon', 'saumon.jpg', true, 1000, 5, 210, false, 15),
+       
+-- bricolage
+       ('scie', 10, 12, 'scie', 'scie.jpg', true, 100, 4.5, 10, false, 21),
+       ('marteau', 11, 13.2, 'marteau', 'marteau.jpg', true, 150, 4.8, 20, false, 21),
+       ('pince', 12, 14.4, 'pince', 'pince.jpg', false, 0, 0, 30, true, 21),
+       ('tournevis', 13, 15.6, 'tournevis', 'tournevis.jpg', true, 200, 4.2, 40, false, 21),
+       ('clou', 2, 2.4, 'clou', 'clou.jpg', true, 250, 4.7, 50, false, 22),
+       ('vis', 3, 3.6, 'vis', 'vis.jpg', true, 300, 4.5, 60, false, 22),
+       ('cheville', 4, 4.8, 'cheville', 'cheville.jpg', true, 350, 5, 70, false, 22),
+       ('agrafes', 5, 6, 'agrafes', 'agrafes.jpg', true, 400, 4.8, 80, false, 22),
+       ('colle', 6, 7.2, 'colle', 'colle.jpg', true, 450, 4.6, 90, false, 22),
+       ('peinture', 3, 3.6, 'peinture', 'peinture.jpg', true, 500, 4.9, 100, false, 23),
+       ('papier peint', 4, 4.8, 'papier peint', 'papier_peint.jpg', true, 550, 4.7, 110, false, 23),
+       ('ciment', 5, 6, 'ciment', 'ciment.jpg', true, 600, 4.5, 120, false, 23),
+       ('chauffage', 6, 7.2, 'chauffage', 'chauffage.jpg', true, 650, 5, 140, false, 24),
+       ('climatisation', 7, 8.4, 'climatisation', 'climatisation.jpg', true, 700, 4.8, 150, false, 24),
+       ('ventilation', 8, 9.6, 'ventilation', 'ventilation.jpg', true, 750, 4.9, 160, false, 24),
+       
+-- high-tech
+       ('ordinateur', 100, 120, 'ordinateur', 'ordinateur.jpg', true, 100, 4.5, 10, false, 31),
+       ('imprimante', 110, 132, 'imprimante', 'imprimante.jpg', true, 150, 4.8, 20, false, 31),
+       ('scanner', 120, 144, 'scanner', 'scanner.jpg', false, 0, 0, 30, true, 31),
+       ('ordinateur portable', 130, 156, 'ordinateur portable', 'ordinateur_portable.jpg', true, 200, 4.2, 40, false, 31),
+       ('souris', 20, 24, 'souris', 'souris.jpg', true, 250, 4.7, 50, false, 32),
+       ('clavier', 30, 36, 'clavier', 'clavier.jpg', true, 300, 4.5, 60, false, 32),
+       ('casque', 40, 48, 'casque', 'casque.jpg', true, 350, 5, 70, false, 32),
+       ('enceinte', 50, 60, 'enceinte', 'enceinte.jpg', true, 400, 4.8, 80, false, 32),
+       ('webcam', 60, 72, 'webcam', 'webcam.jpg', true, 450, 4.6, 90, false, 32),
+       ('tablette', 30, 36, 'tablette', 'tablette.jpg', true, 500, 4.9, 100, false, 33),
+       ('support', 40, 48, 'support', 'support.jpg', true, 550, 4.7, 110, false, 33),
+       ('protecteur d''écran', 50, 60, 'protecteur d''écran', 'protecteur_ecran.jpg', true, 600, 4.5, 120, false, 33),
+       ('câble', 70, 84, 'câble', 'cable.jpg', true, 650, 5, 140, false, 34),
+       ('télécommande', 80, 96, 'télécommande', 'telecommande.jpg', true, 700, 4.8, 150, false, 34),
+       ('décodeur', 90, 108, 'décodeur', 'decodeur.jpg', true, 750, 4.9, 160, false, 34),
+       
+-- jardinage
+       ('plantes', 10, 12, 'plantes', 'plantes.jpg', true, 100, 4.5, 10, false, 41),
+       ('pesticides', 11, 13.2, 'pesticides', 'pesticides.jpg', true, 150, 4.8, 20, false, 41),
+       ('engrais', 12, 14.4, 'engrais', 'engrais.jpg', false, 0, 0, 30, true, 41),
+       ('outils', 13, 15.6, 'outils', 'outils.jpg', true, 200, 4.2, 40, false, 41),
+       ('pots', 20, 24, 'pots', 'pots.jpg', true, 250, 4.7, 50, false, 42),
+       ('terreau', 30, 36, 'terreau', 'terreau.jpg', true, 300, 4.5, 60, false, 42),
+       ('arrosage', 40, 48, 'arrosage', 'arrosage.jpg', true, 350, 5, 70, false, 42),
+       ('semences', 50, 60, 'semences', 'semences.jpg', true, 400, 4.8, 80, false, 42),
+       
+-- jeux vidéo
+       ('consoles', 100, 120, 'consoles', 'consoles.jpg', true, 100, 4.5, 10, false, 51),
+       ('jeux', 110, 132, 'jeux', 'jeux.jpg', true, 150, 4.8, 20, false, 51),
+       ('accessoires', 120, 144, 'accessoires', 'accessoires.jpg', false, 0, 0, 30, true, 51),
+       
+-- livres
+       ('livres scolaires', 10, 12, 'livres scolaires', 'livres_scolaires.jpg', true, 100, 4.5, 10, false, 61),
+       ('livres de fiction', 11, 13.2, 'livres de fiction', 'livres_fiction.jpg', true, 150, 4.8, 20, false, 61),
+       ('livres techniques', 12, 14.4, 'livres techniques', 'livres_techniques.jpg', false, 0, 0, 30, true, 61),
+       ('livres de cuisine', 13, 15.6, 'livres de cuisine', 'livres_cuisine.jpg', true, 200, 4.2, 40, false, 61),
+       ('livres d''art', 20, 24, 'livres d''art', 'livres_art.jpg', true, 250, 4.7, 50, false, 62),
+       
+-- musique
+       ('CD', 30, 36, 'CD', 'cd.jpg', true, 300, 4.5, 60, false, 71),
+       ('DVD', 40, 48, 'DVD', 'dvd.jpg', true, 350, 5, 70, false, 71),
+       ('livres audio', 50, 60, 'livres audio', 'livres_audio.jpg', true, 400, 4.8, 80, false, 71),
+       
+-- vêtements
+       ('hommes', 100, 120, 'hommes', 'hommes.jpg', true, 100, 4.5, 10, false, 81),
+       ('femmes', 110, 132, 'femmes', 'femmes.jpg', true, 150, 4.8, 20, false, 81),
+       ('enfants', 120, 144, 'enfants', 'enfants.jpg', false, 0, 0, 30, true, 81),
+       ('chaussures', 130, 156, 'chaussures', 'chaussures.jpg', true, 200, 4.2, 40, false, 81),
+       ('sacs', 20, 24, 'sacs', 'sacs.jpg', true, 250, 4.7, 50, false, 82),
+       
+-- sports et loisirs
+       ('fitness', 30, 36, 'fitness', 'fitness.jpg', true, 300, 4.5, 60, false, 91),
+       ('musculation', 40, 48, 'musculation', 'musculation.jpg', true, 350, 5, 70, false, 91),
+       ('cardio', 50, 60, 'cardio', 'cardio.jpg', true, 400, 4.8, 80, false, 91),
+       ('sport de raquette', 60, 72, 'sport de raquette', 'sport_raquette.jpg', true, 450, 4.6, 90, false, 91),
+       ('sports d''hiver', 70, 84, 'sports d''hiver', 'sports_hiver.jpg', true, 500, 4.9, 100, false, 92);
+
+
+INSERT  INTO _compte (nom_compte , prenom_compte , pseudo , email , mot_de_passe )
+VALUES  ('Dupond' , 'Jean' , 'jeandupond' , 'jean@dupond.fr' , 'motdepasse' ),
+        ('Dupuis' , 'Pierre' , 'pierredupuis' , 'pierre@dupuis.fr' , 'motdepasse' ),
+        ('Durand' , 'Paul' , 'pauldurand' , 'paul@durand.fr' , 'motdepasse' ),
+        ('Martin' , 'Claude' , 'claudemartin' , 'claude@martin.fr' , 'motdepasse' ),
+        ('Petit' , 'Jacques' , 'jacquespetit' , 'jacques@petit.fr' , 'motdepasse' ),
+        ('Robert' , 'Simon' , 'simonrobert' , 'simon@robert.fr' , 'motdepasse' ),
+        ('Thomas' , 'Laurent' , 'laurentthomas' , 'laurent@thomas.fr' , 'motdepasse' ),
+        ('Leroy' , 'Marie' , 'marieleroy' , 'marie@leroy.fr' , 'motdepasse' ),
+        ('David' , 'Catherine' , 'catherinedavid' , 'catherine@david.fr' , 'motdepasse' ),
+        ('Fabre' , 'Isabelle' , 'isabellefabre' , 'isabelle@fabre.fr' , 'motdepasse' ),
+        ('Girard' , 'Claire' , 'clairegirard' , 'claire@girard.fr' , 'motdepasse' ),
+        ('Lefebvre' , 'Anne' , 'annelefebvre' , 'anne@lefebvre.fr' , 'motdepasse' ),
+        ('Lambert' , 'Sophie' , 'sophielambert' , 'sophie@lambert.fr' , 'motdepasse' ),
+        ('Roux' , 'Hélène' , 'heleneroux' , 'helene@roux.fr' , 'motdepasse' ),
+        ('Vincent' , 'Nathalie' , 'nathalievincent' , 'nathalie@vincent.fr' , 'motdepasse' ),
+        ('Meyer' , 'Virginie' , 'virginiemeyer' , 'virginie@meyer.fr' , 'motdepasse' ),
+        ('Fournier' , 'Emmanuelle' , 'emmanuellefournier' , 'emmanuelle@fournier.fr' , 'motdepasse' );
+
+INSERT   INTO     _adresse_livraison (nom_a, prenom_a, num_rue, nom_rue, code_postal, ville, comp_a1, comp_a2,infos_comp,num_compte)
+VALUES   ( 'Dupond',  'Jean',  13,  'rue des fleurs',  13000,  'Marseille',  '',  '','balbla', 1),
+         ( 'Dupuis',  'Pierre',  2,  'rue de la Paix',  75002,  'Paris',  '',  '' ,'balbla',2),
+         ( 'Durand',  'Paul',  5,  'rue des Écoles',  75005,  'Paris',  '',  '','balbla', 3),
+         ( 'Martin',  'Claude',  1,  'rue du Général de Gaulle',  59000,  'Lille',  '',  '' ,'balbla',4),
+         ( 'Petit',  'Jacques',  7,  'rue des Champs Elysées',  75008,  'Paris',  '',  '' ,'balbla',5),
+         ( 'Robert',  'Simon',  9,  'rue du Colonel Fabien',  75010,  'Paris',  '',  '' ,'balbla',6),
+         ( 'Thomas',  'Laurent',  11,  'rue de la Bastille',  75011,  'Paris',  '',  '' ,'balbla',7),
+         ( 'Leroy',  'Marie',  15,  'rue de Rivoli',  75001,  'Paris',  '',  '' ,'balbla',8),
+         ( 'David',  'Catherine',  17,  'rue Saint Denis',  75002,  'Paris',  '',  '' ,'balbla',9),
+         ( 'Fabre',  'Isabelle',  19,  'rue de la Paix',  75002,  'Paris',  '',  '' ,'balbla',10),
+         ( 'Girard',  'Claire',  21,  'rue du Faubourg Saint Honoré',  75008,  'Paris',  '',  '' ,'balbla',11),
+         ( 'Lefebvre',  'Anne',  23,  'rue Royale',  75008,  'Paris',  '',  '' ,'balbla',12),
+         ( 'Lambert',  'Sophie',  25,  'rue de la Paix',  75002,  'Paris',  '',  '' ,'balbla',13),
+         ( 'Roux',  'Hélène',  27,  'rue du Faubourg Saint Honoré',  75008,  'Paris',  '',  '' ,'balbla',14),
+         ( 'Vincent',  'Nathalie',  29,  'rue des Capucines',  75002,  'Paris',  '',  '' ,'balbla',15),
+         ( 'Meyer',  'Virginie',  31,  'boulevard Haussmann',  75009,  'Paris',  '',  '' ,'balbla',16),
+         ( 'Fournier',  'Emmanuelle',  33,  'rue de la Paix',  75002,  'Paris',  '',  '' ,'balbla',17);
+
+
+INSERT INTO _avis (contenu_av, id_prod, num_compte)
+VALUES 
+-- alimentation (négatif)
+       ('de la merde en boite', 1, 1),
+       ('allez niquer vos mères', 2, 1),
+       ('touche le fond, creuse encore', 4, 2),
+       ('si votre produit étant un arrosoir, il étalerait de la merde partout', 5, 2),
+       ('J''en ai rien à foutre', 6, 3),
+       ('mettez le la ou je pense', 3, 3),
+       
+-- bricolage (positif)
+        ('très bon produit', 1, 4),
+        ('très bon produit', 2, 4),
+        ('produit conforme', 3, 4),
+        ('satisfait', 4, 4),
+        ('produit de bonne qualité', 1, 5),
+        ('tres bon rapport qualité prix', 2, 6),
+        
+-- high-tech (négatif)
+        ('cable de merde', 1, 7),
+        ('vos grand mères je les soulèves toutes', 2, 7),
+        ('de la merde en boite', 3, 7),
+        ('bordel de merde', 4, 7),
+        ('j''en ai rien à foutre', 5, 7),
+        
+-- jardinage (positif)
+        ('produit conforme à la description', 1, 8),
+        ('satisfait', 2, 8),
+        ('livraison rapide', 3, 8),
+        ('produit de bonne qualité', 4, 8),
+        ('tres bon rapport qualité prix', 1, 9),
+        ('très bon produit', 2, 9),
+        
+-- jeux vidéo (positif)
+        ('produit conforme', 1, 10),
+        ('satisfait', 2, 10),
+        ('livraison rapide', 3, 10),
+        ('produit de bonne qualité', 4, 10),
+        
+-- livres (négatif)
+        ('de la merde en boite', 1, 11),
+        ('allez niquer vos mères', 2, 11),
+        ('touche le fond, creuse encore', 3, 11),
+        ('si votre produit étant un arrosoir, il étalerait de la merde partout', 4, 11),
+        ('J''en ai rien à foutre', 5, 11),
+        ('mettez le la ou je pense', 1, 12),
+        ('touche le fond, creuse encore', 2, 12),
+        ('de la merde en boite', 3, 12),
+        ('allez niquer vos mères', 4, 12),
+        ('J''en ai rien à foutre', 5, 12),
+        
+-- musique (positif)
+        ('produit conforme à la description', 1, 13),
+        ('satisfait', 2, 13),
+        ('livraison rapide', 3, 13),
+        ('produit de bonne qualité', 4, 13),
+        ('tres bon rapport qualité prix', 1, 14),
+        ('très bon produit', 2, 14),
+        
+-- vêtements (positif)
+        ('produit conforme à la description', 1, 15),
+        ('satisfait', 2, 15),
+        ('livraison rapide', 3, 15),
+        ('produit de bonne qualité', 4, 15),
+        ('tres bon rapport qualité prix', 1, 16),
+        ('très bon produit', 2, 16),
+        
+-- sports et loisirs (positif)
+        ('produit conforme à la description', 1, 17),
+        ('satisfait', 2, 17),
+        ('livraison rapide', 3, 17),
+        ('produit de bonne qualité', 4, 17);
+
+         
+
+INSERT INTO _reponse (reponse_av, num_avis_link)
+VALUES 
+-- alimentation (négatif)
+       ('c''est la faute des fermiers', 1),
+       ('c''est la faute de l''abattoir', 2),
+       ('c''est la faute des supermarchés', 3),
+       ('c''est la faute des éleveurs', 4),
+       
+-- bricolage (positif)
+        ('merci pour votre commentaire', 5),
+        ('merci pour votre commentaire', 6),
+        ('merci pour votre commentaire', 7),
+        ('merci pour votre commentaire', 8),
+        ('merci pour votre commentaire', 9),
+        ('merci pour votre commentaire', 10),
+        
+-- high-tech (négatif)
+        ('c''est la faute de nvidia', 11),
+        ('c''est la faute de intel', 12),
+        ('c''est la faute de microsoft', 13),
+
+        
+-- jardinage (positif)
+        ('merci pour votre commentaire', 14),
+        ('merci pour votre commentaire', 15),
+        ('merci pour votre commentaire', 16),
+        ('merci pour votre commentaire', 17),
+        ('merci pour votre commentaire', 18),
+        ('merci pour votre commentaire', 19),
+        
+-- jeux vidéo (positif)
+        ('merci pour votre commentaire', 20),
+        ('merci pour votre commentaire', 21),
+        ('merci pour votre commentaire', 22),
+        ('merci pour votre commentaire', 23),
+        
+-- livres (négatif)
+      
+        ('c''est la faute des éditeurs', 24),
+        ('c''est la faute des auteurs', 25),
+        ('c''est la faute des libraires', 26),
+        ('c''est la faute du gouvernement', 27),
+        ('c''est la faute de la société', 28),
+       
+        
+-- musique (positif)
+        ('merci pour votre commentaire', 29),
+        ('merci pour votre commentaire', 30),
+        ('merci pour votre commentaire', 31),
+        ('merci pour votre commentaire', 32),
+        ('merci pour votre commentaire', 33),
+        ('merci pour votre commentaire', 34),
+        
+-- vêtements (positif)
+        ('merci pour votre commentaire', 35),
+        ('merci pour votre commentaire', 36),
+        ('merci pour votre commentaire', 37),
+        ('merci pour votre commentaire', 38),
+        ('merci pour votre commentaire', 39),
+        ('merci pour votre commentaire', 40),
+        
+-- sports et loisirs (positif)
+        ('merci pour votre commentaire', 41),
+        ('merci pour votre commentaire', 42),
+        ('merci pour votre commentaire', 43),
+        ('merci pour votre commentaire', 44),
+        ('merci pour votre commentaire', 45),
+        ('merci pour votre commentaire', 46);
+        
+INSERT INTO _panier_visiteur (num_compte,date_suppression)
+VALUES
+(1,'2015-07-30'),
+(2,'2018-08-20'),
+(3,'2060-07-11'),
+(4,'2004-01-02'),
+(5,'2021-07-11'),
+(6,'2020-07-05'),
+(7,'2022-05-06'),
+(8,'2013-01-25'),
+(9,'2022-07-11'),
+(10,'2020-09-06'),
+(11,'2020-11-05'),
+(12,'2018-07-11'),
+(13,'2020-07-09'),
+(14,'2020-12-11'),
+(15,'2019-07-11'),
+(16,'2000-02-15'),
+(17,'2020-07-3');
+
+INSERT INTO _commande (num_compte,num_commande,date_dep,date_arriv,etat_livraison,id_a,id_adresse)
+VALUES
+(1,'123456789','2022-10-11','2022-10-16','en tattente',1,1),
+(2,'123456791','2022-10-11','2022-10-16','livré',2,2),
+(3,'123456792','2022-10-11','2022-10-16','livré',3,3),
+(4,'123456793','2022-10-11','2022-10-16','perdu',4,4),
+(5,'123456794','2022-10-11','2022-10-16','livré',5,5),
+(6,'123456795','2022-10-11','2022-10-16','livré',6,6),
+(7,'123456796','2022-10-11','2022-10-16','livré',7,7),
+(8,'123456797','2022-10-11','2022-10-16','livré',8,8),
+(9,'123456798','2022-10-11','2022-10-16','livré',9,9),
+(10,'123456799','2022-10-11','2022-10-16','livré',10,10),
+(11,'123456800','2022-10-11','2022-10-16','perdu',11,11),
+(12,'123456801','2022-10-11','2022-10-16','livré',12,12),
+(13,'123456802','2022-10-11','2022-10-16','livré',13,13),
+(14,'123456803','2022-10-11','2022-10-16','en attente',14,14),
+(15,'123456804','2022-10-11','2022-10-16','livré',15,15),
+(16,'123456805','2022-10-11','2022-10-16','livré',16,16),
+(17,'123456806','2022-10-11','2022-10-16','livré',17,17);
+
+INSERT INTO _refere (qte_panier,id_prod,num_compte)
+VALUES 
+(5,52,1),
+(5,12,5),
+(12,5,5),
+(1,5,8),
+(6,36,8),
+(8,85,6),
+(0,8,4),
+(4,45,5),
+(1,45,2),
+(5,41,8),
+(5,15,6),
+(4,85,5),
+(0,51,11),
+(2,65,2),
+(9,9,8),
+(5,7,8),
+(6,31,6),
+(5,58,6),
+(2,65,4),
+(6,25,5),
+(2,45,1),
+(52,15,8),
+(1,2,7);

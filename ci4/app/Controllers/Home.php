@@ -18,6 +18,4 @@ class Home extends BaseController
         $data['prod'] = $clientModel->find(1);
         return view('page_accueil/connexion.php',$data);
     }
-
-    
 }

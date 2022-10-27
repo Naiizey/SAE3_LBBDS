@@ -103,7 +103,7 @@ CREATE TABLE _refere
     qte_panier INT NOT NULL
 );
 
-CREATE TABLE _produit&
+CREATE TABLE _produit
 (
     id_prod SERIAL PRIMARY KEY,
     intitule_prod VARCHAR(50) UNIQUE NOT NULL,

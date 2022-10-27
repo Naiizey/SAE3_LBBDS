@@ -29,7 +29,7 @@
     <body>
         <header>
             <div class="divHeaderAlizon">
-                <a class="lienAlizon" href="<?= base_url() ?>/index.php"> <!-- Lien accueil -->
+                <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
                     <img src="<?= base_url() ?>/images/header/logo.png" alt="logoAlizon" title="Accueil" class="logoAlizon">
                     <h1>Alizon</h1>
                 </a>

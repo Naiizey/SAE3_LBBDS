@@ -8,3 +8,5 @@ CREATE OR REPLACE VIEW produit_catalogue AS
 
 CREATE OR REPLACE VIEW client AS
     SELECT num_compte numero, nom_compte nom, prenom_compte prenom, pseudo identifiant, mot_de_passe motDePasse FROM _compte;
+
+SELECT * FROM client;

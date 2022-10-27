@@ -2,29 +2,7 @@
 <!--dans le imput de recherche : onkeyup="fonction de recherche en php"-->
 <!-- ajuster les logos -->
 <?php require("header.php"); ?>
-            <nav>
-                <hr>
-                <ul>
-                    <li class="liCategorie">
-                        <a class="categorie" href="">Catégorie 1</a>
-                    </li>
-                    <li class="liCategorie">
-                        <a class="categorie" href="">Catégorie 2</a>
-                    </li>
-                    <li class="liCategorie">
-                        <a class="categorie" href="">Catégorie 3</a>
-                    </li>
-                    <li class="liCategorie">
-                        <a class="categorie" href="">Catégorie 4</a>
-                    </li>
-                    <li class="liCategorie">
-                        <a class="categorie" href="">Catégorie 5</a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
         <main>
-
             <section id="carousel-container">
                 <ul id="carousel"> <!-- Menu ./images -->
                     <a href="" class="slide">

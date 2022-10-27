@@ -22,15 +22,19 @@ var autoScrollCar = setInterval(autoScroll, 5000);
 
 function scrollToSlide(slide) {
     windowWidth = Math.round(carouselContainer.offsetWidth);
-    carouselContainer.scroll((windowWidth) * slide, 0);
+    carouselContainer.scroll((windowWidth) * slide, 0)
 }
 
 // Ajout d'un event listener au clic du bouton afin de déplacer les images vers la droite
 nextSlide.addEventListener("click", function () {
     clearInterval(autoScrollCar);
     autoScrollCar = setInterval(autoScroll, 5000);
-    curSlide++;
-    scrollToSlide(curSlide);
+    if (curSlide === (nbSlide-1)) {
+        scrollToSlide(0);
+    } else {
+        curSlide++;
+        scrollToSlide(curSlide);
+    }
 });
 
 // selection de la slide précedente
@@ -39,8 +43,12 @@ nextSlide.addEventListener("click", function () {
 prevSlide.addEventListener("click", function () {
     clearInterval(autoScrollCar);
     autoScrollCar = setInterval(autoScroll, 5000);
-    curSlide--; 
-    scrollToSlide(curSlide);
+    if (curSlide === 0) {
+        scrollToSlide(nbSlide-1);
+    } else {
+        curSlide--;
+        scrollToSlide(curSlide);
+    }
 });
 
 // ajout d'un event listener au scroll dans le carousel
@@ -48,14 +56,6 @@ carouselContainer.addEventListener("scroll", (event) => {
     scrollValue = (carouselContainer.scrollLeft-40);
     windowWidth = Math.round(carouselContainer.offsetWidth);
     curSlide = Math.round(scrollValue/windowWidth);
-    if (curSlide === 0) {
-        prevSlide.style.display = "none";
-    } else if (curSlide === (nbSlide-1)){
-        nextSlide.style.display = "none";
-    } else {
-        prevSlide.style.display = "inline";
-        nextSlide.style.display = "inline";
-    }
 });
 
 

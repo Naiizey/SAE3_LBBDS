@@ -342,6 +342,7 @@ header ul {
     height: 2.5em;
     font-size: x-large;
     border-radius: 10px;
+	cursor: pointer;
 }
 
 .sectionCredit input[type="text"], input[type="submit"], input[type="password"], input[type="email"] {
@@ -492,7 +493,7 @@ header ul {
 
 .sectionPanier a{
     color: #164F57;
-    font-family: "Montserrat-Regular";
+    font-family: "Montserrat-Medium";
     font-size: 1em;
     text-decoration: none;
 }
@@ -525,10 +526,6 @@ header ul {
     align-self: center;
     width: 10em;
     height: 10em;
-}
-
-.articlePanierProduit p{
-    font-family: "Montserrat-Regular";
 }
 
 .divQté{

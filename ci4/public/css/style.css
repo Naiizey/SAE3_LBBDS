@@ -420,41 +420,78 @@ header ul {
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-.mainPanier{
+.divHeaderPanier {
+    display: flex;
+    flex-direction: row;
+    color: #D9D9D9;
+}
+
+.divHeaderPanier img {
+    width: 3em;
+    height: 3em;
+}
+
+.divSuivie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.divSeparationSuivie {
+    height: 0.2em;
+    width: 7.5em;
+    background-color: #D9D9D9;
+    align-self: center;
+    border-radius: 15px;
+}
+
+.divSuivie h3 {
+    margin: 0;
+}
+
+.mainPanier {
     background-color: white;
     display: flex;
     color: #164F57;
     font-family: "Montserrat-Medium";
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-.sectionPanier{
+.mainPanier img {
+    border: solid 2px;
+    border-color: #164F57;
+    border-radius: 3px;
+}
+
+.sectionPanier {
     border-radius: 15px;
     background-color: #E7E8E6;
     color: #164F57;
     width: 70%;
 }
 
-.sectionPanier h2{
-    font-family: "Montserrat-Medium";
+.sectionPanier h2 {
+    font-family: "Montserrat-Regular";
     font-size: 1.4em;
-    color: #404E58;
-   max-width: 20em;
+    color: #164F57;
+    max-width: 20em;
+    text-align: left;
 }
 
-.panierDescription{
+.panierDescription {
     width: 20em;
     color: #164F57;
     margin-bottom: 0;
 }
 
-.sectionPanier h3{
+.sectionPanier h3 {
     font-family: "Montserrat-Medium";
     font-size: 1.1em;
     color: #164F57;
 }
 
-.divPanierHeader{
+.divPanierHeader {
     font-family: "Montserrat-Medium";
     color: #164F57;
     display: flex;
@@ -466,97 +503,93 @@ header ul {
     padding-right: 0.75em;
 }
 
-.sectionPanier hr{
+.mainPanier hr {
     background-color: #164F57;
     width: 97%;
     margin: auto;
 }
 
-.sectionPanier a{
+.sectionPanier a {
     color: #164F57;
-    font-family: "Montserrat-Regular";
+    font-family: "Montserrat-Medium";
     font-size: 1em;
     text-decoration: none;
 }
 
-.articlePanierProduit{
+.articlePanierProduit {
     display: flex;
     flex-direction: row;
-    padding: 1em; 
-    justify-content: space-between;   
+    padding: 1em;
+    justify-content: space-between;
 }
 
-.articlePanierProduit > a{
+.articlePanierProduit>a {
     display: flex;
     flex-direction: row;
     height: 100%;
 }
 
-.articlePanierProduit > a > div{
+.articlePanierProduit>a>div {
     padding-left: 1em;
     flex-grow: 1;
     max-width: 25em;
 }
 
-.articlePanierProduit a{
-    color: #404E58;
+.articlePanierProduit a {
+    color: #164F57;
     text-decoration: none;
 }
 
-.articlePanierProduit img{
+.articlePanierProduit img {
     align-self: center;
     width: 10em;
     height: 10em;
 }
 
-.articlePanierProduit p{
-    font-family: "Montserrat-Regular";
-}
-
-.divQté{
+.divQté {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 0 0.1em;
 }
 
-.divQté select{
+.divQté select {
     max-width: 4em;
     margin: 0 0 0.5em 0;
 }
 
-.articlePanierProduit select + a{
+.articlePanierProduit select+a {
     text-decoration: underline;
 }
 
-.divQté p{
+.divQté p {
     margin: 0 0 0.5em 0;
 }
 
-.articlePanierProduit h3{
+.articlePanierProduit h3 {
     margin: 0;
 }
 
-.divPanierFooter{
+.divPanierFooter {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 1em 1em 0.5em 1em;
-
+    margin: 0.5em 1em;
+    align-items: center;
 }
 
-.divPanierFooter a{
+.divPanierFooter a {
     border-radius: 15px;
     padding: 0.5em 1em 0.5em 1em;
     border: #404E58 1px solid;
 }
 
-.divPanierFooter a:hover{
+.divPanierFooter a:hover {
     background-color: #C63636;
     color: white;
 }
 
-.sectionPanier + aside{
+.sectionPanier+aside {
     width: 25%;
     border-radius: 15px;
     background-color: #E7E8E6;
@@ -567,13 +600,13 @@ header ul {
     align-self: center;
 }
 
-.sectionPanier + aside h2{ 
+.sectionPanier+aside h2 {
     color: #164F57;
     font-size: 1.4em;
     text-align: center;
 }
 
-.btnPanierNonVide{
+.lienPanier {
     color: #E7E8E6;
     border-radius: 15px;
     background-color: #24a064;
@@ -585,27 +618,69 @@ header ul {
     text-align: center;
 }
 
-.btnPanierNonVide:hover{
+.lienPanier:hover {
     background-color: #164F57;
     text-decoration: none;
     color: #E7E8E6;
 }
 
-.btnPanierVide{
+.sectionPanierVide {
+    display: flex;
+    flex-direction: column;
+}
+
+.sectionPanier .h3PasArticlePanier {
+    text-align: center;
+    font-family: "Montserrat-Regular";
+    font-size: 1.2em;
+}
+
+.sectionPanier .lienPasArticlePanier {
+    color: black;
+    text-decoration: underline;
+    font-family: "Montserrat-Medium";
+}
+
+.lienConnexionPanier {
+    margin: auto;
+    margin-bottom: 1em;
+}
+
+aside .lienPanierVide {
     background-color: #BDBFBB;
-    color: #404E58;
+    color: #164F57;
     border-radius: 15px;
     text-decoration: none;
     padding: 0.5em 1em 0.5em 1em;
     margin-top: 1em;
     display: inline-block;
     width: auto;
-    text-align: center; 
+    text-align: center;
 }
 
-.btnPanierVide:hover{
+aside .lienPanierVide:hover {
     background-color: #BDBFBB;
-    color: #404E58;
+    color: #164F57;
+}
+
+.sectionRecommandationsPanier {
+    border-radius: 15px;
+    background-color: #E7E8E6;
+    color: #164F57;
+    width: 100%;
+    margin-top: 2em;
+}
+
+.divRecommandationsPanier {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.divRecommandationsPanier img {
+    width: 10em;
+    height: 10em;
+    margin: 1em;
 }
 
 /*

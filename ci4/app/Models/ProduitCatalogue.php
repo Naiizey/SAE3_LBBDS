@@ -4,14 +4,14 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Produit extends Model
+class ProduitCatalogue extends Model
 {
-    protected $table      = 'produit_catalogue';
+    protected $table      = 'sae3.produit_catalogue';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = false;
 
-    protected $returnType     = \App\Entities\ProduitCatalogue::class;
+    protected $returnType     = \App\Entities\Produit::class;
     protected $useSoftDeletes = false;
 
     protected $allowedFields = ['intitule', 'prixttc','lienimage','isaffiche'];

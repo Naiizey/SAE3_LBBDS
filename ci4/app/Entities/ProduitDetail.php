@@ -2,7 +2,7 @@
 
 use CodeIgniter\Entity\Entity;
 
-class ProduitCatalogue extends Entity
+class ProduitDetail extends Produit
 {
     // ...déjà utilisable sans rien
 }

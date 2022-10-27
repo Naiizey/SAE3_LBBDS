@@ -14,7 +14,7 @@
                             <p class="panierDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus eveniet facilis maxime veniam ... </p>
                         </div>
                     </a>
-                        <div class="divQté">
+                        <div class="divQuantite">
                             <p>Quantité</p>
                             <select name="quantite" id="tabQuant1">
                                 <option value="0">0 (Supprimer)</option>
@@ -43,25 +43,25 @@
                             <p class="panierDescription">Lorem ipsum dolor sit amet consectetur, adipisicing elit. </p>
                         </div>
                     </a>
-                        <div class="divQté">
-                            <p>Quantité</p>
-                            <select name="quantite" id="tabQuant2">
-                                <option value="0">0 (Supprimer)</option>
-                                <option value="1" selected>1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10+">10+</option>
-                            </select>
-                            <!-- si jamais l'utilisateur choisie 10+ il se transforme en number à partir de 10 -->
-                            <a href="">Supprimer</a>
-                        </div>
-                        <h3>35,55€</h3>
+                    <div class="divQuantite">
+                        <p>Quantité</p>
+                        <select name="quantite" id="tabQuant2">
+                            <option value="0">0 (Supprimer)</option>
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10+">10+</option>
+                        </select>
+                        <!-- si jamais l'utilisateur choisie 10+ il se transforme en number à partir de 10 -->
+                        <a href="">Supprimer</a>
+                    </div>
+                    <h3>35,55€</h3>
                 </article>
                 <hr>
                 <div class="divPanierFooter">

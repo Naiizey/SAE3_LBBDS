@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Client extends Model
+class ProduitDetail extends Model
 {
-    protected $table      = 'sae3.client';
-    protected $primaryKey = 'numero';
+    protected $table      = 'sae3.produit_detail';
+    protected $primaryKey = 'id';
 
     protected $useAutoIncrement = false;
 
-    protected $returnType     = \App\Entities\Client::class;
+    protected $returnType     = \App\Entities\ProduitDetail::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['numero','nom','prenom','email','pseudo','mdp'];
+    protected $allowedFields = ['intitule', 'prixttc','lienimage','isaffiche','description','stock'];
 
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';

@@ -335,6 +335,7 @@ header ul {
 .sectionCredit input, label, a {
     font-family: "Montserrat-Regular";
     font-size: larger;
+    color: #D9D9D9;
 }
 
 .sectionCredit form {

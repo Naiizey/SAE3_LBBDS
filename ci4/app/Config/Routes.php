@@ -36,9 +36,17 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
     $routes->get('/', 'Home');
-    
+    $routes->get('/index', 'Home::index');
+
     $routes->get('/connexion/(400)', 'Home::connexion/$1');
+
     $routes->get('/connexion', 'Home::connexion');
+    $routes->get('/inscription', 'Home::inscription');
+
+    $routes->get('/produit', 'Home::produit');
+    $routes->get('/produit/(:num)', 'Home::produit/$1');
+
+
     $routes->get('/test', 'Test::test');
     $routes->post('/credits/connexion', 'EspaceClient::verification');
 

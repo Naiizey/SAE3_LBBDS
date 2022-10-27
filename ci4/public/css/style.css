@@ -64,6 +64,10 @@ header h2:hover {
     max-width: 40%;
 }
 
+.divRecherche a, .divRecherche img {
+    height: 100%;
+}
+
 .champsRecherche {
     border-radius: 25px;
     flex-grow: 1;
@@ -83,10 +87,6 @@ header h2:hover {
     align-items: center;
     margin-left: auto;
     height: 70%;
-}
-
-.logoLoupe {
-    max-width: 1.8em;
 }
 
 .logoProfil, .logoAlizon {
@@ -122,8 +122,11 @@ p {
     font-family: "Montserrat-Regular";
 }
 
-header a:link, header a:hover, header a:active, header a:visited {
+header a, footer a {
     color: #D9D9D9;
+}
+
+header a {
     text-decoration: none;
 }
 
@@ -173,7 +176,7 @@ header ul {
     color: #164F57;
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -1px;
     content: "";
     display: block;
     width: 100%;
@@ -322,6 +325,7 @@ header ul {
     height: 2.5em;
     font-size: x-large;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .sectionCredit input[type="text"], input[type="submit"], input[type="password"], input[type="email"] {
@@ -339,7 +343,7 @@ header ul {
 .sectionCredit input[type="checkbox"] {
     width: 1.2em;
     height: 1.2em;
-    margin: 2% 0 0 0;
+    margin: 0 1% 0 0;
 }
 
 .divCredit a {
@@ -370,6 +374,16 @@ header ul {
 .nomPrenom > div + div > input {
     padding: 0;
     width: 100%;
+}
+
+.divSouvenir {
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
+}
+
+.divSouvenir label {
+    margin-top: 0;
 }
 
 @media (max-width: 1000px) {

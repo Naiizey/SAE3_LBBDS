@@ -14,7 +14,7 @@ class Client extends Model
     protected $returnType     = \App\Entities\Client::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['numero', 'nom','prenom','pseudo','mdp'];
+    protected $allowedFields = ['numero','nom','prenom','email','pseudo','mdp'];
 
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';

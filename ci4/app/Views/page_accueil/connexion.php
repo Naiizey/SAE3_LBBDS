@@ -12,13 +12,13 @@
                         <input type="text" name="identifiant" required="required"/>
                         <label>Mot de passe: </label>
                         <input type="password" name="motDePasse" required="required"/>
-                        <div>
+                        <div class="divSouvenir">
                             <input type="checkbox"/>
                             <label>Se souvenir de moi</label>
                         </div>
                         <input type="submit" value="Se connecter"/>
                     </form>
-                    <a href="inscription.php">Je n'ai pas de compte</a>
+                    <a href="<?= base_url() ?>/inscription">Je n'ai pas de compte</a>
                 </div>
                 <a href="">Mot de passe oublié ?</a>
             </div>

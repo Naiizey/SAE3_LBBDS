@@ -6,8 +6,8 @@ class Home extends BaseController
 {
     public function index()
     {
-        $data['controller']= "connexion";
-        return view('page_accueil/index.php');
+        $data['controller']= "index";
+        return view('page_accueil/index.php',$data);
     }
 
     public function connexion($context = null)
@@ -19,5 +19,29 @@ class Home extends BaseController
         $clientModel = model("\App\Models\Client");
         $data['prod'] = $clientModel->find(1);
         return view('page_accueil/connexion.php',$data);
+    }
+
+    public function inscription($context = null)
+    {
+        $data['controller']= "connexion";
+        if($context == 400)
+        {
+            $data['error']="<p class='erreur'>Erreur d'authentification</p>";
+        }
+        $clientModel = model("\App\Models\Client");
+        $data['prod'] = $clientModel->find(1);
+        return view('page_accueil/inscription.php',$data);
+    }
+
+    public function produit($idProduit = null)
+    {
+        $data['controller']= "produit";
+        if($idProduit == null)
+        {
+            $data['error']="<p class='erreur'>Erreur d'authentification</p>";
+        }
+        $clientModel = model("\App\Models\Produit");
+        $data['prod'] = $clientModel->find($idProduit);
+        return view('page_accueil/produit.php',$data);
     }
 }

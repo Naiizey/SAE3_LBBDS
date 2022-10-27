@@ -29,7 +29,7 @@
     <body>
         <header>
             <div class="divHeaderAlizon">
-                <a class="lienAlizon" href="<?= base_url() ?>/index.php"> <!-- Lien accueil -->
+                <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
                     <img src="<?= base_url() ?>/images/header/logo.png" alt="logoAlizon" title="Accueil" class="logoAlizon">
                     <h1>Alizon</h1>
                 </a>
@@ -39,7 +39,7 @@
                         echo   '<div class="divRecherche">
                                     <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche.."> 
                                     <a href="<?= base_url() ?>/">
-                                        <img class="logoLoupe" src="' . base_url() . '/images/header/loupe.png" alt="recherche" title="Rechercher">
+                                        <img src="' . base_url() . '/images/header/loupe.png" alt="recherche" title="Rechercher">
                                     </a>
                                 </div>';
                     } 

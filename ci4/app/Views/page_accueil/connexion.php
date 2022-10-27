@@ -12,7 +12,7 @@
                         <input type="text" name="identifiant" required="required"/>
                         <label>Mot de passe: </label>
                         <input type="password" name="motDePasse" required="required"/>
-                        <div>
+                        <div class="divSouvenir">
                             <input type="checkbox"/>
                             <label>Se souvenir de moi</label>
                         </div>

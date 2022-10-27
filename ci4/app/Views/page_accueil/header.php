@@ -39,7 +39,7 @@
                         echo   '<div class="divRecherche">
                                     <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche.."> 
                                     <a href="<?= base_url() ?>/">
-                                        <img class="logoLoupe" src="' . base_url() . '/images/header/loupe.png" alt="recherche" title="Rechercher">
+                                        <img src="' . base_url() . '/images/header/loupe.png" alt="recherche" title="Rechercher">
                                     </a>
                                 </div>';
                     } 

@@ -18,7 +18,7 @@
                         </div>
                         <input type="submit" value="Se connecter"/>
                     </form>
-                    <a href="inscription.php">Je n'ai pas de compte</a>
+                    <a href="<?= base_url() ?>/inscription">Je n'ai pas de compte</a>
                 </div>
                 <a href="">Mot de passe oublié ?</a>
             </div>

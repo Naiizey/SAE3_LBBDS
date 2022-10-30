@@ -27,7 +27,8 @@ DROP TABLE IF EXISTS _image_avis CASCADE;
 
 CREATE TABLE _tva
 (
-    cat_tva INT PRIMARY KEY
+    cat_tva INT PRIMARY KEY,
+    taux_tva float
 );
 
 CREATE TABLE _categorie

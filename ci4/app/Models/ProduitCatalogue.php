@@ -15,7 +15,7 @@ use CodeIgniter\Model;
 
 class ProduitDetail extends Model
 {
-    protected $table      = 'sae3.produit_detail';
+    protected $table      = 'sae3.produit_catalogue';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = false;

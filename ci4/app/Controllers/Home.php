@@ -13,23 +13,23 @@ class Home extends BaseController
     public function connexion($context = null)
     {
         $data['controller']= "connexion";
-        if($context == 400){
-            $data['error']="<p class='erreur'>Erreur d'authentification</p>";
+        if($context == 400)
+        {
+            $error= "Connexion refusé, identifiants inccorects";
+            $data['error']="<div class='bloc-erreurs'>
+                                <p class='paragraphe-erreur'>$error</p>
+                            </div>";
         }
-        $clientModel = model("\App\Models\Client");
-        $data['prod'] = $clientModel->find(1);
+        else $data['error']="";
+        
+
         return view('page_accueil/connexion.php',$data);
     }
 
     public function inscription($context = null)
     {
         $data['controller']= "connexion";
-        if($context == 400)
-        {
-            $data['error']="<p class='erreur'>Erreur d'authentification</p>";
-        }
-        $clientModel = model("\App\Models\Client");
-        $data['prod'] = $clientModel->find(1);
+
         return view('page_accueil/inscription.php',$data);
     }
 
@@ -59,7 +59,7 @@ class Home extends BaseController
             $data['prod']=$result;
             return view('page_accueil/produit.php',$data);
         }
-        #TODO: pensez à mettre le prix HT dans la vue et aussi indiquer que la livraisin est gratuite
+        #TODO: pensez à mettre le prix HT dans la vue html et aussi indiquer que la livraison est gratuite
         
         
     }

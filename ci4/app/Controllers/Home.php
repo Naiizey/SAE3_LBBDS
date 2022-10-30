@@ -35,13 +35,15 @@ class Home extends BaseController
 
     public function produit($idProduit = null)
     {
-        $data['controller']= "produit";
         if($idProduit == null)
         {
-            $data['error']="<p class='erreur'>Erreur d'authentification</p>";
+            return view(
+                'errors/html/error_404.php'
+                , array('message' => "Pas de produit spécifier")
+            );
         }
-        $clientModel = model("\App\Models\ProduitDetail");
-        $result = $clientModel->find($idProduit);
+        $prodModel = model("\App\Models\ProduitDetail");
+        $result = $prodModel->find($idProduit);
         if($result == null)
         {
             
@@ -52,8 +54,9 @@ class Home extends BaseController
         }
         else
         {
-            
-            $data['prod']=$result[0];
+            $data['controller']= "produit";
+
+            $data['prod']=$result;
             return view('page_accueil/produit.php',$data);
         }
         #TODO: pensez à mettre le prix HT dans la vue et aussi indiquer que la livraisin est gratuite

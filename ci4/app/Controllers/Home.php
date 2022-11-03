@@ -7,6 +7,7 @@ class Home extends BaseController
     public function index()
     {
         $data['controller']= "index";
+        
         return view('page_accueil/index.php',$data);
     }
 
@@ -15,7 +16,7 @@ class Home extends BaseController
         $data['controller']= "connexion";
         if($context == 400)
         {
-            $error= "Connexion refusé, identifiants inccorects";
+            $error= "Connexion refusé, identifiants incorrects";
             $data['error']="<div class='bloc-erreurs'>
                                 <p class='paragraphe-erreur'>$error</p>
                             </div>";
@@ -31,7 +32,7 @@ class Home extends BaseController
         $errors=session()->get('errors');
        
         //print_r($errors);
-        #TODO: bcrypt 
+
         $data['controller']= "connexion";
 
         return view('page_accueil/inscription.php',$data);

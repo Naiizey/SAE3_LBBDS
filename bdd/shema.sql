@@ -40,7 +40,7 @@ CREATE TABLE _compte
     prenom_compte VARCHAR(50) NOT NULL,
     pseudo VARCHAR(30) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    mot_de_passe VARCHAR(30) NOT NULL
+    mot_de_passe VARCHAR(60) NOT NULL
 );
 
 CREATE TABLE _adresse

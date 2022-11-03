@@ -33,14 +33,56 @@ class Client extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
-    public function getClientByCredentials($identifiant, $motDePasse) : \App\Entities\Client | null
+    private function getClientByCredentials($comptes, $motDePasse, bool $esthashee) : \App\Entities\Client | null
     {
         
-        $retour = $this->where('identifiant',$identifiant)->where('motdepasse',$motDePasse)->findAll();
-        if(sizeof($retour) != 0){
-            return $retour[0];
+        
+        
+            
+        if(!$esthashee)
+        {
+            $comptes=$comptes->findAll();
+            if(sizeof($comptes) != 0)
+            {
+                $retour=null;
+                foreach($comptes as $trouve){
+                
+                    if($trouve->verifCrypt($motDePasse)){
+                        $retour=$trouve;
+                    }
+                }
+                return $retour;
+            }
+            else return null;
+            
         }
-        else return null;
+        else
+        {
+            $comptes=$comptes->where('motdepasse',$motDePasse)->findAll();
+            return (sizeof($comptes)!=0) ? $comptes[0] : null;
+        }
+      
         
     }
+
+    public function getClientByPseudo($identifiant, $motDePasse, bool $esthashee) : \App\Entities\Client | null
+    {
+        
+        $comptes = $this->where('identifiant',$identifiant);
+        
+        return $this->getClientByCredentials($comptes, $motDePasse, $esthashee);
+      
+        
+    }
+
+    public function getClientByEmail($identifiant, $motDePasse, bool $esthashee) : \App\Entities\Client | null
+    {
+        
+        $comptes = $this->where('email',$identifiant);
+        
+        return $this->getClientByCredentials($comptes, $motDePasse, $esthashee);
+      
+        
+    }
+
 }

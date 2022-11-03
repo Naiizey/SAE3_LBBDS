@@ -17,15 +17,18 @@ class Authentification
         if(! empty($entree))
         {
             $clientModel = model("\App\Models\Client");
-            $user = $clientModel->getClientByCredentials($entree['identifiant'],$entree['identifiant']);
+            $user = $clientModel->getClientByPseudo($entree['identifiant'],$entree['motDePasse'],false);
            
             
-            if($user==null)return False;
+            if($user==null) {
+                $user = $clientModel->getClientByEmail($entree['identifiant'],$entree['motDePasse'],false);
+            }
+            if($user==null) return False;
             else
             {
                 $session = session();
-                $session->set('identifiant',$user[0]->identifiant);
-                $session->set('motDePasse',$user[0]->motDePasse);
+                $session->set('identifiant',$user->identifiant);
+                $session->set('motDePasse',$user->motDePasse);
                 return True;
             }
         }
@@ -70,6 +73,7 @@ class Authentification
         
         if(empty($errors)){
             $compteModel=model("\App\Models\Client");
+            $entree->cryptMotDePasse();
             $compteModel->save($entree);
             $session = session();
             $session->set('identifiant',$entree->identifiant);
@@ -84,7 +88,7 @@ class Authentification
         $session = session();
         if($session->has('identifiant') && $session->has('motDePasse')){
             $clientModel = model("\App\Models\Client");
-            if($clientModel->getClientByCredentials($session->get('identifiant'),$session->get('motDePasse')) != null)
+            if($clientModel->getClientByCredentials($session->get('identifiant'),$session->get('motDePasse'),true) != null)
             {
                 return true;
             }

@@ -12,10 +12,12 @@ class Client extends Entity
 
     public $datamap= [
         #numero
-        'motDePasse' => 'motdepasse'
+        'motDePasse' => 'motdepasse',
         #nom
         #prenom
         #identifiant
+        'identifiant' => 'identifiant',
+        'pseudo' => 'identifiant'
     ];
     //les variable en commentaires n'ont aucune utilité à part pour simplifier utilisation au dev
 }

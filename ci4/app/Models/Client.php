@@ -17,12 +17,12 @@ class Client extends Model
     protected $table      = 'sae3.client';
     protected $primaryKey = 'numero';
 
-    protected $useAutoIncrement = false;
+    protected $useAutoIncrement = true;
 
     protected $returnType     = \App\Entities\Client::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['numero','nom','prenom','email','pseudo','mdp'];
+    protected $allowedFields = ['nom','prenom','email','identifiant','motdepasse'];
 
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';

@@ -26,8 +26,12 @@ class Home extends BaseController
         return view('page_accueil/connexion.php',$data);
     }
 
-    public function inscription($context = null)
+    public function inscription()
     {
+        $errors=session()->get('errors');
+       
+        //print_r($errors);
+        #TODO: bcrypt 
         $data['controller']= "connexion";
 
         return view('page_accueil/inscription.php',$data);

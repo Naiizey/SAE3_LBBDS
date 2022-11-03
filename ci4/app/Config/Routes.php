@@ -52,6 +52,7 @@ $routes->set404Override();
     $routes->get('/test', 'Test::test');
     $routes->get('/panier', 'Panier');
     $routes->post('/credits/connexion', 'EspaceClient::verification');
+    $routes->post('/credits/inscription', 'EspaceClient::enregistrement');
 
     $routes->get('/destroy', 'Test::destroySession');
 

@@ -3,6 +3,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/css/style.css" />
+        <?php
+            $logo = file_get_contents(base_url()."/images/header/logo.svg");
+            $profil = file_get_contents(base_url()."/images/header/profil.svg");
+            //$carton = file_get_contents("images/header/carton.svg");
+            //$argentBlanc = file_get_contents("images/header/argentBlanc.svg");
+        ?>
         <style>
             @font-face {
                 font-family: "Expletus Sans";
@@ -36,26 +42,26 @@
                 <?php 
                     if ($controller == "panier" || $controller == "panierVide")
                     {
-                        echo   '<div class="divSuivi">
-                                    <div>
-                                        <img class="imgSuivie1" src="./images/header/logo.png" alt="Panier" title="Panier">
+                        echo   '<div class="divHeaderPanier">
+                                    <div class="divSuivie divSuivie1">
+                                        '.$logo.'
                                         <h3>1. Panier</h3>
                                     </div>
-                                    <hr>
-                                    <div>
-                                        <img class="imgSuivie2" src="./images/header/profil.png" alt="Identification" title="Identification">
+                                    <div class="divSeparationSuivie "></div>
+                                    <div class="divSuivie divSuivie2">
+                                        '.$profil.'
                                         <h3>2. Identification</h3>
                                     </div>
-                                    <hr>
-                                    <div>
-                                        <img class="imgSuivie3" src="./images/header/carton.svg" alt="Livraison" title="Livraison">
+                                    <div class="divSeparationSuivie"></div>
+                                    /*<div class="divSuivie divSuivie3">
+                                        '.$carton.'
                                         <h3>3. Livraison</h3>
                                     </div>
-                                    <hr>
-                                    <div>
-                                        <img class="imgSuivie4" src="./images/header/argentBlanc.png" alt="Paiement" title="Paiement">
+                                    <div class="divSeparationSuivie"></div>
+                                    <div class="divSuivie divSuivie4">
+                                        '.$argentBlanc.'
                                         <h3>4. Paiement</h3>
-                                    </div>
+                                    </div>*/
                                 </div>';
                     } 
                     else 

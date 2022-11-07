@@ -1,7 +1,11 @@
 <?php namespace App\Services;
 
-
-class cardProduit
+/**
+ * Cette classe permet d'afficher une carte d'un produit
+ * @method display
+ * 
+ */
+class CardProduit
 {
     private function normalize(\App\Entities\Produit $prod){
         if (str_contains($prod->intitule,"\n"))

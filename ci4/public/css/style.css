@@ -52,10 +52,8 @@ h2 {
 .divHeaderAlizon {
     background-color: #164F57;
     display: flex;
-    padding-left: 1%;
-    padding-right: 1%;
     position: fixed;
-    width: 98%;
+    width: 100%;
     top: 0;
     z-index: 100;
     justify-content: space-between;
@@ -70,30 +68,32 @@ header h2:hover {
 .lienAlizon {
     display: flex;
     align-items: center;
-    justify-content: space-around;
     height: 70%;
-    width: 15%;
 }
 
 .divRecherche {
     background-color: #D9D9D9;
     padding: 0.3em 0.5em;
-    border-radius: 1.5ex;
+    border-radius: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     flex-grow: 1;
     height: 2em;
     max-width: 40%;
 }
 
+.divRecherche a, .divRecherche img {
+    height: 100%;
+}
+
 .champsRecherche {
-    border-radius: 1ex;
-    flex-grow: .99;
+    border-radius: 25px;
+    flex-grow: 1;
     border-style: none;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    padding-left: 1%;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: .5em;
+    margin-right: .3em;
 }
 
 .champsRecherche:focus {
@@ -103,35 +103,13 @@ header h2:hover {
 .divPanierProfil {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     height: 70%;
-    width: 10%;
 }
 
-.divRecherche > a{
-    display: flex;
-    align-items: center;
-}
-
-.logoLoupe{
-    max-width: 1.7em;
-}
-
-.logoProfil, .logoAlizon{
+.logoProfil, .logoAlizon {
     height: 100%;
     width: auto;
-}
-
-path{
-    fill: #d9d9d9;
-}
-
-.logoLoupe path{
-    fill: black;
-}
-
-.logoProfil:hover path, .logoPanier:hover path, .logoContact:hover path{
-    fill: #6f98bd;
+    margin: 0 0.5em;
 }
 
 .lienConnexion {
@@ -158,62 +136,95 @@ nav {
 }
 
 /* Media query téléphone header */
-@media screen and (max-width:991px){
-    .divPanierProfil{
-        display: none;
-    }
-    
-    .lienAlizon h1{
+@media screen and (max-width:991px) {
+    .divPanierProfil {
         display: none;
     }
 
-    nav{
+    .lienAlizon h1 {
         display: none;
     }
-    
-    .divHeaderAlizon{
+
+    nav {
+        display: none;
+    }
+
+    .divHeaderAlizon {
         height: 10%;
         justify-content: space-around;
     }
 
-    .lienAlizon{
+    .lienAlizon {
         margin-right: 0;
         height: 50%;
     }
 
-    .divRecherche{
+    .divRecherche {
         max-width: 75%;
         height: 50%;
         border-radius: 2.5ex;
     }
 
-    .champsRecherche{
+    .champsRecherche {
         height: 75%;
         font-size: 2em;
         border-radius: 1ex;
         flex-grow: .95;
     }
 
-    .logoLoupe{
+    .logoLoupe {
         max-width: 2.5em;
     }
 }
 
 /* Format paysage */
-@media screen and (max-width: 991px) and (orientation:landscape){
-    .divHeaderAlizon{
+@media screen and (max-width: 991px) and (orientation:landscape) {
+    .divHeaderAlizon {
         height: 20%
     }
 }
-
 
 p {
     font-family: "Montserrat-Regular";
 }
 
-header a:link, header a:hover, header a:active, header a:visited {
+header a, footer a {
     color: #D9D9D9;
+}
+
+header a {
     text-decoration: none;
+}
+
+.divSuivi {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: #D9D9D9;
+    height: 90%;
+    width: 42%;
+}
+
+.divSuivi h3 {
+    margin: 0;
+}
+
+.divSuivi img {
+    height: 100%;
+}
+
+.divSuivi div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.divSuivi hr {
+    height: 3px;
+    width: 12%;
+    background-color: #D9D9D9;
 }
 
 main {
@@ -221,7 +232,6 @@ main {
     padding: 2em;
     background-color: #f3f3f3;
     flex : 1;
-    text-align: center;
 }
 
 footer {
@@ -230,36 +240,28 @@ footer {
     z-index: 100;
 }
 
-footer .pc {
+footer > div {
     display: flex;
     justify-content: space-around;
-}
-
-footer .mobile{
-    display: none;
 }
 
 footer > p {
     color: #D9D9D9;
 }
 
-footer a{
-    color: #D9D9D9;
-}
-
 /* Media query téléphone footer */
-@media screen and (max-width:991px){
-    footer .pc{
+@media screen and (max-width:991px) {
+    footer .pc {
         display: none;
     }
 
-    footer .mobile{
+    footer .mobile {
         width: 100%;
         height: auto;
         display: flex;
     }
 
-    footer .mobile ul{
+    footer .mobile ul {
         display: flex;
         justify-content: space-evenly;
         list-style: none;
@@ -267,7 +269,7 @@ footer a{
         width: 100%;
     }
 
-    footer .mobile li{
+    footer .mobile li {
         width: 7.5%;
         display: flex;
         align-items: center;
@@ -275,12 +277,12 @@ footer a{
         justify-content: space-evenly;
     }
 
-    footer .mobile svg{
+    footer .mobile svg {
         width: 100%;
         height: auto;
     }
 
-    footer .mobile li div:not(.menu){
+    footer .mobile li div:not(.menu) {
         display: block;
         background-color: #D9D9D9;
         width: 100%;
@@ -288,15 +290,15 @@ footer a{
         border-radius: 15ex;
     }
 
-    footer .mobile li:last-child:hover div:not(.menu){
+    footer .mobile li:last-child:hover div:not(.menu) {
         background-color: #6F98C7;
     }
 
-    footer .mobile ul > div{
+    footer .mobile ul>div {
         display: none;
     }
 
-    .menu{
+    .menu {
         position: absolute;
         height: 81.5%;
         width: 100%;
@@ -308,26 +310,26 @@ footer a{
         justify-content: space-evenly;
     }
 
-    .menu a{
+    .menu a {
         text-decoration: underline !important;
     }
 
-    .menu p{
+    .menu p {
         font-size: 3em;
         color: #164f57;
     }
 }
 
-@media screen and (max-width: 991px) and (orientation:landscape){
-    footer .mobile li{
+@media screen and (max-width: 991px) and (orientation:landscape) {
+    footer .mobile li {
         width: 5%;
     }
 
-    footer > p{
+    footer>p {
         margin: 1%;
     }
 
-    footer ul{
+    footer ul {
         margin: 0;
     }
 }

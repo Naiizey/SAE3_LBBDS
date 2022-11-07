@@ -18,8 +18,8 @@
                             <div>
                                 <img src="images/art5.png" />
                             </div>
-                        </div> 
-                        <p><?php echo $prod->description;?></p>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit enim laudantium quia fugit incidunt impedit, fugiat officia mollitia veniam, quos voluptatum ullam rem voluptatem repudiandae corporis nam quis aliquid similique? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio eum architecto, inventore eaque consequuntur quod dolor commodi soluta iure quasi, minus magnam in repudiandae recusandae repellat ipsam consectetur facere nobis?</p>
                     </div>
                     <div class="divDroite">
                         <div>

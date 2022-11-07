@@ -11,8 +11,12 @@ class Test extends BaseController{
 
         public function test()
         {
-            $prodModel=model("\App\Models\Produit");
-            return view('card-produit.php');
+            $data['cardProduit']=service("cardProduit");
+
+            $prodModel=model("\App\Models\ProduitCatalogue");
+            $data['prod']=$prodModel->find(17);
+        
+            return view('card-produit-exemple.php',$data);
         }
 
         public function test2()

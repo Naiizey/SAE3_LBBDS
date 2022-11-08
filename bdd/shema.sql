@@ -26,9 +26,12 @@ CREATE TABLE _categorie
 );
 
 CREATE TABLE _sous_categorie(
-    code_cat INT,
     code_sous_cat INT,
-    CONSTRAINT _sous_categorie_pk PRIMARY KEY (code_cat, code_sous_cat)
+    libelle_cat VARCHAR(50) NOT NULL,
+
+    code_cat INT,--sous
+
+    CONSTRAINT _sous_categorie_pk PRIMARY KEY (code_sous_cat)
 );
 
 
@@ -102,7 +105,7 @@ CREATE TABLE _produit
     seuil_alerte_prod INT,
     alerte_prod BOOLEAN NOT NULL,
 
-    code_cat INT NOT NULL--contenu_dans
+    code_sous_cat INT NOT NULL--contenu_dans
 );
 
 
@@ -212,7 +215,7 @@ CREATE TABLE _refere
 --------------------------------------------------------------*/
 
 --Association 1..* entre _pdt et _categorie ✅ (contenu_dans)
-ALTER TABLE _produit ADD CONSTRAINT _produit_categorie_fk FOREIGN KEY (code_cat) REFERENCES _categorie(code_cat);
+ALTER TABLE _produit ADD CONSTRAINT _produit_sous_categorie_fk FOREIGN KEY (code_sous_cat) REFERENCES _sous_categorie(code_sous_cat) ;
 
 --Association 1..* entre _tva et _categorie ✅ (dans_cat_tva)
 ALTER TABLE _categorie ADD CONSTRAINT _categorie_tva_fk FOREIGN KEY (cat_tva) REFERENCES _tva(cat_tva);
@@ -261,9 +264,8 @@ ALTER TABLE _avis ADD CONSTRAINT _avis_produit_fk FOREIGN KEY (id_prod) REFERENC
 -- ALTER TABLE _avis ADD CONSTRAINT _avis_pk PRIMARY KEY (id_prod,num_compte);
 ALTER TABLE _avis ADD CONSTRAINT _avis_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
--- Association *..1 entre catégorie et catégorie ✅
+-- Association *..1 entre catégorie et catégorie (sous) ✅
 ALTER TABLE _sous_categorie ADD CONSTRAINT _sous_categorie_categorie_code_cat_fk FOREIGN KEY (code_cat) REFERENCES _categorie(code_cat);
-ALTER TABLE _sous_categorie ADD CONSTRAINT sous_categorie_categorie_code_sous_cat_fk FOREIGN KEY (code_sous_cat) REFERENCES _categorie(code_cat);
 
 -- Association *..1 entre adresse_livraison et commande ✅
 ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY (id_adresse) REFERENCES _adresse_livraison(id_a);

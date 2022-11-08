@@ -191,8 +191,9 @@ header a {
     margin: 0;
 }
 
-.divSuivi img {
-    height: 100%;
+.divSuivi img, .divSuivi svg {
+    height: auto;
+    width: auto;
 }
 
 .divSuivi div {

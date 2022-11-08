@@ -60,7 +60,7 @@ header h2, header nav {
 .lienAlizon {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     height: 70%;
     width: 11%;
 }

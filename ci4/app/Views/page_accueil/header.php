@@ -30,7 +30,7 @@
         <header>
             <div class="divHeaderAlizon">
                 <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
-                    <img src="<?= base_url() ?>/images/header/logo.png" alt="logoAlizon" title="Accueil" class="logoAlizon">
+                    <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
                     <h1>Alizon</h1>
                 </a>
                 <?php 
@@ -38,22 +38,22 @@
                     {
                         echo   '<div class="divSuivi">
                                     <div>
-                                        <img class="imgSuivie1" src="./images/header/logo.png" alt="Panier" title="Panier">
+                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/logo.svg").'
                                         <h3>1. Panier</h3>
                                     </div>
                                     <hr>
                                     <div>
-                                        <img class="imgSuivie2" src="./images/header/profil.png" alt="Identification" title="Identification">
+                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/panier.svg").'
                                         <h3>2. Identification</h3>
                                     </div>
                                     <hr>
                                     <div>
-                                        <img class="imgSuivie3" src="./images/header/carton.svg" alt="Livraison" title="Livraison">
+                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/carton.svg").'
                                         <h3>3. Livraison</h3>
                                     </div>
                                     <hr>
                                     <div>
-                                        <img class="imgSuivie4" src="./images/header/argentBlanc.png" alt="Paiement" title="Paiement">
+                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/argentBlanc.svg").'
                                         <h3>4. Paiement</h3>
                                     </div>
                                 </div>';
@@ -61,10 +61,8 @@
                     else 
                     {
                         echo   '<div class="divRecherche">
-                                    <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche.."> 
-                                    <a href="<?= base_url() ?>/">
-                                        <img src="' . base_url() . '/images/header/loupe.png" alt="recherche" title="Rechercher">
-                                    </a>
+                                <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche..">
+                                <a href="">'.file_get_contents(dirname(__DIR__,3)."/public/images/header/loupe.svg").'</a>
                                 </div>';
                     }
                 ?>
@@ -73,7 +71,7 @@
                         <h2>Panier</h2>
                     </a>
                     <a class="lienConnexion" href="<?= base_url() ?>/connexion">
-                        <img class="logoProfil" src="<?= base_url() ?>/images/header/profil.png" onmouseover=passageDeLaSouris(this); onmouseout=departDeLaSouris(this); />
+                        <?php include(dirname(__DIR__,3)."/public/images/header/profil.svg")?>
                     </a>
                 </div>
             </div> 

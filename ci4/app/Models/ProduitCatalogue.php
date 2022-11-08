@@ -13,7 +13,7 @@ use CodeIgniter\Model;
  * @return \App\Entities\Client
  */
 
-class ProduitDetail extends Model
+class ProduitCatalogue extends Model
 {
     protected $table      = 'sae3.produit_catalogue';
     protected $primaryKey = 'id';

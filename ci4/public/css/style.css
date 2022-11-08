@@ -612,6 +612,8 @@ header ul {
 */
 
 .mainPanier {
+    display: flex;
+    flex-direction: column;
     background-color: white;
     color: #164F57;
     font-family: "Montserrat-Medium";
@@ -629,10 +631,41 @@ header ul {
     border-radius: 3px;
 }
 
+.mainPanier aside {
+    border-radius: 15px;
+    background-color: #E7E8E6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+    position: fixed;
+    right: 2%;  
+    width: 23%; 
+}
+
+.mainPanier aside .lienPanierVide {
+    background-color: #BDBFBB;
+    color: #164F57;
+    border-radius: 15px;
+    text-decoration: none;
+    padding: 0.5em 1em 0.5em 1em;
+    margin-top: 1em;
+    display: inline-block;
+    width: auto;
+    text-align: center;
+}
+
+.mainPanier aside .lienPanierVide:hover {
+    background-color: #BDBFBB;
+    color: #164F57;
+}
+
 .divPanierEtAside {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-between;  
+    flex-grow: 1;
+    width: 100%;
 }
 
 .sectionPanier {
@@ -664,6 +697,7 @@ header ul {
     font-family: "Montserrat-Regular";
     font-size: 1.2em;
     text-align: center;
+    margin-top: 1em;
 }
 
 .sectionPanier a {
@@ -687,36 +721,6 @@ header ul {
     flex-direction: column;
 }
 
-.mainPanier aside {
-    border-radius: 15px;
-    background-color: #E7E8E6;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1em;
-    position: fixed;
-    right: 2%;
-    top: 45%;
-    width: 23%;
-}
-
-.mainPanier aside .lienPanierVide {
-    background-color: #BDBFBB;
-    color: #164F57;
-    border-radius: 15px;
-    text-decoration: none;
-    padding: 0.5em 1em 0.5em 1em;
-    margin-top: 1em;
-    display: inline-block;
-    width: auto;
-    text-align: center;
-}
-
-.mainPanier aside .lienPanierVide:hover {
-    background-color: #BDBFBB;
-    color: #164F57;
-}
-
 .divPanierHeader {
     font-family: "Montserrat-Medium";
     color: #164F57;
@@ -724,6 +728,10 @@ header ul {
     font-size: 1.4em;
     justify-content: space-between;
     width: 100%;
+}
+
+.divPanierHeader + hr + div {
+    text-align: center;
 }
 
 .articlePanier {
@@ -820,7 +828,6 @@ header ul {
     color: #164F57;
     margin-top: 2em;
     padding: 1em;
-    flex-grow: 1;
 }
 
 .sectionRecommandationsPanier ul {

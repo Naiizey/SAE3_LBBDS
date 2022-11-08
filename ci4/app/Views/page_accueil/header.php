@@ -3,12 +3,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/css/style.css" />
-        <?php
-            $logo = file_get_contents(base_url()."/images/header/logo.svg");
-            $profil = file_get_contents(base_url()."/images/header/profil.svg");
-            //$carton = file_get_contents("images/header/carton.svg");
-            //$argentBlanc = file_get_contents("images/header/argentBlanc.svg");
-        ?>
         <style>
             @font-face {
                 font-family: "Expletus Sans";
@@ -36,41 +30,50 @@
         <header>
             <div class="divHeaderAlizon">
                 <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
+<<<<<<< HEAD
                     <img src="<?= base_url() ?>/images/header/logo.png" alt="logoAlizon" title="Accueil" class="logoAlizon">
+=======
+                    <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
+>>>>>>> 9c837b0864843a37a65901b288bb9ae26a033907
                     <h1>Alizon</h1>
                 </a>
                 <?php 
                     if ($controller == "panier" || $controller == "panierVide")
                     {
-                        echo   '<div class="divHeaderPanier">
-                                    <div class="divSuivie divSuivie1">
-                                        '.$logo.'
+                        echo   '<div class="divSuivi">
+                                    <div>
+                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/logo.svg").'
                                         <h3>1. Panier</h3>
                                     </div>
-                                    <div class="divSeparationSuivie "></div>
-                                    <div class="divSuivie divSuivie2">
-                                        '.$profil.'
+                                    <hr>
+                                    <div>
+                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/panier.svg").'
                                         <h3>2. Identification</h3>
                                     </div>
-                                    <div class="divSeparationSuivie"></div>
-                                    /*<div class="divSuivie divSuivie3">
-                                        '.$carton.'
+                                    <hr>
+                                    <div>
+                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/carton.svg").'
                                         <h3>3. Livraison</h3>
                                     </div>
-                                    <div class="divSeparationSuivie"></div>
-                                    <div class="divSuivie divSuivie4">
-                                        '.$argentBlanc.'
+                                    <hr>
+                                    <div>
+                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/argentBlanc.svg").'
                                         <h3>4. Paiement</h3>
-                                    </div>*/
+                                    </div>
                                 </div>';
                     } 
                     else 
                     {
                         echo   '<div class="divRecherche">
+<<<<<<< HEAD
                                     <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche.."> 
                                     <a href="<?= base_url() ?>/">
                                         <img src="' . base_url() . '/images/header/loupe.png" alt="recherche" title="Rechercher">
                                     </a>
+=======
+                                <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche..">
+                                <a href="">'.file_get_contents(dirname(__DIR__,3)."/public/images/header/loupe.svg").'</a>
+>>>>>>> 9c837b0864843a37a65901b288bb9ae26a033907
                                 </div>';
                     }
                 ?>
@@ -79,7 +82,11 @@
                         <h2>Panier</h2>
                     </a>
                     <a class="lienConnexion" href="<?= base_url() ?>/connexion">
+<<<<<<< HEAD
                         <img class="logoProfil" src="<?= base_url() ?>/images/header/profil.png" onmouseover=passageDeLaSouris(this); onmouseout=departDeLaSouris(this); />
+=======
+                        <?php include(dirname(__DIR__,3)."/public/images/header/profil.svg")?>
+>>>>>>> 9c837b0864843a37a65901b288bb9ae26a033907
                     </a>
                 </div>
             </div> 

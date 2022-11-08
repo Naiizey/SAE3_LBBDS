@@ -62,7 +62,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-around;
     height: 70%;
-    width: 15%;
+    width: 11%;
 }
 
 .divRecherche {
@@ -95,7 +95,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 70%;
-    width: 10%;
+    width: 8%;
 }
 
 .divRecherche > a{

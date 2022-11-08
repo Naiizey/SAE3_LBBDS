@@ -47,6 +47,24 @@ header h2:hover {
     color: #6F98C7;
 }
 
+header hr {
+    background-color: #D9D9D9;
+    height: 3px;
+    border: none;
+    width: 100%;
+    margin: 0;
+}
+
+header h2, header nav {
+    font-family: "Montserrat-Medium";
+    font-size: 1.2em;
+}
+
+header a:link, header a:hover, header a:active, header a:visited {
+    color: #D9D9D9;
+    text-decoration: none;
+}
+
 .lienAlizon {
     display: flex;
     align-items: center;
@@ -118,19 +136,6 @@ path{
     height: 100%;
 }
 
-hr {
-    background-color: #D9D9D9;
-    height: 3px;
-    border: none;
-    width: 100%;
-    margin: 0;
-}
-
-header h2, header nav {
-    font-family: "Montserrat-Medium";
-    font-size: 1.2em;
-}
-
 nav {
     position: relative;
     top : 4.17em;
@@ -186,14 +191,8 @@ nav {
     }
 }
 
-
 p {
     font-family: "Montserrat-Regular";
-}
-
-header a:link, header a:hover, header a:active, header a:visited {
-    color: #D9D9D9;
-    text-decoration: none;
 }
 
 main {
@@ -230,9 +229,7 @@ main {
 }
 
 .divSuivi hr {
-    height: 3px;
     width: 12%;
-    background-color: #D9D9D9;
 }
 
 footer {
@@ -348,17 +345,13 @@ footer a{
 ┃          Composants d'erreurs          ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-div.bloc-erreurs{
+div.bloc-erreurs {
     margin: 0;
     text-align: center;
     position: relative;
-   
-
-
-   
 }
 
-p.paragraphe-erreur{
+p.paragraphe-erreur {
     color: red;
 }
 

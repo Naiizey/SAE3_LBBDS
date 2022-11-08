@@ -13,11 +13,11 @@
                                         <div>
                                             <h3 class="h3PasArticlePanier">Vous n’avez aucun article dans votre panier. <br> <a href="index.php" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>';
 
-                        $connecte = true;
+                        $connecte = false;
                         if ($connecte == false)
                         {
-                            echo "<h3 class='h3PasArticlePanier'>Connectez-vous pour récupérer votre panier.</h3>";
-                            echo "<a href=connexion.php class='lienPanier'>Se connecter</a>";
+                            echo '<h3 class="h3PasArticlePanier">Connectez-vous pour récupérer votre panier.</h3>';
+                            echo '<a href="' . base_url() . '/connexion" class="lienPanier">Se connecter</a>';
                         } 
                         
                         echo   '        </div>

@@ -6,8 +6,9 @@
         <?php
             $logo = file_get_contents(base_url()."/images/header/logo.svg");
             $profil = file_get_contents(base_url()."/images/header/profil.svg");
-            //$carton = file_get_contents("images/header/carton.svg");
-            //$argentBlanc = file_get_contents("images/header/argentBlanc.svg");
+            //$carton = file_get_contents(base_url()."/images/header/carton.svg");
+            //$argentBlanc = file_get_contents(base_url()."/images/header/argentBlanc.svg");
+            $loupe = file_get_contents(base_url()."/images/header/loupe.svg");
         ?>
         <style>
             @font-face {
@@ -36,10 +37,10 @@
         <header>
             <div class="divHeaderAlizon">
                 <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
-                    <img src="<?= base_url() ?>/images/header/logo.png" alt="logoAlizon" title="Accueil" class="logoAlizon">
+                    <?php echo file_get_contents(base_url()."/images/header/logo.svg")?>
                     <h1>Alizon</h1>
                 </a>
-                <?php 
+                <?php
                     if ($controller == "panier" || $controller == "panierVide")
                     {
                         echo   '<div class="divHeaderPanier">
@@ -63,27 +64,25 @@
                                         <h3>4. Paiement</h3>
                                     </div>*/
                                 </div>';
-                    } 
-                    else 
+                    }
+                    else
                     {
-                        echo   '<div class="divRecherche">
-                                    <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche.."> 
-                                    <a href="<?= base_url() ?>/">
-                                        <img src="' . base_url() . '/images/header/loupe.png" alt="recherche" title="Rechercher">
-                                    </a>
-                                </div>';
+                        echo   "<div class='divRecherche'>
+                                <input class='champsRecherche' type='text' name='recherche' placeholder='Recherche..'>
+                                <a href=''>".$loupe."</a>
+                                </div>";
                     }
                 ?>
                 <div class="divPanierProfil">
-                    <a href="<?= base_url() ?>/panier"> 
+                    <a href="<?= base_url() ?>/panier">
                         <h2>Panier</h2>
                     </a>
                     <a class="lienConnexion" href="<?= base_url() ?>/connexion">
-                        <img class="logoProfil" src="<?= base_url() ?>/images/header/profil.png" onmouseover=passageDeLaSouris(this); onmouseout=departDeLaSouris(this); />
+                        <?php echo file_get_contents(base_url()."/images/header/profil.svg")?>
                     </a>
                 </div>
-            </div> 
-            <?php 
+            </div>
+            <?php
                 if ($controller == "index" || $controller == "produit")
                 {
                     echo    '<nav>

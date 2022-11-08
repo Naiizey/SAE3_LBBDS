@@ -4,7 +4,7 @@
             <div class="divCredit">
                 <div class="sectionCredit">
                     <h2>Inscription</h2>
-                    <form action='<?= base_url() ?>/credits/inscription' method="post">
+                    <form action='<?= base_url() ?>/inscription' method="post">
                         <label>Pseudo:</label>
                         <input type="text" name="pseudo" required="required"/>
                         <div class="nomPrenom">

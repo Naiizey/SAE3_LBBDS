@@ -7,7 +7,7 @@ class Home extends BaseController
     public function index()
     {
         $data['controller']= "index";
-        
+ 
         return view('page_accueil/index.php',$data);
     }
 
@@ -29,12 +29,25 @@ class Home extends BaseController
 
     public function inscription()
     {
-        $errors=session()->get('errors');
+        $post=$this->request->getPost();
+        $erreurs=[];
+        if(!empty($post)){
+            $auth = service('authentification');
+            $user= new \App\Entities\Client();
+            $user->fill($post);
+            $issues=$auth->inscription($user,$post['confirmezMotDePasse']); 
+
+            if(empty($issues)){
+                return redirect()->to("/");
+            }
+        }
+        
+      
        
         //print_r($errors);
 
         $data['controller']= "connexion";
-
+        print_r($issues);
         return view('page_accueil/inscription.php',$data);
     }
 

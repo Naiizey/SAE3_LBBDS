@@ -19,20 +19,5 @@ class EspaceClient extends BaseController
         
     }
 
-    public function enregistrement(){
-        $auth = service('authentification');
-        $post=$this->request->getPost();
-        $user= new \App\Entities\Client();
-        $user->fill($post);
-        $issues=$auth->inscription($user,$post['confirmezMotDePasse']); 
 
-        if(empty($issues)){
-            return redirect()->to("/");
-        }
-        else{
-            session()->set("errors",$issues);
-            return redirect()->to("/inscription");
-        }
-        
-    }
 }

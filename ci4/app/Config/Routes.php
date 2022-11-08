@@ -42,6 +42,8 @@ $routes->set404Override();
 
     $routes->get('/connexion', 'Home::connexion');
     $routes->get('/inscription', 'Home::inscription');
+    $routes->post('/inscription', 'Home::inscription');
+
 
     $routes->get('/produit', 'Home::produit');
     $routes->get('/produit/(:num)', 'Home::produit/$1');
@@ -52,7 +54,6 @@ $routes->set404Override();
     $routes->get('/test', 'Test::test');
     $routes->get('/panier', 'Panier');
     $routes->post('/credits/connexion', 'EspaceClient::verification');
-    $routes->post('/credits/inscription', 'EspaceClient::enregistrement');
 
     $routes->get('/destroy', 'Test::destroySession');
 

@@ -217,8 +217,9 @@ main {
     margin: 0;
 }
 
-.divSuivi img {
+.divSuivi img, .divSuivi svg {
     height: 100%;
+    width: auto;
 }
 
 .divSuivi div {

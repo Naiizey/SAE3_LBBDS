@@ -108,4 +108,11 @@ class Home extends BaseController
         
         return view('page_accueil/panier.php',$data);
     }
+
+    public function catalogue($page=null){
+        $data['cardProduit']=service("cardProduit");
+        $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
+        $data['controller']="Catalogue";
+        return view("catalogue.php",$data);
+    }
 }

@@ -1022,6 +1022,10 @@ header ul {
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+.card-produit-ext{
+    margin: 0 5px;
+}
+
 .card-produit{
     width: 219px;
     height: 300px;
@@ -1074,4 +1078,42 @@ div.image-card{
     text-align: center;
     font-size: 25px;
     margin: 0;
+}
+
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Catalogue (Catalogue.php)                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+
+
+main#Catalogue{
+    display: flex;
+}
+
+.liste-produits{
+    display: flex;
+    width: 70%;
+}
+
+
+.liste-categories{
+    background-color: #164F57;
+    width: 30%;
+    min-height: 2000px;
+    height: fit-content;
+    background-color: white;
+}
+
+/*
+.categories{
+    width: 30%;
+}
+*/
+.titre-categorie{
+    padding: 15px 0 ;
+    min-width: 100%;
+    background-color: #164F57
 }

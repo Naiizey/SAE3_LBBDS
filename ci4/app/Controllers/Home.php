@@ -44,7 +44,7 @@ class Home extends BaseController
         {
             return view(
                 'errors/html/error_404.php'
-                , array('message' => "Pas de produit spécifier")
+                , array('message' => "Pas de produit spécifié")
             );
         }
         $prodModel = model("\App\Models\ProduitDetail");

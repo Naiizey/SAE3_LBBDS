@@ -615,6 +615,7 @@ header ul {
     background-color: white;
     color: #164F57;
     font-family: "Montserrat-Medium";
+    text-align: left;
 }
 
 .mainPanier hr {
@@ -632,8 +633,6 @@ header ul {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    height: 42em;
 }
 
 .sectionPanier {
@@ -645,7 +644,6 @@ header ul {
     color: #164F57;
     width: 70%;
     padding: 1em;
-    height: 95%;
 }
 
 .sectionPanier h2 {
@@ -689,18 +687,20 @@ header ul {
     flex-direction: column;
 }
 
-aside {
+.mainPanier aside {
     border-radius: 15px;
     background-color: #E7E8E6;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1em;
-    margin-left: 2em;
-    flex-grow: 1;
+    position: fixed;
+    right: 2%;
+    top: 45%;
+    width: 23%;
 }
 
-aside .lienPanierVide {
+.mainPanier aside .lienPanierVide {
     background-color: #BDBFBB;
     color: #164F57;
     border-radius: 15px;
@@ -712,7 +712,7 @@ aside .lienPanierVide {
     text-align: center;
 }
 
-aside .lienPanierVide:hover {
+.mainPanier aside .lienPanierVide:hover {
     background-color: #BDBFBB;
     color: #164F57;
 }
@@ -723,6 +723,7 @@ aside .lienPanierVide:hover {
     display: flex;
     font-size: 1.4em;
     justify-content: space-between;
+    width: 100%;
 }
 
 .articlePanier {

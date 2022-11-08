@@ -31,11 +31,11 @@
                     else
                     {
                         echo   '<section class="sectionPanier">
-                                    <div class="divPanierHeader">
-                                            <h2>Votre panier</h2>
-                                            <h3>Prix</h3>
-                                    </div>
                                     <div class="divPanierArticles">
+                                        <div class="divPanierHeader">
+                                                <h2>Votre panier</h2>
+                                                <h3>Prix</h3>
+                                        </div>
                                         <hr>
                                         <article class="articlePanier">
                                             <a href="">

@@ -34,4 +34,9 @@ class Services extends BaseService
     {
        return new \App\Services\Authentification();
     }
+
+    public static function cardProduit()
+    {
+       return new \App\Services\CardProduit();
+    }
 }

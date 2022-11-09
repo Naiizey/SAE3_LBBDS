@@ -7,12 +7,12 @@
         <?php endfor; ?>
         </div>
         <div class="nav-page">
-            <?php for($i=1;$i<=$nombreMaxPages;++$i): ?>
+            <?php for($i=0;$i<=$nombreMaxPages;++$i): ?>
                 
                     <?php if($i==$page):?>
-                        <a <?=($i>1)?"href='./".($i-1)."'":"" ?>  class="fleche-page <?=($i<=1)?"indisponible":"" ?>"><img src='<?= base_url() ?>/images/catalogue/Fleche_page_gauche.svg' alt='tourner page vers la gauche'></a>
+                        <a <?=($i>0)?"href='".base_url()."/catalogue/".($i-1)."'":"" ?>  class="fleche-page <?=($i<=1)?"indisponible":"" ?>"><img src='<?= base_url() ?>/images/catalogue/Fleche_page_gauche.svg' alt='tourner page vers la gauche'></a>
                         <span class="chiffre-page"><?= $i ?> </span>
-                        <a  <?=($i<$nombreMaxPages)?"href='./".($i+1)."'":"" ?> class="fleche-page <?=($i>=$nombreMaxPages)?"indisponible":"" ?>"><img class="fleche-page <?=($i==$nombreMaxPages)?"indisponible":"" ?>" src='<?= base_url() ?>/images/catalogue/Fleche_page_droite.svg' alt='tourner page vers la droite'></a>
+                        <a  <?=($i<$nombreMaxPages)?"href='".base_url()."/catalogue/".($i+1)."'":"" ?> class="fleche-page <?=($i>=$nombreMaxPages)?"indisponible":"" ?>"><img class="fleche-page <?=($i==$nombreMaxPages)?"indisponible":"" ?>" src='<?= base_url() ?>/images/catalogue/Fleche_page_droite.svg' alt='tourner page vers la droite'></a>
                     <?php else:?>
                         <?= $i ?>
                     <?php endif;?>

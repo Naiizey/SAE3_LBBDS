@@ -37,12 +37,12 @@
                         <hr>
                     </div>
                     <div class="articlesAcceuil">
-                        <?php $minProd=0; $maxProd=5?>
+                        <?php $minProd=0; $maxProd=6?>
                         <?php for($i=$minProd;$i<$maxProd && $i<sizeof($prods);++$i): ?>
                             <?= $cardProduit->display($prods[$i])?>
                         <?php endfor; ?>
                     </div>
-                    <h2><a href="./catalogue">Voir les produits</a></h2>
+                    <h2><a href="<?=base_url()?>/catalogue/">Voir les produits</a></h2>
                 </section>
                 <section>
                     <div class="titreAccueil">
@@ -50,7 +50,6 @@
                         <hr>
                     </div>
                     <div class="articlesAcceuil">
-                        <?php $minProd=0; $maxProd=5?>
                         <?php for($i=$minProd;$i<$maxProd && $i<sizeof($prods);++$i): ?>
                             <?= $cardProduit->display($prods[$i])?>
                         <?php endfor; ?>

@@ -44,12 +44,18 @@ class Home extends BaseController
                 return redirect()->to("/");
             }
         }
-       
-        //print_r($errors);
 
         $data['controller']= "inscription";
         $data['erreurs'] = $issues;
-        //print_r($issues);
+
+        //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
+        $data['pseudo'] = (isset($_POST['pseudo'])) ? $_POST['pseudo'] : "";
+        $data['nom'] = (isset($_POST['nom'])) ? $_POST['nom'] : "";
+        $data['prenom'] = (isset($_POST['prenom'])) ? $_POST['prenom'] : "";
+        $data['email'] = (isset($_POST['email'])) ? $_POST['email'] : "";
+        $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
+        $data['confirmezMotDePasse'] = (isset($_POST['confirmezMotDePasse'])) ? $_POST['confirmezMotDePasse'] : "";
+
         return view('page_accueil/inscription.php',$data);
     }
 
@@ -123,15 +129,16 @@ class Home extends BaseController
         $data['categories']=model("\App\Models\CategorieModel")->findAll();
         $data['controller']="Catalogue";
         
-        $data['nombreMaxPages']=sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE;
+        $data['nombreMaxPages']=(sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE)+1;
         if(is_null($page) || $page==0)
         {
             $data['minProd']=0;
             $data['maxProd']=self::NBPRODSPAGECATALOGUE;
-            $data['page']=1;
+            $data['page']=0;
         }
         else
         {
+            
             if($data['nombreMaxPages']>=$page)
             {
                 $data['page']=$page;

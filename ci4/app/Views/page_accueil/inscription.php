@@ -16,30 +16,30 @@
                     <h2>Inscription</h2>
                     <form action='<?= base_url() ?>/inscription' method="post">
                         <label>Pseudo:</label>
-                        <input type="text" name="pseudo" required="required"/>
+                        <input type="text" name="pseudo" required="required" value="<?= $pseudo?>"/>
                         <?= afficheErreurs($erreurs, 3); ?>
                         <div class="nomPrenom">
                             <div>
                                 <label>Nom:</label>
-                                <input type="text" name="nom" required="required"/>
+                                <input type="text" name="nom" required="required" value="<?= $nom?>"/>
                             </div>
                             <div>
                                 <label>Prénom:</label>
-                                <input type="text" name="prenom" required="required"/>
+                                <input type="text" name="prenom" required="required" value="<?= $prenom?>"/>
                             </div>
                         </div>
                         <?= afficheErreurs($erreurs, 2); ?>
                         <label>Adresse mail:</label>
-                        <input type="email" name="email" />
+                        <input type="email" name="email" required="required" value="<?= $email?>"/>
                         <?= afficheErreurs($erreurs, 4); ?>
                         <label>Mot de passe:</label>
-                        <input type="password" name="motDePasse" required="required"/>
+                        <input type="password" name="motDePasse" required="required" value="<?= $motDePasse?>"/>
                         <?= 
                             afficheErreurs($erreurs, 5) .
                             afficheErreurs($erreurs, 6)
                         ?>
                         <label>Confirmez mot de passe:</label>
-                        <input type="password" name="confirmezMotDePasse" required="required"/>
+                        <input type="password" name="confirmezMotDePasse" required="required" value="<?= $confirmezMotDePasse?>"/>
                         <?= afficheErreurs($erreurs, 1); ?>
                         <input type="submit" value="S'inscrire"/>
                     </form>

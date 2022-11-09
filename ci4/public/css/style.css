@@ -555,6 +555,11 @@ header ul {
     color: #164F57;
 }
 
+.mainAccueil section a:hover {
+    background-color: #164F57;
+    color: #F3F3F3;
+}
+
 .iconesAccueil {
     display: flex;
     justify-content: space-around;

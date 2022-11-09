@@ -441,6 +441,7 @@ header ul {
 #carousel-container {
     position: relative;
     margin: 0;
+    padding: 2em 0;
 }
 
 #carousel {
@@ -502,6 +503,37 @@ header ul {
 
 .btn-suiv {
     right: 4%;
+}
+
+.mainAccueil {
+    padding: 0;
+}
+
+.underline {
+    width: fit-content;
+    margin-top: 4em;
+    text-align: right;
+}
+
+.underline hr {
+    width: 30em;
+    background-color: #3997A3;
+    height: 6px;
+}
+
+.underline h1 {
+    font-size: xx-large;
+    color: #164F57;
+    padding-right: .2em;
+}
+
+.phare {
+    background-color: #DCE5E6;
+}
+
+.mainAccueil section p {
+    text-align:justify;
+    margin: 1em 6em;
 }
 
 /*

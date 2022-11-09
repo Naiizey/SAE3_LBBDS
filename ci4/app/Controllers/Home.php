@@ -16,7 +16,7 @@ class Home extends BaseController
         $data['controller']= "connexion";
         if($context == 400)
         {
-            $error= "Connexion refusé, identifiants incorrects";
+            $error= "Connexion refusée, identifiant et ou mot de passe incorrects";
             $data['error']="<div class='bloc-erreurs'>
                                 <p class='paragraphe-erreur'>$error</p>
                             </div>";
@@ -30,7 +30,7 @@ class Home extends BaseController
     public function inscription()
     {
         $post=$this->request->getPost();
-        $erreurs=[];
+        $issues=[];
         if(!empty($post)){
             $auth = service('authentification');
             $user= new \App\Entities\Client();
@@ -41,13 +41,11 @@ class Home extends BaseController
                 return redirect()->to("/");
             }
         }
-        
-      
        
         //print_r($errors);
 
-        $data['controller']= "connexion";
-        print_r($issues);
+        $data['controller']= "inscription";
+        //print_r($issues);
         return view('page_accueil/inscription.php',$data);
     }
 

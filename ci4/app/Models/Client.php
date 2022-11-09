@@ -33,7 +33,7 @@ class Client extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
-    private function getClientByCredentials($comptes, $motDePasse, bool $esthashee) : \App\Entities\Client | null
+    private function getClientByCredentials($comptes, $motDePasse, bool $esthashee) //: \App\Entities\Client | null
     {
         
         
@@ -65,7 +65,7 @@ class Client extends Model
         
     }
 
-    public function getClientByPseudo($identifiant, $motDePasse, bool $esthashee) : \App\Entities\Client | null
+    public function getClientByPseudo($identifiant, $motDePasse, bool $esthashee) //: \App\Entities\Client | null
     {
         
         $comptes = $this->where('identifiant',$identifiant);
@@ -75,7 +75,7 @@ class Client extends Model
         
     }
 
-    public function getClientByEmail($identifiant, $motDePasse, bool $esthashee) : \App\Entities\Client | null
+    public function getClientByEmail($identifiant, $motDePasse, bool $esthashee) //: \App\Entities\Client | null
     {
         
         $comptes = $this->where('email',$identifiant);

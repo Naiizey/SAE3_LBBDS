@@ -72,3 +72,5 @@ function autoScroll() {
         scrollToSlide(curSlide);
     }
 }
+
+//TODO: voir et cacher le mot de passe avec un bouton (un neuil) dans l'<input>

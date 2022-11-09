@@ -7,6 +7,9 @@ class Home extends BaseController
     public function index()
     {
         $data['controller']= "index";
+
+        $data['cardProduit']=service("cardProduit");
+        $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
  
         return view('page_accueil/index.php',$data);
     }

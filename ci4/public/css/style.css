@@ -506,7 +506,6 @@ header ul {
 
 .titreAccueil {
     width: fit-content;
-    margin-top: 4em;
     text-align: right;
 }
 
@@ -526,10 +525,20 @@ header ul {
     background-color: #DCE5E6;
 }
 
+.articlesAcceuil {
+    display: flex;
+    margin: 2em 0;
+    justify-content: space-around;
+}
+
 .mainAccueil section p {
     text-align:justify;
     margin: 1em 6em;
     color: #164F57;
+}
+
+.mainAccueil section {
+    margin: 4em 0;
 }
 
 .iconesAccueil {
@@ -541,7 +550,7 @@ header ul {
 }
 
 .iconesAccueil figure img {
-    width: 20%;
+    width: 50%;
 }
 
 /*

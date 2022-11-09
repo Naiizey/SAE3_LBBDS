@@ -36,7 +36,12 @@
                         <h1>Nos produits phares</h1>
                         <hr>
                     </div>
-                    <!-- les produits -->
+                    <div class="articlesAcceuil">
+                        <?php $minProd=0; $maxProd=5?>
+                        <?php for($i=$minProd;$i<$maxProd && $i<sizeof($prods);++$i): ?>
+                            <?= $cardProduit->display($prods[$i])?>
+                        <?php endfor; ?>
+                    </div>
                     <h2><a href="">Voir les produits</a></h2>
                 </section>
                 <section>
@@ -44,7 +49,12 @@
                         <h1>Nos promotions</h1>
                         <hr>
                     </div>
-                    <!-- les produits -->
+                    <div class="articlesAcceuil">
+                        <?php $minProd=0; $maxProd=5?>
+                        <?php for($i=$minProd;$i<$maxProd && $i<sizeof($prods);++$i): ?>
+                            <?= $cardProduit->display($prods[$i])?>
+                        <?php endfor; ?>
+                    </div>
                     <h2><a href="">Voir les promotions</a></h2>
                 </section>
                 <div class="iconesAccueil">

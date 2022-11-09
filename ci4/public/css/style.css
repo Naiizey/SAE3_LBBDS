@@ -1228,3 +1228,21 @@ ul.liste-sous-categories {
 .chiffre-page{
     font-size: 1.5em;
 }
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                   Page import CSS                               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+#dropzone {
+    background-color: lightgreen;
+    flex-basis: 100%;
+    flex-grow: 1;
+    border-radius: 0.9em;
+    padding: 10px;
+    height: 10em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

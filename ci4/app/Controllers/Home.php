@@ -150,4 +150,9 @@ class Home extends BaseController
 
         return view("catalogue.php",$data);
     }
+    public function import()
+    {
+        $data['controller']= "import";
+        return view('page_accueil/import.php', $data);
+    }
 }

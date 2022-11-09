@@ -44,12 +44,18 @@ class Home extends BaseController
                 return redirect()->to("/");
             }
         }
-       
-        //print_r($errors);
 
         $data['controller']= "inscription";
         $data['erreurs'] = $issues;
-        //print_r($issues);
+
+        //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
+        $data['pseudo'] = (isset($_POST['pseudo'])) ? $_POST['pseudo'] : "";
+        $data['nom'] = (isset($_POST['nom'])) ? $_POST['nom'] : "";
+        $data['prenom'] = (isset($_POST['prenom'])) ? $_POST['prenom'] : "";
+        $data['email'] = (isset($_POST['email'])) ? $_POST['email'] : "";
+        $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
+        $data['confirmezMotDePasse'] = (isset($_POST['confirmezMotDePasse'])) ? $_POST['confirmezMotDePasse'] : "";
+
         return view('page_accueil/inscription.php',$data);
     }
 

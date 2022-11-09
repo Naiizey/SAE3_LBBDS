@@ -27,7 +27,7 @@ class Home extends BaseController
         return view('page_accueil/connexion.php',$data);
     }
 
-    public function inscription($context = null)
+    public function inscription()
     {
         $post=$this->request->getPost();
         $issues=[];
@@ -45,13 +45,7 @@ class Home extends BaseController
         //print_r($errors);
 
         $data['controller']= "inscription";
-        if($context == 400)
-        {
-            $data['erreur'] = "<div class='bloc-erreurs'>
-                                    <p class='paragraphe-erreur'>$issues</p>
-                              </div>";
-        }
-        else $data['erreur']="";
+        $data['erreurs'] = $issues;
         //print_r($issues);
         return view('page_accueil/inscription.php',$data);
     }

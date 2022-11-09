@@ -27,6 +27,7 @@ class Authentification
             else
             {
                 $session = session();
+                $session->set('numero',$user->numero);
                 $session->set('identifiant',$user->identifiant);
                 $session->set('motDePasse',$user->motDePasse);
                 return True;
@@ -39,24 +40,20 @@ class Authentification
     public function inscription(\App\Entities\Client $entree, $verifMdp) : array
     {   
         $errors=[];
-        if(! empty($entree))
+        if(!empty($entree))
         {
-            
-            if(
-                
-                empty($entree->motDePasse) 
+            if(    empty($entree->motDePasse) 
                 || empty($entree->pseudo) 
                 || empty($entree->nom)
-                //|| empty($entree->prenom)
+                || empty($entree->prenom)
                 || empty($entree->email)
+            ) $errors[1]="Remplissez le(s) champs vide(s)";
 
-            ) $errors[1]="Champ(s) vide";
+            if(strlen($entree->nom) > 50 && strlen($entree->prenom) > 50) $errors[2]= "50 caractères maximum pour le nom (" . strlen($entree->prenom) . " actuellement) et/ou prénom (" . strlen($entree->nom) . " actuellement)";
 
-            if(strlen($entree->nom) > 50 && strlen($entree->prenom) > 50) $errors[2]=["Trop de caracterères,nom et prénom, 50 attendues",strlen($entree->prenom),strlen($entree->nom)];
+            if(strlen($entree->pseudo) > 30 ) $errors[3]="30 caractères maximum pour le pseudo (" .strlen($entree->pseudo) . " actuellement)";
 
-            if(strlen($entree->pseudo) > 30 ) $errors[3]=["Trop de caracterères pseudo, 30 attendues",strlen($entree->pseudo)];
-
-            if(!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) && strlen($entree->email)<255) $errors[4]="L'email ne correspond aux normes de tailles(255) ou de caractère";
+            if(!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) && strlen($entree->email)<255) $errors[4]="255 caractères maximum pour l'email et caractère spéciaux interdits";
 
             if (preg_match_all("/[a-z]/",$entree->motDePasse) < 1 
             ||  preg_match_all("/[A-Z]/",$entree->motDePasse) < 1 
@@ -65,9 +62,7 @@ class Authentification
             ||  strlen($entree->motDePasse) < 12
             ) $errors[5]="Le mot de passe doit faire plus de 12 caractère et doit contenir au moins une majuscule, une minuscule et un chiffre";
             
-            else if($entree->motDePasse != $verifMdp) $errors[6]="Les mots de passes ne correspondent pas";
-
-
+            if($entree->motDePasse != $verifMdp) $errors[6]="Les mots de passes ne correspondent pas";
         }
         else $errors[0] ="Pas d'entrée";
         
@@ -78,6 +73,9 @@ class Authentification
             $session = session();
             $session->set('identifiant',$entree->identifiant);
             $session->set('motDePasse',$entree->motDePasse);
+
+            $user = $compteModel->getClientByPseudo($entree['identifiant'],$entree['motDePasse'],false);
+
         }
 
         return $errors;

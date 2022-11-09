@@ -54,7 +54,7 @@ $routes->set404Override();
     $routes->get('/catalogue', 'Home::catalogue');
     $routes->get('/catalogue/(:num)', 'Home::catalogue/$1');
 
-    $routes->get('/test', 'Test::test');
+    $routes->get('/test', 'Test::test3');
     $routes->get('/panier', 'Panier');
     $routes->post('/credits/connexion', 'EspaceClient::verification');
 

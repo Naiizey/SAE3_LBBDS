@@ -1,4 +1,14 @@
-<?php require("header.php"); ?>
+<?php require("header.php");
+    function afficheErreurs($e, $codeE)
+    {
+        if (isset($e[$codeE]))
+        {
+            return "<div class='bloc-erreurs'>
+                                <p class='paragraphe-erreur'>$e[$codeE]</p>
+                    </div>";
+        }   
+    }  
+?>
         </header>
         <main>
             <div class="divCredit">
@@ -7,6 +17,7 @@
                     <form action='<?= base_url() ?>/inscription' method="post">
                         <label>Pseudo:</label>
                         <input type="text" name="pseudo" required="required"/>
+                        <?= afficheErreurs($erreurs, 3); ?>
                         <div class="nomPrenom">
                             <div>
                                 <label>Nom:</label>
@@ -17,13 +28,19 @@
                                 <input type="text" name="prenom" required="required"/>
                             </div>
                         </div>
+                        <?= afficheErreurs($erreurs, 2); ?>
                         <label>Adresse mail:</label>
-                        <input type="email" name="email" required="required"/>
+                        <input type="email" name="email" />
+                        <?= afficheErreurs($erreurs, 4); ?>
                         <label>Mot de passe:</label>
                         <input type="password" name="motDePasse" required="required"/>
+                        <?= 
+                            afficheErreurs($erreurs, 5) .
+                            afficheErreurs($erreurs, 6)
+                        ?>
                         <label>Confirmez mot de passe:</label>
                         <input type="password" name="confirmezMotDePasse" required="required"/>
-                        <?=$erreur ?>
+                        <?= afficheErreurs($erreurs, 1); ?>
                         <input type="submit" value="S'inscrire"/>
                     </form>
                     <a href="<?= base_url() ?>/connexion">J'ai déjà un compte</a>

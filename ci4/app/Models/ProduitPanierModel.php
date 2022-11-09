@@ -5,7 +5,7 @@ namespace App\Models;
 use \App\Entities\ProduitPanier as Produit;
 
 use CodeIgniter\Model;
-
+use Exception;
 
 class ProduitPanierModel extends Model
 {
@@ -27,9 +27,9 @@ class ProduitPanierModel extends Model
         return $this->where('num_client',$numCli)->findAll();
     }
 
-    public function deleteFromPanier(Produit $prod)
+    public function deleteFromPanier($idProd,$numCli)
     {
-        return $this->where('num_client',$prod->numCli)->delete($this->id);
+        return $this->where('num_client',$numCli)->delete($idProd);
     }
 
     public function viderPanier($numCli)
@@ -39,20 +39,31 @@ class ProduitPanierModel extends Model
         }
     }
 
-    public function ajouterProduit(Produit $prod,$numCli)
+    public function ajouterProduit($idProd,$quantite,$numCli)
     {
-        if(isset($prod->id) && isset($prod->quantite) && isset($prod->numCli)){
+        if($this->find($idProd) == null){
+            $prod=new Produit();
+            $prod->fill(array('id'=>$idProd,'quantite'=>$quantite,'num_client'=>$numCli));
             $this->save($prod);
 
         }
+        else throw new Exception("Ce produit est déjà dans le panier !");
+        
+
+        
     }
 
-    public function changerQuantite(Produit $prod,$numCli,$newQuanite){
-        $prod->quantite=$newQuanite;
-        if(isset($prod->id) && isset($prod->id) && isset($prod->numCli)){
+    public function changerQuantite($idProd,$numCli,$newQuanite){
+        $prod=$this->find($idProd);
+        if($prod != null){
+            $prod->fill(array('id'=>$idProd,'quantite'=>$newQuanite,'num_client'=>$numCli));
             $this->save($prod);
-
         }
+        else throw new Exception("Ce produit n'est pas dans le panier !");
+        
+        
+
+        
     }   
 
 }

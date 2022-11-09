@@ -2,7 +2,7 @@
         <main class="mainPanier">
             <div class="divPanierEtAside">
                 <?php 
-                    if ($controller == "panierVide")
+                    if (empty($produits))
                     {
                         echo   '<section class="sectionPanier">
                                     <div>
@@ -87,7 +87,7 @@
                 ?> 
             </div>
             <?php
-                if ($controller == 'panierVide')
+                if (empty($produits))
                 {
                     echo    '<section class="sectionRecommandationsPanier">
                                 <h2>Recommandations</h2>

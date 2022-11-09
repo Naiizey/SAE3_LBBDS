@@ -46,7 +46,9 @@ class Panier extends BaseController
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }
 
-        $data['produits'] = model("\App\Models\ProduitPanierModel")->findAll();
+        $data['produits'] = model("\App\Models\ProduitPanierModel")->getPanierFromClient(1);
+
+    
         
         return view('page_accueil/panier.php', $data);
     }

@@ -27,7 +27,7 @@ class ProduitPanierModel extends Model
         return $this->where('num_client',$numCli)->findAll();
     }
 
-    public function deleteFromPanier(Produit $prod,)
+    public function deleteFromPanier(Produit $prod)
     {
         return $this->where('num_client',$prod->numCli)->delete($this->id);
     }

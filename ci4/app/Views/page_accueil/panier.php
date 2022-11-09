@@ -36,9 +36,12 @@
                                                 <h2>Votre panier</h2>
                                                 <h3>Prix</h3>
                                         </div>';
-
+                        $sommePrix = 0;
+                        $sommeNbArticle = 0;
                         foreach ($produits as $produit)
                         {
+                            $sommeNbArticle += 1;
+                            $sommePrix += $produit -> prixTtc;
                             //print_r($produit);
                             echo       '<hr>
                                         <article class="articlePanier">
@@ -51,19 +54,19 @@
                                             </a>
                                                 <div class="divQuantite">
                                                     <p>Quantité</p>
-                                                    <select name="quantite">
-                                                        <option value="0">0 (Supprimer)</option>
-                                                        <option value="1" selected>1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                        <option value="9">9</option>
-                                                        <option value="10+">10+</option>
-                                                    </select>
+                                                    <select name="quantite">';
+                            for ($i = 0; $i < $produit -> quantite; $i++)
+                            {
+                                if ($i == 1)
+                                {
+                                    echo               '<option value="1" selected>1</option>';
+                                }
+                                else
+                                {
+                                    echo                   '<option value="' . $i . '">' . $i . "</option>";
+                                }
+                            }
+                            echo                   '</select>
                                                     <a href="">Supprimer</a>
                                                 </div>
                                                 <h3>' . $produit -> prixTtc . '€</h3>
@@ -73,11 +76,11 @@
                                     </div>
                                     <div class="divPanierFooter"> 
                                         <a href="">Vider le panier</a>
-                                        <h2>Sous-total (2 articles) : 55,00€</h2>
+                                        <h2>Sous-total (' . $sommeNbArticle . ' articles) : ' . $sommePrix . '€</h2>
                                     </div>
                                 </section>
                                 <aside>
-                                    <h2>Sous-total (2 articles) : 55,00€</h2>
+                                    <h2>Sous-total (' . $sommeNbArticle . ' articles) : ' . $sommePrix . '€</h2>
                                     <a class="lienPanier" href="">Valider le panier</a>
                                 </aside>';
                     }

@@ -30,7 +30,7 @@ class Home extends BaseController
     public function inscription()
     {
         $post=$this->request->getPost();
-        $erreurs=[];
+        $issues=[];
         if(!empty($post)){
             $auth = service('authentification');
             $user= new \App\Entities\Client();
@@ -47,7 +47,7 @@ class Home extends BaseController
         //print_r($errors);
 
         $data['controller']= "connexion";
-        print_r($issues);
+      
         return view('page_accueil/inscription.php',$data);
     }
 

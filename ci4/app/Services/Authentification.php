@@ -74,7 +74,6 @@ class Authentification
             $session->set('identifiant',$entree->identifiant);
             $session->set('motDePasse',$entree->motDePasse);
 
-            $user = $compteModel->getClientByPseudo($entree['identifiant'],$entree['motDePasse'],false);
 
         }
 

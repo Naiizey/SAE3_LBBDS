@@ -55,7 +55,7 @@ class CardProduit
 
     private function cardProduit($prod){ 
         ob_start(); ?>
-        <div class="card-produit-ext">
+        <a href="<?= base_url()."/produit/".$prod->id ?>" class="card-produit-ext">
         <div class="card-produit">
     
             <div class="image-card" style="background-image: url(<?= base_url().'/'.$prod->lienimage
@@ -66,7 +66,7 @@ class CardProduit
             <p class="prix-card"><?= $prod->prixttc?>€</p>
     
         </div>
-        </div>
+        </a>
         <?php return ob_get_clean();
     }
 

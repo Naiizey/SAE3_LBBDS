@@ -25,14 +25,14 @@
             </div>
             <div>
                 <section>
-                    <div class="underline">
+                    <div class="titreAccueil">
                         <h1>&Agrave; propos de nous</h1>
                         <hr>
                     </div>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </section>
-                <section class="phare">
-                    <div class="underline">
+                <section class="produitsPhare">
+                    <div class="titreAccueil">
                         <h1>Nos produits phares</h1>
                         <hr>
                     </div>
@@ -40,24 +40,24 @@
                     <h2><a href="">Voir les produits</a></h2>
                 </section>
                 <section>
-                    <div class="underline">
+                    <div class="titreAccueil">
                         <h1>Nos promotions</h1>
                         <hr>
                     </div>
                     <!-- les produits -->
                     <h2><a href="">Voir les promotions</a></h2>
                 </section>
-                <div>
+                <div class="iconesAccueil">
                     <figure>
-                        <img src="" alt="" title="">
+                        <img src="./images/header/logo.svg" alt="" title="">
                         <figcaption>Livraison gratuite !</figcaption>
                     </figure>
                     <figure>
-                        <img src="" alt="" title="">
+                        <img src="./images/header/hermine.svg" alt="" title="">
                         <figcaption>Produits issus de commerces Bretons !</figcaption>
                     </figure>
                     <figure>
-                        <img src="" alt="" title="">
+                        <img src="./images/header/carton.svg" alt="" title="">
                         <figcaption>Livraison à domicile !</figcaption>
                     </figure>
                 </div>

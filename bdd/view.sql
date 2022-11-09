@@ -3,7 +3,6 @@ SET SCHEMA 'sae3';
 
 
 
-drop view produit_detail;
 
 CREATE OR REPLACE VIEW produit_catalogue AS
     WITH moyenne AS (SELECT id_prod id,avg(note_prod) as moyenneNote FROM _produit natural join _note  group by id_prod)
@@ -18,7 +17,10 @@ CREATE OR REPLACE VIEW produit_detail AS
     SELECT id_prod  id, intitule_prod intitule, prix_ttc prixTTC,lien_image_prod lienImage,publication_prod  isAffiche, libelle_cat categorie, code_sous_cat codeCategorie,description_prod description, stock_prod stock FROM _produit NATURAL JOIN _sous_categorie c LEFT JOIN moyenne on _produit.id_prod = moyenne.id;
 
 CREATE OR REPLACE VIEW categorie AS
-    SELECT code_cat,libelle_cat libelle FROM _categorie;
+    SELECT code_cat,libelle_cat libelle,cat_tva FROM _categorie;
 
 CREATE OR REPLACE VIEW sous_categorie AS
-    SELECT concat(code_cat,code_sous_cat) ,libelle_cat libelle FROM _sous_categorie;
+    SELECT code_sous_cat code_cat, libelle_cat libelle, code_cat code_sur_cat FROM _sous_categorie;
+
+
+SELECT * From sous_categorie inner join categorie c on sous_categorie.code_sur_cat = c.code_cat;

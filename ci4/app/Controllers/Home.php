@@ -112,6 +112,7 @@ class Home extends BaseController
     public function catalogue($page=null){
         $data['cardProduit']=service("cardProduit");
         $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
+        $data['categories']=model("\App\Models\CategorieModel")->findAll();
         $data['controller']="Catalogue";
         return view("catalogue.php",$data);
     }

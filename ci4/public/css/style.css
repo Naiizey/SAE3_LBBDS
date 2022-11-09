@@ -436,6 +436,7 @@ header ul {
 #carousel-container {
     position: relative;
     margin: 0;
+    padding: 2em 0;
 }
 
 #carousel {
@@ -497,6 +498,50 @@ header ul {
 
 .btn-suiv {
     right: 4%;
+}
+
+.mainAccueil {
+    padding: 0;
+}
+
+.titreAccueil {
+    width: fit-content;
+    margin-top: 4em;
+    text-align: right;
+}
+
+.titreAccueil hr {
+    width: 28em;
+    background-color: #3997A3;
+    height: 6px;
+}
+
+.titreAccueil h1 {
+    font-size: xx-large;
+    color: #164F57;
+    padding-right: .2em;
+}
+
+.produitsPhare {
+    background-color: #DCE5E6;
+}
+
+.mainAccueil section p {
+    text-align:justify;
+    margin: 1em 6em;
+    color: #164F57;
+}
+
+.iconesAccueil {
+    display: flex;
+    justify-content: space-around;
+    font-family: "Montserrat-Regular";
+    font-size: x-large;
+    color: #164F57;
+}
+
+.iconesAccueil figure img {
+    width: 20%;
 }
 
 /*

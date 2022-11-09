@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use \App\Entities\Produit as Produit;
+use \App\Entities\ProduitPanier as Produit;
 
 use CodeIgniter\Model;
 
@@ -19,14 +19,6 @@ class ProduitPanierModel extends Model
 
     protected $allowedFields = ['id','quantite','num_client'];
 
-    protected $useTimestamps = false;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
-
-    protected $validationRules    = [];
-    protected $validationMessages = [];
-    protected $skipValidation     = false;
 
 
 
@@ -35,12 +27,12 @@ class ProduitPanierModel extends Model
         return $this->where('num_client',$numCli)->findAll();
     }
 
-    public function deleteFromPanier(Produit $prod,$numCli)
+    public function deleteFromPanier(Produit $prod,)
     {
-        return $this->where('num_client',$numCli)->delete($this->id);
+        return $this->where('num_client',$prod->numCli)->delete($this->id);
     }
 
-    public function viderPanier(Produit $prod,$numCli)
+    public function viderPanier($numCli)
     {
         foreach($this->getPanierFromClient($numCli) as $prod){
             $this->delete($prod,$numCli);
@@ -49,11 +41,18 @@ class ProduitPanierModel extends Model
 
     public function ajouterProduit(Produit $prod,$numCli)
     {
-        
+        if(isset($prod->id) && isset($prod->quantite) && isset($prod->numCli)){
+            $this->save($prod);
+
+        }
     }
 
-    public function changerQuantite(Produit $prod,$numCli){
-        
-    }
+    public function changerQuantite(Produit $prod,$numCli,$newQuanite){
+        $prod->quantite=$newQuanite;
+        if(isset($prod->id) && isset($prod->id) && isset($prod->numCli)){
+            $this->save($prod);
+
+        }
+    }   
 
 }

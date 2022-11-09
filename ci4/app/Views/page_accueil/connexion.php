@@ -1,7 +1,6 @@
 <?php require("header.php"); ?>
         </header>
         <main>
-            
             <div class="divAlizon">
                 <img src="<?= base_url() ?>/images/logo_noir.png" alt="logoAlizon" title="Accueil">
             </div>
@@ -17,7 +16,7 @@
                             <input type="checkbox"/>
                             <label>Se souvenir de moi</label>
                         </div>
-                        <?=$error ?>
+                        <?=$erreur ?>
                         <input type="submit" value="Se connecter"/>
                     </form>
                     <a href="<?= base_url() ?>/inscription">Je n'ai pas de compte</a>

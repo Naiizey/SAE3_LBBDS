@@ -23,6 +23,7 @@
                         <input type="password" name="motDePasse" required="required"/>
                         <label>Confirmez mot de passe:</label>
                         <input type="password" name="confirmezMotDePasse" required="required"/>
+                        <?=$erreur ?>
                         <input type="submit" value="S'inscrire"/>
                     </form>
                     <a href="<?= base_url() ?>/connexion">J'ai déjà un compte</a>

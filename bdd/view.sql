@@ -26,3 +26,6 @@ CREATE OR REPLACE VIEW categorie AS
 
 CREATE OR REPLACE VIEW sous_categorie AS
     SELECT concat(code_cat,code_sous_cat) ,libelle_cat libelle FROM _sous_categorie;
+
+CREATE OR REPLACE VIEW produitCSV AS
+    SELECT * from _produit;

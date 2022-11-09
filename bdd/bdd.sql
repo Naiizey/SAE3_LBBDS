@@ -1,3 +1,4 @@
+-- Active: 1655031515408@@127.0.0.1@5432@postgres
 -- SQLBook: Code
 DROP SCHEMA IF EXISTS sae3 CASCADE;
 CREATE SCHEMA sae3; 

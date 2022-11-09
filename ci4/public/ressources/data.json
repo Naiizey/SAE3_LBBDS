@@ -1,0 +1,15 @@
+[
+    {
+        "intitule_prod": "133",
+        "prix_ht": "10",
+        "prix_ttc": "15",
+        "description_prod": "'arottes mures et bien juteuses provenant de la provance excellent l\u00e9gume typiquement francais. Provenance: gouadeloupe'",
+        "lien_image_prod": " 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg'",
+        "publication_prod": "true",
+        "stock_prod": "10",
+        "moyenne_note_prod": " 4.5",
+        "seuil_alerte_prod": "5",
+        "alerte_prod": "true",
+        "code_sous_cat": "131"
+    }
+]

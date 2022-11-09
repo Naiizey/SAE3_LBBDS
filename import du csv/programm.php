@@ -48,7 +48,7 @@ function verify_entete($line)
     $missing = 0;
     $listmanquant = array();
     $listproche = array();
-    $list = array('code_cat','intitule_prod','prix_ht','prix_ttc','description_prod','lien_image_prod','publication_prod','stock_prod','moyenne_note_prod','seuil_alerte_prod','alerte_prod');  
+    $list = array('code_sous_cat','intitule_prod','prix_ht','prix_ttc','description_prod','lien_image_prod','publication_prod','stock_prod','moyenne_note_prod','seuil_alerte_prod','alerte_prod');  
     $line = str_replace(' ', '', $line);
     foreach ($list as $value) {
         if (!in_array($value, $line)) {
@@ -108,9 +108,11 @@ function convert_tab($tab)
         echo $errors.' erreur(s) détectée(s) <br>';
     }
     //export en json pour test (optionnel)
-    // $json = json_encode($new_table);
-    // $file = 'data.json';
-    // file_put_contents($file, $json);
+    $json = json_encode($new_table);
+    $file = 'data.json';
+    file_put_contents($file, $json);
     return $new_table;
 }
+// regex qui repond a l'expression : "code_sous_cat":"*" (avec * = n'importe quoi)
+
 ?>

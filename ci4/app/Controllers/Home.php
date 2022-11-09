@@ -147,6 +147,29 @@ class Home extends BaseController
     public function import()
     {
         $data['controller']= "import";
+        $strJsonFileContents = file_get_contents("ressources/data.json");
+        $array = json_decode($strJsonFileContents, true);
+        if($array[0]['alerte_prod'])    // suggested by **mario**
+        {
+            echo "alerte";
+            $array[0]['alerte_prod'] = "1";
+        }
+        else {
+            echo "pas alerte";
+            $array[0]['alerte_prod'] = "0";   
+        }
+        if($array[0]['publication_prod'])    // suggested by **mario**
+        {
+            echo "publié";
+            $array[0]['publication_prod'] = "1";    
+        }
+        else {
+            echo "pas publié";
+            $array[0]['publication_prod'] = "0";   
+        }
+        print_r($array);
+        $importModel = model("\App\Models\ImportCSV");
+        $importModel->CSVimport($array);
         return view('page_accueil/import.php', $data);
     }
 }

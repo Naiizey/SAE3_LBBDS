@@ -1,0 +1,10 @@
+SET SCHEMA 'sae3';
+CREATE OR REPLACE FUNCTION csvImport() RETURNS TRIGGER AS
+$$
+BEGIN
+    INSERT INTO _produit SELECT * FROM old;
+END
+$$
+language plpgsql;
+DROP TRIGGER csvImport ON produitCSV;
+/* CREATE OR REPLACE TRIGGER csvImport INSTEAD OF INSERT ON produitcsv FOR EACH ROW EXECUTE PROCEDURE csvImport();

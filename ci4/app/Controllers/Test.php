@@ -28,6 +28,8 @@ class Test extends BaseController{
 
         public function test3()
         {
-            print_r(model("\App\Models\ProduitPanierModel")->getPanierFromClient(1));
+            $prods=model("\App\Models\ProduitPanierModel")->getPanierFromClient(1);
+            model("\App\Models\ProduitPanierModel")->delete(1);
+            print_r($prods);
         }
 }

@@ -61,8 +61,8 @@ header h2, header nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70%;
-    width: 11%;
+    height: 100%;
+    width: 13%;
 }
 
 .divRecherche {
@@ -94,8 +94,8 @@ header h2, header nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70%;
-    width: 8%;
+    height: 100%;
+    width: 10%;
 }
 
 .divRecherche > a{
@@ -108,7 +108,7 @@ header h2, header nav {
 }
 
 .logoProfil, .logoAlizon{
-    height: 100%;
+    height: 70%;
     width: auto;
 }
 
@@ -126,6 +126,8 @@ path{
 
 .lienConnexion {
     height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 hr {
@@ -140,55 +142,6 @@ nav {
     position: relative;
     top : 4.17em;
     background-color: #3997A3;
-}
-
-/* Media query téléphone header */
-@media screen and (max-width:991px){
-    .divPanierProfil{
-        display: none;
-    }
-    
-    .lienAlizon h1{
-        display: none;
-    }
-
-    nav{
-        display: none;
-    }
-    
-    .divHeaderAlizon{
-        height: 10%;
-        justify-content: space-around;
-    }
-
-    .lienAlizon{
-        margin-right: 0;
-        height: 50%;
-    }
-
-    .divRecherche{
-        max-width: 75%;
-        height: 50%;
-        border-radius: 2.5ex;
-    }
-
-    .champsRecherche{
-        height: 75%;
-        font-size: 2em;
-        border-radius: 1ex;
-        flex-grow: .95;
-    }
-
-    .logoLoupe{
-        max-width: 2.5em;
-    }
-}
-
-/* Format paysage */
-@media screen and (max-width: 991px) and (orientation:landscape){
-    .divHeaderAlizon{
-        height: 20%
-    }
 }
 
 p {
@@ -234,9 +187,45 @@ main {
     background-color: #D9D9D9;
 }
 
+/* Media query téléphone header */
+
 @media screen and (max-width: 991px){
+    .divPanierProfil{
+        display: none;
+    }
+    
+    .lienAlizon h1{
+        display: none;
+    }
+
+    nav{
+        display: none;
+    }
+    
+    .divHeaderAlizon{
+        height: 10%;
+        justify-content: space-around;
+    }
+
+    .divRecherche{
+        max-width: 75%;
+        height: 50%;
+        border-radius: 2.5ex;
+    }
+
+    .champsRecherche{
+        height: 75%;
+        font-size: 2em;
+        border-radius: 1ex;
+        flex-grow: .95;
+    }
+
+    .logoLoupe{
+        max-width: 2.5em;
+    }
+
     .divSuivi {
-        width: 100%;
+        width: 70%;
         padding-left: 2%;
         padding-right: 2%;
     }
@@ -249,9 +238,12 @@ main {
     .divSuivi hr{
         width: 5%
     }
+}
 
-    .lienAlizon{
-        display: none;
+/* Format paysage */
+@media screen and (max-width: 991px) and (orientation:landscape){
+    .divHeaderAlizon{
+        height: 20%
     }
 }
 
@@ -487,7 +479,7 @@ header ul {
     padding: .8%;
     transition: 0.2s ease-in-out;
     width: 1.5em;
-    top : 50%;
+    top : 42%;
 }
 
 .btn:hover {

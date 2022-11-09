@@ -103,6 +103,13 @@ class Home extends BaseController
         return view('page_accueil/panier.php',$data);
     }
 
+    public function viderPanierClient()
+    {
+        session() -> get("numero");
+        $ProduitPanierModel = model("\App\Models\ProduitPanierModel");
+        //$ProduitPanierModel -> viderPanierClient
+    }
+
     private const NBPRODSPAGECATALOGUE = 10;
     #FIXME: comportement href différent entre $page=null oe $page !=null    
 

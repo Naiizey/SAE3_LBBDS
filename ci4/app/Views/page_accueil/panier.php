@@ -55,7 +55,7 @@
                                                 <div class="divQuantite">
                                                     <p>Quantité</p>
                                                     <select name="quantite">';
-                            for ($i = 0; $i < $produit -> quantite; $i++)
+                            for ($i = 1; $i < $produit -> quantite + 1; $i++)
                             {
                                 if ($i == 1)
                                 {

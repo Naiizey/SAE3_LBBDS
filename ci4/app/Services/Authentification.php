@@ -27,6 +27,7 @@ class Authentification
             else
             {
                 $session = session();
+                $session->set('numero',$user->numero);
                 $session->set('identifiant',$user->identifiant);
                 $session->set('motDePasse',$user->motDePasse);
                 return True;
@@ -78,6 +79,9 @@ class Authentification
             $session = session();
             $session->set('identifiant',$entree->identifiant);
             $session->set('motDePasse',$entree->motDePasse);
+
+            $user = $compteModel->getClientByPseudo($entree['identifiant'],$entree['motDePasse'],false);
+
         }
 
         return $errors;

@@ -17,17 +17,17 @@
             <div class="mobile">
                 <ul>
                     <li>
-                        <a href=""> <!-- profile -->
+                        <a href="./"> <!-- profile -->
                             <?php include("./images/header/profil.svg")?>
                         </a>
                     </li>
                     <li>
-                        <a href=""> <!-- contact -->
+                        <a href="./"> <!-- contact -->
                             <?php include("./images/header/contact.svg")?>
                         </a>
                     </li>
                     <li>
-                        <a href=""> <!-- panier -->
+                        <a href="./panier"> <!-- panier -->
                             <?php include("./images/header/panier.svg")?>
                         </a>
                     </li>
@@ -37,13 +37,13 @@
                         <div></div>
                     </li>
                     <div>
-                        <a href=""> <!-- Lien mentions légales -->
+                        <a href="./"> <!-- Lien mentions légales -->
                             <p>Mentions légales</p>
                         </a>
-                        <a href=""> <!-- Lien réseaux sociaux -->
+                        <a href="./"> <!-- Lien réseaux sociaux -->
                             <p>Réseaux sociaux</p>
                         </a>
-                        <a href=""> <!-- Lien aide -->
+                        <a href="./"> <!-- Lien aide -->
                             <p>Besoin d'aide ?</p>
                         </a>
                     </div>

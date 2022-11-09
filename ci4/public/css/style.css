@@ -235,6 +235,21 @@ main {
 }
 
 @media screen and (max-width: 991px){
+    .divSuivi {
+        width: 100%;
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+
+    .divSuivi img, .divSuivi svg {
+        height: 10em;
+        width: 10em;
+    }
+
+    .divSuivi hr{
+        width: 5%
+    }
+
     .lienAlizon{
         display: none;
     }

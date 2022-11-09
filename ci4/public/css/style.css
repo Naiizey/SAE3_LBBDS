@@ -61,8 +61,8 @@ header h2, header nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70%;
-    width: 11%;
+    height: 100%;
+    width: 13%;
 }
 
 .divRecherche {
@@ -94,8 +94,8 @@ header h2, header nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70%;
-    width: 8%;
+    height: 100%;
+    width: 10%;
 }
 
 .divRecherche > a{
@@ -108,7 +108,7 @@ header h2, header nav {
 }
 
 .logoProfil, .logoAlizon{
-    height: 100%;
+    height: 70%;
     width: auto;
 }
 
@@ -126,6 +126,8 @@ path{
 
 .lienConnexion {
     height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 hr {

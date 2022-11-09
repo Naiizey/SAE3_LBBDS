@@ -61,8 +61,8 @@ header h2, header nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70%;
-    width: 11%;
+    height: 100%;
+    width: 13%;
 }
 
 .divRecherche {
@@ -94,8 +94,8 @@ header h2, header nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70%;
-    width: 8%;
+    height: 100%;
+    width: 10%;
 }
 
 .divRecherche > a{
@@ -108,7 +108,7 @@ header h2, header nav {
 }
 
 .logoProfil, .logoAlizon{
-    height: 100%;
+    height: 70%;
     width: auto;
 }
 
@@ -126,6 +126,8 @@ path{
 
 .lienConnexion {
     height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 hr {
@@ -232,6 +234,27 @@ main {
     height: 3px;
     width: 12%;
     background-color: #D9D9D9;
+}
+
+@media screen and (max-width: 991px){
+    .divSuivi {
+        width: 100%;
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+
+    .divSuivi img, .divSuivi svg {
+        height: 10em;
+        width: 10em;
+    }
+
+    .divSuivi hr{
+        width: 5%
+    }
+
+    .lienAlizon{
+        display: none;
+    }
 }
 
 footer {
@@ -466,7 +489,7 @@ header ul {
     padding: .8%;
     transition: 0.2s ease-in-out;
     width: 1.5em;
-    top : 50%;
+    top : 42%;
 }
 
 .btn:hover {
@@ -1016,6 +1039,10 @@ header ul {
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+.card-produit-ext{
+    margin: 10px 10px;
+}
+
 .card-produit{
     width: 219px;
     height: 300px;
@@ -1068,4 +1095,138 @@ div.image-card{
     text-align: center;
     font-size: 25px;
     margin: 0;
+}
+
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Catalogue (Catalogue.php)                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+
+
+main#Catalogue{
+    display: flex;
+    min-height: 1000px;
+}
+.partie-produits{
+    width: 70%;
+    max-width: 70%; 
+}
+.partie-categorie{
+    width: 25%;
+    min-height: 100%;
+}
+
+.liste-produits{
+    display: flex;
+    flex-wrap: wrap; 
+    align-content: flex-start;   
+
+    
+
+}
+
+
+.liste-categories{
+    background-color: #164F57;
+    width: 100%;
+    min-height: 100%;
+
+
+    background-color: white;
+}
+
+
+
+.titre-categorie, .categorie-catalogue summary{
+
+    padding: 15px 0 ;
+    min-width: 100%;
+    background-color: #164F57
+}
+
+.categorie-catalogue h2{
+    display: inline-block;
+    text-transform: capitalize;
+    width: 70%;
+    text-align: inherit;
+    font-family: "Montserrat-Bold";
+    font-weight: lighter;
+}
+
+.categorie-catalogue summary::after{
+    content: '\0025BC';
+    position: relative;
+    top: -5px;
+}
+
+.categorie-catalogue details[open] summary::after{
+    content: '\0025B2';
+    position: relative;
+  
+}
+
+.categorie-catalogue summary{
+    cursor: pointer;
+    box-sizing: border-box;
+    list-style:none;
+    width: 100%;
+    padding: 20px 5% ;
+    background-color: #EFECEC;
+    text-align: left;
+    color: #164F57;
+    border: solid 1px black;
+    
+}
+
+.liste-categories details, .liste-sous-categories{
+    background-color: #3997a377;
+    margin: 0;
+  
+
+}
+
+.liste-sous-categories h3 {
+    width:fit-content;
+    color: inherit;
+    padding: 20px 0;
+    margin: 0;
+}
+.liste-sous-categories a {
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none;
+}
+
+.liste-sous-categories li{
+    margin: 0 0 0 40%;
+    color: #164F57; 
+
+}
+
+.liste-sous-categories li::before{
+ 
+    color: #164F57; 
+
+}
+
+
+ul.liste-sous-categories {
+    padding: 0;
+}
+
+
+.liste-sous-categories a:hover{
+    display: block;
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.fleche-page img{
+    width: 1em;
+}
+
+.chiffre-page{
+    font-size: 1.5em;
 }

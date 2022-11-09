@@ -38,12 +38,12 @@
                     {
                         echo   '<div class="divSuivi">
                                     <div>
-                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/logo.svg").'
+                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/panier.svg").'
                                         <h3>1. Panier</h3>
                                     </div>
                                     <hr>
                                     <div>
-                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/panier.svg").'
+                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/profil.svg").'
                                         <h3>2. Identification</h3>
                                     </div>
                                     <hr>
@@ -53,7 +53,7 @@
                                     </div>
                                     <hr>
                                     <div>
-                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/argentBlanc.svg").'
+                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/paiement.svg").'
                                         <h3>4. Paiement</h3>
                                     </div>
                                 </div>';

@@ -219,12 +219,11 @@ main {
 }
 
 .divSuivi img, .divSuivi svg {
-    height: auto;
-    width: auto;
+    height: 5.5em;
+    width: 5.5em;
 }
 
 .divSuivi div {
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;

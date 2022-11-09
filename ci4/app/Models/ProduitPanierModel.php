@@ -7,7 +7,7 @@ use \App\Entities\Produit as Produit;
 use CodeIgniter\Model;
 
 
-class ProduitCatalogueModel extends Model
+class ProduitPanierModel extends Model
 {
     protected $table      = 'sae3.produit_panier';
     protected $primaryKey = 'id';

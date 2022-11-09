@@ -58,6 +58,8 @@ $routes->set404Override();
     $routes->get('/panier', 'Panier');
     $routes->post('/credits/connexion', 'EspaceClient::verification');
 
+    $routes->get('/import', 'Home::import');
+
     $routes->get('/destroy', 'Test::destroySession');
 
 ##param uri (:any) et dans methode /$1

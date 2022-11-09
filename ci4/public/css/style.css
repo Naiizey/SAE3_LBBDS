@@ -62,7 +62,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 13%;
+    width: 11%;
 }
 
 .divRecherche {
@@ -95,7 +95,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 10%;
+    width: 8%;
 }
 
 .divRecherche > a{
@@ -1223,4 +1223,22 @@ ul.liste-sous-categories {
 
 .chiffre-page{
     font-size: 1.5em;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                   Page import CSS                               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+#dropzone {
+    background-color: lightgreen;
+    flex-basis: 100%;
+    flex-grow: 1;
+    border-radius: 0.9em;
+    padding: 10px;
+    height: 10em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

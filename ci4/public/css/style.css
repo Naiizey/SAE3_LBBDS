@@ -366,8 +366,11 @@ div.bloc-erreurs {
     position: relative;
 }
 
-p.paragraphe-erreur {
+.paragraphe-erreur {
     color: red;
+    margin-bottom: 0;
+    text-align:justify;
+    
 }
 
 /*
@@ -559,6 +562,7 @@ header ul {
     height: 2.5em;
     border: solid 1px;
     border-color: #C6C6C6;
+    padding-left: 2%;
 }
 
 .sectionCredit label {

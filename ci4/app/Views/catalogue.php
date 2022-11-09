@@ -1,11 +1,26 @@
 <?php require("page_accueil/header.php"); ?>
 <main id=Catalogue>
-    <div class="liste-produits">
-    <?php foreach($prods as $prod): ?>
-        <?= $cardProduit->display($prod)?>
-    <?php endforeach; ?>
-    
-    </div>
+    <section class="partie-produits">
+        <div class="liste-produits">
+        <?php for($i=$minProd;$i<$maxProd && $i<sizeof($prods);++$i): ?>
+            <?= $cardProduit->display($prods[$i])?>
+        <?php endfor; ?>
+        </div>
+        <div class="nav-page">
+            <?php for($i=1;$i<=$nombreMaxPages;++$i): ?>
+                
+                    <?php if($i==$page):?>
+                        <a <?=($i>1)?"href='./".($i-1)."'":"" ?>  class="fleche-page <?=($i<=1)?"indisponible":"" ?>"><img src='<?= base_url() ?>/images/catalogue/Fleche_page_gauche.svg' alt='tourner page vers la gauche'></a>
+                        <span class="chiffre-page"><?= $i ?> </span>
+                        <a  <?=($i<$nombreMaxPages)?"href='./".($i+1)."'":"" ?> class="fleche-page <?=($i>=$nombreMaxPages)?"indisponible":"" ?>"><img class="fleche-page <?=($i==$nombreMaxPages)?"indisponible":"" ?>" src='<?= base_url() ?>/images/catalogue/Fleche_page_droite.svg' alt='tourner page vers la droite'></a>
+                    <?php else:?>
+                        <?= $i ?>
+                    <?php endif;?>
+               
+            <?php endfor;?>
+        </div>
+    </section>
+    <section class="partie-categorie">
     <div class="liste-categories">
         <div class="titre-categorie">
             <h1>Catégories</h1>
@@ -27,6 +42,7 @@
         
         
     </div>
+    </section>
 
 </main>
 <?php require("page_accueil/footer.php"); ?>

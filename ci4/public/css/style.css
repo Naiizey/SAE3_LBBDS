@@ -1091,14 +1091,22 @@ div.image-card{
 
 main#Catalogue{
     display: flex;
+    min-height: 1000px;
+}
+.partie-produits{
+    width: 70%;
+    max-width: 70%; 
+}
+.partie-categorie{
+    width: 25%;
+    min-height: 100%;
 }
 
 .liste-produits{
     display: flex;
     flex-wrap: wrap; 
     align-content: flex-start;   
-    width: 70%;
-    max-width: 70%;
+
     
 
 }
@@ -1106,7 +1114,7 @@ main#Catalogue{
 
 .liste-categories{
     background-color: #164F57;
-    width: 25%;
+    width: 100%;
     min-height: 100%;
 
 
@@ -1196,4 +1204,12 @@ ul.liste-sous-categories {
 .liste-sous-categories a:hover{
     display: block;
     background-color: rgba(255, 255, 255, 0.24);
+}
+
+.fleche-page img{
+    width: 1em;
+}
+
+.chiffre-page{
+    font-size: 1.5em;
 }

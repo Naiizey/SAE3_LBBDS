@@ -75,7 +75,7 @@
                         echo       '    <hr>
                                     </div>
                                     <div class="divPanierFooter"> 
-                                        <a href="">Vider le panier</a>
+                                        <a href='.base_url().'/panier/vider>Vider le panier</a>
                                         <h2>Sous-total (' . $sommeNbArticle . ' articles) : ' . $sommePrix . '€</h2>
                                     </div>
                                 </section>

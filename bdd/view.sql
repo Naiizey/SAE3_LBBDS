@@ -19,7 +19,7 @@ CREATE OR REPLACE VIEW produit_detail AS
 
 
 CREATE OR REPLACE VIEW produit_panier AS
-    SELECT id_prod  id, intitule_prod intitule, prix_ttc prixTTC,lien_image_prod lienImage, description_prod description, qte_panier quantite,num_compte num_client FROM _produit NATURAL JOIN _refere NATURAL JOIN _panier;
+    SELECT id_prod  id, intitule_prod intitule, prix_ttc prixTTC,lien_image_prod lienImage, description_prod description, qte_panier quantite,num_compte num_client,num_panier current_panier FROM _produit NATURAL JOIN _refere NATURAL JOIN _panier;
 
 CREATE OR REPLACE VIEW categorie AS
     SELECT code_cat,libelle_cat libelle FROM _categorie;

@@ -34,9 +34,12 @@ class ProduitPanierModel extends Model
 
     public function viderPanier($numCli)
     {
+        
         foreach($this->getPanierFromClient($numCli) as $prod){
-            $this->delete($prod,$numCli);
+            
+            $this->delete($prod->id);
         }
+        
     }
 
     public function ajouterProduit($idProd,$quantite,$numCli)

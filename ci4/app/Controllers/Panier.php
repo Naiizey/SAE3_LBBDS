@@ -54,14 +54,14 @@ class Panier extends BaseController
     }
 
     public function viderPanier() {
-        $data['controller']= "panier";
-        $session = session();
-        $session->remove('panier');
+   
+
         $panierModel = model("\App\Models\ProduitPanierModel");
-        $panierModel->viderPanier();
-        return view('page_accueil/panier.php', $data);
+        $panierModel->viderPanier(1);
+        return redirect()->to("panier");
     }
 
+    /*
     public function ajouterPanier() {
         $data['controller'] = "panier";
         $session = session();
@@ -81,4 +81,5 @@ class Panier extends BaseController
         $panierModel->ajouterProduitPanier($idProduit, $quantite);
         return view('page_accueil/panier.php', $data);
     }
+    */
 }

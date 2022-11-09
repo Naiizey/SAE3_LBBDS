@@ -6,17 +6,17 @@
                         <div class="divImagesProduits">
                             <ul>
                                 <li>
-                                    <img src="images/art5.png" />
+                                    <img src="<?=base_url() ?>/images/art5.png" />
                                 </li>
                                 <li>
-                                    <img src="images/art5.png" />
+                                    <img src="<?=base_url() ?>/images/art5.png" />
                                 </li>
                                 <li>
-                                    <img src="images/art5.png" />
+                                    <img src="<?=base_url() ?>/images/art5.png" />
                                 </li>
                             </ul>
                             <div>
-                                <img src="images/art5.png" />
+                                <img src="<?=base_url() ?>/images/art5.png" />
                             </div>
                         </div> 
                         <p><?php echo $prod->description;?></p>
@@ -27,10 +27,10 @@
                             <h3>Prix: 0.01€</h3>
                             <h4>Avis clients:</h4>
                             <div class="divAvisLogos">
-                                <img src="images/produit/avis.png"/>
+                                <img src="<?=base_url() ?>/images/produit/avis.png"/>
                                 <div>
-                                    <img src="images/produit/produits_locaux.png" />
-                                    <img src="images/produit/livraison_gratuite.png" />
+                                    <img src="<?=base_url() ?>/images/produit/produits_locaux.png" />
+                                    <img src="<?=base_url() ?>/images/produit/livraison_gratuite.png" />
                                 </div>
                             </div>
                             <div class="divQuantitePanier">
@@ -61,31 +61,31 @@
                 <ul>
                     <li>
                         <figure>
-                            <img src="images/art5.png" />
+                            <img src="<?=base_url() ?>/images/art5.png" />
                             <figcaption>Nom article</figcaption>
                         </figure>
                     </li>
                     <li>
                         <figure>
-                            <img src="images/art5.png" />
+                            <img src="<?=base_url() ?>/images/art5.png" />
                             <figcaption>Nom article</figcaption>
                         </figure>
                     </li>
                     <li>
                         <figure>
-                            <img src="images/art5.png" />
+                            <img src="<?=base_url() ?>/images/art5.png" />
                             <figcaption>Nom article</figcaption>
                         </figure>
                     </li>
                     <li>
                         <figure>
-                            <img src="images/art5.png" />
+                            <img src="<?=base_url() ?>/images/art5.png" />
                             <figcaption>Nom article</figcaption>
                         </figure>
                     </li>
                     <li>
                         <figure>
-                            <img src="images/art5.png" />
+                            <img src="<?=base_url() ?>/images/art5.png" />
                             <figcaption>Nom article</figcaption>
                         </figure>
                     </li>

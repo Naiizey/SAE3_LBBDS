@@ -204,13 +204,12 @@ main {
 }
 
 .divSuivi {
-    font-size: 70%;
+    font-size: 60%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     color: #D9D9D9;
-    height: 90%;
     width: 40%;
 }
 
@@ -233,6 +232,12 @@ main {
     height: 3px;
     width: 12%;
     background-color: #D9D9D9;
+}
+
+@media screen and (max-width: 991px){
+    .lienAlizon{
+        display: none;
+    }
 }
 
 footer {
@@ -529,11 +534,16 @@ header ul {
 .sectionCredit input[type="submit"] {
     background-color: #24a064;
     color: white;
-    margin: 2.5em 25% 1em 25%;
+    margin: 2em 25% 1em 25%;
     height: 2.5em;
     font-size: x-large;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.sectionCredit input[type="submit"]:hover {
+    background-color: #164F57;
+    color: white;
 }
 
 .sectionCredit input[type="text"], input[type="submit"], input[type="password"], input[type="email"] {
@@ -545,7 +555,7 @@ header ul {
 }
 
 .sectionCredit label {
-    margin-top: 5%;
+    margin-top: 3%;
 }
 
 .sectionCredit input[type="checkbox"] {
@@ -562,7 +572,7 @@ header ul {
 
 .nomPrenom {
     display: flex;
-    margin-top: 3%;
+    margin-top: 2%;
 }
 
 .nomPrenom > div {
@@ -815,8 +825,8 @@ header ul {
 }
 
 .lienPanier {
-    color: #E7E8E6;
-    border-radius: 15px;
+    color: white;
+    border-radius: 10px;
     background-color: #24a064;
     text-decoration: none;
     padding: 0.5em 1em 0.5em 1em;
@@ -829,7 +839,7 @@ header ul {
 .lienPanier:hover {
     background-color: #164F57;
     text-decoration: none;
-    color: #E7E8E6;
+    color: white;
 }
 
 .divPanierFooter {

@@ -234,6 +234,12 @@ main {
     background-color: #D9D9D9;
 }
 
+@media screen and (max-width: 991px){
+    .lienAlizon{
+        display: none;
+    }
+}
+
 footer {
     background-color: #164F57;
     text-align: center;

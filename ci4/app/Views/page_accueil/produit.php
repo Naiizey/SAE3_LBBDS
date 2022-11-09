@@ -35,6 +35,7 @@
                             </div>
                             <div class="divQuantitePanier">
                                 <p>Faites vite, il n'en reste que 3</p>
+                                <form action="/panier" method="post">
                                 <div>
                                     <p>Quantité :</p>
                                     <select name="quantite" id="tabQuant">
@@ -52,9 +53,10 @@
                                     </select>
                                     <!-- si jamais l'utilisateur choisi 10+ il se transforme en number à partir de 10 -->
                                 </div>
+                                <button type="submit">Ajouter au panier</button>
+                                </form>
                             </div>
                         </div>
-                        <a href="">Ajouter au panier</a>
                     </div>
                 </article>
                 <h3>Suggestions :</h3>

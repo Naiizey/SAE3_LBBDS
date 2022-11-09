@@ -1065,13 +1065,14 @@ header ul {
     height: 95%;
 }
 
-.divDroite > a {
+.divQuantitePanier button{
     display: inline-block;
     color: white;
     border-radius: 5px;
     background-color: #24a064;
     text-decoration: none;
     padding: 0.5em 0;
+    text-align: center;
     width: 100%;
 }
 

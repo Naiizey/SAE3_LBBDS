@@ -33,5 +33,5 @@ class ProduitDetail extends Model
 
     protected $validationRules    = [];
     protected $validationMessages = [];
-    protected $skipValidation     = false;
+    protected $skipValidation     = false; 
 }

@@ -50,4 +50,33 @@ class Panier extends BaseController
         
         return view('page_accueil/panier.php', $data);
     }
+
+    public function viderPanier() {
+        $data['controller']= "panier";
+        $session = session();
+        $session->remove('panier');
+        $panierModel = model("\App\Models\ProduitPanierModel");
+        $panierModel->viderPanier();
+        return view('page_accueil/panier.php', $data);
+    }
+
+    public function ajouterPanier() {
+        $data['controller'] = "panier";
+        $session = session();
+        $panier = $session->get('panier');
+        $idProduit = $this->request->getPost('idProduit');
+        $quantite = $this->request->getPost('quantite');
+        if($panier == null) {
+            $panier = array();
+        }
+        if(array_key_exists($idProduit, $panier)) {
+            $panier[$idProduit] += $quantite;
+        } else {
+            $panier[$idProduit] = $quantite;
+        }
+        $session->set('panier', $panier);
+        $panierModel = model("\App\Models\ProduitPanierModel");
+        $panierModel->ajouterProduitPanier($idProduit, $quantite);
+        return view('page_accueil/panier.php', $data);
+    }
 }

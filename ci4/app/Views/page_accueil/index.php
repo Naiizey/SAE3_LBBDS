@@ -42,7 +42,7 @@
                             <?= $cardProduit->display($prods[$i])?>
                         <?php endfor; ?>
                     </div>
-                    <h2><a href="">Voir les produits</a></h2>
+                    <h2><a href="./catalogue">Voir les produits</a></h2>
                 </section>
                 <section>
                     <div class="titreAccueil">

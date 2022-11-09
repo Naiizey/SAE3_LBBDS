@@ -16,18 +16,18 @@ class Home extends BaseController
         $data['controller']= "connexion";
         if($context == 400)
         {
-            $error= "Connexion refusée, identifiant et ou mot de passe incorrects";
-            $data['error']="<div class='bloc-erreurs'>
+            $error = "Connexion refusée, identifiant et ou mot de passe incorrects";
+            $data['erreur']="<div class='bloc-erreurs'>
                                 <p class='paragraphe-erreur'>$error</p>
                             </div>";
         }
-        else $data['error']="";
+        else $data['erreur']="";
         
 
         return view('page_accueil/connexion.php',$data);
     }
 
-    public function inscription()
+    public function inscription($context = null)
     {
         $post=$this->request->getPost();
         $issues=[];
@@ -37,7 +37,7 @@ class Home extends BaseController
             $user->fill($post);
             $issues=$auth->inscription($user,$post['confirmezMotDePasse']); 
 
-            if(empty($issues)){
+            if(empty($issues)) {
                 return redirect()->to("/");
             }
         }
@@ -45,6 +45,13 @@ class Home extends BaseController
         //print_r($errors);
 
         $data['controller']= "inscription";
+        if($context == 400)
+        {
+            $data['erreur'] = "<div class='bloc-erreurs'>
+                                    <p class='paragraphe-erreur'>$issues</p>
+                              </div>";
+        }
+        else $data['erreur']="";
         //print_r($issues);
         return view('page_accueil/inscription.php',$data);
     }

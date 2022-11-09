@@ -14,7 +14,7 @@ CREATE OR REPLACE VIEW client AS
 
 
 CREATE OR REPLACE VIEW produit_detail AS
-    WITH moyenne AS (SELECT id,avg(note_prod) as moyenneNote FROM _produit natural join _note  group by id_prod)
+    WITH moyenne AS (SELECT id_prod id,avg(note_prod) as moyenneNote FROM _produit natural join _note  group by id_prod)
     SELECT id_prod  id, intitule_prod intitule, prix_ttc prixTTC,lien_image_prod lienImage,publication_prod  isAffiche, libelle_cat categorie, code_cat codeCategorie,description_prod description, stock_prod stock FROM _produit LEFT JOIN moyenne on _produit.id_prod = moyenne.id NATURAL JOIN _categorie c;
 
 

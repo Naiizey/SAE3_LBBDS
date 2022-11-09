@@ -9,7 +9,7 @@ INSERT INTO _adresse_livraison (nom_a, prenom_a, num_rue, nom_rue, code_postal, 
 INSERT INTO _tva VALUES (1);
 INSERT INTO _tva VALUES (2);
 INSERT INTO _tva VALUES (3);
-
+/*
 INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (123,'alimentaire',2);
 INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (124,'vetement',1);
 INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (125,'electronique',2);
@@ -58,72 +58,104 @@ INSERT INTO _sous_categorie(code_cat,code_sous_cat) VALUES (128,146);
 INSERT INTO _sous_categorie(code_cat,code_sous_cat) VALUES (129,147);
 INSERT INTO _sous_categorie(code_cat,code_sous_cat) VALUES (129,148);
 INSERT INTO _sous_categorie(code_cat,code_sous_cat) VALUES (130,149);
+*/
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (123,'alimentaire',2);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (131,'fruit',123);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (132,'legumes',123);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (133,'boissons',123);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (134,'epicerie',123);
+
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (124,'vetement',1);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (135,'chaussures',124);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (136,'vetements',124);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (137,'accessoires',124);
+
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (125,'electronique',2);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (138,'informatique',125);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (139,'telephonie',125);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (140,'audiovisuel',125);
+
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (126,'loisir',1);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (141,'sport',126);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (142,'loisir',126);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (148,'jeux',126);
+
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (127,'jardinage',2);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (143,'jardinage',127);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (144,'bricolage',127);
+
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (128,'beaute',3);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (145,'beaute',128);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (146,'hygiene',128);
+
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (130,'autre',3);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (149,'artisanat',130);
 
 
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (133,'coke',100,150,'carottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (133,'vins',10,15,'arottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+VALUES (133,'vins',10,15,'arottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', '../ci4/public/image/produit/vins.jpg', true, 10, 4.5, 5, true);
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (134,'fines herbes',10,15,'rottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (134,'cannabis',10,15,'cultivé localement, produits de nos terroirs', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (135,'nike',10,15,'ottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (135,'néo balances',10,15,'ttes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (136,'gucchivenchi',10,15,'tes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (136,'le coq pas sportif',10,15,'es mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (137,'canard',10,15,'s mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+VALUES (137,'canard',10,15,'s mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', '../ci4/public/images/produit/canard.jpg', true, 10, 4.5, 5, true);
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (137,'33 tonnes',10,15,'mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (138,'RTX9090ti',10,15,'ures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (138,'Ryzen -6000RX',10,15,'res et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (139,'cSamsung S22 (SS22)',10,15,'es et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloup', 'https://pbs.twimg.com/media/C3tBUxtUMAAgTPO?format=jpg&name=900x900e.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (140,'iphone 1',10,15,'s et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (140,'écran de cinéma',10,15,'et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+VALUES (140,'écran de cinéma',10,15,'et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', '../ci4/public/images/produit/ecran_cinema.jpg', true, 10, 4.5, 5, true);
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (141,'JBL PRO',10,15,'t bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (141,'running gag shoes',10,15,'bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (142,'strap',10,15,'ien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (142,'péripatéticienne',10,15,'en juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloup', 'https://media.sudouest.fr/2136676/1000x500/entree-bitche.jpg?v=1618309579e.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (143,'claymore',10,15,'n juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloup','https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/US_M18a1_claymore_mine.jpg/280px-US_M18a1_claymore_mine.jpge.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (143,'rateau',10,15,'juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+VALUES (143,'rateau',10,15,'juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', '../ci4/public/images/produit/rateau.jpg', true, 10, 4.5, 5, true);
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (144,'bêche',10,15,'uteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloup','https://greensquare.fr/1160-large_default/fourche-beche-kent-and-stowe.jpge.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (144,'fraiseuse',10,15,'teuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (145,'pilon',10,15,'euses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (145,'chadior',10,15,'uses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (146,'oréo',10,15,'ses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (146,'mousse anti vax',10,15,'es provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (147,'détartreur pour dentition',10,15,'s provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (147,'saut à pied non joint',10,15,'provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (148,'missile javelin',1000,1500, 'très bon missile pour arrêter un T72, Attention à usage unique, provenance: ukraine','https://gagadget.com/media/post_big/Javelin_imXLcav.jpge.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+VALUES (142,'détartreur pour dentition',10,15,'s provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+VALUES (142,'saut à pied non joint',10,15,'provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+VALUES (148,'missile javelin',1000,1500, 'très bon missile pour arrêter un T72, Attention à usage unique, provenance: ukraine','../ci4/public/images/produit/missile_javelin.jpg', true, 10, 4.5, 5, true);
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (148,'jour',10,15,'rovenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (149,'hélicoptère apache',10000,15000,'héliocptère de fabrique américaine, configuration : 16 missiles hellfire, 1200 obus 30mm, Hydra 70 missile air sol (attention s''épuise très vite à l''usage): contact SAV', 'https://www.defense.govlouphttps://www.helicopassion.com/images/AH64/USArmy/NS11T3574h.jpge.jpg', true, 10, 4.5, 5, true);
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+VALUES (149,'hélicoptère apache',10000,15000,'héliocptère de fabrique américaine, configuration : 16 missiles hellfire, 1200 obus 30mm, Hydra 70 missile air sol (attention s''épuise très vite à l''usage): contact SAV', '../ci4/public/images/produit/helicoptere_apache.jpg', true, 10, 4.5, 5, true);
 
 
 INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('franchement j''en suis très satisfait, rien à redire le missile fonctionne très bien, néammoins attention à la prénétration sur du blindage réactif: on sent bien la limite du produit car il explose à la surface en ne faisant que très peu de dégats',30,1);

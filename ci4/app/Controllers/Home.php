@@ -68,6 +68,7 @@ class Home extends BaseController
                 , array('message' => "Pas de produit spécifié")
             );
         }
+        (new \App\Controllers\Panier())->ajouterPanier($idProduit,$this->request->getPost("quantite"));
         $prodModel = model("\App\Models\ProduitDetail");
         $result = $prodModel->find($idProduit);
         if($result == null)

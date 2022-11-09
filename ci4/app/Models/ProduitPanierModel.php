@@ -9,10 +9,10 @@ use Exception;
 
 class ProduitPanierModel extends Model
 {
-    protected $table      = 'sae3.produit_panier';
+    protected $table      = 'sae3.produit_panier_compte';
     protected $primaryKey = 'id';
 
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
 
     protected $returnType     = Produit::class;
     protected $useSoftDeletes = false;
@@ -35,18 +35,19 @@ class ProduitPanierModel extends Model
     public function viderPanier($numCli)
     {
         
+        
         foreach($this->getPanierFromClient($numCli) as $prod){
-            
+         
             $this->delete($prod->id);
         }
         
     }
 
-    public function ajouterProduit($idProd,$quantite,$numCli)
+    public function ajouterProduit(Produit $prod)
     {
-        if($this->find($idProd) == null){
-            $prod=new Produit();
-            $prod->fill(array('id'=>$idProd,'quantite'=>$quantite,'num_client'=>$numCli));
+     
+        if($this->find($prod->id) == ""){
+            
             $this->save($prod);
 
         }

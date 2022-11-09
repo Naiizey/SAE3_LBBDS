@@ -35,7 +35,7 @@
                             </div>
                             <div class="divQuantitePanier">
                                 <p>Faites vite, il n'en reste que 3</p>
-                                <form action="/panier" method="post">
+                                <form action=<?="./$prod->id"?> method="post">
                                 <div>
                                     <p>Quantité :</p>
                                     <select name="quantite" id="tabQuant">

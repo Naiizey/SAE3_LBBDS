@@ -23,7 +23,7 @@ class Panier extends BaseController
         }
         
     }
-
+    /*
     // fonction qui permet de récupérer les produits du panier
     public function getProduitsPanier(){
         $session = session();
@@ -37,6 +37,7 @@ class Panier extends BaseController
         }
         return $produits;
     }
+    */
 
     public function getProduitPanierClient($context = null)
     {
@@ -82,4 +83,25 @@ class Panier extends BaseController
         return view('page_accueil/panier.php', $data);
     }
     */
+
+    public function ajouterPanier($idProd=null,$quantite=null) {
+        $data['controller'] = "panier";
+        
+       if(!is_null($idProd) && !is_null($quantite))
+       {
+            $prod=new \App\Entities\ProduitPanier();
+
+            $prod->id = $idProd;
+            $prod->quantite  = $quantite;
+            $prod->numCli=1;
+        
+            $panierModel = model("\App\Models\ProduitPanierModel");
+            $panierModel->ajouterProduit($prod);
+
+            
+       }
+       
+        
+    
+    }
 }

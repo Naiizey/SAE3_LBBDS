@@ -72,13 +72,22 @@ CREATE TABLE _adresse_facturation(
 
 CREATE TABLE _panier
 (
-    num_panier SERIAL PRIMARY KEY,
-    num_compte INT NOT NULL
+    num_panier SERIAL PRIMARY KEY
+
 );
+
+CREATE TABLE _panier_client
+(
+    num_compte INT NOT NULL
+)INHERITS (_panier);
+
+
+
 
 CREATE TABLE _panier_visiteur
 (
-    date_suppression DATE NOT NULL
+    date_suppression DATE NOT NULL,
+    token_cookie VARCHAR(60) NOT NULL
 )INHERITS (_panier);
 
 CREATE TABLE _commande
@@ -89,7 +98,7 @@ CREATE TABLE _commande
     etat_livraison INT NOT NULL,
     id_a INT NOT NULL, --attendu_a
     id_adresse INT NOT NULL
-)INHERITS (_panier);
+)INHERITS (_panier_client);
 
 CREATE TABLE _produit
 (
@@ -169,6 +178,17 @@ END
 $$
 LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION fixInheritance() RETURNS TRIGGER AS
+$$
+BEGIN
+    INSERT INTO _panier (num_panier) VALUES (new.num_panier);
+    return new;
+END;
+$$
+LANGUAGE PLPGSQL;
+CREATE OR REPLACE TRIGGER insteadOfInsert_panier AFTER INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
+CREATE OR REPLACE TRIGGER insteadOfInsert_panier AFTER INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
+
 
 --Classe association entre _compte * - *_produit qui se nomme note ✅
 CREATE TABLE _note
@@ -229,7 +249,7 @@ ALTER TABLE _compte ADD CONSTRAINT _compte_panier_fk FOREIGN KEY (num_panier) RE
 --Association 0.1..1.0 entre _panier et _compte (utilise) ✅
 
 --ALTER TABLE _panier ADD CONSTRAINT _panier_pk PRIMARY KEY (num_compte);
-ALTER TABLE _panier ADD CONSTRAINT _panier_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+ALTER TABLE _panier_client ADD CONSTRAINT _panier_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
 -- PRIMARY KEY _panier_visiteur
 --ALTER TABLE _panier_visiteur ADD CONSTRAINT _panier_visiteur_pk PRIMARY KEY (num_compte);

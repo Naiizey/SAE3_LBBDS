@@ -7,6 +7,9 @@ class Home extends BaseController
     public function index()
     {
         $data['controller']= "index";
+
+        $data['cardProduit']=service("cardProduit");
+        $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
  
         return view('page_accueil/index.php',$data);
     }
@@ -101,6 +104,13 @@ class Home extends BaseController
         }
         
         return view('page_accueil/panier.php',$data);
+    }
+
+    public function viderPanierClient()
+    {
+        session() -> get("numero");
+        $ProduitPanierModel = model("\App\Models\ProduitPanierModel");
+        //$ProduitPanierModel -> viderPanierClient
     }
 
     private const NBPRODSPAGECATALOGUE = 10;

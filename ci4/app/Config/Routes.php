@@ -48,7 +48,7 @@ $routes->set404Override();
     $routes->get('/produit', 'Home::produit');
     $routes->get('/produit/(:num)', 'Home::produit/$1');
 
-    $routes->get('/panier', 'Home::panier');
+    $routes->get('/panier', 'Panier::getProduitPanierClient');
     $routes->get('/panierVide', 'Home::panierVide');
 
     $routes->get('/catalogue', 'Home::catalogue');

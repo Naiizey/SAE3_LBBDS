@@ -62,7 +62,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 13%;
+    width: 11%;
 }
 
 .divRecherche {
@@ -95,7 +95,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 10%;
+    width: 8%;
 }
 
 .divRecherche > a{
@@ -436,6 +436,7 @@ header ul {
 #carousel-container {
     position: relative;
     margin: 0;
+    padding: 2em 0;
 }
 
 #carousel {
@@ -497,6 +498,59 @@ header ul {
 
 .btn-suiv {
     right: 4%;
+}
+
+.mainAccueil {
+    padding: 0;
+}
+
+.titreAccueil {
+    width: fit-content;
+    text-align: right;
+}
+
+.titreAccueil hr {
+    width: 28em;
+    background-color: #3997A3;
+    height: 6px;
+}
+
+.titreAccueil h1 {
+    font-size: xx-large;
+    color: #164F57;
+    padding-right: .2em;
+}
+
+.produitsPhare {
+    background-color: #DCE5E6;
+}
+
+.articlesAcceuil {
+    display: flex;
+    margin: 2em 0;
+    justify-content: space-around;
+}
+
+.mainAccueil section p {
+    text-align:justify;
+    margin: 1em 6em;
+    color: #164F57;
+}
+
+.mainAccueil section {
+    margin: 4em 0;
+}
+
+.iconesAccueil {
+    display: flex;
+    justify-content: space-around;
+    font-family: "Montserrat-Regular";
+    font-size: x-large;
+    color: #164F57;
+}
+
+.iconesAccueil figure img {
+    width: 50%;
 }
 
 /*

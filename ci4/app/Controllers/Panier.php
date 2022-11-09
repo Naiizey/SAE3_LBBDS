@@ -37,4 +37,17 @@ class Panier extends BaseController
         }
         return $produits;
     }
+
+    public function getProduitPanierClient($context = null)
+    {
+        $data['controller']= "panier";
+        if($context == 400)
+        {
+            $data['error']="<p class='erreur'>Erreur d'authentification</p>";
+        }
+
+        $data['produits'] = model("\App\Models\ProduitPanierModel")->findAll();
+        
+        return view('page_accueil/panier.php', $data);
+    }
 }

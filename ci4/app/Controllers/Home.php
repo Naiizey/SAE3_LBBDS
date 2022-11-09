@@ -123,15 +123,16 @@ class Home extends BaseController
         $data['categories']=model("\App\Models\CategorieModel")->findAll();
         $data['controller']="Catalogue";
         
-        $data['nombreMaxPages']=sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE;
+        $data['nombreMaxPages']=(sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE)+1;
         if(is_null($page) || $page==0)
         {
             $data['minProd']=0;
             $data['maxProd']=self::NBPRODSPAGECATALOGUE;
-            $data['page']=1;
+            $data['page']=0;
         }
         else
         {
+            
             if($data['nombreMaxPages']>=$page)
             {
                 $data['page']=$page;

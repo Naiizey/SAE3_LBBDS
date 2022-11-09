@@ -27,7 +27,7 @@ class Home extends BaseController
         return view('page_accueil/connexion.php',$data);
     }
 
-    public function inscription($context = null)
+    public function inscription()
     {
         $post=$this->request->getPost();
         $issues=[];
@@ -45,13 +45,7 @@ class Home extends BaseController
         //print_r($errors);
 
         $data['controller']= "inscription";
-        if($context == 400)
-        {
-            $data['erreur'] = "<div class='bloc-erreurs'>
-                                    <p class='paragraphe-erreur'>$issues</p>
-                              </div>";
-        }
-        else $data['erreur']="";
+        $data['erreurs'] = $issues;
         //print_r($issues);
         return view('page_accueil/inscription.php',$data);
     }
@@ -107,5 +101,52 @@ class Home extends BaseController
         }
         
         return view('page_accueil/panier.php',$data);
+    }
+
+    private const NBPRODSPAGECATALOGUE = 10;
+    #FIXME: comportement href différent entre $page=null oe $page !=null    
+
+    public function catalogue($page=null){
+        $get=$this->request->getGet();
+        $data['cardProduit']=service("cardProduit");
+        $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
+        $data['categories']=model("\App\Models\CategorieModel")->findAll();
+        $data['controller']="Catalogue";
+        
+        $data['nombreMaxPages']=sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE;
+        if(is_null($page) || $page==0)
+        {
+            $data['minProd']=0;
+            $data['maxProd']=self::NBPRODSPAGECATALOGUE;
+            $data['page']=1;
+        }
+        else
+        {
+            if($data['nombreMaxPages']>=$page)
+            {
+                $data['page']=$page;
+
+                $data['minProd']=self::NBPRODSPAGECATALOGUE*$page;
+                $data['maxProd']=self::NBPRODSPAGECATALOGUE*($page+1);
+                
+            }
+            else return view(
+                'errors/html/error_404.php'
+                , array('message' => "Page trop haute: pas assez de produit")
+                );
+            
+                
+            
+            
+            
+        }
+        
+
+        return view("catalogue.php",$data);
+    }
+    public function import()
+    {
+        $data['controller']= "import";
+        return view('page_accueil/import.php', $data);
     }
 }

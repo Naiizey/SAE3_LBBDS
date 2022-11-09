@@ -48,7 +48,7 @@
                                     </div>
                                     <hr>
                                     <div>
-                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/logo.svg").'
+                                        '.file_get_contents(dirname(__DIR__,3)."/public/images/header/carton.svg").'
                                         <h3>3. Livraison</h3>
                                     </div>
                                     <hr>

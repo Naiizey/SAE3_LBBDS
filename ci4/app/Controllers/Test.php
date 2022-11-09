@@ -25,4 +25,9 @@ class Test extends BaseController{
             
             echo $session->get('identifiant');
         }
+
+        public function test3()
+        {
+            print_r(model("\App\Models\ProduitPanierModel")->getPanierFromClient(1));
+        }
 }

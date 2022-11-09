@@ -51,9 +51,14 @@ $routes->set404Override();
     $routes->get('/panier', 'Home::panier');
     $routes->get('/panierVide', 'Home::panierVide');
 
-    $routes->get('/test', 'Test::test');
+    $routes->get('/catalogue', 'Home::catalogue');
+    $routes->get('/catalogue/(:num)', 'Home::catalogue/$1');
+
+    $routes->get('/test', 'Test::test3');
     $routes->get('/panier', 'Panier');
     $routes->post('/credits/connexion', 'EspaceClient::verification');
+
+    $routes->get('/import', 'Home::import');
 
     $routes->get('/destroy', 'Test::destroySession');
 

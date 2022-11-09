@@ -73,4 +73,40 @@ function autoScroll() {
     }
 }
 
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                   DragNDrop                                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+
+function dropHandler(ev) {
+    console.log('File(s) dropped');
+
+    // Evite que l'action par défaut ne se produise (ouvrir le fichier dans le navigateur par exemple)
+    ev.preventDefault();
+
+    if (ev.dataTransfer.items) {
+        // Utilisation de dataTransfer.items pour accéder aux fichiers
+        [...ev.dataTransfer.items].forEach((item, i) => {
+        // Si les objets sont des fichiers
+        if (item.kind === 'file') {
+            const file = item.getAsFile();
+            console.log(`… file[${i}].name = ${file.name}`);
+        }
+        });
+    } else {
+        [...ev.dataTransfer.files].forEach((file, i) => {
+        console.log(`… file[${i}].name = ${file.name}`);
+    });
+    }
+}
+
+function dragOverHandler(ev) {
+    console.log('File(s) in drop zone');
+    // Evite que l'action par défaut ne se produise (ouvrir le fichier dans le navigateur par exemple)
+    ev.preventDefault();
+}
+
 //TODO: voir et cacher le mot de passe avec un bouton (un neuil) dans l'<input>

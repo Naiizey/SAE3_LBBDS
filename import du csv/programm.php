@@ -56,7 +56,7 @@ function verify_entete($line)
             $missing++;
             $listmanquant[] = $value;
             $min = 100;
-            $idelem;
+            $idelem = '';
             //cherche le champ le plus proche syntaxiquement
             for ($i=0; $i < count($line); $i++) { 
                 $lev = levenshtein($value, $line[$i]);
@@ -113,6 +113,4 @@ function convert_tab($tab)
     file_put_contents($file, $json);
     return $new_table;
 }
-// regex qui repond a l'expression : "code_sous_cat":"*" (avec * = n'importe quoi)
-
 ?>

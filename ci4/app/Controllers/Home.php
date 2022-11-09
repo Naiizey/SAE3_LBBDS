@@ -156,30 +156,33 @@ class Home extends BaseController
     }
     public function import()
     {
+
         $data['controller']= "import";
-        $strJsonFileContents = file_get_contents("ressources/data.json");
-        $array = json_decode($strJsonFileContents, true);
-        if($array[0]['alerte_prod'])    // suggested by **mario**
-        {
-            echo "alerte";
-            $array[0]['alerte_prod'] = "1";
+        $row = 0;
+        $fichier = fopen("ressources/data.csv", "r");
+        $size = fstat($fichier)["size"];
+        while (($dataCSV = fgetcsv($fichier, $size, ';')) !== FALSE) {
+            $num = count($dataCSV);
+            for ($c=0; $c < $num; $c++) {
+                $retour[$row][$c] = $dataCSV[$c];
+            }
+            $row++;
         }
-        else {
-            echo "pas alerte";
-            $array[0]['alerte_prod'] = "0";   
+        fclose($fichier);
+        $new_table = array();
+        for ($i=0; $i < count($retour); $i++) { 
+            //on itère sur chaque ligne
+            if (count($retour[0]) == count($retour[$i]))
+            {
+                for ($j=0; $j < count($retour[0]); $j++) {
+                    $new_table[$i][$retour[0][$j]] = $retour[$i][$j];
+                }
+            }
         }
-        if($array[0]['publication_prod'])    // suggested by **mario**
-        {
-            echo "publié";
-            $array[0]['publication_prod'] = "1";    
-        }
-        else {
-            echo "pas publié";
-            $array[0]['publication_prod'] = "0";   
-        }
-        print_r($array);
+        $result = array_slice($new_table,1);
+        print_r($result);
         $importModel = model("\App\Models\ImportCSV");
-        $importModel->CSVimport($array);
+        $importModel->CSVimport($result);
         return view('page_accueil/import.php', $data);
     }
 }

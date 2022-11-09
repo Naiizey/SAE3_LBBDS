@@ -59,15 +59,15 @@
                 </section>
                 <div class="iconesAccueil">
                     <figure>
-                        <img src="./images/header/logo.svg" alt="" title="">
+                        <img src="./images/header/" alt="" title="">
                         <figcaption>Livraison gratuite !</figcaption>
                     </figure>
                     <figure>
-                        <img src="./images/header/hermine.svg" alt="" title="">
+                        <img src="./images/header/" alt="" title="">
                         <figcaption>Produits issus de commerces Bretons !</figcaption>
                     </figure>
                     <figure>
-                        <img src="./images/header/carton.svg" alt="" title="">
+                        <img src="./images/header/" alt="" title="">
                         <figcaption>Livraison à domicile !</figcaption>
                     </figure>
                 </div>

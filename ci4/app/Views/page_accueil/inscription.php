@@ -25,7 +25,7 @@
                         <input type="password" name="confirmezMotDePasse" required="required"/>
                         <input type="submit" value="S'inscrire"/>
                     </form>
-                    <a href="connexion.php">J'ai déjà un compte</a>
+                    <a href="<?= base_url() ?>/connexion">J'ai déjà un compte</a>
                 </div>
             </div>
         </main>

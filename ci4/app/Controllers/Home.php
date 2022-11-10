@@ -14,18 +14,30 @@ class Home extends BaseController
         return view('page_accueil/index.php',$data);
     }
 
-    public function connexion($context = null)
+    public function connexion()
     {
-        $data['controller']= "connexion";
-        if($context == 400)
+        $post=$this->request->getPost();
+        $issues=[];
+
+        if(!empty($post))
         {
-            $error = "Connexion refusée, identifiant et ou mot de passe incorrects";
-            $data['erreur']="<div class='bloc-erreurs'>
-                                <p class='paragraphe-erreur'>$error</p>
-                            </div>";
+            $auth = service('authentification');
+            $user= new \App\Entities\Client();
+            $user->fill($post);
+            $issues=$auth->connexion($user); 
+
+            if(empty($issues)) 
+            {
+                return redirect()->to("/");
+            }
         }
-        else $data['erreur']="";
-        
+
+        $data['controller']= "connexion";
+        $data['erreurs'] = $issues;
+
+        //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
+        $data['identifiant'] = (isset($_POST['identifiant'])) ? $_POST['identifiant'] : "";
+        $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
 
         return view('page_accueil/connexion.php',$data);
     }
@@ -34,13 +46,16 @@ class Home extends BaseController
     {
         $post=$this->request->getPost();
         $issues=[];
-        if(!empty($post)){
+
+        if(!empty($post))
+        {
             $auth = service('authentification');
             $user= new \App\Entities\Client();
             $user->fill($post);
             $issues=$auth->inscription($user,$post['confirmezMotDePasse']); 
 
-            if(empty($issues)) {
+            if(empty($issues)) 
+            {
                 return redirect()->to("/");
             }
         }

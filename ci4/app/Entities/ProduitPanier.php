@@ -7,11 +7,12 @@ class ProduitPanier extends Entity
 
    public $datamap= [
       #id,
-      #intitule,
+      'idProd' => 'id_prod',
+    
       'prixTtc' => 'prixttc',
       'lienImage' => 'lienimage',
-      #categorie
-      'moyenneNote' => 'moyennenote',
+   
+
       'numCli'=> "num_client"
   ];
 

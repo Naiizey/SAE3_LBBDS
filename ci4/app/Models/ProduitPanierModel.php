@@ -17,7 +17,7 @@ class ProduitPanierModel extends Model
     protected $returnType     = Produit::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['id','quantite','num_client'];
+    protected $allowedFields = ['id','id_prod','quantite','num_client'];
 
 
 
@@ -29,7 +29,7 @@ class ProduitPanierModel extends Model
 
     public function deleteFromPanier($idProd,$numCli)
     {
-        return $this->where('num_client',$numCli)->delete($idProd);
+        return $this->where('num_client',$numCli)->where('id_prod',$idProd)->delete();
     }
 
     public function viderPanier($numCli)
@@ -46,19 +46,19 @@ class ProduitPanierModel extends Model
     public function ajouterProduit(Produit $prod)
     {
      
-        if($this->find($prod->id) == ""){
-            
+        if(empty($this->where("num_client",$prod->numCli)->where("id_prod",$prod->idProd)->findAll())){
+            $prod->id="£";
             $this->save($prod);
 
         }
-        else throw new Exception("Ce produit est déjà dans le panier !");
+        else throw new Exception("Ce produit est déjà dans le panier !".$this->where("num_client",$prod->numCli)->where("id_prod",$prod->idProd)->findAll()[0]);
         
 
         
     }
 
     public function changerQuantite($idProd,$numCli,$newQuanite){
-        $prod=$this->find($idProd);
+        $prod=$this->where("num_client",$numCli)->where("id_prod",$idProd)->findAll()[0];
         if($prod != null){
             $prod->fill(array('id'=>$idProd,'quantite'=>$newQuanite,'num_client'=>$numCli));
             $this->save($prod);

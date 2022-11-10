@@ -22,8 +22,8 @@ class Test extends BaseController{
         public function test2()
         {
             $session= session();
-            
-            echo $session->get('identifiant');
+         
+            print_r($session->get());  
         }
 
         public function test3()

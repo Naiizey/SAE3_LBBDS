@@ -181,13 +181,25 @@ LANGUAGE PLPGSQL;
 CREATE OR REPLACE FUNCTION fixInheritance() RETURNS TRIGGER AS
 $$
 BEGIN
-    INSERT INTO _panier (num_panier) VALUES (new.num_panier);
+    INSERT INTO sae3._panier (num_panier) VALUES (new.num_panier);
     return new;
 END;
 $$
 LANGUAGE PLPGSQL;
 CREATE OR REPLACE TRIGGER insteadOfInsert_panier AFTER INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
 CREATE OR REPLACE TRIGGER insteadOfInsert_panier AFTER INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
+
+CREATE OR REPLACE FUNCTION creerPremierPanier() RETURNS TRIGGER AS
+    $$
+
+    BEGIN
+        Insert Into sae3._panier_client (num_compte) VALUES (new.num_compte);
+        return new;
+
+    end;
+    $$ language plpgsql;
+CREATE OR REPLACE TRIGGER afterOfInsertClient AFTER INSERT ON _compte FOR EACH ROW EXECUTE PROCEDURE creerPremierPanier ();
+
 
 
 --Classe association entre _compte * - *_produit qui se nomme note ✅

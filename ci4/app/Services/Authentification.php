@@ -71,8 +71,10 @@ class Authentification
             $entree->cryptMotDePasse();
             $compteModel->save($entree);
             $session = session();
-            $session->set('identifiant',$entree->identifiant);
-            $session->set('motDePasse',$entree->motDePasse);
+            $user=$compteModel->where("email",$entree->email)->findAll()[0];
+            $session->set('numero',$user->numero);
+            $session->set('identifiant',$user->identifiant);
+            $session->set('motDePasse',$user->motDePasse);
 
 
         }
@@ -83,7 +85,7 @@ class Authentification
     public function estConnectee() : bool
     {   
         $session = session();
-        if($session->has('identifiant') && $session->has('motDePasse')){
+        if($session->has('numero')){
             $clientModel = model("\App\Models\Client");
             if($clientModel->getClientByCredentials($session->get('identifiant'),$session->get('motDePasse'),true) != null)
             {

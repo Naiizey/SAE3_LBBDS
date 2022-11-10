@@ -1,5 +1,7 @@
 <?php namespace App\Controllers;
 
+use Exception;
+
 class Panier extends BaseController
 {
     public function index()
@@ -46,9 +48,11 @@ class Panier extends BaseController
         {
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }
+        else{
+            $data['produits'] = model("\App\Models\ProduitPanierModel")->getPanierFromClient(session()->get("numero"));
 
-        $data['produits'] = model("\App\Models\ProduitPanierModel")->getPanierFromClient(1);
-
+        }
+        
     
         
         return view('page_accueil/panier.php', $data);
@@ -56,9 +60,19 @@ class Panier extends BaseController
 
     public function viderPanier() {
    
-
-        $panierModel = model("\App\Models\ProduitPanierModel");
-        $panierModel->viderPanier(1);
+        if(session()->has("numero"))
+        {
+            $panierModel = model("\App\Models\ProduitPanierModel");
+            $panierModel->viderPanier(session()->get("numero"));
+        }
+        else if(cookies()->has("token_panier"))
+        {
+            //TODO: vider en tant qu'internautes
+        }
+        else throw new \Exception("Le panier n'existe pas !");
+        
+        
+        
         return redirect()->to("panier");
     }
 
@@ -89,19 +103,49 @@ class Panier extends BaseController
         
        if(!is_null($idProd) && !is_null($quantite))
        {
-            $prod=new \App\Entities\ProduitPanier();
-
-            $prod->id = $idProd;
-            $prod->quantite  = $quantite;
-            $prod->numCli=1;
-        
-            $panierModel = model("\App\Models\ProduitPanierModel");
-            $panierModel->ajouterProduit($prod);
+            if(session()->has("numero"))
+            {
+                $prod=new \App\Entities\ProduitPanier();
+                $prod->idProd = $idProd;
+                $prod->quantite  = $quantite;
+                $prod->numCli= session()->get("numero");
+                $panierModel = model("\App\Models\ProduitPanierModel");
+                $panierModel->ajouterProduit($prod);
+            }
+            else if(cookies()->has("token_panier"))
+            {
+                //TODO: vider en tant qu'internautes
+            }
+            else 
+            {
+                //TODO: création du panier
+                //temporaire:
+                throw new \Exception("Non implémenté");
+            }
 
             
        }
        
         
     
+    }
+
+    public function supprimerProduitPanier($idProd = null){
+        if(!is_null($idProd))
+        {
+            if(session()->has("numero"))
+            {
+                $panierModel = model("\App\Models\ProduitPanierModel");
+                $panierModel->deleteFromPanier($idProd,session()->get("numero"));
+            }
+            else if(cookies()->has("token_panier"))
+            {
+                //TODO: vider en tant qu'internautes
+            }
+            else throw new \Exception("Le panier n'existe pas !");
+        }
+        if(isset($this->request)){
+            return redirect()->to(session()->get("_ci_previous_url"));
+        }
     }
 }

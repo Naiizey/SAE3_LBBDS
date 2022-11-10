@@ -51,12 +51,13 @@ $routes->set404Override();
 
     $routes->get('/panier', 'Panier::getProduitPanierClient');
     $routes->get('/panier/vider', 'Panier::viderPanier');
+    $routes->get('/panier/supprimer/(:num)', 'Panier::supprimerProduitPanier/$1');
 
 
     $routes->get('/catalogue', 'Home::catalogue');
     $routes->get('/catalogue/(:num)', 'Home::catalogue/$1');
 
-    $routes->get('/test', 'Test::test3');
+    $routes->get('/test', 'Test::test2');
     $routes->get('/panier', 'Panier');
     $routes->post('/credits/connexion', 'EspaceClient::verification');
 

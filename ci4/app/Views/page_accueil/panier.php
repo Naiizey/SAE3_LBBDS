@@ -13,8 +13,8 @@
                                         <div>
                                             <h3 class="h3PasArticlePanier">Vous n’avez aucun article dans votre panier. <br> <a href="index.php" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>';
 
-                        $connecte = false;
-                        if ($connecte == false)
+                        
+                        if (!session()->has("numero"))
                         {
                             echo '<h3 class="h3PasArticlePanier">Connectez-vous pour récupérer votre panier.</h3>';
                             echo '<a href="' . base_url() . '/connexion" class="lienPanier">Se connecter</a>';
@@ -67,7 +67,7 @@
                                 }
                             }
                             echo                   '</select>
-                                                    <a href="">Supprimer</a>
+                                                    <a href="'.base_url()."/panier/supprimer/$produit->idProd".'">Supprimer</a>
                                                 </div>
                                                 <h3>' . $produit -> prixTtc . '€</h3>
                                         </article>';

@@ -13,7 +13,7 @@ language plpgsql;
 CREATE OR REPLACE FUNCTION deleteProduitPanier() RETURNS TRIGGER AS
     $$
     BEGIN
-        DELETE FROM sae3._refere where id_prod=old.id and num_panier=old.current_panier;
+        DELETE FROM sae3._refere where id_prod=old.id_prod and num_panier=old.current_panier;
         RETURN OLD;
 
     end;
@@ -26,7 +26,7 @@ CREATE OR REPLACE FUNCTION insertProduitPanier() RETURNS TRIGGER AS
         current_panier int;
     BEGIN
         select max(num_panier) into current_panier from sae3._panier_client where num_compte=new.num_client group by num_compte;
-        Insert into sae3._refere (id_prod, num_panier, qte_panier) VALUES (new.id,current_panier,new.quantite);
+        Insert into sae3._refere (id_prod, num_panier, qte_panier) VALUES (new.id_prod,current_panier,new.quantite);
 
         RETURN OLD;
 

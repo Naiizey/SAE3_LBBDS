@@ -98,6 +98,8 @@ class Authentification
         
     }
 
+    #TODO: chargement des produit panier visiteur dans panier client
+
 
 
 }

@@ -19,6 +19,8 @@ CREATE OR REPLACE FUNCTION deleteProduitPanier() RETURNS TRIGGER AS
     end;
     $$ language plpgsql;
 CREATE OR REPLACE TRIGGER insteadOfDelete_produit_panier INSTEAD OF DELETE ON produit_panier_compte FOR EACH ROW EXECUTE PROCEDURE deleteProduitPanier();
+CREATE OR REPLACE TRIGGER insteadOfDelete_produit_panier INSTEAD OF DELETE ON produit_panier_visiteur FOR EACH ROW EXECUTE PROCEDURE deleteProduitPanier();
+
 
 CREATE OR REPLACE FUNCTION insertProduitPanier() RETURNS TRIGGER AS
     $$
@@ -34,3 +36,15 @@ CREATE OR REPLACE FUNCTION insertProduitPanier() RETURNS TRIGGER AS
     $$ language plpgsql;
 CREATE OR REPLACE TRIGGER insteadOfInsert_produit_panier INSTEAD OF INSERT ON produit_panier_compte FOR EACH ROW EXECUTE PROCEDURE insertProduitPanier ();
 
+CREATE OR REPLACE FUNCTION insertProduitPanierVisiteur() RETURNS TRIGGER AS
+    $$
+    DECLARE
+        current_panier int;
+    BEGIN
+        select num_panier into current_panier from sae3._panier_visiteur where token_cookie=new.token_cookie;
+        Insert into sae3._refere (id_prod, num_panier, qte_panier) VALUES (new.id_prod,current_panier,new.quantite);
+
+        RETURN OLD;
+
+    end;
+    $$ language plpgsql;

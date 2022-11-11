@@ -380,4 +380,7 @@ interface ResponseInterface
      * @return DownloadResponse|null
      */
     public function download(string $filename = '', $data = '', bool $setMime = false);
+
+    //Petite douille pour éviter problème intelephense
+    public function setHeader(string $name, $value);
 }

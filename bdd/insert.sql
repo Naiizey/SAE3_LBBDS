@@ -171,8 +171,7 @@ INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('Performant mais a par
 INSERT INTO _image_avis (num_avis, lien_image_avis) VALUES (1, 'https://floriangll.fr/Humour/Dark/Masterclass/Masterclass.gif');
 INSERT INTO _image_avis (num_avis, lien_image_avis) VALUES (2, 'https://floriangll.fr/Humour/Light/Masterclass/Masterclass.gif');
 
-INSERT INTO _panier_client (num_compte) VALUES (1);
-INSERT INTO _panier_client (num_compte) VALUES (2);
+
 -- INSERT INTO _panier (num_compte) VALUES (1);
 
 INSERT INTO _panier_visiteur (date_suppression, token_cookie) VALUES ('2021-05-01', 'nqndbzuiodzb');

@@ -1,5 +1,6 @@
 <?php namespace App\Controllers;
 
+use CodeIgniter\CodeIgniter;
 use Exception;
 
 class Panier extends BaseController
@@ -147,5 +148,47 @@ class Panier extends BaseController
         if(isset($this->request)){
             return redirect()->to(session()->get("_ci_previous_url"));
         }
+    }
+
+    public function modifierProduitPanier($id = null, $newQuantite = null){
+
+        
+        if (session()->has('numero'))
+        {
+            try{
+                model("\App\Models\ProduitPanierModel")->changerQuantite($id,session()->get('numero'),$newQuantite);
+                $result = array("prodChanged" => $id,"forClientId" => session()->get('numero'));
+                $code=200;
+            }catch(\Exception $e){
+                $result = array("error" => $e);
+                $code=500;
+            }
+        } 
+
+        if(!isset($this->request)) return $result;
+
+        else if($this->request->getMethod()==="put")
+        {
+            return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
+            ->setStatusCode($code)->setJSON($result);
+        }
+        
+        else if(isset($this->request) && $this->request->getMethod()==="get")
+        {
+            return redirect()->to(session()->get("_ci_previous_url"));
+        }
+        
+      
+      
+  
+    }
+
+    public function sendCors($idProd = null, $newQuantite = null){
+        
+        if(isset($this->request) && $this->request->getMethod()==="options"){
+            return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
+            ->setStatusCode(200);
+        }
+  
     }
 }

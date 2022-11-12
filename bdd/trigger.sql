@@ -48,3 +48,20 @@ CREATE OR REPLACE FUNCTION insertProduitPanierVisiteur() RETURNS TRIGGER AS
 
     end;
     $$ language plpgsql;
+CREATE OR REPLACE TRIGGER insteadOfInsert_produit_visiteur INSTEAD OF INSERT ON produit_panier_visiteur FOR EACH ROW EXECUTE PROCEDURE insertProduitPanierVisiteur ();
+
+CREATE OR REPLACE FUNCTION updateProduitPanier() RETURNS TRIGGER AS
+    $$
+    DECLARE
+        current_panier int;
+    BEGIN
+        select max(num_panier) into current_panier from sae3._panier_client where num_compte=new.num_client group by num_compte;
+        update sae3._refere SET  qte_panier=new.quantite where id_prod=new.id_prod and num_panier=current_panier;
+
+        RETURN new;
+
+    end;
+    $$ language plpgsql;
+CREATE OR REPLACE TRIGGER updateOfInsert_produit_panier INSTEAD OF UPDATE ON produit_panier_compte FOR EACH ROW EXECUTE PROCEDURE updateProduitPanier ();
+
+

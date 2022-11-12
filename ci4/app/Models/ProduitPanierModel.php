@@ -57,10 +57,11 @@ class ProduitPanierModel extends Model
         
     }
 
-    public function changerQuantite($idProd,$numCli,$newQuanite){
-        $prod=$this->where("num_client",$numCli)->where("id_prod",$idProd)->findAll()[0];
+    public function changerQuantite($id,$numCli,$newQuanite){
+        $prod=$this->where("num_client",$numCli)->find($id);
+
         if($prod != null){
-            $prod->fill(array('id'=>$idProd,'quantite'=>$newQuanite,'num_client'=>$numCli));
+            $prod->fill(array('id'=>$id,'quantite'=>$newQuanite,'num_client'=>$numCli));
             $this->save($prod);
         }
         else throw new Exception("Ce produit n'est pas dans le panier !");

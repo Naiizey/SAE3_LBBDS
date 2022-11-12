@@ -44,7 +44,7 @@
                             $sommePrix += $produit -> prixTtc;
                             //print_r($produit);
                             echo       '<hr>
-                                        <article class="articlePanier">
+                                        <article id='.$produit->id.' class="articlePanier">
                                             <a href="">
                                                 <img src="' . $produit -> lienimage . '" alt="article 1" title="Article 1">
                                                 <div>
@@ -54,17 +54,13 @@
                                             </a>
                                                 <div class="divQuantite">
                                                     <p>Quantité</p>
-                                                    <select name="quantite">';
-                            for ($i = 1; $i < $produit -> quantite + 1; $i++)
+                                                    <select id=forProd-'.$produit->id.' name="quantite">';
+                            for ($i = 1; $i <= $produit -> stock; $i++)
                             {
-                                if ($i == 1)
-                                {
-                                    echo               '<option value="1" selected>1</option>';
-                                }
-                                else
-                                {
-                                    echo                   '<option value="' . $i . '">' . $i . "</option>";
-                                }
+                            
+                              
+                                    echo                   '<option value="'. $i .'" '. (($produit->quantite == $i)?'selected':'') .' ">' . $i . "</option>";
+                                
                             }
                             echo                   '</select>
                                                     <a href="'.base_url()."/panier/supprimer/$produit->idProd".'">Supprimer</a>
@@ -127,5 +123,17 @@
                             </section>';
                 }
             ?>
-        </main>
+        </main>       
+        <script>
+            //toSend est un param permettant la modification de la page sans rafraichissement
+            var toSend = new Object();
+            //url où envoyé les données
+            toSend.http = 'http://localhost/Alizon/ci4/public/panier/modifier/quantite';
+            //indication de comment récupérer un select
+            toSend.howGetSelect=() => document.querySelectorAll(".divQuantite select");
+            //indication de comment l'id du produit d'un select
+            toSend.howGetId=(node) => node.parentNode.parentNode.id;
+            //indique si non voulons ou non que la console affiche les résultats de la requête
+            toSend.debug=false;
+        </script>
 <?php require("footer.php"); ?>

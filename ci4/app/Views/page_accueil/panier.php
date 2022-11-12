@@ -133,7 +133,7 @@
             toSend.howGetSelect=() => document.querySelectorAll(".divQuantite select");
             //indication de comment l'id du produit d'un select
             toSend.howGetId=(node) => node.parentNode.parentNode.id;
-            //indique si non voulons ou non que la console affiche les résultats de la requête
-            toSend.debug=false;
+            //indique si non voulons ou non que la console affiche les résultats (true/false) de la requête OU de définir une fonction
+            toSend.callback=false;
         </script>
 <?php require("footer.php"); ?>

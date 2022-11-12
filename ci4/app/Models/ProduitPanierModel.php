@@ -43,16 +43,30 @@ class ProduitPanierModel extends Model
         
     }
 
-    public function ajouterProduit(Produit $prod)
+    public function ajouterProduit(Produit $prod, $siDejaLaAjoute=false)
     {
-     
-        if(empty($this->where("num_client",$prod->numCli)->where("id_prod",$prod->idProd)->findAll())){
+        if($prod->quantite===0) throw new Exception("Pas d'ajout de produit à la quantité null");
+        
+        
+        $trouve=$this->where("num_client",$prod->numCli)->where("id_prod",$prod->idProd)->findAll();
+        if(empty($trouve))
+        {
             $prod->id="£";
+            #FIXME: La vue MVC peut créer cette exception
+            if($prod->quantite > $prod->stock) throw new Exception("Pas assez de stock: $prod->quantite c'est trop");
             $this->save($prod);
 
         }
-        else throw new Exception("Ce produit est déjà dans le panier !".$this->where("num_client",$prod->numCli)->where("id_prod",$prod->idProd)->findAll()[0]);
-        
+        else if ($siDejaLaAjoute)
+        {
+            $dejaLa=new Produit();
+            $dejaLa=$trouve[0];
+
+            $dejaLa->quantite+=$prod->quantite;
+            if($dejaLa->quantite > $dejaLa->stock) throw new Exception("Pas assez de stock: $dejaLa->quantite c'est trop");
+            $this->save($dejaLa);
+        }
+        else throw new Exception("Produit déjà présent dans le panier, et n'a pas été pris en compte");
 
         
     }

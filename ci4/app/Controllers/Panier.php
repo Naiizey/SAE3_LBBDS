@@ -111,7 +111,7 @@ class Panier extends BaseController
                 $prod->quantite  = $quantite;
                 $prod->numCli= session()->get("numero");
                 $panierModel = model("\App\Models\ProduitPanierModel");
-                $panierModel->ajouterProduit($prod);
+                $panierModel->ajouterProduit($prod,true);
             }
             else if(cookies()->has("token_panier"))
             {

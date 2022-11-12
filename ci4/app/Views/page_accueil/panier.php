@@ -11,7 +11,7 @@
                                         </div>
                                         <hr>
                                         <div>
-                                            <h3 class="h3PasArticlePanier">Vous n’avez aucun article dans votre panier. <br> <a href="index.php" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>';
+                                            <h3 class="h3PasArticlePanier">Vous n’avez aucun article dans votre panier. <br> <a href="'.base_url()."/catalogue".'" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>';
 
                         
                         if (!session()->has("numero"))
@@ -45,7 +45,7 @@
                             //print_r($produit);
                             echo       '<hr>
                                         <article id='.$produit->id.' class="articlePanier">
-                                            <a href="">
+                                            <a href="'.base_url()."/produit/$produit->idProd".'">
                                                 <img src="' . $produit -> lienimage . '" alt="article 1" title="Article 1">
                                                 <div>
                                                     <h2>' . $produit -> intitule . '</h2>

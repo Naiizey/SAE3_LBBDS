@@ -50,7 +50,9 @@ abstract class ProduitPanierModel extends Model
 
     public function ajouterProduit($idProd,$quantite,$idUser, $siDejaLaAjoute=false)
     {
-        if($quantite===0) throw new Exception("Pas d'ajout de produit à la quantité null");
+        if($quantite==0){
+            throw new Exception("Pas d'ajout de produit à la quantité null");
+        }
         
         $colonne=$this->getColonneProduitIdUser();
         
@@ -59,7 +61,7 @@ abstract class ProduitPanierModel extends Model
         $prod->$colonne=$idUser;
         
         $trouve=$this->where($this->getIdUser(),$prod->$colonne)->where("id_prod",$prod->idProd)->findAll();
-        print_r($trouve);
+        
         if(empty($trouve))
         {
             $prod->id="£";
@@ -73,7 +75,7 @@ abstract class ProduitPanierModel extends Model
             $dejaLa=new Produit();
             $dejaLa=$trouve[0];
 
-            $dejaLa->quantite+=$prod->quantite;
+            $dejaLa->quantite+=(int)$prod->quantite;
             if($dejaLa->quantite > $dejaLa->stock) throw new Exception("Pas assez de stock: $dejaLa->quantite c'est trop");
             $this->save($dejaLa);
         }

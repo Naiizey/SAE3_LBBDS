@@ -121,6 +121,10 @@ class Panier extends BaseController
     public function ajouterPanier($idProd=null,$quantite=null) {
         $data['controller'] = "panier";
         
+        if($quantite==null && isset($this->request)){
+            $quantite=$this->request->getPost("quantite");
+        }
+        
        if(!is_null($idProd) && !is_null($quantite))
        {
             if(session()->has("numero"))
@@ -140,9 +144,11 @@ class Panier extends BaseController
                 $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
                 $panierModel->ajouterProduit($idProd,$quantite,$token,$quantite,true);
             }
+        }
 
-            
-       }
+        if(isset($this->request)){
+            return redirect()->to(session()->get("_ci_previous_url"));
+        }
        
         
     

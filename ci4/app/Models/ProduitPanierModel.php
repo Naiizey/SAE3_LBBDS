@@ -7,48 +7,58 @@ use \App\Entities\ProduitPanier as Produit;
 use CodeIgniter\Model;
 use Exception;
 
-class ProduitPanierModel extends Model
+abstract class ProduitPanierModel extends Model
 {
+    /*
     protected $table      = 'sae3.produit_panier_compte';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = false;
 
-    protected $returnType     = Produit::class;
+    
     protected $useSoftDeletes = false;
 
     protected $allowedFields = ['id','id_prod','quantite','num_client'];
+    */
+    protected $returnType     = Produit::class;
 
 
-
-
-    public function getPanierFromClient($numCli)
+    abstract protected function getIdUser();
+    abstract protected function getColonneProduitIdUser();
+    public function getPanier($idUser)
     {
-        return $this->where('num_client',$numCli)->findAll();
+        return $this->where($this->getIdUser(),$idUser)->findAll();
     }
 
     public function deleteFromPanier($idProd,$numCli)
     {
-        return $this->where('num_client',$numCli)->where('id_prod',$idProd)->delete();
+        return $this->where($this->getIdUser(),$numCli)->where('id_prod',$idProd)->delete();
     }
 
-    public function viderPanier($numCli)
+    public function viderPanier($idUser)
     {
         
         
-        foreach($this->getPanierFromClient($numCli) as $prod){
+        foreach($this->getPanier($idUser) as $prod){
          
             $this->delete($prod->id);
         }
         
     }
 
-    public function ajouterProduit(Produit $prod, $siDejaLaAjoute=false)
+
+    public function ajouterProduit($idProd,$quantite,$idUser, $siDejaLaAjoute=false)
     {
-        if($prod->quantite===0) throw new Exception("Pas d'ajout de produit à la quantité null");
+        if($quantite===0) throw new Exception("Pas d'ajout de produit à la quantité null");
         
+        $colonne=$this->getColonneProduitIdUser();
         
-        $trouve=$this->where("num_client",$prod->numCli)->where("id_prod",$prod->idProd)->findAll();
+        $prod=model("\App\Models\ProduitDetail")->find($idProd)->convertForPanier();
+        $prod->quantite=$quantite;
+        $prod->$colonne=$idUser;
+        
+        $trouve=$this->where($this->getIdUser(),$prod->numCli)->where("id_prod",$prod->idProd)->findAll();
+        print_r($trouve);
         if(empty($trouve))
         {
             $prod->id="£";
@@ -71,11 +81,12 @@ class ProduitPanierModel extends Model
         
     }
 
-    public function changerQuantite($id,$numCli,$newQuanite){
-        $prod=$this->where("num_client",$numCli)->find($id);
+
+    public function changerQuantite($id,$idUser,$newQuanite){
+        $prod=$this->where($this->getIdUser(),$idUser)->find($id);
 
         if($prod != null){
-            $prod->fill(array('id'=>$id,'quantite'=>$newQuanite,'num_client'=>$numCli));
+            $prod->fill(array('id'=>$id,'quantite'=>$newQuanite,$this->getIdUser()=>$idUser));
             $this->save($prod);
         }
         else throw new Exception("Ce produit n'est pas dans le panier !");

@@ -50,7 +50,7 @@ class Panier extends BaseController
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }
         else{
-            $data['produits'] = model("\App\Models\ProduitPanierModel")->getPanierFromClient(session()->get("numero"));
+            $data['produits'] = model("\App\Models\ProduitPanierCompteModel")->getPanier(session()->get("numero"));
 
         }
         
@@ -63,7 +63,7 @@ class Panier extends BaseController
    
         if(session()->has("numero"))
         {
-            $panierModel = model("\App\Models\ProduitPanierModel");
+            $panierModel = model("\App\Models\ProduitPanierCompteModel");
             $panierModel->viderPanier(session()->get("numero"));
         }
         else if(cookies()->has("token_panier"))
@@ -106,12 +106,9 @@ class Panier extends BaseController
        {
             if(session()->has("numero"))
             {
-                $prod=new \App\Entities\ProduitPanier();
-                $prod->idProd = $idProd;
-                $prod->quantite  = $quantite;
-                $prod->numCli= session()->get("numero");
-                $panierModel = model("\App\Models\ProduitPanierModel");
-                $panierModel->ajouterProduit($prod,true);
+                            
+                $panierModel = model("\App\Models\ProduitPanierCompteModel");
+                $panierModel->ajouterProduit($idProd,$quantite,session()->get("numero"),$quantite,true);
             }
             else if(cookies()->has("token_panier"))
             {
@@ -136,7 +133,7 @@ class Panier extends BaseController
         {
             if(session()->has("numero"))
             {
-                $panierModel = model("\App\Models\ProduitPanierModel");
+                $panierModel = model("\App\Models\ProduitPanierCompteModel");
                 $panierModel->deleteFromPanier($idProd,session()->get("numero"));
             }
             else if(cookies()->has("token_panier"))
@@ -156,7 +153,7 @@ class Panier extends BaseController
         if (session()->has('numero'))
         {
             try{
-                model("\App\Models\ProduitPanierModel")->changerQuantite($id,session()->get('numero'),$newQuantite);
+                model("\App\Models\ProduitPanierCompteModel")->changerQuantite($id,session()->get('numero'),$newQuantite);
                 $result = array("prodChanged" => $id,"forClientId" => session()->get('numero'));
                 $code=200;
             }catch(\Exception $e){

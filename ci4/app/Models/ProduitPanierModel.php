@@ -25,6 +25,7 @@ abstract class ProduitPanierModel extends Model
 
     abstract protected function getIdUser();
     abstract protected function getColonneProduitIdUser();
+
     public function getPanier($idUser)
     {
         return $this->where($this->getIdUser(),$idUser)->findAll();
@@ -57,7 +58,7 @@ abstract class ProduitPanierModel extends Model
         $prod->quantite=$quantite;
         $prod->$colonne=$idUser;
         
-        $trouve=$this->where($this->getIdUser(),$prod->numCli)->where("id_prod",$prod->idProd)->findAll();
+        $trouve=$this->where($this->getIdUser(),$prod->$colonne)->where("id_prod",$prod->idProd)->findAll();
         print_r($trouve);
         if(empty($trouve))
         {

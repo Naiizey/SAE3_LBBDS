@@ -105,6 +105,7 @@ if (! function_exists('has_cookie')) {
      */
     function has_cookie(string $name, ?string $value = null, string $prefix = ''): bool
     {
-        return Services::response()->hasCookie($name, $value, $prefix);
+        //return Services::response()->hasCookie($name, $value, $prefix);
+        return isset($_COOKIE[$name]);
     }
 }

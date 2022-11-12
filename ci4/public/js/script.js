@@ -190,7 +190,7 @@ function requeteDynamHTTP(url="") {
                     toSend.howGetId(event.target),
                     event.target.value
                 ]
-                requete.put(listValue,toSend.debug);
+                requete.put(listValue,toSend.callback);
                 
             })
         }

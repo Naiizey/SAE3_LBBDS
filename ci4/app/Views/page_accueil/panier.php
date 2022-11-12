@@ -134,6 +134,6 @@
             //indication de comment l'id du produit d'un select
             toSend.howGetId=(node) => node.parentNode.parentNode.id;
             //indique si non voulons ou non que la console affiche les résultats (true/false) de la requête OU de définir une fonction
-            toSend.callback=false;
+            toSend.callback=true;
         </script>
 <?php require("footer.php"); ?>

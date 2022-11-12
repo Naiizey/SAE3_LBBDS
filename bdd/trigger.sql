@@ -64,4 +64,18 @@ CREATE OR REPLACE FUNCTION updateProduitPanier() RETURNS TRIGGER AS
     $$ language plpgsql;
 CREATE OR REPLACE TRIGGER updateOfInsert_produit_panier INSTEAD OF UPDATE ON produit_panier_compte FOR EACH ROW EXECUTE PROCEDURE updateProduitPanier ();
 
+CREATE OR REPLACE FUNCTION updateProduitPanierVisiteur() RETURNS TRIGGER AS
+    $$
+    DECLARE
+        current_panier int;
+    BEGIN
+        select num_panier into current_panier from sae3._panier_visiteur where token_cookie=new.token_cookie;
+        update sae3._refere SET  qte_panier=new.quantite where id_prod=new.id_prod and num_panier=current_panier;
+
+        RETURN new;
+
+    end;
+    $$ language plpgsql;
+CREATE OR REPLACE TRIGGER updateOfInsert_produit_panier_visiteur INSTEAD OF UPDATE ON produit_panier_visiteur FOR EACH ROW EXECUTE PROCEDURE updateProduitPanierVisiteur ();
+
 

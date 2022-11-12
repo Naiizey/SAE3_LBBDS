@@ -1,10 +1,18 @@
 <?php namespace App\Controllers;
 
 use CodeIgniter\CodeIgniter;
+use CodeIgniter\Cookie\Cookie;
+use Config\Services;
 use Exception;
 
 class Panier extends BaseController
 {
+
+    public function __construct()
+    {
+
+        helper('cookie');
+    }
     public function index()
     {
         return view('panier/index.php');
@@ -49,10 +57,20 @@ class Panier extends BaseController
         {
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }
-        else{
+        else if(session()->has("numero")){
             $data['produits'] = model("\App\Models\ProduitPanierCompteModel")->getPanier(session()->get("numero"));
 
         }
+        else if(has_cookie("token_panier")){
+            $data['produits'] = model("\App\Models\ProduitPanierVisiteurModel")->getPanier(get_cookie("token_panier"));
+        
+        }
+        else{
+            $data['produits']=array();
+        }
+
+        
+        
         
     
         
@@ -66,9 +84,10 @@ class Panier extends BaseController
             $panierModel = model("\App\Models\ProduitPanierCompteModel");
             $panierModel->viderPanier(session()->get("numero"));
         }
-        else if(cookies()->has("token_panier"))
+        else if(has_cookie("token_panier"))
         {
-            //TODO: vider en tant qu'internautes
+            $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
+            $panierModel->viderPanier(get_cookie("token_panier"));
         }
         else throw new \Exception("Le panier n'existe pas !");
         
@@ -110,15 +129,16 @@ class Panier extends BaseController
                 $panierModel = model("\App\Models\ProduitPanierCompteModel");
                 $panierModel->ajouterProduit($idProd,$quantite,session()->get("numero"),$quantite,true);
             }
-            else if(cookies()->has("token_panier"))
+            else if(has_cookie("token_panier"))
             {
-                //TODO: vider en tant qu'internautes
+                $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
+                $panierModel->ajouterProduit($idProd,$quantite,get_cookie("token_panier"),$quantite,true);
             }
             else 
             {
-                //TODO: création du panier
-                //temporaire:
-                throw new \Exception("Non implémenté");
+                $token=$this->creerPanier();
+                $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
+                $panierModel->ajouterProduit($idProd,$quantite,$token,$quantite,true);
             }
 
             
@@ -136,9 +156,10 @@ class Panier extends BaseController
                 $panierModel = model("\App\Models\ProduitPanierCompteModel");
                 $panierModel->deleteFromPanier($idProd,session()->get("numero"));
             }
-            else if(cookies()->has("token_panier"))
+            else if(has_cookie("token_panier"))
             {
-                //TODO: vider en tant qu'internautes
+                $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
+                $panierModel->deleteFromPanier($idProd,get_cookie("token_panier"));
             }
             else throw new \Exception("Le panier n'existe pas !");
         }
@@ -150,8 +171,8 @@ class Panier extends BaseController
     public function modifierProduitPanier($id = null, $newQuantite = null){
 
         
-        if (session()->has('numero'))
-        {
+            if (session()->has('numero'))
+            {
             try{
                 model("\App\Models\ProduitPanierCompteModel")->changerQuantite($id,session()->get('numero'),$newQuantite);
                 $result = array("prodChanged" => $id,"forClientId" => session()->get('numero'));
@@ -160,21 +181,39 @@ class Panier extends BaseController
                 $result = array("error" => $e);
                 $code=500;
             }
-        } 
+            } 
+            else if(has_cookie("token_panier"))
+            {   
+                try{
+                    model("\App\Models\ProduitPanierVisiteurModel")->changerQuantite($id, get_cookie("token_panier"),$newQuantite);
+                    $result = array("prodChanged" => $id,"forClientId" =>  get_cookie("token_panier"));
+                    $code=200;
+                
+                }catch(\ErrorException $e){
+                    //echo $e;
+                    $result = array("error" => $e->getMessage());
+                    $code=500;
+                }
+                
+               
+            }
+            else throw new \Exception("Le panier n'existe pas !");
 
-        if(!isset($this->request)) return $result;
+        
+            
+            if(!isset($this->request)) return $result;
 
-        else if($this->request->getMethod()==="put")
-        {
-            return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
-            ->setStatusCode($code)->setJSON($result);
-        }
-        
-        else if(isset($this->request) && $this->request->getMethod()==="get")
-        {
-            return redirect()->to(session()->get("_ci_previous_url"));
-        }
-        
+            else if($this->request->getMethod()==="put")
+            {
+                return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
+                ->setStatusCode($code)->setJSON($result);
+            }
+            /*
+            else if(isset($this->request) && $this->request->getMethod()==="get")
+            {
+                return redirect()->to(session()->get("_ci_previous_url"));
+            }
+            */
       
       
   
@@ -187,5 +226,17 @@ class Panier extends BaseController
             ->setStatusCode(200);
         }
   
+    }
+
+    public function creerPanier(){
+        $token = bin2hex(openssl_random_pseudo_bytes(16));
+        $expiration=strtotime('+13 mouth');
+        $model=model("\App\Models\ProduitPanierVisiteurModel");
+        $token=$model->createPanierVisiteur($token,$expiration);
+
+        helper('cookie');
+        set_cookie('token_panier',$token,$expiration);
+        return $token;
+      
     }
 }

@@ -6,8 +6,8 @@
             "port": 5432,
             "driver": "PostgreSQL",
             "database": "postgres",
-            "username": "postgres",
-            "password": "Wofzyc51",
+            "username": "mathis",
+            "password": "mathis",
             "name": "postgres"
         }
     ]

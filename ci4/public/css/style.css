@@ -1,5 +1,3 @@
-/* Quand on scroll, retirer catégories éventuellement, ca peut etre cool */
-
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                          Commun à toutes les pages                              ┃
@@ -56,7 +54,7 @@ header h2, header nav {
     font-family: "Montserrat-Medium";
     font-size: 1.2em;
 }
-
+ 
 .lienAlizon {
     display: flex;
     align-items: center;
@@ -737,7 +735,7 @@ header ul {
 .mainPanier {
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: #f3f3f3;
     color: #164F57;
     font-family: "Montserrat-Medium";
     text-align: left;
@@ -755,8 +753,9 @@ header ul {
 }
 
 .mainPanier aside {
-    border-radius: 15px;
-    background-color: #E7E8E6;
+    border: solid 2px;
+    border-color: #C6C6C6;
+    background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -795,11 +794,12 @@ header ul {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border-radius: 15px;
-    background-color: #E7E8E6;
+    background-color: white;
     color: #164F57;
     width: 70%;
     padding: 1em;
+    border: solid 2px;
+    border-color: #C6C6C6;
 }
 
 .sectionPanier h2 {
@@ -946,9 +946,10 @@ header ul {
 }
 
 .sectionRecommandationsPanier {
-    border-radius: 15px;
-    background-color: #E7E8E6;
+    border: solid 2px;
+    border-color: #C6C6C6;  
     color: #164F57;
+    background-color: white;
     margin-top: 2em;
     padding: 1em;
 }
@@ -969,6 +970,11 @@ header ul {
 .sectionRecommandationsPanier img {
     width: 100%;
     height: auto;
+}
+
+.sectionRecommandationsPanier hr {
+    background-color: #164F57;
+    margin: 1em 0;
 }
 
 /*
@@ -1005,28 +1011,14 @@ header ul {
     background-color: white;
 }
 
-.sectionProduit > ul {
-    display: flex;
-    justify-content: space-between;
-    list-style-type: none;
-    padding: 0;
-}
-
-.sectionProduit > ul li {
-    width: 12%;
-}
-
-.sectionProduit > ul figure {
-    margin: 0;
-}
-
-.divImagesProduits {
+.divGauche {
     display: flex;
     flex-direction: row;
-    padding: 0 1em 1em 0;
+    padding-right: 1em;
+    width: 60%;
 }
 
-.divImagesProduits ul {
+.divGauche ul {
     width: 20%;
     margin: 0;
     padding: 0;
@@ -1034,22 +1026,20 @@ header ul {
     list-style-type: none;
 }
 
-.divImagesProduits div {
+.divGauche div {
     width: 80%;
 }
 
-.divGauche {
-    width: 60%;
-}
-
-.divGauche p {
+.ParaDescProduit {
     text-align: justify;
     margin-right: 1em;
     font-family: 'Montserrat-Regular';
 }
 
 .divDroite {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 40%;
     margin-left: 1em;
 }
@@ -1061,16 +1051,30 @@ header ul {
 }
 
 .divDroite h2 {
-    text-align: center;
+    text-align: left;
     color: #164F57;
 }
 
-.divDroite > div {
-    text-align: left;
-    height: 95%;
+.divLogos, .sectionAvis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.divQuantitePanier button{
+.sectionAvis h4 {
+    margin: 0 1em 0 0;
+}
+
+.divAcheterProduit {
+    text-align: right;
+}
+
+.divAcheterProduit select {
+    max-height: 2em;
+    margin-left: 1em;
+}
+
+.divAcheterProduit button {
     display: inline-block;
     color: white;
     border-radius: 5px;
@@ -1081,25 +1085,28 @@ header ul {
     width: 100%;
 }
 
-.divAvisLogos {
-    text-align: center;
+.divAcheterProduit button:hover {
+    background-color: #164F57;
 }
 
-.divQuantitePanier {
-    text-align: right;
-}
-
-.divQuantitePanier > div {
+.divQuantiteProduit {
     display: flex;
+    justify-content: end;
     align-items: center;
-    justify-content: right;
 }
 
-.divQuantitePanier select {
-    max-height: 2em;
-    margin-left: 1em;
+.divQuantiteProduit p {
+    margin: 0;
 }
 
+.divQuantiteProduit + div {
+    margin: 1em 0;
+    display: block;
+}
+
+.divQuantiteProduit + div h3 {
+    margin: 0;
+}
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

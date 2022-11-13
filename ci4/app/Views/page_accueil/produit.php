@@ -3,95 +3,92 @@
             <section class="sectionProduit">
                 <article>
                     <div class="divGauche">
-                        <div class="divImagesProduits">
-                            <ul>
-                                <li>
-                                    <img src="<?=base_url() ?>/images/art5.png" />
-                                </li>
-                                <li>
-                                    <img src="<?=base_url() ?>/images/art5.png" />
-                                </li>
-                                <li>
-                                    <img src="<?=base_url() ?>/images/art5.png" />
-                                </li>
-                            </ul>
-                            <div>
-                                <img src="<?=base_url() ?>/images/art5.png" />
-                            </div>
-                        </div> 
-                        <p><?php echo $prod->description;?></p>
+                        <ul>
+                            <li>
+                                <img src="<?= $prod -> lienimage ?>" />
+                            </li>
+                            <li>
+                                <img src="<?= $prod -> lienimage ?>" />
+                            </li>
+                            <li>
+                                <img src="<?= $prod -> lienimage ?>" />
+                            </li>
+                        </ul>
+                        <div>
+                            <img src="<?= $prod -> lienimage ?>" />
+                        </div>
                     </div>
                     <div class="divDroite">
                         <div>
-                            <h2>Galettes saucisses</h2>
-                            <h3>Prix: 0.01€</h3>
-                            <h4>Avis clients:</h4>
-                            <div class="divAvisLogos">
+                            <?= '<h2>' . ucfirst($prod -> intitule) . '</h2>' ?>
+                            <p class="ParaDescProduit"><?= ucfirst($prod->description) ?></p>
+                            <section class="sectionAvis">
+                                <h4>Avis clients:</h4>
                                 <img src="<?=base_url() ?>/images/produit/avis.png"/>
-                                <div>
-                                    <img src="<?=base_url() ?>/images/produit/produits_locaux.png" />
-                                    <img src="<?=base_url() ?>/images/produit/livraison_gratuite.png" />
-                                </div>
+                            </section>
+                            <div class="divLogos">
+                                <img src="<?=base_url() ?>/images/produit/produits_locaux.png" />
+                                <img src="<?=base_url() ?>/images/produit/livraison_gratuite.png" />
                             </div>
-                            <div class="divQuantitePanier">
-                                <p>Faites vite, il n'en reste que 3</p>
-                                <form action=<?=base_url()."/panier/ajouter/$prod->id"?> method="post">
-                                <div>
+                        </div>
+                        <div class="divAcheterProduit">
+                            <?php if ($prod -> stock <= 10): ?>
+                            <?= "<p>Faites vite, il n'en reste que " . $prod -> stock . '</p>' ?>
+                            <?php endif; ?>
+                            <form action= <?= base_url()."/panier/ajouter/$prod->id" ?> method="post">
+                                <div class="divQuantiteProduit">
                                     <p>Quantité :</p>
-                                    <select name="quantite" id="tabQuant">
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10+">10+</option>
-                                    </select>
-                                    <!-- si jamais l'utilisateur choisi 10+ il se transforme en number à partir de 10 -->
+                                    <?= '<select name="quantite" id="tabQuant">' . "\n"; ?>
+                                    <?php for ($i = 1; $i <= $prod -> stock; $i++): ?>
+                                        <?= '<option value="'. $i .'">' . $i . '</option>' . "\n"; ?>
+                                    <?php endfor; ?>
+                                    <?= '</select>' . "\n"; ?>
+                                </div>
+                                <div>
+                                    <h3><?= "Prix (TTC): " . $prod -> prixttc ?></h3>
+                                    <h3><?= '(HT): ' . $prod -> prixht ?></h3>
                                 </div>
                                 <button type="submit">Ajouter au panier</button>
-                                </form>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </article>
-                <h3>Suggestions :</h3>
-                <ul>
-                    <li>
-                        <figure>
-                            <img src="<?=base_url() ?>/images/art5.png" />
-                            <figcaption>Nom article</figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="<?=base_url() ?>/images/art5.png" />
-                            <figcaption>Nom article</figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="<?=base_url() ?>/images/art5.png" />
-                            <figcaption>Nom article</figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="<?=base_url() ?>/images/art5.png" />
-                            <figcaption>Nom article</figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="<?=base_url() ?>/images/art5.png" />
-                            <figcaption>Nom article</figcaption>
-                        </figure>
-                    </li>
-                </ul>
+                <section class="sectionRecommandationsPanier">
+                    <h2>Recommandations</h2>
+                    <hr>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <img src="<?=base_url() ?>/images/art1.png" alt="article 1" title="Article 1">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="<?=base_url() ?>/images/art2.png" alt="article 2" title="Article 2">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="<?=base_url() ?>/images/art3.png" alt="article 3" title="Article 3">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="<?=base_url() ?>/images/art4.png" alt="article 4" title="Article 4">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="<?=base_url() ?>/images/art5.png" alt="article 5" title="Article 5">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="<?=base_url() ?>/images/art5.png" alt="article 6" title="Article 6">
+                            </a>
+                        </li>
+                    </ul>
+                </section>
             </section>
         </main>
 <?php require("footer.php"); ?>

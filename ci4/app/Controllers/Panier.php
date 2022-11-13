@@ -133,9 +133,10 @@ class Panier extends BaseController
                 $panierModel = model("\App\Models\ProduitPanierCompteModel");
                 $panierModel->ajouterProduit($idProd,$quantite,session()->get("numero"),$quantite,true);
             }
-            else if(has_cookie("token_panier"))
+            else if(has_cookie("token_panier") && model("\App\Models\ProduitPanierVisiteurModel")->estConsigne(get_cookie("token_panier")))
             {
                 $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
+                
                 $panierModel->ajouterProduit($idProd,$quantite,get_cookie("token_panier"),$quantite,true);
             }
             else 

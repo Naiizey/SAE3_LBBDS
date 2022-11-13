@@ -39,6 +39,15 @@ class ProduitPanierVisiteurModel extends ProduitPanierModel
         return $token;
     } 
 
+    public function estConsigne($token){
+ 
+        $db = db_connect();
+        $result=$db->table('sae3._panier_visiteur')->where('token_cookie',$token)->get()->getResult();
+
+        return !empty($result);
+    } 
+
+
    
     
 

@@ -47,6 +47,7 @@ class Authentification
 
     public function inscription(\App\Entities\Client $entree, $verifMdp) : array
     {   
+        $compteModel=model("\App\Models\Client");
         $errors=[];
         if(!empty($entree))
         {
@@ -77,6 +78,18 @@ class Authentification
             {
                 $errors[6]="Les mots de passes ne correspondent pas";
             }
+            if ($compteModel->doesClientExists($entree->pseudo, $entree->email, $entree->motDePasse))
+            {
+                $errors[7]="Vous êtes déjà inscrit avec ce pseudo/email et ce mot de passe";
+            }
+            if (!$compteModel->doesEmailExists($entree->email))
+            {
+                $errors[8]="Un utilisateur existe déjà avec cette adresse mail";
+            }
+            if (!$compteModel->doesPseudoExists($entree->pseudo))
+            {
+                $errors[9]="Un utilisateur existe déjà avec ce pseudo";
+            }
         }
         else 
         {
@@ -85,34 +98,13 @@ class Authentification
         
         if(empty($errors))
         {
-            $compteModel=model("\App\Models\Client");
             $entree->cryptMotDePasse();
-
-            if ($compteModel->doesClientExists($entree->pseudo))
-            {
-                $errors[9]="Un utilisateur existe déjà avec ce pseudo";
-            }
-            /*if ($compteModel->getClientByCredentials($entree->pseudo,$entree->motDePasse,true) != null)
-            {
-                $errors[7]="Vous êtes déjà inscrit";
-            }*/
-            /*if ($compteModel->getClientByEmail($entree->email,$entree->motDePasse,true) != null)
-            {
-                $errors[8]="Un utilisateur existe déjà avec cette adresse mail";
-            }*/
-            /*if ($compteModel->getClientByPseudo($entree->pseudo,$entree->motDePasse,true) != null)
-            {
-                $errors[9]="Un utilisateur existe déjà avec ce pseudo";
-            }*/
-            if (empty($errors))
-            {
-                $compteModel->save($entree);
-                $session = session();
-                $user=$compteModel->where("email",$entree->email)->findAll()[0];
-                $session->set('numero',$user->numero);
-                $session->set('identifiant',$user->identifiant);
-                $session->set('motDePasse',$user->motDePasse);
-            }
+            $compteModel->save($entree);
+            $session = session();
+            $user=$compteModel->where("email",$entree->email)->findAll()[0];
+            $session->set('numero',$user->numero);
+            $session->set('identifiant',$user->identifiant);
+            $session->set('motDePasse',$user->motDePasse);
         }
 
         return $errors;

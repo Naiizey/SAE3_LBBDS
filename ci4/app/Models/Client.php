@@ -50,7 +50,6 @@ class Client extends Model
                 return $retour;
             }
             else return null;
-            
         }
         else
         {
@@ -75,8 +74,42 @@ class Client extends Model
         return $this->getClientByCredentials($comptes, $motDePasse, $esthashee);
     }
 
-    public function doesClientExists($pseudo) : bool
+    public function doesPseudoExists($pseudo) : bool
     {
         return empty($this->where('identifiant',$pseudo)->findAll());
+    }
+
+    public function doesEmailExists($email) : bool
+    {
+        return empty($this->where('email',$email)->findAll());
+    }
+
+    public function doesClientExists($pseudo, $email, $motDePasse) : bool
+    {
+        #Attention je pars du principe que le mot de passe n'est pas crypté
+        $comptes = $this->where('identifiant',$pseudo)->findAll();
+        if ($comptes != 0)
+        {
+            foreach($comptes as $trouve)
+            {
+                if($trouve->verifCrypt($motDePasse))
+                {
+                    return true;
+                }
+            }
+        }
+
+        $comptes = $this->where('email',$email)->findAll();
+        if ($comptes != 0)
+        {
+            foreach($comptes as $trouve)
+            {
+                if($trouve->verifCrypt($motDePasse))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

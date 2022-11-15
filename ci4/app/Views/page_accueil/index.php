@@ -58,15 +58,14 @@
                 </section>
                 <div class="iconesAccueil">
                     <figure>
-                        <img src="./images/header/" alt="" title="">
+                        <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
                         <figcaption>Livraison gratuite !</figcaption>
                     </figure>
                     <figure>
-                        <img src="./images/header/" alt="" title="">
                         <figcaption>Produits issus de commerces Bretons !</figcaption>
                     </figure>
                     <figure>
-                        <img src="./images/header/" alt="" title="">
+                        <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/header/carton.svg")?>
                         <figcaption>Livraison à domicile !</figcaption>
                     </figure>
                 </div>

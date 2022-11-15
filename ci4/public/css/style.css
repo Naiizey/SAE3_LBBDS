@@ -566,8 +566,17 @@ header ul {
     color: #164F57;
 }
 
-.iconesAccueil figure img {
-    width: 50%;
+.iconesAccueil figure path {
+    fill: #BDBFBB;
+}
+
+.iconesAccueil .logoIndex {
+    width : 8em;
+    height : 8em;
+}
+
+.iconesAccueil figure figcaption {
+    width: 15em;
 }
 
 /*

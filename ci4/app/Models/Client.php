@@ -33,12 +33,8 @@ class Client extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
-    private function getClientByCredentials($comptes, $motDePasse, bool $esthashee) //: \App\Entities\Client | null
+    private function getClientByCredentials($comptes, $motDePasse, bool $esthashee) : \App\Entities\Client | null
     {
-        
-        
-        
-            
         if(!$esthashee)
         {
             $comptes=$comptes->findAll();
@@ -61,28 +57,26 @@ class Client extends Model
             $comptes=$comptes->where('motdepasse',$motDePasse)->findAll();
             return (sizeof($comptes)!=0) ? $comptes[0] : null;
         }
-      
-        
     }
 
-    public function getClientByPseudo($identifiant, $motDePasse, bool $esthashee) //: \App\Entities\Client | null
+    public function getClientByPseudo($pseudo, $motDePasse, bool $esthashee) : \App\Entities\Client | null
     {
         
-        $comptes = $this->where('identifiant',$identifiant);
+        $comptes = $this->where('identifiant',$pseudo);
         
         return $this->getClientByCredentials($comptes, $motDePasse, $esthashee);
-      
-        
     }
 
-    public function getClientByEmail($identifiant, $motDePasse, bool $esthashee) //: \App\Entities\Client | null
+    public function getClientByEmail($email, $motDePasse, bool $esthashee) : \App\Entities\Client | null
     {
         
-        $comptes = $this->where('email',$identifiant);
+        $comptes = $this->where('email',$email);
         
         return $this->getClientByCredentials($comptes, $motDePasse, $esthashee);
-      
-        
     }
 
+    public function doesClientExists($pseudo) : bool
+    {
+        return empty($this->where('identifiant',$pseudo)->findAll());
+    }
 }

@@ -11,7 +11,6 @@
 
 class Authentification
 {
-
     public function connexion($entree) : array
     {   
         $errors=[];
@@ -88,12 +87,32 @@ class Authentification
         {
             $compteModel=model("\App\Models\Client");
             $entree->cryptMotDePasse();
-            $compteModel->save($entree);
-            $session = session();
-            $user=$compteModel->where("email",$entree->email)->findAll()[0];
-            $session->set('numero',$user->numero);
-            $session->set('identifiant',$user->identifiant);
-            $session->set('motDePasse',$user->motDePasse);
+
+            if ($compteModel->doesClientExists($entree->pseudo))
+            {
+                $errors[9]="Un utilisateur existe déjà avec ce pseudo";
+            }
+            /*if ($compteModel->getClientByCredentials($entree->pseudo,$entree->motDePasse,true) != null)
+            {
+                $errors[7]="Vous êtes déjà inscrit";
+            }*/
+            /*if ($compteModel->getClientByEmail($entree->email,$entree->motDePasse,true) != null)
+            {
+                $errors[8]="Un utilisateur existe déjà avec cette adresse mail";
+            }*/
+            /*if ($compteModel->getClientByPseudo($entree->pseudo,$entree->motDePasse,true) != null)
+            {
+                $errors[9]="Un utilisateur existe déjà avec ce pseudo";
+            }*/
+            if (empty($errors))
+            {
+                $compteModel->save($entree);
+                $session = session();
+                $user=$compteModel->where("email",$entree->email)->findAll()[0];
+                $session->set('numero',$user->numero);
+                $session->set('identifiant',$user->identifiant);
+                $session->set('motDePasse',$user->motDePasse);
+            }
         }
 
         return $errors;
@@ -111,12 +130,6 @@ class Authentification
             else return false;
         }
         else return false;
-        
-        
     }
-
     #TODO: chargement des produit panier visiteur dans panier client
-
-
-
 }

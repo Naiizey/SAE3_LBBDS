@@ -17,7 +17,10 @@
                     <form action='<?= base_url() ?>/inscription' method="post">
                         <label>Pseudo:</label>
                         <input type="text" name="pseudo" required="required" value="<?= $pseudo?>"/>
-                        <?= afficheErreurs($erreurs, 3); ?>
+                        <?= 
+                            afficheErreurs($erreurs, 3) .
+                            afficheErreurs($erreurs, 9) 
+                        ?>
                         <div class="nomPrenom">
                             <div>
                                 <label>Nom:</label>
@@ -31,7 +34,10 @@
                         <?= afficheErreurs($erreurs, 2); ?>
                         <label>Adresse mail:</label>
                         <input type="email" name="email" required="required" value="<?= $email?>"/>
-                        <?= afficheErreurs($erreurs, 4); ?>
+                        <?= 
+                            afficheErreurs($erreurs, 4) .
+                            afficheErreurs($erreurs, 8)
+                        ?>
                         <label>Mot de passe:</label>
                         <input type="password" name="motDePasse" required="required" value="<?= $motDePasse?>"/>
                         <?= 
@@ -40,7 +46,10 @@
                         ?>
                         <label>Confirmez mot de passe:</label>
                         <input type="password" name="confirmezMotDePasse" required="required" value="<?= $confirmezMotDePasse?>"/>
-                        <?= afficheErreurs($erreurs, 1); ?>
+                        <?= 
+                            afficheErreurs($erreurs, 1) .
+                            afficheErreurs($erreurs, 7) 
+                        ?>
                         <input type="submit" value="S'inscrire"/>
                     </form>
                     <a href="<?= base_url() ?>/connexion">J'ai déjà un compte</a>

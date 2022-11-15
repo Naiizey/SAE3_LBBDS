@@ -39,6 +39,7 @@ CREATE TABLE _sous_categorie(
 CREATE TABLE _compte
 (
     num_compte SERIAL PRIMARY KEY,
+    --code_tarif_liv INTEGER NOT NULL,
     nom_compte VARCHAR(50) NOT NULL,
     prenom_compte VARCHAR(50) NOT NULL,
     pseudo VARCHAR(30) NOT NULL,
@@ -51,7 +52,7 @@ CREATE TABLE _adresse
     id_a SERIAL PRIMARY KEY,
     nom_a VARCHAR(50) NOT NULL,
     prenom_a VARCHAR(50) NOT NULL,
-    num_rue INT NOT NULL,
+    numero_rue INT NOT NULL,
     nom_rue VARCHAR(50) NOT NULL,
     code_postal INT NOT NULL,
     ville VARCHAR(50) NOT NULL,
@@ -93,8 +94,11 @@ CREATE TABLE _panier_visiteur
 CREATE TABLE _commande
 (
     num_commande VARCHAR(50),
-    date_dep DATE NOT NULL,
-    date_arriv DATE NOT NULL,
+    date_commande DATE NOT NULL,
+    date_expedition DATE,
+    date_plateformeReg DATE,
+    date_plateformeLoc DATE,
+    date_arriv DATE,
     etat_livraison INT NOT NULL,
     id_a INT NOT NULL, --attendu_a
     id_adresse INT NOT NULL
@@ -147,6 +151,17 @@ CREATE TABLE _image_avis(
     num_avis INT NOT NULL
 );
 
+CREATE TABLE _promotion(
+    id_promo SERIAL PRIMARY KEY ,
+    texte_promo text NOT NULL ,
+    banniere VARCHAR(50) NOT NULL,
+    remise int NOT NULL ,
+    date_debut DATE NOT NULL ,
+    heure_debut TIME NOT NULL ,
+    date_fin DATE NOT NULL ,
+    heure_fin DATE NOT NULL
+);
+
 /* -----------------------------------------------------------
 -                  Classes association                        -
 -                                                            -
@@ -163,42 +178,6 @@ CREATE TABLE _pouce
     CONSTRAINT _pouce_produit_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis),
     CONSTRAINT _pouce_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte)
 );
-
-
--- ajout d'un check : un compte ne peut pas mettre un pouce à son propre avis ✅
-CREATE OR REPLACE FUNCTION pouce_check() RETURNS TRIGGER AS
-$$
-BEGIN
-    PERFORM num_compte FROM _avis inner join _pouce on _avis.num_compte = _pouce.num_compte WHERE _avis.num_avis = _pouce.num_avis;
-    IF FOUND THEN
-        RAISE EXCEPTION 'IMPOSSIBLE DE S''AUTO LIKE CLOCHARD VA';
-    END IF;
-    return new;
-END
-$$
-LANGUAGE PLPGSQL;
-
-CREATE OR REPLACE FUNCTION fixInheritance() RETURNS TRIGGER AS
-$$
-BEGIN
-    INSERT INTO sae3._panier (num_panier) VALUES (new.num_panier);
-    return new;
-END;
-$$
-LANGUAGE PLPGSQL;
-CREATE OR REPLACE TRIGGER insteadOfInsert_panier AFTER INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
-CREATE OR REPLACE TRIGGER insteadOfInsert_panier AFTER INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
-
-CREATE OR REPLACE FUNCTION creerPremierPanier() RETURNS TRIGGER AS
-    $$
-
-    BEGIN
-        Insert Into sae3._panier_client (num_compte) VALUES (new.num_compte);
-        return new;
-
-    end;
-    $$ language plpgsql;
-CREATE OR REPLACE TRIGGER afterOfInsertClient AFTER INSERT ON _compte FOR EACH ROW EXECUTE PROCEDURE creerPremierPanier ();
 
 
 
@@ -240,6 +219,20 @@ CREATE TABLE _refere
     CONSTRAINT _refere_panier_fk FOREIGN KEY (num_panier) REFERENCES _panier(num_panier),
     CONSTRAINT _refere_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod)
 );
+
+
+CREATE TABLE _est_en_remise_sous
+(
+    id_prod INT,
+    id_promo INT,
+
+    CONSTRAINT  _est_en_remise_sous_pk primary key (id_prod,id_promo),
+    CONSTRAINT  _prod_en_remise_fk foreign key (id_prod) REFERENCES _produit(id_prod),
+    CONSTRAINT  _remise_de_prod_fk foreign key (id_prod) REFERENCES _promotion(id_promo)
+
+);
+
+
 
 /* -----------------------------------------------------------
 -                        Associations                        -
@@ -305,3 +298,46 @@ ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY 
 
 -- Association 1..0.3 entre avis et image_avis
 ALTER TABLE _image_avis ADD CONSTRAINT _image_avis_avis_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
+
+/* -----------------------------------------------------------
+-                  Trigger schema                        -
+-                                                            -
+--------------------------------------------------------------*/
+
+
+-- ajout d'un check : un compte ne peut pas mettre un pouce à son propre avis ✅
+CREATE OR REPLACE FUNCTION pouce_check() RETURNS TRIGGER AS
+$$
+BEGIN
+    PERFORM num_compte FROM _avis inner join _pouce on _avis.num_compte = new.num_compte WHERE _avis.num_avis = new.num_avis;
+    IF FOUND THEN
+        RAISE EXCEPTION 'IMPOSSIBLE DE S''AUTO LIKE';
+    END IF;
+    return new;
+END
+$$
+LANGUAGE PLPGSQL;
+CREATE OR REPLACE TRIGGER beforeInsert_pouce BEFORE INSERT ON _pouce FOR EACH ROW EXECUTE PROCEDURE pouce_check() ;
+
+CREATE OR REPLACE FUNCTION fixInheritance() RETURNS TRIGGER AS
+$$
+BEGIN
+    INSERT INTO sae3._panier (num_panier) VALUES (new.num_panier);
+    return new;
+END;
+$$
+LANGUAGE PLPGSQL;
+CREATE OR REPLACE TRIGGER afterInsert_panier_compte AFTER INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
+CREATE OR REPLACE TRIGGER afterInsert_panier_visiteur AFTER INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
+
+CREATE OR REPLACE FUNCTION creerPremierPanier() RETURNS TRIGGER AS
+    $$
+
+    BEGIN
+        Insert Into sae3._panier_client (num_compte) VALUES (new.num_compte);
+        return new;
+
+    end;
+    $$ language plpgsql;
+CREATE OR REPLACE TRIGGER afterInsertClient AFTER INSERT ON _compte FOR EACH ROW EXECUTE PROCEDURE creerPremierPanier ();
+

@@ -109,19 +109,5 @@ class Authentification
 
         return $errors;
     }
-
-    public function estConnectee() : bool
-    {   
-        $session = session();
-        if($session->has('numero')){
-            $clientModel = model("\App\Models\Client");
-            if($clientModel->getClientByCredentials($session->get('identifiant'),$session->get('motDePasse'),true) != null)
-            {
-                return true;
-            }
-            else return false;
-        }
-        else return false;
-    }
     #TODO: chargement des produit panier visiteur dans panier client
 }

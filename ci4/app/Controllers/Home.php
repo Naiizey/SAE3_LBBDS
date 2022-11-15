@@ -4,6 +4,14 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
+
+    public function __construct()
+    {
+        //permer d'éviter le bug de redirection.
+        session();
+
+    }
+
     public function index()
     {
         $data['controller']= "index";

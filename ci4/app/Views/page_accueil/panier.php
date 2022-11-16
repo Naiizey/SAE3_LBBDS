@@ -58,25 +58,25 @@
                             for ($i = 1; $i <= $produit -> stock; $i++)
                             {
                             
-                              
+                                
                                     echo                   '<option value="'. $i .'" '. (($produit->quantite == $i)?'selected':'') .' ">' . $i . "</option>";
                                 
                             }
                             echo                   '</select>
                                                     <a href="'.base_url()."/panier/supprimer/$produit->idProd".'">Supprimer</a>
                                                 </div>
-                                                <h3>' . $produit -> prixTtc . '€</h3>
+                                                <h3 class="prix" prix="'. $produit -> prixTtc .'">' . $produit -> prixTtc . '€</h3>
                                         </article>';
                         }                
                         echo       '    <hr>
                                     </div>
                                     <div class="divPanierFooter"> 
                                         <a href='.base_url().'/panier/vider>Vider le panier</a>
-                                        <h2>Sous-total (' . $sommeNbArticle . ' articles) : ' . $sommePrix . '€</h2>
+                                        <h2>Sous-total (<span class="nbArt">' . $sommeNbArticle . '</span> articles) : <span class="total">' . $sommePrix . '</span> €</h2>
                                     </div>
                                 </section>
                                 <aside>
-                                    <h2>Sous-total (' . $sommeNbArticle . ' articles) : ' . $sommePrix . '€</h2>
+                                    <h2>Sous-total (<span class="nbArt">' . $sommeNbArticle . '</span> articles) : <span class="total">' . $sommePrix . '</span>€</h2>
                                     <a class="lienPanier" href="">Valider le panier</a>
                                 </aside>';
                     }
@@ -128,7 +128,7 @@
             //toSend est un param permettant la modification de la page sans rafraichissement
             var toSend = new Object();
             //url où envoyé les données
-            toSend.http = 'http://localhost/Alizon/ci4/public/panier/modifier/quantite';
+            toSend.http = "<?php echo base_url()  .  'panier/modifier/quantite'?>";
             //indication de comment récupérer un select
             toSend.howGetSelect=() => document.querySelectorAll(".divQuantite select");
             //indication de comment l'id du produit d'un select

@@ -68,7 +68,8 @@ $routes->set404Override();
     $routes->get('/test', 'Test::test2');
     $routes->get('/panier', 'Panier');
 
-    $routes->get('/import', 'Home::import');
+    $routes->get('/import', 'Import::index');
+    $routes->post('/import/upload', 'Import::upload');
 
     $routes->get('/destroy', 'Test::destroySession');
 

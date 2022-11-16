@@ -1402,6 +1402,7 @@ a.fleche-page{
     display: flex;
     justify-content: space-between;
     height: 3.2em;
+    width: 100%;
 }
 
 .labelRecupMail {
@@ -1409,7 +1410,7 @@ a.fleche-page{
 }
 
 .divRecupMail input[type="text"] {
-    flex-grow: 1;
+    flex-grow: 4;
     margin: 0 1em 0 0;
     height: auto;
 }
@@ -1418,6 +1419,7 @@ a.fleche-page{
     margin: 0;
     padding: 0;
     height: auto;
-    width: 8em;
+    flex-grow: 1;
     border-radius: 0;
+    background-color: #3997A3;
 }

@@ -60,7 +60,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 11%;
+    width: 13%;
 }
 
 .divRecherche {
@@ -93,7 +93,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 8%;
+    width: 9%;
 }
 
 .divRecherche > a{
@@ -1380,4 +1380,34 @@ a.fleche-page{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                  Page d'oublie de mot de passe (mdpOublie.php)                  ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.divRecupMail {
+    display: flex;
+    justify-content: space-between;
+    height: 3.2em;
+}
+
+.labelRecupMail {
+    margin-bottom: 1%;
+}
+
+.divRecupMail input[type="text"] {
+    flex-grow: 1;
+    margin: 0 1em 0 0;
+    height: auto;
+}
+
+.divRecupMail input[type="submit"] {
+    margin: 0;
+    padding: 0;
+    height: auto;
+    width: 8em;
+    border-radius: 0;
 }

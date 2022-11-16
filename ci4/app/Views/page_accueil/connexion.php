@@ -17,7 +17,8 @@
             <div class="divCredit">
                 <div class="sectionCredit">
                     <h2>Connexion</h2>
-                    <form action="<?= base_url() ?>/connexion" method="post">
+                    <form action="<?= current_url() ?>" method="post">
+                        <?= afficheErreurs($erreurs,'redirection'); ?>
                         <label>Nom d'utilisateur ou adresse mail :</label>
                         <input type="text" name="identifiant" required="required" value="<?= $identifiant?>"/>
                         <label>Mot de passe : </label>

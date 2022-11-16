@@ -22,10 +22,14 @@ class Home extends BaseController
         return view('page_accueil/index.php',$data);
     }
 
-    public function connexion()
+    public function connexion($context= null)
     {
         $post=$this->request->getPost();
         $issues=[];
+
+        if(!is_null($context) && $context==401){
+            $issues['redirection']="Vous devez vous connectez pour valider votre commande";
+        }
 
         if(!empty($post))
         {
@@ -34,11 +38,17 @@ class Home extends BaseController
             $user->fill($post);
             $issues=$auth->connexion($user); 
 
-            if(empty($issues)) 
+            if(empty($issues) && is_null($context)) 
             {
                 return redirect()->to("/");
             }
+            else if(empty($issues) && !is_null($context))
+            {
+                return redirect()->to("/commandes");
+            }
         }
+
+        
 
         $data['controller']= "connexion";
         $data['erreurs'] = $issues;
@@ -176,5 +186,12 @@ class Home extends BaseController
     {
         $data['controller']= "mdpOublie";
         return view('page_accueil/mdpOublie.php', $data);
+    }
+
+
+    //Tant que commande n'est pas là
+    public function commandeTest(){
+        
+        echo "oui";
     }
 }

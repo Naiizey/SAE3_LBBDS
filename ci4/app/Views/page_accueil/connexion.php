@@ -18,9 +18,9 @@
                 <div class="sectionCredit">
                     <h2>Connexion</h2>
                     <form action="<?= base_url() ?>/connexion" method="post">
-                        <label>Nom d'utilisateur ou adresse mail:</label>
+                        <label>Nom d'utilisateur ou adresse mail :</label>
                         <input type="text" name="identifiant" required="required" value="<?= $identifiant?>"/>
-                        <label>Mot de passe: </label>
+                        <label>Mot de passe : </label>
                         <input type="password" name="motDePasse" required="required" value="<?= $motDePasse?>"/>
                         <div class="divSouvenir">
                             <input type="checkbox"/>
@@ -31,7 +31,7 @@
                     </form>
                     <a href="<?= base_url() ?>/inscription">Je n'ai pas de compte</a>
                 </div>
-                <a href="">Mot de passe oublié ?</a>
+                <a href="<?= base_url() ?>/mdpOublie">Mot de passe oublié ?</a>
             </div>
         </main>
 <?php require("footer.php"); ?>

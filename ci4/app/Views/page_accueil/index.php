@@ -62,6 +62,7 @@
                         <figcaption>Livraison gratuite !</figcaption>
                     </figure>
                     <figure>
+                        <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/header/hermine.svg")?>
                         <figcaption>Produits issus de commerces Bretons !</figcaption>
                     </figure>
                     <figure>

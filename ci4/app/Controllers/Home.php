@@ -171,37 +171,10 @@ class Home extends BaseController
        
         return view("catalogue.php",$data);
     }
-    public function import()
+    
+    public function mdpOublie()
     {
-
-        $data['controller']= "import";
-        $row = 0;
-        $fichier = fopen("ressources/data.csv", "r");
-        $size = fstat($fichier)["size"];
-        while (($dataCSV = fgetcsv($fichier, $size, ';')) !== FALSE) {
-            $num = count($dataCSV);
-            for ($c=0; $c < $num; $c++) {
-                $retour[$row][$c] = $dataCSV[$c];
-            }
-            $row++;
-        }
-        fclose($fichier);
-        $new_table = array();
-        for ($i=0; $i < count($retour); $i++) 
-        { 
-            //on itère sur chaque ligne
-            if (count($retour[0]) == count($retour[$i]))
-            {
-                for ($j=0; $j < count($retour[0]); $j++) 
-                {
-                    $new_table[$i][$retour[0][$j]] = $retour[$i][$j];
-                }
-            }
-        }
-        $result = array_slice($new_table,1);
-        print_r($result);
-        $importModel = model("\App\Models\ImportCSV");
-        $importModel->CSVimport($result);
-        return view('page_accueil/import.php', $data);
+        $data['controller']= "mdpOublie";
+        return view('page_accueil/mdpOublie.php', $data);
     }
 }

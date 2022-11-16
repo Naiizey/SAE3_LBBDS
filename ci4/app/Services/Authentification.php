@@ -17,11 +17,11 @@ class Authentification
         if(!empty($entree))
         {
             $clientModel = model("\App\Models\Client");
-            $user = $clientModel->getClientByPseudo($entree -> identifiant,$entree -> motDePasse,false);
+            $user = $clientModel->getClientByPseudo($entree -> identifiant,$entree -> motDePasse);
             
             if($user == null) 
             {
-                $user = $clientModel->getClientByEmail($entree -> identifiant,$entree -> motDePasse,false);
+                $user = $clientModel->getClientByEmail($entree -> identifiant,$entree -> motDePasse);
             }
             if($user == null)
             {
@@ -78,17 +78,13 @@ class Authentification
             {
                 $errors[6]="Les mots de passes ne correspondent pas";
             }
-            if ($compteModel->doesClientExists($entree->pseudo, $entree->email, $entree->motDePasse))
-            {
-                $errors[7]="Vous êtes déjà inscrit avec ce pseudo/email et ce mot de passe";
-            }
             if (!$compteModel->doesEmailExists($entree->email))
             {
-                $errors[8]="Un utilisateur existe déjà avec cette adresse mail";
+                $errors[7]="Un utilisateur existe déjà avec cette adresse mail";
             }
             if (!$compteModel->doesPseudoExists($entree->pseudo))
             {
-                $errors[9]="Un utilisateur existe déjà avec ce pseudo";
+                $errors[8]="Un utilisateur existe déjà avec ce pseudo";
             }
         }
         else 

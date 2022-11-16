@@ -15,41 +15,38 @@
                 <div class="sectionCredit">
                     <h2>Inscription</h2>
                     <form action='<?= base_url() ?>/inscription' method="post">
-                        <label>Pseudo:</label>
+                        <label>Pseudo :</label>
                         <input type="text" name="pseudo" required="required" value="<?= $pseudo?>"/>
                         <?= 
                             afficheErreurs($erreurs, 3) .
-                            afficheErreurs($erreurs, 9) 
+                            afficheErreurs($erreurs, 8) 
                         ?>
                         <div class="nomPrenom">
                             <div>
-                                <label>Nom:</label>
+                                <label>Nom :</label>
                                 <input type="text" name="nom" required="required" value="<?= $nom?>"/>
                             </div>
                             <div>
-                                <label>Prénom:</label>
+                                <label>Prénom :</label>
                                 <input type="text" name="prenom" required="required" value="<?= $prenom?>"/>
                             </div>
                         </div>
                         <?= afficheErreurs($erreurs, 2); ?>
-                        <label>Adresse mail:</label>
+                        <label>Adresse mail :</label>
                         <input type="email" name="email" required="required" value="<?= $email?>"/>
                         <?= 
                             afficheErreurs($erreurs, 4) .
-                            afficheErreurs($erreurs, 8)
+                            afficheErreurs($erreurs, 7)
                         ?>
-                        <label>Mot de passe:</label>
+                        <label>Mot de passe :</label>
                         <input type="password" name="motDePasse" required="required" value="<?= $motDePasse?>"/>
                         <?= 
                             afficheErreurs($erreurs, 5) .
                             afficheErreurs($erreurs, 6)
                         ?>
-                        <label>Confirmez mot de passe:</label>
+                        <label>Confirmez mot de passe :</label>
                         <input type="password" name="confirmezMotDePasse" required="required" value="<?= $confirmezMotDePasse?>"/>
-                        <?= 
-                            afficheErreurs($erreurs, 1) .
-                            afficheErreurs($erreurs, 7) 
-                        ?>
+                        <?= afficheErreurs($erreurs, 1) ?>
                         <input type="submit" value="S'inscrire"/>
                     </form>
                     <a href="<?= base_url() ?>/connexion">J'ai déjà un compte</a>

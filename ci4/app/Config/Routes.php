@@ -44,6 +44,7 @@ $routes->set404Override();
     $routes->post('/connexion', 'Home::connexion');
     $routes->get('/inscription', 'Home::inscription');
     $routes->post('/inscription', 'Home::inscription');
+    $routes->get('/mdpOublie', 'Home::mdpOublie');
 
 
     $routes->get('/produit', 'Home::produit');
@@ -67,7 +68,8 @@ $routes->set404Override();
     $routes->get('/test', 'Test::test2');
     $routes->get('/panier', 'Panier');
 
-    $routes->get('/import', 'Home::import');
+    $routes->get('/import', 'Import::index');
+    $routes->post('/import/upload', 'Import::upload');
 
     $routes->get('/destroy', 'Test::destroySession');
 

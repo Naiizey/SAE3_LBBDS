@@ -137,7 +137,7 @@ class Home extends BaseController
         //$ProduitPanierModel -> viderPanierClient
     }
 
-    private const NBPRODSPAGECATALOGUE = 6;
+    private const NBPRODSPAGECATALOGUE = 18;
     #FIXME: comportement href différent entre $page=null oe $page !=null    
 
     public function catalogue($page=null)

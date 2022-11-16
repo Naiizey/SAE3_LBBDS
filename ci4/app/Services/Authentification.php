@@ -6,7 +6,7 @@
  * 
  * Ce service permet la vérification qu'un utilisateur est bienn connecté et existant dans la base, permet aussi à la connexion 
  * d'un client à partir de ses identifiants
- * //TODO: Implémetation avec token cookie ?
+ * 
  */
 
 class Authentification
@@ -105,5 +105,5 @@ class Authentification
 
         return $errors;
     }
-    #TODO: chargement des produit panier visiteur dans panier client
+    
 }

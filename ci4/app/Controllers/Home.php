@@ -103,7 +103,6 @@ class Home extends BaseController
             $data['prod'] = $result;
             return view('page_accueil/produit.php',$data);
         }
-        #TODO: pensez à mettre le prix HT dans la vue html et aussi indiquer que la livraison est gratuite
         
         
     }

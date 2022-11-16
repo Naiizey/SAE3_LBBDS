@@ -86,33 +86,25 @@ if (carouselContainer)//verifi si il existe
 */
 
 
-function dropHandler(ev) {
-    console.log('File(s) dropped');
+let target = document.getElementById('dropzone');
+let body = document.body;
+let fileInput = document.getElementById("file");
 
-    // Evite que l'action par défaut ne se produise (ouvrir le fichier dans le navigateur par exemple)
-    ev.preventDefault();
+target.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  body.classList.add('dragging');
+});
 
-    if (ev.dataTransfer.items) {
-        // Utilisation de dataTransfer.items pour accéder aux fichiers
-        [...ev.dataTransfer.items].forEach((item, i) => {
-        // Si les objets sont des fichiers
-        if (item.kind === 'file') {
-            const file = item.getAsFile();
-            console.log(`… file[${i}].name = ${file.name}`);
-        }
-        });
-    } else {
-        [...ev.dataTransfer.files].forEach((file, i) => {
-        console.log(`… file[${i}].name = ${file.name}`);
-    });
-    }
-} 
+target.addEventListener('dragleave', () => {
+  body.classList.remove('dragging');
+});
 
-function dragOverHandler(ev) {
-    console.log('File(s) in drop zone');
-    // Evite que l'action par défaut ne se produise (ouvrir le fichier dans le navigateur par exemple)
-    ev.preventDefault();
-}
+target.addEventListener('drop', (e) => {
+  e.preventDefault();
+  body.classList.remove('dragging');
+  
+  fileInput.files = e.dataTransfer.files;
+});
 
 //TODO: voir et cacher le mot de passe avec un bouton (un neuil) dans l'<input>
 

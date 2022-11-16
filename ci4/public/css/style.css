@@ -1375,13 +1375,22 @@ a.fleche-page{
     background-color: lightgreen;
     flex-basis: 100%;
     flex-grow: 1;
+    flex-direction: column;
     border-radius: 0.9em;
-    padding: 10px;
+    padding: 10%;
     height: 10em;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+#dropzone > form {
+    display: flex;
+    flex-direction: column;
+    gap: 4vh;
+}
+
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

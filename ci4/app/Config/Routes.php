@@ -46,6 +46,8 @@ $routes->set404Override();
     $routes->post('/connexion/(401)', 'Home::connexion/$1');
     $routes->get('/inscription', 'Home::inscription');
     $routes->post('/inscription', 'Home::inscription');
+    $routes->get('/inscription/(401)', 'Home::inscription/$1');
+    $routes->post('/inscription/(401)', 'Home::inscription/$1');
     $routes->get('/mdpOublie', 'Home::mdpOublie');
 
 

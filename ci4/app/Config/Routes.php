@@ -45,6 +45,7 @@ $routes->set404Override();
     $routes->get('/inscription', 'Home::inscription');
     $routes->post('/inscription', 'Home::inscription');
     $routes->get('/mdpOublie', 'Home::mdpOublie');
+    $routes->get('/lstCommandes', 'Home::lstCommandes');
 
 
     $routes->get('/produit', 'Home::produit');

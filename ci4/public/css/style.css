@@ -1421,3 +1421,36 @@ a.fleche-page{
     width: 8em;
     border-radius: 0;
 }
+
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                  Page pour lister toutes les commandes (lstCommandes.php)       ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+#divLstCommandes{
+    border: solid 2px #C6C6C6;
+    background-color: white;
+}
+
+#tableLstCommandes{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tableLstCommandes thead{
+    background-color: #D9D9D9;
+}
+
+#tableLstCommandes tr{
+    height: 3em;
+}
+
+#tableLstCommandes tbody tr{
+    border-bottom: 3px solid #404E58;
+}
+
+#tableLstCommandes th, #tableLstCommandes td{
+    width: 5em;
+}

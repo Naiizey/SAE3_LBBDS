@@ -122,6 +122,14 @@ path{
     fill: #6f98bd;
 }
 
+.logoPanier path {
+    fill: #6f98bd;
+}
+
+.logoPanier + h3 {
+    color: #6f98bd;
+}
+
 .lienConnexion {
     height: 100%;
     display: flex;
@@ -749,6 +757,7 @@ header ul {
     color: #164F57;
     font-family: "Montserrat-Medium";
     text-align: left;
+    text-decoration: none;
 }
 
 .mainPanier hr {
@@ -779,7 +788,6 @@ header ul {
     background-color: #BDBFBB;
     color: #164F57;
     border-radius: 10px;
-    text-decoration: none;
     padding: 0.5em 1em 0.5em 1em;
     margin-top: 1em;
     display: inline-block;
@@ -838,7 +846,6 @@ header ul {
     color: #164F57;
     font-family: "Montserrat-Medium";
     font-size: 1em;
-    text-decoration: none;
 }
 
 .divPanierArticles hr + div {
@@ -887,11 +894,6 @@ header ul {
     font-size: 100%;
 }
 
-.articlePanier a {
-    color: #164F57;
-    text-decoration: none;
-}
-
 .panierDescription {
     color: #164F57;
     margin-bottom: 0;
@@ -907,6 +909,10 @@ header ul {
     margin: 0.5em 0;
 }
 
+.divQuantite a {
+    text-decoration: underline;
+}
+
 .divQuantite p {
     margin: 0;
 }
@@ -915,15 +921,21 @@ header ul {
     max-width: 4em;
 }
 
-.divQuantite a {
-    text-decoration: underline;
+.lienViderPanier {
+    border-radius: 15px;
+    padding: 0.5em 1em;
+    border: #404E58 1px solid;
+}
+
+.lienViderPanier:hover {
+    background-color: #C63636;
+    color: white;
 }
 
 .lienPanier {
     color: white;
     border-radius: 10px;
     background-color: #24a064;
-    text-decoration: none;
     padding: 0.5em 1em 0.5em 1em;
     margin-top: 1em;
     display: inline-block;
@@ -933,7 +945,6 @@ header ul {
 
 .lienPanier:hover {
     background-color: #164F57;
-    text-decoration: none;
     color: white;
 }
 
@@ -943,17 +954,6 @@ header ul {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-}
-
-.divPanierFooter a {
-    border-radius: 15px;
-    padding: 0.5em 1em;
-    border: #404E58 1px solid;
-}
-
-.divPanierFooter a:hover {
-    background-color: #C63636;
-    color: white;
 }
 
 .sectionRecommandationsPanier {

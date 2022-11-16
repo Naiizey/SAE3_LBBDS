@@ -128,7 +128,7 @@
             //toSend est un param permettant la modification de la page sans rafraichissement
             var toSend = new Object();
             //url où envoyé les données
-            toSend.http = "<?php echo base_url()  .  'panier/modifier/quantite'?>";
+            toSend.http = "<?php echo base_url()  .  '/panier/modifier/quantite'?>";
             //indication de comment récupérer un select
             toSend.howGetSelect=() => document.querySelectorAll(".divQuantite select");
             //indication de comment l'id du produit d'un select

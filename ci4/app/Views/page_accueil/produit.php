@@ -26,10 +26,6 @@
                                 <h4>Avis clients:</h4>
                                 <img src="<?=base_url() ?>/images/produit/avis.png"/>
                             </section>
-                            <div class="divLogos">
-                                <img src="<?=base_url() ?>/images/produit/produits_locaux.png" />
-                                <img src="<?=base_url() ?>/images/produit/livraison_gratuite.png" />
-                            </div>
                         </div>
                         <div class="divAcheterProduit">
                             <?php if ($prod -> stock <= 10): ?>

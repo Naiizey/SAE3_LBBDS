@@ -27,15 +27,19 @@ h2 {
     margin: 0;
 }
 
+header{
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+
 .divHeaderAlizon {
     background-color: #164F57;
     display: flex;
     padding-left: 1%;
     padding-right: 1%;
-    position: fixed;
-    width: 98%;
-    top: 0;
-    z-index: 100;
+    width: 98vw;
     justify-content: space-between;
     align-items: center;
     height: 5em;
@@ -60,7 +64,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 12%;
+    width: 13%;
 }
 
 .divRecherche {
@@ -93,7 +97,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 8.5%;
+    width: 10%;
 }
 
 .divRecherche > a{
@@ -103,6 +107,7 @@ header h2, header nav {
 
 .logoLoupe{
     max-width: 1.7em;
+    height: 100%;   
 }
 
 .logoProfil, .logoAlizon{
@@ -145,8 +150,6 @@ hr {
 }
 
 nav {
-    position: relative;
-    top : 4.17em;
     background-color: #3997A3;
 }
 
@@ -155,7 +158,8 @@ p {
 }
 
 main {
-    margin-top: 5em;
+    position: relative;
+    top: 5em;
     padding: 2em;
     background-color: #f3f3f3;
     flex : 1;
@@ -394,8 +398,8 @@ header ul {
 }
 
 .liCategorie {
-    text-decoration: none;
     position: relative;
+    text-decoration: none;
     padding: .5em 2em .7em;
 }
 
@@ -996,7 +1000,7 @@ header ul {
 
 .mainProduit {
     background-color: #f3f3f3;
-    font-family: 'Montserrat-Medium';
+    font-family: 'Montserrat-Regular';
 }
 
 .mainProduit img {
@@ -1066,10 +1070,10 @@ header ul {
     color: #164F57;
 }
 
-.divLogos, .sectionAvis {
+.sectionAvis {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
 }
 
 .sectionAvis h4 {
@@ -1193,23 +1197,17 @@ div.image-card{
     background-position: 0;
 }
 
-
-
-
 .prix-card{
     text-align: center;
     font-size: 25px;
     margin: 0;
 }
 
-
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                          Catalogue (Catalogue.php)                              ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-
-
 
 main#Catalogue{
     display: flex;

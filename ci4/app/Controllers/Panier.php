@@ -127,6 +127,7 @@ class Panier extends BaseController
         
        if(!is_null($idProd) && !is_null($quantite))
        {
+            
             if(session()->has("numero"))
             {
                             
@@ -138,12 +139,15 @@ class Panier extends BaseController
                 $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
                 
                 $panierModel->ajouterProduit($idProd,$quantite,get_cookie("token_panier"),$quantite,true);
+                
             }
             else 
             {
+                
                 $token=$this->creerPanier();
                 $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
                 $panierModel->ajouterProduit($idProd,$quantite,$token,$quantite,true);
+                return $token;
             }
         }
 
@@ -241,7 +245,7 @@ class Panier extends BaseController
         $model=model("\App\Models\ProduitPanierVisiteurModel");
         $token=$model->createPanierVisiteur($token,$expiration);
 
-        helper('cookie');
+
         set_cookie('token_panier',$token,$expiration);
         return $token;
       

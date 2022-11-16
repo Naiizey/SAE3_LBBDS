@@ -260,7 +260,7 @@ ALTER TABLE _panier_client ADD CONSTRAINT _panier_compte_fk FOREIGN KEY (num_com
 --ALTER TABLE _panier_visiteur ADD CONSTRAINT _panier_visiteur_pk PRIMARY KEY (num_compte);
 
 -- PRIMARY KEY _commande
-ALTER TABLE _commande ADD CONSTRAINT _commande_pk PRIMARY KEY (num_compte);
+ALTER TABLE _commande ADD CONSTRAINT _commande_pk PRIMARY KEY (num_panier);
 
 --Association 1..* entre _adresse et _commande ✅ (attendu_a)
 ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_fk FOREIGN KEY (id_a) REFERENCES _adresse(id_a);

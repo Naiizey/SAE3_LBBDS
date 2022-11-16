@@ -26,7 +26,7 @@ class Authentification
             if($user == null)
             {
                 //Impossible de trouver un utilisateur avec son identifiant (pseudo) ou son email
-                $errors[1] = "Connexion refusée, identifiant et ou mot de passe incorrects";
+                $errors[1] = "Connexion refusée, identifiant et/ou mot de passe incorrect(s)";
             }
         }
         else

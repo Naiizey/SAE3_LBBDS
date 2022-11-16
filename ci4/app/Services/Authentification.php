@@ -17,11 +17,11 @@ class Authentification
         if(!empty($entree))
         {
             $clientModel = model("\App\Models\Client");
-            $user = $clientModel->getClientByPseudo($entree -> identifiant,$entree -> motDePasse,false);
+            $user = $clientModel->getClientByPseudo($entree -> identifiant,$entree -> motDePasse);
             
             if($user == null) 
             {
-                $user = $clientModel->getClientByEmail($entree -> identifiant,$entree -> motDePasse,false);
+                $user = $clientModel->getClientByEmail($entree -> identifiant,$entree -> motDePasse);
             }
             if($user == null)
             {

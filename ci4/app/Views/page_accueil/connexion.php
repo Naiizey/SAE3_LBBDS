@@ -31,7 +31,7 @@
                     </form>
                     <a href="<?= base_url() ?>/inscription">Je n'ai pas de compte</a>
                 </div>
-                <a href="">Mot de passe oublié ?</a>
+                <a href="<?= base_url() ?>/mdpOublie">Mot de passe oublié ?</a>
             </div>
         </main>
 <?php require("footer.php"); ?>

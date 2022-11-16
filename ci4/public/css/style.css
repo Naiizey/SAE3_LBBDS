@@ -1137,7 +1137,10 @@ main a.card-produit-ext:hover{
   
 
     background-color: transparent;
+}
     
+.card-produit-ext{
+    margin: 10px 10px;
 }
 
 .card-produit{
@@ -1323,11 +1326,41 @@ ul.liste-sous-categories {
     background-color: rgba(255, 255, 255, 0.24);
 }
 
-.fleche-page img{
+.nav-page{
+    display: flex;
+    justify-content: center;
+    min-width: 100%;
+    height: 40px;
+}
+.fleche-page svg{
     width: 1em;
+    position: relative;
+    top: 8px;
 }
 
-.chiffre-page{
+a.fleche-page{
+    text-decoration: none;
+}
+.fleche-page.disponible svg path, .fleche-page.disponible img path{
+    fill:#164F57;
+  
+}
+.current-page{
+    width: 10%;
+}
+.apres-current-page,.avant-current-page{
+
+    position: relative;
+    top: 12px;
+    width: 40.0%;
+}
+.apres-current-page{
+    text-align: left;
+}
+.avant-current-page{
+    text-align: right;
+}
+.current-page,.apres-current-page,.avant-current-page{
     font-size: 1.5em;
 }
 

@@ -137,7 +137,7 @@ class Home extends BaseController
         //$ProduitPanierModel -> viderPanierClient
     }
 
-    private const NBPRODSPAGECATALOGUE = 10;
+    private const NBPRODSPAGECATALOGUE = 6;
     #FIXME: comportement href différent entre $page=null oe $page !=null    
 
     public function catalogue($page=null)
@@ -148,12 +148,13 @@ class Home extends BaseController
         $data['categories']=model("\App\Models\CategorieModel")->findAll();
         $data['controller']="Catalogue";
         
-        $data['nombreMaxPages']=(sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE)+1;
+        $data['nombreMaxPages']=intdiv(sizeof($data['prods']),self::NBPRODSPAGECATALOGUE)
+            + ((sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE==0)?0:1) ;
         if(is_null($page) || $page==0)
         {
             $data['minProd']=0;
             $data['maxProd']=self::NBPRODSPAGECATALOGUE;
-            $data['page']=0;
+            $data['page']=1;
         }
         else
         {
@@ -161,12 +162,13 @@ class Home extends BaseController
             {
                 $data['page']=$page;
 
-                $data['minProd']=self::NBPRODSPAGECATALOGUE*$page;
-                $data['maxProd']=self::NBPRODSPAGECATALOGUE*($page+1);
+                $data['minProd']=self::NBPRODSPAGECATALOGUE*($page-1);
+                $data['maxProd']=self::NBPRODSPAGECATALOGUE*$page;
                 
             }
             else return view('errors/html/error_404.php', array('message' => "Page trop haute: pas assez de produit"));
         }
+       
         return view("catalogue.php",$data);
     }
     public function import()

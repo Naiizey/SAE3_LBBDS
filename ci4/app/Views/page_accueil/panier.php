@@ -24,8 +24,8 @@
                                     </div>
                                 </section>
                                 <aside>
-                                    <h2>Sous-total (0 article) : 00,00€</h2>
-                                    <a href="" class="lienPanierVide">Valider le panier</a>
+                                    <h2>Sous-total (0 article.s) : 0,00€</h2>
+                                    <a class="lienPanierVide">Valider le panier</a>
                                 </aside>';
                     }
                     else
@@ -71,12 +71,12 @@
                         echo       '    <hr>
                                     </div>
                                     <div class="divPanierFooter"> 
-                                        <a href='.base_url().'/panier/vider>Vider le panier</a>
-                                        <h2>Sous-total (<span class="nbArt">' . $sommeNbArticle . '</span> articles) : <span class="total">' . $sommePrix . '</span> €</h2>
+                                        <h2>Sous-total (<span class="nbArt">' . $sommeNbArticle . '</span> article.s) : <span class="total">' . $sommePrix . '</span> €</h2>
                                     </div>
                                 </section>
                                 <aside>
-                                    <h2>Sous-total (<span class="nbArt">' . $sommeNbArticle . '</span> articles) : <span class="total">' . $sommePrix . '</span>€</h2>
+                                    <h2>Sous-total (<span class="nbArt">' . $sommeNbArticle . '</span> article.s) : <span class="total">' . $sommePrix . '</span>€</h2>
+                                    <a class="lienViderPanier" href='.base_url().'/panier/vider>Vider le panier</a>
                                     <a class="lienPanier" href="">Valider le panier</a>
                                 </aside>';
                     }
@@ -128,7 +128,7 @@
             //toSend est un param permettant la modification de la page sans rafraichissement
             var toSend = new Object();
             //url où envoyé les données
-            toSend.http = "<?php echo base_url()  .  'panier/modifier/quantite'?>";
+            toSend.http = "<?php echo base_url()  .  '/panier/modifier/quantite'?>";
             //indication de comment récupérer un select
             toSend.howGetSelect=() => document.querySelectorAll(".divQuantite select");
             //indication de comment l'id du produit d'un select

@@ -1,14 +1,4 @@
-<?php require("header.php");
-    function afficheErreurs($e, $codeE)
-    {
-        if (isset($e[$codeE]))
-        {
-            return "<div class='bloc-erreurs'>
-                                <p class='paragraphe-erreur'>$e[$codeE]</p>
-                    </div>";
-        }   
-    }  
-?>
+<?php require("header.php");?>
         </header>
         <main>
             <div class="divAlizon">
@@ -17,18 +7,23 @@
             <div class="divCredit sectionCredit">
                 <div>
                     <h2>Mot de passe oublié</h2>
-                    <form action="<?= base_url() ?>/mdpOublie" method="post">
-                        <label class="labelRecupMail">Entrez une adresse mail de récupération :</label>
+                    <form action="<?= base_url() ?>/obtenirCode" method="post">
+                        <label class="labelRecupMail">Entrez votre adresse mail :</label>
                         <div class="divRecupMail">
                             <input type="text" name="mailRecup" required="required""/>
-                            <input type="submit" value="Envoyer mail"/>
+                            <input type="submit" value="Obtenir code"/>
                         </div>
+                        <?php
+                            if (isset($retour)) {
+                                echo $retour;
+                            }
+                        ?>
                     </form>
                 </div>
                 <div>
-                    <form action="<?= base_url() ?>/mdpOublie" method="post">
-                        <label>Entrez une code de récupération :</label>
-                        <input type="text" name="mailRecup" required="required""/>
+                    <form action="<?= base_url() ?>/validerCode" method="post">
+                        <label>Entrez le code de récupération :</label>
+                        <input type="email" name="email" required="required" value=""/>
                         <input type="submit" value="Valider"/>
                     </form>
                 </div>

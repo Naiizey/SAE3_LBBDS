@@ -60,7 +60,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 13%;
+    width: 12%;
 }
 
 .divRecherche {
@@ -93,7 +93,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 9%;
+    width: 8.5%;
 }
 
 .divRecherche > a{
@@ -779,7 +779,7 @@ header ul {
 .mainPanier aside .lienPanierVide {
     background-color: #BDBFBB;
     color: #164F57;
-    border-radius: 15px;
+    border-radius: 10px;
     text-decoration: none;
     padding: 0.5em 1em 0.5em 1em;
     margin-top: 1em;
@@ -791,6 +791,7 @@ header ul {
 .mainPanier aside .lienPanierVide:hover {
     background-color: #BDBFBB;
     color: #164F57;
+    cursor: not-allowed;
 }
 
 .divPanierEtAside {

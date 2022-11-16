@@ -103,6 +103,7 @@ header h2, header nav {
 
 .logoLoupe{
     max-width: 1.7em;
+    height: 100%;
 }
 
 .logoProfil, .logoAlizon{
@@ -995,7 +996,7 @@ header ul {
 
 .mainProduit {
     background-color: #f3f3f3;
-    font-family: 'Montserrat-Medium';
+    font-family: 'Montserrat-Regular';
 }
 
 .mainProduit img {
@@ -1065,10 +1066,10 @@ header ul {
     color: #164F57;
 }
 
-.divLogos, .sectionAvis {
+.sectionAvis {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
 }
 
 .sectionAvis h4 {
@@ -1192,23 +1193,17 @@ div.image-card{
     background-position: 0;
 }
 
-
-
-
 .prix-card{
     text-align: center;
     font-size: 25px;
     margin: 0;
 }
 
-
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                          Catalogue (Catalogue.php)                              ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-
-
 
 main#Catalogue{
     display: flex;

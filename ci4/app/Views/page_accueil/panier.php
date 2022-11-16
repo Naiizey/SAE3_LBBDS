@@ -11,7 +11,7 @@
                                         </div>
                                         <hr>
                                         <div>
-                                            <h3 class="h3PasArticlePanier">Vous n’avez aucun article dans votre panier. <br> <a href="index.php" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>';
+                                            <h3 class="h3PasArticlePanier">Vous n’avez aucun article dans votre panier. <br> <a href="'.base_url()."/catalogue".'" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>';
 
                         
                         if (!session()->has("numero"))
@@ -44,8 +44,8 @@
                             $sommePrix += $produit -> prixTtc;
                             //print_r($produit);
                             echo       '<hr>
-                                        <article class="articlePanier">
-                                            <a href="">
+                                        <article id='.$produit->id.' class="articlePanier">
+                                            <a href="'.base_url()."/produit/$produit->idProd".'">
                                                 <img src="' . $produit -> lienimage . '" alt="article 1" title="Article 1">
                                                 <div>
                                                     <h2>' . $produit -> intitule . '</h2>
@@ -54,17 +54,13 @@
                                             </a>
                                                 <div class="divQuantite">
                                                     <p>Quantité</p>
-                                                    <select name="quantite">';
-                            for ($i = 1; $i < $produit -> quantite + 1; $i++)
+                                                    <select id=forProd-'.$produit->id.' name="quantite">';
+                            for ($i = 1; $i <= $produit -> stock; $i++)
                             {
-                                if ($i == 1)
-                                {
-                                    echo               '<option value="1" selected>1</option>';
-                                }
-                                else
-                                {
-                                    echo                   '<option value="' . $i . '">' . $i . "</option>";
-                                }
+                            
+                              
+                                    echo                   '<option value="'. $i .'" '. (($produit->quantite == $i)?'selected':'') .' ">' . $i . "</option>";
+                                
                             }
                             echo                   '</select>
                                                     <a href="'.base_url()."/panier/supprimer/$produit->idProd".'">Supprimer</a>
@@ -127,5 +123,17 @@
                             </section>';
                 }
             ?>
-        </main>
+        </main>       
+        <script>
+            //toSend est un param permettant la modification de la page sans rafraichissement
+            var toSend = new Object();
+            //url où envoyé les données
+            toSend.http = 'http://localhost/Alizon/ci4/public/panier/modifier/quantite';
+            //indication de comment récupérer un select
+            toSend.howGetSelect=() => document.querySelectorAll(".divQuantite select");
+            //indication de comment l'id du produit d'un select
+            toSend.howGetId=(node) => node.parentNode.parentNode.id;
+            //indique si non voulons ou non que la console affiche les résultats (true/false) de la requête OU de définir une fonction
+            toSend.callback=true;
+        </script>
 <?php require("footer.php"); ?>

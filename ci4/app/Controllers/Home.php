@@ -4,6 +4,14 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
+
+    public function __construct()
+    {
+        //permer d'éviter le bug de redirection.
+        session();
+
+    }
+
     public function index()
     {
         $data['controller']= "index";
@@ -14,18 +22,30 @@ class Home extends BaseController
         return view('page_accueil/index.php',$data);
     }
 
-    public function connexion($context = null)
+    public function connexion()
     {
-        $data['controller']= "connexion";
-        if($context == 400)
+        $post=$this->request->getPost();
+        $issues=[];
+
+        if(!empty($post))
         {
-            $error = "Connexion refusée, identifiant et ou mot de passe incorrects";
-            $data['erreur']="<div class='bloc-erreurs'>
-                                <p class='paragraphe-erreur'>$error</p>
-                            </div>";
+            $auth = service('authentification');
+            $user= new \App\Entities\Client();
+            $user->fill($post);
+            $issues=$auth->connexion($user); 
+
+            if(empty($issues)) 
+            {
+                return redirect()->to("/");
+            }
         }
-        else $data['erreur']="";
-        
+
+        $data['controller']= "connexion";
+        $data['erreurs'] = $issues;
+
+        //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
+        $data['identifiant'] = (isset($_POST['identifiant'])) ? $_POST['identifiant'] : "";
+        $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
 
         return view('page_accueil/connexion.php',$data);
     }
@@ -34,13 +54,16 @@ class Home extends BaseController
     {
         $post=$this->request->getPost();
         $issues=[];
-        if(!empty($post)){
+
+        if(!empty($post))
+        {
             $auth = service('authentification');
             $user= new \App\Entities\Client();
             $user->fill($post);
             $issues=$auth->inscription($user,$post['confirmezMotDePasse']); 
 
-            if(empty($issues)) {
+            if(empty($issues)) 
+            {
                 return redirect()->to("/");
             }
         }
@@ -63,27 +86,21 @@ class Home extends BaseController
     {
         if($idProduit == null)
         {
-            return view(
-                'errors/html/error_404.php'
-                , array('message' => "Pas de produit spécifié")
-            );
+            return view('errors/html/error_404.php', array('message' => "Pas de produit spécifié"));
         }
-        (new \App\Controllers\Panier())->ajouterPanier($idProduit,$this->request->getPost("quantite"));
+       
         $prodModel = model("\App\Models\ProduitDetail");
         $result = $prodModel->find($idProduit);
+        
         if($result == null)
         {
-            
-            return view(
-                'errors/html/error_404.php'
-                , array('message' => "Ce produit n'existe pas")
-            );
+            return view('errors/html/error_404.php', array('message' => "Ce produit n'existe pas"));
         }
         else
         {
-            $data['controller']= "produit";
+            $data['controller'] = "produit";
 
-            $data['prod']=$result;
+            $data['prod'] = $result;
             return view('page_accueil/produit.php',$data);
         }
         #TODO: pensez à mettre le prix HT dans la vue html et aussi indiquer que la livraison est gratuite
@@ -120,46 +137,38 @@ class Home extends BaseController
         //$ProduitPanierModel -> viderPanierClient
     }
 
-    private const NBPRODSPAGECATALOGUE = 10;
+    private const NBPRODSPAGECATALOGUE = 18;
     #FIXME: comportement href différent entre $page=null oe $page !=null    
 
-    public function catalogue($page=null){
+    public function catalogue($page=null)
+    {
         $get=$this->request->getGet();
         $data['cardProduit']=service("cardProduit");
         $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
         $data['categories']=model("\App\Models\CategorieModel")->findAll();
         $data['controller']="Catalogue";
         
-        $data['nombreMaxPages']=(sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE)+1;
+        $data['nombreMaxPages']=intdiv(sizeof($data['prods']),self::NBPRODSPAGECATALOGUE)
+            + ((sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE==0)?0:1) ;
         if(is_null($page) || $page==0)
         {
             $data['minProd']=0;
             $data['maxProd']=self::NBPRODSPAGECATALOGUE;
-            $data['page']=0;
+            $data['page']=1;
         }
         else
         {
-            
             if($data['nombreMaxPages']>=$page)
             {
                 $data['page']=$page;
 
-                $data['minProd']=self::NBPRODSPAGECATALOGUE*$page;
-                $data['maxProd']=self::NBPRODSPAGECATALOGUE*($page+1);
+                $data['minProd']=self::NBPRODSPAGECATALOGUE*($page-1);
+                $data['maxProd']=self::NBPRODSPAGECATALOGUE*$page;
                 
             }
-            else return view(
-                'errors/html/error_404.php'
-                , array('message' => "Page trop haute: pas assez de produit")
-                );
-            
-                
-            
-            
-            
+            else return view('errors/html/error_404.php', array('message' => "Page trop haute: pas assez de produit"));
         }
-        
-
+       
         return view("catalogue.php",$data);
     }
     public function import()
@@ -178,11 +187,13 @@ class Home extends BaseController
         }
         fclose($fichier);
         $new_table = array();
-        for ($i=0; $i < count($retour); $i++) { 
+        for ($i=0; $i < count($retour); $i++) 
+        { 
             //on itère sur chaque ligne
             if (count($retour[0]) == count($retour[$i]))
             {
-                for ($j=0; $j < count($retour[0]); $j++) {
+                for ($j=0; $j < count($retour[0]); $j++) 
+                {
                     $new_table[$i][$retour[0][$j]] = $retour[$i][$j];
                 }
             }

@@ -7,21 +7,21 @@
                 <div id="carousel">
                     <ul id="carousel-elem"> <!-- Menu ./images -->
                         <a href="" class="slide">
-                            <img src="./images/art (1).jpg" alt="article 1" title="Article 1">
+                            <img src="<?=base_url()?>/images/art (1).jpg" alt="article 1" title="Article 1">
                         </a>
                         <a href="" class="slide">
-                            <img src="./images/art (2).jpg" alt="article 2" title="Article 2">
+                            <img src="<?=base_url()?>/images/art (2).jpg" alt="article 2" title="Article 2">
                         </a>
                         <a href="" class="slide">
-                            <img src="./images/art (3).jpg" alt="article 3" title="Article 3">
+                            <img src="<?=base_url()?>/images/art (3).jpg" alt="article 3" title="Article 3">
                         </a>
                         <a href="" class="slide">
-                            <img src="./images/art (3).jpg" alt="article 3" title="Article 3">
+                            <img src="<?=base_url()?>/images/art (3).jpg" alt="article 3" title="Article 3">
                         </a>
                     </ul>
                 </div>
-                <img src="./images/fleche_gauche.png" alt="flèche gauche" class="btn btn-prev">
-                <img src="./images/fleche_droite.png" alt="flèche droite" class="btn btn-suiv">
+                <img src="<?=base_url()?>/images/fleche_gauche.png" alt="flèche gauche" class="btn btn-prev">
+                <img src="<?=base_url()?>/images/fleche_droite.png" alt="flèche droite" class="btn btn-suiv">
             </div>
             <div>
                 <section>
@@ -58,15 +58,14 @@
                 </section>
                 <div class="iconesAccueil">
                     <figure>
-                        <img src="./images/header/" alt="" title="">
+                        <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
                         <figcaption>Livraison gratuite !</figcaption>
                     </figure>
                     <figure>
-                        <img src="./images/header/" alt="" title="">
                         <figcaption>Produits issus de commerces Bretons !</figcaption>
                     </figure>
                     <figure>
-                        <img src="./images/header/" alt="" title="">
+                        <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/header/carton.svg")?>
                         <figcaption>Livraison à domicile !</figcaption>
                     </figure>
                 </div>

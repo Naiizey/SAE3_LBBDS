@@ -41,6 +41,7 @@ $routes->set404Override();
     $routes->get('/connexion/(400)', 'Home::connexion/$1');
 
     $routes->get('/connexion', 'Home::connexion');
+    $routes->post('/connexion', 'Home::connexion');
     $routes->get('/inscription', 'Home::inscription');
     $routes->post('/inscription', 'Home::inscription');
 
@@ -50,8 +51,14 @@ $routes->set404Override();
     $routes->post('/produit/(:num)', 'Home::produit/$1');
 
     $routes->get('/panier', 'Panier::getProduitPanierClient');
-    $routes->get('/panier/vider', 'Panier::viderPanier');
+    $routes->get('/panier/vider', 'Panier::viderPanier'); 
     $routes->get('/panier/supprimer/(:num)', 'Panier::supprimerProduitPanier/$1');
+    $routes->post('/panier/ajouter/(:num)', 'Panier::ajouterPanier/$1/');
+
+    $routes->get('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::modifierProduitPanier/$1/$2');
+    $routes->put('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::modifierProduitPanier/$1/$2');
+    $routes->options('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::sendCors/$1/$2');
+
 
 
     $routes->get('/catalogue', 'Home::catalogue');
@@ -59,7 +66,6 @@ $routes->set404Override();
 
     $routes->get('/test', 'Test::test2');
     $routes->get('/panier', 'Panier');
-    $routes->post('/credits/connexion', 'EspaceClient::verification');
 
     $routes->get('/import', 'Home::import');
 

@@ -11,8 +11,8 @@ class ProduitPanier extends Entity
     
       'prixTtc' => 'prixttc',
       'lienImage' => 'lienimage',
-   
-
+      
+      'tokenId' => 'token_cookie',
       'numCli'=> "num_client"
   ];
 

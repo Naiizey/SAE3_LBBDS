@@ -54,7 +54,7 @@ CREATE TABLE _compte
     num_compte SERIAL PRIMARY KEY,
     nom_compte VARCHAR(50) NOT NULL,
     prenom_compte VARCHAR(50) NOT NULL,
-    pseudo VARCHAR(30) NOT NULL,
+    pseudo VARCHAR(30) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     mot_de_passe VARCHAR(30) NOT NULL
 );

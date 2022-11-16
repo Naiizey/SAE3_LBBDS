@@ -8,8 +8,8 @@ INSERT INTO _compte (nom_compte, prenom_compte, pseudo, email, mot_de_passe) VAL
 INSERT INTO _compte (nom_compte, prenom_compte, pseudo, email, mot_de_passe) VALUES ('illoutchine','nassima','nassima_illoutchine', 'nassima@gmail.com', 'test152687');
 INSERT INTO _compte (nom_compte, prenom_compte, pseudo, email, mot_de_passe) VALUES ('moigne','tania','taniamoigne666999', 'temoigne@gmail.com', 'test152687');
 
-INSERT INTO _adresse_facturation (nom_a, prenom_a, num_rue, nom_rue, code_postal, ville, num_compte) VALUES ('Carpadies', 'Jean', 15, 'Rue de la paix', 75000, 'Paris', 1);
-INSERT INTO _adresse_livraison (nom_a, prenom_a, num_rue, nom_rue, code_postal, ville, infos_comp, num_compte) VALUES ('Carpadies', 'Jean', 15, 'Rue de la paix', 75000, 'Paris', 'Sous la poubelle bleue', 1);
+INSERT INTO _adresse_facturation (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, num_compte) VALUES ('Carpadies', 'Jean', 15, 'Rue de la paix', 75000, 'Paris', 1);
+INSERT INTO _adresse_livraison (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, infos_comp, num_compte) VALUES ('Carpadies', 'Jean', 15, 'Rue de la paix', 75000, 'Paris', 'Sous la poubelle bleue', 1);
 
 INSERT INTO _tva VALUES (1);
 INSERT INTO _tva VALUES (2);
@@ -171,8 +171,7 @@ INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('Performant mais a par
 INSERT INTO _image_avis (num_avis, lien_image_avis) VALUES (1, 'https://floriangll.fr/Humour/Dark/Masterclass/Masterclass.gif');
 INSERT INTO _image_avis (num_avis, lien_image_avis) VALUES (2, 'https://floriangll.fr/Humour/Light/Masterclass/Masterclass.gif');
 
-INSERT INTO _panier_client (num_compte) VALUES (1);
-INSERT INTO _panier_client (num_compte) VALUES (2);
+
 -- INSERT INTO _panier (num_compte) VALUES (1);
 
 INSERT INTO _panier_visiteur (date_suppression, token_cookie) VALUES ('2021-05-01', 'nqndbzuiodzb');

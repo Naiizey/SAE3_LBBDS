@@ -33,7 +33,9 @@
                         </div>
                         <div class="divAcheterProduit">
                             <?php if ($prod -> stock <= 10): ?>
-                            <?= "<p>Faites vite, il n'en reste que " . $prod -> stock . '</p>' ?>
+                            <?= //TODO: Adapter par rapport a quantité dans le panier
+                                "<p>Faites vite, il n'en reste que " . $prod -> stock . '</p>' ?>
+                        
                             <?php endif; ?>
                             <form action= <?= base_url()."/panier/ajouter/$prod->id" ?> method="post">
                                 <div class="divQuantiteProduit">

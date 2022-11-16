@@ -442,6 +442,7 @@ header ul {
     height : 30vh;
     padding: 0;
     overflow-x: scroll;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     --slide-count: 4;

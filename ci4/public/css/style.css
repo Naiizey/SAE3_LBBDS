@@ -258,6 +258,8 @@ main {
 }
 
 footer {
+    position: relative;
+    top: 5em;
     background-color: #164F57;
     text-align: center;
     z-index: 100;

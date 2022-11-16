@@ -90,21 +90,24 @@ let target = document.getElementById('dropzone');
 let body = document.body;
 let fileInput = document.getElementById("file");
 
-target.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  body.classList.add('dragging');
-});
+if(target){
+    target.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        body.classList.add('dragging');
+      });
+      
+      target.addEventListener('dragleave', () => {
+        body.classList.remove('dragging');
+      });
+      
+      target.addEventListener('drop', (e) => {
+        e.preventDefault();
+        body.classList.remove('dragging');
+        
+        fileInput.files = e.dataTransfer.files;
+      });
+}
 
-target.addEventListener('dragleave', () => {
-  body.classList.remove('dragging');
-});
-
-target.addEventListener('drop', (e) => {
-  e.preventDefault();
-  body.classList.remove('dragging');
-  
-  fileInput.files = e.dataTransfer.files;
-});
 
 //TODO: voir et cacher le mot de passe avec un bouton (un neuil) dans l'<input>
 
@@ -145,6 +148,7 @@ function requeteDynamHTTP(url="") {
                 }
            };
         }
+
         else if(callback===false)
         {
             this.useCallback=() => {};
@@ -174,6 +178,11 @@ function requeteDynamHTTP(url="") {
 
     //toSend est par exemple défini dans panier.php
     if(typeof toSend != 'undefined'){
+        toSend.callback=(err, resp) => {
+            updatePricePanier();
+            updatePriceTotal();
+
+        }
         let requete = new requeteDynamHTTP(toSend.http);
         for (elem of toSend.howGetSelect())
         {
@@ -190,7 +199,7 @@ function requeteDynamHTTP(url="") {
 
     
 /*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                Update prix                                      ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */

@@ -173,7 +173,6 @@ class Home extends BaseController
     }
     public function import()
     {
-
         $data['controller']= "import";
         $row = 0;
         $fichier = fopen("ressources/data.csv", "r");
@@ -203,5 +202,11 @@ class Home extends BaseController
         $importModel = model("\App\Models\ImportCSV");
         $importModel->CSVimport($result);
         return view('page_accueil/import.php', $data);
+    }
+
+    public function mdpOublie()
+    {
+        $data['controller']= "mdpOublie";
+        return view('page_accueil/mdpOublie.php', $data);
     }
 }

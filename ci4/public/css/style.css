@@ -178,6 +178,9 @@ main {
 
 .divSuivi h3 {
     margin: 0;
+    font-family: "Montserrat-Regular";
+    font-size: large;
+    margin-top: 2%;
 }
 
 .divSuivi img, .divSuivi svg {
@@ -1455,4 +1458,56 @@ a.fleche-page{
 
 #tableLstCommandes th, #tableLstCommandes td{
     width: 5em;
+}
+
+
+
+
+
+
+
+
+@media (min-width: 800px) and (max-width: 1280px) and (orientation: landscape) {
+
+    .titreAccueil h1 {
+        font-size: x-large;
+    }
+
+    h1, h2 {
+        font-size: larger;
+    }
+
+    .sectionPanier h2 {
+        font-size: 1em;
+    }
+
+    .sectionCredit input[type="submit"] {
+        font-size: large;
+    }
+
+    header h2, label, a, figcaption, .liCategorie a, .h3PasArticlePanier h3, .sectionPanier .h3PasArticlePanier {
+        font-size: medium;
+    }
+
+    p, .divSuivi h3 {
+        font-size: small;
+    }
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                       CGU                                       ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+main>*, header>*, footer>* {
+    filter: blur(4px);
+}
+
+.mentionLegales {
+    filter: blur(0);
+    position: absolute;
+    top: 20em;
+    border: #3997A3 solid 2px;
+    padding: 2em;
+    background-color: white;
 }

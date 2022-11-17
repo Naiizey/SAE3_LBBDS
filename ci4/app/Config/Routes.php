@@ -83,6 +83,8 @@ $routes->set404Override();
 
     $routes->get('/commandes', 'Home::commandeTest',['filter' => 'connexion']);
 
+    $routes->get('/espaceCleint', 'EspaceClient::index');
+
 ##param uri (:any) et dans methode /$1
 
 /*

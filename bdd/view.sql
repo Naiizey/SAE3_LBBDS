@@ -35,6 +35,3 @@ CREATE OR REPLACE VIEW sous_categorie AS
 
 CREATE OR REPLACE VIEW produitCSV AS
     SELECT * from _produit;
-
-CREATE OR REPLACE VIEW commande AS
-    select * from _commande;

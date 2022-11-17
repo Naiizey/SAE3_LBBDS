@@ -11,12 +11,11 @@ use CodeIgniter\HTTP\ResponseInterface;
  */
 
 
-class Authentification implements FilterInterface{
+class AuthentificationFilter implements FilterInterface{
     public function before(RequestInterface $request, $arguments = null)
     {
-        $auth = service("App\Services\Athentification");
-        if($auth->estConnectee()){
-            redirect()->to('error');
+        if(!session()->has("numero")){
+            return redirect()->to("/connexion/401");
         }
     }
 

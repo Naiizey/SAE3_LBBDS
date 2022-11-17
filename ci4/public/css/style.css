@@ -64,7 +64,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 12%;
+    width: 11%;
 }
 
 .divRecherche {
@@ -97,7 +97,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 9%;
+    width: 8%;
 }
 
 .divRecherche > a{
@@ -385,7 +385,12 @@ div.bloc-erreurs {
     color: red;
     margin-bottom: 0;
     text-align:justify;
-    
+}
+
+.paragraphe-valid {
+    color: #24a064;
+    margin-bottom: 0;
+    text-align: justify;
 }
 
 /*
@@ -679,6 +684,10 @@ header ul {
     margin-left: 2px;
 }
 
+.divCredit a:hover {
+    color: #6f98bd;
+}
+
 .nomPrenom {
     display: flex;
     margin-top: 2%;
@@ -766,6 +775,9 @@ header ul {
     color: #164F57;
     font-family: "Montserrat-Medium";
     text-align: left;
+}
+
+.mainPanier a {
     text-decoration: none;
 }
 
@@ -798,16 +810,16 @@ header ul {
     color: #164F57;
     border-radius: 10px;
     padding: 0.5em 1em 0.5em 1em;
-    margin-top: 1em;
+    margin-top: 0.5em;
     display: inline-block;
     width: auto;
     text-align: center;
+    cursor: not-allowed;
 }
 
 .mainPanier aside .lienPanierVide:hover {
     background-color: #BDBFBB;
     color: #164F57;
-    cursor: not-allowed;
 }
 
 .divPanierEtAside {
@@ -857,6 +869,12 @@ header ul {
     font-size: 1em;
 }
 
+.divPanierArticles {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 .divPanierArticles hr + div {
     text-align: center;
 }
@@ -865,10 +883,8 @@ header ul {
     margin-bottom: 1em;
 }
 
-.divPanierArticles {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.divPanierArticles + h2 {
+    text-align: right;
 }
 
 .divPanierHeader {
@@ -931,8 +947,11 @@ header ul {
 }
 
 .lienViderPanier {
-    border-radius: 15px;
+    color: #164F57;
+    border-radius: 10px;
     padding: 0.5em 1em;
+    margin-top: 0.5em;
+    font-size: 1em;
     border: #404E58 1px solid;
 }
 
@@ -941,12 +960,21 @@ header ul {
     color: white;
 }
 
+.desactive {
+    cursor: not-allowed;
+}
+
+.desactive:hover {
+    color: #164F57;
+    background-color: white;
+}
+
 .lienPanier {
     color: white;
     border-radius: 10px;
     background-color: #24a064;
     padding: 0.5em 1em 0.5em 1em;
-    margin-top: 1em;
+    margin-top: 0.5em;
     display: inline-block;
     width: auto;
     text-align: center;
@@ -955,14 +983,6 @@ header ul {
 .lienPanier:hover {
     background-color: #164F57;
     color: white;
-}
-
-.divPanierFooter {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
 }
 
 .sectionRecommandationsPanier {
@@ -1413,17 +1433,17 @@ a.fleche-page{
     margin-bottom: 1%;
 }
 
-.divRecupMail input[type="text"] {
-    flex-grow: 4;
-    margin: 0 1em 0 0;
+.divRecupMail input[type="email"] {
+    margin: 0;
+    width: 60%;
     height: auto;
 }
 
 .divRecupMail input[type="submit"] {
+    width: 35%;
     margin: 0;
     padding: 0;
     height: auto;
-    flex-grow: 1;
     border-radius: 0;
     background-color: #3997A3;
 }
@@ -1454,6 +1474,12 @@ a.fleche-page{
 
 #tableLstCommandes tbody tr{
     border-bottom: 3px solid #404E58;
+}
+
+#tableLstCommandes tbody tr:hover{
+    cursor: pointer;
+    outline: none;
+    background-color: #f3f3f3;
 }
 
 #tableLstCommandes th, #tableLstCommandes td{

@@ -164,8 +164,7 @@ function requeteDynamHTTP(url="") {
             self.useCallback(null, self.http.responseText);
         }
     
-        // Since the data is an object so
-        // we need to stringify it
+       
         this.http.send(null);
         
         
@@ -199,7 +198,7 @@ function requeteDynamHTTP(url="") {
 
     
 /*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                Update prix                                      ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
@@ -234,18 +233,4 @@ function updatePriceTotal() {
 
     prixTotTab[0].textContent = sommeTot;
     prixTotTab[1].textContent = sommeTot; 
-}
-
-/*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                      CGU                                        ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-var lienCGU = document.getElementsByClassName("lienCGU");
-lienCGU[0].addEventListener("click", test);
-
-/*document.querySelector(".mentionLegales > p").style.color = "red";*/
-
-function test(event) {
-    event.preventDefault();    
 }

@@ -137,7 +137,7 @@ CREATE TABLE _retour(
     motif VARCHAR(50) NOT NULL,
     etat_remb BOOLEAN NOT NULL,
     conf_ret BOOLEAN NOT NULL,
-    num_compte INT NOT NULL --rembourse
+    num_panier INT NOT NULL --renvoie
 );
 
 CREATE TABLE _avis(
@@ -268,7 +268,7 @@ ALTER TABLE _commande ADD CONSTRAINT _commande_pk PRIMARY KEY (num_panier);
 ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_fk FOREIGN KEY (id_a) REFERENCES _adresse(id_a);
 
 --Association 1..* entre _commande et _retour (rembourse) ✅
-ALTER TABLE _retour ADD CONSTRAINT _retour_commande_fk FOREIGN KEY (num_compte) REFERENCES _commande(num_compte);
+ALTER TABLE _retour ADD CONSTRAINT _retour_commande_fk FOREIGN KEY (num_panier) REFERENCES _commande(num_panier);
 
 --Association 1..* entre _compte et _avoirs () ✅
 ALTER TABLE _avoirs ADD CONSTRAINT _avoirs_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
@@ -331,6 +331,18 @@ $$
 LANGUAGE PLPGSQL;
 CREATE OR REPLACE TRIGGER afterInsert_panier_compte AFTER INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
 CREATE OR REPLACE TRIGGER afterInsert_panier_visiteur AFTER INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
+
+CREATE OR REPLACE FUNCTION fixInheritance2() RETURNS TRIGGER AS
+$$
+BEGIN
+    INSERT INTO sae3._adresse (id_a,nom_a,prenom_a,numero_rue,nom_rue,code_postal,ville) VALUES (new.id_a,new.nom_a,new.prenom_a,new.numero_rue,new.nom_rue,new.code_postal,new.ville);
+    return new;
+END;
+$$
+LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE TRIGGER afterInsert_adresse_facturation AFTER INSERT ON _adresse_facturation FOR EACH ROW EXECUTE PROCEDURE fixInheritance2() ;
+CREATE OR REPLACE TRIGGER afterInsert_adresse_livraison AFTER INSERT ON _adresse_livraison FOR EACH ROW EXECUTE PROCEDURE fixInheritance2() ;
 
 CREATE OR REPLACE FUNCTION creerPremierPanier() RETURNS TRIGGER AS
     $$

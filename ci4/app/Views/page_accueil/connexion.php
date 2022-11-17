@@ -17,7 +17,8 @@
             <div class="divCredit">
                 <div class="sectionCredit">
                     <h2>Connexion</h2>
-                    <form action="<?= base_url() ?>/connexion" method="post">
+                    <form action="<?= current_url() ?>" method="post">
+                        <?= afficheErreurs($erreurs,'redirection'); ?>
                         <label>Nom d'utilisateur ou adresse mail :</label>
                         <input type="text" name="identifiant" required="required" value="<?= $identifiant?>"/>
                         <label>Mot de passe : </label>
@@ -29,7 +30,7 @@
                         <?= afficheErreurs($erreurs, 0) . afficheErreurs($erreurs, 1) ?>
                         <input type="submit" value="Se connecter"/>
                     </form>
-                    <a href="<?= base_url() ?>/inscription">Je n'ai pas de compte</a>
+                    <a href="<?= base_url() ?>/inscription<?= (isset($estRedirection) && $estRedirection)?"/401":"" ?>">Je n'ai pas de compte</a>
                 </div>
                 <a href="<?= base_url() ?>/mdpOublie">Mot de passe oublié ?</a>
             </div>

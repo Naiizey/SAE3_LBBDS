@@ -14,7 +14,8 @@
             <div class="divCredit">
                 <div class="sectionCredit">
                     <h2>Inscription</h2>
-                    <form action='<?= base_url() ?>/inscription' method="post">
+                    <?= afficheErreurs($erreurs, 'redirection'); ?>
+                    <form action='<?= current_url() ?>' method="post">
                         <label>Pseudo :</label>
                         <input type="text" name="pseudo" required="required" value="<?= $pseudo?>"/>
                         <?= 

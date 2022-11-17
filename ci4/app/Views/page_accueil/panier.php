@@ -29,6 +29,7 @@
                                 <aside>
                                     <h2>Sous-total (0 article.s) : 0,00€</h2>
                                     <a class="lienPanierVide">Valider le panier</a>
+                                    <a class="lienViderPanier desactive">Vider le panier</a>
                                 </aside>';
                     }
                     else
@@ -73,14 +74,12 @@
                         }                
                         echo       '    <hr>
                                     </div>
-                                    <div class="divPanierFooter"> 
-                                        <h2>Sous-total (<span class="nbArt">' . $sommeNbArticle . '</span> article.s) : <span class="total">' . $sommePrix . '</span> €</h2>
-                                    </div>
+                                    <h2>Sous-total (<span class="nbArt">' . $sommeNbArticle . '</span> article.s) : <span class="total">' . $sommePrix . '</span> €</h2>
                                 </section>
                                 <aside>
                                     <h2>Sous-total (<span class="nbArt">' . $sommeNbArticle . '</span> article.s) : <span class="total">' . $sommePrix . '</span>€</h2>
+                                    <a href="'.base_url().'/commandes" class="lienPanier">Valider le panier</a>
                                     <a class="lienViderPanier" href='.base_url().'/panier/vider>Vider le panier</a>
-                                    <a class="lienPanier" href="">Valider le panier</a>
                                 </aside>';
                     }
                 ?> 

@@ -68,11 +68,11 @@ class Client extends Model
 
     public function doesPseudoExists($pseudo) : bool
     {
-        return empty($this->where('identifiant',$pseudo)->findAll());
+        return !empty($this->where('identifiant',$pseudo)->findAll());
     }
 
     public function doesEmailExists($email) : bool
     {
-        return empty($this->where('email',$email)->findAll());
+        return !empty($this->where('email',$email)->findAll());
     }
 }

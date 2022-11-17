@@ -170,12 +170,6 @@ class Home extends BaseController
        
         return view("catalogue.php",$data);
     }
-    
-    public function mdpOublie()
-    {
-        $data['controller']= "mdpOublie";
-        return view('page_accueil/mdpOublie.php', $data);
-    }
 
     public function lstCommandes()
     {

@@ -35,3 +35,12 @@ CREATE OR REPLACE VIEW sous_categorie AS
 
 CREATE OR REPLACE VIEW produitCSV AS
     SELECT * from _produit;
+
+CREATE OR REPLACE VIEW client_mail AS
+    SELECT num_compte, email from _compte;
+
+CREATE OR REPLACE VIEW adresse_facturation AS
+    SELECT num_compte, nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville FROM _adresse_facturation;
+
+CREATE OR REPLACE VIEW adresse_livraison AS
+    SELECT num_compte, nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville FROM _adresse_livraison;

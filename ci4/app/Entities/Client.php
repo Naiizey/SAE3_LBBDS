@@ -20,6 +20,18 @@ class Client extends Entity
         return "<p>$this->identifiant</p>Nom: $this->nom\tPrénom: $this->prenom";
     }
 
+    public function getPseudo(){
+        return $this->identifiant;
+    }
+
+    public function getFirstName(){
+        return $this->prenom;
+    }
+
+    public function getSurname(){
+        return $this->nom;
+    }
+
     public function cryptMotDePasse(){
         $this->motDePasse=password_hash($this->motDePasse,PASSWORD_BCRYPT,array('cost' => 12));
         $isCrypted=true;

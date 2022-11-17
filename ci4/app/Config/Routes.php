@@ -51,6 +51,14 @@ $routes->set404Override();
     $routes->get('/mdpOublie', 'Home::mdpOublie');
     $routes->get('/lstCommandes', 'Home::lstCommandes');
 
+    $routes->get('/mdpOublie', 'MdpOublie::mdpOublie');
+    $routes->post('/mdpOublie', 'MdpOublie::mdpOublie');
+    $routes->get('/obtenirCode', 'MdpOublie::obtenirCode');
+    $routes->post('/obtenirCode', 'MdpOublie::obtenirCode');
+    $routes->get('/validerCode', 'MdpOublie::validerCode');
+    $routes->post('/validerCode', 'MdpOublie::validerCode');
+
+    $routes->get('/lstCommandes', 'Home::lstCommandes');
 
     $routes->get('/produit', 'Home::produit');
     $routes->get('/produit/(:num)', 'Home::produit/$1');

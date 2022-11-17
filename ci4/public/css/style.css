@@ -64,7 +64,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 13%;
+    width: 11%;
 }
 
 .divRecherche {
@@ -97,7 +97,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 10%;
+    width: 8%;
 }
 
 .divRecherche > a{
@@ -382,7 +382,12 @@ div.bloc-erreurs {
     color: red;
     margin-bottom: 0;
     text-align:justify;
-    
+}
+
+.paragraphe-valid {
+    color: #24a064;
+    margin-bottom: 0;
+    text-align: justify;
 }
 
 /*
@@ -674,6 +679,10 @@ header ul {
     color: #164F57;
     text-decoration: none;
     margin-left: 2px;
+}
+
+.divCredit a:hover {
+    color: #6f98bd;
 }
 
 .nomPrenom {
@@ -1410,17 +1419,17 @@ a.fleche-page{
     margin-bottom: 1%;
 }
 
-.divRecupMail input[type="text"] {
-    flex-grow: 4;
-    margin: 0 1em 0 0;
+.divRecupMail input[type="email"] {
+    margin: 0;
+    width: 60%;
     height: auto;
 }
 
 .divRecupMail input[type="submit"] {
+    width: 35%;
     margin: 0;
     padding: 0;
     height: auto;
-    flex-grow: 1;
     border-radius: 0;
     background-color: #3997A3;
 }

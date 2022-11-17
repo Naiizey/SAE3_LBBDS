@@ -77,8 +77,8 @@ CREATE OR REPLACE FUNCTION updateProduitPanierVisiteur() RETURNS TRIGGER AS
     end;
     $$ language plpgsql;
 CREATE OR REPLACE TRIGGER updateOfInsert_produit_panier_visiteur INSTEAD OF UPDATE ON produit_panier_visiteur FOR EACH ROW EXECUTE PROCEDURE updateProduitPanierVisiteur ();
-
-CREATE O    R REPLACE FUNCTION transvasagePanier(entree_num_panier int, entree_num_compte int) RETURNS INT AS
+/*
+CREATE OR REPLACE FUNCTION transvasagePanier(entree_num_panier int, entree_num_compte int) RETURNS INT AS
     $$
      DECLARE
         current_panier int;
@@ -90,7 +90,9 @@ CREATE O    R REPLACE FUNCTION transvasagePanier(entree_num_panier int, entree_n
             select max(num_panier) into current_panier from sae3._panier_client where num_compte=entree_num_compte group by num_compte;
             for row in (SELECT * FROM sae3._refere natural join sae3._panier_visiteur where num_panier=entree_num_panier) loop
                 INSERT INTO _refere VALUES (row.id_prod,current_panier,row.qte_panier);
+                delete from _refere where num_panier=row.num_panier and id_prod=row.id_prod;
             end loop;
+
 
         else
             raise notice 'il n''y  pas de produits dans ce panier';
@@ -100,6 +102,6 @@ CREATE O    R REPLACE FUNCTION transvasagePanier(entree_num_panier int, entree_n
 
     END;
     $$ language plpgsql;
-
+*/
 
 

@@ -1473,6 +1473,12 @@ a.fleche-page{
     border-bottom: 3px solid #404E58;
 }
 
+#tableLstCommandes tbody tr:hover{
+    cursor: pointer;
+    outline: none;
+    background-color: #f3f3f3;
+}
+
 #tableLstCommandes th, #tableLstCommandes td{
     width: 5em;
 }

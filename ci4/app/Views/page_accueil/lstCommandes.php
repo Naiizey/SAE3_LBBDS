@@ -14,17 +14,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>00001</td>
-                        <td>00001</td>
-                        <td>2020-01-01</td>
-                        <td>2022-01-01</td>
-                        <td>100</td>
-                        <td>120</td>
-                        <td>Livrée</td>
-                    </tr>
-                    <tr>
-                        <td>00001</td>
+                    <tr class="lignesCommandes" >
+                        <td class="numCommandes">00001</td>
                         <td>00001</td>
                         <td>2020-01-01</td>
                         <td>2022-01-01</td>
@@ -32,8 +23,8 @@
                         <td>120</td>
                         <td>Livrée</td>
                     </tr>
-                    <tr>
-                        <td>00001</td>
+                    <tr class="lignesCommandes">
+                        <td class="numCommandes">00002</td>
                         <td>00001</td>
                         <td>2020-01-01</td>
                         <td>2022-01-01</td>
@@ -41,8 +32,17 @@
                         <td>120</td>
                         <td>Livrée</td>
                     </tr>
-                    <tr>
+                    <tr class="lignesCommandes">
+                        <td class="numCommandes">00003</td>
                         <td>00001</td>
+                        <td>2020-01-01</td>
+                        <td>2022-01-01</td>
+                        <td>100</td>
+                        <td>120</td>
+                        <td>Livrée</td>
+                    </tr>
+                    <tr class="lignesCommandes">
+                        <td class="numCommandes">00004</td>
                         <td>00001</td>
                         <td>2020-01-01</td>
                         <td>2022-01-01</td>

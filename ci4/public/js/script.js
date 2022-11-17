@@ -198,7 +198,7 @@ function requeteDynamHTTP(url="") {
 
     
 /*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                Update prix                                      ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
@@ -234,3 +234,23 @@ function updatePriceTotal() {
     prixTotTab[0].textContent = sommeTot;
     prixTotTab[1].textContent = sommeTot; 
 }
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                           Liens aux lignes de lstCommandes                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+var lignes=document.getElementsByClassName("lignesCommandes");
+var numCommandes=document.getElementsByClassName("numCommandes");
+
+for (let numLigne of lignes) {
+    var ligneA=lignes.item(numLigne);
+    var commandeA=numCommandes[numLigne];
+    ligneA.addEventListener("click", lienLigne);
+}
+/*
+function lienLigne(element) {
+    window.location.href = `/commande/${(commandeA.textContent)}`;
+}
+*/

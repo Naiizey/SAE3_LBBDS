@@ -332,6 +332,18 @@ LANGUAGE PLPGSQL;
 CREATE OR REPLACE TRIGGER afterInsert_panier_compte AFTER INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
 CREATE OR REPLACE TRIGGER afterInsert_panier_visiteur AFTER INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
 
+CREATE OR REPLACE FUNCTION fixInheritance2() RETURNS TRIGGER AS
+$$
+BEGIN
+    INSERT INTO sae3._adresse (id_a,nom_a,prenom_a,numero_rue,nom_rue,code_postal,ville) VALUES (new.id_a,new.nom_a,new.prenom_a,new.numero_rue,new.nom_rue,new.code_postal,new.ville);
+    return new;
+END;
+$$
+LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE TRIGGER afterInsert_adresse_facturation AFTER INSERT ON _adresse_facturation FOR EACH ROW EXECUTE PROCEDURE fixInheritance2() ;
+CREATE OR REPLACE TRIGGER afterInsert_adresse_livraison AFTER INSERT ON _adresse_livraison FOR EACH ROW EXECUTE PROCEDURE fixInheritance2() ;
+
 CREATE OR REPLACE FUNCTION creerPremierPanier() RETURNS TRIGGER AS
     $$
 

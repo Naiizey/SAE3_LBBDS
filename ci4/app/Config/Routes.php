@@ -48,7 +48,6 @@ $routes->set404Override();
     $routes->post('/inscription', 'Home::inscription');
     $routes->get('/inscription/(401)', 'Home::inscription/$1');
     $routes->post('/inscription/(401)', 'Home::inscription/$1');
-    $routes->get('/mdpOublie', 'Home::mdpOublie');
     $routes->get('/lstCommandes', 'Home::lstCommandes');
 
     $routes->get('/mdpOublie', 'MdpOublie::mdpOublie');
@@ -57,8 +56,6 @@ $routes->set404Override();
     $routes->post('/obtenirCode', 'MdpOublie::obtenirCode');
     $routes->get('/validerCode', 'MdpOublie::validerCode');
     $routes->post('/validerCode', 'MdpOublie::validerCode');
-
-    $routes->get('/lstCommandes', 'Home::lstCommandes');
 
     $routes->get('/produit', 'Home::produit');
     $routes->get('/produit/(:num)', 'Home::produit/$1');
@@ -72,8 +69,6 @@ $routes->set404Override();
     $routes->get('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::modifierProduitPanier/$1/$2');
     $routes->put('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::modifierProduitPanier/$1/$2');
     $routes->options('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::sendCors/$1/$2');
-
-
 
     $routes->get('/catalogue', 'Home::catalogue');
     $routes->get('/catalogue/(:num)', 'Home::catalogue/$1');

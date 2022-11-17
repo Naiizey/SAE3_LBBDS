@@ -36,6 +36,17 @@ class MdpOublie extends BaseController
 
     public function validerCode()
     {
-        return $this->mdpOublie();
+        $post=$this->request->getPost();
+
+        $leCodeEstBon = false;
+        if ($leCodeEstBon) 
+        {
+            $data['retour'][3] = "Votre mot de passe a bien été réinitialisé.";
+        } 
+        else 
+        {
+            $data['retour'][4] = "Erreur, code invalide.";
+        }
+        return $this->mdpOublie($post, $data);
     }
 }

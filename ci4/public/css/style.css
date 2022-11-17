@@ -772,6 +772,9 @@ header ul {
     color: #164F57;
     font-family: "Montserrat-Medium";
     text-align: left;
+}
+
+.mainPanier a {
     text-decoration: none;
 }
 
@@ -804,16 +807,16 @@ header ul {
     color: #164F57;
     border-radius: 10px;
     padding: 0.5em 1em 0.5em 1em;
-    margin-top: 1em;
+    margin-top: 0.5em;
     display: inline-block;
     width: auto;
     text-align: center;
+    cursor: not-allowed;
 }
 
 .mainPanier aside .lienPanierVide:hover {
     background-color: #BDBFBB;
     color: #164F57;
-    cursor: not-allowed;
 }
 
 .divPanierEtAside {
@@ -937,8 +940,11 @@ header ul {
 }
 
 .lienViderPanier {
-    border-radius: 15px;
+    color: #164F57;
+    border-radius: 10px;
     padding: 0.5em 1em;
+    margin-top: 0.5em;
+    font-size: 1em;
     border: #404E58 1px solid;
 }
 
@@ -947,12 +953,21 @@ header ul {
     color: white;
 }
 
+.desactive {
+    cursor: not-allowed;
+}
+
+.desactive:hover {
+    color: #164F57;
+    background-color: white;
+}
+
 .lienPanier {
     color: white;
     border-radius: 10px;
     background-color: #24a064;
     padding: 0.5em 1em 0.5em 1em;
-    margin-top: 1em;
+    margin-top: 0.5em;
     display: inline-block;
     width: auto;
     text-align: center;
@@ -961,14 +976,6 @@ header ul {
 .lienPanier:hover {
     background-color: #164F57;
     color: white;
-}
-
-.divPanierFooter {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
 }
 
 .sectionRecommandationsPanier {
@@ -1001,6 +1008,10 @@ header ul {
 .sectionRecommandationsPanier hr {
     background-color: #164F57;
     margin: 1em 0;
+}
+
+.divPanierArticles + h2 {
+    text-align: right;
 }
 
 /*
@@ -1460,6 +1471,12 @@ a.fleche-page{
 
 #tableLstCommandes tbody tr{
     border-bottom: 3px solid #404E58;
+}
+
+#tableLstCommandes tbody tr:hover{
+    cursor: pointer;
+    outline: none;
+    background-color: #f3f3f3;
 }
 
 #tableLstCommandes th, #tableLstCommandes td{

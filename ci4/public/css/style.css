@@ -866,6 +866,12 @@ header ul {
     font-size: 1em;
 }
 
+.divPanierArticles {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 .divPanierArticles hr + div {
     text-align: center;
 }
@@ -874,10 +880,8 @@ header ul {
     margin-bottom: 1em;
 }
 
-.divPanierArticles {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.divPanierArticles + h2 {
+    text-align: right;
 }
 
 .divPanierHeader {
@@ -1008,10 +1012,6 @@ header ul {
 .sectionRecommandationsPanier hr {
     background-color: #164F57;
     margin: 1em 0;
-}
-
-.divPanierArticles + h2 {
-    text-align: right;
 }
 
 /*

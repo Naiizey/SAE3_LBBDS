@@ -50,10 +50,12 @@ class Panier extends BaseController
     }
     */
 
+
+    #TODO: valeur pas update au début.  
     public function getProduitPanierClient($context = null)
     {
         $data['controller']= "panier";
-        if($context == 400)
+        if($context == 400) 
         {
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }
@@ -147,7 +149,7 @@ class Panier extends BaseController
                 $token=$this->creerPanier();
                 $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
                 $panierModel->ajouterProduit($idProd,$quantite,$token,$quantite,true);
-                return $token;
+              
             }
         }
 

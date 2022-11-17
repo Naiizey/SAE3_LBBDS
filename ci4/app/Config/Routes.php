@@ -38,12 +38,18 @@ $routes->set404Override();
     $routes->get('/', 'Home');
     $routes->get('/index', 'Home::index');
 
-    $routes->get('/connexion/(400)', 'Home::connexion/$1');
+    
 
     $routes->get('/connexion', 'Home::connexion');
     $routes->post('/connexion', 'Home::connexion');
+    $routes->get('/connexion/(401)', 'Home::connexion/$1');
+    $routes->post('/connexion/(401)', 'Home::connexion/$1');
     $routes->get('/inscription', 'Home::inscription');
     $routes->post('/inscription', 'Home::inscription');
+    $routes->get('/inscription/(401)', 'Home::inscription/$1');
+    $routes->post('/inscription/(401)', 'Home::inscription/$1');
+    $routes->get('/mdpOublie', 'Home::mdpOublie');
+    $routes->get('/lstCommandes', 'Home::lstCommandes');
 
     $routes->get('/mdpOublie', 'MdpOublie::mdpOublie');
     $routes->post('/mdpOublie', 'MdpOublie::mdpOublie');
@@ -79,6 +85,8 @@ $routes->set404Override();
     $routes->post('/import/upload', 'Import::upload');
 
     $routes->get('/destroy', 'Test::destroySession');
+
+    $routes->get('/commandes', 'Home::commandeTest',['filter' => 'connexion']);
 
 ##param uri (:any) et dans methode /$1
 

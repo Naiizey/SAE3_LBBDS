@@ -22,11 +22,12 @@ class Home extends BaseController
         return view('page_accueil/index.php',$data);
     }
 
-    public function connexion()
+    public function connexion($context= null)
     {
         $post=$this->request->getPost();
         $issues=[];
 
+        
         if(!empty($post))
         {
             $auth = service('authentification');
@@ -34,11 +35,23 @@ class Home extends BaseController
             $user->fill($post);
             $issues=$auth->connexion($user); 
 
-            if(empty($issues)) 
+            if(empty($issues) && is_null($context)) 
             {
                 return redirect()->to("/");
             }
+            else if(empty($issues) && !is_null($context))
+            {
+                return redirect()->to("/commandes");
+            }
         }
+
+        if(!is_null($context) && $context==401){
+            $issues['redirection']="Vous devez vous connectez pour valider votre commande";
+            $data['estRedirection']=True;
+        }
+
+
+        
 
         $data['controller']= "connexion";
         $data['erreurs'] = $issues;
@@ -50,10 +63,12 @@ class Home extends BaseController
         return view('page_accueil/connexion.php',$data);
     }
 
-    public function inscription()
+    public function inscription($context=null)
     {
         $post=$this->request->getPost();
         $issues=[];
+
+       
 
         if(!empty($post))
         {
@@ -62,10 +77,20 @@ class Home extends BaseController
             $user->fill($post);
             $issues=$auth->inscription($user,$post['confirmezMotDePasse']); 
 
-            if(empty($issues)) 
+            if(empty($issues) && is_null($context)) 
             {
                 return redirect()->to("/");
             }
+            else if(empty($issues) && !is_null($context))
+            {
+                return redirect()->to("/commandes");
+            }
+        }
+
+        if(!is_null($context) && $context==401){
+            $issues['redirection']="Vous devez avoir un compte pour valider votre commande";
+            $data['estRedirection']=True;
+            
         }
 
         $data['controller']= "inscription";
@@ -175,5 +200,11 @@ class Home extends BaseController
     {
         $data['controller']= "lstCommandes";
         return view('page_accueil/lstCommandes.php', $data);
+    }
+    
+    //Tant que commande n'est pas là
+    public function commandeTest(){
+        
+        echo "oui";
     }
 }

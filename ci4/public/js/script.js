@@ -164,8 +164,7 @@ function requeteDynamHTTP(url="") {
             self.useCallback(null, self.http.responseText);
         }
     
-        // Since the data is an object so
-        // we need to stringify it
+       
         this.http.send(null);
         
         

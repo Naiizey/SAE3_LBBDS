@@ -3,8 +3,10 @@ DROP SCHEMA IF EXISTS sae3 CASCADE;
 CREATE SCHEMA sae3;
 SET SCHEMA 'sae3';
 
-
-
+/*
+TODO: Contrainte -> bloquer un numéro de compte même si le compte relié est supprimé (attendre maj UML)
+TODO: Contraintes current_panier(voir UML) à revoir (pas urgent du tout)
+*/
 /* -----------------------------------------------------------
 -                    Classes                                 -
 -                                                            -
@@ -135,7 +137,7 @@ CREATE TABLE _retour(
     motif VARCHAR(50) NOT NULL,
     etat_remb BOOLEAN NOT NULL,
     conf_ret BOOLEAN NOT NULL,
-    num_compte INT NOT NULL --rembourse
+    num_panier INT NOT NULL --renvoie
 );
 
 CREATE TABLE _avis(
@@ -266,7 +268,7 @@ ALTER TABLE _commande ADD CONSTRAINT _commande_pk PRIMARY KEY (num_panier);
 ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_fk FOREIGN KEY (id_a) REFERENCES _adresse(id_a);
 
 --Association 1..* entre _commande et _retour (rembourse) ✅
-ALTER TABLE _retour ADD CONSTRAINT _retour_commande_fk FOREIGN KEY (num_compte) REFERENCES _commande(num_compte);
+ALTER TABLE _retour ADD CONSTRAINT _retour_commande_fk FOREIGN KEY (num_panier) REFERENCES _commande(num_panier);
 
 --Association 1..* entre _compte et _avoirs () ✅
 ALTER TABLE _avoirs ADD CONSTRAINT _avoirs_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);

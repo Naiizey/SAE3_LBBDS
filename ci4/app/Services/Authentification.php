@@ -78,11 +78,11 @@ class Authentification
             {
                 $errors[6]="Les mots de passes ne correspondent pas";
             }
-            if (!$compteModel->doesEmailExists($entree->email))
+            if ($compteModel->doesEmailExists($entree->email))
             {
                 $errors[7]="Un utilisateur existe déjà avec cette adresse mail";
             }
-            if (!$compteModel->doesPseudoExists($entree->pseudo))
+            if ($compteModel->doesPseudoExists($entree->pseudo))
             {
                 $errors[8]="Un utilisateur existe déjà avec ce pseudo";
             }
@@ -105,5 +105,5 @@ class Authentification
 
         return $errors;
     }
-    
+
 }

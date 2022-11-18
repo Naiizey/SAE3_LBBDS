@@ -70,3 +70,5 @@ CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_panier int) RETURNS 
 
     end;
     $$ language plpgsql;
+CREATE OR REPLACE VIEW commande AS
+    SELECT * FROM _commande;

@@ -62,18 +62,21 @@ CREATE TABLE _adresse
     comp_a2 VARCHAR(150) NULL
 );
 
+
 CREATE TABLE _adresse_livraison(
     if_adresse_livr SERIAL PRIMARY KEY,
      num_compte INT NOT NULL,
     infos_comp VARCHAR NOT NULL,
-    CONSTRAINT _adresse_livraison_pk PRIMARY KEY (id_a)
+    id_a INT NOT NULL--dans_adresse
 );
 
 CREATE TABLE _adresse_facturation(
     if_adresse_fact SERIAL PRIMARY KEY,
     num_compte INT NOT NULL,
-    CONSTRAINT _adresse_facturation_pk PRIMARY KEY (id_a)
+    id_a INT NOT NULL--dans_adresse
 );
+
+
 
 CREATE TABLE _panier
 (
@@ -302,6 +305,14 @@ ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY 
 
 -- Association 1..0.3 entre avis et image_avis
 ALTER TABLE _image_avis ADD CONSTRAINT _image_avis_avis_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
+
+-- contrainte entre _adresse et _adresse_facturation ✅
+ALTER TABLE _adresse_facturation
+ADD CONSTRAINT _adresse_facturation_id_a_fk FOREIGN KEY (id_a) REFERENCES _adresse(id_a);
+
+-- contrainte entre _adresse et _adresse_livraison ✅
+ALTER TABLE _adresse_livraison
+ADD CONSTRAINT _adresse_livraison_id_a_fk FOREIGN KEY (id_a) REFERENCES _adresse(id_a);
 
 /* -----------------------------------------------------------
 -                  Trigger schema                        -

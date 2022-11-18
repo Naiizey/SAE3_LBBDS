@@ -192,7 +192,10 @@ INSERT INTO _liste_souhait ( id_prod, num_compte) VALUES (18, 2);
 INSERT INTO _liste_souhait (id_prod, num_compte) VALUES (17, 2);
 -- INSERT INTO _liste_souhait (etat_stock, id_prod, num_compte) VALUES (false, 18, 1);
 
-
+-- trois insertions d'adresses
+INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('Doe', 'John', 1, 'rue de la paix', 75000, 'Paris', 'Batiment A', 'Etage 1');
+INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('Doe', 'Jane', 2, 'rue de la paix', 75000, 'Paris', 'Batiment B', 'Etage 2');
+INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('hiller', 'adolphe', 3, 'rue de la guerre', 70000, 'lille', 'Batiment C', 'Etage 3');
 
 -- 3 insertions d'adresses de livraison
 INSERT INTO _adresse_livraison (num_compte, infos_comp, id_a) VALUES (1, 'infos complémentaires', 1);
@@ -204,7 +207,4 @@ INSERT INTO _adresse_facturation (num_compte, id_a) VALUES (1, 1);
 INSERT INTO _adresse_facturation (num_compte, id_a) VALUES (2, 2);
 INSERT INTO _adresse_facturation (num_compte, id_a) VALUES (3, 3);
 
--- trois insertions d'adresses
-INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('Doe', 'John', 1, 'rue de la paix', 75000, 'Paris', 'Batiment A', 'Etage 1');
-INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('Doe', 'Jane', 2, 'rue de la paix', 75000, 'Paris', 'Batiment B', 'Etage 2');
-INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('hiller', 'adolphe', 3, 'rue de la guerre', 70000, 'lille', 'Batiment C', 'Etage 3');
+

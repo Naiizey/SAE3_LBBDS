@@ -76,7 +76,18 @@ class Client extends Model
         return !empty($this->where('email',$email)->findAll());
     }
 
+    public function getClientById($id)
+    {
+        return $this->find($id);
+    }
 
+    public function saveClient(\App\Entities\Client $client)
+    {
+        $this->save($client);
+    }
+
+    /*
+    Pas besoin de ces méthodes, voir mes remarques dans espaces client.
     //Principalement utilisées dans le controlleur EspaceClient.php 
     public function getClientPseudoById($id)
     {
@@ -116,4 +127,5 @@ class Client extends Model
     {
         $this->find($id)->setMail($nouveauMail);
     }
+    */
 }

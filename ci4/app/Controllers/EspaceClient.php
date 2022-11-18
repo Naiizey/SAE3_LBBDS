@@ -12,6 +12,15 @@ class EspaceClient extends BaseController
 
         if (!empty($post))
         {
+
+            /*
+            Pas comme ça, 
+            1: Au tout début, utilise la fonction getClienById du Model qui va de retourner une entité Client 
+            2: À chaque modif, modifie la propriété de l'entité sans faire appel au Model
+            3: Si il faut save appel ta méthode save dans laquelle tu prend en paramètre l'entité client
+            4: Utilise aussi cette entité pour mettre des valeurs dans data
+            Bref, moins d'appel au model, juste 2 fois: créer l'entité et pour la sauvegarde
+            */
             $besoinDeSave = false;
             if (isset($post['pseudo']))
             {

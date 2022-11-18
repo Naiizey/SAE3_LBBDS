@@ -11,7 +11,10 @@
                                         </div>
                                         <hr>
                                         <div>
-                                            <h3 class="h3PasArticlePanier">Vous n’avez aucun article dans votre panier. <br> <a href="'.base_url()."/catalogue".'" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>';
+                                            <div class="h3PasArticlePanier">
+                                                <h3>Vous n’avez aucun article dans votre panier.</h3>
+                                                <h3><a href="'.base_url()."/catalogue".'"class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>
+                                            </div>';
 
                         
                         if (!session()->has("numero"))

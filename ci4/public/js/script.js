@@ -272,3 +272,19 @@ function lienLigne(element) {
     window.location.href = `/commande/${(commandeA.textContent)}`;
 }
 */
+
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                      CGU                                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+var lienCGU = document.getElementsByClassName("lienCGU");
+lienCGU[0].addEventListener("click", test);
+
+/*document.querySelector(".mentionLegales > p").style.color = "red";*/
+
+function test(event) {
+    event.preventDefault();    
+}
+//TODO:Desactiver les event listners quand le fond est blur (rendre la navigation impossible)

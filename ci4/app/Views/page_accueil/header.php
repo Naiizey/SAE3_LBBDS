@@ -57,25 +57,30 @@
                                         <h3>4. Paiement</h3>
                                     </div>
                                 </div>';
-                    } 
-                    else 
+                    }
+                    else
                     {
-                        echo   '<div class="divRecherche">
+                        echo   '<form class="formRecherche">
                                 <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche..">
-                                <a href="">'.file_get_contents(dirname(__DIR__,3)."/public/images/header/loupe.svg").'</a>
-                                </div>';
+                                <label><input type="submit">'.file_get_contents(dirname(__DIR__,3)."/public/images/header/loupe.svg") .
+                                '</label></form>';
                     }
                 ?>
                 <div class="divPanierProfil">
-                    <a href="<?= base_url() ?>/panier"> 
+                    <a href="<?= base_url() ?>/panier">
                         <h2>Panier</h2>
                     </a>
-                    <a class="lienConnexion" href="<?= base_url() ?>/connexion">
+                    <a class="lienConnexion" href="<?php if(session()->has("numero")){
+                                                            echo base_url()."/espaceClient";
+                                                        }
+                                                        else{
+                                                            echo base_url()."/connexion";
+                                                        }?>">
                         <?php include(dirname(__DIR__,3)."/public/images/header/profil.svg")?>
                     </a>
                 </div>
-            </div> 
-            <?php 
+            </div>
+            <?php
                 if ($controller == "index" || $controller == "produit")
                 {
                     echo    '<nav>
@@ -98,6 +103,6 @@
                                     </li>
                                 </ul>
                             </nav>';
-                }  
+                }
             ?>
         </header>

@@ -1,6 +1,6 @@
 <footer>
             <div class="pc">
-                <a href=""> <!-- Lien mentions légales -->
+                <a href="" class="lienCGU"> <!-- Lien mentions légales -->
                     <p>Mentions légales</p>
                 </a>
                 <a href=""> <!-- Lien contacts -->
@@ -37,8 +37,8 @@
                         <div></div>
                     </li>
                     <div>
-                        <a href="./"> <!-- Lien mentions légales -->
-                            <p>Mentions légales</p>
+                        <a> <!-- Lien mentions légales -->
+                            <p>Mentions légales</p> 
                         </a>
                         <a href="./"> <!-- Lien réseaux sociaux -->
                             <p>Réseaux sociaux</p>

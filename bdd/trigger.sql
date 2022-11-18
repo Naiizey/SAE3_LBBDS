@@ -129,6 +129,3 @@ CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_panier int) RETURNS 
     end;
     $$ language plpgsql;
 
-
-
-select retourneEtatLivraison('11-09-2021','11-09-2021','11-09-2021',null);

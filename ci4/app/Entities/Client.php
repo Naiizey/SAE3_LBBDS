@@ -36,9 +36,27 @@ class Client extends Entity
     {
         return $this->email;
     }
+
+    public function getEntite()
+    {
+        return $this;
+    }
+
     public function setPseudo($nouveauPseudo)
     {
         $this->identifiant = $nouveauPseudo;
+    }
+    public function setPrenom($nouveauPrenom)
+    {
+        $this->prenom = $nouveauPrenom;
+    }
+    public function setNom($nouveauNom)
+    {
+        $this->nom = $nouveauNom;
+    }
+    public function setMail($nouveauMail)
+    {
+        $this->email = $nouveauMail;
     }
 
     public function cryptMotDePasse(){

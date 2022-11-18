@@ -288,3 +288,23 @@ function test(event) {
     event.preventDefault();    
 }
 //TODO:Desactiver les event listners quand le fond est blur (rendre la navigation impossible)
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                  Espace Client                                  ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+var inputsCli = document.querySelectorAll(".divInputEtLien input");
+var lienModifsCli = document.querySelectorAll(".divInputEtLien a");
+
+
+for (let i = 0; i < lienModifsCli.length; i++) 
+{
+    lienModifsCli[i].addEventListener("click", function(event) 
+    {
+        event.preventDefault();
+        inputsCli[i].disabled = false;
+        inputsCli[i].focus();
+    });
+}

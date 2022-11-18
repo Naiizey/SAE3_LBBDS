@@ -20,20 +20,25 @@ class Client extends Entity
         return "<p>$this->identifiant</p>Nom: $this->nom\tPrénom: $this->prenom";
     }
 
-    public function getPseudo(){
+    public function getPseudo()
+    {
         return $this->identifiant;
     }
-
-    public function getFirstName(){
+    public function getFirstName()
+    {
         return $this->prenom;
     }
-
-    public function getSurname(){
+    public function getSurname()
+    {
         return $this->nom;
     }
-
-    public function getMail(){
+    public function getMail()
+    {
         return $this->email;
+    }
+    public function setPseudo($nouveauPseudo)
+    {
+        $this->identifiant = $nouveauPseudo;
     }
 
     public function cryptMotDePasse(){

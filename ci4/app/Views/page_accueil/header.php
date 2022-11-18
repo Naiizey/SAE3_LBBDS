@@ -24,7 +24,7 @@
                 src: url("<?=base_url() ?>/fonts/Montserrat-Bold.ttf") format("truetype");
             }
         </style>
-        <title>Page d'accueil</title>
+        <title><?= $controller ?></title>
     </head>
     <body>
         <header>

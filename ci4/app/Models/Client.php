@@ -76,18 +76,26 @@ class Client extends Model
         return !empty($this->where('email',$email)->findAll());
     }
 
-    public function getClientPseudoById($id){
+
+    //Principalement utilisées dans le controlleur EspaceClient.php 
+    public function getClientPseudoById($id)
+    {
         return $this->find($id)->getPseudo();
     }
-
-    public function getClientFirstNameById($id){
+    public function getClientFirstNameById($id)
+    {
         return $this->find($id)->getFirstName();
     }
-    public function getClientSurnameById($id){
+    public function getClientSurnameById($id)
+    {
         return $this->find($id)->getSurname();
     }
-
-    public function getClientMailbyId($id){
+    public function getClientMailbyId($id)
+    {
         return $this->find($id)->getMail();
+    }
+    public function setClientPseudoById($id, $nouveauPseudo)
+    {
+        $this->find($id)->setPseudo($nouveauPseudo);
     }
 }

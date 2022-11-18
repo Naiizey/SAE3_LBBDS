@@ -1,5 +1,3 @@
-set schema 'sae3';
-
 insert into sae3._compte ( nom_compte, prenom_compte, pseudo, email, mot_de_passe) values ('MonMDPcest', 'NEk5aHqcPYz3Ff5', 'testMotDePasseVisible', 'test@tst.de', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
 
 

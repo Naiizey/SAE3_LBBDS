@@ -198,7 +198,7 @@ function requeteDynamHTTP(url="") {
 
     
 /*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                Update prix                                      ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
@@ -269,3 +269,4 @@ lienCGU[0].addEventListener("click", test);
 function test(event) {
     event.preventDefault();    
 }
+//TODO:Desactiver les event listners quand le fond est blur (rendre la navigation impossible)

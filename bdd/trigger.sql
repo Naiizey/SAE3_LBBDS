@@ -103,5 +103,32 @@ CREATE OR REPLACE FUNCTION transvasagePanier(entree_num_panier int, entree_num_c
     END;
     $$ language plpgsql;
 */
+CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_panier int) RETURNS INT AS
+    $$
+    DECLARE
+        row sae3._commande%ROWTYPE;
+    BEGIN
+        SELECT date_expedition, date_plateformeReg, date_plateformeLoc, date_arriv  INTO row FROM sae3._commande where num_panier=entree_num_panier;
+
+        IF row.date_expedition is null then
+            return 1;
+        end if;
+        IF row.date_plateformeReg is null then
+            return 2;
+        end if;
+        IF row.date_plateformeLoc is null then
+            return 3;
+        end if;
+        IF row.date_arriv is null then
+            return 4;
+        end if;
 
 
+        return 5;
+
+    end;
+    $$ language plpgsql;
+
+
+
+select retourneEtatLivraison('11-09-2021','11-09-2021','11-09-2021',null);

@@ -320,8 +320,7 @@ ADD CONSTRAINT _adresse_facturation_id_a_fk FOREIGN KEY (id_a) REFERENCES _adres
 ALTER TABLE _adresse_livraison
 ADD CONSTRAINT _adresse_livraison_id_a_fk FOREIGN KEY (id_a) REFERENCES _adresse(id_a);
 
--- foreign key entre _commande et _panier_client ✅
-ALTER TABLE _commande ADD CONSTRAINT _commande_panier_client_fk FOREIGN KEY (num_panier) REFERENCES _panier_client(num_panier);
+
 
 
 
@@ -333,6 +332,8 @@ ALTER TABLE _panier_visiteur ADD CONSTRAINT _panier_visiteur_pk PRIMARY KEY (num
 ALTER TABLE _panier_client ADD CONSTRAINT _panier_client_fk FOREIGN KEY (num_panier) REFERENCES _panier(num_panier);
 ALTER TABLE _panier_client ADD CONSTRAINT _panier_client_pk PRIMARY KEY (num_panier);
 
+-- foreign key entre _commande et _panier_client ✅
+ALTER TABLE _commande ADD CONSTRAINT _commande_panier_client_fk FOREIGN KEY (num_panier) REFERENCES _panier_client(num_panier);
 
 /* -----------------------------------------------------------
 -                  Trigger schema                        -
@@ -353,23 +354,25 @@ END
 $$
 LANGUAGE PLPGSQL;
 CREATE OR REPLACE TRIGGER beforeInsert_pouce BEFORE INSERT ON _pouce FOR EACH ROW EXECUTE PROCEDURE pouce_check() ;
+/*
+CREATE OR REPLACE FUNCTION fixInheritance() RETURNS TRIGGER AS
+$$
+BEGIN
 
--- CREATE OR REPLACE FUNCTION fixInheritance() RETURNS TRIGGER AS
--- $$
--- BEGIN
+    INSERT INTO sae3._panier (num_panier) VALUES (new.num_panier);
+    return new;
+END;
+$$
+LANGUAGE PLPGSQL;
 
---     INSERT INTO sae3._panier (num_panier) VALUES (new.num_panier);
---     return new;
--- END;
--- $$
--- LANGUAGE PLPGSQL;
--- CREATE OR REPLACE TRIGGER afterInsert_panier_compte AFTER INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
--- CREATE OR REPLACE TRIGGER afterInsert_panier_visiteur AFTER INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
-
+CREATE OR REPLACE TRIGGER afterInsert_panier_compte AFTER INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
+CREATE OR REPLACE TRIGGER afterInsert_panier_visiteur AFTER INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
+*/
 
 
 CREATE OR REPLACE FUNCTION creerPremierPanier() RETURNS TRIGGER AS
     $$
+
     BEGIN
         INSERT INTO _panier DEFAULT VALUES;
         Insert Into sae3._panier_client (num_compte,num_panier) VALUES (new.num_compte,CURRVAL('_panier_num_panier_seq'));
@@ -377,4 +380,3 @@ CREATE OR REPLACE FUNCTION creerPremierPanier() RETURNS TRIGGER AS
     end;
     $$ language plpgsql;
 CREATE OR REPLACE TRIGGER afterInsertClient AFTER INSERT ON _compte FOR EACH ROW EXECUTE PROCEDURE creerPremierPanier ();
-

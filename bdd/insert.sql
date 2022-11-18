@@ -1,6 +1,3 @@
-Set schema 'sae3';
-
-
 insert into sae3._compte ( nom_compte, prenom_compte, pseudo, email, mot_de_passe) values ('MonMDPcest', 'NEk5aHqcPYz3Ff5', 'testMotDePasseVisible', 'test@tst.de', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
 
 
@@ -171,8 +168,8 @@ INSERT INTO _image_avis (num_avis, lien_image_avis) VALUES (2, 'https://floriang
 
 -- INSERT INTO _panier (num_compte) VALUES (1);
 
-INSERT INTO _panier_visiteur (date_suppression, token_cookie) VALUES ('2021-05-01', 'nqndbzuiodzb');
-INSERT INTO _panier_visiteur (date_suppression, token_cookie) VALUES ('2021-05-01', 'jdolzdqdbuzo');
+INSERT INTO _panier_visiteur (num_panier,date_suppression, token_cookie) VALUES (1,'2021-05-01', 'nqndbzuiodzb');
+INSERT INTO _panier_visiteur (num_panier,date_suppression, token_cookie) VALUES (2,'2021-05-01', 'jdolzdqdbuzo');
 
 -- INSERT INTO _commande (num_commande, date_dep, date_arriv, etat_livraison, num_compte, id_a, id_adresse) VALUES ('12486','2022-10-23', '2022-10-30', 1, 2, 2, 2);
 
@@ -213,5 +210,3 @@ INSERT INTO _commande VALUES (1,'1', '2018-01-01', '2018-01-01', '2018-01-01', '
 INSERT INTO _commande VALUES (2,'2', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 2, 2, 2);
 INSERT INTO _commande VALUES (3,'3', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 3, 3, 3);
 INSERT INTO _commande VALUES (4,'4', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 4, 1, 1);
-INSERT INTO _commande VALUES (5,'5', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 5, 2, 2);
-INSERT INTO _commande VALUES (6,'6', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 6, 3, 3);

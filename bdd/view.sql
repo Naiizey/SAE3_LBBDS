@@ -70,11 +70,9 @@ CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_panier int) RETURNS 
 
     end;
     $$ language plpgsql;
-CREATE OR REPLACE VIEW commande AS
-    SELECT * FROM _commande;
 
 --SELECT * FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit;
 CREATE OR REPLACE VIEW commande_list_vendeur AS
-    SELECT num_commande,num_compte,date_commande,date_arriv, prix_ht, prix_ttc, qte_panier FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit;
+    SELECT num_commande,num_compte,intitule_prod,date_commande,date_arriv, prix_ht, prix_ttc, qte_panier FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit NATURAL JOIN _panier_client;
     
 SELECT * FROM commande_list_vendeur;

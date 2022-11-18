@@ -1014,6 +1014,17 @@ header ul {
     text-align: right;
 }
 
+.sous-totaux h2{
+    float: left;
+    width: 50%;
+}
+
+.sous-totaux h2+h2{
+    float: right;
+    text-align: right;
+}
+
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                          Page produit (produit.php)                             ┃

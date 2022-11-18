@@ -66,15 +66,20 @@
                             echo                   '</select>
                                                     <a href="'.base_url()."/panier/supprimer/$produit->idProd".'">Supprimer</a>
                                                 </div>
-                                                <h3 class="prix" prix="'. $produit -> prixTtc .'">' . $produit -> prixTtc . '€</h3>
+                                                <h3>TTC: <span class="prixTtc" prix="'. $produit -> prixTtc .'" >'. $produit -> prixTtc .'€</span> </h3>
+                                                <h3>HT: <span class="prixGt" prix="'. $produit -> prixHt .'" >'. $produit -> prixHt .'€</span> </h3>
                                         </article>';
                         }                
                         echo       '    <hr>
                                     </div>
-                                    <h2>Sous-total (<span class="nbArt">' . $sommeNbArticle . '</span> article.s) : <span class="total">' . $sommePrix . '</span> €</h2>
+                                    <div class="sous-totaux">
+                                        <h2>Sous-total HT(<span class="nbArt">' . $sommeNbArticle . '</span> article.s) : <span class="totalHt">' . $sommePrix . '</span> €</h2>
+                                        <h2>Sous-total TTC(<span class="nbArt">' . $sommeNbArticle . '</span> article.s) : <span class="totalTtc">' . $sommePrix . '</span> €</h2>
+                                    </div>
                                 </section>
                                 <aside>
-                                    <h2>Sous-total (<span class="nbArt">' . $sommeNbArticle . '</span> article.s) : <span class="total">' . $sommePrix . '</span>€</h2>
+
+                                    <h2>Sous-total (<span class="nbArt">' . $sommeNbArticle . '</span> article.s) : <span class="totalTtc">' . $sommePrix . '</span>€</h2>
                                     <a href="'.base_url().'/commandes" class="lienPanier">Valider le panier</a>
                                     <a class="lienViderPanier" href='.base_url().'/panier/vider>Vider le panier</a>
                                 </aside>';
@@ -136,3 +141,8 @@
             toSend.callback=true;
         </script>
 <?php require("footer.php"); ?>
+
+<script>
+        updatePricePanier()
+        updatePriceTotal()
+</script>

@@ -207,17 +207,23 @@ function updatePricePanier() {
     let quantites = document.getElementsByTagName("select");
     let nbArticleTab = document.getElementsByClassName("nbArt");
     let prixTab = document.getElementsByClassName("prixTtc");
+    let prixTabHt = document.getElementsByClassName("prixHt");
     let quant, prix, quantTot = 0;
 
     for (let ind = 0; ind < quantites.length; ind++) {
         quant = quantites[ind].value;
         quantTot += parseInt(quant);
+
         prix = prixTab[ind].getAttribute("prix");
         prixTab[ind].textContent = (prix * quant) + '€';
+    
+        prix = prixTabHt[ind].getAttribute("prix");
+        prixTabHt[ind].textContent = (prix * quant) + '€';
     }
 
     nbArticleTab[0].textContent = quantTot;
     nbArticleTab[1].textContent = quantTot;
+    nbArticleTab[2].textContent = quantTot;
 }
 
 function updatePriceTotal() {

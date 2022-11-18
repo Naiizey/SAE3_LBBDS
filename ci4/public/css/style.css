@@ -1524,10 +1524,10 @@ a.fleche-page{
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                       CGU                                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
+
 main>*, header>*, footer>* {
-    filter: blur(4px);
-}
+    filter: blur(4px); 
+}*/
 
 .mentionLegales {
     filter: blur(0);
@@ -1544,13 +1544,7 @@ main>*, header>*, footer>* {
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 .mainEspaceCli{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-left: 7.5%;
-    padding-right: 7.5%;
-    padding-bottom: 5%;
-    background-color: #D9D9D9;
+    background-color: #f3f3f3;
 }
 
 .mainEspaceCli svg{
@@ -1566,7 +1560,11 @@ main>*, header>*, footer>* {
     fill: black;
 }
 
-.espCliContent{
+.mainEspaceCli h2 {
+    color: #164F57;
+}
+
+/*.espCliContent{
     color: #164F57;
     background-color: white;
     border: solid 2px #C6C6C6;
@@ -1677,4 +1675,4 @@ h3{
     height: 100%;
     margin: 0;
     font-size: 1em;
-}
+}*/

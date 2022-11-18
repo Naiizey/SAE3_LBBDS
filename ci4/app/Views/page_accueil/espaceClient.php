@@ -1,7 +1,32 @@
 <?php require("header.php"); ?>
 <main class="mainEspaceCli">
     <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/header/profil.svg");?>
-    <div class="espCliContent">
+    <h2>Bonjour <?php echo $pseudo?>!</h2>
+    <div class="divCredit">
+        <section class="sectionCredit">
+            <p><?php echo $surname?></p>
+            <p><?php echo $firstname?></p>
+            <p><?php $email?></p>
+            <ul>
+                <?php
+                    $adressesFacture = $adresseFact;
+                    foreach($adressesFacture as $adresse){
+                        echo '<li>'.$adresse.'</li>';
+                    }
+                ?>
+            </ul>
+            <ul>
+                <?php
+                    $adressesLivraison = $adresseLivr;
+                    foreach($adressesLivraison as $adresse){
+                        echo '<li>'.$adresse.'</li>';
+                    }
+                ?>
+            </ul>            
+        </section>
+    </div>
+    
+    <!-- <div class="espCliContent">
         <h2>Profil</h2>
         <div class="nameMdp">
             <h3 class="name">Bonjour <?php echo $pseudo?></h3>
@@ -52,6 +77,6 @@
                     </ul>
                 </section>
             </div>
-        </div>
+        </div> -->
 </main>
 <?php require("footer.php"); ?>

@@ -64,14 +64,14 @@ CREATE TABLE _adresse
 
 
 CREATE TABLE _adresse_livraison(
-    if_adresse_livr SERIAL PRIMARY KEY,
+    id_adresse_livr SERIAL PRIMARY KEY,
      num_compte INT NOT NULL,
     infos_comp VARCHAR NOT NULL,
     id_a INT NOT NULL--dans_adresse
 );
 
 CREATE TABLE _adresse_facturation(
-    if_adresse_fact SERIAL PRIMARY KEY,
+    id_adresse_fact SERIAL PRIMARY KEY,
     num_compte INT NOT NULL,
     id_a INT NOT NULL--dans_adresse
 );
@@ -300,7 +300,7 @@ ALTER TABLE _avis ADD CONSTRAINT _avis_compte_fk FOREIGN KEY (num_compte) REFERE
 ALTER TABLE _sous_categorie ADD CONSTRAINT _sous_categorie_categorie_code_cat_fk FOREIGN KEY (code_cat) REFERENCES _categorie(code_cat);
 
 -- Association *..1 entre adresse_livraison et commande ✅
-ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY (id_adresse) REFERENCES _adresse_livraison(id_a);
+ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY (id_adresse) REFERENCES _adresse_livraison(id_adresse_livr);
 
 
 -- Association 1..0.3 entre avis et image_avis

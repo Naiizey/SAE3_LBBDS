@@ -60,10 +60,10 @@
                     }
                     else
                     {
-                        echo   '<div class="divRecherche">
+                        echo   '<form class="formRecherche">
                                 <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche..">
-                                <a href="">'.file_get_contents(dirname(__DIR__,3)."/public/images/header/loupe.svg").'</a>
-                                </div>';
+                                <label><input type="submit">'.file_get_contents(dirname(__DIR__,3)."/public/images/header/loupe.svg") .
+                                '</label></form>';
                     }
                 ?>
                 <div class="divPanierProfil">

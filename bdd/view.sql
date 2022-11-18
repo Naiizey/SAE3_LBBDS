@@ -44,3 +44,6 @@ CREATE OR REPLACE VIEW adresse_facturation AS
 
 CREATE OR REPLACE VIEW adresse_livraison AS
     SELECT num_compte, nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville FROM _adresse_livraison NATURAL JOIN _adresse;
+
+CREATE OR REPLACE VIEW commande AS
+    SELECT * FROM _commande;

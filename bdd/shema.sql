@@ -111,6 +111,9 @@ CREATE TABLE _commande
     id_adresse INT NOT NULL
 )INHERITS (_panier_client);
 
+
+
+
 CREATE TABLE _produit
 (
     id_prod SERIAL PRIMARY KEY,

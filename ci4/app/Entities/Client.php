@@ -32,6 +32,10 @@ class Client extends Entity
         return $this->nom;
     }
 
+    public function getMail(){
+        return $this->email;
+    }
+
     public function cryptMotDePasse(){
         $this->motDePasse=password_hash($this->motDePasse,PASSWORD_BCRYPT,array('cost' => 12));
         $isCrypted=true;

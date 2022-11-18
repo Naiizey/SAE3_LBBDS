@@ -86,4 +86,8 @@ class Client extends Model
     public function getClientSurnameById($id){
         return $this->find($id)->getSurname();
     }
+
+    public function getClientMailbyId($id){
+        return $this->find($id)->getMail();
+    }
 }

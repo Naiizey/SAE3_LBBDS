@@ -2,11 +2,15 @@
 
 use CodeIgniter\Entity\Entity;
 
-class AdresseLivraison extends Entity{
-    public function __toString()
+class AdresseLivraison extends Entity
+{
+    public function get()
     {
-        return '<div class="numNameFirstName"><h5>Nom: '.$this->nom_a.'</h5><h5>Prenom: '.$this->prenom_a.'</h5></div>'
-        .'<div class="numStreetName"><h5>Adresse: '.$this->numero_rue.'</h5><h5>'.$this->nom_rue.'</h5></div>'
-        .'<div class="postalCodeCity"><h5>Ville: '.$this->code_postal.'</h5><h5>'.$this->ville.'</h5></div>';
+        return array('<p>Nom : '.$this->nom_a.'</p>', 
+                     '<p>Prenom : '.$this->prenom_a.'</p>',
+                     '<p>Adresse : '.$this->numero_rue.'</p>',
+                     '<p>Nom de rue : '.$this->nom_rue.'</p>',
+                     '<p>Ville : '.$this->ville.'</p>',
+                     '<p>Code postal : '.$this->code_postal.'</p>');
     }
 }

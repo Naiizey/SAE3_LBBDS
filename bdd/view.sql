@@ -44,3 +44,29 @@ CREATE OR REPLACE VIEW adresse_facturation AS
 
 CREATE OR REPLACE VIEW adresse_livraison AS
     SELECT num_compte, nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville FROM _adresse_livraison NATURAL JOIN _adresse;
+
+CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_panier int) RETURNS INT AS
+    $$
+    DECLARE
+        row sae3._commande%ROWTYPE;
+    BEGIN
+        SELECT date_expedition, date_plateformeReg, date_plateformeLoc, date_arriv  INTO row FROM sae3._commande where num_panier=entree_num_panier;
+
+        IF row.date_expedition is null then
+            return 1;
+        end if;
+        IF row.date_plateformeReg is null then
+            return 2;
+        end if;
+        IF row.date_plateformeLoc is null then
+            return 3;
+        end if;
+        IF row.date_arriv is null then
+            return 4;
+        end if;
+
+
+        return 5;
+
+    end;
+    $$ language plpgsql;

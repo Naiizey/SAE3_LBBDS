@@ -142,6 +142,7 @@ class Panier extends BaseController
                 
                 $panierModel->ajouterProduit($idProd,$quantite,get_cookie("token_panier"),$quantite,true);
                 
+                
             }
             else 
             {
@@ -149,6 +150,8 @@ class Panier extends BaseController
                 $token=$this->creerPanier();
                 $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
                 $panierModel->ajouterProduit($idProd,$quantite,$token,$quantite,true);
+                //return $token;
+                
               
             }
         }
@@ -243,12 +246,12 @@ class Panier extends BaseController
 
     public function creerPanier(){
         $token = bin2hex(openssl_random_pseudo_bytes(16));
-        $expiration=strtotime('+13 mouth');
+        $expiration=strtotime('+24 hours');
         $model=model("\App\Models\ProduitPanierVisiteurModel");
         $token=$model->createPanierVisiteur($token,$expiration);
 
 
-        set_cookie('token_panier',$token,$expiration);
+        setcookie('token_panier',$token,array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
         return $token;
       
     }

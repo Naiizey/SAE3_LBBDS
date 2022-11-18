@@ -103,5 +103,3 @@ CREATE OR REPLACE FUNCTION transvasagePanier(entree_num_panier int, entree_num_c
     END;
     $$ language plpgsql;
 */
-
-

@@ -62,16 +62,21 @@ CREATE TABLE _adresse
     comp_a2 VARCHAR(150) NULL
 );
 
+
 CREATE TABLE _adresse_livraison(
+    id_adresse_livr SERIAL PRIMARY KEY,
      num_compte INT NOT NULL,
     infos_comp VARCHAR NOT NULL,
-    CONSTRAINT _adresse_livraison_pk PRIMARY KEY (id_a)
-)INHERITS (_adresse);
+    id_a INT NOT NULL--dans_adresse
+);
 
 CREATE TABLE _adresse_facturation(
+    id_adresse_fact SERIAL PRIMARY KEY,
     num_compte INT NOT NULL,
-    CONSTRAINT _adresse_facturation_pk PRIMARY KEY (id_a)
-)INHERITS (_adresse);
+    id_a INT NOT NULL--dans_adresse
+);
+
+
 
 CREATE TABLE _panier
 (
@@ -81,20 +86,24 @@ CREATE TABLE _panier
 
 CREATE TABLE _panier_client
 (
+    num_panier INT NOT NULL,
     num_compte INT NOT NULL
-)INHERITS (_panier);
-
+);
 
 
 
 CREATE TABLE _panier_visiteur
 (
+    num_panier INT NOT NULL,
     date_suppression DATE NOT NULL,
     token_cookie VARCHAR(60) NOT NULL
-)INHERITS (_panier);
+);
+
+
 
 CREATE TABLE _commande
 (
+    num_panier INT NOT NULL,
     num_commande VARCHAR(50),
     date_commande DATE NOT NULL,
     date_expedition DATE,
@@ -104,7 +113,9 @@ CREATE TABLE _commande
     etat_livraison INT NOT NULL,
     id_a INT NOT NULL, --attendu_a
     id_adresse INT NOT NULL
-)INHERITS (_panier_client);
+) ;
+
+
 
 CREATE TABLE _produit
 (
@@ -295,11 +306,34 @@ ALTER TABLE _avis ADD CONSTRAINT _avis_compte_fk FOREIGN KEY (num_compte) REFERE
 ALTER TABLE _sous_categorie ADD CONSTRAINT _sous_categorie_categorie_code_cat_fk FOREIGN KEY (code_cat) REFERENCES _categorie(code_cat);
 
 -- Association *..1 entre adresse_livraison et commande ✅
-ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY (id_adresse) REFERENCES _adresse_livraison(id_a);
+ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY (id_adresse) REFERENCES _adresse_livraison(id_adresse_livr);
 
 
 -- Association 1..0.3 entre avis et image_avis
 ALTER TABLE _image_avis ADD CONSTRAINT _image_avis_avis_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
+
+-- contrainte entre _adresse et _adresse_facturation ✅
+ALTER TABLE _adresse_facturation
+ADD CONSTRAINT _adresse_facturation_id_a_fk FOREIGN KEY (id_a) REFERENCES _adresse(id_a);
+
+-- contrainte entre _adresse et _adresse_livraison ✅
+ALTER TABLE _adresse_livraison
+ADD CONSTRAINT _adresse_livraison_id_a_fk FOREIGN KEY (id_a) REFERENCES _adresse(id_a);
+
+
+
+
+
+-- association entre _panier et _panier_visiteur
+ALTER TABLE _panier_visiteur ADD CONSTRAINT _panier_visiteur_fk FOREIGN KEY (num_panier) REFERENCES _panier(num_panier);
+ALTER TABLE _panier_visiteur ADD CONSTRAINT _panier_visiteur_pk PRIMARY KEY (num_panier);
+
+-- association entre _panier et _panier_client
+ALTER TABLE _panier_client ADD CONSTRAINT _panier_client_fk FOREIGN KEY (num_panier) REFERENCES _panier(num_panier);
+ALTER TABLE _panier_client ADD CONSTRAINT _panier_client_pk PRIMARY KEY (num_panier);
+
+-- foreign key entre _commande et _panier_client ✅
+ALTER TABLE _commande ADD CONSTRAINT _commande_panier_client_fk FOREIGN KEY (num_panier) REFERENCES _panier_client(num_panier);
 
 /* -----------------------------------------------------------
 -                  Trigger schema                        -
@@ -320,38 +354,29 @@ END
 $$
 LANGUAGE PLPGSQL;
 CREATE OR REPLACE TRIGGER beforeInsert_pouce BEFORE INSERT ON _pouce FOR EACH ROW EXECUTE PROCEDURE pouce_check() ;
-
+/*
 CREATE OR REPLACE FUNCTION fixInheritance() RETURNS TRIGGER AS
 $$
 BEGIN
+
     INSERT INTO sae3._panier (num_panier) VALUES (new.num_panier);
     return new;
 END;
 $$
 LANGUAGE PLPGSQL;
+
 CREATE OR REPLACE TRIGGER afterInsert_panier_compte AFTER INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
 CREATE OR REPLACE TRIGGER afterInsert_panier_visiteur AFTER INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
+*/
 
-CREATE OR REPLACE FUNCTION fixInheritance2() RETURNS TRIGGER AS
-$$
-BEGIN
-    INSERT INTO sae3._adresse (id_a,nom_a,prenom_a,numero_rue,nom_rue,code_postal,ville) VALUES (new.id_a,new.nom_a,new.prenom_a,new.numero_rue,new.nom_rue,new.code_postal,new.ville);
-    return new;
-END;
-$$
-LANGUAGE PLPGSQL;
-
-CREATE OR REPLACE TRIGGER afterInsert_adresse_facturation AFTER INSERT ON _adresse_facturation FOR EACH ROW EXECUTE PROCEDURE fixInheritance2() ;
-CREATE OR REPLACE TRIGGER afterInsert_adresse_livraison AFTER INSERT ON _adresse_livraison FOR EACH ROW EXECUTE PROCEDURE fixInheritance2() ;
 
 CREATE OR REPLACE FUNCTION creerPremierPanier() RETURNS TRIGGER AS
     $$
 
     BEGIN
-        Insert Into sae3._panier_client (num_compte) VALUES (new.num_compte);
+        INSERT INTO _panier DEFAULT VALUES;
+        Insert Into sae3._panier_client (num_compte,num_panier) VALUES (new.num_compte,CURRVAL('_panier_num_panier_seq'));
         return new;
-
     end;
     $$ language plpgsql;
 CREATE OR REPLACE TRIGGER afterInsertClient AFTER INSERT ON _compte FOR EACH ROW EXECUTE PROCEDURE creerPremierPanier ();
-

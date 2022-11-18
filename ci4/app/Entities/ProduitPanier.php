@@ -10,7 +10,9 @@ class ProduitPanier extends Entity
       'idProd' => 'id_prod',
     
       'prixTtc' => 'prixttc',
+      'prixHt' => 'prix_ht',
       'lienImage' => 'lienimage',
+
       
       'tokenId' => 'token_cookie',
       'numCli'=> "num_client"

@@ -198,7 +198,7 @@ function requeteDynamHTTP(url="") {
 
     
 /*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                Update prix                                      ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
@@ -206,33 +206,51 @@ function requeteDynamHTTP(url="") {
 function updatePricePanier() {
     let quantites = document.getElementsByTagName("select");
     let nbArticleTab = document.getElementsByClassName("nbArt");
-    let prixTab = document.getElementsByClassName("prix");
+    let prixTab = document.getElementsByClassName("prixTtc");
+    let prixTabHt = document.getElementsByClassName("prixHt");
     let quant, prix, quantTot = 0;
 
     for (let ind = 0; ind < quantites.length; ind++) {
         quant = quantites[ind].value;
         quantTot += parseInt(quant);
+
         prix = prixTab[ind].getAttribute("prix");
         prixTab[ind].textContent = (prix * quant) + '€';
+    
+        prix = prixTabHt[ind].getAttribute("prix");
+        prixTabHt[ind].textContent = (prix * quant) + '€';
     }
 
     nbArticleTab[0].textContent = quantTot;
     nbArticleTab[1].textContent = quantTot;
+    nbArticleTab[2].textContent = quantTot;
 }
 
 function updatePriceTotal() {
-    let prixTab = document.getElementsByClassName("prix");
-    let prixTotTab = document.getElementsByClassName("total");
+    let prixTab = document.getElementsByClassName("prixTtc");
+    let prixTabHt = document.getElementsByClassName("prixHt");
     let sommeTot = 0;
+
+    let prixTotTab = document.getElementsByClassName("totalTtc");
+    let prixTotTabHt = document.getElementsByClassName("totalHt");
+    let sommeTotHt = 0;
+    
     let prix;
 
     for (let ind = 0; ind < prixTab.length; ind++) {
         prix = prixTab[ind].textContent.replace('€','');
         sommeTot += parseFloat(prix);
+        prix = prixTabHt[ind].textContent.replace('€','');
+        sommeTotHt += parseFloat(prix);
+        console.log(prix);
     }
 
     prixTotTab[0].textContent = sommeTot;
-    prixTotTab[1].textContent = sommeTot; 
+    prixTotTab[1].textContent = sommeTot;
+
+    console.log(sommeTotHt);
+    prixTotTabHt[0].textContent = sommeTotHt;
+    //prixTotTabHt[1].textContent = sommeToHt;
 }
 
 /*
@@ -269,3 +287,4 @@ lienCGU[0].addEventListener("click", test);
 function test(event) {
     event.preventDefault();    
 }
+//TODO:Desactiver les event listners quand le fond est blur (rendre la navigation impossible)

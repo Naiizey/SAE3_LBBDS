@@ -63,15 +63,17 @@ CREATE TABLE _adresse
 );
 
 CREATE TABLE _adresse_livraison(
+    if_adresse_livr SERIAL PRIMARY KEY,
      num_compte INT NOT NULL,
     infos_comp VARCHAR NOT NULL,
     CONSTRAINT _adresse_livraison_pk PRIMARY KEY (id_a)
-)INHERITS (_adresse);
+);
 
 CREATE TABLE _adresse_facturation(
+    if_adresse_fact SERIAL PRIMARY KEY,
     num_compte INT NOT NULL,
     CONSTRAINT _adresse_facturation_pk PRIMARY KEY (id_a)
-)INHERITS (_adresse);
+);
 
 CREATE TABLE _panier
 (

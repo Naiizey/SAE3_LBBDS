@@ -667,7 +667,9 @@ header ul {
     color: white;
 }
 
-.sectionCredit input[type="text"], input[type="submit"], input[type="password"], input[type="email"] {
+.sectionCredit input[type="text"], 
+.sectionCredit input[type="password"], 
+.sectionCredit input[type="email"] {
     background-color: #F3F3F3;
     margin: 1% 0 0 0;
     height: 2.5em;
@@ -1549,7 +1551,7 @@ a.fleche-page{
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 main>*, header>*, footer>* {
-    /*filter: blur(4px);*/
+    filter: blur(4px);
 }
 
 .mentionLegales {
@@ -1566,138 +1568,84 @@ main>*, header>*, footer>* {
 ┃                    Page d'espace client (espaceClient.php)                      ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-.mainEspaceCli{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-left: 7.5%;
-    padding-right: 7.5%;
-    padding-bottom: 5%;
-    background-color: #D9D9D9;
+.mainEspaceCli {
+    background-color: #f3f3f3;
 }
 
-.mainEspaceCli svg{
+.mainEspaceCli > svg {
     height: 10em;
 }
 
-.mainEspaceCli svg path{
+.mainEspaceCli > svg path {
     fill: black;
 }
 
-
-.mainEspaceCli svg:hover path{
+.mainEspaceCli > svg:hover path {
     fill: black;
 }
 
-.espCliContent{
+.mainEspaceCli h2 {
     color: #164F57;
-    background-color: white;
-    border: solid 2px #C6C6C6;
-    width: 100%;
-    height: 100%;
+    margin: 1em 0;
+}
+
+.mainEspaceCli h3 {
+    color: #164F57;
+    font-family: "Montserrat-Medium";
+}
+
+.divEspaceCli {
+    margin: 0 20%;
+}
+
+.divInputEtLien {
     position: relative;
-    top: 2em;
-    padding-left: 1%;
-    padding-top: 1%;
-    padding-bottom: 1%;
+    height: 2.5em;
 }
 
-
-.infos{
-    color: black;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+.divInputEtLien a {
+    width: auto;
+    height: 80%;
+    position: absolute;
+    right: 3%;
+    padding: 1% 1% 0 1%;
 }
 
-.nameMdp{
-    display: flex;
-    width: 40%;
-    justify-content: space-between;
-}
-
-.mdpModif{
-    display: flex;
-    align-items: center;
-}
-
-.left, .right{
-    background-color: white;
-    border-radius: 0.9em;
-    width: 45%;
-}
-
-h4{
-    text-align: left;
-    position: relative;
-    left: 1em;
-    font-size: 1.25em;
-}
-
-h3{
-    font-family: "Montserrat-Regular";
-}
-
-.cliNomPrenom{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.cliNom, .cliPrenom{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 70%;
-}
-
-.cliNom h4, .cliPrenom h4, .cliNomPrenom button{
-    display: inline-block;
-}
-
-.cliNomPrenom button{
-    width: 40%;
-    height: 10%;
-}
-
-.facturation ul, .livraison ul{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+.divInputEtLien input {
+    margin: 0 !important;
+    width: 95%;
+    height: 100% !important; 
     padding: 0;
-    margin: 0;
 }
 
-.right li{
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    padding: 1.5%;
-    border: solid 1px black;
-    border-radius: 1em;
+.divInputEtLien input:disabled {
+    opacity: 1;
+    color: black;
 }
 
-.right li div{
-    display: flex;
-    justify-content: flex-start;
+.sectionCredit svg {
+    height: 1.2em;
+}
+
+.sectionCredit svg path {
+    fill: #164F57;
+}
+
+.divModifier input[type="email"] input[type="text"] {
+    width: 75%;
+}
+
+.divModifier input[type="submit"] {
+    width: 20%;
+}
+
+.divAdressesCli {
+    margin-top: 3%;
     width: 100%;
-    height: 1.5em;
+    display: flex;
+    justify-content: space-around;
 }
 
-.right li div:first-child{
-    gap: 5%;
-}
-
-.right li div:not(first-child){
-    gap: 1%;
-}
-
-.right li h5{
-    display: inline-block;
-    height: 100%;
-    margin: 0;
-    font-size: 1em;
+.divAdressesCli ul {
+    padding: 0;
 }

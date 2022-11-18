@@ -47,3 +47,9 @@ CREATE OR REPLACE VIEW adresse_livraison AS
 
 CREATE OR REPLACE VIEW commande AS
     SELECT * FROM _commande;
+
+--SELECT * FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit;
+CREATE OR REPLACE VIEW commande_list_vendeur AS
+    SELECT num_commande,num_compte,date_commande,date_arriv, prix_ht, prix_ttc, qte_panier FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit;
+    
+SELECT * FROM commande_list_vendeur;

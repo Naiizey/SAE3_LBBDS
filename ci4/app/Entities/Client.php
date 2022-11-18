@@ -36,12 +36,10 @@ class Client extends Entity
     {
         return $this->email;
     }
-
     public function getEntite()
     {
         return $this;
     }
-
     public function setPseudo($nouveauPseudo)
     {
         $this->identifiant = $nouveauPseudo;

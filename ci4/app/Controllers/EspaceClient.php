@@ -9,38 +9,46 @@ class EspaceClient extends BaseController
         $modelLivr = model("\App\Models\ClientAdresseLivraison");
         $modelClient = model("\App\Models\Client");
         $post=$this->request->getPost();
-        
-        if (isset($post['pseudo']))
-        {
-            if (!($post['pseudo'] === $modelClient->getClientPseudoById(session()->get("numero"))))
-            {
-                $modelClient->setClientPseudoById(session()->get("numero"), $post['pseudo']);
-            }
-        }
-        if (isset($post['prenom']))
-        {
-            if (!($post['prenom'] === $modelClient->getClientPrenomById(session()->get("numero"))))
-            {
-                $modelClient->setClientPrenomById(session()->get("numero"), $post['prenom']);
-            }
-        }
-        if (isset($post['nom']))
-        {
-            if (!($post['nom'] === $modelClient->getClientNomById(session()->get("numero"))))
-            {
-                $modelClient->setClientNomById(session()->get("numero"), $post['nom']);
-            }
-        }
-        if (isset($post['email']))
-        {
-            if (!($post['email'] === $modelClient->getClientMailById(session()->get("numero"))))
-            {
-                $modelClient->setClientMailById(session()->get("numero"), $post['email']);
-            }
-        }
+
         if (!empty($post))
         {
-            $modelClient->saveClient(session()->get("numero"));
+            $besoinDeSave = false;
+            if (isset($post['pseudo']))
+            {
+                if (!($post['pseudo'] === $modelClient->getClientPseudoById(session()->get("numero"))))
+                {
+                    $modelClient->setClientPseudoById(session()->get("numero"), $post['pseudo']);
+                    $besoinDeSave = true;
+                }
+            }
+            if (isset($post['prenom']))
+            {
+                if (!($post['prenom'] === $modelClient->getClientPrenomById(session()->get("numero"))))
+                {
+                    $modelClient->setClientPrenomById(session()->get("numero"), $post['prenom']);
+                    $besoinDeSave = true;
+                }
+            }
+            if (isset($post['nom']))
+            {
+                if (!($post['nom'] === $modelClient->getClientNomById(session()->get("numero"))))
+                {
+                    $modelClient->setClientNomById(session()->get("numero"), $post['nom']);
+                    $besoinDeSave = true;
+                }
+            }
+            if (isset($post['email']))
+            {
+                if (!($post['email'] === $modelClient->getClientMailById(session()->get("numero"))))
+                {
+                    $modelClient->setClientMailById(session()->get("numero"), $post['email']);
+                    $besoinDeSave = true;
+                }
+            }
+            if ($besoinDeSave)
+            {
+                $modelClient->saveClient(session()->get("numero"));
+            }
         }
         
         //Pré-remplit les champs avec les données de la base

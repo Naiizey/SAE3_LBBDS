@@ -194,3 +194,10 @@ INSERT INTO _liste_souhait ( id_prod, num_compte) VALUES (17, 1);
 INSERT INTO _liste_souhait ( id_prod, num_compte) VALUES (18, 2);
 INSERT INTO _liste_souhait (id_prod, num_compte) VALUES (17, 2);
 -- INSERT INTO _liste_souhait (etat_stock, id_prod, num_compte) VALUES (false, 18, 1);
+
+INSERT INTO _adresse_livraison (id_a,nom_a,prenom_a,numero_rue,nom_rue,code_postal,ville,comp_a1,comp_a2,num_compte,infos_comp) VALUES (1,'DUPONT','Jean','12','rue de la paix','75000','Paris','Batiment A','Etage 2',1,'');
+INSERT INTO _adresse_livraison (id_a,nom_a,prenom_a,numero_rue,nom_rue,code_postal,ville,comp_a1,comp_a2,num_compte,infos_comp) VALUES (2,'DUPONT','Jean','12','rue de la paix','75000','Paris','Batiment A','Etage 2',2,'');
+
+INSERT INTO _adresse_facturation (id_a,nom_a,prenom_a,numero_rue,nom_rue,code_postal,ville,comp_a1,comp_a2,num_compte) VALUES (1,'DUPONT','Jean','12','rue de la paix','75000','Paris','Batiment A','Etage 2',1);
+INSERT INTO _adresse_facturation (id_a,nom_a,prenom_a,numero_rue,nom_rue,code_postal,ville,comp_a1,comp_a2,num_compte) VALUES (2,'DUPONT','Jean','12','rue de la paix','75000','Paris','Batiment A','Etage 2',2);
+

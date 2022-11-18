@@ -324,6 +324,7 @@ CREATE OR REPLACE TRIGGER beforeInsert_pouce BEFORE INSERT ON _pouce FOR EACH RO
 CREATE OR REPLACE FUNCTION fixInheritance() RETURNS TRIGGER AS
 $$
 BEGIN
+
     INSERT INTO sae3._panier (num_panier) VALUES (new.num_panier);
     return new;
 END;
@@ -335,6 +336,8 @@ CREATE OR REPLACE TRIGGER afterInsert_panier_visiteur AFTER INSERT ON _panier_vi
 CREATE OR REPLACE FUNCTION fixInheritance2() RETURNS TRIGGER AS
 $$
 BEGIN
+
+    -- si id_a n'est pas déja dans la TABLE _adresse
     INSERT INTO sae3._adresse (id_a,nom_a,prenom_a,numero_rue,nom_rue,code_postal,ville) VALUES (new.id_a,new.nom_a,new.prenom_a,new.numero_rue,new.nom_rue,new.code_postal,new.ville);
     return new;
 END;
@@ -350,7 +353,6 @@ CREATE OR REPLACE FUNCTION creerPremierPanier() RETURNS TRIGGER AS
     BEGIN
         Insert Into sae3._panier_client (num_compte) VALUES (new.num_compte);
         return new;
-
     end;
     $$ language plpgsql;
 CREATE OR REPLACE TRIGGER afterInsertClient AFTER INSERT ON _compte FOR EACH ROW EXECUTE PROCEDURE creerPremierPanier ();

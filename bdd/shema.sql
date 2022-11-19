@@ -373,9 +373,24 @@ CREATE OR REPLACE FUNCTION creerPremierPanier() RETURNS TRIGGER AS
     $$
 
     BEGIN
-        INSERT INTO _panier DEFAULT VALUES;
-        Insert Into sae3._panier_client (num_compte,num_panier) VALUES (new.num_compte,CURRVAL('_panier_num_panier_seq'));
+
+        Insert Into sae3._panier_client (num_compte) VALUES (new.num_compte);
         return new;
     end;
     $$ language plpgsql;
 CREATE OR REPLACE TRIGGER afterInsertClient AFTER INSERT ON _compte FOR EACH ROW EXECUTE PROCEDURE creerPremierPanier ();
+
+
+CREATE OR REPLACE FUNCTION creerPanier() RETURNS TRIGGER AS
+    $$
+
+    BEGIN
+        INSERT INTO sae3._panier DEFAULT VALUES;
+        new.num_panier = CURRVAL('sae3._panier_num_panier_seq');
+        return new;
+    end;
+    $$ language plpgsql;
+CREATE OR REPLACE TRIGGER beforeInsertPanierCli BEFORE INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE creerPanier ();
+CREATE OR REPLACE TRIGGER beforeInsertPanierVis BEFORE INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE creerPanier ();
+
+

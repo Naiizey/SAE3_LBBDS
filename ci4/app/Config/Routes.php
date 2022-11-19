@@ -91,6 +91,7 @@ $routes->set404Override();
         $routes->get('/espaceClient', 'Home::connexion');
     }
 
+    $routes->get('/recherche', 'Recherche::rechercher');
 ##param uri (:any) et dans methode /$1
 
 /*

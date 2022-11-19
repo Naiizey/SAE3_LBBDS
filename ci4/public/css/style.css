@@ -385,6 +385,34 @@ footer a{
     }
 }
 
+.alerte-validation{
+    color: white;
+    width: 250px;
+    
+    background-color: #3997a3;
+    
+    padding: 30px 2%;
+    border-radius: 20px;
+    
+    position: fixed;
+    top: -500px;
+    right: 20px;
+}
+
+.alerte-validation .logo-validation svg{
+   float: left;
+    position: relative;
+    left: -10px;
+    top: 2px;
+}
+
+.alerte-validation span+span{
+   
+    position: relative;
+    
+    top: -7px;
+}
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                           Composants d'erreurs                                  ┃

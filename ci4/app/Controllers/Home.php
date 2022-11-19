@@ -45,15 +45,21 @@ class Home extends BaseController
             }
         }
 
-        if(!is_null($context) && $context==401){
+        if(!is_null($context) && $context==401)
+        {
             $issues['redirection']="Vous devez vous connectez pour valider votre commande";
             $data['estRedirection']=True;
+            $data['controller']= "compte_redirection";
+        }
+        else
+        {
+            $data['controller']= "connexion";
         }
 
 
         
 
-        $data['controller']= "connexion";
+       
         $data['erreurs'] = $issues;
 
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
@@ -91,9 +97,13 @@ class Home extends BaseController
             $issues['redirection']="Vous devez avoir un compte pour valider votre commande";
             $data['estRedirection']=True;
             
+            $data['controller']= "compte_redirection";
         }
-
-        $data['controller']= "inscription";
+        else
+        {
+            $data['controller']= "connexion";
+        }
+        
         $data['erreurs'] = $issues;
 
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs

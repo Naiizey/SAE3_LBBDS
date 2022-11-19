@@ -135,11 +135,18 @@ path{
     fill: #6f98bd;
 }
 
-.logoPanier path {
+.divSuivi div:hover svg path{
+    fill: #6f98bd;
+}
+.divSuivi div:hover h3{
+    color: #6f98bd;
+}
+
+.etat-courant-commande svg path {
     fill: #6f98bd;
 }
 
-.logoPanier + h3 {
+.etat-courant-commande  h3 {
     color: #6f98bd;
 }
 

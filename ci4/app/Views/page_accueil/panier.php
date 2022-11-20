@@ -132,20 +132,25 @@
             ?>
         </main>       
         <script>
-            //toSend est un param permettant la modification de la page sans rafraichissement
-            var toSend = new Object();
-            //url où envoyé les données
-            toSend.http = "<?php echo base_url()  .  '/panier/modifier/quantite'?>";
-            //indication de comment récupérer un select
-            toSend.howGetSelect=() => document.querySelectorAll(".divQuantite select");
-            //indication de comment l'id du produit d'un select
-            toSend.howGetId=(node) => node.parentNode.parentNode.id;
-            //indique si non voulons ou non que la console affiche les résultats (true/false) de la requête OU de définir une fonction
-            toSend.callback=true;
+            
         </script>
 <?php require("footer.php"); ?>
 
 <script>
-        updatePricePanier()
-        updatePriceTotal()
+    reqUpdateQuantite(
+        "<?php echo base_url()  .  '/panier/modifier/quantite'?>",
+        () => document.querySelectorAll(".divQuantite select"),
+        (node) => node.parentNode.parentNode.id,
+        (err, resp) => {
+            if(!err){
+                updatePricePanier();
+                updatePriceTotal();
+            }
+            
+
+        }
+
+    );
+    updatePricePanier()
+    updatePriceTotal()
 </script>

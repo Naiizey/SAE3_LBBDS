@@ -21,9 +21,9 @@
                     <?php else:?>
                         <?= $i ?>
                     <?php endif;?>
-                       
                     
-               
+                    
+                    
             <?php endfor;?>
             </div>
         </div>
@@ -34,9 +34,8 @@
             <h1>Catégories</h1>
         </div>
 
-        
-        <?php foreach ($categories as $categorie):?>
         <div class="categorie-catalogue">
+        <?php foreach ($categories as $categorie):?>
             <details> <summary class="categorie"><h2><?=$categorie->libelle?></h2></summary>
                 <ul class="liste-sous-categories">
                     <?php foreach ($categorie->getAllSousCat() as $sousCat): ?>

@@ -297,3 +297,21 @@ for (let i = 0; i < lienModifsCli.length; i++)
         inputsCli[i].focus();
     });
 }
+
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                   Catalogue                                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+function boutonCliquable(bouton,action){
+    
+    bouton.addEventListener("click",action);
+}
+
+function switchEtatFiltre(list){
+    for (n of list){
+        n.classList.toggle("est-filtre-ouvert");
+    }
+}

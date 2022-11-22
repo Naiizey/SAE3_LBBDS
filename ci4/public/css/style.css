@@ -12,7 +12,7 @@ body {
     background-color: #164F57;
     display: flex;
     flex-direction: column;
-    min-height: 100%;
+    min-height: 100vh;
 }
 
 h1 {
@@ -64,7 +64,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 11%;
+    width: 13%;
 }
 
 .formRecherche {
@@ -105,7 +105,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 8%;
+    width: 10%;
 }
 
 .formRecherche > a{
@@ -1302,34 +1302,58 @@ main#Catalogue{
     width: 70%;
     max-width: 70%; 
 }
-.partie-categorie{
+.partie-filtre{
     width: 25%;
-    min-height: 100%;
+    min-height: 100%;  
 }
 
 .liste-produits{
     display: flex;
     flex-wrap: wrap; 
     align-content: flex-start;   
-
-    
-
 }
 
+.categorie-catalogue summary ~ div{
+    width: 100%;
+    display: flex;
+    gap: 7%;
+    padding-left: 5%;
+}
 
-.liste-categories{
-    background-color: #164F57;
+.categorie-catalogue summary ~ div label h3{
+    text-align: left;
+}
+
+.categorie-catalogue summary ~ div label h3::first-letter{
+    text-transform: uppercase;
+}
+
+.liste-filtre{  
     width: 100%;
     min-height: 100%;
-
-
-    background-color: white;
 }
 
+.mobile-ouvrir-filtres{
+    cursor: pointer;
+    display: none;
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    width: 200px;
+    height: 75px;
+    border-radius: 35px;
+    background-color: #164F57;
+    z-index: 5;
+    border: none;
+    color: #D9D9D9;
+}
 
+.mobile-ouvrir-filtres svg{
+   position: relative;
+   top: 4px;
+}
 
-.titre-categorie, .categorie-catalogue summary{
-
+.titre-filtre, .categorie-catalogue summary{
     padding: 15px 0 ;
     min-width: 100%;
     background-color: #164F57
@@ -1353,55 +1377,79 @@ main#Catalogue{
 .categorie-catalogue details[open] summary::after{
     content: '\0025B2';
     position: relative;
-  
+}
+.onglets{
+    display: flex;
+    flex-wrap: nowrap;
+    height: 53px;
+}
+.onglet{
+    background-color: #e9e3e3;
+    width: 50%;
+    padding-top: 15px;
+    padding-bottom: 7px;
+    height: fit-content;
+    border-top: solid #20535a 8px ;
+    z-index: 1;
+}
+
+.onglet-selectionnee{
+    border: none;
+    border-top: solid #3997A3 8px ;
+    background-color: #EFECEC;
+}
+
+.onglet h3{
+    font-family: 'Montserrat-Bold';
+    font-weight: lighter;
+    margin: 0;
+}
+
+.categorie-catalogue summary, .onglet{
+    cursor: pointer;
+    box-sizing: border-box;
+    color: #164F57;
 }
 
 .categorie-catalogue summary{
-    cursor: pointer;
-    box-sizing: border-box;
+    background-color: #EFECEC;
     list-style:none;
     width: 100%;
     padding: 20px 5% ;
-    background-color: #EFECEC;
-    text-align: left;
-    color: #164F57;
-    border: solid 1px black;
+    text-align: left;    
+}
+
+.liste-filtre details, .liste-sous-categories{
+    background-color: #3997a377;
+    margin: 0;
+    list-style: none;
+}
+
+.categorie-catalogue summary ~ div h3 {
+    width:fit-content;
+    color: inherit;
+    padding: 15px 0;
+    margin: 0;
+}
+
+.liste-sous-categories a {
+    display: block;
+    font-family:  'Montserrat-Regular';
+    font-size: inherit;
+    text-decoration: none;    
+}
+
+.liste-sous-categories option{
+    color: #164F57; 
     
 }
 
-.liste-categories details, .liste-sous-categories{
-    background-color: #3997a377;
-    margin: 0;
-  
-
-}
-
-.liste-sous-categories h3 {
-    width:fit-content;
-    color: inherit;
-    padding: 20px 0;
-    margin: 0;
-}
-.liste-sous-categories a {
-    font-family: inherit;
-    font-size: inherit;
-    text-decoration: none;
-}
-
-.liste-sous-categories li{
-    margin: 0 0 0 40%;
-    color: #164F57; 
-
-}
-
-.liste-sous-categories li::before{
- 
-    color: #164F57; 
-
+.liste-sous-categories option::before{
+    color: #164F57;
 }
 
 
-ul.liste-sous-categories {
+select.liste-sous-categories {
     padding: 0;
 }
 
@@ -1417,6 +1465,7 @@ ul.liste-sous-categories {
     min-width: 100%;
     height: 40px;
 }
+
 .fleche-page svg{
     width: 1em;
     position: relative;
@@ -1426,28 +1475,89 @@ ul.liste-sous-categories {
 a.fleche-page{
     text-decoration: none;
 }
+
 .fleche-page.disponible svg path, .fleche-page.disponible img path{
     fill:#164F57;
-  
 }
+
 .current-page{
     width: 10%;
 }
-.apres-current-page,.avant-current-page{
 
+.apres-current-page,.avant-current-page{
     position: relative;
     top: 12px;
     width: 40.0%;
 }
+
 .apres-current-page{
     text-align: left;
 }
+
 .avant-current-page{
     text-align: right;
 }
+
 .current-page,.apres-current-page,.avant-current-page{
     font-size: 1.5em;
 }
+
+.fermer-filtre{
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    border: none;
+    background-color: transparent;
+}
+
+@media (max-width: 1400px) {
+    .partie-produits{
+        width: 60%;
+    }
+    .partie-filtre{
+        width: 40%;
+    }
+}
+
+@media (max-width: 1270px) {
+    main#Catalogue{
+        flex-direction: column;
+        align-items: center;
+    }
+    .mobile-ouvrir-filtres:not(.est-filtre-ouvert){
+        display: block;
+    }
+    .partie-produits{
+        width: 100%;
+        max-width: 100%;
+    }
+    .liste-produits{
+        justify-content: center;
+    }
+
+    .fermer-filtre{
+        display: block;
+    }
+    
+    .partie-filtre{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .partie-filtre.est-filtre-ouvert{
+        top: 0;
+    }
+
+    .partie-filtre:not(.est-filtre-ouvert){
+        position: fixed;
+        bottom: -100vh;
+    }
+}
+
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -1584,18 +1694,41 @@ a.fleche-page{
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                       CGU                                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
-main>*, header>*, footer>* {
-    filter: blur(4px);
-}*/
-
-.mentionLegales {
-    filter: blur(0);
+.mentionsLegales {
+    z-index: 100;
     position: absolute;
-    top: 20em;
+    margin: 6em 1em 1em 1em;
+    padding: 2em;
     border: #3997A3 solid 2px;
     padding: 2em;
     background-color: white;
+    overflow-y: scroll;
+    max-height: 80vh;
+    pointer-events: all;
+    text-align: center;
+}
+
+.mentionsLegales div {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.divFermerCGU {
+    height: 0;
+}
+
+.divRemonterCGU {
+    height: 1em;
+}
+
+.remonterCGU {
+    cursor: pointer;
+}
+
+.mentionsLegales svg path {
+    fill: #164F57;
 }
 
 /*

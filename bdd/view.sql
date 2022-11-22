@@ -108,8 +108,12 @@ CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_panier varchar) RETU
 
 --SELECT * FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit;
 CREATE OR REPLACE VIEW commande_list_vendeur AS
-    SELECT num_commande,retourneEtatLivraison(num_commande),num_compte,intitule_prod,date_commande,date_arriv, prix_ht, prix_ttc, qte_panier FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit NATURAL JOIN _panier_client;
+    SELECT num_commande,num_compte,date_commande,date_arriv, sum(prix_ht*qte_panier) ht, sum(prix_ttc*qte_panier) ttc, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit NATURAL JOIN _panier_client group by num_commande, num_compte,date_commande,date_arriv,etat;
     
 SELECT * FROM commande_list_vendeur;
 
 SELECT retourneEtatLivraison('1');
+
+CREATE OR REPLACE VIEW commande_list_produits_client AS
+    SELECT num_commande,num_compte,date_commande,date_arriv,(prix_ttc*qte_panier) prix_ttc,(prix_ttc*qte_panier) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit NATURAL JOIN _panier_client;
+SELECT * FROM commande_list_produits_client;

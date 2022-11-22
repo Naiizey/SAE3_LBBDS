@@ -2,6 +2,7 @@
 <html lang=fr>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/css/style.css" />
         <style>
             @font-face {
@@ -61,7 +62,7 @@
                     else
                     {
                         echo   '<form class="formRecherche" action="'.base_url().'/recherche"'.'>
-                                <input class="champsRecherche" type="text" name="search" placeholder="Recherche..">
+                                <input required class="champsRecherche" type="text" name="search" placeholder="Recherche..">
                                 <label><input type="submit">'.file_get_contents(dirname(__DIR__,3)."/public/images/header/loupe.svg") .
                                 '</label></form>';
                     }

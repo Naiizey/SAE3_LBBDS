@@ -40,6 +40,7 @@ class Authentification
             $session->set('numero',$user->numero);
             $session->set('identifiant',$user->identifiant);
             $session->set('motDePasse',$user->motDePasse);
+            $session->set("just_connectee",True);
         }
 
         return $errors;
@@ -62,7 +63,7 @@ class Authentification
             if(strlen($entree->pseudo) > 30 )
             {
                 $errors[3]="30 caractères maximum pour le pseudo (" .strlen($entree->pseudo) . " actuellement)";
-            }
+            } 
             if(!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) && strlen($entree->email)<255) 
             {
                 $errors[4]="255 caractères maximum pour l'email et caractère spéciaux interdits";
@@ -101,6 +102,8 @@ class Authentification
             $session->set('numero',$user->numero);
             $session->set('identifiant',$user->identifiant);
             $session->set('motDePasse',$user->motDePasse);
+
+            $session->set("just_connectee",True);
         }
 
         return $errors;

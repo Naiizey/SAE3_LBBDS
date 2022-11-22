@@ -209,6 +209,7 @@ class Home extends BaseController
     public function lstCommandesVendeur()
     {
         $data['controller']= "lstCommandesVendeur";
+        $data['commandesVend']=model("\App\Models\LstCommandesVendeur")->findAll();
         return view('page_accueil/lstCommandesVendeur.php', $data);
     }
     

@@ -14,7 +14,7 @@ class LstCommandesVendeur extends Model
 
     protected $useAutoIncrement = false;
 
-    protected $returnType     = Produit::class;
+    protected $returnType     = CommandeVend::class;
     protected $useSoftDeletes = false;
 
     

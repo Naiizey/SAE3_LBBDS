@@ -8,7 +8,7 @@
                         <th>N° client</th>
                         <th>Date commande</th>
                         <th>Date livraison</th>
-                        <th>Total HTT</th>
+                        <th>Total HT</th>
                         <th>Total TTC</th>
                         <th>Etat</th>
                     </tr>

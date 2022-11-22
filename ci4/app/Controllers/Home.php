@@ -196,10 +196,10 @@ class Home extends BaseController
         return view("catalogue.php",$data);
     }
 
-    public function lstCommandes()
+    public function lstCommandesVendeur()
     {
-        $data['controller']= "lstCommandes";
-        return view('page_accueil/lstCommandes.php', $data);
+        $data['controller']= "lstCommandesVendeur";
+        return view('page_accueil/lstCommandesVendeur.php', $data);
     }
     
     //Tant que commande n'est pas là

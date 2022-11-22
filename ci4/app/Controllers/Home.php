@@ -214,6 +214,17 @@ class Home extends BaseController
         return view("catalogue.php",$data);
     }
 
+
+    public function infoLivraison(){
+        
+        $data['controller']='infoLivraison';
+
+
+        return view('formAdresse.php',$data);
+
+
+    }
+
     public function lstCommandes()
     {
         $data['controller']= "lstCommandes";

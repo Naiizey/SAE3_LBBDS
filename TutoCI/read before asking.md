@@ -10,4 +10,8 @@ solution: Restart ci4
 require(__DIR__."/../page_accueil/footer.php");
 ```
 
-##
+## erreur 
+oops we seem to have hit a snag, please try later
+
+solution vérifiez que le fichier .env est bien dans le dossier ci4 et que il est bien en .env et pas en env
+sinon passez en mode développeur

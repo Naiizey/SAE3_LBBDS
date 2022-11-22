@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class Home extends BaseController
+class Home extends BaseController 
 {
 
     public function __construct()
@@ -214,10 +214,11 @@ class Home extends BaseController
         return view("catalogue.php",$data);
     }
 
-    public function lstCommandes()
+    public function lstCommandesVendeur()
     {
-        $data['controller']= "lstCommandes";
-        return view('page_accueil/lstCommandes.php', $data);
+        $data['controller']= "lstCommandesVendeur";
+        $data['commandesVend']=model("\App\Models\LstCommandesVendeur")->findAll();
+        return view('page_accueil/lstCommandesVendeur.php', $data);
     }
     
     //Tant que commande n'est pas là

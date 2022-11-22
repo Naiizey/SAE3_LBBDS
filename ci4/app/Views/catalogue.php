@@ -18,8 +18,7 @@
         </div>
         <div class="nav-page">
             <div class="avant-current-page">
-            <?php for($i=1;$i<=$nombreMaxPages;++$i): ?>
-                        
+            <?php for($i=1;$i<=$nombreMaxPages;++$i): ?> 
                     <?php if($i==$page):?>
                         </div>
                         <div class="current-page">
@@ -31,9 +30,6 @@
                     <?php else:?>
                         <?= $i ?>
                     <?php endif;?>
-                    
-                    
-                    
             <?php endfor;?>
             </div>
         </div>
@@ -52,29 +48,24 @@
             <div class="onglet onglet-selectionnee"><h3>Catégorie</h3></div>
             <div class="onglet"><h3>Détail</h3></div>
         </div>
-
         <div class="categorie-catalogue">
         <?php foreach ($categories as $categorie):?>
-            <details> <summary class="categorie"><h2><?=$categorie->libelle?></h2></summary>
-                <ul class="liste-sous-categories">
-                    <?php foreach ($categorie->getAllSousCat() as $sousCat): ?>
-                        <a href="./catalogue?cat=<?=$categorie->codeCat?>&sousCat=<?=$sousCat->codeCat?>"><li class=".sous-categorie-catalogue"><h3><?= $sousCat->libelle ?></h3></li></a>
-                    <?php endforeach;?>
-                </ul>
+            <details>
+                <summary class="categorie"><h2><?=$categorie->libelle?></h2></summary>
+                <?php foreach ($categorie->getAllSousCat() as $sousCat): ?>
+                <div class="sous-categorie_<?= $sousCat->libelle?>">
+                    <input type="checkbox" name="sous-categorie">
+                    <label class=".sous-categorie-catalogue"><h3><?= $sousCat->libelle ?></h3></label>
+                </div>
+                <?php endforeach;?>
             </details>
         <?php endforeach;?>
         </div>
-        
-        
-        
     </div>
     </section>
-
 </main>
-
 <?php require("page_accueil/footer.php"); ?>
 <script>
-
     boutonCliquable(
         document.querySelector(".mobile-ouvrir-filtres"),
         () => {
@@ -83,11 +74,8 @@
             }
         );
    
-
-
     boutonCliquable(
         document.querySelector(".fermer-filtre"),
         () => switchEtatFiltre(document.querySelectorAll(".mobile-ouvrir-filtres, .partie-filtre"))
         );
-    
 </script>

@@ -269,14 +269,34 @@ function lienLigne(element) {
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 var lienCGU = document.getElementsByClassName("lienCGU");
-lienCGU[0].addEventListener("click", test);
+lienCGU[0].addEventListener("click", affichageCGU);
+var mentionsLegales = document.getElementsByClassName("mentionsLegales")[0];
 
-/*document.querySelector(".mentionLegales > p").style.color = "red";*/
+function affichageCGU(event) {
+    event.preventDefault();
+    let flou = document.querySelectorAll("main>*, header>*, footer>*");
+    let page = document.querySelector("html");
 
-function test(event) {
-    event.preventDefault();    
+    if (mentionsLegales.style.display == "none") {
+        mentionsLegales.style.display = "block";
+        page.style.overflow = "hidden";
+        page.style.pointerEvents = "none";
+        window.scrollTo({top: 0, behavior: 'smooth'});
+        mentionsLegales.scrollTo({top: 0, behavior: 'auto'});
+
+        for (let index = 0; index < flou.length; index++) {
+            flou[index].style.filter = "blur(4px)";
+            mentionsLegales.style.filter = "blur(0)";
+        }
+        document.getElementsByClassName("fermerCGU").addEventListener("blur", affichageCGU);
+    }
 }
-//TODO:Desactiver les event listners quand le fond est blur (rendre la navigation impossible)
+
+var boutonML = document.getElementsByClassName("remonterCGU")[0];
+boutonML.addEventListener("click", function(e) {
+    mentionsLegales.scrollTo({top: 0, behavior: 'smooth'});
+});
+//TODO : bouton scroll back en sticky en bas à gauche du bloc        
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

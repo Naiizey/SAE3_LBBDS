@@ -1,3 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-    <path d="M168 336C181.3 336 192 346.7 192 360C192 373.3 181.3 384 168 384H120C106.7 384 96 373.3 96 360C96 346.7 106.7 336 120 336H168zM360 336C373.3 336 384 346.7 384 360C384 373.3 373.3 384 360 384H248C234.7 384 224 373.3 224 360C224 346.7 234.7 336 248 336H360zM512 32C547.3 32 576 60.65 576 96V416C576 451.3 547.3 480 512 480H64C28.65 480 0 451.3 0 416V96C0 60.65 28.65 32 64 32H512zM512 80H64C55.16 80 48 87.16 48 96V128H528V96C528 87.16 520.8 80 512 80zM528 224H48V416C48 424.8 55.16 432 64 432H512C520.8 432 528 424.8 528 416V224z"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 576 448"
+   version="1.1"
+   id="svg169"
+   sodipodi:docname="paiement.svg"
+   width="576"
+   height="448"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs173" />
+  <sodipodi:namedview
+     id="namedview171"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.5898438"
+     inkscape:cx="288.07862"
+     inkscape:cy="141.20884"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg169" />
+  <path
+     d="m 168,304 c 13.3,0 24,10.7 24,24 0,13.3 -10.7,24 -24,24 h -48 c -13.3,0 -24,-10.7 -24,-24 0,-13.3 10.7,-24 24,-24 z m 192,0 c 13.3,0 24,10.7 24,24 0,13.3 -10.7,24 -24,24 H 248 c -13.3,0 -24,-10.7 -24,-24 0,-13.3 10.7,-24 24,-24 z M 512,0 c 35.3,0 64,28.65 64,64 v 320 c 0,35.3 -28.7,64 -64,64 H 64 C 28.65,448 0,419.3 0,384 V 64 C 0,28.65 28.65,0 64,0 Z m 0,48 H 64 C 55.16,48 48,55.16 48,64 V 96 H 528 V 64 c 0,-8.84 -7.2,-16 -16,-16 z m 16,144 H 48 v 192 c 0,8.8 7.16,16 16,16 h 448 c 8.8,0 16,-7.2 16,-16 z"
+     id="path167" />
 </svg>

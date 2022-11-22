@@ -5,7 +5,7 @@ use CodeIgniter\CodeIgniter;
 class Recherche extends BaseController
 {
     public function indice_recherche($article, $champ) {
-        $indice = substr_count($article->intitule, $champ)*0.6 + substr_count($article->isaffiche, $champ)*0.4;
+        $indice = substr_count(strtolower($article->intitule), strtolower($champ))*0.6 + substr_count(strtolower($article->isaffiche), strtolower($champ))*0.4;
         return $indice;
     }
 
@@ -20,6 +20,7 @@ class Recherche extends BaseController
         $champ = $this->request->getGet()["search"];
         $data['controller'] = "recherche";
         $data['cardProduit']=service("cardProduit");
+        $data['vide'] = false;
         $produits = model("\App\Models\ProduitCatalogue")->findAll();
         $data['categories']=model("\App\Models\CategorieModel")->findAll();
         $indices = [];
@@ -36,6 +37,8 @@ class Recherche extends BaseController
             $data['nombreMaxPages']=intdiv(sizeof($data['prods']),self::NBPRODSPAGECATALOGUE)
             + ((sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE==0)?0:1);
         } else {
+            $data['vide'] = true;
+            $data['prods'] = $produits;
             $data['nombreMaxPages'] = 1;
         }
 

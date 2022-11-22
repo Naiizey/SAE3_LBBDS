@@ -14,42 +14,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="lignesCommandes" >
-                        <td class="numCommandes">00001</td>
-                        <td>00001</td>
-                        <td>2020-01-01</td>
-                        <td>2022-01-01</td>
-                        <td>100</td>
-                        <td>120</td>
-                        <td>Livrée</td>
-                    </tr>
-                    <tr class="lignesCommandes">
-                        <td class="numCommandes">00002</td>
-                        <td>00001</td>
-                        <td>2020-01-01</td>
-                        <td>2022-01-01</td>
-                        <td>100</td>
-                        <td>120</td>
-                        <td>Livrée</td>
-                    </tr>
-                    <tr class="lignesCommandes">
-                        <td class="numCommandes">00003</td>
-                        <td>00001</td>
-                        <td>2020-01-01</td>
-                        <td>2022-01-01</td>
-                        <td>100</td>
-                        <td>120</td>
-                        <td>Livrée</td>
-                    </tr>
-                    <tr class="lignesCommandes">
-                        <td class="numCommandes">00004</td>
-                        <td>00001</td>
-                        <td>2020-01-01</td>
-                        <td>2022-01-01</td>
-                        <td>100</td>
-                        <td>120</td>
-                        <td>Livrée</td>
-                    </tr>
+                    <?php foreach ($commandesVend as $commandeVend){
+                        echo "<tr class='lignesCommandes' >
+                            <td class='numCommandes'>$commandeVend->num_commande</td>
+                            <td>$commandeVend->num_compte</td>
+                            <td>$commandeVend->date_commande</td>
+                            <td>$commandeVend->date_arriv</td>
+                            <td>$commandeVend->ht</td>
+                            <td>$commandeVend->ttc</td>
+                            <td>$commandeVend->etat</td>
+                        </tr>";
+                    } ?>
                 </tbody>
             </table>
         </div>

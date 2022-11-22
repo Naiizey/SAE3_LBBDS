@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use \App\Entities\ProduitPanier as Produit;
-use \App\Models\ProduitPanierModel;
+use \App\Entities\CommandeVend as CommandeVend;
 use CodeIgniter\Model;
 use Exception;
 
@@ -14,7 +13,7 @@ class LstCommandesVendeur extends Model
 
     protected $useAutoIncrement = false;
 
-    protected $returnType     = Produit::class;
+    protected $returnType     = CommandeVend::class;
     protected $useSoftDeletes = false;
 
     

@@ -1584,18 +1584,41 @@ a.fleche-page{
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                       CGU                                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
-main>*, header>*, footer>* {
-    filter: blur(4px);
-}*/
-
-.mentionLegales {
-    filter: blur(0);
+.mentionsLegales {
+    z-index: 100;
     position: absolute;
-    top: 20em;
+    margin: 6em 1em 1em 1em;
+    padding: 2em;
     border: #3997A3 solid 2px;
     padding: 2em;
     background-color: white;
+    overflow-y: scroll;
+    max-height: 80vh;
+    pointer-events: all;
+    text-align: center;
+}
+
+.mentionsLegales div {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.divFermerCGU {
+    height: 0;
+}
+
+.divRemonterCGU {
+    height: 1em;
+}
+
+.remonterCGU {
+    cursor: pointer;
+}
+
+.mentionsLegales svg path {
+    fill: #164F57;
 }
 
 /*

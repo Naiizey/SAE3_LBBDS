@@ -57,25 +57,8 @@ class EspaceClient extends BaseController
                 $auth = service('authentification');
                 $user=$client;
                 $user->fill($post);
-                $issues=$auth->inscription($user, $post['confirmezMotDePasse']); 
-                
-                //On retire les erreurs liées au pseudo et email qui ne sont pas modifiables dans la page espaceClient
-                if (!isset($issues[3]))
-                {
-                    unset($issues[3]);
-                }
-                if (!isset($issues[8]))
-                {
-                    unset($issues[8]);
-                }
-                if (!isset($issues[4]))
-                {
-                    unset($issues[4]);
-                }
-                if (!isset($issues[7]))
-                {
-                    unset($issues[7]);
-                }
+                $issues=$auth->modifEspaceClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']); 
+            
                 if (!empty($issues))
                 {
                     $data['motDePasse'] = $post['motDePasse'];
@@ -83,9 +66,10 @@ class EspaceClient extends BaseController
                     $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
                 }
             }
-
-            $data['classModifMdp'] = "modifMdpOuvert";
+            $data['motDePasse'] = "";
+            $data['classModifMdp'] = "";
             $data['classLienModifMdp'] = "lienModifMdp";
+            $data['attributModifMdp'] = "";
         }
         else
         {
@@ -95,6 +79,7 @@ class EspaceClient extends BaseController
             $data['nouveauMotDePasse'] = "";
             $data['classModifMdp'] = "modifMdpFerme";
             $data['classLienModifMdp'] = "";
+            $data['attributModifMdp'] = "disabled";
         }
         
         //Pré-remplit les champs avec les données de la base

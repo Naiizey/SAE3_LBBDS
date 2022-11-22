@@ -9,64 +9,102 @@ class EspaceClient extends BaseController
         $modelLivr = model("\App\Models\ClientAdresseLivraison");
         $modelClient = model("\App\Models\Client");
         $post=$this->request->getPost();
+        $client = $modelClient->getClientById(session()->get("numero"));
+        $issues = [];
 
         if (!empty($post))
         {
-
-            /*
-            Pas comme ça, 
-            1: Au tout début, utilise la fonction getClienById du Model qui va de retourner une entité Client 
-            2: À chaque modif, modifie la propriété de l'entité sans faire appel au Model
-            3: Si il faut save appel ta méthode save dans laquelle tu prend en paramètre l'entité client
-            4: Utilise aussi cette entité pour mettre des valeurs dans data
-            Bref, moins d'appel au model, juste 2 fois: créer l'entité et pour la sauvegarde
-            */
             $besoinDeSave = false;
             if (isset($post['pseudo']))
             {
-                if (!($post['pseudo'] === $modelClient->getClientPseudoById(session()->get("numero"))))
+                if (!($post['pseudo'] === $client->identifiant))
                 {
-                    $modelClient->setClientPseudoById(session()->get("numero"), $post['pseudo']);
+                    $client->identifiant = $post['pseudo'];
                     $besoinDeSave = true;
                 }
             }
             if (isset($post['prenom']))
             {
-                if (!($post['prenom'] === $modelClient->getClientPrenomById(session()->get("numero"))))
+                if (!($post['prenom'] === $client->prenom))
                 {
-                    $modelClient->setClientPrenomById(session()->get("numero"), $post['prenom']);
+                    $client->prenom = $post['prenom'];
                     $besoinDeSave = true;
                 }
             }
             if (isset($post['nom']))
             {
-                if (!($post['nom'] === $modelClient->getClientNomById(session()->get("numero"))))
+                if (!($post['nom'] === $client->nom))
                 {
-                    $modelClient->setClientNomById(session()->get("numero"), $post['nom']);
+                    $client->nom = $post['nom'];
                     $besoinDeSave = true;
                 }
             }
             if (isset($post['email']))
             {
-                if (!($post['email'] === $modelClient->getClientMailById(session()->get("numero"))))
+                if (!($post['email'] === $client->email))
                 {
-                    $modelClient->setClientMailById(session()->get("numero"), $post['email']);
+                    $client->email = $post['email'];
                     $besoinDeSave = true;
                 }
             }
             if ($besoinDeSave)
             {
-                $modelClient->saveClient(session()->get("numero"));
+                $modelClient->saveClient($client);
             }
+
+            if (isset($post['confirmezMotDePasse']) && isset($post['nouveauMotDePasse']) && ($post['motDePasse'] != "motDePassemotDePasse"))
+            {
+                $auth = service('authentification');
+                $user=$client;
+                $user->fill($post);
+                $issues=$auth->inscription($user, $post['confirmezMotDePasse']); 
+                
+                //On retire les erreurs liées au pseudo et email qui ne sont pas modifiables dans la page espaceClient
+                if (!isset($issues[3]))
+                {
+                    unset($issues[3]);
+                }
+                if (!isset($issues[8]))
+                {
+                    unset($issues[8]);
+                }
+                if (!isset($issues[4]))
+                {
+                    unset($issues[4]);
+                }
+                if (!isset($issues[7]))
+                {
+                    unset($issues[7]);
+                }
+                if (!empty($issues))
+                {
+                    $data['motDePasse'] = $post['motDePasse'];
+                    $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
+                    $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
+                }
+            }
+
+            $data['classModifMdp'] = "modifMdpOuvert";
+            $data['classLienModifMdp'] = "lienModifMdp";
+        }
+        else
+        {
+            //Valeurs par défaut
+            $data['motDePasse'] = "motDePassemotDePasse";
+            $data['confirmezMotDePasse'] = "";
+            $data['nouveauMotDePasse'] = "";
+            $data['classModifMdp'] = "modifMdpFerme";
+            $data['classLienModifMdp'] = "";
         }
         
         //Pré-remplit les champs avec les données de la base
-        $data['pseudo'] = $modelClient->getClientPseudoById(session()->get("numero"));
-        $data['prenom'] = $modelClient->getClientPrenomById(session()->get("numero"));
-        $data['nom'] = $modelClient->getClientNomById(session()->get("numero"));
-        $data['email'] = $modelClient->getClientMailById(session()->get("numero"));
+        $data['pseudo'] = $client->identifiant;
+        $data['prenom'] = $client->prenom;
+        $data['nom'] = $client->nom;
+        $data['email'] = $client->email;
         $data['adresseFact'] = $modelFact->getAdresse(session()->get("numero"));
         $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
+        $data['erreurs'] = $issues;
 
         return view('/page_accueil/espaceClient',$data);
     }

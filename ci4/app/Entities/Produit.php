@@ -7,11 +7,11 @@ class Produit extends Entity
 
    public $datamap= [
       #id,
-      #intitule,
+      'intitule_prod' => 'intituleProduit',
       'prixTtc' => 'prixttc',
       'lienImage' => 'lienimage',
       #categorie
-      'moyenneNote' => 'moyennenote'
+      'moyenneNote' => 'moyennenote',
   ];
 
    public function __toString()

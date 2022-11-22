@@ -107,3 +107,4 @@ _modules/*
 
 # Faire gaffe
 ##app/Config/App.php
+build/logs/*

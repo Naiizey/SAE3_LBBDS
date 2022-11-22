@@ -131,37 +131,13 @@ function requeteDynamHTTP(url="") {
         urlToUse=listValue.reduce((url,value) => url.concat("/",value),this.url);
 
         this.http.open('PUT', urlToUse, true);
-      
     
-        
-        this.useCallback;
-        if(callback===true)
-        {
-           this.useCallback=(err,resp)=>{
-                if(err)
-                {
-                    console.log(err);
-                }
-                else
-                {
-                    console.log(resp);
-                }
-           };
-        }
-
-        else if(callback===false)
-        {
-            this.useCallback=() => {};
-        }
-        else
-        {
-            this.useCallback=callback;
-        }
+      
         let self = this;
 
         this.http.onload = function() {
    
-            self.useCallback(null, self.http.responseText);
+            callback(null, self.http.responseText);
         }
     
        
@@ -169,33 +145,46 @@ function requeteDynamHTTP(url="") {
         
         
   }
+  this.get = function(object) {
+    urlToUse=listValue.reduce((url,value) => url.concat("/",value),this.url);
+    this.http.open('GET', urlToUse, true);
+    this.http.setRequestHeader("Content-type",'application/json;charset=UTF-8');
+
+    /* Par exemple pour le cas des filtres
+    object={
+        page: ,
+        filters: []
+
+    }
+    */
+
+    this.http.send(object)
+    
+  }
 }
 
 
-            
 
-
-    //toSend est par exemple défini dans panier.php
-    if(typeof toSend != 'undefined'){
-        toSend.callback=(err, resp) => {
-            updatePricePanier();
-            updatePriceTotal();
-
-        }
-        let requete = new requeteDynamHTTP(toSend.http);
-        for (elem of toSend.howGetSelect())
+    function reqUpdateQuantite(url,howGetSelect,howGetId,callback){
+        
+        let requete = new requeteDynamHTTP(url);
+        for (elem of howGetSelect())
         {
             elem.addEventListener("change",(event) =>{
                 let listValue= [
-                    toSend.howGetId(event.target),
+                    howGetId(event.target),
                     event.target.value
                 ]
-                requete.put(listValue,toSend.callback);
+                requete.put(listValue,callback);
                 
             })
         }
     }
+            
 
+
+ 
+   
     
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -288,3 +277,41 @@ function test(event) {
     event.preventDefault();    
 }
 //TODO:Desactiver les event listners quand le fond est blur (rendre la navigation impossible)
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                  Espace Client                                  ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+var inputsCli = document.querySelectorAll(".divInputEtLien input");
+var lienModifsCli = document.querySelectorAll(".divInputEtLien a");
+
+
+for (let i = 0; i < lienModifsCli.length; i++) 
+{
+    lienModifsCli[i].addEventListener("click", function(event) 
+    {
+        event.preventDefault();
+        inputsCli[i].disabled = false;
+        inputsCli[i].focus();
+    });
+}
+
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                   Catalogue                                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+function boutonCliquable(bouton,action){
+    
+    bouton.addEventListener("click",action);
+}
+
+function switchEtatFiltre(list){
+    for (n of list){
+        n.classList.toggle("est-filtre-ouvert");
+    }
+}

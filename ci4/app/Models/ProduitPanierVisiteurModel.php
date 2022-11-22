@@ -39,6 +39,17 @@ class ProduitPanierVisiteurModel extends ProduitPanierModel
         return $token;
     } 
 
+    public function updatePanierVisiteur($token,$expiration){
+        
+        $date = date('Y-m-d H:i:s',$expiration); 
+
+        $db = db_connect();
+        $db->table('sae3._panier_visiteur')->where('token_cookie',$token)->set('date_suppression',$date)->update();
+
+        return $token;
+    } 
+
+
     public function estConsigne($token){
  
         $db = db_connect();

@@ -64,7 +64,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 11%;
+    width: 13%;
 }
 
 .formRecherche {
@@ -105,7 +105,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 8%;
+    width: 10%;
 }
 
 .formRecherche > a{
@@ -135,11 +135,18 @@ path{
     fill: #6f98bd;
 }
 
-.logoPanier path {
+.divSuivi div:hover svg path{
+    fill: #6f98bd;
+}
+.divSuivi div:hover h3{
+    color: #6f98bd;
+}
+
+.etat-courant-commande svg path {
     fill: #6f98bd;
 }
 
-.logoPanier + h3 {
+.etat-courant-commande  h3 {
     color: #6f98bd;
 }
 
@@ -376,6 +383,34 @@ footer a{
     footer ul{
         margin: 0;
     }
+}
+
+.alerte-validation{
+    color: white;
+    width: 250px;
+    
+    background-color: #3997a3;
+    
+    padding: 30px 2%;
+    border-radius: 20px;
+    
+    position: fixed;
+    top: -500px;
+    right: 20px;
+}
+
+.alerte-validation .logo-validation svg{
+   float: left;
+    position: relative;
+    left: -10px;
+    top: 2px;
+}
+
+.alerte-validation span+span{
+   
+    position: relative;
+    
+    top: -7px;
 }
 
 /*
@@ -1267,23 +1302,23 @@ main#Catalogue{
     width: 70%;
     max-width: 70%; 
 }
-.partie-categorie{
+.partie-filtre{
     width: 25%;
     min-height: 100%;
+    
 }
 
 .liste-produits{
     display: flex;
     flex-wrap: wrap; 
-    align-content: flex-start;   
-
+    align-content: flex-start;  
     
-
 }
 
 
-.liste-categories{
-    background-color: #164F57;
+
+.liste-filtre{
+    
     width: 100%;
     min-height: 100%;
 
@@ -1291,9 +1326,28 @@ main#Catalogue{
     background-color: white;
 }
 
+.mobile-ouvrir-filtres{
+    cursor: pointer;
+    display: none;
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    width: 200px;
+    height: 75px;
+    border-radius: 35px;
+    background-color: #164F57;
+    z-index: 5;
+    border: none;
+    color: #D9D9D9;
 
+}
 
-.titre-categorie, .categorie-catalogue summary{
+.mobile-ouvrir-filtres svg {
+   position: relative;
+   top: 4px;
+}
+
+.titre-filtre, .categorie-catalogue summary{
 
     padding: 15px 0 ;
     min-width: 100%;
@@ -1320,23 +1374,61 @@ main#Catalogue{
     position: relative;
   
 }
+.onglets{
+    display: flex;
+    flex-wrap: nowrap;
+    height: 53px;
 
-.categorie-catalogue summary{
+}
+.onglet{
+    background-color: #e9e3e3;
+    width: 50%;
+    padding-top: 15px;
+    padding-bottom: 7px;
+    height: fit-content;
+    border-top: solid #20535a 8px ;
+ 
+    z-index: 1;
+}
+
+.onglet-selectionnee{
+    
+    border: none;
+    border-top: solid #3997A3 8px ;
+    background-color: #EFECEC;
+}
+
+.onglet h3{
+    font-family: 'Montserrat-Bold';
+    font-weight: lighter    ;
+    margin: 0;
+}
+
+.categorie-catalogue summary, .onglet{
     cursor: pointer;
     box-sizing: border-box;
+    
+    color: #164F57;
+}
+
+.categorie-catalogue summary{
+   
+    background-color: #EFECEC;
     list-style:none;
     width: 100%;
     padding: 20px 5% ;
-    background-color: #EFECEC;
+
     text-align: left;
-    color: #164F57;
-    border: solid 1px black;
+
+
     
 }
 
-.liste-categories details, .liste-sous-categories{
+.liste-filtre details, .liste-sous-categories{
     background-color: #3997a377;
     margin: 0;
+    list-style: none;
+    
   
 
 }
@@ -1344,19 +1436,23 @@ main#Catalogue{
 .liste-sous-categories h3 {
     width:fit-content;
     color: inherit;
-    padding: 20px 0;
+    padding: 15px 0;
     margin: 0;
 }
 .liste-sous-categories a {
-    font-family: inherit;
+    display: block;
+    font-family:  'Montserrat-Regular';
     font-size: inherit;
     text-decoration: none;
+
+
+    
 }
 
 .liste-sous-categories li{
     margin: 0 0 0 40%;
     color: #164F57; 
-
+    
 }
 
 .liste-sous-categories li::before{
@@ -1413,6 +1509,67 @@ a.fleche-page{
 .current-page,.apres-current-page,.avant-current-page{
     font-size: 1.5em;
 }
+
+
+.fermer-filtre{
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    border: none;
+    background-color: transparent;
+}
+
+@media (max-width: 1400px) {
+
+    .partie-produits{
+        width: 60%;
+    }
+    .partie-filtre{
+        width: 40%;
+    }
+}
+
+@media (max-width: 1270px) {
+    main#Catalogue{
+        flex-direction: column;
+        align-items: center;
+    }
+    .mobile-ouvrir-filtres:not(.est-filtre-ouvert){
+        display: block;
+    }
+    .partie-produits{
+        width: 100%;
+        max-width: 100%;
+    }
+    .liste-produits{
+        justify-content: center;
+    }
+
+    .fermer-filtre{
+        display: block;
+    }
+    
+    .partie-filtre{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+    }
+
+    .partie-filtre.est-filtre-ouvert{
+        top: 0;
+        
+    }
+    .partie-filtre:not(.est-filtre-ouvert){
+        position: fixed;
+        bottom: -10000px;
+        
+    }
+}
+
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -1549,10 +1706,10 @@ a.fleche-page{
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                       CGU                                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
+
 main>*, header>*, footer>* {
     filter: blur(4px);
-}
+}*/
 
 .mentionLegales {
     filter: blur(0);

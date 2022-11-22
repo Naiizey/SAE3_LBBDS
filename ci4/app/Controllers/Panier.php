@@ -90,6 +90,7 @@ class Panier extends BaseController
         {
             $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
             $panierModel->viderPanier(get_cookie("token_panier"));
+            $this->updatePanier(get_cookie("token_panier"));
         }
         else throw new \Exception("Le panier n'existe pas !");
         
@@ -141,6 +142,8 @@ class Panier extends BaseController
                 $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
                 
                 $panierModel->ajouterProduit($idProd,$quantite,get_cookie("token_panier"),$quantite,true);
+
+                $this->updatePanier(get_cookie("token_panier"));
                 
                 
             }
@@ -176,6 +179,7 @@ class Panier extends BaseController
             {
                 $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
                 $panierModel->deleteFromPanier($idProd,get_cookie("token_panier"));
+                $this->updatePanier(get_cookie("token_panier"));
             }
             else throw new \Exception("Le panier n'existe pas !");
         }
@@ -204,6 +208,7 @@ class Panier extends BaseController
                     model("\App\Models\ProduitPanierVisiteurModel")->changerQuantite($id, get_cookie("token_panier"),$newQuantite);
                     $result = array("prodChanged" => $id,"forClientId" =>  get_cookie("token_panier"));
                     $code=200;
+                    $this->updatePanier(get_cookie("token_panier"));
                 
                 }catch(\ErrorException $e){
                     //echo $e;
@@ -249,6 +254,18 @@ class Panier extends BaseController
         $expiration=strtotime('+24 hours');
         $model=model("\App\Models\ProduitPanierVisiteurModel");
         $token=$model->createPanierVisiteur($token,$expiration);
+
+
+        setcookie('token_panier',$token,array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
+        return $token;
+      
+    }
+
+    public function updatePanier($token){
+        
+        $expiration=strtotime('+24 hours');
+        $model=model("\App\Models\ProduitPanierVisiteurModel");
+        $token=$model->updatePanierVisiteur($token,$expiration);
 
 
         setcookie('token_panier',$token,array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));

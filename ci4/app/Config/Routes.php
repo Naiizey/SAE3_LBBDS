@@ -85,11 +85,13 @@ $routes->set404Override();
 
     if(session()->has("numero")){
         $routes->get('/espaceClient', 'EspaceClient::index');
+        $routes->post('/espaceClient', 'EspaceClient::index');
     }
     else{
         $routes->get('/espaceClient', 'Home::connexion');
     }
 
+    $routes->get('/recherche', 'Recherche::rechercher');
 ##param uri (:any) et dans methode /$1
 
 /*

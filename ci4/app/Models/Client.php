@@ -76,18 +76,56 @@ class Client extends Model
         return !empty($this->where('email',$email)->findAll());
     }
 
-    public function getClientPseudoById($id){
+    public function getClientById($id)
+    {
+        return $this->find($id);
+    }
+
+    public function saveClient(\App\Entities\Client $client)
+    {
+        $this->save($client);
+    }
+
+    /*
+    Pas besoin de ces méthodes, voir mes remarques dans espaces client.
+    //Principalement utilisées dans le controlleur EspaceClient.php 
+    public function getClientPseudoById($id)
+    {
         return $this->find($id)->getPseudo();
     }
-
-    public function getClientFirstNameById($id){
+    public function getClientPrenomById($id)
+    {
         return $this->find($id)->getFirstName();
     }
-    public function getClientSurnameById($id){
+    public function getClientNomById($id)
+    {
         return $this->find($id)->getSurname();
     }
-
-    public function getClientMailbyId($id){
+    public function getClientMailbyId($id)
+    {
         return $this->find($id)->getMail();
     }
+
+    public function saveClient($id)
+    {
+        $this->save($this->find($id)->getEntite());
+    }
+
+    public function setClientPseudoById($id, $nouveauPseudo)
+    {
+        $this->find($id)->setPseudo($nouveauPseudo);
+    }
+    public function setClientPrenomById($id, $nouveauPrenom)
+    {
+        $this->find($id)->setPrenom($nouveauPrenom);
+    }
+    public function setClientNomById($id, $nouveauNom)
+    {
+        $this->find($id)->setNom($nouveauNom);
+    }
+    public function setClientMailById($id, $nouveauMail)
+    {
+        $this->find($id)->setMail($nouveauMail);
+    }
+    */
 }

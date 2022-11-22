@@ -24,7 +24,7 @@
                 src: url("<?=base_url() ?>/fonts/Montserrat-Bold.ttf") format("truetype");
             }
         </style>
-        <title>Page d'accueil</title>
+        <title><?= $controller ?></title>
     </head>
     <body>
         <header>
@@ -34,15 +34,15 @@
                     <h1>Alizon</h1>
                 </a>
                 <?php 
-                    if ($controller == "panier" || $controller == "panierVide")
+                    if ($controller == "panier" || $controller == "panierVide" || $controller == "compte_redirection")
                     {
                         echo   '<div class="divSuivi">
-                                    <div>
+                                    <div class="'.(($controller == "panier" )?"etat-courant-commande":"").'">
                                         '.file_get_contents(dirname(__DIR__,3)."/public/images/header/panier.svg").'
                                         <h3>1. Panier</h3>
                                     </div>
                                     <hr>
-                                    <div>
+                                    <div class="'.(($controller == "compte_redirection" )?"etat-courant-commande":"").'">
                                         '.file_get_contents(dirname(__DIR__,3)."/public/images/header/profil.svg").'
                                         <h3>2. Identification</h3>
                                     </div>
@@ -60,8 +60,8 @@
                     }
                     else
                     {
-                        echo   '<form class="formRecherche">
-                                <input class="champsRecherche" type="text" name="recherche" placeholder="Recherche..">
+                        echo   '<form class="formRecherche" action="'.base_url().'/recherche"'.'>
+                                <input class="champsRecherche" type="text" name="search" placeholder="Recherche..">
                                 <label><input type="submit">'.file_get_contents(dirname(__DIR__,3)."/public/images/header/loupe.svg") .
                                 '</label></form>';
                     }

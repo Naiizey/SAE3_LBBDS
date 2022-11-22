@@ -384,14 +384,20 @@ footer a{
         margin: 0;
     }
 }
-
+.alerte-validation.valide{
+    background-color: #3997a3;
+}
+.alerte-validation.invalide{
+    background-color: rgb(199, 54, 0);
+}
 .alerte-validation{
     color: white;
-    width: 250px;
+    z-index: 100;
     
-    background-color: #3997a3;
+   
     
-    padding: 30px 2%;
+    padding: 10px 40px;
+    padding-top: 20px;
     border-radius: 20px;
     
     position: fixed;
@@ -399,18 +405,57 @@ footer a{
     right: 20px;
 }
 
+
+
 .alerte-validation .logo-validation svg{
+    color: white;
    float: left;
     position: relative;
     left: -10px;
-    top: 2px;
+    top: -10px;
+}
+
+.alerte-validation .logo-validation svg path{
+    fill: white;
 }
 
 .alerte-validation span+span{
-   
+    font-weight: 600;
     position: relative;
+    font-display: optional;
+    top: -3px;
+  
+}
+
+
+
+.alerte-validation{
+    animation-name: jmenvais;
+    animation-duration: 2.5s;
     
-    top: -7px;
+    animation-direction: alternate;
+    animation-iteration-count: 2;
+    animation-timing-function: cubic-bezier(.45,1.09,.55,.99);
+    
+}
+@keyframes jmenvais {
+    from{
+        top: -200px;
+        opacity: 0;
+        
+    }
+   
+    70%{
+        top: 150px;
+        opacity: 1;
+    }
+    to{
+        top: 150px;
+        opacity: 1;
+    
+    }
+     
+    
 }
 
 /*

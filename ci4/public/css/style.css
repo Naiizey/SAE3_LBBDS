@@ -1527,13 +1527,30 @@ a.fleche-page{
 
 .current-page{
     width: 10%;
+    min-width: 90.2px;
+ 
+
+    font-weight: bolder;
+
+    
 }
 
-.apres-current-page,.avant-current-page{
-    position: relative;
-    top: 12px;
-    width: 40.0%;
+.current-page span, .apres-current-page a, .avant-current-page a{
+    font-family: 'Montserrat-Bold';
+    
+    color: #164F57;
 }
+.apres-current-page a, .avant-current-page a{
+    text-decoration: none;
+    font-weight: lighter;
+    position: relative;
+    top: 14px;
+    width: 40.0%;
+    font-size: 1em;
+}
+
+
+
 
 .apres-current-page{
     text-align: left;

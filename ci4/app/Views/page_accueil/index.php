@@ -2,6 +2,8 @@
 <!--dans le imput de recherche : onkeyup="fonction de recherche en php"-->
 <!-- ajuster les logos -->
 <?php require("header.php"); ?>
+        
+        <?= (isset($validation)?$validation:""); ?>
         <main class="mainAccueil">
             <div id="carousel-container">
                 <div id="carousel">
@@ -23,6 +25,7 @@
                 <img src="<?=base_url()?>/images/fleche_gauche.png" alt="flèche gauche" class="btn btn-prev">
                 <img src="<?=base_url()?>/images/fleche_droite.png" alt="flèche droite" class="btn btn-suiv">
             </div>
+          
             <div>
                 <section class="produitsPhare">
                     <div class="titreAccueil">
@@ -73,4 +76,5 @@
                 <p>En utilisant la plateforme, vous reconnaissez avoir lu, compris et accepté l’entièreté et sans aucunes réserves les conditions générales d’utilisation et de ventes présentées ci-dessous.</p>
             </div>
         </main>
+       
 <?php require("footer.php"); ?>

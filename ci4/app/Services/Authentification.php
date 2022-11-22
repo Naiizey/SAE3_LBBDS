@@ -40,6 +40,7 @@ class Authentification
             $session->set('numero',$user->numero);
             $session->set('identifiant',$user->identifiant);
             $session->set('motDePasse',$user->motDePasse);
+            $session->set("just_connectee",True);
         }
 
         return $errors;
@@ -98,6 +99,8 @@ class Authentification
             $session->set('numero',$user->numero);
             $session->set('identifiant',$user->identifiant);
             $session->set('motDePasse',$user->motDePasse);
+
+            $session->set("just_connectee",True);
         }
 
         return $errors;

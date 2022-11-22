@@ -83,6 +83,8 @@ $routes->set404Override();
 
     $routes->get('/commandes', 'Home::commandeTest',['filter' => 'connexion']);
 
+    $routes->get('/commandes/detail/(:num)','Commandes::detail/$1',);//['filter' => 'connexion']
+
     if(session()->has("numero")){
         $routes->get('/espaceClient', 'EspaceClient::index');
         $routes->post('/espaceClient', 'EspaceClient::index');

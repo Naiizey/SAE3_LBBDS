@@ -127,6 +127,10 @@ class Authentification
             {
                 $errors[3]="Le mot de passe doit faire plus de 12 caractère et doit contenir au moins une majuscule, une minuscule et un chiffre";
             }
+            if ($entree->motDePasse == $nouveauMdp) 
+            {
+                $errors[4]="Le nouveau mot de passe doit être différent de l'ancien";
+            }
             if (preg_match_all("/[a-z]/",$nouveauMdp) < 1 ||  
                 preg_match_all("/[A-Z]/",$nouveauMdp) < 1 ||  
                 preg_match_all("/[0-9]/",$nouveauMdp) < 1 ||  
@@ -146,13 +150,9 @@ class Authentification
         
         if(empty($errors))
         {
+            $entree->motDePasse=$nouveauMdp;
             $entree->cryptMotDePasse();
             $compteModel->save($entree);
-            $session = session();
-            $user=$compteModel->where("email",$entree->email)->findAll()[0];
-            $session->set('numero',$user->numero);
-            $session->set('identifiant',$user->identifiant);
-            $session->set('motDePasse',$user->motDePasse);
         }
 
         return $errors;

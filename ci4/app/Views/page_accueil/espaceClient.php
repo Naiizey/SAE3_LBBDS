@@ -48,16 +48,17 @@
                 <?= afficheErreurs($erreurs, 3) ?>
                 <label class="labelRecupMail <?= $classModifMdp ?>">Confirmez votre ancien mot de passe</label>
                 <div class="divInputEtLien <?= $classModifMdp ?>">
-                    <input type="password" name="confirmezMotDePasse" required="required" value="<?= $confirmezMotDePasse?>"/>
+                    <input type="password" name="confirmezMotDePasse" value="<?= $confirmezMotDePasse?>"/>
                 </div>
                 <?= afficheErreurs($erreurs, 6) ?>
                 <label class="labelRecupMail <?= $classModifMdp ?>">Entrez votre nouveau mot de passe</label>
                 <div class="divInputEtLien <?= $classModifMdp ?>">
-                    <input type="password" name="nouveauMotDePasse" required="required" value="<?= $nouveauMotDePasse?>"/>
+                    <input type="password" name="nouveauMotDePasse" value="<?= $nouveauMotDePasse?>"/>
                 </div>
                 <?= 
                     afficheErreurs($erreurs, 1) . 
-                    afficheErreurs($erreurs, 5) 
+                    afficheErreurs($erreurs, 4) .
+                    afficheErreurs($erreurs, 5)
                 ?>
                 <div class="divAdressesCli">
                     <div>

@@ -12,6 +12,15 @@ class EspaceClient extends BaseController
         $client = $modelClient->getClientById(session()->get("numero"));
         $issues = [];
 
+        //Valeurs par défaut
+        $data['motDePasse'] = "motDePassemotDePasse";
+        $data['confirmezMotDePasse'] = "";
+        $data['nouveauMotDePasse'] = "";
+        $data['classModifMdp'] = "modifMdpFerme";
+        $data['classLienModifMdp'] = "";
+        $data['attributModifMdp'] = "disabled";
+        $data['requisModifMdp'] = "";
+
         if (!empty($post))
         {
             $besoinDeSave = false;
@@ -65,21 +74,15 @@ class EspaceClient extends BaseController
                     $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
                     $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
                 }
+                else
+                {
+                    return redirect()->to("/espaceClient");
+                }
             }
-            $data['motDePasse'] = "";
             $data['classModifMdp'] = "";
             $data['classLienModifMdp'] = "lienModifMdp";
             $data['attributModifMdp'] = "";
-        }
-        else
-        {
-            //Valeurs par défaut
-            $data['motDePasse'] = "motDePassemotDePasse";
-            $data['confirmezMotDePasse'] = "";
-            $data['nouveauMotDePasse'] = "";
-            $data['classModifMdp'] = "modifMdpFerme";
-            $data['classLienModifMdp'] = "";
-            $data['attributModifMdp'] = "disabled";
+            $data['requisModifMdp'] = "required";
         }
         
         //Pré-remplit les champs avec les données de la base

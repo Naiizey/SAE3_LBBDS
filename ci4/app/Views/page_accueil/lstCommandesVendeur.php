@@ -15,14 +15,14 @@
                 </thead>
                 <tbody>
                     <?php foreach ($commandesVend as $commandeVend){
-                        echo "<tr class='lignesCommandes' >;
-                            <td class='numCommandes'><?= $commandeVend->num_commande ?></td>
-                            <td><?= $commandeVend->num_compte ?></td>
-                            <td><?= $commandeVend->date_commande ?></td>
-                            <td><?= $commandeVend->date_arriv ?></td>
-                            <td><?= $commandeVend->ht ?></td>
-                            <td><?= $commandeVend->ttc ?></td>
-                            <td><?= $commandeVend->etat ?></td>
+                        echo "<tr class='lignesCommandes' >
+                            <td class='numCommandes'>$commandeVend->num_commande</td>
+                            <td>$commandeVend->num_compte</td>
+                            <td>$commandeVend->date_commande</td>
+                            <td>$commandeVend->date_arriv</td>
+                            <td>$commandeVend->ht</td>
+                            <td>$commandeVend->ttc</td>
+                            <td>$commandeVend->etat</td>
                         </tr>";
                     } ?>
                 </tbody>

@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use \App\Entities\ProduitPanier as Produit;
-use \App\Models\ProduitPanierModel;
+use \App\Entities\CommandeVend as CommandeVend;
 use CodeIgniter\Model;
 use Exception;
 

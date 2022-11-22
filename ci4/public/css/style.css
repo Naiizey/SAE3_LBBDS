@@ -499,7 +499,7 @@ header ul {
 #carousel-container {
     position: relative;
     margin: 0;
-    padding: 2em 0;
+    padding: 4em 0 0 0;
 }
 
 #carousel {
@@ -1699,8 +1699,7 @@ a.fleche-page{
 .mentionsLegales {
     z-index: 100;
     position: absolute;
-    margin: 6em 1em 1em 1em;
-    padding: 2em;
+    margin: 6em 18em 1em 18em;
     border: #3997A3 solid 2px;
     padding: 2em;
     background-color: white;
@@ -1717,10 +1716,6 @@ a.fleche-page{
 
 .divFermerCGU {
     height: 0;
-}
-
-.divRemonterCGU {
-    height: 1em;
 }
 
 .remonterCGU {

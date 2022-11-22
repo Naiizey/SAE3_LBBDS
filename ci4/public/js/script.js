@@ -270,12 +270,12 @@ function lienLigne(element) {
 */
 var lienCGU = document.getElementsByClassName("lienCGU");
 lienCGU[0].addEventListener("click", affichageCGU);
-let flou = document.querySelectorAll("main>*, header>*, footer>*");
-let page = document.querySelector("html");
-let mentionsLegales = document.getElementsByClassName("mentionsLegales")[0];
+var mentionsLegales = document.getElementsByClassName("mentionsLegales")[0];
 
 function affichageCGU(event) {
     event.preventDefault();
+    let flou = document.querySelectorAll("main>*, header>*, footer>*");
+    let page = document.querySelector("html");
 
     if (mentionsLegales.style.display == "none") {
         mentionsLegales.style.display = "block";
@@ -291,7 +291,12 @@ function affichageCGU(event) {
         document.getElementsByClassName("fermerCGU").addEventListener("blur", affichageCGU);
     }
 }
-//TODO:Desactiver les event listners quand le fond est blur (rendre la navigation impossible)
+
+var boutonML = document.getElementsByClassName("remonterCGU")[0];
+boutonML.addEventListener("click", function(e) {
+    mentionsLegales.scrollTo({top: 0, behavior: 'smooth'});
+});
+//TODO : bouton scroll back en sticky en bas à gauche du bloc        
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

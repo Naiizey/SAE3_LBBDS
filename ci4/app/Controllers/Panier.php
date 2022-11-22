@@ -250,7 +250,7 @@ class Panier extends BaseController
     }
 
     public function creerPanier(){
-        $token = bin2hex(openssl_random_pseudo_bytes(16));
+        $token = bin2hex(\openssl_random_pseudo_bytes(16));
         $expiration=strtotime('+24 hours');
         $model=model("\App\Models\ProduitPanierVisiteurModel");
         $token=$model->createPanierVisiteur($token,$expiration);

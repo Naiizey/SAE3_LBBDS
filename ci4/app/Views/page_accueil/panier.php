@@ -1,4 +1,4 @@
-<?php require("header.php"); ?>
+    <?php require("header.php"); ?>
         <main class="mainPanier">
             <div class="divPanierEtAside">
                 <?php 

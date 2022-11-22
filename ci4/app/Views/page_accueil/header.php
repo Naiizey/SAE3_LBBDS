@@ -61,7 +61,7 @@
                     else
                     {
                         echo   '<form class="formRecherche" action="'.base_url().'/recherche"'.'>
-                                <input class="champsRecherche" type="text" name="search" placeholder="Recherche..">
+                                <input required class="champsRecherche" type="text" name="search" placeholder="Recherche..">
                                 <label><input type="submit">'.file_get_contents(dirname(__DIR__,3)."/public/images/header/loupe.svg") .
                                 '</label></form>';
                     }

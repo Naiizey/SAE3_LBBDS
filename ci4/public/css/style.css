@@ -64,7 +64,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 11%;
+    width: 13%;
 }
 
 .formRecherche {
@@ -105,7 +105,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 8%;
+    width: 10%;
 }
 
 .formRecherche > a{

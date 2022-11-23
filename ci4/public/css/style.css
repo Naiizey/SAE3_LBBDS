@@ -1664,12 +1664,13 @@ a.fleche-page{
 }
 
 /*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                  Page pour lister toutes les commandes (lstCommandes.php)       ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                  Page pour lister les commandes Vendeur (lstCommandesVendeur.php) ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
 #divLstCommandes{
+    font-family: "Montserrat-Regular";
     border: solid 2px #C6C6C6;
     background-color: white;
 }
@@ -1695,6 +1696,10 @@ a.fleche-page{
     cursor: pointer;
     outline: none;
     background-color: #f3f3f3;
+}
+
+#tableLstCommandes tbody tr:last-child{
+    border-bottom: none;
 }
 
 #tableLstCommandes th, #tableLstCommandes td{

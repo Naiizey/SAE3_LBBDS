@@ -119,28 +119,29 @@ class Authentification
             if(strlen($entree->nom) > 50 && strlen($entree->prenom) > 50)
             {
                 $errors[2]= "50 caractères maximum pour le nom (" . strlen($entree->prenom) . " actuellement) et/ou prénom (" . strlen($entree->nom) . " actuellement)";
-            } 
-            if (preg_match_all("/[a-z]/",$entree->motDePasse) < 1 ||  
-                preg_match_all("/[A-Z]/",$entree->motDePasse) < 1 ||  
-                preg_match_all("/[0-9]/",$entree->motDePasse) < 1 ||  
-                strlen($entree->motDePasse) < 12)
-            {
-                $errors[3]="Le mot de passe doit faire plus de 12 caractère et doit contenir au moins une majuscule, une minuscule et un chiffre";
             }
-            if ($entree->motDePasse == $nouveauMdp) 
+            if (($entree->motDePasse != "motDePassemotDePasse") && !empty($verifMdp) && !empty($nouveauMdp)) 
             {
-                $errors[4]="Le nouveau mot de passe doit être différent de l'ancien";
-            }
-            if (preg_match_all("/[a-z]/",$nouveauMdp) < 1 ||  
-                preg_match_all("/[A-Z]/",$nouveauMdp) < 1 ||  
-                preg_match_all("/[0-9]/",$nouveauMdp) < 1 ||  
-                strlen($nouveauMdp) < 12)
-            {
-                $errors[5]="Le mot de passe doit faire plus de 12 caractère et doit contenir au moins une majuscule, une minuscule et un chiffre";
-            }
-            if($entree->motDePasse != $verifMdp) 
-            {
-                $errors[6]="Les mots de passes ne correspondent pas";
+                //Le controlleur nous informe par ces valeurs que l'utilisateur a cherché à modifier le mdp, il faut donc tout vérifier
+                if(!$entree->verifCrypt($entree->motDePasse))
+                {
+                    $errors[3]="Ceci n'est pas votre ancien mot de passe";
+                }
+                if ($entree->motDePasse == $nouveauMdp) 
+                {
+                    $errors[4]="Le nouveau mot de passe doit être différent de l'ancien";
+                }
+                if (preg_match_all("/[a-z]/",$nouveauMdp) < 1 ||  
+                    preg_match_all("/[A-Z]/",$nouveauMdp) < 1 ||  
+                    preg_match_all("/[0-9]/",$nouveauMdp) < 1 ||  
+                    strlen($nouveauMdp) < 12)
+                {
+                    $errors[5]="Le mot de passe doit faire plus de 12 caractère et doit contenir au moins une majuscule, une minuscule et un chiffre";
+                }
+                if($entree->motDePasse != $verifMdp) 
+                {
+                    $errors[6]="Les mots de passes ne correspondent pas";
+                }
             }
         }
         else 

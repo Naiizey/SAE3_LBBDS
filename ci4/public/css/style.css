@@ -1961,3 +1961,18 @@ a.fleche-page{
 .modifMdpFerme, .lienModifMdp {
     display: none;
 }
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                             Paiement (paiement.php)                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.test {
+    /*
+    background: url(../images/header/paiement.svg) no-repeat;
+    background-size: 2em;
+    background-position: 98%;
+    backgr
+    */
+}

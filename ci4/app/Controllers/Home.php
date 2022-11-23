@@ -215,5 +215,4 @@ class Home extends BaseController
         
         echo "oui";
     }
-    
 }

@@ -70,6 +70,8 @@ $routes->set404Override();
     $routes->put('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::modifierProduitPanier/$1/$2');
     $routes->options('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::sendCors/$1/$2');
 
+    $routes->get('/paiement', 'Home::paiement');
+
     $routes->get('/catalogue', 'Home::catalogue');
     $routes->get('/catalogue/(:num)', 'Home::catalogue/$1');
 

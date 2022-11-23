@@ -34,7 +34,7 @@
                         </div>
                         <div class="apres-current-page">
                     <?php else:?>
-                        <?= $i ?>
+                        <a href="<?= base_url()."/catalogue/".$i ?>"><?=$i ?></a>
                     <?php endif;?>
             <?php endfor;?>
             </div>

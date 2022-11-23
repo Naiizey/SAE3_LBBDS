@@ -87,6 +87,9 @@ $routes->set404Override();
 
     $routes->get('/commandes/detail/(:num)','Commandes::detail/$1',);//['filter' => 'connexion']
 
+    $routes->get('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
+    $routes->options('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
+
     if(session()->has("numero")){
         $routes->get('/espaceClient', 'EspaceClient::index');
         $routes->post('/espaceClient', 'EspaceClient::index');

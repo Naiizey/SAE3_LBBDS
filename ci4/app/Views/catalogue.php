@@ -11,7 +11,7 @@
             </h2>
     </button>
     <section class="partie-produits">
-        <?php if ($vide) {
+        <?php if (isset($vide) && $vide) {
             echo "<div id='aucunResultat'>";
             echo '<iframe src="https://giphy.com/embed/l4FB538nlkpzyZsD6" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>';
             echo "<h2>Malheuresement, cette recherche n'a retournée aucun article.<br>Mais avez-vous vu ceux-ci ?</h2>";

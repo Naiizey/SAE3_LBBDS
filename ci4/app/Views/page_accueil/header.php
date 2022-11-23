@@ -62,7 +62,9 @@
                     else
                     {
                         echo   '<form class="formRecherche" action="'.base_url().'/recherche"'.'>
-                                <input required class="champsRecherche" type="text" name="search" placeholder="Recherche..">
+                                <input required class="champsRecherche" type="search" name="search" placeholder="Recherche.." value="'; 
+                                if (isset($_GET["search"])) echo $_GET["search"];
+                                echo '">
                                 <label><input type="submit">'.file_get_contents(dirname(__DIR__,3)."/public/images/header/loupe.svg") .
                                 '</label></form>';
                     }

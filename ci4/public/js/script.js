@@ -365,3 +365,13 @@ function switchEtatFiltre(list){
         n.classList.toggle("est-filtre-ouvert");
     }
 }
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                  Recherche                                      ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+    const rechercher = document.getElementsByClassName()[0]
+
+    rechercher.value = get

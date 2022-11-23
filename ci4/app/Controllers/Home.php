@@ -264,4 +264,9 @@ class Home extends BaseController
 
         <?php return ob_get_clean();
     }
+
+    public function paiement() {
+        $data['controller']='paiement';
+        return view('page_accueil/paiement.php', $data);
+    }
 }

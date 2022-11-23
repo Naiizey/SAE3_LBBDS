@@ -305,17 +305,47 @@ boutonML.addEventListener("click", function(e) {
 */
 
 var inputsCli = document.querySelectorAll(".divInputEtLien input");
-var lienModifsCli = document.querySelectorAll(".divInputEtLien a");
+var ancienMdp = document.getElementsByClassName("labelAncienMdp")[0];
+ancienMdp.innerHTML = "Votre mot de passe :";
 
+var temp = document.querySelectorAll(".divInputEtLien a");
+lienModifsCli = new Array("", temp[0], temp[1], "", temp[2]);
+
+var modifMdp = document.getElementsByClassName("modifMdpFerme");
 
 for (let i = 0; i < lienModifsCli.length; i++) 
 {
-    lienModifsCli[i].addEventListener("click", function(event) 
+    //Si le lien n'a pas été retiré du front
+    if (lienModifsCli[i] != "")
     {
-        event.preventDefault();
-        inputsCli[i].disabled = false;
-        inputsCli[i].focus();
-    });
+        //Si ce n'est pas le dernier lien à écouter
+        if (i != lienModifsCli.length - 1) 
+        {
+            lienModifsCli[i].addEventListener("click", function (event) {
+                event.preventDefault();
+                inputsCli[i].disabled = false;
+                inputsCli[i].focus();
+            });
+        }
+        //Si c'est le dernier lien
+        else 
+        {
+            lienModifsCli[i].addEventListener("click", function (event) {
+                event.preventDefault();
+
+                while (modifMdp.length) 
+                {
+                    modifMdp[0].classList.remove("modifMdpFerme");
+                }
+                
+                //ancienMdp.innerHTML = "Entrez votre ancien mot de passe";
+                lienModifsCli[i].classList.add("modifMdpFerme");
+                inputsCli[i].value = "";
+                inputsCli[i].disabled = false;
+                inputsCli[i].focus();
+            });
+        }
+    }
 }
 
 

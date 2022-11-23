@@ -12,6 +12,15 @@ class EspaceClient extends BaseController
         $client = $modelClient->getClientById(session()->get("numero"));
         $issues = [];
 
+        //Valeurs par défaut
+        $data['motDePasse'] = "motDePassemotDePasse";
+        $data['confirmezMotDePasse'] = "";
+        $data['nouveauMotDePasse'] = "";
+        $data['classModifMdp'] = "modifMdpFerme";
+        $data['classLienModifMdp'] = "";
+        $data['attributModifMdp'] = "disabled";
+        $data['requisModifMdp'] = "";
+
         if (!empty($post))
         {
             $besoinDeSave = false;
@@ -57,44 +66,23 @@ class EspaceClient extends BaseController
                 $auth = service('authentification');
                 $user=$client;
                 $user->fill($post);
-                $issues=$auth->inscription($user, $post['confirmezMotDePasse']); 
-                
-                //On retire les erreurs liées au pseudo et email qui ne sont pas modifiables dans la page espaceClient
-                if (!isset($issues[3]))
-                {
-                    unset($issues[3]);
-                }
-                if (!isset($issues[8]))
-                {
-                    unset($issues[8]);
-                }
-                if (!isset($issues[4]))
-                {
-                    unset($issues[4]);
-                }
-                if (!isset($issues[7]))
-                {
-                    unset($issues[7]);
-                }
+                $issues=$auth->modifEspaceClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']); 
+            
                 if (!empty($issues))
                 {
                     $data['motDePasse'] = $post['motDePasse'];
                     $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
                     $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
                 }
+                else
+                {
+                    return redirect()->to("/espaceClient");
+                }
             }
-
-            $data['classModifMdp'] = "modifMdpOuvert";
+            $data['classModifMdp'] = "";
             $data['classLienModifMdp'] = "lienModifMdp";
-        }
-        else
-        {
-            //Valeurs par défaut
-            $data['motDePasse'] = "motDePassemotDePasse";
-            $data['confirmezMotDePasse'] = "";
-            $data['nouveauMotDePasse'] = "";
-            $data['classModifMdp'] = "modifMdpFerme";
-            $data['classLienModifMdp'] = "";
+            $data['attributModifMdp'] = "";
+            $data['requisModifMdp'] = "required";
         }
         
         //Pré-remplit les champs avec les données de la base

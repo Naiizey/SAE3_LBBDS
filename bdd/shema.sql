@@ -2,9 +2,11 @@ DROP SCHEMA IF EXISTS sae3 CASCADE;
 CREATE SCHEMA sae3;
 SET SCHEMA 'sae3';
 
+
 /*
 TODO: Contrainte -> bloquer un numéro de compte même si le compte relié est supprimé (attendre maj UML)
-TODO: Contraintes current_panier(voir UML) à revoir (pas urgent du tout)
+TODO: Contraintes current_panier(voir UML) à revoir (mineur)
+TODO: Faire un shema image pour produit spécifiant l'image, son origine et son encadrement.
 */
 /* -----------------------------------------------------------
 -                    Classes                                 -

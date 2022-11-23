@@ -64,7 +64,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 13%;
+    width: 11%;
 }
 
 .formRecherche {
@@ -105,7 +105,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 10%;
+    width: 8%;
 }
 
 .formRecherche > a{
@@ -1527,13 +1527,30 @@ a.fleche-page{
 
 .current-page{
     width: 10%;
+    min-width: 90.2px;
+ 
+
+    font-weight: bolder;
+
+    
 }
 
-.apres-current-page,.avant-current-page{
-    position: relative;
-    top: 12px;
-    width: 40.0%;
+.current-page span, .apres-current-page a, .avant-current-page a{
+    font-family: 'Montserrat-Bold';
+    
+    color: #164F57;
 }
+.apres-current-page a, .avant-current-page a{
+    text-decoration: none;
+    font-weight: lighter;
+    position: relative;
+    top: 14px;
+    width: 40.0%;
+    font-size: 1em;
+}
+
+
+
 
 .apres-current-page{
     text-align: left;
@@ -1602,7 +1619,9 @@ a.fleche-page{
     }
 }
 
-
+#aucunResultat {
+    padding-block: 5rem;
+}
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -1707,9 +1726,90 @@ a.fleche-page{
 }
 
 
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Page détail commande (details.php)                               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
+.detail-cmd,.main-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    height: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #E7E8E6;
+    border-radius: 15px;
+    padding: 0%;
+}
 
+.detail-cmd,.secondary-block {
+    background-color:#D1D1D1;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 15px;
+}
 
+.detail-cmd,.wht-line
+{
+    border: 0px;
+    background-color: #E7E8E6;
+    height: 8px;
+    border-radius: 10px;
+}
+
+.detail-cmd,.blk-line
+{
+    border: 0px;
+    background-color: #404E58;
+    height: 8px;
+    border-radius: 10px;
+}
+
+.detail-cmd,.point-ok {
+    background-color: #55C044;
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    margin-left: 10em;
+}
+
+.detail-cmd,.point-ko {
+    background-color: #C04444;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+.detail-cmd,.progress-bar-ok {
+    background-color: #55C044;
+    border-radius: 5px;
+    height: 10px;
+    display: flex;
+}
+
+.detail-cmd,.progress-bar-ko {
+    background-color: #C04444;
+    border-radius: 5px;
+    height: 10px;
+}
+
+.detail-cmd,.button 
+{
+    background-color: #164F57;
+    border-radius: 5px;
+}
+
+.detail-cmd,#bar {
+    margin-top:  1em;
+    height: 10em;
+    background-color: #3997A3;
+    margin-left: 0;
+    width: 80%;
+}
 
 
 
@@ -1865,4 +1965,19 @@ a.fleche-page{
 
 .modifMdpFerme, .lienModifMdp {
     display: none;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                             Paiement (paiement.php)                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.test {
+    /*
+    background: url(../images/header/paiement.svg) no-repeat;
+    background-size: 2em;
+    background-position: 98%;
+    backgr
+    */
 }

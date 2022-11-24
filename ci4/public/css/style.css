@@ -799,7 +799,7 @@ header ul {
 /* Prénom */
 .nomPrenom > div + div > input {
     padding: 0;
-    width: 100%;
+    width: auto;
 }
 
 .divSouvenir {
@@ -1950,12 +1950,24 @@ a.fleche-page{
 ┃                             Paiement (paiement.php)                             ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+.conteneurCB {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+  
+.conteneurCB svg {
+    position: absolute;
+    right: 2%;
+    width: 2em;
+    height: 2em;
+}
+  
+.conteneurCB input {
+    width: 100%;
+    margin: 0 !important;
+}
 
-.test {
-    /*
-    background: url(../images/header/paiement.svg) no-repeat;
-    background-size: 2em;
-    background-position: 98%;
-    backgr
-    */
+.labelCB {
+    margin-bottom: 1%;
 }

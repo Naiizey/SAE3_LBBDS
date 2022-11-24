@@ -1,6 +1,6 @@
 <?php require("page_accueil/header.php"); ?>
 
-
+<?php model("\App\Models\ProduitCatalogue")->selectMax('prixttc')?>
 <main id=Catalogue>
     <button class="mobile-ouvrir-filtres">
             <h2>
@@ -11,12 +11,6 @@
             </h2>
     </button>
     <section class="partie-produits">
-        <?php if (isset($vide) && $vide) {
-            echo "<div id='aucunResultat'>";
-            echo '<iframe src="https://giphy.com/embed/l4FB538nlkpzyZsD6" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>';
-            echo "<h2>Malheuresement, cette recherche n'a retournée aucun article.<br>Mais avez-vous vu ceux-ci ?</h2>";
-            echo "</div>";
-        }?>
         <div class="liste-produits">
         <?php for($i=$minProd;$i<$maxProd && $i<sizeof($prods);++$i): ?>
             <?= $cardProduit->display($prods[$i])?>
@@ -24,7 +18,7 @@
         </div>
         <div class="nav-page">
             <div class="avant-current-page">
-            <?php for($i=1;$i<=$nombreMaxPages;++$i): ?> 
+            <?php for($i=1;$i<=$nombreMaxPages;++$i): ?>
                     <?php if($i==$page):?>
                         </div>
                         <div class="current-page">
@@ -34,7 +28,7 @@
                         </div>
                         <div class="apres-current-page">
                     <?php else:?>
-                        <a href="<?= base_url()."/catalogue/".$i ?>"><?=$i ?></a>
+                        <?= $i ?>
                     <?php endif;?>
             <?php endfor;?>
             </div>
@@ -54,24 +48,42 @@
             <div class="onglet onglet-selectionnee"><h3>Catégorie</h3></div>
             <div class="onglet"><h3>Détail</h3></div>
         </div>
-        <div class="categorie-catalogue">
-        <?php foreach ($categories as $categorie):?>
-            <details>
-                <summary class="categorie"><h2><?=$categorie->libelle?></h2></summary>
-                <?php foreach ($categorie->getAllSousCat() as $sousCat): ?>
-                <div class="sous-categorie_<?= $sousCat->libelle?>">
-                    <input type="checkbox" name="sous-categorie">
-                    <label class=".sous-categorie-catalogue"><h3><?= $sousCat->libelle ?></h3></label>
-                </div>
-                <?php endforeach;?>
-            </details>
-        <?php endforeach;?>
-        </div>
+        <form method="get">
+            <div class="categorie-catalogue">
+            <?php foreach ($categories as $categorie):?>
+                <details>
+                    <summary class="categorie"><h2><?=$categorie->libelle?></h2></summary>
+                    <?php foreach ($categorie->getAllSousCat() as $sousCat): ?>
+                    <div class="sous-categorie_<?= $sousCat->libelle?>" for="<?= $sousCat->libelle ?>">
+                        <input name="<?= $sousCat->libelle ?>" type="checkbox" id="<?= $sousCat->libelle ?>" name="sous-categorie">
+                        <label for="<?= $sousCat->libelle ?>" class=".sous-categorie-catalogue"><h3><?= $sousCat->libelle ?></h3></label>
+                    </div>
+                    <?php endforeach;?>
+                </details>
+            <?php endforeach;?>
+            </div>
+            <section class="prix">
+                <label>Prix :</label>
+                <section class="price-range">
+                    <input type="number" name="prix_min" id="prix_min" value="0" min="<?= $min_price ?>" max="<?= $max_price ?>">
+                    <div class="slider">
+                        <div class="progress"></div>
+                        <div class="range-input">
+                        <input type="range" class="range-min" min="<?= $min_price ?>" max="<?= $max_price - 5 ?>" value="0" step="5">
+                        <input type="range" class="range-max" min="<?= $min_price + 5 ?>" max="<?= $max_price ?>" value="15000" step="5">
+                    </div>
+                    </div>
+                    <input type="number" name="prix_max" id="prix_max" value="15000" min="1" max="15000">
+                </section>
+            </section>
+            <button type="submit">Appliquer le(s) filtre(s)</button>
+        </form>
     </div>
     </section>
 </main>
 <?php require("page_accueil/footer.php"); ?>
 <script>
+    cataloguePrice();
     boutonCliquable(
         document.querySelector(".mobile-ouvrir-filtres"),
         () => {

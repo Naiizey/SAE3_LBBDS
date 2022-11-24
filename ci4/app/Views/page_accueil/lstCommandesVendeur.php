@@ -34,3 +34,6 @@
         </div>
     </main>
 <?php require("footer.php");?>
+<script>
+    lstCommandes();
+</script>

@@ -10,8 +10,6 @@ class Home extends BaseController
         //permer d'éviter le bug de redirection.
         session();
         $this->feedback=service("feedback");
-        
-
     }
 
     public function index()
@@ -65,10 +63,6 @@ class Home extends BaseController
         {
             $data['controller']= "connexion";
         }
-
-
-        
-
        
         $data['erreurs'] = $issues;
 
@@ -148,8 +142,6 @@ class Home extends BaseController
             $data['prod'] = $result;
             return view('page_accueil/produit.php',$data);
         }
-        
-        
     }
 
     public function panier($context = null)
@@ -179,29 +171,54 @@ class Home extends BaseController
         session() -> get("numero");
         $ProduitPanierModel = model("\App\Models\ProduitPanierModel");
         //$ProduitPanierModel -> viderPanierClient
-    }
-
+    }  
     
+    private const NBPRODSPAGECATALOGUE = 18;
     #FIXME: comportement href différent entre $page=null oe $page !=null    
-
     public function catalogue($page=null)
     {
         $filters=$this->request->getGet();
+        $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
         $data['cardProduit']=service("cardProduit");
         $data['categories']=model("\App\Models\CategorieModel")->findAll();
         $data['controller']="Catalogue";
+        $data['prods'] = [];
+        $data['max_price'] = $modelProduitCatalogue->selectMax('prixttc')->find()[0]->prixttc;
+        $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
 
-        $data=array_merge(
-            $data,
-            (new \App\Controllers\Produits())->getAllProduitSelonPage($page,$filters)
-        );
-        
-        
+        if(empty($filters)){
+            $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
+        }
+        else{
+            foreach(array_keys($filters) as $key){
+                $data['prods'] = array_merge($data['prods'],model("\App\Models\ProduitCatalogue")->where("categorie",$key)->findAll());
+            }
+        }
+
+        $data['nombreMaxPages']=intdiv(sizeof($data['prods']),self::NBPRODSPAGECATALOGUE)
+            + ((sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE==0)?0:1);
+        if(is_null($page) || $page==0)
+        {
+            $data['minProd']=0;
+            $data['maxProd']=self::NBPRODSPAGECATALOGUE;
+            $data['page']=1;
+        }
+        else
+        {
+            if($data['nombreMaxPages']>=$page)
+            {
+                $data['page']=$page;
+
+                $data['minProd']=self::NBPRODSPAGECATALOGUE*($page-1);
+                $data['maxProd']=self::NBPRODSPAGECATALOGUE*$page;
+                
+            }
+            else return view('errors/html/error_404.php', array('message' => "Page trop haute: pas assez de produit"));
+        }
+               
        
         return view("catalogue.php",$data);
     }
-
-    
 
     public function lstCommandesVendeur()
     {

@@ -219,12 +219,40 @@ class Home extends BaseController
        
         return view("catalogue.php",$data);
     }
+    
+    public function lstCommandesCli()
+    {
+        $data['controller']= "lstCommandesCli";
+        $data['commandesCli']=model("\App\Models\lstCommandesCli")->getCompteCommandes();
+        return view('page_accueil/lstCommandesCli.php', $data);
+    }
 
     public function lstCommandesVendeur()
     {
         $data['controller']= "lstCommandesVendeur";
         $data['commandesVend']=model("\App\Models\LstCommandesVendeur")->findAll();
         return view('page_accueil/lstCommandesVendeur.php', $data);
+    }
+
+    public function paiement() {
+        $post=$this->request->getPost();
+        $issues=[];
+        $data['controller']='paiement';
+        //appel au service de paiement
+        if(!empty($post))
+        {
+            $paiement = service('card');
+            $issues=$paiement->verifcard($post);
+            if(empty($issues))
+            {
+                return redirect()->to("/");
+            }
+        }
+        $data['nomCB'] = (isset($_POST['nomCB'])) ? $_POST['nomCB'] : "";
+        $data['numCB'] = (isset($_POST['numCB'])) ? $_POST['numCB'] : "";
+        $data['DateExpiration'] = (isset($_POST['DateExpiration'])) ? $_POST['DateExpiration'] : "";
+        $data['CCV'] = (isset($_POST['CCV'])) ? $_POST['CCV'] : "";
+        return view('page_accueil/paiement.php', $data);
     }
     
     //Tant que commande n'est pas là

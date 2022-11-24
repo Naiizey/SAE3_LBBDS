@@ -373,6 +373,7 @@ class Home extends BaseController
         $data['erreurs'] = $issues;
 
         return view('/page_accueil/espaceClient',$data);
+    }
 
     public function infoLivraison(){
         

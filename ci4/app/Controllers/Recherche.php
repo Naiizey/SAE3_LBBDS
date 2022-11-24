@@ -5,7 +5,7 @@ use CodeIgniter\CodeIgniter;
 class Recherche extends BaseController
 {
     public function indice_recherche($article, $champ) {
-        $indice = substr_count($article->intitule, $champ)*0.6 + substr_count($article->isaffiche, $champ)*0.4;
+        $indice = (substr_count(strtolower($article->intitule), strtolower($champ))*0.6)/(.1+strpos($article->intitule, $champ)) + substr_count(strtolower($article->description_prod), strtolower($champ))*0.4;
         return $indice;
     }
 
@@ -20,18 +20,23 @@ class Recherche extends BaseController
         $champ = $this->request->getGet()["search"];
         $data['controller'] = "recherche";
         $data['cardProduit']=service("cardProduit");
-        $produits = model("\App\Models\ProduitCatalogue")->findAll();
+        $data['vide'] = false;
+        $produits = model("\App\Models\ProduitCatalogue")->like('intitule', $champ)->orLike('description_prod', $champ)->findAll();
         $data['categories']=model("\App\Models\CategorieModel")->findAll();
-        $indices = [];
-        foreach ($produits as $cle=>$prod) {
-            $indice = $this->indice_recherche($prod, $champ);
-            if ($indice > 0.1) { 
+        //TODO: Proposer uniquement des filtres qui collent aux articles de la recherches
+        //TODO: correcteur de fautes
+        if ($produits == null) {
+            $data['vide'] = true;
+            $data['prods'] = model("\App\Models\ProduitCatalogue")->findAll();
+        } else {
+            $indices = [];
+            foreach ($produits as $cle=>$prod) {
+                $indice = $this->indice_recherche($prod, $champ);
                 $indices[$cle] = ["score"=>$indice,"produit"=>$prod];
             }
+            $resultats = array_column($this->tri($indices),'produit');
+            $data["prods"] = $resultats;
         }
-        $resultats = array_column($this->tri($indices),'produit');
-        $data["prods"] = $resultats;
-
         if ($data["prods"] != null) {
             $data['nombreMaxPages']=intdiv(sizeof($data['prods']),self::NBPRODSPAGECATALOGUE)
             + ((sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE==0)?0:1);

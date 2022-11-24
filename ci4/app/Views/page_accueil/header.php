@@ -40,29 +40,31 @@
                         echo   '<div class="divSuivi">
                                     <div class="'.(($controller == "panier" )?"etat-courant-commande":"").'">
                                         '.file_get_contents(dirname(__DIR__,3)."/public/images/header/panier.svg").'
-                                        <h3>1. Panier</h3>
+                                        <h3>Panier</h3>
                                     </div>
                                     <hr>
                                     <div class="'.(($controller == "compte_redirection" )?"etat-courant-commande":"").'">
                                         '.file_get_contents(dirname(__DIR__,3)."/public/images/header/profil.svg").'
-                                        <h3>2. Identification</h3>
+                                        <h3>Identification</h3>
                                     </div>
                                     <hr>
                                     <div>
                                         '.file_get_contents(dirname(__DIR__,3)."/public/images/header/carton.svg").'
-                                        <h3>3. Livraison</h3>
+                                        <h3>Livraison</h3>
                                     </div>
                                     <hr>
                                     <div>
                                         '.file_get_contents(dirname(__DIR__,3)."/public/images/header/paiement.svg").'
-                                        <h3>4. Paiement</h3>
+                                        <h3>Paiement</h3>
                                     </div>
                                 </div>';
                     }
                     else
                     {
                         echo   '<form class="formRecherche" action="'.base_url().'/recherche"'.'>
-                                <input required class="champsRecherche" type="text" name="search" placeholder="Recherche..">
+                                <input required class="champsRecherche" type="search" name="search" placeholder="Recherche.." value="'; 
+                                if (isset($_GET["search"])) echo $_GET["search"];
+                                echo '">
                                 <label><input type="submit">'.file_get_contents(dirname(__DIR__,3)."/public/images/header/loupe.svg") .
                                 '</label></form>';
                     }

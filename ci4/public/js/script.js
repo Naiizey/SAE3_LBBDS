@@ -304,20 +304,61 @@ boutonML.addEventListener("click", function(e) {
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-var inputsCli = document.querySelectorAll(".divInputEtLien input");
+var inputModifsCli = document.querySelectorAll(".divInputEtLien input");
+var labelModifsCli = document.querySelectorAll(".mainEspaceCli label");
+var divModifsCli = document.querySelectorAll(".mainEspaceCli .divInputEtLien");
 var lienModifsCli = document.querySelectorAll(".divInputEtLien a");
+var ancienMdp = document.getElementsByClassName("labelAncienMdp")[0];
+ancienMdp.innerHTML = "Votre mot de passe :";
 
+var divCacheModifsCli = document.getElementsByClassName("cacheModifMdp");
 
-for (let i = 0; i < lienModifsCli.length; i++) 
-{
-    lienModifsCli[i].addEventListener("click", function(event) 
+lienModifsCli[0].addEventListener("click", function (event) {
+    event.preventDefault();
+    inputModifsCli[1].disabled = false;
+    inputModifsCli[1].focus();
+});
+
+lienModifsCli[1].addEventListener("click", function (event) {
+    event.preventDefault();
+    inputModifsCli[2].disabled = false;
+    inputModifsCli[2].focus();
+});
+
+lienModifsCli[2].addEventListener("click", function (event) {
+    event.preventDefault();
+    if (ancienMdp.innerHTML == "Votre mot de passe :") 
     {
-        event.preventDefault();
-        inputsCli[i].disabled = false;
-        inputsCli[i].focus();
-    });
-}
+        while (divCacheModifsCli.length)
+        {
+            divCacheModifsCli[0].classList.remove("cacheModifMdp");
+        }
 
+        ancienMdp.innerHTML = "Entrez votre ancien mot de passe";
+        inputModifsCli[4].value = "";
+        inputModifsCli[4].disabled = false;
+        inputModifsCli[4].focus();
+        inputModifsCli[5].required = true;
+        inputModifsCli[6].required = true;
+    }
+    else 
+    {
+        inputModifsCli[5].value = "";
+        inputModifsCli[6].value = "";
+        inputModifsCli[5].classList.add("cacheModifMdp");
+        inputModifsCli[6].classList.add("cacheModifMdp");
+        labelModifsCli[5].classList.add("cacheModifMdp");
+        labelModifsCli[6].classList.add("cacheModifMdp");
+        divModifsCli[5].classList.add("cacheModifMdp");
+        divModifsCli[6].classList.add("cacheModifMdp");
+        inputModifsCli[5].required = false;
+        inputModifsCli[6].required = false;
+
+        ancienMdp.innerHTML = "Votre mot de passe :";
+        inputModifsCli[4].value = "motDePassemotDePasse";
+        inputModifsCli[4].disabled = true;
+    }
+});
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -335,3 +376,13 @@ function switchEtatFiltre(list){
         n.classList.toggle("est-filtre-ouvert");
     }
 }
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                  Recherche                                      ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+    const rechercher = document.getElementsByClassName()[0]
+
+    rechercher.value = get

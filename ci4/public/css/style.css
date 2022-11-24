@@ -64,7 +64,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 11%;
+    width: 12.5rem;
 }
 
 .formRecherche {
@@ -105,7 +105,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 8%;
+    width: 9.5rem;
 }
 
 .formRecherche > a{
@@ -182,31 +182,33 @@ main {
 }
 
 .divSuivi {
-    font-size: 60%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     color: #D9D9D9;
-    width: 40%;
+    width: 40rem;
+    height: 80%;
 }
 
 .divSuivi h3 {
     margin: 0;
     font-family: "Montserrat-Regular";
-    font-size: large;
+    font-size: medium;
     margin-top: 2%;
 }
 
 .divSuivi img, .divSuivi svg {
-    height: 5.5em;
-    width: 5.5em;
+    height: 2.5rem;
+    width: 2.5rem;
 }
 
 .divSuivi div {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .divSuivi hr {

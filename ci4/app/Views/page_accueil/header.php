@@ -70,8 +70,9 @@
                     }
                 ?>
                 <div class="divPanierProfil">
-                    <a href="<?= base_url() ?>/panier">
-                        <h2>Panier</h2>
+                    <a class="lienHPanier" href="<?= base_url() ?>/panier">
+                        <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/header/panier.svg"); ?>
+                        <span class="quantPanier">3</span>
                     </a>
                     <a class="lienConnexion" href="<?php if(session()->has("numero")){
                                                             echo base_url()."/espaceClient";

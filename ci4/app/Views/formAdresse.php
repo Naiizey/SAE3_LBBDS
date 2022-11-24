@@ -13,12 +13,14 @@
         <main>
             <div class="divFormAdresse">
                 <div class="onglets">
+                    <?php if(isset($controller) && $controller==="infoLivraison"): ?>
                     <div class="onglet">
                         <h3>Adresses sauvegardées</h3>
                     </div>
-                    <div class="onglet">
+                    <div class="onglet onglet-selectionnee">
                         <h3>Autre adresse</h3>
                     </div>
+                    <?php endif; ?>
                 </div>
                 <div class="sectionCredit">
                     <h2><?= (isset($controller) && $controller==="infoLivraison")?"Adresse livraison":"Adresse facture" ?></h2>
@@ -70,10 +72,17 @@
                         <label>Complément adresse 2 :</label>
                         <input type="text" name="c_adresse2"  value="<?= ""?>"/>
                         <?php if(isset($controller) && $controller==="infoLivraison"): ?>
+                        
                         <label>Informations complémentaites :</label>
                         <textarea name="info_comp"></textarea>
+
+                        <div class="sauvegarder-adresse">
+                            <input type="checkbox" name="sauvegarder_adresse">
+                            <label for="sauvegarder_adresse">Sauvegarder cette adresse</label>
+                        </div>
         
                         <input type="submit" value="Confirmer"/>
+                        
                         <?php endif; ?>
                     </form>
                 

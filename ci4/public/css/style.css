@@ -865,16 +865,21 @@ header ul {
     border-top: none;
 }
 .infoRue, .infoVille { 
+    display: flex;
     justify-content: space-between;
     align-items: end;
+    flex-wrap: wrap;
+
 }
 
 .infoRue div:first-child {
     width: 22%;
+    min-width: 155px;
  }
  
  .infoRue div:last-child {
      width: 75%;
+     flex-shrink: 2;
   }
 
 .infoVille div:first-child {
@@ -893,7 +898,7 @@ header ul {
     
     font-size: 1.2em;
     padding: 10px 0;
-    height: 80px;
+    height: 100px;
 }
 
 .surNomPrenom{
@@ -908,12 +913,18 @@ header ul {
 }
 .divFormAdresse .onglets{
     justify-content: space-between;
+    
   
 }
 .divFormAdresse .onglet{
     background-color: white;
     width: 49.5%;
+    
   
+}
+
+.divFormAdresse .onglet.onglet-selectionnee{
+    height: 60px;
 }
 
 .divFormAdresse .onglet:first-child{
@@ -921,6 +932,22 @@ header ul {
 }
 .divFormAdresse .onglet:last-child{
     border-right: solid 2px #C6C6C6;
+}
+
+.sauvegarder-adresse{
+    padding-top: 20px;
+}
+
+@media (max-width: 1000px) {
+
+    .infoRue, .infoVille { 
+     
+        flex-wrap: nowrap;
+    }
+    .infoRue div:first-child {
+      
+        min-width: 155px;
+     }
 }
 
 

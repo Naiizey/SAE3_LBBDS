@@ -14,6 +14,7 @@ class Home extends BaseController
 
     public function index()
     {
+        
 
         if(session()->has("just_connectee") && session()->get("just_connectee")==true){
             
@@ -30,7 +31,7 @@ class Home extends BaseController
         return view('page_accueil/index.php',$data);
     }
 
-    public function connexion($context= null)
+    public function connexion()
     {
         $post=$this->request->getPost();
         $issues=[];
@@ -43,21 +44,36 @@ class Home extends BaseController
             $user->fill($post);
             $issues=$auth->connexion($user); 
 
-            if(empty($issues) && is_null($context)) 
+            if(empty($issues) && !session()->has("referer_redirection")) 
             {
                 return redirect()->to("/");
             }
-            else if(empty($issues) && !is_null($context))
+            else if(empty($issues) && session()->has("referer_redirection"))
             {
-                return redirect()->to("/commandes");
+                if(parse_url(session()->get("referer_redirection")) === "panier")
+                {
+                    return redirect()->to("/commandes");
+                }
+                else
+                {
+                    return redirect()->to(session()->get("referer_redirection"));
+                }
             }
         }
 
-        if(!is_null($context) && $context==401)
+        if(session()->has("referer_redirection"))
         {
-            $issues['redirection']="Vous devez vous connectez pour valider votre commande";
-            $data['estRedirection']=True;
-            $data['controller']= "compte_redirection";
+            
+            $data['linkRedirection']=session()->get("referer_redirection");
+            if(parse_url($data['linkRedirection']) === "panier"){
+                $issues['redirection']="Vous devez vous connectez pour valider votre commande";
+                $data['controller']= "compte_redirection";
+            }
+            else{
+                $issues['redirection']="Vous devez vous connectez pour y accéder";
+                $data['controller']= "connexion";
+            }
+            
         }
         else
         {
@@ -77,7 +93,7 @@ class Home extends BaseController
         return view('page_accueil/connexion.php',$data);
     }
 
-    public function inscription($context=null)
+    public function inscription()
     {
         $post=$this->request->getPost();
         $issues=[];
@@ -89,27 +105,41 @@ class Home extends BaseController
             $auth = service('authentification');
             $user= new \App\Entities\Client();
             $user->fill($post);
+            
+      
             $issues=$auth->inscription($user,$post['confirmezMotDePasse']); 
 
-            if(empty($issues) && is_null($context)) 
+            if(empty($issues) && !session()->has("referer_redirection")) 
             {
                 return redirect()->to("/");
             }
-            else if(empty($issues) && !is_null($context))
+            else if(empty($issues) && session()->has("referer_redirection"))
             {
-                return redirect()->to("/commandes");
+                if(parse_url(session()->get("referer_redirection")) === "panier")
+                {
+                    return redirect()->to("/commandes");
+                }
+                else
+                {
+                    return redirect()->to(session()->get("referer_redirection"));
+                }
             }
         }
 
-        if(!is_null($context) && $context==401){
-            $issues['redirection']="Vous devez avoir un compte pour valider votre commande";
-            $data['estRedirection']=True;
-            
-            $data['controller']= "compte_redirection";
+        if(session()->has("referer_redirection")){
+            $data['linkRedirection']=session()->get("referer_redirection");
+            if(parse_url($data['linkRedirection']) === "panier"){
+                $issues['redirection']="Vous devez vous connectez pour valider votre commande";
+                $data['controller']= "compte_redirection";
+            }
+            else{
+                $issues['redirection']="Vous devez vous connectez pour accéder à cette espace";
+                $data['controller']= "inscription";
+            }
         }
         else
         {
-            $data['controller']= "connexion";
+            $data['controller']= "inscription";
         }
         
         $data['erreurs'] = $issues;
@@ -152,6 +182,7 @@ class Home extends BaseController
 
     public function panier($context = null)
     {
+        
         $data['controller']= "panier";
         if($context == 400)
         {
@@ -218,7 +249,7 @@ class Home extends BaseController
     public function infoLivraison(){
         
         $data['controller']='infoLivraison';
-
+        
 
         return view('formAdresse.php',$data);
 

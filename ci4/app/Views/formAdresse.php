@@ -11,12 +11,24 @@
 ?>
         </header>
         <main>
-            <div class="divCredit">
+            <div class="divFormAdresse">
+                <div class="onglets">
+                    <div class="onglet">
+                        <h3>Adresses sauvegardées</h3>
+                    </div>
+                    <div class="onglet">
+                        <h3>Autre adresse</h3>
+                    </div>
+                </div>
                 <div class="sectionCredit">
-                    <h2>Inscription</h2>
+                    <h2><?= (isset($controller) && $controller==="infoLivraison")?"Adresse livraison":"Adresse facture" ?></h2>
                   
                     <form action='<?= current_url() ?>' method="post">
-                        
+                        <div class="surNomPrenom">
+                            <div>
+                                <input type="checkbox" name="utilise_nom_profil">
+                                <label for="utilise_nom_profil">Utiliser les identifiants de mon compte</label>
+                            </div>
                         <div class="nomPrenom">
                             <div>
                                 <label for="nom">Nom :</label>
@@ -27,10 +39,12 @@
                                 <input type="text" name="prenom" required="required" value="<?= "" ?>"/>
                             </div>
                         </div>
+                        </div>
+                        
 
                         <div class="infoRue">
                             <div>
-                                <label for="numero_rue">Numéro   rue :</label>
+                                <label for="numero_rue">Numéro rue :</label>
                                 <input type="text" name="numero_rue" required="required" value="<?= "" ?>"/>
                             </div>
                             <div>
@@ -40,11 +54,14 @@
                         </div>
 
                         <div class="infoVille">
-                            <label for="code_postal">Code Postal :</label>
-                            <input type="text" name="code_postal" required="required" value="<?= ""?>"/>
-                    
-                            <label for="ville">Ville :</label>
-                            <input type="text" name="ville" required="required" value="<?= ""?>"/>
+                            <div>
+                                <label for="code_postal">Code Postal :</label>
+                                <input type="text" name="code_postal" required="required" value="<?= ""?>"/>
+                            </div>
+                            <div>                       
+                                <label for="ville">Ville :</label>
+                                <input type="text" name="ville" required="required" value="<?= ""?>"/>  
+                            </div>
                         </div>
 
                         <label for="c_adresse1">Complément adresse 1 :</label>
@@ -52,12 +69,12 @@
              
                         <label>Complément adresse 2 :</label>
                         <input type="text" name="c_adresse2"  value="<?= ""?>"/>
-
+                        <?php if(isset($controller) && $controller==="infoLivraison"): ?>
                         <label>Informations complémentaites :</label>
-                        <textarea name="info_comp"  value="<?= ""?>">
-                        </textarea>
+                        <textarea name="info_comp"></textarea>
         
                         <input type="submit" value="Confirmer"/>
+                        <?php endif; ?>
                     </form>
                 
                 </div>

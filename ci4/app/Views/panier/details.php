@@ -4,14 +4,14 @@
             <section class="main-block" class="detail-cmd">
                 <h3>Commande n°15263890891</h3>
                 <div id="bar">   
-                    <div class="progress-bar-ok"></div>
-                    <div>                    
+                    <progress class="progress-bar-ok" value="70" max="100">70 %</progress>       
+                    <div class="button">
                         <div class="point-ok"></div>
                         <div class="point-ok"></div>
                         <div class="point-ok"></div>
                         <div class="point-ok"></div>
                     </div>
-
+                    
                 </div>
                 <div class="secondary-block"></div>
                     

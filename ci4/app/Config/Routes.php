@@ -48,7 +48,6 @@ $routes->set404Override();
     $routes->post('/inscription', 'Home::inscription');
     $routes->get('/inscription/(401)', 'Home::inscription/$1');
     $routes->post('/inscription/(401)', 'Home::inscription/$1');
-    $routes->get('/lstCommandesVendeur', 'Home::lstCommandesVendeur');
 
     $routes->get('/mdpOublie', 'MdpOublie::mdpOublie');
     $routes->post('/mdpOublie', 'MdpOublie::mdpOublie');
@@ -78,14 +77,19 @@ $routes->set404Override();
     $routes->get('/test', 'Test::test2');
     $routes->get('/panier', 'Panier');
 
-    $routes->get('/import', 'Import::index');
-    $routes->post('/import/upload', 'Import::upload');
+    $routes->get('vendeur/import', 'Import::index');
+    $routes->post('vendeur/import/upload', 'Import::upload');
+
+    $routes->get('vendeur/lstCommandesVendeur', 'Home::lstCommandesVendeur');
 
     $routes->get('/destroy', 'Test::destroySession');
 
     $routes->get('/commandes', 'Home::commandeTest',['filter' => 'connexion']);
 
     $routes->get('/commandes/detail/(:num)','Commandes::detail/$1',);//['filter' => 'connexion']
+
+    $routes->get('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
+    $routes->options('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
 
     if(session()->has("numero")){
         $routes->get('/espaceClient', 'EspaceClient::index');

@@ -58,7 +58,7 @@ class CardProduit
         <a href="<?= base_url()."/produit/".$prod->id ?>" class="card-produit-ext">
         <div class="card-produit">
     
-            <div class="image-card" style="background-image: url(<?= base_url().'/'.$prod->lienimage
+            <div class="image-card" style="background-image: url(<?= /*base_url().'/'.*/$prod->lienimage
     ?>);"></div>
     
             <div class="notation-card"><?= $this->notationEtoile($prod->moyenneNote) ?></div>

@@ -4,6 +4,10 @@ class EspaceClient extends BaseController
 {
     public function index()
     {
+        #TODO: le système ne reconnait pas si le mot de passe (Entrez votre ancien mot de passe), est le bon
+        #TODO: les erreurs sur un nom ou prénom trop long ne se montrent pas, à la place on a une erreur de la base
+        #TODO: de temps en temps, l'input prends le pas sur le bouton "crayon" s'il on veut rembaler la section car il n'est pas en disabled
+
         $data['controller'] = "EspaceClient";
         $modelFact = model("\App\Models\ClientAdresseFacturation");
         $modelLivr = model("\App\Models\ClientAdresseLivraison");
@@ -16,73 +20,51 @@ class EspaceClient extends BaseController
         $data['motDePasse'] = "motDePassemotDePasse";
         $data['confirmezMotDePasse'] = "";
         $data['nouveauMotDePasse'] = "";
-        $data['classModifMdp'] = "modifMdpFerme";
-        $data['classLienModifMdp'] = "";
-        $data['attributModifMdp'] = "disabled";
-        $data['requisModifMdp'] = "";
+
+        //On cache par défaut les champs supplémentaires pour modifier le mdp
+        $data['classCacheDiv'] = "cacheModifMdp";
+        $data['disableInput'] = "disabled";
+        $data['requireInput'] = "";
 
         if (!empty($post))
         {
-            $besoinDeSave = false;
-            if (isset($post['pseudo']))
+            //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
+            if (!isset($post['motDePasse']))
             {
-                if (!($post['pseudo'] === $client->identifiant))
-                {
-                    $client->identifiant = $post['pseudo'];
-                    $besoinDeSave = true;
-                }
-            }
-            if (isset($post['prenom']))
-            {
-                if (!($post['prenom'] === $client->prenom))
-                {
-                    $client->prenom = $post['prenom'];
-                    $besoinDeSave = true;
-                }
-            }
-            if (isset($post['nom']))
-            {
-                if (!($post['nom'] === $client->nom))
-                {
-                    $client->nom = $post['nom'];
-                    $besoinDeSave = true;
-                }
-            }
-            if (isset($post['email']))
-            {
-                if (!($post['email'] === $client->email))
-                {
-                    $client->email = $post['email'];
-                    $besoinDeSave = true;
-                }
-            }
-            if ($besoinDeSave)
-            {
-                $modelClient->saveClient($client);
+                $post['motDePasse'] = "motDePassemotDePasse";
             }
 
-            if (isset($post['confirmezMotDePasse']) && isset($post['nouveauMotDePasse']) && ($post['motDePasse'] != "motDePassemotDePasse"))
+            //Si ces deux champs ne sont pas remplis, cela veut dire que l'utilisateur n'a pas cherché à modifier le mdp
+            if (empty($post['confirmezMotDePasse']) && empty($post['nouveauMotDePasse']))
             {
-                $auth = service('authentification');
-                $user=$client;
-                $user->fill($post);
-                $issues=$auth->modifEspaceClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']); 
-            
-                if (!empty($issues))
-                {
-                    $data['motDePasse'] = $post['motDePasse'];
-                    $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
-                    $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
-                }
-                else
-                {
-                    return redirect()->to("/espaceClient");
-                }
+                //On remplit ces variables pour informer le service que nous n'avons pas besoin d'erreurs sur ces champs
+                $post['confirmezMotDePasse'] = "";
+                $post['nouveauMotDePasse'] = "";
             }
-            $data['classModifMdp'] = "";
-            $data['classLienModifMdp'] = "lienModifMdp";
-            $data['attributModifMdp'] = "";
-            $data['requisModifMdp'] = "required";
+            else
+            {
+                //Si l'utilisateur a cherché à modifier le mdp, alors on révèle les champs
+                $data['classCacheDiv'] = "";
+                $data['disableInput'] = "";
+                $data['requireInput'] = "required";
+            }
+
+            $auth = service('authentification');
+            $user=$client;
+            $user->fill($post);
+            $issues=$auth->modifEspaceClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']); 
+            
+            if (!empty($issues))
+            {
+                //En cas d'erreur(s), on pré-remplit les champs avec les données déjà renseignées
+                $data['motDePasse'] = $post['motDePasse'];
+                $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
+                $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
+            }
+            else
+            {
+                return redirect()->to("/espaceClient");
+            }
         }
         
         //Pré-remplit les champs avec les données de la base

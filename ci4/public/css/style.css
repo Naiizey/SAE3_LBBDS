@@ -64,7 +64,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 11%;
+    width: 12.5rem;
 }
 
 .formRecherche {
@@ -105,7 +105,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 8%;
+    width: 9.5rem;
 }
 
 .formRecherche > a{
@@ -182,31 +182,33 @@ main {
 }
 
 .divSuivi {
-    font-size: 60%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     color: #D9D9D9;
-    width: 40%;
+    width: 40rem;
+    height: 80%;
 }
 
 .divSuivi h3 {
     margin: 0;
     font-family: "Montserrat-Regular";
-    font-size: large;
+    font-size: medium;
     margin-top: 2%;
 }
 
 .divSuivi img, .divSuivi svg {
-    height: 5.5em;
-    width: 5.5em;
+    height: 2.5rem;
+    width: 2.5rem;
 }
 
 .divSuivi div {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .divSuivi hr {
@@ -1527,13 +1529,30 @@ a.fleche-page{
 
 .current-page{
     width: 10%;
+    min-width: 90.2px;
+ 
+
+    font-weight: bolder;
+
+    
 }
 
-.apres-current-page,.avant-current-page{
-    position: relative;
-    top: 12px;
-    width: 40.0%;
+.current-page span, .apres-current-page a, .avant-current-page a{
+    font-family: 'Montserrat-Bold';
+    
+    color: #164F57;
 }
+.apres-current-page a, .avant-current-page a{
+    text-decoration: none;
+    font-weight: lighter;
+    position: relative;
+    top: 14px;
+    width: 40.0%;
+    font-size: 1em;
+}
+
+
+
 
 .apres-current-page{
     text-align: left;
@@ -1666,14 +1685,19 @@ a.fleche-page{
 }
 
 /*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                  Page pour lister toutes les commandes (lstCommandes.php)       ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                  Page pour lister les commandes Vendeur (lstCommandesVendeur.php) ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
 #divLstCommandes{
+    font-family: "Montserrat-Regular";
     border: solid 2px #C6C6C6;
     background-color: white;
+}
+
+#divLstCommandes h2{
+    margin: 0.5em 0;
 }
 
 #tableLstCommandes{
@@ -1697,6 +1721,10 @@ a.fleche-page{
     cursor: pointer;
     outline: none;
     background-color: #f3f3f3;
+}
+
+#tableLstCommandes tbody tr:last-child{
+    border-bottom: none;
 }
 
 #tableLstCommandes th, #tableLstCommandes td{
@@ -1752,33 +1780,53 @@ a.fleche-page{
     border-radius: 50%;
     width: 2em;
     height: 2em;
-    margin-left: 10em;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .detail-cmd,.point-ko {
     background-color: #C04444;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 2em;
+    height: 2em;
+    padding-left: 100%;
 }
 
-.detail-cmd,.progress-bar-ok {
-    background-color: #55C044;
+
+.detail-cmd,progress {
+    background-color: #C04444;
+    border-radius: 5px;
+    height: 10px;
+    width: 70%;
+    border: none;
+}
+
+.detail-cmd,progress::-moz-progress-bar 
+{ 
+    background: #55C044; 
     border-radius: 5px;
     height: 10px;
     display: flex;
+    
 }
 
 .detail-cmd,.progress-bar-ko {
     background-color: #C04444;
     border-radius: 5px;
     height: 10px;
+    position: relative;
 }
 
 .detail-cmd,.button 
 {
-    background-color: #164F57;
+
     border-radius: 5px;
+    /* en ligne */
+    display: inline-flex;
+    position: absolute;
+    /* superpostion par rapport à .progress-bar-ko */
+    left: 15%;
+
 }
 
 .detail-cmd,#bar {
@@ -1788,6 +1836,7 @@ a.fleche-page{
     margin-left: 0;
     width: 80%;
 }
+
 
 
 
@@ -1941,7 +1990,7 @@ a.fleche-page{
     padding: 0;
 }
 
-.modifMdpFerme, .lienModifMdp {
+.cacheModifMdp {
     display: none;
 }
 

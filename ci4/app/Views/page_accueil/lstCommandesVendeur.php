@@ -29,7 +29,7 @@
                     echo "</tbody>
                 </table>";
             } else {
-                echo "<h2>Il n'y a actuellement aucune commande.</h2>";
+                echo "<h2>Aucune commande n'a été réalisé pour le moment.</h2>";
             }?>
         </div>
     </main>

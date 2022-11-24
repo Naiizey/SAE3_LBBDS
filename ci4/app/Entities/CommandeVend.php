@@ -7,23 +7,20 @@ class CommandeVend extends Entity
   public function etatString() : String
   {
       switch ($this->etat) {
-         case 0:
+         case 1:
             return 'En attente';
             break;
-         case 1:
+         case 2:
             return 'En route';
             break;
-         case 2:
-            return 'Livrée';
-            break;
          case 3:
-            return 'Annulée';
+            return 'En route';
             break;
          case 4:
-            return 'Retour';
+            return 'En route';
             break;
          case 5:
-            return 'Terminée';
+            return 'Livrée';
             break;
          default:
             return 'Erreur';

@@ -1694,6 +1694,10 @@ a.fleche-page{
     background-color: white;
 }
 
+#divLstCommandes h2{
+    margin: 0.5em 0;
+}
+
 #tableLstCommandes{
     width: 100%;
     border-collapse: collapse;

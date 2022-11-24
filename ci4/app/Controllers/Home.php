@@ -14,7 +14,6 @@ class Home extends BaseController
 
     public function index()
     {
-
         if(session()->has("just_connectee") && session()->get("just_connectee")==true){
             
             session()->set("just_connectee",False);
@@ -34,7 +33,6 @@ class Home extends BaseController
     {
         $post=$this->request->getPost();
         $issues=[];
-        
         
         if(!empty($post))
         {
@@ -77,8 +75,6 @@ class Home extends BaseController
     {
         $post=$this->request->getPost();
         $issues=[];
-
-       
 
         if(!empty($post))
         {
@@ -215,9 +211,81 @@ class Home extends BaseController
             }
             else return view('errors/html/error_404.php', array('message' => "Page trop haute: pas assez de produit"));
         }
-               
        
         return view("catalogue.php",$data);
+    }
+
+    public function espaceClient()
+    {
+        $data['controller'] = "EspaceClient";
+        $modelFact = model("\App\Models\ClientAdresseFacturation");
+        $modelLivr = model("\App\Models\ClientAdresseLivraison");
+        $modelClient = model("\App\Models\Client");
+        $post=$this->request->getPost();
+        $client = $modelClient->getClientById(session()->get("numero"));
+        $issues = [];
+
+        //Valeurs par défaut
+        $data['motDePasse'] = "motDePassemotDePasse";
+        $data['confirmezMotDePasse'] = "";
+        $data['nouveauMotDePasse'] = "";
+
+        //On cache par défaut les champs supplémentaires pour modifier le mdp
+        $data['classCacheDiv'] = "cacheModifMdp";
+        $data['disableInput'] = "disabled";
+        $data['requireInput'] = "";
+
+        if (!empty($post))
+        {
+            //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
+            if (!isset($post['motDePasse']))
+            {
+                $post['motDePasse'] = "motDePassemotDePasse";
+            }
+
+            //Si ces deux champs ne sont pas remplis, cela veut dire que l'utilisateur n'a pas cherché à modifier le mdp
+            if (empty($post['confirmezMotDePasse']) && empty($post['nouveauMotDePasse']))
+            {
+                //On remplit ces variables pour informer le service que nous n'avons pas besoin d'erreurs sur ces champs
+                $post['confirmezMotDePasse'] = "";
+                $post['nouveauMotDePasse'] = "";
+            }
+            else
+            {
+                //Si l'utilisateur a cherché à modifier le mdp, alors on révèle les champs
+                $data['classCacheDiv'] = "";
+                $data['disableInput'] = "";
+                $data['requireInput'] = "required";
+            }
+
+            $auth = service('authentification');
+            $user=$client;
+            $user->fill($post);
+            $issues=$auth->modifEspaceClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']); 
+            
+            if (!empty($issues))
+            {
+                //En cas d'erreur(s), on pré-remplit les champs avec les données déjà renseignées
+                $data['motDePasse'] = $post['motDePasse'];
+                $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
+                $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
+            }
+            else
+            {
+                return redirect()->to("/espaceClient");
+            }
+        }
+        
+        //Pré-remplit les champs avec les données de la base
+        $data['pseudo'] = $client->identifiant;
+        $data['prenom'] = $client->prenom;
+        $data['nom'] = $client->nom;
+        $data['email'] = $client->email;
+        $data['adresseFact'] = $modelFact->getAdresse(session()->get("numero"));
+        $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
+        $data['erreurs'] = $issues;
+
+        return view('/page_accueil/espaceClient',$data);
     }
 
     public function lstCommandesVendeur()
@@ -227,24 +295,28 @@ class Home extends BaseController
         return view('page_accueil/lstCommandesVendeur.php', $data);
     }
 
-    public function paiement() {
+    public function paiement() 
+    {
         $post=$this->request->getPost();
         $issues=[];
         $data['controller']='paiement';
-        //appel au service de paiement
+
         if(!empty($post))
         {
-            $paiement = service('card');
-            $issues=$paiement->verifcard($post);
+            $paiement = service('authentification');
+            $issues=$paiement->paiement($post);
+
             if(empty($issues))
             {
                 return redirect()->to("/");
             }
         }
+        $data['erreurs'] = $issues;
         $data['nomCB'] = (isset($_POST['nomCB'])) ? $_POST['nomCB'] : "";
         $data['numCB'] = (isset($_POST['numCB'])) ? $_POST['numCB'] : "";
-        $data['DateExpiration'] = (isset($_POST['DateExpiration'])) ? $_POST['DateExpiration'] : "";
-        $data['CCV'] = (isset($_POST['CCV'])) ? $_POST['CCV'] : "";
+        $data['dateExpiration'] = (isset($_POST['dateExpiration'])) ? $_POST['dateExpiration'] : "";
+        $data['CVC'] = (isset($_POST['CVC'])) ? $_POST['CVC'] : "";
+
         return view('page_accueil/paiement.php', $data);
     }
     

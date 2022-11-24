@@ -10,8 +10,6 @@ class Home extends BaseController
         //permer d'éviter le bug de redirection.
         session();
         $this->feedback=service("feedback");
-        
-
     }
 
     public function index()
@@ -65,10 +63,6 @@ class Home extends BaseController
         {
             $data['controller']= "connexion";
         }
-
-
-        
-
        
         $data['erreurs'] = $issues;
 
@@ -148,8 +142,6 @@ class Home extends BaseController
             $data['prod'] = $result;
             return view('page_accueil/produit.php',$data);
         }
-        
-        
     }
 
     public function panier($context = null)
@@ -200,8 +192,6 @@ class Home extends BaseController
        
         return view("catalogue.php",$data);
     }
-
-    
 
     public function lstCommandesVendeur()
     {

@@ -354,7 +354,7 @@ BEGIN
 END
 $$
 LANGUAGE PLPGSQL;
-CREATE OR REPLACE TRIGGER beforeInsert_pouce BEFORE INSERT ON _pouce FOR EACH ROW EXECUTE PROCEDURE pouce_check() ;
+CREATE tRIGGER beforeInsert_pouce BEFORE INSERT ON _pouce FOR EACH ROW EXECUTE PROCEDURE pouce_check() ;
 /*
 CREATE OR REPLACE FUNCTION fixInheritance() RETURNS TRIGGER AS
 $$
@@ -366,8 +366,8 @@ END;
 $$
 LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE TRIGGER afterInsert_panier_compte AFTER INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
-CREATE OR REPLACE TRIGGER afterInsert_panier_visiteur AFTER INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
+CREATE tRIGGER afterInsert_panier_compte AFTER INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
+CREATE tRIGGER afterInsert_panier_visiteur AFTER INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
 */
 
 
@@ -380,7 +380,7 @@ CREATE OR REPLACE FUNCTION creerPremierPanier() RETURNS TRIGGER AS
         return new;
     end;
     $$ language plpgsql;
-CREATE OR REPLACE TRIGGER afterInsertClient AFTER INSERT ON _compte FOR EACH ROW EXECUTE PROCEDURE creerPremierPanier ();
+CREATE tRIGGER afterInsertClient AFTER INSERT ON _compte FOR EACH ROW EXECUTE PROCEDURE creerPremierPanier ();
 
 
 CREATE OR REPLACE FUNCTION creerPanier() RETURNS TRIGGER AS
@@ -392,7 +392,7 @@ CREATE OR REPLACE FUNCTION creerPanier() RETURNS TRIGGER AS
         return new;
     end;
     $$ language plpgsql;
-CREATE OR REPLACE TRIGGER beforeInsertPanierCli BEFORE INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE creerPanier ();
-CREATE OR REPLACE TRIGGER beforeInsertPanierVis BEFORE INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE creerPanier ();
+CREATE tRIGGER beforeInsertPanierCli BEFORE INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE creerPanier ();
+CREATE tRIGGER beforeInsertPanierVis BEFORE INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE creerPanier ();
 
 

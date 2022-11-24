@@ -472,13 +472,13 @@ div.bloc-erreurs {
 .paragraphe-erreur {
     color: red;
     margin-bottom: 0;
-    text-align:justify;
+    text-align: left;
 }
 
 .paragraphe-valid {
     color: #24a064;
     margin-bottom: 0;
-    text-align: justify;
+    text-align: left;
 }
 
 /*

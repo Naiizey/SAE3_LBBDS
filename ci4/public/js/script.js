@@ -425,3 +425,21 @@ function switchEtatFiltre(list){
         n.classList.toggle("est-filtre-ouvert");
     }
 }
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                     Catalogue                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+// 1 2  3  4  5
+// 0 25 50 75 100
+
+function barreProgression() {
+    for (let index = 0; index < 5; index++) {
+        if (index*25 <= document.querySelector(".progress-bar-ok").value) {
+            document.getElementsByClassName("pointProgress")[index].classList.add("point-ok");
+        } else {
+            document.getElementsByClassName("pointProgress")[index].classList.add("point-ko");
+        }
+    }
+}

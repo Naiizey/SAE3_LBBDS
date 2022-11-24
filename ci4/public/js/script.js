@@ -258,7 +258,7 @@ for (let numLigne of lignes) {
 }
 /*
 function lienLigne(element) {
-    window.location.href = `/commande/${(commandeA.textContent)}`;
+    window.location.href = `/commandes/details/${(commandeA.textContent)}`;
 }
 */
 

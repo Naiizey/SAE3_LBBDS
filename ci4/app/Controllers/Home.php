@@ -201,7 +201,12 @@ class Home extends BaseController
         return view("catalogue.php",$data);
     }
 
-    
+    public function lstCommandesCli()
+    {
+        $data['controller']= "lstCommandesCli";
+        $data['commandesCli']=model("\App\Models\lstCommandesCli")->getCompteCommandes();
+        return view('page_accueil/lstCommandesCli.php', $data);
+    }
 
     public function lstCommandesVendeur()
     {

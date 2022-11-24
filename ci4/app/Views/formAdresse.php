@@ -25,7 +25,7 @@
                 <div class="sectionCredit">
                     <h2><?= (isset($controller) && $controller==="infoLivraison")?"Adresse livraison":"Adresse facture" ?></h2>
                   
-                    <form action='<?= current_url() ?>' method="post">
+                    <form action='<?= current_url() ?>' method="post" name="form_adresse">
                         <div class="surNomPrenom">
                             <div>
                                 <input type="checkbox" name="utilise_nom_profil">
@@ -34,11 +34,11 @@
                         <div class="nomPrenom">
                             <div>
                                 <label for="nom">Nom :</label>
-                                <input type="text" name="nom" required="required" value="<?= "" ?>"/>
+                                <input type="text" name="nom" required="required" sauvegardee="Nom" value="<?= "" ?>"/>
                             </div>
                             <div>
                                 <label for="prenom">Prénom :</label>
-                                <input type="text" name="prenom" required="required" value="<?= "" ?>"/>
+                                <input type="text" name="prenom" required="required" sauvegardee="Prénom" value="<?= "" ?>"/>
                             </div>
                         </div>
                         </div>
@@ -58,11 +58,15 @@
                         <div class="infoVille">
                             <div>
                                 <label for="code_postal">Code Postal :</label>
-                                <input type="text" name="code_postal" required="required" value="<?= ""?>"/>
+                                <input list="code_postal_trouvee" type="text" name="code_postal" required="required" pattern="[0-9]{5,6}" autocomplete="off" value="<?= ""?>"/>
+                                <datalist id="code_postal_trouvee">
+                                </datalist>
                             </div>
                             <div>                       
                                 <label for="ville">Ville :</label>
-                                <input type="text" name="ville" required="required" value="<?= ""?>"/>  
+                                <input list="ville_trouvee" type="text" name="ville" required="required" autocomplete="off" value="<?= ""?>"/>
+                                <datalist id="ville_trouvee">
+                                </datalist>  
                             </div>
                         </div>
 
@@ -90,3 +94,6 @@
             </div>
         </main>
 <?php require("page_accueil/footer.php"); ?>
+<script>
+    var js = new formAdresseConstructor();
+</script>

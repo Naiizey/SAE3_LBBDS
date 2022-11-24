@@ -473,6 +473,8 @@ div.bloc-erreurs {
     color: red;
     margin-bottom: 0;
     text-align:justify;
+    flex-shrink: 0;
+    width: 100%;
 }
 
 .paragraphe-valid {
@@ -867,7 +869,7 @@ header ul {
 .infoRue, .infoVille { 
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: flex-start ;
     flex-wrap: wrap;
 
 }
@@ -887,7 +889,7 @@ header ul {
 
 }
 
-.infoVille div:last-child {
+.infoVille div:nth-child(2) {
     width: 63%;
 
 }
@@ -948,6 +950,12 @@ header ul {
       
         min-width: 155px;
      }
+}
+
+/*FIXME*/
+
+.divFormAdresse div > div > label,.divFormAdresse .sectionCredit div > div > input {
+    margin: 0;
 }
 
 

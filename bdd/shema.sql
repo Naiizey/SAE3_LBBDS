@@ -111,7 +111,6 @@ CREATE TABLE _commande
     date_plateformeReg DATE,
     date_plateformeLoc DATE,
     date_arriv DATE,
-    etat_livraison INT NOT NULL,
     id_a INT NOT NULL, --attendu_a
     id_adresse INT NOT NULL
 ) ;

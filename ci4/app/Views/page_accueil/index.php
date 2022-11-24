@@ -70,3 +70,6 @@
         </main>
        
 <?php require("footer.php"); ?>
+<script>
+    carrousel();
+</script>

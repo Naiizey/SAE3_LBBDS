@@ -96,3 +96,6 @@
     </div>
 </main>
 <?php require("footer.php"); ?>
+<script>
+    espaceCli();
+</script>

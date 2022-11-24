@@ -64,7 +64,7 @@ header h2, header nav {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 11%;
+    width: 12.5rem;
 }
 
 .formRecherche {
@@ -102,10 +102,11 @@ header h2, header nav {
 
 .divPanierProfil {
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 8%;
+    width: 9.5rem;
 }
 
 .formRecherche > a{
@@ -118,9 +119,21 @@ header h2, header nav {
     height: 100%;   
 }
 
-.logoProfil, .logoAlizon{
+.logoProfil, .logoAlizon, .logoPanier{
     height: 70%;
     width: auto;
+}
+
+.quantPanier {
+    position: absolute;
+    left: 3.3rem;
+    bottom: .5rem;
+    border-radius: 50%;
+    border: black;
+    width: 1.5rem;
+    height: 1.5rem;
+    text-align: center;
+    background-color: #3997a3;
 }
 
 path{
@@ -150,7 +163,7 @@ path{
     color: #6f98bd;
 }
 
-.lienConnexion {
+.lienConnexion, .lienHPanier{
     height: 100%;
     display: flex;
     align-items: center;
@@ -182,31 +195,33 @@ main {
 }
 
 .divSuivi {
-    font-size: 60%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     color: #D9D9D9;
-    width: 40%;
+    width: 40rem;
+    height: 80%;
 }
 
 .divSuivi h3 {
     margin: 0;
     font-family: "Montserrat-Regular";
-    font-size: large;
+    font-size: medium;
     margin-top: 2%;
 }
 
 .divSuivi img, .divSuivi svg {
-    height: 5.5em;
-    width: 5.5em;
+    height: 2.5rem;
+    width: 2.5rem;
 }
 
 .divSuivi div {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .divSuivi hr {
@@ -799,7 +814,7 @@ header ul {
 /* Prénom */
 .nomPrenom > div + div > input {
     padding: 0;
-    width: 100%;
+    width: auto;
 }
 
 .divSouvenir {
@@ -1295,6 +1310,7 @@ main a.card-produit-ext:hover{
     width: 100%;
     height: 55%;
     border-radius: 8.47px 8.47px 0 0;
+    background-size: cover;
 }
 .notation-card{
     background-color: rgba(0, 0, 0, 61%);
@@ -1694,6 +1710,10 @@ a.fleche-page{
     background-color: white;
 }
 
+#divLstCommandes h2{
+    margin: 0.5em 0;
+}
+
 #tableLstCommandes{
     width: 100%;
     border-collapse: collapse;
@@ -1774,33 +1794,53 @@ a.fleche-page{
     border-radius: 50%;
     width: 2em;
     height: 2em;
-    margin-left: 10em;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .detail-cmd,.point-ko {
     background-color: #C04444;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 2em;
+    height: 2em;
+    padding-left: 100%;
 }
 
-.detail-cmd,.progress-bar-ok {
-    background-color: #55C044;
+
+.detail-cmd,progress {
+    background-color: #C04444;
+    border-radius: 5px;
+    height: 10px;
+    width: 70%;
+    border: none;
+}
+
+.detail-cmd,progress::-moz-progress-bar 
+{ 
+    background: #55C044; 
     border-radius: 5px;
     height: 10px;
     display: flex;
+    
 }
 
 .detail-cmd,.progress-bar-ko {
     background-color: #C04444;
     border-radius: 5px;
     height: 10px;
+    position: relative;
 }
 
 .detail-cmd,.button 
 {
-    background-color: #164F57;
+
     border-radius: 5px;
+    /* en ligne */
+    display: inline-flex;
+    position: absolute;
+    /* superpostion par rapport à .progress-bar-ko */
+    left: 15%;
+
 }
 
 .detail-cmd,#bar {
@@ -1810,6 +1850,7 @@ a.fleche-page{
     margin-left: 0;
     width: 80%;
 }
+
 
 
 
@@ -1972,12 +2013,24 @@ a.fleche-page{
 ┃                             Paiement (paiement.php)                             ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+.conteneurCB {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+  
+.conteneurCB svg {
+    position: absolute;
+    right: 2%;
+    width: 2em;
+    height: 2em;
+}
+  
+.conteneurCB input {
+    width: 100%;
+    margin: 0 !important;
+}
 
-.test {
-    /*
-    background: url(../images/header/paiement.svg) no-repeat;
-    background-size: 2em;
-    background-position: 98%;
-    backgr
-    */
+.labelCB {
+    margin-bottom: 1%;
 }

@@ -13,3 +13,6 @@
 </main>
 
 <?php require("footer.php"); ?>
+<script>
+        dragNDrop();
+</script>

@@ -1737,134 +1737,54 @@ a.fleche-page{
 ┃                          Page détail commande (details.php)                               ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+.main-block h3 {
+    font-family: "Montserrat-Medium";
+}
 
-.detail-cmd,.main-block {
+.main-block {
+    background-color: white;
+    border-radius: 3px;
+}
+
+.bar {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 95%;
-    height: 95%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #E7E8E6;
-    border-radius: 15px;
-    padding: 0%;
 }
 
-.detail-cmd,.secondary-block {
-    background-color:#D1D1D1;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 15px;
+.buttonProgress {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 88%;
 }
 
-.detail-cmd,.wht-line
-{
-    border: 0px;
-    background-color: #E7E8E6;
-    height: 8px;
-    border-radius: 10px;
-}
-
-.detail-cmd,.blk-line
-{
-    border: 0px;
-    background-color: #404E58;
-    height: 8px;
-    border-radius: 10px;
-}
-
-.detail-cmd,.point-ok {
+.point-ok {
     background-color: #55C044;
     border-radius: 50%;
     width: 2em;
     height: 2em;
-    margin-right: auto;
-    margin-left: auto;
 }
 
-.detail-cmd,.point-ko {
+.point-ko {
     background-color: #C04444;
     border-radius: 50%;
     width: 2em;
     height: 2em;
-    padding-left: 100%;
 }
 
-
-.detail-cmd,progress {
+progress {
     background-color: #C04444;
-    border-radius: 5px;
     height: 10px;
-    width: 70%;
+    width: 90%;
     border: none;
 }
 
-.detail-cmd,progress::-moz-progress-bar 
+progress::-moz-progress-bar 
 { 
-    background: #55C044; 
-    border-radius: 5px;
+    background: #55C044;
     height: 10px;
-    display: flex;
-    
-}
-
-.detail-cmd,.progress-bar-ko {
-    background-color: #C04444;
-    border-radius: 5px;
-    height: 10px;
-    position: relative;
-}
-
-.detail-cmd,.button 
-{
-
-    border-radius: 5px;
-    /* en ligne */
-    display: inline-flex;
-    position: absolute;
-    /* superpostion par rapport à .progress-bar-ko */
-    left: 15%;
-
-}
-
-.detail-cmd,#bar {
-    margin-top:  1em;
-    height: 10em;
-    background-color: #3997A3;
-    margin-left: 0;
-    width: 80%;
-}
-
-
-
-
-@media (min-width: 800px) and (max-width: 1280px) and (orientation: landscape) {
-
-    .titreAccueil h1 {
-        font-size: x-large;
-    }
-
-    h1, h2 {
-        font-size: larger;
-    }
-
-    .sectionPanier h2 {
-        font-size: 1em;
-    }
-
-    .sectionCredit input[type="submit"] {
-        font-size: large;
-    }
-
-    header h2, label, a, figcaption, .liCategorie a, .h3PasArticlePanier h3, .sectionPanier .h3PasArticlePanier {
-        font-size: medium;
-    }
-
-    p, .divSuivi h3 {
-        font-size: small;
-    }
 }
 
 /*
@@ -2019,4 +1939,36 @@ a.fleche-page{
 
 .labelCB {
     margin-bottom: 1%;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                             Media query font sizes                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+@media (min-width: 800px) and (max-width: 1280px) and (orientation: landscape) {
+
+    .titreAccueil h1 {
+        font-size: x-large;
+    }
+
+    h1, h2 {
+        font-size: larger;
+    }
+
+    .sectionPanier h2 {
+        font-size: 1em;
+    }
+
+    .sectionCredit input[type="submit"] {
+        font-size: large;
+    }
+
+    header h2, label, a, figcaption, .liCategorie a, .h3PasArticlePanier h3, .sectionPanier .h3PasArticlePanier {
+        font-size: medium;
+    }
+
+    p, .divSuivi h3 {
+        font-size: small;
+    }
 }

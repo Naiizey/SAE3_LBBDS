@@ -719,7 +719,7 @@ header ul {
     height: 10em;
 }
 
-.divCredit {
+.divCredit, .divFormAdresse {
     margin: 0 30%;
 }
 
@@ -764,7 +764,8 @@ header ul {
 
 .sectionCredit input[type="text"], 
 .sectionCredit input[type="password"], 
-.sectionCredit input[type="email"] {
+.sectionCredit input[type="email"], 
+.sectionCredit textarea{
     background-color: #F3F3F3;
     margin: 1% 0 0 0;
     height: 2.5em;
@@ -783,29 +784,32 @@ header ul {
     margin: 0 1% 0 0;
 }
 
-.divCredit a {
+.divCredit a, .divFormAdresse a {
     color: #164F57;
     text-decoration: none;
     margin-left: 2px;
 }
 
-.divCredit a:hover {
+.divCredit a:hover, .divFormAdresse a:hover {
     color: #6f98bd;
 }
 
-.nomPrenom {
+.nomPrenom, .infoRue, .infoVille {
     display: flex;
     margin-top: 2%;
 }
 
-.nomPrenom > div {
+.nomPrenom > div, .infoRue > div ,.infoVille > div {
     width: 50%;
     display: flex;
     flex-direction: column;
 }
 
+
+ 
+
 /* Nom */
-.nomPrenom input {
+.nomPrenom input{
     padding: 0;
     margin: 2% 0 0 0;
     width: 90%;
@@ -828,7 +832,7 @@ header ul {
 }
 
 @media (max-width: 1000px) {
-    .divCredit {
+    .divCredit, .divFormAdresse {
         font-size: xx-large;
         margin: 0;
         padding: 10% 0;
@@ -842,7 +846,7 @@ header ul {
         padding-bottom: 1.5em;
     }
 
-    .divCredit h2 {
+    .divCredit h2, .divFormAdresse h2 {
         font-size: 1.8em;
     }
 
@@ -850,11 +854,11 @@ header ul {
         text-align: center;
     }
 
-    .nomPrenom {
+    .nomPrenom,.infoRue {
         display: block;
     }
 
-    .nomPrenom div {
+    .nomPrenom div, .infoRue div, .infoVille div {
         width: 100%;
     }
 
@@ -866,6 +870,108 @@ header ul {
         font-size: 1.3em;
     }
 }
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Form adresse                                           ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+.divFormAdresse .sectionCredit{
+    border-top: none;
+}
+.infoRue, .infoVille { 
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start ;
+    flex-wrap: wrap;
+
+}
+
+.infoRue div:first-child {
+    width: 22%;
+    min-width: 155px;
+ }
+ 
+ .infoRue div:last-child {
+     width: 75%;
+     flex-shrink: 2;
+  }
+
+.infoVille div:first-child {
+    width: 35%;
+
+}
+
+.infoVille div:nth-child(2) {
+    width: 63%;
+
+}
+
+.sectionCredit textarea{
+    resize: none;
+    font-family: "Montserrat-Regular";
+    
+    font-size: 1.2em;
+    padding: 10px 0;
+    height: 100px;
+}
+
+.surNomPrenom{
+    margin-top: 30px;
+    background-color: #D9D9D9;
+    padding: 20px;
+
+}
+
+.surNomPrenom > .nomPrenom {
+    margin-top: 0;
+}
+.divFormAdresse .onglets{
+    justify-content: space-between;
+    
+  
+}
+.divFormAdresse .onglet{
+    background-color: white;
+    width: 49.5%;
+    
+  
+}
+
+.divFormAdresse .onglet.onglet-selectionnee{
+    height: 60px;
+}
+
+.divFormAdresse .onglet:first-child{
+    border-left: solid 2px #C6C6C6;
+}
+.divFormAdresse .onglet:last-child{
+    border-right: solid 2px #C6C6C6;
+}
+
+.sauvegarder-adresse{
+    padding-top: 20px;
+}
+
+@media (max-width: 1000px) {
+
+    .infoRue, .infoVille { 
+     
+        flex-wrap: nowrap;
+    }
+    .infoRue div:first-child {
+      
+        min-width: 155px;
+     }
+}
+
+/*FIXME*/
+
+.divFormAdresse div > div > label,.divFormAdresse .sectionCredit div > div > input {
+    margin: 0;
+}
+
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -1819,9 +1925,9 @@ a.fleche-page{
 }
 
 /*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                  Page pour lister les commandes Vendeur (lstCommandesVendeur.php) ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃          Page pour lister les commandes (lstCommandesVendeur.php & lstCommandesCli.php)         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
 #divLstCommandes{
@@ -1871,27 +1977,46 @@ a.fleche-page{
 ┃                          Page détail commande (details.php)                               ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-.main-block h3 {
-    font-family: "Montserrat-Medium";
+.divPrincipaleDetail {
+    background-color: white;
 }
 
-.main-block {
-    background-color: white;
+.divPrincipaleDetail, .divDetail, .divDroiteDetail > div {
     border-radius: 3px;
+    border: solid 2px #C6C6C6;
+    padding: 1em;
+}
+
+.divDroiteDetail {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.divDetail, .divDroiteDetail > div {
+    background-color: #f3f3f3;
+    margin: 1em;
+}
+
+.divBasPageDetail {
+    display: flex;
+    justify-content: space-between;
 }
 
 .bar {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 3em;
 }
 
 .buttonProgress {
     position: absolute;
     display: flex;
     justify-content: space-between;
-    width: 88%;
+    width: 100%;
 }
 
 .point-ok {
@@ -1911,7 +2036,7 @@ a.fleche-page{
 progress {
     background-color: #C04444;
     height: 10px;
-    width: 90%;
+    width: 100%;
     border: none;
 }
 

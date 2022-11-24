@@ -85,7 +85,7 @@ $routes->set404Override();
 
     $routes->get('/destroy', 'Test::destroySession');
 
-    $routes->get('/commandes', 'Home::commandeTest',['filter' => 'connexion']);
+    $routes->get('/commandes', 'Home::lstCommandesCli',['filter' => 'connexion']);
 
     $routes->get('/commandes/detail/(:num)','Commandes::detail/$1',);//['filter' => 'connexion']
 

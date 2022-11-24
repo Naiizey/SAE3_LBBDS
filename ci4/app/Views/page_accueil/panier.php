@@ -69,8 +69,8 @@
                             echo                   '</select>
                                                     <a href="'.base_url()."/panier/supprimer/$produit->idProd".'">Supprimer</a>
                                                 </div>
-                                                <h3>TTC: <span class="prixTtc" prix="'. $produit -> prixTtc .'" >'. $produit -> prixTtc .'€</span> </h3>
                                                 <h3>HT: <span class="prixHt" prix="'. $produit -> prixHt .'" >'. $produit -> prixHt .'€</span> </h3>
+                                                <h3>TTC: <span class="prixTtc" prix="'. $produit -> prixTtc .'" >'. $produit -> prixTtc .'€</span> </h3>
                                         </article>';
                         }                
                         echo       '    <hr>

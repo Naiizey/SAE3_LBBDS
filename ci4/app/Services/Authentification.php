@@ -56,7 +56,7 @@ class Authentification
             {
                 $errors[1]="Remplissez le(s) champs vide(s)";
             }
-            if(strlen($entree->nom) > 50 && strlen($entree->prenom) > 50)
+            if(strlen($entree->nom) > 50 || strlen($entree->prenom) > 50)
             {
                 $errors[2]= "50 caractères maximum pour le nom (" . strlen($entree->prenom) . " actuellement) et/ou prénom (" . strlen($entree->nom) . " actuellement)";
             } 
@@ -64,7 +64,7 @@ class Authentification
             {
                 $errors[3]="30 caractères maximum pour le pseudo (" .strlen($entree->pseudo) . " actuellement)";
             } 
-            if(!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) && strlen($entree->email)<255) 
+            if(!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) || strlen($entree->email) > 255) 
             {
                 $errors[4]="255 caractères maximum pour l'email et caractère spéciaux interdits";
             }
@@ -116,14 +116,14 @@ class Authentification
             {
                 $errors[1]="Remplissez le(s) champs vide(s)";
             }
-            if(strlen($entree->nom) > 50 && strlen($entree->prenom) > 50)
+            if(strlen($entree->nom) > 50 || strlen($entree->prenom) > 50)
             {
                 $errors[2]= "50 caractères maximum pour le nom (" . strlen($entree->prenom) . " actuellement) et/ou prénom (" . strlen($entree->nom) . " actuellement)";
             }
             if (($entree->motDePasse != "motDePassemotDePasse") && !empty($verifMdp) && !empty($nouveauMdp)) 
             {
                 //Le controlleur nous informe par ces valeurs que l'utilisateur a cherché à modifier le mdp, il faut donc tout vérifier
-                if(!$entree->verifCrypt($entree->motDePasse))
+                if($compteModel->getClientByPseudo($entree -> pseudo, $entree -> motDePasse) == null)
                 {
                     $errors[3]="Ceci n'est pas votre ancien mot de passe";
                 }

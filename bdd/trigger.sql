@@ -8,7 +8,7 @@ END
 $$
 language plpgsql;
 --DROP TRIGGER csvImport ON produitCSV;
-/* CREATE OR REPLACE TRIGGER csvImport INSTEAD OF INSERT ON produitcsv FOR EACH ROW EXECUTE PROCEDURE csvImport();*/
+/* CREATE tRIGGER csvImport INSTEAD OF INSERT ON produitcsv FOR EACH ROW EXECUTE PROCEDURE csvImport();*/
 
 CREATE OR REPLACE FUNCTION deleteProduitPanier() RETURNS TRIGGER AS
     $$
@@ -18,8 +18,8 @@ CREATE OR REPLACE FUNCTION deleteProduitPanier() RETURNS TRIGGER AS
 
     end;
     $$ language plpgsql;
-CREATE OR REPLACE TRIGGER insteadOfDelete_produit_panier INSTEAD OF DELETE ON produit_panier_compte FOR EACH ROW EXECUTE PROCEDURE deleteProduitPanier();
-CREATE OR REPLACE TRIGGER insteadOfDelete_produit_panier INSTEAD OF DELETE ON produit_panier_visiteur FOR EACH ROW EXECUTE PROCEDURE deleteProduitPanier();
+CREATE tRIGGER insteadOfDelete_produit_panier INSTEAD OF DELETE ON produit_panier_compte FOR EACH ROW EXECUTE PROCEDURE deleteProduitPanier();
+CREATE tRIGGER insteadOfDelete_produit_panier INSTEAD OF DELETE ON produit_panier_visiteur FOR EACH ROW EXECUTE PROCEDURE deleteProduitPanier();
 
 
 CREATE OR REPLACE FUNCTION insertProduitPanier() RETURNS TRIGGER AS
@@ -34,7 +34,7 @@ CREATE OR REPLACE FUNCTION insertProduitPanier() RETURNS TRIGGER AS
 
     end;
     $$ language plpgsql;
-CREATE OR REPLACE TRIGGER insteadOfInsert_produit_panier INSTEAD OF INSERT ON produit_panier_compte FOR EACH ROW EXECUTE PROCEDURE insertProduitPanier ();
+CREATE tRIGGER insteadOfInsert_produit_panier INSTEAD OF INSERT ON produit_panier_compte FOR EACH ROW EXECUTE PROCEDURE insertProduitPanier ();
 
 CREATE OR REPLACE FUNCTION insertProduitPanierVisiteur() RETURNS TRIGGER AS
     $$
@@ -48,7 +48,7 @@ CREATE OR REPLACE FUNCTION insertProduitPanierVisiteur() RETURNS TRIGGER AS
 
     end;
     $$ language plpgsql;
-CREATE OR REPLACE TRIGGER insteadOfInsert_produit_visiteur INSTEAD OF INSERT ON produit_panier_visiteur FOR EACH ROW EXECUTE PROCEDURE insertProduitPanierVisiteur ();
+CREATE tRIGGER insteadOfInsert_produit_visiteur INSTEAD OF INSERT ON produit_panier_visiteur FOR EACH ROW EXECUTE PROCEDURE insertProduitPanierVisiteur ();
 
 CREATE OR REPLACE FUNCTION updateProduitPanier() RETURNS TRIGGER AS
     $$
@@ -62,7 +62,7 @@ CREATE OR REPLACE FUNCTION updateProduitPanier() RETURNS TRIGGER AS
 
     end;
     $$ language plpgsql;
-CREATE OR REPLACE TRIGGER updateOfInsert_produit_panier INSTEAD OF UPDATE ON produit_panier_compte FOR EACH ROW EXECUTE PROCEDURE updateProduitPanier ();
+CREATE tRIGGER updateOfInsert_produit_panier INSTEAD OF UPDATE ON produit_panier_compte FOR EACH ROW EXECUTE PROCEDURE updateProduitPanier ();
 
 CREATE OR REPLACE FUNCTION updateProduitPanierVisiteur() RETURNS TRIGGER AS
     $$
@@ -76,7 +76,7 @@ CREATE OR REPLACE FUNCTION updateProduitPanierVisiteur() RETURNS TRIGGER AS
 
     end;
     $$ language plpgsql;
-CREATE OR REPLACE TRIGGER updateOfInsert_produit_panier_visiteur INSTEAD OF UPDATE ON produit_panier_visiteur FOR EACH ROW EXECUTE PROCEDURE updateProduitPanierVisiteur ();
+CREATE tRIGGER updateOfInsert_produit_panier_visiteur INSTEAD OF UPDATE ON produit_panier_visiteur FOR EACH ROW EXECUTE PROCEDURE updateProduitPanierVisiteur ();
 /*
 CREATE OR REPLACE FUNCTION transvasagePanier(entree_num_panier int, entree_num_compte int) RETURNS INT AS
     $$

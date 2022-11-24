@@ -250,6 +250,10 @@ class Home extends BaseController
                 }
             }
         }
+
+        if(empty($data['prods'])){
+            return view('errors/html/error_404.php', array('message' => "Aucun produit disponible avec les critères sélectionnés"));
+        }
         
         if(isset($filters)){
             $filtersInline = "";

@@ -83,6 +83,7 @@
 </main>
 <?php require("page_accueil/footer.php"); ?>
 <script>
+    cataloguePrice();
     boutonCliquable(
         document.querySelector(".mobile-ouvrir-filtres"),
         () => {

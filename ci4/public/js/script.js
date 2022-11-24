@@ -3,81 +3,84 @@
 ┃                                    Footer                                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-const footerLiList = document.querySelectorAll('footer li');
-const burger = footerLiList[footerLiList.length-1];
-const menu = document.querySelector('footer ul > div');
+function footer(){
+    const footerLiList = document.querySelectorAll('footer li');
+    const burger = footerLiList[footerLiList.length-1];
+    const menu = document.querySelector('footer ul > div');
 
-burger.addEventListener('click', () => {if(menu.classList.contains('menu')){menu.classList.remove('menu');menu.style['display']='none'}else{menu.classList.add('menu');menu.style['display']='flex'}});
-
+    burger.addEventListener('click', () => {if(menu.classList.contains('menu')){menu.classList.remove('menu');menu.style['display']='none'}else{menu.classList.add('menu');menu.style['display']='flex'}});
+}
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                   Caroussel                                     ┃
+┃                           Carrousel                                ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-// Variable qui stock l'index de l'image
-let curSlide = 0;
-const slides = document.querySelectorAll(".slide");
-let nbSlide = slides.length;
-const carouselContainer = document.getElementById("carousel");
-if (carouselContainer)//verifi si il existe
-{
+function carrousel(){
+    // Variable qui stock l'index de l'image
+    let curSlide = 0;
+    const slides = document.querySelectorAll(".slide");
+    let nbSlide = slides.length;
+    const carouselContainer = document.getElementById("carousel");
+    if (carouselContainer)//verifi si il existe
+    {
 
 
 
-    const nextSlide = document.querySelector(".btn-suiv");
-    let windowWidth = Math.round(carouselContainer.offsetWidth);
-    const prevSlide = document.querySelector(".btn-prev");
-    let scrollValue = (carouselContainer.scrollLeft-40);
-    var autoScrollCar = setInterval(autoScroll, 5000);
+        const nextSlide = document.querySelector(".btn-suiv");
+        let windowWidth = Math.round(carouselContainer.offsetWidth);
+        const prevSlide = document.querySelector(".btn-prev");
+        let scrollValue = (carouselContainer.scrollLeft-40);
+        var autoScrollCar = setInterval(autoScroll, 5000);
 
-    function scrollToSlide(slide) {
-        windowWidth = Math.round(carouselContainer.offsetWidth);
-        carouselContainer.scroll((windowWidth) * slide, 0)
+        function scrollToSlide(slide) {
+            windowWidth = Math.round(carouselContainer.offsetWidth);
+            carouselContainer.scroll((windowWidth) * slide, 0)
+        }
+
+        // Ajout d'un event listener au clic du bouton afin de déplacer les images vers la droite
+        nextSlide.addEventListener("click", function () {
+            clearInterval(autoScrollCar);
+            autoScrollCar = setInterval(autoScroll, 5000);
+            if (curSlide === (nbSlide-1)) {
+                scrollToSlide(0);
+            } else {
+                curSlide++;
+                scrollToSlide(curSlide);
+            }
+        });
+
+        // selection de la slide précedente
+
+        // Ajout d'un event listener au clic du bouton afin de déplacer les images vers la gauche
+        prevSlide.addEventListener("click", function () {
+            clearInterval(autoScrollCar);
+            autoScrollCar = setInterval(autoScroll, 5000);
+            if (curSlide === 0) {
+                scrollToSlide(nbSlide-1);
+            } else {
+                curSlide--;
+                scrollToSlide(curSlide);
+            }
+        });
+
+        // ajout d'un event listener au scroll dans le carousel
+        carouselContainer.addEventListener("scroll", (event) => {
+            scrollValue = (carouselContainer.scrollLeft-40);
+            windowWidth = Math.round(carouselContainer.offsetWidth);
+            curSlide = Math.round(scrollValue/windowWidth);
+        });
+
+
+        function autoScroll() {
+            if (curSlide === (nbSlide-1)) {
+                scrollToSlide(0);
+            } else {
+                curSlide++;
+                scrollToSlide(curSlide);
+            }
+        }
+
     }
-
-    // Ajout d'un event listener au clic du bouton afin de déplacer les images vers la droite
-    nextSlide.addEventListener("click", function () {
-        clearInterval(autoScrollCar);
-        autoScrollCar = setInterval(autoScroll, 5000);
-        if (curSlide === (nbSlide-1)) {
-            scrollToSlide(0);
-        } else {
-            curSlide++;
-            scrollToSlide(curSlide);
-        }
-    });
-
-    // selection de la slide précedente
-
-    // Ajout d'un event listener au clic du bouton afin de déplacer les images vers la gauche
-    prevSlide.addEventListener("click", function () {
-        clearInterval(autoScrollCar);
-        autoScrollCar = setInterval(autoScroll, 5000);
-        if (curSlide === 0) {
-            scrollToSlide(nbSlide-1);
-        } else {
-            curSlide--;
-            scrollToSlide(curSlide);
-        }
-    });
-
-    // ajout d'un event listener au scroll dans le carousel
-    carouselContainer.addEventListener("scroll", (event) => {
-        scrollValue = (carouselContainer.scrollLeft-40);
-        windowWidth = Math.round(carouselContainer.offsetWidth);
-        curSlide = Math.round(scrollValue/windowWidth);
-    });
-
-
-    function autoScroll() {
-        if (curSlide === (nbSlide-1)) {
-            scrollToSlide(0);
-        } else {
-            curSlide++;
-            scrollToSlide(curSlide);
-        }
-    }
-
 }
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -85,27 +88,28 @@ if (carouselContainer)//verifi si il existe
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+function dragNDrop(){
+    let target = document.getElementById('dropzone');
+    let body = document.body;
+    let fileInput = document.getElementById("file");
 
-let target = document.getElementById('dropzone');
-let body = document.body;
-let fileInput = document.getElementById("file");
+    if(target){
+        target.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            body.classList.add('dragging');
+          });
 
-if(target){
-    target.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        body.classList.add('dragging');
-      });
-      
-      target.addEventListener('dragleave', () => {
-        body.classList.remove('dragging');
-      });
-      
-      target.addEventListener('drop', (e) => {
-        e.preventDefault();
-        body.classList.remove('dragging');
-        
-        fileInput.files = e.dataTransfer.files;
-      });
+          target.addEventListener('dragleave', () => {
+            body.classList.remove('dragging');
+          });
+
+          target.addEventListener('drop', (e) => {
+            e.preventDefault();
+            body.classList.remove('dragging');
+
+            fileInput.files = e.dataTransfer.files;
+          });
+    }
 }
 
 
@@ -247,124 +251,180 @@ function updatePriceTotal() {
 ┃                           Liens aux lignes de lstCommandes                          ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+function lstCommandes(){
+    var lignes=document.getElementsByClassName("lignesCommandes");
+    var numCommandes=document.getElementsByClassName("numCommandes");
 
-var lignes=document.getElementsByClassName("lignesCommandes");
-var numCommandes=document.getElementsByClassName("numCommandes");
-
-for (let numLigne of lignes) {
-    var ligneA=lignes.item(numLigne);
-    var commandeA=numCommandes[numLigne];
-    ligneA.addEventListener("click", lienLigne);
+    for (let numLigne of lignes) {
+        var ligneA=lignes.item(numLigne);
+        var commandeA=numCommandes[numLigne];
+        ligneA.addEventListener("click", lienLigne);
+    }
+    /*
+    function lienLigne(element) {
+        window.location.href = `/commande/${(commandeA.textContent)}`;
+    }
+    */
 }
-/*
-function lienLigne(element) {
-    window.location.href = `/commandes/details/${(commandeA.textContent)}`;
-}
-*/
-
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                      CGU                                        ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-var lienCGU = document.getElementsByClassName("lienCGU");
-lienCGU[0].addEventListener("click", affichageCGU);
-var mentionsLegales = document.getElementsByClassName("mentionsLegales")[0];
+function cgu(){
+    var lienCGU = document.getElementsByClassName("lienCGU");
+    lienCGU[0].addEventListener("click", affichageCGU);
+    var mentionsLegales = document.getElementsByClassName("mentionsLegales")[0];
 
-function affichageCGU(event) {
-    event.preventDefault();
-    let flou = document.querySelectorAll("main>*, header>*, footer>*");
-    let page = document.querySelector("html");
+    function affichageCGU(event) {
+        event.preventDefault();
+        let flou = document.querySelectorAll("main>*, header>*, footer>*");
+        let page = document.querySelector("html");
 
-    if (mentionsLegales.style.display == "none") {
-        mentionsLegales.style.display = "block";
-        page.style.overflow = "hidden";
-        page.style.pointerEvents = "none";
-        window.scrollTo({top: 0, behavior: 'smooth'});
-        mentionsLegales.scrollTo({top: 0, behavior: 'auto'});
+        if (mentionsLegales.style.display == "none") {
+            mentionsLegales.style.display = "block";
+            page.style.overflow = "hidden";
+            page.style.pointerEvents = "none";
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            mentionsLegales.scrollTo({top: 0, behavior: 'auto'});
 
-        for (let index = 0; index < flou.length; index++) {
-            flou[index].style.filter = "blur(4px)";
-            mentionsLegales.style.filter = "blur(0)";
+            for (let index = 0; index < flou.length; index++) {
+                flou[index].style.filter = "blur(4px)";
+                mentionsLegales.style.filter = "blur(0)";
+            }
+            document.getElementsByClassName("fermerCGU").addEventListener("blur", affichageCGU);
         }
-        document.getElementsByClassName("fermerCGU").addEventListener("blur", affichageCGU);
     }
-}
 
-var boutonML = document.getElementsByClassName("remonterCGU")[0];
-boutonML.addEventListener("click", function(e) {
-    mentionsLegales.scrollTo({top: 0, behavior: 'smooth'});
-});
-//TODO : bouton scroll back en sticky en bas à gauche du bloc        
+    var boutonML = document.getElementsByClassName("remonterCGU")[0];
+    boutonML.addEventListener("click", function(e) {
+        mentionsLegales.scrollTo({top: 0, behavior: 'smooth'});
+    });
+    //TODO : bouton scroll back en sticky en bas à gauche du bloc    
+}    
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                  Espace Client                                  ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+function espaceCli(){
+    var inputModifsCli = document.querySelectorAll(".divInputEtLien input");
+    var labelModifsCli = document.querySelectorAll(".mainEspaceCli label");
+    var divModifsCli = document.querySelectorAll(".mainEspaceCli .divInputEtLien");
+    var lienModifsCli = document.querySelectorAll(".divInputEtLien a");
+    var ancienMdp = document.getElementsByClassName("labelAncienMdp")[0];
+    ancienMdp.innerHTML = "Votre mot de passe :";
 
-var inputModifsCli = document.querySelectorAll(".divInputEtLien input");
-var labelModifsCli = document.querySelectorAll(".mainEspaceCli label");
-var divModifsCli = document.querySelectorAll(".mainEspaceCli .divInputEtLien");
-var lienModifsCli = document.querySelectorAll(".divInputEtLien a");
-var ancienMdp = document.getElementsByClassName("labelAncienMdp")[0];
-ancienMdp.innerHTML = "Votre mot de passe :";
+    var divCacheModifsCli = document.getElementsByClassName("cacheModifMdp");
 
-var divCacheModifsCli = document.getElementsByClassName("cacheModifMdp");
+    lienModifsCli[0].addEventListener("click", function (event) {
+        event.preventDefault();
+        inputModifsCli[1].disabled = false;
+        inputModifsCli[1].focus();
+    });
 
-lienModifsCli[0].addEventListener("click", function (event) {
-    event.preventDefault();
-    inputModifsCli[1].disabled = false;
-    inputModifsCli[1].focus();
-});
+    lienModifsCli[1].addEventListener("click", function (event) {
+        event.preventDefault();
+        inputModifsCli[2].disabled = false;
+        inputModifsCli[2].focus();
+    });
 
-lienModifsCli[1].addEventListener("click", function (event) {
-    event.preventDefault();
-    inputModifsCli[2].disabled = false;
-    inputModifsCli[2].focus();
-});
-
-lienModifsCli[2].addEventListener("click", function (event) {
-    event.preventDefault();
-    if (ancienMdp.innerHTML == "Votre mot de passe :") 
-    {
-        while (divCacheModifsCli.length)
+    lienModifsCli[2].addEventListener("click", function (event) {
+        event.preventDefault();
+        if (ancienMdp.innerHTML == "Votre mot de passe :") 
         {
-            divCacheModifsCli[0].classList.remove("cacheModifMdp");
+            while (divCacheModifsCli.length)
+            {
+                divCacheModifsCli[0].classList.remove("cacheModifMdp");
+            }
+
+            ancienMdp.innerHTML = "Entrez votre ancien mot de passe";
+            inputModifsCli[4].value = "";
+            inputModifsCli[4].disabled = false;
+            inputModifsCli[4].focus();
+            inputModifsCli[5].required = true;
+            inputModifsCli[6].required = true;
         }
+        else 
+        {
+            inputModifsCli[5].value = "";
+            inputModifsCli[6].value = "";
+            inputModifsCli[5].classList.add("cacheModifMdp");
+            inputModifsCli[6].classList.add("cacheModifMdp");
+            labelModifsCli[5].classList.add("cacheModifMdp");
+            labelModifsCli[6].classList.add("cacheModifMdp");
+            divModifsCli[5].classList.add("cacheModifMdp");
+            divModifsCli[6].classList.add("cacheModifMdp");
+            inputModifsCli[5].required = false;
+            inputModifsCli[6].required = false;
 
-        ancienMdp.innerHTML = "Entrez votre ancien mot de passe";
-        inputModifsCli[4].value = "";
-        inputModifsCli[4].disabled = false;
-        inputModifsCli[4].focus();
-        inputModifsCli[5].required = true;
-        inputModifsCli[6].required = true;
-    }
-    else 
-    {
-        inputModifsCli[5].value = "";
-        inputModifsCli[6].value = "";
-        inputModifsCli[5].classList.add("cacheModifMdp");
-        inputModifsCli[6].classList.add("cacheModifMdp");
-        labelModifsCli[5].classList.add("cacheModifMdp");
-        labelModifsCli[6].classList.add("cacheModifMdp");
-        divModifsCli[5].classList.add("cacheModifMdp");
-        divModifsCli[6].classList.add("cacheModifMdp");
-        inputModifsCli[5].required = false;
-        inputModifsCli[6].required = false;
-
-        ancienMdp.innerHTML = "Votre mot de passe :";
-        inputModifsCli[4].value = "motDePassemotDePasse";
-        inputModifsCli[4].disabled = true;
-    }
-});
+            ancienMdp.innerHTML = "Votre mot de passe :";
+            inputModifsCli[4].value = "motDePassemotDePasse";
+            inputModifsCli[4].disabled = true;
+        }
+    });
+}
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                   Catalogue                                     ┃
+┃                       Catalogue                                   ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+function cataloguePrice(){
+    const rangeInput = document.querySelectorAll(".range-input input"),
+    priceInput = document.querySelectorAll(".price-range input:not(.range-input input)"),
+    range = document.querySelector(".slider .progress");
+    let priceGap = 100;
+
+    priceInput.forEach(() => {
+        window.addEventListener("load", fctPriceInput);
+    });
+    rangeInput.forEach(() => {
+        window.addEventListener("load", fctRangeInput);
+    });
+
+    priceInput.forEach((input) => {
+        input.addEventListener("input", fctPriceInput);
+    });
+    rangeInput.forEach((input) => {
+        input.addEventListener("input", fctRangeInput);
+    });
+
+    function fctPriceInput(e){
+        let minPrice = parseInt(priceInput[0].value),
+        maxPrice = parseInt(priceInput[1].value);
+        if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
+            if (e.target.id === "prix_min") {
+                rangeInput[0].value = minPrice;
+                range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
+                console.log(minPrice + " | " + maxPrice);
+            } else if(e.target.id === "prix_max") {
+                rangeInput[1].value = maxPrice;
+                range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+            }
+        }
+    }
+
+    function fctRangeInput(e){
+        let minVal = parseInt(rangeInput[0].value),
+        maxVal = parseInt(rangeInput[1].value);
+        if (maxVal - minVal < priceGap) {
+        if (e.target.className === "range-min") {
+            rangeInput[0].value = maxVal - priceGap;
+        } else {
+            rangeInput[1].value = minVal + priceGap;
+        }
+        } else {
+            priceInput[0].value = minVal;
+            priceInput[1].value = maxVal;
+            range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+            range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+        }
+    }
+}
+
 
 function boutonCliquable(bouton,action){
     
@@ -376,13 +436,3 @@ function switchEtatFiltre(list){
         n.classList.toggle("est-filtre-ouvert");
     }
 }
-
-/*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                  Recherche                                      ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
-    const rechercher = document.getElementsByClassName()[0]
-
-    rechercher.value = get

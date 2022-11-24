@@ -102,6 +102,7 @@ header h2, header nav {
 
 .divPanierProfil {
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: space-between;
     height: 100%;
@@ -118,9 +119,21 @@ header h2, header nav {
     height: 100%;   
 }
 
-.logoProfil, .logoAlizon{
+.logoProfil, .logoAlizon, .logoPanier{
     height: 70%;
     width: auto;
+}
+
+.quantPanier {
+    position: absolute;
+    left: 3.3rem;
+    bottom: .5rem;
+    border-radius: 50%;
+    border: black;
+    width: 1.5rem;
+    height: 1.5rem;
+    text-align: center;
+    background-color: #3997a3;
 }
 
 path{
@@ -150,7 +163,7 @@ path{
     color: #6f98bd;
 }
 
-.lienConnexion {
+.lienConnexion, .lienHPanier{
     height: 100%;
     display: flex;
     align-items: center;
@@ -474,13 +487,13 @@ div.bloc-erreurs {
 .paragraphe-erreur {
     color: red;
     margin-bottom: 0;
-    text-align:justify;
+    text-align: left;
 }
 
 .paragraphe-valid {
     color: #24a064;
     margin-bottom: 0;
-    text-align: justify;
+    text-align: left;
 }
 
 /*
@@ -801,7 +814,7 @@ header ul {
 /* Prénom */
 .nomPrenom > div + div > input {
     padding: 0;
-    width: 100%;
+    width: auto;
 }
 
 .divSouvenir {
@@ -1297,6 +1310,7 @@ main a.card-produit-ext:hover{
     width: 100%;
     height: 55%;
     border-radius: 8.47px 8.47px 0 0;
+    background-size: cover;
 }
 .notation-card{
     background-color: rgba(0, 0, 0, 61%);
@@ -1354,6 +1368,34 @@ main#Catalogue{
     min-height: 100%;  
 }
 
+.onglets + form{
+    background-color: #EFECEC;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    padding-bottom: 3%;
+}
+
+.onglets + form button{
+    background-color: #24a064;
+    color: white;
+    border: none;
+    width: 65%;
+    height: 3em;
+    border-radius: .5em;
+    align-self: center;
+}
+
+.onglets + form button:hover{
+    background-color: #164F57;
+}
+
+.liste-produits{
+    display: flex;
+    flex-wrap: wrap; 
+    align-content: flex-start;   
+}
+
 .liste-produits{
     display: flex;
     flex-wrap: wrap; 
@@ -1367,12 +1409,104 @@ main#Catalogue{
     padding-left: 5%;
 }
 
+.categorie-catalogue summary ~ div label{
+    cursor: pointer;
+    width: auto;
+}
+
 .categorie-catalogue summary ~ div label h3{
     text-align: left;
+    color: #164F57
 }
 
 .categorie-catalogue summary ~ div label h3::first-letter{
     text-transform: uppercase;
+}
+
+.prix{
+    width: 80%;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+.prix > label{
+    align-self: flex-start;
+}
+
+.price-range{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.price-range input[type="number"]{
+    width: 15%;
+    border: none;
+    text-align: center;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    border: 1px solid #164F57;
+    border-radius: .5em;
+}
+
+.slider{
+    align-self: center;
+    width: 60%;
+    height: .5em;
+    position: relative;
+    background: #ddd;
+    border-radius: 5px;
+}
+
+.slider .progress {
+    height: 100%;
+    left: 1%;
+    right: 1%;
+    position: absolute;
+    border-radius: 5px;
+    background: #17a2b8;
+}
+.range-input {
+    position: relative;
+    height: 100%;
+}
+
+.range-input input {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: -.5em;
+    background: none;
+    pointer-events: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    height: 1em;
+    width: 1em;
+    border-radius: 50%;
+    background: #17a2b8;
+    pointer-events: auto;
+    -webkit-appearance: none;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+input[type="range"]::-moz-range-thumb {
+    height: 1em;
+    width: 1em;
+    border: none;
+    border-radius: 50%;
+    background: #17a2b8;
+    pointer-events: auto;
+    -moz-appearance: none;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+.liste-filtre .categorie-catalogue + label{
+    width: 35%;
 }
 
 .liste-filtre{  
@@ -1737,113 +1871,54 @@ a.fleche-page{
 ┃                          Page détail commande (details.php)                               ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+.main-block h3 {
+    font-family: "Montserrat-Medium";
+}
 
-.detail-cmd,.main-block {
+.main-block {
+    background-color: white;
+    border-radius: 3px;
+}
+
+.bar {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 95%;
-    height: 95%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #E7E8E6;
-    border-radius: 15px;
-    padding: 0%;
 }
 
-.detail-cmd,.secondary-block {
-    background-color:#D1D1D1;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 15px;
+.buttonProgress {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 88%;
 }
 
-.detail-cmd,.wht-line
-{
-    border: 0px;
-    background-color: #E7E8E6;
-    height: 8px;
-    border-radius: 10px;
-}
-
-.detail-cmd,.blk-line
-{
-    border: 0px;
-    background-color: #404E58;
-    height: 8px;
-    border-radius: 10px;
-}
-
-.detail-cmd,.point-ok {
+.point-ok {
     background-color: #55C044;
     border-radius: 50%;
     width: 2em;
     height: 2em;
-    margin-left: 10em;
 }
 
-.detail-cmd,.point-ko {
+.point-ko {
     background-color: #C04444;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 2em;
+    height: 2em;
 }
 
-.detail-cmd,.progress-bar-ok {
-    background-color: #55C044;
-    border-radius: 5px;
-    height: 10px;
-    display: flex;
-}
-
-.detail-cmd,.progress-bar-ko {
+progress {
     background-color: #C04444;
-    border-radius: 5px;
     height: 10px;
+    width: 90%;
+    border: none;
 }
 
-.detail-cmd,.button 
-{
-    background-color: #164F57;
-    border-radius: 5px;
-}
-
-.detail-cmd,#bar {
-    margin-top:  1em;
-    height: 10em;
-    background-color: #3997A3;
-    margin-left: 0;
-    width: 80%;
-}
-
-
-
-@media (min-width: 800px) and (max-width: 1280px) and (orientation: landscape) {
-
-    .titreAccueil h1 {
-        font-size: x-large;
-    }
-
-    h1, h2 {
-        font-size: larger;
-    }
-
-    .sectionPanier h2 {
-        font-size: 1em;
-    }
-
-    .sectionCredit input[type="submit"] {
-        font-size: large;
-    }
-
-    header h2, label, a, figcaption, .liCategorie a, .h3PasArticlePanier h3, .sectionPanier .h3PasArticlePanier {
-        font-size: medium;
-    }
-
-    p, .divSuivi h3 {
-        font-size: small;
-    }
+progress::-moz-progress-bar 
+{ 
+    background: #55C044;
+    height: 10px;
 }
 
 /*
@@ -1978,12 +2053,56 @@ a.fleche-page{
 ┃                             Paiement (paiement.php)                             ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+.conteneurCB {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+  
+.conteneurCB svg {
+    position: absolute;
+    right: 2%;
+    width: 2em;
+    height: 2em;
+}
+  
+.conteneurCB input {
+    width: 100%;
+    margin: 0 !important;
+}
 
-.test {
-    /*
-    background: url(../images/header/paiement.svg) no-repeat;
-    background-size: 2em;
-    background-position: 98%;
-    backgr
-    */
+.labelCB {
+    margin-bottom: 1%;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                             Media query font sizes                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+@media (min-width: 800px) and (max-width: 1280px) and (orientation: landscape) {
+
+    .titreAccueil h1 {
+        font-size: x-large;
+    }
+
+    h1, h2 {
+        font-size: larger;
+    }
+
+    .sectionPanier h2 {
+        font-size: 1em;
+    }
+
+    .sectionCredit input[type="submit"] {
+        font-size: large;
+    }
+
+    header h2, label, a, figcaption, .liCategorie a, .h3PasArticlePanier h3, .sectionPanier .h3PasArticlePanier {
+        font-size: medium;
+    }
+
+    p, .divSuivi h3 {
+        font-size: small;
+    }
 }

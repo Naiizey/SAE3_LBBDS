@@ -91,6 +91,8 @@ $routes->set404Override();
     $routes->get('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
     $routes->options('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
 
+    $routes->get('/livraison','Home::infoLivraison');
+
     if(session()->has("numero")){
         $routes->get('/espaceClient', 'EspaceClient::index');
         $routes->post('/espaceClient', 'EspaceClient::index');

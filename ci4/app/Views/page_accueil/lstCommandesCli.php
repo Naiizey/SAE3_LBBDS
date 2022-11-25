@@ -32,3 +32,7 @@
         </div>
     </main>
 <?php require("footer.php");?>
+<script>
+    var base_url = '<?= base_url() ?>';
+    lstCommandes();
+</script>

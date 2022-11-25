@@ -14,7 +14,6 @@ class Home extends BaseController
 
     public function index()
     {
-
         if(session()->has("just_connectee") && session()->get("just_connectee")==true){
             
             session()->set("just_connectee",False);
@@ -30,11 +29,10 @@ class Home extends BaseController
         return view('page_accueil/index.php',$data);
     }
 
-    public function connexion($context= null)
+    public function connexion()
     {
         $post=$this->request->getPost();
         $issues=[];
-        
         
         if(!empty($post))
         {
@@ -43,21 +41,36 @@ class Home extends BaseController
             $user->fill($post);
             $issues=$auth->connexion($user); 
 
-            if(empty($issues) && is_null($context)) 
+            if(empty($issues) && !session()->has("referer_redirection")) 
             {
                 return redirect()->to("/");
             }
-            else if(empty($issues) && !is_null($context))
+            else if(empty($issues) && session()->has("referer_redirection"))
             {
-                return redirect()->to("/commandes");
+                if(parse_url(session()->get("referer_redirection")) === "panier")
+                {
+                    return redirect()->to("/commandes");
+                }
+                else
+                {
+                    return redirect()->to(session()->get("referer_redirection"));
+                }
             }
         }
 
-        if(!is_null($context) && $context==401)
+        if(session()->has("referer_redirection"))
         {
-            $issues['redirection']="Vous devez vous connectez pour valider votre commande";
-            $data['estRedirection']=True;
-            $data['controller']= "compte_redirection";
+            
+            $data['linkRedirection']=session()->get("referer_redirection");
+            if(parse_url($data['linkRedirection']) === "panier"){
+                $issues['redirection']="Vous devez vous connectez pour valider votre commande";
+                $data['controller']= "compte_redirection";
+            }
+            else{
+                $issues['redirection']="Vous devez vous connectez pour y accéder";
+                $data['controller']= "connexion";
+            }
+            
         }
         else
         {
@@ -73,39 +86,51 @@ class Home extends BaseController
         return view('page_accueil/connexion.php',$data);
     }
 
-    public function inscription($context=null)
+    public function inscription()
     {
         $post=$this->request->getPost();
         $issues=[];
-
-       
 
         if(!empty($post))
         {
             $auth = service('authentification');
             $user= new \App\Entities\Client();
             $user->fill($post);
+            
+      
             $issues=$auth->inscription($user,$post['confirmezMotDePasse']); 
 
-            if(empty($issues) && is_null($context)) 
+            if(empty($issues) && !session()->has("referer_redirection")) 
             {
                 return redirect()->to("/");
             }
-            else if(empty($issues) && !is_null($context))
+            else if(empty($issues) && session()->has("referer_redirection"))
             {
-                return redirect()->to("/commandes");
+                if(parse_url(session()->get("referer_redirection")) === "panier")
+                {
+                    return redirect()->to("/commandes");
+                }
+                else
+                {
+                    return redirect()->to(session()->get("referer_redirection"));
+                }
             }
         }
 
-        if(!is_null($context) && $context==401){
-            $issues['redirection']="Vous devez avoir un compte pour valider votre commande";
-            $data['estRedirection']=True;
-            
-            $data['controller']= "compte_redirection";
+        if(session()->has("referer_redirection")){
+            $data['linkRedirection']=session()->get("referer_redirection");
+            if(parse_url($data['linkRedirection']) === "panier"){
+                $issues['redirection']="Vous devez vous connectez pour valider votre commande";
+                $data['controller']= "compte_redirection";
+            }
+            else{
+                $issues['redirection']="Vous devez vous connectez pour accéder à cette espace";
+                $data['controller']= "inscription";
+            }
         }
         else
         {
-            $data['controller']= "connexion";
+            $data['controller']= "inscription";
         }
         
         $data['erreurs'] = $issues;
@@ -146,6 +171,7 @@ class Home extends BaseController
 
     public function panier($context = null)
     {
+        
         $data['controller']= "panier";
         if($context == 400)
         {
@@ -186,14 +212,60 @@ class Home extends BaseController
         $data['max_price'] = $modelProduitCatalogue->selectMax('prixttc')->find()[0]->prixttc;
         $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
 
-        if(empty($filters)){
-            $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
-        }
-        else{
-            foreach(array_keys($filters) as $key){
-                $data['prods'] = array_merge($data['prods'],model("\App\Models\ProduitCatalogue")->where("categorie",$key)->findAll());
+        if(isset($filters["prix_min"]) && isset($filters["prix_max"]))
+        {
+            $price = [];
+            $price = ["prix_min"=>$filters["prix_min"], "prix_max"=>$filters["prix_max"]];
+
+            array_pop($filters);
+            array_pop($filters);
+
+            $priceQuery = $modelProduitCatalogue->where('prixttc >=',$price["prix_min"])->where('prixttc <=',$price["prix_max"]);
+
+            if(empty($filters)){
+                $data['prods'] = $priceQuery->orderBy('prixttc')->findAll();
+            }
+            else{
+                foreach(array_keys($filters) as $key){
+                    $data['prods'] = array_merge($data['prods'],$modelProduitCatalogue->
+                    where('categorie',$key)->where('prixttc >=',$price["prix_min"])->
+                    where('prixttc <=',$price["prix_max"])->findAll());
+                }
             }
         }
+
+        
+        else{
+            if(empty($filters)){
+                $data['prods']=$modelProduitCatalogue->findAll();
+            }
+            else{
+                foreach(array_keys($filters) as $key){
+                    $data['prods'] = array_merge($data['prods'],$modelProduitCatalogue->where("categorie",$key)->findAll());
+                }
+            }
+        }
+
+        if(empty($data['prods'])){
+            return view('errors/html/error_404.php', array('message' => "Aucun produit disponible avec les critères sélectionnés"));
+        }
+        
+        if(isset($filters)){
+            $filtersInline = "";
+            foreach($filters as $key => $value){
+                $filtersInline .= "&".$key."=".$value;
+            }
+            $filtersInline = substr($filtersInline,0);
+            $filtersInline = "?".$filtersInline;
+        }
+
+        if(isset($price)){
+            $priceInline = "";
+            foreach($price as $key => $value){
+                $priceInline .= "&".$key."=".$value;
+            }   
+        }
+
 
         $data['nombreMaxPages']=intdiv(sizeof($data['prods']),self::NBPRODSPAGECATALOGUE)
             + ((sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE==0)?0:1);
@@ -207,7 +279,18 @@ class Home extends BaseController
         {
             if($data['nombreMaxPages']>=$page)
             {
-                $data['page']=$page;
+                if(isset($price) && isset($filters)){
+                    $data['page']=$page . "/" . $filtersInline . $priceInline;
+                }
+                else if(isset($filetrs)){
+                    $data['page']=$page . "/" . $filtersInline;
+                }
+                else if(isset($price)){
+                    $data['page']=$page . "/" . $priceInline;
+                }
+                else{
+                    $data['page']=$page;
+                }
 
                 $data['minProd']=self::NBPRODSPAGECATALOGUE*($page-1);
                 $data['maxProd']=self::NBPRODSPAGECATALOGUE*$page;
@@ -215,12 +298,91 @@ class Home extends BaseController
             }
             else return view('errors/html/error_404.php', array('message' => "Page trop haute: pas assez de produit"));
         }
-               
        
         return view("catalogue.php",$data);
     }
-    
-    public function lstCommandesCli()
+
+    public function espaceClient()
+    {
+        $data['controller'] = "EspaceClient";
+        $modelFact = model("\App\Models\ClientAdresseFacturation");
+        $modelLivr = model("\App\Models\ClientAdresseLivraison");
+        $modelClient = model("\App\Models\Client");
+        $post=$this->request->getPost();
+        $client = $modelClient->getClientById(session()->get("numero"));
+        $issues = [];
+
+        //Valeurs par défaut
+        $data['motDePasse'] = "motDePassemotDePasse";
+        $data['confirmezMotDePasse'] = "";
+        $data['nouveauMotDePasse'] = "";
+
+        //On cache par défaut les champs supplémentaires pour modifier le mdp
+        $data['classCacheDiv'] = "cacheModifMdp";
+        $data['disableInput'] = "disabled";
+        $data['requireInput'] = "";
+
+        if (!empty($post))
+        {
+            //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
+            if (!isset($post['motDePasse']))
+            {
+                $post['motDePasse'] = "motDePassemotDePasse";
+            }
+
+            //Si ces deux champs ne sont pas remplis, cela veut dire que l'utilisateur n'a pas cherché à modifier le mdp
+            if (empty($post['confirmezMotDePasse']) && empty($post['nouveauMotDePasse']))
+            {
+                //On remplit ces variables pour informer le service que nous n'avons pas besoin d'erreurs sur ces champs
+                $post['confirmezMotDePasse'] = "";
+                $post['nouveauMotDePasse'] = "";
+            }
+            else
+            {
+                //Si l'utilisateur a cherché à modifier le mdp, alors on révèle les champs
+                $data['classCacheDiv'] = "";
+                $data['disableInput'] = "";
+                $data['requireInput'] = "required";
+            }
+
+            $auth = service('authentification');
+            $user=$client;
+            $user->fill($post);
+            $issues=$auth->modifEspaceClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']); 
+            
+            if (!empty($issues))
+            {
+                //En cas d'erreur(s), on pré-remplit les champs avec les données déjà renseignées
+                $data['motDePasse'] = $post['motDePasse'];
+                $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
+                $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
+            }
+            else
+            {
+                return redirect()->to("/espaceClient");
+            }
+        }
+        
+        //Pré-remplit les champs avec les données de la base
+        $data['pseudo'] = $client->identifiant;
+        $data['prenom'] = $client->prenom;
+        $data['nom'] = $client->nom;
+        $data['email'] = $client->email;
+        $data['adresseFact'] = $modelFact->getAdresse(session()->get("numero"));
+        $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
+        $data['erreurs'] = $issues;
+
+        return view('/page_accueil/espaceClient',$data);
+    }
+
+    public function infoLivraison(){
+        
+        $data['controller']='infoLivraison';
+
+        return view('formAdresse.php',$data);
+    }
+
+    public function lstCommandes()
     {
         $data['controller']= "lstCommandesCli";
         $data['commandesCli']=model("\App\Models\lstCommandesCli")->getCompteCommandes();
@@ -234,24 +396,28 @@ class Home extends BaseController
         return view('page_accueil/lstCommandesVendeur.php', $data);
     }
 
-    public function paiement() {
+    public function paiement() 
+    {
         $post=$this->request->getPost();
         $issues=[];
         $data['controller']='paiement';
-        //appel au service de paiement
+
         if(!empty($post))
         {
-            $paiement = service('card');
-            $issues=$paiement->verifcard($post);
+            $paiement = service('authentification');
+            $issues=$paiement->paiement($post);
+
             if(empty($issues))
             {
                 return redirect()->to("/");
             }
         }
+        $data['erreurs'] = $issues;
         $data['nomCB'] = (isset($_POST['nomCB'])) ? $_POST['nomCB'] : "";
         $data['numCB'] = (isset($_POST['numCB'])) ? $_POST['numCB'] : "";
-        $data['DateExpiration'] = (isset($_POST['DateExpiration'])) ? $_POST['DateExpiration'] : "";
-        $data['CCV'] = (isset($_POST['CCV'])) ? $_POST['CCV'] : "";
+        $data['dateExpiration'] = (isset($_POST['dateExpiration'])) ? $_POST['dateExpiration'] : "";
+        $data['CVC'] = (isset($_POST['CVC'])) ? $_POST['CVC'] : "";
+
         return view('page_accueil/paiement.php', $data);
     }
     

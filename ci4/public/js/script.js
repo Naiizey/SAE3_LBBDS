@@ -309,7 +309,8 @@ function cgu(){
 ┃                                  Espace Client                                  ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-function espaceCli(){
+function espaceCli()
+{
     var inputModifsCli = document.querySelectorAll(".divInputEtLien input");
     var labelModifsCli = document.querySelectorAll(".mainEspaceCli label");
     var divModifsCli = document.querySelectorAll(".mainEspaceCli .divInputEtLien");
@@ -366,10 +367,33 @@ function espaceCli(){
         }
     });
 }
+function espaceCliAdmin() 
+{
+    console.log(this);
+    this.form = document.forms["formClient"];
+    var self = this;
+    var lienModif;
+    var ancienMdp = document.getElementsByClassName("labelAncienMdp")[0];
+    ancienMdp.innerHTML = "Votre mot de passe :";
+    
+    for (let i = 0; i < this.form.elements.length; i++)
+    {
+        lienModif = this.form.elements[i].parentNode.getElementsByTagName("a")[0];
+        
+        if (typeof lienModif !== 'undefined')
+        {
+            lienModif.addEventListener("click", function (event) {
+                event.preventDefault();
+                this.form.elements[i].disabled = false;
+                this.form.elements[i].focus();
+            });
+        }
+    }
+}
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                       Catalogue                                   ┃
+┃                                 Catalogue                                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 function cataloguePrice(){
@@ -602,24 +626,6 @@ var formAdresseConstructor = function(){
             .then(response => response.json())
             .then(response => self.afterCodePostal(response))
             .catch(error => console.error('Error:', error));   
-                
-            
-           
         }
     });
-
-
-   
-
-    
-    
-
-
-    
 }
-
-
-
-
-
-  

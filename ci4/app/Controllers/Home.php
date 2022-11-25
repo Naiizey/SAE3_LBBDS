@@ -302,7 +302,7 @@ class Home extends BaseController
         return view("catalogue.php",$data);
     }
 
-    public function espaceClient()
+    public function espaceClient($role = null)
     {
         $data['controller'] = "EspaceClient";
         $modelFact = model("\App\Models\ClientAdresseFacturation");
@@ -366,13 +366,23 @@ class Home extends BaseController
         //Pré-remplit les champs avec les données de la base
         $data['pseudo'] = $client->identifiant;
         $data['prenom'] = $client->prenom;
-        $data['nom'] = $client->nom;
+        $data['nom'] = $role;
         $data['email'] = $client->email;
         $data['adresseFact'] = $modelFact->getAdresse(session()->get("numero"));
         $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
         $data['erreurs'] = $issues;
 
-        return view('/page_accueil/espaceClient',$data);
+        $data['role'] = "";
+        if ($role == "admin")
+        {
+            $data['role'] = "admin";
+        }
+        else if ($role == null)
+        {
+            $data['role'] = "client";
+        }
+
+        return view('/page_accueil/espaceClient.php',$data);
     }
 
     public function infoLivraison(){

@@ -1242,6 +1242,9 @@ header ul {
     text-align: right;
 }
 
+h3 > .lienPasArticlePanier {
+    text-decoration: underline;
+}
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

@@ -92,6 +92,9 @@ $routes->set404Override();
     $routes->get('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
     $routes->options('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
 
+    $routes->get('/espaceClient/(admin)', 'Home::espaceClient/$1');
+    $routes->post('/espaceClient/(admin)', 'Home::espaceClient/$1');
+    
     if(session()->has("numero"))
     {
         $routes->get('/espaceClient', 'Home::espaceClient');

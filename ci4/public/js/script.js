@@ -255,16 +255,11 @@ function lstCommandes(){
     var lignes=document.getElementsByClassName("lignesCommandes");
     var numCommandes=document.getElementsByClassName("numCommandes");
 
-    for (let numLigne of lignes) {
-        var ligneA=lignes.item(numLigne);
-        var commandeA=numCommandes[numLigne];
-        ligneA.addEventListener("click", lienLigne);
+    for (let numLigne=0; numLigne<lignes.length; numLigne++){
+        let ligneA=lignes.item(numLigne);
+        let commandeA=numCommandes.item(numLigne).textContent;
+        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/commandes/detail/${commandeA}`;});
     }
-    /*
-    function lienLigne(element) {
-        window.location.href = `/commande/${(commandeA.textContent)}`;
-    }
-    */
 }
 
 /*

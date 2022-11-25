@@ -382,7 +382,7 @@ class Home extends BaseController
         return view('formAdresse.php',$data);
     }
 
-    public function lstCommandes()
+    public function lstCommandesClient()
     {
         $data['controller']= "lstCommandesCli";
         $data['commandesCli']=model("\App\Models\lstCommandesCli")->getCompteCommandes();

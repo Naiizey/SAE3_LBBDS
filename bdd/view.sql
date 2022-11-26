@@ -124,7 +124,7 @@ CREATE OR REPLACE VIEW adresse_facturation AS
     SELECT * FROM _adresse NATURAL JOIN _adresse_facturation;
 
 CREATE OR REPLACE VIEW adresse_livraison AS
-    SELECT * FROM _adresse NATURAL JOIN _adresse_livraison;
+    SELECT id_a, nom_a nom, prenom_a prenom, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, infos_comp FROM _adresse NATURAL JOIN _adresse_livraison;
 
 
 

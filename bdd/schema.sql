@@ -66,7 +66,7 @@ CREATE TABLE _adresse
 
 CREATE TABLE _adresse_livraison(
     id_adresse_livr SERIAL PRIMARY KEY,
-    infos_comp VARCHAR NOT NULL,
+    infos_comp VARCHAR,
     id_a INT NOT NULL--dans_adresse
 );
 

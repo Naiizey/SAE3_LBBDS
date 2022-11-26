@@ -107,8 +107,10 @@ CREATE OR REPLACE FUNCTION transvasagePanier(entree_num_panier int, entree_num_c
 CREATE OR REPLACE FUNCTION insertAdresseLivraison() RETURNS TRIGGER AS
     $$
     BEGIN
-        INSERT INTO sae3._adresse(nom_a,prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES (new.nom_a,new.prenom_a,new.numero_rue,new.nom_rue,new.code_postal,new.ville,new.comp_a1,new.comp_a2);
+        INSERT INTO sae3._adresse(nom_a,prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES (new.nom,new.prenom,new.numero_rue,new.nom_rue,new.code_postal,new.ville,new.comp_a1,new.comp_a2);
         INSERT INTO sae3._adresse_livraison(infos_comp, id_a) VALUES (new.infos_comp,currval('sae3._adresse_id_a_seq'));
+
+        return new;
     end
 $$ language plpgsql;
 CREATE TRIGGER insteadOfInsert_adresse_livraison INSTEAD OF INSERT ON adresse_livraison FOR EACH ROW EXECUTE PROCEDURE insertadresselivraison();
@@ -118,6 +120,8 @@ CREATE OR REPLACE FUNCTION insertAdresseFacture() RETURNS TRIGGER AS
     BEGIN
         INSERT INTO sae3._adresse(nom_a,prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES (new.nom_a,new.prenom_a,new.numero_rue,new.nom_rue,new.code_postal,new.ville,new.comp_a1,new.comp_a2);
         INSERT INTO sae3._adresse_livraison(id_a) VALUES (currval('sae3._adresse_id_a_seq'));
+
+        return new;
     end
 $$ language plpgsql;
 CREATE TRIGGER insteadOfInsert_adresse_facture INSTEAD OF INSERT ON adresse_facturation FOR EACH ROW EXECUTE PROCEDURE insertAdresseFacture();

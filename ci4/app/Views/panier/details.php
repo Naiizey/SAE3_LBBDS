@@ -6,28 +6,84 @@
                     <h2>Commande n°15263890891</h2>
                     <div class="bar">   
                         <progress class="progress-bar-ok" value="87.5" max="100"></progress>       
-                            <div class="buttonProgress">
-                            <div class="pointProgress"></div>
-                            <div class="pointProgress"></div>
-                            <div class="pointProgress"></div>
-                            <div class="pointProgress"></div>
-                            <div class="pointProgress"></div>
+                        <div class="buttonProgress">
+                            <div>
+                                <div class="pointProgress"></div>
+                                <p>Commandée</p>
+                            </div>
+                            <div>
+                                <div class="pointProgress"></div>
+                                <p>Expédiée</p>
+                            </div>
+                            <div>
+                                <div class="pointProgress"></div>
+                                <p>Plateforme régionale</p>
+                            </div>
+                            <div>
+                                <div class="pointProgress"></div>
+                                <p>Plateforme Locale</p>
+                            </div>
+                            <div>
+                                <div class="pointProgress"></div>
+                                <p>Livrée</p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="divBasPageDetail">
                     <div class="divDetail">
-                        <h2>detail</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit vero totam nobis facilis, repellat similique! Cupiditate impedit accusamus ipsum illum error, dolor exercitationem, voluptatibus molestias in rerum dolores, reiciendis amet.</p>
+                        <h2>Détail de la commande</h2>
+                        <hr>
+                        <div class="divArticles">
+                            <div>
+                                <div>
+                                    <img src="<?=base_url()?>/images/art1.png" alt="">
+                                    <p>25 galettes saucisses</p>
+                                </div>
+                                <p>50 €</p>
+                            </div>
+                            <hr>
+                            <div>
+                                <div>
+                                    <img src="<?=base_url()?>/images/art2.png" alt="">
+                                    <p>25 galettes saucisses</p>
+                                </div>
+                                <p>50 €</p>
+                            </div>
+                            <hr>
+                            <div>
+                                <div>
+                                    <img src="<?=base_url()?>/images/art3.png" alt="">
+                                    <p>25 galettes saucisses</p>
+                                </div>
+                                <p>50 €</p>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="divPrix">
+                            <p>Total HT : 150€</p>
+                            <p>Total TTC : 180€</p>
+                        </div>
                     </div>
                     <div class="divDroiteDetail">
                         <div>
-                            <h2>telecharger</h2>
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci, veritatis. Velit at cumque laudantium nam illo laboriosam blanditiis, cupiditate doloremque veritatis ratione tenetur vero delectus libero quibusdam id nemo similique.</p>
+                            <h2>Télécharger</h2>
+                            <hr>
+                            <div class="btnTelecharger">
+                                <a href="">Facture</a>
+                                <a href="">Preuve d'achat</a>
+                                <a href="">Facture</a>
+                            </div>
                         </div>
                         <div>
-                           <h2>livraison</h2>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur quisquam eos, debitis, quasi dolor vel eum soluta fugit quibusdam, nobis corporis maxime sit repellendus dolorum sapiente asperiores ut error amet.</p>
+                           <h2>Livraison</h2>
+                            <hr>
+                            <div class="divDetailLivraison">    
+                                <p>Adresse : </p>
+                                <p>Livreur : </p>
+                                <p>N° de suivi : </p>
+                                <p>Lien du suivi : </p>
+                            </div>
                         </div>
                     </div>
                 </div>

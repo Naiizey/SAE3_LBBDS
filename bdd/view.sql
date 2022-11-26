@@ -40,11 +40,11 @@ CREATE OR REPLACE VIEW produitCSV AS
 CREATE OR REPLACE VIEW client_mail AS
     SELECT num_compte, email from _compte;
 
-CREATE OR REPLACE VIEW adresse_facturation AS
-    SELECT num_compte, nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville FROM _adresse_facturation NATURAL JOIN _adresse;
+CREATE OR REPLACE VIEW adresse_facturation_client AS
+    SELECT num_compte, nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville FROM _adresse_facturation NATURAL JOIN _adresse NATURAL JOIN _recevoir_facture;
 
-CREATE OR REPLACE VIEW adresse_livraison AS
-    SELECT num_compte, nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville FROM _adresse_livraison NATURAL JOIN _adresse;
+CREATE OR REPLACE VIEW adresse_livraison_client AS
+    SELECT num_compte, nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville FROM _adresse_livraison NATURAL JOIN _adresse NATURAL JOIN _recevoir_commande;
 
 CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_panier int) RETURNS INT AS
     $$
@@ -118,4 +118,13 @@ SELECT * FROM commande_list_client;
 
 CREATE OR REPLACE VIEW commande_list_produits_client AS
     SELECT num_commande,num_compte,date_commande,date_arriv,(prix_ttc*qte_panier) prix_ttc,(prix_ht*qte_panier) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit NATURAL JOIN _panier_client;
-SELECT * FROM commande_list_produits_client;
+
+
+CREATE OR REPLACE VIEW adresse_facturation AS
+    SELECT * FROM _adresse NATURAL JOIN _adresse_facturation;
+
+CREATE OR REPLACE VIEW adresse_livraison AS
+    SELECT * FROM _adresse NATURAL JOIN _adresse_livraison;
+
+
+

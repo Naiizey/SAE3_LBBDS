@@ -1242,6 +1242,9 @@ header ul {
     text-align: right;
 }
 
+h3 > .lienPasArticlePanier {
+    text-decoration: underline;
+}
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -1979,28 +1982,13 @@ a.fleche-page{
 */
 .divPrincipaleDetail {
     background-color: white;
+    color: #164F57;
 }
 
 .divPrincipaleDetail, .divDetail, .divDroiteDetail > div {
-    border-radius: 3px;
+    border-radius: 5px;
     border: solid 2px #C6C6C6;
     padding: 1em;
-}
-
-.divDroiteDetail {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.divDetail, .divDroiteDetail > div {
-    background-color: #f3f3f3;
-    margin: 1em;
-}
-
-.divBasPageDetail {
-    display: flex;
-    justify-content: space-between;
 }
 
 .bar {
@@ -2012,11 +2000,28 @@ a.fleche-page{
     height: 3em;
 }
 
+.progress-bar-ok {
+    width: 89%;
+}
+
 .buttonProgress {
     position: absolute;
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 90%;
+}
+
+.buttonProgress div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttonProgress div p {
+    position: absolute;
+    margin-top: 1.6em;
+    font-size: x-large;
+    font-weight: bold;
 }
 
 .point-ok {
@@ -2044,6 +2049,109 @@ progress::-moz-progress-bar
 { 
     background: #55C044;
     height: 10px;
+}
+
+.divDetailLivraison {
+    text-align: left;
+    font-size: x-large;
+}
+
+.divDetailLivraison p {
+    margin: .6em 0 0 0;
+}
+
+.divArticles {
+    display: flex;
+    flex-direction: column;
+}
+
+.divArticles div {
+    display: flex;
+    justify-content: space-between;
+    font-size: x-large;
+}
+
+.divArticles div div p {
+    margin-left: 1em;
+}
+
+.divArticles img {
+    width: 5em;
+    height: 5em;
+    border-radius: 5px;
+    border: solid 2px #164F57;
+}
+
+.divArticles hr {
+    background-color: #D1D1D1;
+    height: 4px;
+    margin: .5em 0;
+}
+
+.divPrix {
+    text-align: right;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.divPrix p {
+    margin: .5em 0 0 0;
+}
+
+.divDroiteDetail {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+}
+
+.divDetail, .divDroiteDetail > div {
+    margin: 1em;
+}
+
+.divDetail {
+    background-color: #F3F3F3;
+    width: 100%;
+}
+
+.divDetail hr {
+    background-color: #164F57;
+    margin-bottom: .5em;
+}
+
+.divDroiteDetail > div {
+    background-color: #D1D1D1;
+    border: solid 2px #aeaeae;
+}
+
+.divDroiteDetail hr {
+    background-color: white;
+    margin-bottom: .5em;
+}
+
+.divBasPageDetail h2 {
+    margin-bottom: .6em;
+}
+
+.divBasPageDetail {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2em;
+}
+
+.btnTelecharger {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+
+.btnTelecharger a {
+    background-color: #164F57;
+    margin: .4em 0;
+    padding: .3em 0;
+    text-decoration: none;
+    color: #C6C6C6;
+    font-size: x-large;
+    border-radius: 5px;
 }
 
 /*

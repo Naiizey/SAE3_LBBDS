@@ -255,16 +255,11 @@ function lstCommandes(){
     var lignes=document.getElementsByClassName("lignesCommandes");
     var numCommandes=document.getElementsByClassName("numCommandes");
 
-    for (let numLigne of lignes) {
-        var ligneA=lignes.item(numLigne);
-        var commandeA=numCommandes[numLigne];
-        ligneA.addEventListener("click", lienLigne);
+    for (let numLigne=0; numLigne<lignes.length; numLigne++){
+        let ligneA=lignes.item(numLigne);
+        let commandeA=numCommandes.item(numLigne).textContent;
+        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/commandes/detail/${commandeA}`;});
     }
-    /*
-    function lienLigne(element) {
-        window.location.href = `/commande/${(commandeA.textContent)}`;
-    }
-    */
 }
 
 /*
@@ -309,7 +304,8 @@ function cgu(){
 ┃                                  Espace Client                                  ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-function espaceCli(){
+function espaceCli()
+{
     var inputModifsCli = document.querySelectorAll(".divInputEtLien input");
     var labelModifsCli = document.querySelectorAll(".mainEspaceCli label");
     var divModifsCli = document.querySelectorAll(".mainEspaceCli .divInputEtLien");
@@ -366,10 +362,33 @@ function espaceCli(){
         }
     });
 }
+function espaceCliAdmin() 
+{
+    console.log(this);
+    this.form = document.forms["formClient"];
+    var self = this;
+    var lienModif;
+    var ancienMdp = document.getElementsByClassName("labelAncienMdp")[0];
+    ancienMdp.innerHTML = "Votre mot de passe :";
+    
+    for (let i = 0; i < this.form.elements.length; i++)
+    {
+        lienModif = this.form.elements[i].parentNode.getElementsByTagName("a")[0];
+        
+        if (typeof lienModif !== 'undefined')
+        {
+            lienModif.addEventListener("click", function (event) {
+                event.preventDefault();
+                this.form.elements[i].disabled = false;
+                this.form.elements[i].focus();
+            });
+        }
+    }
+}
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                       Catalogue                                   ┃
+┃                                 Catalogue                                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 function cataloguePrice(){
@@ -610,19 +629,6 @@ var formAdresseConstructor = function(){
         }
     };
     this.codePostal.addEventListener("blur", this.chercherVilleParCodePostal);
-
-
-   
-
-    
-    
-
-
-    
+ 
 }
-
-
-
-
-
-  
+ 

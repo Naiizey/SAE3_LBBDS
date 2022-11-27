@@ -2,6 +2,12 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\Config\Services;
+use CodeIgniter\Validation\Validation;
+use Exception;
+
+use function PHPUnit\Framework\throwException;
+
 class Home extends BaseController 
 {
 
@@ -306,8 +312,45 @@ class Home extends BaseController
 
 
     public function infoLivraison(){
+        //Assetion Début
+        if(!session()->has("numero")){
+            
+            throw new Exception("Erreur, vous devez être connecté ",401);
+        } 
+
         
+        $model=model("\App\Models\AdresseLivraison");
+        
+        $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
         $data['controller']='infoLivraison';
+        $post=$this->request->getPost();
+        $adresse = new \App\Entities\Adresse();
+
+        if(isset($post["utilise_nom_profil"]))   
+        {
+            $data["profil_utilisee"]=true;
+            unset($post["utilise_nom_profil"]);
+        }
+        else
+        {
+            $data["profil_utilisee"]=false;
+        }
+        
+        $this->validator = Services::validation();
+        $this->validator->setRules($model->rules);
+        if(!empty($post)){
+            
+            $adresse->fill($post);
+            if($adresse->checkAttribute($this->validator)){
+                return redirect()->to("/paiement");
+            }
+        
+        }
+        
+        $data['adresse']=$adresse;
+        $data['client']=$client;
+        $data['errors']=$this->validator;
+        
         
 
         return view('formAdresse.php',$data);

@@ -474,27 +474,27 @@ var formAdresseConstructor = function(){
     this.codePostal=this.form.elements["code_postal"];
     this.ville=this.form.elements["ville"];
 
-    this.form.elements["utilise_nom_profil"].addEventListener('change', (event) => {
+    this.utiliserProfil =  (event) => {
         selfTarget=event.target;
         this.nomEtPrenom.map(elem => {
             
             elem.classList.toggle("blocked-and-completed");
             if (Array.from(elem.classList).includes("blocked-and-completed")){
-                elem.setAttribute("disabled","disabled");
+                elem.setAttribute("readOnly","readOnly");
                 
                 elem.dejaMis=elem.value;
                 elem.value=elem.getAttribute("sauvegardee");
             }
             else{
-                elem.removeAttribute("disabled");
+                elem.removeAttribute("readOnly");
                 elem.value=elem.dejaMis;
                 
                 
             }
         });
         this.supprimerErreur(selfTarget.parentNode.parentNode);
-        
-    })
+    }
+    this.form.elements["utilise_nom_profil"].addEventListener('change', this.utiliserProfil );
 
     
 
@@ -519,8 +519,7 @@ var formAdresseConstructor = function(){
         
     }
 
-    this.nomEtPrenom.map(elem => 
-        elem.addEventListener("blur", (event) => {
+    this.verifierNomEtPrenom =  (event) => {
         selfTarget=event.target;
         if(selfTarget.validity.valueMissing){
             this.creerErreur(selfTarget.parentNode.parentNode.parentNode,"Attention champ(s) vide(s)");
@@ -529,12 +528,16 @@ var formAdresseConstructor = function(){
             
             this.supprimerErreur(selfTarget.parentNode.parentNode.parentNode);
         }
-    }));
+    };
+    this.nomEtPrenom.map(elem => 
+        elem.addEventListener("blur", this.verifierNomEtPrenom));
 
     
 
     Array.from(this.form.elements)
-    .filter(elem => {return elem.required && !Array.from(elem.parentNode.parentNode.classList).includes("nomPrenom")})
+    .filter(elem => {
+        return elem.required && !Array.from(elem.parentNode.parentNode.classList).includes("nomPrenom")
+    })
     .forEach(elemRequired => {
         elemRequired.addEventListener("blur", (event) => {
         selfTarget=event.target;
@@ -551,13 +554,10 @@ var formAdresseConstructor = function(){
     })
 
     this.afterVille = function(response){
-        let datalist= document.getElementById("code_postal_trouvee");
-        datalist.innerHTML="";
+    
+       
         response.features.forEach(feature => {
-            console.log(feature.properties.postcode)
-            let option = document.createElement("option");
-            option.value=feature.properties.postcode;
-            datalist.appendChild(option);
+            this.codePostal.value = feature.properties.postcode;
         });   
     }
 
@@ -573,7 +573,7 @@ var formAdresseConstructor = function(){
     }
 
 
-    this.ville.addEventListener("blur", (event) => {
+    this.chercheCodePostalVille =  (event) => {
         selfTarget=event.target;
       
         if(selfTarget.value.length > 3){
@@ -584,29 +584,32 @@ var formAdresseConstructor = function(){
             .catch(error => console.error('Error:', error));   
             
         }
-    });
+    }
 
-    this.codePostal.addEventListener("blur", (event) => {
+    this.ville.addEventListener("blur",this.chercheCodePostalVille);
+
+    this.chercherVilleParCodePostal= (event) => {
         selfTarget=event.target;
         if(this.codePostal.validity.patternMismatch){
             this.creerErreur(selfTarget.parentNode.parentNode,"Ne correspond à aucun code postal");
            
         }
-        else{
+        else if(! this.codePostal.validity.valueMissing){
             
             this.supprimerErreur(selfTarget.parentNode.parentNode);
             
             
-            console.log(selfTarget.value);
+            
             fetch("https://api-adresse.data.gouv.fr/search/?q="+selfTarget.value+"&postcode="+selfTarget.value+"&type=municipality")
             .then(response => response.json())
             .then(response => self.afterCodePostal(response))
-            .catch(error => console.error('Error:', error));   
+            .catch(error => {console.error('Error:', error)});   
                 
             
            
         }
-    });
+    };
+    this.codePostal.addEventListener("blur", this.chercherVilleParCodePostal);
 
 
    

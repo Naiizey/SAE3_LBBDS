@@ -1,0 +1,1 @@
+<p class='paragraphe-erreur'><?= esc($error) ?></p>

@@ -95,9 +95,8 @@ $routes->set404Override();
     $routes->get('/livraison','Home::infoLivraison');
     $routes->post('/livraison','Home::infoLivraison');
 
-    
-    $routes->get('/espaceClient/(admin)', 'Home::espaceClient/$1');
-    $routes->post('/espaceClient/(admin)', 'Home::espaceClient/$1');
+    $routes->get('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
+    $routes->post('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
     
     if(session()->has("numero"))
     {

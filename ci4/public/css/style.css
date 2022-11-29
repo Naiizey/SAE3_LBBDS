@@ -2348,3 +2348,59 @@ progress::-moz-progress-bar
         font-size: small;
     }
 }
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                             Errors                                ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+#error_text {
+    font-size: 2em;
+    color: #d9d9d9;
+}
+
+#details table {
+    width: 100%;
+    border-collapse: collapse;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+#details.hidden td {
+    opacity: 0;
+    font-size: 0;
+}
+
+#details td {
+    font-size: 1em;
+    color: #d9d9d9;
+    padding-top: .5em;
+    transition: opacity 1.4s, font-size .3s, color 1.2s;
+    opacity: 1;
+}
+
+#details td a{
+    font-size: 1em;
+    color: blueviolet;
+}
+
+#details td.name {
+    text-align: right;
+    padding-right: .3em;
+    width: 50%;
+}
+
+#details td.value {
+    text-align: left;
+    padding-left: .3em;
+}

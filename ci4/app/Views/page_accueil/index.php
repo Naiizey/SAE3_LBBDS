@@ -38,7 +38,7 @@
                             <?= $cardProduit->display($prods[$i])?>
                         <?php endfor; ?>
                     </div>
-                    <h2><a href="<?=base_url()?>/catalogue/">Voir les produits</a></h2>
+                    <h2><a href="<?=base_url()?>/catalogue/" class="seeMoreBtn">Voir les produits</a></h2>
                 </section>
                 <section>
                     <div class="titreAccueil">
@@ -50,7 +50,7 @@
                             <?= $cardProduit->display($prods[$i])?>
                         <?php endfor; ?>
                     </div>
-                    <h2><a href="">Voir les promotions</a></h2>
+                    <h2><a href="" class="seeMoreBtn">Voir les promotions</a></h2>
                 </section>
                 <div class="iconesAccueil">
                     <figure>

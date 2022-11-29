@@ -9,7 +9,7 @@
                     <div>
                         <h2>Mot de passe oublié</h2>
                         <form action="<?= base_url() ?>/obtenirCode" method="post">
-                            <label class="labelRecupMail">Entrez votre adresse mail :</label>
+                            <label class="labelRecupMail">Entrez votre adresse mail<span class="requis">*</span> :</label>
                             <div class="divRecupMail">
                                 <input type="email" name="email" required="required" value="<?= $email?>"/>
                                 <input type="submit" value="Obtenir code"/>

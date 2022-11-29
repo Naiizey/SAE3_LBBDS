@@ -304,70 +304,12 @@ function cgu(){
 ┃                                  Espace Client                                  ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-function espaceCli()
+function espaceCli(role)
 {
-    var inputModifsCli = document.querySelectorAll(".divInputEtLien input");
-    var labelModifsCli = document.querySelectorAll(".mainEspaceCli label");
-    var divModifsCli = document.querySelectorAll(".mainEspaceCli .divInputEtLien");
-    var lienModifsCli = document.querySelectorAll(".divInputEtLien a");
-    var ancienMdp = document.getElementsByClassName("labelAncienMdp")[0];
-    ancienMdp.innerHTML = "Votre mot de passe :";
-
-    var divCacheModifsCli = document.getElementsByClassName("cacheModifMdp");
-
-    lienModifsCli[0].addEventListener("click", function (event) {
-        event.preventDefault();
-        inputModifsCli[1].disabled = false;
-        inputModifsCli[1].focus();
-    });
-
-    lienModifsCli[1].addEventListener("click", function (event) {
-        event.preventDefault();
-        inputModifsCli[2].disabled = false;
-        inputModifsCli[2].focus();
-    });
-
-    lienModifsCli[2].addEventListener("click", function (event) {
-        event.preventDefault();
-        if (ancienMdp.innerHTML == "Votre mot de passe :") 
-        {
-            while (divCacheModifsCli.length)
-            {
-                divCacheModifsCli[0].classList.remove("cacheModifMdp");
-            }
-
-            ancienMdp.innerHTML = "Entrez votre ancien mot de passe";
-            inputModifsCli[4].value = "";
-            inputModifsCli[4].disabled = false;
-            inputModifsCli[4].focus();
-            inputModifsCli[5].required = true;
-            inputModifsCli[6].required = true;
-        }
-        else 
-        {
-            inputModifsCli[5].value = "";
-            inputModifsCli[6].value = "";
-            inputModifsCli[5].classList.add("cacheModifMdp");
-            inputModifsCli[6].classList.add("cacheModifMdp");
-            labelModifsCli[5].classList.add("cacheModifMdp");
-            labelModifsCli[6].classList.add("cacheModifMdp");
-            divModifsCli[5].classList.add("cacheModifMdp");
-            divModifsCli[6].classList.add("cacheModifMdp");
-            inputModifsCli[5].required = false;
-            inputModifsCli[6].required = false;
-
-            ancienMdp.innerHTML = "Votre mot de passe :";
-            inputModifsCli[4].value = "motDePassemotDePasse";
-            inputModifsCli[4].disabled = true;
-        }
-    });
-}
-function espaceCliAdmin() 
-{
-    console.log(this);
     this.form = document.forms["formClient"];
     var self = this;
     var lienModif;
+    var labelModifsCli = document.querySelectorAll(".mainEspaceCli label");
     var ancienMdp = document.getElementsByClassName("labelAncienMdp")[0];
     ancienMdp.innerHTML = "Votre mot de passe :";
     
@@ -375,12 +317,69 @@ function espaceCliAdmin()
     {
         lienModif = this.form.elements[i].parentNode.getElementsByTagName("a")[0];
         
-        if (typeof lienModif !== 'undefined')
+        //On sélectionne tous les inputs qui ne sont ni le bouton enregistrer ni les inputs cachés 
+        if (this.form.elements[i].type != "submit" && typeof lienModif !== 'undefined')
         {
             lienModif.addEventListener("click", function (event) {
                 event.preventDefault();
-                this.form.elements[i].disabled = false;
-                this.form.elements[i].focus();
+
+                if (self.form.elements[i].disabled == true) 
+                {
+                    self.form.elements[i].disabled = false;
+                    self.form.elements[i].required = true;
+                    self.form.elements[i].focus();
+
+                    //Si on parle de l'input mot de passe
+                    if (self.form.elements[i].type == "password") 
+                    {
+                        self.form.elements[i].value = "";
+
+                        //Si je suis un client alors je vais devoir renseigner des champs en plus pour changer mon mot de passe
+                        if (role == "client")
+                        {
+                            ancienMdp.innerHTML = "Entrez votre ancien mot de passe";
+                            let divCacheModifsCli = document.getElementsByClassName("cacheModifMdp");
+
+                            //On découvre les inputs confirmezAncienMdp, nouveauMdp ainsi que leurs labels et divs
+                            while (divCacheModifsCli.length) {
+                                divCacheModifsCli[0].classList.remove("cacheModifMdp");
+                            }
+
+                            self.form.elements[i + 1].required = true;
+                            self.form.elements[i + 2].required = true;
+                        }
+                    }
+                }
+                else
+                {
+                    self.form.elements[i].disabled = true;
+                    self.form.elements[i].required = false;
+
+                    //Si on parle de l'input mot de passe
+                    if (self.form.elements[i].type == "password") 
+                    {
+                        if (role == "client") 
+                        {
+                            ancienMdp.innerHTML = "Votre mot de passe :";
+                            self.form.elements[i].value = "motDePassemotDePasse";
+
+                            //Inputs confirmezAncienMdp et nouveauMdp
+                            self.form.elements[i + 1].value = "";
+                            self.form.elements[i + 1].classList.add("cacheModifMdp");
+                            self.form.elements[i + 2].value = "";
+                            self.form.elements[i + 2].classList.add("cacheModifMdp");
+
+                            labelModifsCli[5].classList.add("cacheModifMdp");
+                            labelModifsCli[6].classList.add("cacheModifMdp");
+
+                            self.form.elements[i + 1].parentNode.classList.add("cacheModifMdp");
+                            self.form.elements[i + 2].parentNode.classList.add("cacheModifMdp");
+
+                            self.form.elements[i + 1].required = false;
+                            self.form.elements[i + 2].required = false;
+                        }
+                    }
+                }
             });
         }
     }
@@ -458,11 +457,9 @@ function switchEtatFiltre(list){
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                     Catalogue                                   ┃
+┃                               Detail commande                                   ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-// 1 2  3  4  5
-// 0 25 50 75 100
 
 function barreProgression() {
     for (let index = 0; index < 5; index++) {
@@ -471,6 +468,11 @@ function barreProgression() {
         } else {
             document.getElementsByClassName("pointProgress")[index].classList.add("point-ko");
         }
+    }
+    if ((document.getElementsByClassName("pointProgress")[3].classList.contains("point-ok")) && (document.getElementsByClassName("pointProgress")[4].classList.contains("point-ko"))) {
+        document.querySelector(".preuveLivraison").style.backgroundColor = "#BDBFBB";
+        document.querySelector(".preuveLivraison").style.color = "#164F57";
+        document.querySelector(".preuveLivraison").style.cursor = "not-allowed";
     }
 }
 /*
@@ -647,3 +649,76 @@ var formAdresseConstructor = function(){
  
 }
  
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Errors                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+function errors(){
+    const Shuffle = function ($el) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=+<>,./?[{()}]!@#$%^&*~`\|'.split(''),
+            $source = $el.querySelector('.source'), $target = $el.querySelector('.target');
+    
+        let cursor = 0, scrambleInterval = undefined, cursorDelayInterval = undefined, cursorInterval = undefined;
+    
+        const getRandomizedString = function (len) {
+            let s = '';
+    
+            for (let i = 0; i < len; i++) {
+                s += chars[Math.floor(Math.random() * chars.length)];
+            }
+    
+            return s;
+        };
+    
+        this.start = function () {
+            $source.style.display = 'none';
+            $target.style.display = 'block';
+    
+            scrambleInterval = window.setInterval(() => {
+                if (cursor <= $source.innerText.length) {
+                    $target.innerText = $source.innerText.substring(0, cursor) + getRandomizedString($source.innerText.length - cursor);
+                }
+            }, 450 / 30);
+    
+            cursorDelayInterval = window.setTimeout(() => {
+                cursorInterval = window.setInterval(() => {
+                    if (cursor > $source.innerText.length - 1) {
+                        this.stop();
+                    }
+    
+                    cursor++;
+                }, 70);
+            }, 350);
+        };
+    
+        this.stop = function () {
+            $source.style.display = 'block';
+            $target.style.display = 'none';
+            $target.innerText = '';
+            cursor = 0;
+    
+            if (scrambleInterval !== undefined) {
+                window.clearInterval(scrambleInterval);
+                scrambleInterval = undefined;
+            }
+    
+            if (cursorInterval !== undefined) {
+                window.clearInterval(cursorInterval);
+                cursorInterval = undefined;
+            }
+    
+            if (cursorDelayInterval !== undefined) {
+                window.clearInterval(cursorDelayInterval);
+                cursorDelayInterval = undefined;
+            }
+        };
+    };
+    
+    (new Shuffle(document.getElementById('error_text'))).start();
+    
+    window.setTimeout(function () {
+        document.getElementById('details').classList.remove('hidden');
+    }, 550);
+}

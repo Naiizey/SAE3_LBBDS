@@ -308,15 +308,30 @@ class Home extends BaseController
         return view("catalogue.php",$data);
     }
 
-    public function espaceClient($role = null)
+    public function espaceClient($role = null, $numClient = null)
     {
-        $data['controller'] = "EspaceClient";
+        $data['controller'] = "espaceClient";
         $modelFact = model("\App\Models\ClientAdresseFacturation");
         $modelLivr = model("\App\Models\ClientAdresseLivraison");
         $modelClient = model("\App\Models\Client");
         $post=$this->request->getPost();
-        $client = $modelClient->getClientById(session()->get("numero"));
+
+        $data['numClient'] = $numClient;
+        $data['role'] = "";
+        if ($role == "admin" && $numClient != null)
+        {
+            $data['role'] = "admin";
+        }
+        else //if ($role == null)
+        {
+            $data['role'] = "client";
+            $numClient = session()->get("numero");
+        }
+
         $issues = [];
+        $client = $modelClient->getClientById($numClient);
+        $clientBase = $modelClient->getClientById($numClient);
+        $data['prenomBase'] = $clientBase->prenom;
 
         //Valeurs par défaut
         $data['motDePasse'] = "motDePassemotDePasse";
@@ -365,30 +380,27 @@ class Home extends BaseController
             }
             else
             {
-                return redirect()->to("/espaceClient");
+                if ($role == "admin")
+                {
+                    return redirect()->to("/espaceClient/admin/" . $numClient);
+                }
+                else
+                {
+                    return redirect()->to("/espaceClient");
+                }
             }
         }
         
         //Pré-remplit les champs avec les données de la base
         $data['pseudo'] = $client->identifiant;
         $data['prenom'] = $client->prenom;
-        $data['nom'] = $role;
+        $data['nom'] = $client->nom;
         $data['email'] = $client->email;
         $data['adresseFact'] = $modelFact->getAdresse(session()->get("numero"));
         $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
         $data['erreurs'] = $issues;
 
-        $data['role'] = "";
-        if ($role == "admin")
-        {
-            $data['role'] = "admin";
-        }
-        else if ($role == null)
-        {
-            $data['role'] = "client";
-        }
-
-        return view('/page_accueil/espaceClient.php',$data);
+        return view('/page_accueil/espaceClient.php', $data);
     }
 
     public function infoLivraison(){
@@ -477,10 +489,20 @@ class Home extends BaseController
 
         return view('page_accueil/paiement.php', $data);
     }
-    
+
+    public function detail($num_commande)
+    {
+        $data['controller']= "detail";
+        $data['numCommande'] = $num_commande;
+
+        $model=model("\App\Models\LstCommandesCli");
+        $data['infosCommande']=$model->getCommandeById($num_commande);
+
+        return view('panier/details.php',$data);
+    }
+
     //Tant que commande n'est pas là
     public function commandeTest(){
-        
         echo "oui";
     }
 }

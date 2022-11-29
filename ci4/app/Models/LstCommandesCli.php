@@ -49,4 +49,7 @@ class LstCommandesCli extends Model
             
     }
 
+    public function getCommandeById($num_commande){
+        return $this->where('num_commande',$num_commande)->findAll();
+    }
 }

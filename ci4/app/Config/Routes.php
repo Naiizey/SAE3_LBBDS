@@ -64,6 +64,7 @@ $routes->set404Override();
     $routes->get('/panier/vider', 'Panier::viderPanier'); 
     $routes->get('/panier/supprimer/(:num)', 'Panier::supprimerProduitPanier/$1');
     $routes->post('/panier/ajouter/(:num)', 'Panier::ajouterPanier/$1/');
+    $routes->get('/panier/ajouter/(:num)', 'Panier::ajouterPanier/$1/');
 
     $routes->get('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::modifierProduitPanier/$1/$2');
     $routes->put('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::modifierProduitPanier/$1/$2');
@@ -87,7 +88,7 @@ $routes->set404Override();
 
     $routes->get('/commandes', 'Home::lstCommandesClient',['filter' => 'connexion']);
 
-    $routes->get('/commandes/detail/(:num)','Commandes::detail/$1',);//['filter' => 'connexion']
+    $routes->get('/commandes/detail/(:num)','Home::detail/$1');//['filter' => 'connexion']
 
     $routes->get('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
     $routes->options('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
@@ -95,9 +96,8 @@ $routes->set404Override();
     $routes->get('/livraison','Home::infoLivraison');
     $routes->post('/livraison','Home::infoLivraison');
 
-    
-    $routes->get('/espaceClient/(admin)', 'Home::espaceClient/$1');
-    $routes->post('/espaceClient/(admin)', 'Home::espaceClient/$1');
+    $routes->get('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
+    $routes->post('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
     
     if(session()->has("numero"))
     {

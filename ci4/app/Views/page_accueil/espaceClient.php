@@ -11,7 +11,7 @@
 ?>
 <main class="mainEspaceCli">
     <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/header/profil.svg");?>
-    <h2>Bonjour <?php echo $prenom?>!</h2>
+    <h2>Bonjour <?= $prenomBase ?>!</h2>
     <div class="divCredit divEspaceCli">
         <section class="sectionCredit">
             <form name="formClient" action="<?= current_url() ?>" method="post">
@@ -109,12 +109,5 @@
 </main>
 <?php require("footer.php"); ?>
 <script>
-    if ("<?= $role ?>" == "admin")
-    {
-        var js = new espaceCliAdmin();
-    }
-    if ("<?= $role ?>" == "client")
-    {
-        espaceCli();
-    }
+    var js = new espaceCli("<?= $role ?>");
 </script>

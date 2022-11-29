@@ -3,7 +3,7 @@
         <main>
             <div class="divPrincipaleDetail">
                 <div class="divProgress">
-                    <h2>Commande n°15263890891</h2>
+                    <?= "<h2>Commande n°".$numCommande."</h2>"?>
                     <div class="bar">   
                         <progress class="progress-bar-ok" value="87.5" max="100"></progress>       
                         <div class="buttonProgress">
@@ -33,6 +33,7 @@
                 <div class="divBasPageDetail">
                     <div class="divDetail">
                         <h2>Détail de la commande</h2>
+                    <?php print_r($infosCommande); ?>
                         <hr>
                         <div class="divArticles">
                             <div>
@@ -72,7 +73,7 @@
                             <div class="btnTelecharger">
                                 <a href="">Facture</a>
                                 <a href="">Preuve d'achat</a>
-                                <a href="">Facture</a>
+                                <a href="" class="preuveLivraison">Preuve de livraison</a>
                             </div>
                         </div>
                         <div>

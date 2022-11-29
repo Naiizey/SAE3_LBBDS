@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Error 404 - Not Found</title>
+    <title>Error 421 - Misdirected Request</title>
     <link rel="stylesheet" href="<?=base_url()?>/css/style.css"/>
 </head>
     <body>
         <div class="flex-center full-height">
             <div>
                 <div id="error_text">
-                    <span class="source">Error 404: <span data-l10n>Not Found</span></span>
+                    <span class="source">Error 421: <span data-l10n>Misdirected Request</span></span>
                     <span class="target"></span>
                 </div>
                 <div class="hidden" id="details">
@@ -24,11 +24,6 @@
                             <td class="value"><a href="https://www.alizon.net">Alizon.net</a></td>
                         </tr>
                     </table>
-                    <?php if (ENVIRONMENT !== 'production') : ?>
-                        <?= nl2br(esc($message)) ?>
-                    <?php else : ?>
-                        Sorry! Cannot seem to find the page you were looking for.
-                    <?php endif ?>
                 </div>
             </div>
         </div>

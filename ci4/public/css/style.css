@@ -230,6 +230,10 @@ main {
     background-color: #D9D9D9;
 }
 
+.requis{
+    color: #C63636;
+}
+
 /* Media query téléphone header */
 
 @media screen and (max-width: 991px){
@@ -663,7 +667,7 @@ header ul {
 
 .mainAccueil section div p {
     text-align: center;
-    margin: 10px 0 0 0;
+    margin: 0;
 }
 
 .mainAccueil section {
@@ -671,15 +675,15 @@ header ul {
     padding-bottom: 3em;
 }
 
-.mainAccueil section a {
-    border: #164F57 1px solid;
+.mainAccueil section .seeMoreBtn {
+    border-radius: 2em;
     background-color: white;
     padding: .5em 2em;
     text-decoration: none;
     color: #164F57;
 }
 
-.mainAccueil section a:hover {
+.mainAccueil section .seeMoreBtn:hover {
     background-color: #164F57;
     color: #F3F3F3;
 }
@@ -1392,42 +1396,41 @@ h3 > .lienPasArticlePanier {
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-main a.card-produit-ext{
+main div.card-produit-ext{
     display: block;
-    margin: 10px 10px;
     border: none;
     color: inherit;
     text-decoration: none;
     background-color: transparent;
-    padding: 0;
+    padding: 1em;
 }
 
-main a.card-produit-ext:hover{
-  
-
+main div.card-produit-ext:hover{
     background-color: transparent;
 }
-    
-.card-produit-ext{
-    margin: 10px 10px;
+
+.bottom-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .card-produit{
-    width: 219px;
-    height: 300px;
-    border-radius: 8.47px;
-    border: solid 1px black;
+    width: 15rem;
+    height: 21rem;
+    border-radius: 5%;
     text-align: center;
     font-family: 'Montserrat-Medium';
     font-size: 19px ;
+    position: relative;
     background-color: white;
-
     color: #164F57;
 }
 .image-card{
     width: 100%;
-    height: 55%;
-    border-radius: 8.47px 8.47px 0 0;
+    height: 8rem;
+    border-radius: 5% 5% 0 0;
     background-size: cover;
 }
 .notation-card{
@@ -1444,10 +1447,6 @@ main a.card-produit-ext:hover{
     max-height:85px;
 }
 
-.contain-libelle, .notation-card, .prix-card{
-    position: relative;
-    top: -25px;
-}
 p.libelle{
     margin-top: 10px;
     width: 100%;
@@ -1457,14 +1456,21 @@ p.libelle{
 }
 /*TODO: sauvegarder dans bdd position */
 div.image-card{
-    
     background-position: 0;
 }
 
 .prix-card{
-    text-align: center;
     font-size: 25px;
+}
+
+.addPanier {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.addPanier svg {
     margin: 0;
+    width: 100%;
 }
 
 /*
@@ -1478,8 +1484,7 @@ main#Catalogue{
     min-height: 1000px;
 }
 .partie-produits{
-    width: 70%;
-    max-width: 70%; 
+    max-width: 75%; 
 }
 .partie-filtre{
     width: 25%;
@@ -1993,11 +1998,10 @@ a.fleche-page{
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 .divPrincipaleDetail {
-    background-color: white;
     color: #164F57;
 }
 
-.divPrincipaleDetail, .divDetail, .divDroiteDetail > div {
+.divDetail, .divDroiteDetail > div {
     border-radius: 5px;
     border: solid 2px #C6C6C6;
     padding: 1em;
@@ -2095,8 +2099,6 @@ progress::-moz-progress-bar
 }
 
 .divArticles hr {
-    background-color: #D1D1D1;
-    height: 4px;
     margin: .5em 0;
 }
 
@@ -2121,23 +2123,18 @@ progress::-moz-progress-bar
 }
 
 .divDetail {
-    background-color: #F3F3F3;
+    background-color: white;
     width: 100%;
 }
 
-.divDetail hr {
+.divDetail hr, .divDroiteDetail hr {
     background-color: #164F57;
     margin-bottom: .5em;
 }
 
 .divDroiteDetail > div {
-    background-color: #D1D1D1;
-    border: solid 2px #aeaeae;
-}
-
-.divDroiteDetail hr {
     background-color: white;
-    margin-bottom: .5em;
+    border: solid 2px #C6C6C6;
 }
 
 .divBasPageDetail h2 {
@@ -2350,4 +2347,60 @@ progress::-moz-progress-bar
     p, .divSuivi h3 {
         font-size: small;
     }
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                             Errors                                ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+#error_text {
+    font-size: 2em;
+    color: #d9d9d9;
+}
+
+#details table {
+    width: 100%;
+    border-collapse: collapse;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+#details.hidden td {
+    opacity: 0;
+    font-size: 0;
+}
+
+#details td {
+    font-size: 1em;
+    color: #d9d9d9;
+    padding-top: .5em;
+    transition: opacity 1.4s, font-size .3s, color 1.2s;
+    opacity: 1;
+}
+
+#details td a{
+    font-size: 1em;
+    color: blueviolet;
+}
+
+#details td.name {
+    text-align: right;
+    padding-right: .3em;
+    width: 50%;
+}
+
+#details td.value {
+    text-align: left;
+    padding-left: .3em;
 }

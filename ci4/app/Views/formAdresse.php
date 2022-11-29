@@ -43,11 +43,11 @@
                             </div>
                         <div class="nomPrenom">
                             <div>
-                                <label for="nom">Nom :</label>
+                                <label for="nom">Nom<span class="requis">*</span> :</label>
                                 <input type="text" name="nom" required="required" sauvegardee=<?= $client->nom ?> value="<?= $adresse->nom ?>" <?= ($profil_utilisee)?"readOnly":"" ?>>
                             </div>
                             <div>
-                                <label for="prenom">Prénom :</label>
+                                <label for="prenom">Prénom<span class="requis">*</span> :</label>
                                 <input type="text" name="prenom" required="required" sauvegardee=<?= $client->prenom ?> value="<?= $adresse->prenom  ?>"  <?= ($profil_utilisee)?"readOnly":"" ?>/>
                             </div>
                         </div>
@@ -56,12 +56,12 @@
 
                         <div class="infoRue">
                             <div>
-                                <label for="numero_rue">Numéro rue :</label>
+                                <label for="numero_rue">Numéro rue<span class="requis">*</span> :</label>
                                 <input type="text" name="numero_rue" required="required" value="<?= $adresse->numero_rue  ?>"/>
                                 <?= $errors->showError("numero_rue","paragraphe_erreur") ?>
                             </div>
                             <div>
-                                <label for="nom_rue">Nom rue :</label>
+                                <label for="nom_rue">Nom rue<span class="requis">*</span> :</label>
                                 <input type="text" name="nom_rue" required="required" value="<?= $adresse->nom_rue ?>"/>
                                 <?= $errors->showError("nom_rue","paragraphe_erreur") ?>
                             </div>
@@ -69,12 +69,12 @@
 
                         <div class="infoVille">
                             <div>
-                                <label for="code_postal">Code Postal :</label>
+                                <label for="code_postal">Code Postal<span class="requis">*</span> :</label>
                                 <input list="code_postal_trouvee" type="text" name="code_postal" required="required"  pattern="[0-9]{5,6}" autocomplete="off" value="<?= $adresse->code_postal ?>"/>
                                 <?= $errors->showError("code_postal","paragraphe_erreur") ?>
                             </div>
                             <div>                       
-                                <label for="ville">Ville :</label>
+                                <label for="ville">Ville<span class="requis">*</span> :</label>
                                 <input list="ville_trouvee" type="text" name="ville" required="required" autocomplete="off" value="<?= $adresse->ville ?>"/>
                                 <?= $errors->showError("ville","paragraphe_erreur") ?>
                                 <datalist id="ville_trouvee">

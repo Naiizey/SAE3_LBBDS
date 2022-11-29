@@ -458,11 +458,9 @@ function switchEtatFiltre(list){
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                     Catalogue                                   ┃
+┃                               Detail commande                                   ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-// 1 2  3  4  5
-// 0 25 50 75 100
 
 function barreProgression() {
     for (let index = 0; index < 5; index++) {
@@ -471,6 +469,11 @@ function barreProgression() {
         } else {
             document.getElementsByClassName("pointProgress")[index].classList.add("point-ko");
         }
+    }
+    if ((document.getElementsByClassName("pointProgress")[3].classList.contains("point-ok")) && (document.getElementsByClassName("pointProgress")[4].classList.contains("point-ko"))) {
+        document.querySelector(".preuveLivraison").style.backgroundColor = "#BDBFBB";
+        document.querySelector(".preuveLivraison").style.color = "#164F57";
+        document.querySelector(".preuveLivraison").style.cursor = "not-allowed";
     }
 }
 /*

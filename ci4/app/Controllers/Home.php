@@ -474,10 +474,20 @@ class Home extends BaseController
 
         return view('page_accueil/paiement.php', $data);
     }
-    
+
+    public function detail($num_commande)
+    {
+        $data['controller']= "detail";
+        $data['numCommande'] = $num_commande;
+
+        $model=model("\App\Models\LstCommandesCli");
+        $data['infosCommande']=$model->getCommandeById($num_commande);
+
+        return view('panier/details.php',$data);
+    }
+
     //Tant que commande n'est pas là
     public function commandeTest(){
-        
         echo "oui";
     }
 }

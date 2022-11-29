@@ -87,7 +87,7 @@ $routes->set404Override();
 
     $routes->get('/commandes', 'Home::lstCommandesClient',['filter' => 'connexion']);
 
-    $routes->get('/commandes/detail/(:num)','Commandes::detail/$1',);//['filter' => 'connexion']
+    $routes->get('/commandes/detail/(:num)','Home::detail/$1');//['filter' => 'connexion']
 
     $routes->get('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
     $routes->options('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');

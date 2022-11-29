@@ -22,4 +22,7 @@ class LstCommandesCli extends Model
         return $this->where('num_compte',session()->get("numero"))->findAll();
     }
 
+    public function getCommandeById($num_commande){
+        return $this->where('num_commande',$num_commande)->findAll();
+    }
 }

@@ -50,11 +50,7 @@ class AdresseLivraison extends Model
 
     public function enregAdresse(Adresse $adresse){
         $this->save($adresse);  
-<<<<<<< Updated upstream
-        return $this->selectMax('id_a')->get()->getResult()[0]->id_a;
-=======
         return $this->db->table("sae3._adresse_livraison")->selectMax("id_adresse_livr")->get()->getResult()[0]->id_adresse_livr;
->>>>>>> Stashed changes
     }
 
     public function getAdresseById($id){

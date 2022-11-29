@@ -457,11 +457,9 @@ function switchEtatFiltre(list){
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                     Catalogue                                   ┃
+┃                               Detail commande                                   ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-// 1 2  3  4  5
-// 0 25 50 75 100
 
 function barreProgression() {
     for (let index = 0; index < 5; index++) {
@@ -470,6 +468,11 @@ function barreProgression() {
         } else {
             document.getElementsByClassName("pointProgress")[index].classList.add("point-ko");
         }
+    }
+    if ((document.getElementsByClassName("pointProgress")[3].classList.contains("point-ok")) && (document.getElementsByClassName("pointProgress")[4].classList.contains("point-ko"))) {
+        document.querySelector(".preuveLivraison").style.backgroundColor = "#BDBFBB";
+        document.querySelector(".preuveLivraison").style.color = "#164F57";
+        document.querySelector(".preuveLivraison").style.cursor = "not-allowed";
     }
 }
 /*
@@ -488,6 +491,11 @@ var formAdresseConstructor = function(){
         this.form.elements["nom"],
         this.form.elements["prenom"]    
     ];
+    
+    this.estRempli = new Array();
+    Array.from(this.form.elements).forEach(elem => {
+        this.estRempli[elem.name]=elem.value.length>0;
+    });
 
     this.codePostal=this.form.elements["code_postal"];
     this.ville=this.form.elements["ville"];
@@ -514,11 +522,16 @@ var formAdresseConstructor = function(){
     }
     this.form.elements["utilise_nom_profil"].addEventListener('change', this.utiliserProfil );
 
+
+
     
 
     this.creerErreur =function(destination,message){
-  
-        if(Array.from(destination.children).filter(child => Array.from(child.classList).includes("paragraphe-erreur")).length==0){
+        
+        if(Array.from(destination.children).filter(
+            child => Array.from(child.classList).includes("paragraphe-erreur") && child.textContent==message
+            ).length==0){
+
             let p=document.createElement('p');
             p.classList.add("paragraphe-erreur");
             p.innerText=message
@@ -527,6 +540,8 @@ var formAdresseConstructor = function(){
         }
         
     }
+
+    
 
     this.supprimerErreur =function(destination){
 
@@ -561,10 +576,10 @@ var formAdresseConstructor = function(){
         selfTarget=event.target;
         if(selfTarget.validity.valueMissing){
             this.creerErreur(selfTarget.parentNode,"Champ vide");
-           
+            this.estRempli[selfTarget.name]=false;
         }
         else{
-            
+            this.estRempli[selfTarget.name]=true;
             this.supprimerErreur(selfTarget.parentNode);
            
         }
@@ -573,10 +588,8 @@ var formAdresseConstructor = function(){
 
     this.afterVille = function(response){
     
-       
-        response.features.forEach(feature => {
-            this.codePostal.value = feature.properties.postcode;
-        });   
+       this.codePostal.value = response.features[0].properties.postcode;
+        
     }
 
     this.afterCodePostal = function(response){
@@ -609,12 +622,12 @@ var formAdresseConstructor = function(){
     this.chercherVilleParCodePostal= (event) => {
         selfTarget=event.target;
         if(this.codePostal.validity.patternMismatch){
-            this.creerErreur(selfTarget.parentNode.parentNode,"Ne correspond à aucun code postal");
+            this.creerErreur(selfTarget.parentNode,"Ne correspond à aucun code postal");
            
         }
-        else if(! this.codePostal.validity.valueMissing){
-            
-            this.supprimerErreur(selfTarget.parentNode.parentNode);
+        else if(!this.codePostal.validity.valueMissing){
+            console.log("Bonsoir, non");
+            this.supprimerErreur(selfTarget.parentNode);
             
             
             
@@ -626,6 +639,10 @@ var formAdresseConstructor = function(){
             
            
         }
+        else{
+            this.supprimerErreur(selfTarget.parentNode);
+            this.creerErreur(selfTarget.parentNode,"Champ vide");
+        }    
     };
     this.codePostal.addEventListener("blur", this.chercherVilleParCodePostal);
  

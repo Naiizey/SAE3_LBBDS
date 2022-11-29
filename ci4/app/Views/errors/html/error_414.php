@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Error 404 - Not Found</title>
+    <title>Error 414 - URI Too Long</title>
     <link rel="stylesheet" href="<?=base_url()?>/css/style.css"/>
 </head>
     <body>
         <div class="flex-center full-height">
             <div>
                 <div id="error_text">
-                    <span class="source">Error 404: <span data-l10n>Not Found</span></span>
+                    <span class="source">Error 414: <span data-l10n>URI Too Long</span></span>
                     <span class="target"></span>
                 </div>
                 <div class="hidden" id="details">

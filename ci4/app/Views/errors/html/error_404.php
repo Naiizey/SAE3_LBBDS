@@ -27,10 +27,12 @@
                     <?php if (ENVIRONMENT !== 'production') : ?>
                         <?= nl2br(esc($message)) ?>
                     <?php else : ?>
+                        Sorry! Cannot seem to find the page you were looking for.
+                    <?php endif ?>
                 </div>
             </div>
         </div>
     </body>
-    <script src="<?= base_url()?>/js/script.js"></script>
-    <script>errors();</script>
 </html>
+<script src="<?= base_url()?>/js/script.js"></script>
+<script>errors();</script>

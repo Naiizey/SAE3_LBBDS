@@ -94,9 +94,10 @@ abstract class ProduitPanierModel extends Model
         }
         else throw new Exception("Ce produit n'est pas dans le panier !");
         
-        
-
-        
     }   
+
+    public function compteurDansPanier($idUser){
+        return $this->where($this->getColonneProduitIdUser(),$idUser)->countAllResults();
+    }
 
 }

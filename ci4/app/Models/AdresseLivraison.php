@@ -34,6 +34,8 @@ class AdresseLivraison extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
+
+    //Variable à utilser avec un Validator
     public $rules = [
         "nom" => ['rules' => "required|max_length[50]", 'errors' => array('required' => "Champs vide", "max_length" => "Maximum de caractère atteint")],
         "prenom" => ['rules' => "required|max_length[50]", 'errors' => array('required' => "Champs vide","max_length" => "Maximum de caractère atteint")],

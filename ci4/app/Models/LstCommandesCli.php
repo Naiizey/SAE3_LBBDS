@@ -33,10 +33,10 @@ class LstCommandesCli extends Model
             $index = rand(0, strlen($characters) - 1);
                 $numCommande .= $characters[$index];
             }
-        }while(!empty($this->db->table('sae3._commande')->where("num_commande",$numCommande)->get()));
+        }while(!empty($this->db->table('sae3.insert_commande')->where("num_commande",$numCommande)->get()->getResult()));
 
-
-        $this->db->table('sae3._commande')->insert(array(
+        
+        $this->db->table('sae3.insert_commande')->insert(array(
                 "num_commande"=>$numCommande,
                 "num_compte"=>$numClient,
                 "id_a"=>$id_adresse_livr

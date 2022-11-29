@@ -82,15 +82,27 @@ final class ExampleDatabaseTest extends CIUnitTestCase
     public function testCommande(){
         $model_C=model("\App\Models\LstCommandesCli");
         $model_A=model("\App\Models\AdresseLivraison");
+        
+        
 
-        $client = model("\App\Models\Client")->getClientById(1);
+        $fabricatorCli = new Fabricator(Client::class,array(
+            "nom" => 'firstName',
+            "prenom" => 'name',
+            "email" => 'email',
+            "identifiant" => "userName",
+            "motdepasse" => "password"
+            
+        ));
 
-        $fabricator = new Fabricator(AdresseLivraisonTest::class,null,'fr_FR');
-        $ok = $fabricator->make();
+        $client=$fabricatorCli->create();
+
+        $fabricatorAdr = new Fabricator(AdresseLivraisonTest::class,null,'fr_FR');
+        $ok = $fabricatorAdr->make();
         $id_a=$model_A->enregAdresse($ok);
-
-        $model_C->creerCommande($client->numCli,$id_a);
-
+        
+        d($client);
+        $model_C->creerCommande($client->numero,$id_a);
+        
 
         $this->assertCount(Fabricator::getCount($model_C->table), $model_C->findAll());
 

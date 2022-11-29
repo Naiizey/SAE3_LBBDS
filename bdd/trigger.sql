@@ -127,3 +127,15 @@ $$ language plpgsql;
 CREATE TRIGGER insteadOfInsert_adresse_facture INSTEAD OF INSERT ON adresse_facturation FOR EACH ROW EXECUTE PROCEDURE insertAdresseFacture();
 
 
+CREATE OR REPLACE FUNCTION insertInsertCommande() RETURNS TRIGGER AS
+    $$
+    DECLARE
+        current_panier integer;
+    BEGIN
+        select max(num_panier) into current_panier from sae3._panier_client where num_compte=new.num_compte group by num_compte;
+        INSERT INTO sae3._commande(num_panier, num_commande, date_commande, id_a) VALUES (current_panier,new.num_commande, current_date,new.id_a);
+        RETURN NEW;
+    end
+$$ language plpgsql;
+CREATE TRIGGER insteadOfInsert_insertCommande INSTEAD OF INSERT ON insert_commande FOR EACH ROW EXECUTE PROCEDURE insertInsertCommande();
+

@@ -330,6 +330,8 @@ class Home extends BaseController
 
         $issues = [];
         $client = $modelClient->getClientById($numClient);
+        $clientBase = $modelClient->getClientById($numClient);
+        $data['prenomBase'] = $clientBase->prenom;
 
         //Valeurs par défaut
         $data['motDePasse'] = "motDePassemotDePasse";

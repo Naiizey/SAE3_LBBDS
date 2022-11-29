@@ -44,13 +44,18 @@
                         <div class="nomPrenom">
                             <div>
                                 <label for="nom">Nom<span class="requis">*</span> :</label>
-                                <input type="text" name="nom" required="required" sauvegardee=<?= $client->nom ?> value="<?= $adresse->nom ?>" <?= ($profil_utilisee)?"readOnly":"" ?>>
+                                <input type="text" name="nom"  maxlength="50" required="required" sauvegardee=<?= $client->nom ?> value="<?= $adresse->nom ?>" <?= ($profil_utilisee)?"readOnly":"" ?>>
                             </div>
                             <div>
                                 <label for="prenom">Prénom<span class="requis">*</span> :</label>
-                                <input type="text" name="prenom" required="required" sauvegardee=<?= $client->prenom ?> value="<?= $adresse->prenom  ?>"  <?= ($profil_utilisee)?"readOnly":"" ?>/>
+                                <input type="text" name="prenom"  maxlength="50" required="required" sauvegardee=<?= $client->prenom ?> value="<?= $adresse->prenom  ?>"  <?= ($profil_utilisee)?"readOnly":"" ?>/>
                             </div>
+                            
                         </div>
+                            <?= $errors->showError("nom","paragraphe_erreur") ?>
+                        
+                            <?= ($errors->hasError("nom"))?"":$errors->showError("prenom","paragraphe_erreur") ?>
+                            
                         </div>
                         
 
@@ -83,16 +88,16 @@
                         </div>
 
                         <label for="c_adresse1">Complément adresse 1 :</label>
-                        <input type="text" name="c_adresse1"  value="<?= $adresse->c_adresse1 ?>"/>
+                        <input type="text" name="c_adresse1" maxlength=150 value="<?= $adresse->c_adresse1 ?>"/>
                         <?= $errors->showError("comp_a1","paragraphe_erreur") ?>
              
                         <label>Complément adresse 2 :</label>
-                        <input type="text" name="c_adresse2"  value="<?= $adresse->c_adresse2 ?>"/>
+                        <input type="text" name="c_adresse2"  maxlength=150 value="<?= $adresse->c_adresse2 ?>"/>
                         <?= $errors->showError("comp_a2","paragraphe_erreur") ?>
                         <?php if(isset($controller) && $controller==="infoLivraison"): ?>
                         
                         <label>Informations complémentaites :</label>
-                        <textarea name="info_comp"><?= $adresse->infos_comp ?></textarea>
+                        <textarea name="info_comp" maxlength=250><?= $adresse->infos_comp ?></textarea>
 
                         <div class="sauvegarder-adresse">
                             <input type="checkbox" name="sauvegarder_adresse">

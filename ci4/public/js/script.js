@@ -491,6 +491,11 @@ var formAdresseConstructor = function(){
         this.form.elements["nom"],
         this.form.elements["prenom"]    
     ];
+
+    this.form.elements["ville"].addEventListener("mousedown",function(){
+        if( document.activeElement == this )return;
+        document.querySelector(this).focus();
+       });
     
     this.estRempli = new Array();
     Array.from(this.form.elements).forEach(elem => {

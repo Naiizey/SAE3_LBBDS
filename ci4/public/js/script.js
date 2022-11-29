@@ -323,7 +323,7 @@ function espaceCli(role)
             lienModif.addEventListener("click", function (event) {
                 event.preventDefault();
 
-                if (ancienMdp.innerHTML == "Votre mot de passe :") 
+                if (self.form.elements[i].disabled == true) 
                 {
                     self.form.elements[i].disabled = false;
                     self.form.elements[i].required = true;

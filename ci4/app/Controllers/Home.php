@@ -310,12 +310,13 @@ class Home extends BaseController
 
     public function espaceClient($role = null, $numClient = null)
     {
-        $data['controller'] = "EspaceClient";
+        $data['controller'] = "espaceClient";
         $modelFact = model("\App\Models\ClientAdresseFacturation");
         $modelLivr = model("\App\Models\ClientAdresseLivraison");
         $modelClient = model("\App\Models\Client");
         $post=$this->request->getPost();
 
+        $data['numClient'] = $numClient;
         $data['role'] = "";
         if ($role == "admin" && $numClient != null)
         {
@@ -377,7 +378,14 @@ class Home extends BaseController
             }
             else
             {
-                return redirect()->to("/espaceClient");
+                if ($role == "admin")
+                {
+                    return redirect()->to("/espaceClient/admin/" . $numClient);
+                }
+                else
+                {
+                    return redirect()->to("/espaceClient");
+                }
             }
         }
         
@@ -390,7 +398,7 @@ class Home extends BaseController
         $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
         $data['erreurs'] = $issues;
 
-        return view('/page_accueil/espaceClient.php',$data);
+        return view('/page_accueil/espaceClient.php', $data);
     }
 
     public function infoLivraison(){

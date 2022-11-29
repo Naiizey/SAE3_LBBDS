@@ -332,12 +332,12 @@ function espaceCli(role)
                     //Si on parle de l'input mot de passe
                     if (self.form.elements[i].type == "password") 
                     {
-                        ancienMdp.innerHTML = "Entrez votre ancien mot de passe";
                         self.form.elements[i].value = "";
 
                         //Si je suis un client alors je vais devoir renseigner des champs en plus pour changer mon mot de passe
                         if (role == "client")
                         {
+                            ancienMdp.innerHTML = "Entrez votre ancien mot de passe";
                             let divCacheModifsCli = document.getElementsByClassName("cacheModifMdp");
 
                             //On découvre les inputs confirmezAncienMdp, nouveauMdp ainsi que leurs labels et divs

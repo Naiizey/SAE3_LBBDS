@@ -24,6 +24,9 @@
                             <td class="value"><a href="https://www.alizon.net">Alizon.net</a></td>
                         </tr>
                     </table>
+                    <?php if (ENVIRONMENT !== 'production') : ?>
+                        <?= nl2br(esc($message)) ?>
+                    <?php else : ?>
                 </div>
             </div>
         </div>

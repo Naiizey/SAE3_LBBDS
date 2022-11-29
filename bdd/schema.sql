@@ -66,15 +66,27 @@ CREATE TABLE _adresse
 
 CREATE TABLE _adresse_livraison(
     id_adresse_livr SERIAL PRIMARY KEY,
-     num_compte INT NOT NULL,
-    infos_comp VARCHAR NOT NULL,
+    infos_comp VARCHAR,
     id_a INT NOT NULL--dans_adresse
 );
 
 CREATE TABLE _adresse_facturation(
     id_adresse_fact SERIAL PRIMARY KEY,
-    num_compte INT NOT NULL,
     id_a INT NOT NULL--dans_adresse
+);
+
+CREATE TABLE _recevoir_commande(
+    num_compte INT,
+    id_adresse_livr INT PRIMARY KEY,
+    CONSTRAINT  fk_recevoir_commande_compte FOREIGN KEY (num_compte) REFERENCES _compte(num_compte),
+    CONSTRAINT  fk_recevoir_commande_adresse FOREIGN KEY (id_adresse_livr) REFERENCES _adresse_livraison(id_adresse_livr)
+);
+
+CREATE TABLE _recevoir_facture(
+    num_compte INT,
+    id_adresse_fact INT PRIMARY KEY,
+    CONSTRAINT  fk_recevoir_commande_compte FOREIGN KEY (num_compte) REFERENCES _compte(num_compte),
+    CONSTRAINT  fk_recevoir_commande_adresse FOREIGN KEY (id_adresse_fact) REFERENCES _adresse_livraison(id_adresse_livr)
 );
 
 
@@ -289,11 +301,11 @@ ALTER TABLE _avoirs ADD CONSTRAINT _avoirs_compte_fk FOREIGN KEY (num_compte) RE
 
 
 --Association 1..* entre _compte et _adresse_facturation (possedeF) ✅
-ALTER TABLE _adresse_facturation ADD CONSTRAINT _adresse_facturation_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+--ALTER TABLE _adresse_facturation ADD CONSTRAINT _adresse_facturation_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
 
 --Association 1..* entre _compte et _adresse_livraison ✅
-ALTER TABLE _adresse_livraison ADD CONSTRAINT _adresse_facturation_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+--ALTER TABLE _adresse_livraison ADD CONSTRAINT _adresse_facturation_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
 --Association 1..* entre _produit et _avis (sur) ✅
 ALTER TABLE _avis ADD CONSTRAINT _avis_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod);

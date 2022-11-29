@@ -158,4 +158,41 @@ class Authentification
 
         return $errors;
     }
+
+    public function paiement($entree) : array
+    {
+        $errors=[];
+        if(!empty($entree))
+        {
+            if (empty($entree['nomCB']) || empty($entree['numCB']) || empty($entree['dateExpiration']) || empty($entree['CVC']))
+            {
+                $errors[1]="Remplissez le(s) champs vide(s)";
+            }
+            if (preg_match_all("/\d{6}\d{1,12}\d/", $entree['numCB']) < 1  &&
+                preg_match_all("/(\b[4|5|6]\d{3}[\s-]?(\d{4}[\s-]?){2}\d{1,4}\b)|(\b\d{4}[\s-]?\d{6}[\s-]?\d{5}\b)/", $entree['numCB']) < 1)
+            {
+                $errors[2]="Format de numéro de carte bancaire invalide";
+            }
+            if (preg_match_all("/\b(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})\b/", $entree['dateExpiration']) < 1)
+            {
+                $errors[3]="Format de date d'expiration invalide";
+            }
+            else
+            {
+                $annee = substr($entree['dateExpiration'], strlen($entree['dateExpiration']) - 2, strlen($entree['dateExpiration']) - 1);
+                $mois = substr($entree['dateExpiration'], 0, 2);
+
+                //Si l'année actuelle (sur deux chiffres) est inférieure à celle renseignée OU si le mois actuel est inférieur au mois renseigné (+année actuelle égale à celle renseignée)
+                if (((int) $annee) < idate("y") || ((int) $mois) < idate("m") && ((int) $annee) == idate("y"))
+                {
+                    $errors[4]="Votre carte est expirée";
+                }
+            }
+        }
+        else 
+        {
+            $errors[0] ="Pas d'entrée";
+        }
+        return $errors;
+    }
 }

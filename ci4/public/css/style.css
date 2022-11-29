@@ -230,6 +230,10 @@ main {
     background-color: #D9D9D9;
 }
 
+.requis{
+    color: #C63636;
+}
+
 /* Media query téléphone header */
 
 @media screen and (max-width: 991px){
@@ -719,7 +723,7 @@ header ul {
     height: 10em;
 }
 
-.divCredit {
+.divCredit, .divFormAdresse {
     margin: 0 30%;
 }
 
@@ -764,7 +768,8 @@ header ul {
 
 .sectionCredit input[type="text"], 
 .sectionCredit input[type="password"], 
-.sectionCredit input[type="email"] {
+.sectionCredit input[type="email"], 
+.sectionCredit textarea{
     background-color: #F3F3F3;
     margin: 1% 0 0 0;
     height: 2.5em;
@@ -783,29 +788,32 @@ header ul {
     margin: 0 1% 0 0;
 }
 
-.divCredit a {
+.divCredit a, .divFormAdresse a {
     color: #164F57;
     text-decoration: none;
     margin-left: 2px;
 }
 
-.divCredit a:hover {
+.divCredit a:hover, .divFormAdresse a:hover {
     color: #6f98bd;
 }
 
-.nomPrenom {
+.nomPrenom, .infoRue, .infoVille {
     display: flex;
     margin-top: 2%;
 }
 
-.nomPrenom > div {
+.nomPrenom > div, .infoRue > div ,.infoVille > div {
     width: 50%;
     display: flex;
     flex-direction: column;
 }
 
+
+ 
+
 /* Nom */
-.nomPrenom input {
+.nomPrenom input{
     padding: 0;
     margin: 2% 0 0 0;
     width: 90%;
@@ -828,7 +836,7 @@ header ul {
 }
 
 @media (max-width: 1000px) {
-    .divCredit {
+    .divCredit, .divFormAdresse {
         font-size: xx-large;
         margin: 0;
         padding: 10% 0;
@@ -842,7 +850,7 @@ header ul {
         padding-bottom: 1.5em;
     }
 
-    .divCredit h2 {
+    .divCredit h2, .divFormAdresse h2 {
         font-size: 1.8em;
     }
 
@@ -850,11 +858,11 @@ header ul {
         text-align: center;
     }
 
-    .nomPrenom {
+    .nomPrenom,.infoRue {
         display: block;
     }
 
-    .nomPrenom div {
+    .nomPrenom div, .infoRue div, .infoVille div {
         width: 100%;
     }
 
@@ -866,6 +874,117 @@ header ul {
         font-size: 1.3em;
     }
 }
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Form adresse                                           ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.divFormAdresse .onglets{
+    height: fit-content
+}
+
+.divFormAdresse .onglet{
+    min-height: 100%;
+}
+
+.divFormAdresse .sectionCredit{
+    border-top: none;
+}
+.infoRue, .infoVille { 
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start ;
+    flex-wrap: wrap;
+
+}
+
+.infoRue div:first-child {
+    width: 22%;
+    min-width: 155px;
+ }
+ 
+ .infoRue div:last-child {
+     width: 75%;
+     flex-shrink: 2;
+  }
+
+.infoVille div:first-child {
+    width: 35%;
+
+}
+
+.infoVille div:nth-child(2) {
+    width: 63%;
+
+}
+
+.sectionCredit textarea{
+    resize: none;
+    font-family: "Montserrat-Regular";
+    
+    font-size: 1.2em;
+    padding: 10px 0;
+    height: 100px;
+}
+
+.surNomPrenom{
+    margin-top: 30px;
+    background-color: #D9D9D9;
+    padding: 20px;
+
+}
+
+.surNomPrenom > .nomPrenom {
+    margin-top: 0;
+}
+.divFormAdresse .onglets{
+    justify-content: space-between;
+    
+  
+}
+.divFormAdresse .onglet-selectionnee{
+    background-color: white;
+    width: 49.5%;
+    
+  
+}
+/*
+.divFormAdresse .onglet.onglet-selectionnee{
+    height: 60px;
+}
+*/
+.divFormAdresse .onglet:first-child{
+    border-left: solid 2px #C6C6C6;
+}
+.divFormAdresse .onglet:last-child{
+    border-right: solid 2px #C6C6C6;
+}
+
+.sauvegarder-adresse{
+    padding-top: 20px;
+}
+
+@media (max-width: 1000px) {
+
+    .infoRue, .infoVille { 
+     
+        flex-wrap: nowrap;
+    }
+    .infoRue div:first-child {
+      
+        min-width: 155px;
+     }
+}
+
+/*FIXME*/
+
+.divFormAdresse div > div > label,.divFormAdresse .sectionCredit div > div > input {
+    margin: 0;
+}
+
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -1136,6 +1255,9 @@ header ul {
     text-align: right;
 }
 
+h3 > .lienPasArticlePanier {
+    text-decoration: underline;
+}
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -1369,6 +1491,34 @@ main#Catalogue{
     min-height: 100%;  
 }
 
+.onglets + form{
+    background-color: #EFECEC;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    padding-bottom: 3%;
+}
+
+.onglets + form button{
+    background-color: #24a064;
+    color: white;
+    border: none;
+    width: 65%;
+    height: 3em;
+    border-radius: .5em;
+    align-self: center;
+}
+
+.onglets + form button:hover{
+    background-color: #164F57;
+}
+
+.liste-produits{
+    display: flex;
+    flex-wrap: wrap; 
+    align-content: flex-start;   
+}
+
 .liste-produits{
     display: flex;
     flex-wrap: wrap; 
@@ -1382,12 +1532,104 @@ main#Catalogue{
     padding-left: 5%;
 }
 
+.categorie-catalogue summary ~ div label{
+    cursor: pointer;
+    width: auto;
+}
+
 .categorie-catalogue summary ~ div label h3{
     text-align: left;
+    color: #164F57
 }
 
 .categorie-catalogue summary ~ div label h3::first-letter{
     text-transform: uppercase;
+}
+
+.prix{
+    width: 80%;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+.prix > label{
+    align-self: flex-start;
+}
+
+.price-range{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.price-range input[type="number"]{
+    width: 15%;
+    border: none;
+    text-align: center;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    border: 1px solid #164F57;
+    border-radius: .5em;
+}
+
+.slider{
+    align-self: center;
+    width: 60%;
+    height: .5em;
+    position: relative;
+    background: #ddd;
+    border-radius: 5px;
+}
+
+.slider .progress {
+    height: 100%;
+    left: 1%;
+    right: 1%;
+    position: absolute;
+    border-radius: 5px;
+    background: #17a2b8;
+}
+.range-input {
+    position: relative;
+    height: 100%;
+}
+
+.range-input input {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: -.5em;
+    background: none;
+    pointer-events: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    height: 1em;
+    width: 1em;
+    border-radius: 50%;
+    background: #17a2b8;
+    pointer-events: auto;
+    -webkit-appearance: none;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+input[type="range"]::-moz-range-thumb {
+    height: 1em;
+    width: 1em;
+    border: none;
+    border-radius: 50%;
+    background: #17a2b8;
+    pointer-events: auto;
+    -moz-appearance: none;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+.liste-filtre .categorie-catalogue + label{
+    width: 35%;
 }
 
 .liste-filtre{  
@@ -1450,9 +1692,12 @@ main#Catalogue{
     width: 50%;
     padding-top: 15px;
     padding-bottom: 7px;
-    height: fit-content;
     border-top: solid #20535a 8px ;
     z-index: 1;
+}
+
+#Catalogue .onglet{
+    height: fit-content;
 }
 
 .onglet-selectionnee{
@@ -1700,9 +1945,9 @@ a.fleche-page{
 }
 
 /*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                  Page pour lister les commandes Vendeur (lstCommandesVendeur.php) ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃          Page pour lister les commandes (lstCommandesVendeur.php & lstCommandesCli.php)         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
 #divLstCommandes{
@@ -1752,134 +1997,170 @@ a.fleche-page{
 ┃                          Page détail commande (details.php)                               ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+.divPrincipaleDetail {
+    color: #164F57;
+}
 
-.detail-cmd,.main-block {
+.divDetail, .divDroiteDetail > div {
+    border-radius: 5px;
+    border: solid 2px #C6C6C6;
+    padding: 1em;
+}
+
+.bar {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 95%;
-    height: 95%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #E7E8E6;
-    border-radius: 15px;
-    padding: 0%;
+    height: 3em;
 }
 
-.detail-cmd,.secondary-block {
-    background-color:#D1D1D1;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 15px;
+.progress-bar-ok {
+    width: 89%;
 }
 
-.detail-cmd,.wht-line
-{
-    border: 0px;
-    background-color: #E7E8E6;
-    height: 8px;
-    border-radius: 10px;
+.buttonProgress {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
 }
 
-.detail-cmd,.blk-line
-{
-    border: 0px;
-    background-color: #404E58;
-    height: 8px;
-    border-radius: 10px;
+.buttonProgress div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.detail-cmd,.point-ok {
+.buttonProgress div p {
+    position: absolute;
+    margin-top: 1.6em;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.point-ok {
     background-color: #55C044;
     border-radius: 50%;
     width: 2em;
     height: 2em;
-    margin-right: auto;
-    margin-left: auto;
 }
 
-.detail-cmd,.point-ko {
+.point-ko {
     background-color: #C04444;
     border-radius: 50%;
     width: 2em;
     height: 2em;
-    padding-left: 100%;
 }
 
-
-.detail-cmd,progress {
+progress {
     background-color: #C04444;
-    border-radius: 5px;
     height: 10px;
-    width: 70%;
+    width: 100%;
     border: none;
 }
 
-.detail-cmd,progress::-moz-progress-bar 
+progress::-moz-progress-bar 
 { 
-    background: #55C044; 
-    border-radius: 5px;
+    background: #55C044;
     height: 10px;
+}
+
+.divDetailLivraison {
+    text-align: left;
+    font-size: x-large;
+}
+
+.divDetailLivraison p {
+    margin: .6em 0 0 0;
+}
+
+.divArticles {
     display: flex;
-    
+    flex-direction: column;
 }
 
-.detail-cmd,.progress-bar-ko {
-    background-color: #C04444;
+.divArticles div {
+    display: flex;
+    justify-content: space-between;
+    font-size: x-large;
+}
+
+.divArticles div div p {
+    margin-left: 1em;
+}
+
+.divArticles img {
+    width: 5em;
+    height: 5em;
     border-radius: 5px;
-    height: 10px;
-    position: relative;
+    border: solid 2px #164F57;
 }
 
-.detail-cmd,.button 
-{
+.divArticles hr {
+    margin: .5em 0;
+}
 
+.divPrix {
+    text-align: right;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.divPrix p {
+    margin: .5em 0 0 0;
+}
+
+.divDroiteDetail {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+}
+
+.divDetail, .divDroiteDetail > div {
+    margin: 1em;
+}
+
+.divDetail {
+    background-color: white;
+    width: 100%;
+}
+
+.divDetail hr, .divDroiteDetail hr {
+    background-color: #164F57;
+    margin-bottom: .5em;
+}
+
+.divDroiteDetail > div {
+    background-color: white;
+    border: solid 2px #C6C6C6;
+}
+
+.divBasPageDetail h2 {
+    margin-bottom: .6em;
+}
+
+.divBasPageDetail {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2em;
+}
+
+.btnTelecharger {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+
+.btnTelecharger a {
+    background-color: #164F57;
+    margin: .4em 0;
+    padding: .3em 0;
+    text-decoration: none;
+    color: #C6C6C6;
+    font-size: x-large;
     border-radius: 5px;
-    /* en ligne */
-    display: inline-flex;
-    position: absolute;
-    /* superpostion par rapport à .progress-bar-ko */
-    left: 15%;
-
-}
-
-.detail-cmd,#bar {
-    margin-top:  1em;
-    height: 10em;
-    background-color: #3997A3;
-    margin-left: 0;
-    width: 80%;
-}
-
-
-
-
-@media (min-width: 800px) and (max-width: 1280px) and (orientation: landscape) {
-
-    .titreAccueil h1 {
-        font-size: x-large;
-    }
-
-    h1, h2 {
-        font-size: larger;
-    }
-
-    .sectionPanier h2 {
-        font-size: 1em;
-    }
-
-    .sectionCredit input[type="submit"] {
-        font-size: large;
-    }
-
-    header h2, label, a, figcaption, .liCategorie a, .h3PasArticlePanier h3, .sectionPanier .h3PasArticlePanier {
-        font-size: medium;
-    }
-
-    p, .divSuivi h3 {
-        font-size: small;
-    }
 }
 
 /*
@@ -2034,4 +2315,36 @@ a.fleche-page{
 
 .labelCB {
     margin-bottom: 1%;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                             Media query font sizes                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+@media (min-width: 800px) and (max-width: 1280px) and (orientation: landscape) {
+
+    .titreAccueil h1 {
+        font-size: x-large;
+    }
+
+    h1, h2 {
+        font-size: larger;
+    }
+
+    .sectionPanier h2 {
+        font-size: 1em;
+    }
+
+    .sectionCredit input[type="submit"] {
+        font-size: large;
+    }
+
+    header h2, label, a, figcaption, .liCategorie a, .h3PasArticlePanier h3, .sectionPanier .h3PasArticlePanier {
+        font-size: medium;
+    }
+
+    p, .divSuivi h3 {
+        font-size: small;
+    }
 }

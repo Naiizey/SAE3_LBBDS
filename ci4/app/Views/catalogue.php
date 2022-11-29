@@ -55,7 +55,7 @@
                     <summary class="categorie"><h2><?=$categorie->libelle?></h2></summary>
                     <?php foreach ($categorie->getAllSousCat() as $sousCat): ?>
                     <div class="sous-categorie_<?= $sousCat->libelle?>" for="<?= $sousCat->libelle ?>">
-                        <input name="<?= $sousCat->libelle ?>" type="checkbox" id="<?= $sousCat->libelle ?>" name="sous-categorie">
+                        <input name="<?= $sousCat->libelle ?>" type="checkbox" id="<?= $sousCat->libelle ?>" <?php if(isset($_GET[$sousCat->libelle])): echo "checked"; endif?> name="sous-categorie">
                         <label for="<?= $sousCat->libelle ?>" class=".sous-categorie-catalogue"><h3><?= $sousCat->libelle ?></h3></label>
                     </div>
                     <?php endforeach;?>
@@ -65,15 +65,15 @@
             <section class="prix">
                 <label>Prix :</label>
                 <section class="price-range">
-                    <input type="number" name="prix_min" id="prix_min" value="0" min="<?= $min_price ?>" max="<?= $max_price ?>">
+                    <input type="number" name="prix_min" id="prix_min" value="<?php if(isset($_GET["prix_min"])):echo $_GET["prix_min"]; else: echo $min_price; endif?>" min="<?= $min_price ?>" max="<?= $max_price ?>">
                     <div class="slider">
                         <div class="progress"></div>
                         <div class="range-input">
-                        <input type="range" class="range-min" min="<?= $min_price ?>" max="<?= $max_price - 5 ?>" value="0" step="5">
-                        <input type="range" class="range-max" min="<?= $min_price + 5 ?>" max="<?= $max_price ?>" value="15000" step="5">
+                        <input type="range" class="range-min" min="<?= $min_price ?>" max="<?= $max_price - 5 ?>" value="<?php if(isset($_GET["prix_min"])):echo $_GET["prix_min"]; else: echo $min_price;endif?>" step="5">
+                        <input type="range" class="range-max" min="<?= $min_price + 5 ?>" max="<?= $max_price ?>" value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" step="5">
                     </div>
                     </div>
-                    <input type="number" name="prix_max" id="prix_max" value="15000" min="1" max="15000">
+                    <input type="number" name="prix_max" id="prix_max" value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" min="1" max="15000">
                 </section>
             </section>
             <button type="submit">Appliquer le(s) filtre(s)</button>
@@ -83,6 +83,7 @@
 </main>
 <?php require("page_accueil/footer.php"); ?>
 <script>
+    cataloguePrice();
     boutonCliquable(
         document.querySelector(".mobile-ouvrir-filtres"),
         () => {

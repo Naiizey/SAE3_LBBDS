@@ -36,6 +36,8 @@ class Validation extends BaseConfig
     public $templates = [
         'list'   => 'CodeIgniter\Validation\Views\list',
         'single' => 'CodeIgniter\Validation\Views\single',
+        'bloc_erreur' => 'errors/bloc-erreur.php',
+        'paragraphe_erreur' => 'errors/paragraphe-erreur.php'
     ];
 
     // --------------------------------------------------------------------

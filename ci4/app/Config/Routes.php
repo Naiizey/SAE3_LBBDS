@@ -71,6 +71,7 @@ $routes->set404Override();
     $routes->options('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::sendCors/$1/$2');
 
     $routes->get('/paiement', 'Home::paiement');
+    $routes->post('/paiement', 'Home::paiement');
 
     $routes->get('/catalogue', 'Home::catalogue');
     $routes->get('/catalogue/(:num)', 'Home::catalogue/$1');
@@ -85,18 +86,27 @@ $routes->set404Override();
 
     $routes->get('/destroy', 'Test::destroySession');
 
-    $routes->get('/commandes', 'Home::commandeTest',['filter' => 'connexion']);
+    $routes->get('/commandes', 'Home::lstCommandesClient',['filter' => 'connexion']);
 
     $routes->get('/commandes/detail/(:num)','Commandes::detail/$1',);//['filter' => 'connexion']
 
     $routes->get('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
     $routes->options('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
 
-    if(session()->has("numero")){
-        $routes->get('/espaceClient', 'EspaceClient::index');
-        $routes->post('/espaceClient', 'EspaceClient::index');
+    $routes->get('/livraison','Home::infoLivraison');
+    $routes->post('/livraison','Home::infoLivraison');
+
+    
+    $routes->get('/espaceClient/(admin)', 'Home::espaceClient/$1');
+    $routes->post('/espaceClient/(admin)', 'Home::espaceClient/$1');
+    
+    if(session()->has("numero"))
+    {
+        $routes->get('/espaceClient', 'Home::espaceClient');
+        $routes->post('/espaceClient', 'Home::espaceClient');
     }
-    else{
+    else
+    {
         $routes->get('/espaceClient', 'Home::connexion');
     }
 

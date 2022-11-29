@@ -19,31 +19,31 @@
                         
                         <div class="nomPrenom">
                             <div>
-                                <label for="nom">Nom :</label>
+                                <label for="nom">Nom<span class="requis">*</span> :</label>
                                 <input type="text" name="nom" required="required" value="<?= $nom?>"/>
                             </div>
                             <div>
-                                <label for="prenom">Prénom :</label>
+                                <label for="prenom">Prénom<span class="requis">*</span> :</label>
                                 <input type="text" name="prenom" required="required" value="<?= $prenom?>"/>
                             </div>
                         </div>
 
                         <div class="infoRue">
                             <div>
-                                <label for="numero_rue">Num rue :</label>
+                                <label for="numero_rue">Num rue<span class="requis">*</span> :</label>
                                 <input type="text" name="numero_rue" required="required" value="<?= $numeroRue?>"/>
                             </div>
                             <div>
-                                <label for="nom_rue">Nom rue :</label>
+                                <label for="nom_rue">Nom rue<span class="requis">*</span> :</label>
                                 <input type="text" name="nom_rue" required="required" value="<?= $nomRue?>"/>
                             </div>
                         </div>
 
                         <div class="infoVille">
-                            <label for="code_postal">Code Postal :</label>
+                            <label for="code_postal">Code Postal<span class="requis">*</span> :</label>
                             <input type="text" name="code_postal" required="required" value="<?= $codePostal?>"/>
                     
-                            <label for="ville">Ville :</label>
+                            <label for="ville">Ville<span class="requis">*</span> :</label>
                             <input type="text" name="ville" required="required" value="<?= $ville?>"/>
                         </div>
 

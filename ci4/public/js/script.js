@@ -235,13 +235,13 @@ function updatePriceTotal() {
         sommeTot += parseFloat(prix);
         prix = prixTabHt[ind].textContent.replace('€','');
         sommeTotHt += parseFloat(prix);
-        console.log(prix);
+        //console.log(prix);
     }
 
     prixTotTab[0].textContent = sommeTot;
     prixTotTab[1].textContent = sommeTot;
 
-    console.log(sommeTotHt);
+    //console.log(sommeTotHt);
     prixTotTabHt[0].textContent = sommeTotHt;
     //prixTotTabHt[1].textContent = sommeToHt;
 }
@@ -255,18 +255,12 @@ function lstCommandes(){
     var lignes=document.getElementsByClassName("lignesCommandes");
     var numCommandes=document.getElementsByClassName("numCommandes");
 
-    for (let numLigne of lignes) {
-        var ligneA=lignes.item(numLigne);
-        var commandeA=numCommandes[numLigne];
-        ligneA.addEventListener("click", lienLigne);
+    for (let numLigne=0; numLigne<lignes.length; numLigne++){
+        let ligneA=lignes.item(numLigne);
+        let commandeA=numCommandes.item(numLigne).textContent;
+        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/commandes/detail/${commandeA}`;});
     }
-    /*
-    function lienLigne(element) {
-        window.location.href = `/commande/${(commandeA.textContent)}`;
-    }
-    */
 }
-
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -310,7 +304,8 @@ function cgu(){
 ┃                                  Espace Client                                  ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-function espaceCli(){
+function espaceCli()
+{
     var inputModifsCli = document.querySelectorAll(".divInputEtLien input");
     var labelModifsCli = document.querySelectorAll(".mainEspaceCli label");
     var divModifsCli = document.querySelectorAll(".mainEspaceCli .divInputEtLien");
@@ -367,10 +362,33 @@ function espaceCli(){
         }
     });
 }
+function espaceCliAdmin() 
+{
+    console.log(this);
+    this.form = document.forms["formClient"];
+    var self = this;
+    var lienModif;
+    var ancienMdp = document.getElementsByClassName("labelAncienMdp")[0];
+    ancienMdp.innerHTML = "Votre mot de passe :";
+    
+    for (let i = 0; i < this.form.elements.length; i++)
+    {
+        lienModif = this.form.elements[i].parentNode.getElementsByTagName("a")[0];
+        
+        if (typeof lienModif !== 'undefined')
+        {
+            lienModif.addEventListener("click", function (event) {
+                event.preventDefault();
+                this.form.elements[i].disabled = false;
+                this.form.elements[i].focus();
+            });
+        }
+    }
+}
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                       Catalogue                                   ┃
+┃                                 Catalogue                                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 function cataloguePrice(){
@@ -378,40 +396,52 @@ function cataloguePrice(){
     priceInput = document.querySelectorAll(".price-range input:not(.range-input input)"),
     range = document.querySelector(".slider .progress");
     let priceGap = 100;
+
+    priceInput.forEach(() => {
+        window.addEventListener("load", fctPriceInput);
+    });
+    rangeInput.forEach(() => {
+        window.addEventListener("load", fctRangeInput);
+    });
+
     priceInput.forEach((input) => {
-        input.addEventListener("input", (e) => {
-            let minPrice = parseInt(priceInput[0].value),
-            maxPrice = parseInt(priceInput[1].value);
-            if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
-                if (e.target.id === "prix_min") {
-                    rangeInput[0].value = minPrice;
-                    range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
-                    console.log(minPrice + " | " + maxPrice);
-                } else if(e.target.id === "prix_max") {
-                    rangeInput[1].value = maxPrice;
-                    range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
-                }
-            }
-        });
+        input.addEventListener("input", fctPriceInput);
     });
     rangeInput.forEach((input) => {
-        input.addEventListener("input", (e) => {
-            let minVal = parseInt(rangeInput[0].value),
-            maxVal = parseInt(rangeInput[1].value);
-            if (maxVal - minVal < priceGap) {
-            if (e.target.className === "range-min") {
-                rangeInput[0].value = maxVal - priceGap;
-            } else {
-                rangeInput[1].value = minVal + priceGap;
+        input.addEventListener("input", fctRangeInput);
+    });
+
+    function fctPriceInput(e){
+        let minPrice = parseInt(priceInput[0].value),
+        maxPrice = parseInt(priceInput[1].value);
+        if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
+            if (e.target.id === "prix_min") {
+                rangeInput[0].value = minPrice;
+                range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
+                console.log(minPrice + " | " + maxPrice);
+            } else if(e.target.id === "prix_max") {
+                rangeInput[1].value = maxPrice;
+                range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
             }
-            } else {
+        }
+    }
+
+    function fctRangeInput(e){
+        let minVal = parseInt(rangeInput[0].value),
+        maxVal = parseInt(rangeInput[1].value);
+        if (maxVal - minVal < priceGap) {
+        if (e.target.className === "range-min") {
+            rangeInput[0].value = maxVal - priceGap;
+        } else {
+            rangeInput[1].value = minVal + priceGap;
+        }
+        } else {
             priceInput[0].value = minVal;
             priceInput[1].value = maxVal;
             range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
             range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
-            }
-        });
-    });
+        }
+    }
 }
 
 
@@ -425,3 +455,194 @@ function switchEtatFiltre(list){
         n.classList.toggle("est-filtre-ouvert");
     }
 }
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                     Catalogue                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+// 1 2  3  4  5
+// 0 25 50 75 100
+
+function barreProgression() {
+    for (let index = 0; index < 5; index++) {
+        if (index*25 <= document.querySelector(".progress-bar-ok").value) {
+            document.getElementsByClassName("pointProgress")[index].classList.add("point-ok");
+        } else {
+            document.getElementsByClassName("pointProgress")[index].classList.add("point-ko");
+        }
+    }
+}
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                   formAdresse                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+
+var formAdresseConstructor = function(){
+    this.form=document.forms["form_adresse"];
+    var self =this;
+    this.actionAfterFetch= new Object();
+
+    this.nomEtPrenom =[
+        this.form.elements["nom"],
+        this.form.elements["prenom"]    
+    ];
+    
+    this.estRempli = new Array();
+    Array.from(this.form.elements).forEach(elem => {
+        this.estRempli[elem.name]=elem.value.length>0;
+    });
+
+    this.codePostal=this.form.elements["code_postal"];
+    this.ville=this.form.elements["ville"];
+
+    this.utiliserProfil =  (event) => {
+        selfTarget=event.target;
+        this.nomEtPrenom.map(elem => {
+            
+            elem.classList.toggle("blocked-and-completed");
+            if (Array.from(elem.classList).includes("blocked-and-completed")){
+                elem.setAttribute("readOnly","readOnly");
+                
+                elem.dejaMis=elem.value;
+                elem.value=elem.getAttribute("sauvegardee");
+            }
+            else{
+                elem.removeAttribute("readOnly");
+                elem.value=elem.dejaMis;
+                
+                
+            }
+        });
+        this.supprimerErreur(selfTarget.parentNode.parentNode);
+    }
+    this.form.elements["utilise_nom_profil"].addEventListener('change', this.utiliserProfil );
+
+
+
+    
+
+    this.creerErreur =function(destination,message){
+        
+        if(Array.from(destination.children).filter(
+            child => Array.from(child.classList).includes("paragraphe-erreur") && child.textContent==message
+            ).length==0){
+
+            let p=document.createElement('p');
+            p.classList.add("paragraphe-erreur");
+            p.innerText=message
+            destination.appendChild(p)
+          
+        }
+        
+    }
+
+    
+
+    this.supprimerErreur =function(destination){
+
+        Array.from(destination.children)
+        .filter(child => Array.from(child.classList).includes("paragraphe-erreur"))
+        .forEach(child => destination.removeChild(child))
+            
+        
+    }
+
+    this.verifierNomEtPrenom =  (event) => {
+        selfTarget=event.target;
+        if(selfTarget.validity.valueMissing){
+            this.creerErreur(selfTarget.parentNode.parentNode.parentNode,"Attention champ(s) vide(s)");
+        }
+        else{
+            
+            this.supprimerErreur(selfTarget.parentNode.parentNode.parentNode);
+        }
+    };
+    this.nomEtPrenom.map(elem => 
+        elem.addEventListener("blur", this.verifierNomEtPrenom));
+
+    
+
+    Array.from(this.form.elements)
+    .filter(elem => {
+        return elem.required && !Array.from(elem.parentNode.parentNode.classList).includes("nomPrenom")
+    })
+    .forEach(elemRequired => {
+        elemRequired.addEventListener("blur", (event) => {
+        selfTarget=event.target;
+        if(selfTarget.validity.valueMissing){
+            this.creerErreur(selfTarget.parentNode,"Champ vide");
+            this.estRempli[selfTarget.name]=false;
+        }
+        else{
+            this.estRempli[selfTarget.name]=true;
+            this.supprimerErreur(selfTarget.parentNode);
+           
+        }
+        })
+    })
+
+    this.afterVille = function(response){
+    
+       this.codePostal.value = response.features[0].properties.postcode;
+        
+    }
+
+    this.afterCodePostal = function(response){
+        let datalist= document.getElementById("ville_trouvee");
+        datalist.innerHTML="";
+        response.features.forEach(feature => {
+            console.log(feature.properties.city)
+            let option = document.createElement("option");
+            option.value=feature.properties.city;
+            datalist.appendChild(option);
+        });   
+    }
+
+
+    this.chercheCodePostalVille =  (event) => {
+        selfTarget=event.target;
+      
+        if(selfTarget.value.length > 3){
+            
+            fetch("https://api-adresse.data.gouv.fr/search/?q="+selfTarget.value+"&type=municipality")
+            .then(response => response.json())
+            .then(response => self.afterVille(response))
+            .catch(error => console.error('Error:', error));   
+            
+        }
+    }
+
+    this.ville.addEventListener("blur",this.chercheCodePostalVille);
+
+    this.chercherVilleParCodePostal= (event) => {
+        selfTarget=event.target;
+        if(this.codePostal.validity.patternMismatch){
+            this.creerErreur(selfTarget.parentNode,"Ne correspond à aucun code postal");
+           
+        }
+        else if(!this.codePostal.validity.valueMissing){
+            console.log("Bonsoir, non");
+            this.supprimerErreur(selfTarget.parentNode);
+            
+            
+            
+            fetch("https://api-adresse.data.gouv.fr/search/?q="+selfTarget.value+"&postcode="+selfTarget.value+"&type=municipality")
+            .then(response => response.json())
+            .then(response => self.afterCodePostal(response))
+            .catch(error => {console.error('Error:', error)});   
+                
+            
+           
+        }
+        else{
+            this.supprimerErreur(selfTarget.parentNode);
+            this.creerErreur(selfTarget.parentNode,"Champ vide");
+        }    
+    };
+    this.codePostal.addEventListener("blur", this.chercherVilleParCodePostal);
+ 
+}
+ 

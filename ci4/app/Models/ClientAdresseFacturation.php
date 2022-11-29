@@ -5,7 +5,7 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 class ClientAdresseFacturation extends Model{
-    protected $table = "sae3.adresse_facturation";
+    protected $table = "sae3.adresse_facturation_client";
     protected $primaryKey = "num_compte";
 
     protected $allowedFields = ["num_compte",

@@ -31,6 +31,6 @@
             </div>
         </div>
     </body>
+    <script src="<?= base_url()?>/js/script.js"></script>
+    <script>errors();</script>
 </html>
-<script src="<?= base_url()?>/js/script.js"></script>
-<script>errors();</script>

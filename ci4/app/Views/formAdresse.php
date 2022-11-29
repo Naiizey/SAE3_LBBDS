@@ -13,13 +13,23 @@
         <main>
             <div class="divFormAdresse">
                 <div class="onglets">
-                    <?php if(isset($controller) && $controller==="infoLivraison"): ?>
+                    <?php if(isset($controller) && $controller==="paiement"): ?>
                     <div class="onglet">
                         <h3>Adresses sauvegardées</h3>
                     </div>
                     <div class="onglet onglet-selectionnee">
                         <h3>Autre adresse</h3>
                     </div>
+                    <?php elseif(isset($controller) && $controller==="infoLivraison"): ?>
+                        <div class="onglet">
+                            <h3>Adresses sauvegardées</h3>
+                        </div>
+                        <div class="onglet onglet-selectionnee">
+                            <h3>Autre adresse</h3>
+                        </div>
+                        <div class="onglet">
+                            <h3>Point relais</h3>
+                        </div>
                     <?php endif; ?>
                 </div>
                 <div class="sectionCredit">
@@ -60,7 +70,7 @@
                         <div class="infoVille">
                             <div>
                                 <label for="code_postal">Code Postal :</label>
-                                <input list="code_postal_trouvee" type="text" name="code_postal"  pattern="[0-9]{5,6}" autocomplete="off" value="<?= $adresse->code_postal ?>"/>
+                                <input list="code_postal_trouvee" type="text" name="code_postal" required="required"  pattern="[0-9]{5,6}" autocomplete="off" value="<?= $adresse->code_postal ?>"/>
                                 <?= $errors->showError("code_postal","paragraphe_erreur") ?>
                             </div>
                             <div>                       

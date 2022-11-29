@@ -125,3 +125,5 @@ CREATE OR REPLACE FUNCTION insertAdresseFacture() RETURNS TRIGGER AS
     end
 $$ language plpgsql;
 CREATE TRIGGER insteadOfInsert_adresse_facture INSTEAD OF INSERT ON adresse_facturation FOR EACH ROW EXECUTE PROCEDURE insertAdresseFacture();
+
+

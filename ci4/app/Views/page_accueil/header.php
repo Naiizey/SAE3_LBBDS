@@ -35,7 +35,7 @@
                     <h1>Alizon</h1>
                 </a>
                 <?php 
-                    if ($controller == "panier" || $controller == "panierVide" || $controller == "compte_redirection" || $controller == "infoLivraison")
+                    if ($controller == "panier" || $controller == "panierVide" || $controller == "compte_redirection" || $controller == "infoLivraison" || $controller == "paiement")
                     {
                         echo   '<div class="divSuivi">
                                     <div class="'.(($controller == "panier" )?"etat-courant-commande":"").'">
@@ -53,7 +53,7 @@
                                         <h3>Livraison</h3>
                                     </div>
                                     <hr>
-                                    <div>
+                                    <div class="'.(($controller == "paiement" )?"etat-courant-commande":"").'">
                                         '.file_get_contents(dirname(__DIR__,3)."/public/images/header/paiement.svg").'
                                         <h3>Paiement</h3>
                                     </div>

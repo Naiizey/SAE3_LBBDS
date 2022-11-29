@@ -16,7 +16,7 @@
                     <h2>Inscription</h2>
                     <?= afficheErreurs($erreurs, 'redirection'); ?>
                     <form action='<?= current_url() ?>' method="post">
-                        <label>Pseudo :</label>
+                        <label>Pseudo<span class="requis">*</span> :</label>
                         <input type="text" name="pseudo" required="required" value="<?= $pseudo?>"/>
                         <?= 
                             afficheErreurs($erreurs, 3) .
@@ -24,28 +24,28 @@
                         ?>
                         <div class="nomPrenom">
                             <div>
-                                <label>Nom :</label>
+                                <label>Nom<span class="requis">*</span> :</label>
                                 <input type="text" name="nom" required="required" value="<?= $nom?>"/>
                             </div>
                             <div>
-                                <label>Prénom :</label>
+                                <label>Prénom<span class="requis">*</span> :</label>
                                 <input type="text" name="prenom" required="required" value="<?= $prenom?>"/>
                             </div>
                         </div>
                         <?= afficheErreurs($erreurs, 2); ?>
-                        <label>Adresse mail :</label>
+                        <label>Adresse mail<span class="requis">*</span> :</label>
                         <input type="email" name="email" required="required" value="<?= $email?>"/>
                         <?= 
                             afficheErreurs($erreurs, 4) .
                             afficheErreurs($erreurs, 7)
                         ?>
-                        <label>Mot de passe :</label>
+                        <label>Mot de passe<span class="requis">*</span> :</label>
                         <input type="password" name="motDePasse" required="required" value="<?= $motDePasse?>"/>
                         <?= 
                             afficheErreurs($erreurs, 5) .
                             afficheErreurs($erreurs, 6)
                         ?>
-                        <label>Confirmez mot de passe :</label>
+                        <label>Confirmez mot de passe<span class="requis">*</span> :</label>
                         <input type="password" name="confirmezMotDePasse" required="required" value="<?= $confirmezMotDePasse?>"/>
                         <?= afficheErreurs($erreurs, 1) ?>
                         <input type="submit" value="S'inscrire"/>

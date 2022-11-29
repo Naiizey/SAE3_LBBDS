@@ -19,9 +19,9 @@
                     <h2>Connexion</h2>
                     <form action="<?= current_url() ?>" method="post">
                         <?= afficheErreurs($erreurs,'redirection'); ?>
-                        <label>Nom d'utilisateur ou adresse mail :</label>
+                        <label>Nom d'utilisateur ou adresse mail<span class="requis">*</span> :</label>
                         <input type="text" name="identifiant" required="required" value="<?= $identifiant?>"/>
-                        <label>Mot de passe : </label>
+                        <label>Mot de passe<span class="requis">*</span> : </label>
                         <input type="password" name="motDePasse" required="required" value="<?= $motDePasse?>"/>
                         <div class="divSouvenir">
                             <input type="checkbox"/>

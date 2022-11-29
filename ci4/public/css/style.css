@@ -230,6 +230,10 @@ main {
     background-color: #D9D9D9;
 }
 
+.requis{
+    color: #C63636;
+}
+
 /* Media query téléphone header */
 
 @media screen and (max-width: 991px){

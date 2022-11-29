@@ -648,3 +648,76 @@ var formAdresseConstructor = function(){
  
 }
  
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Errors                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+function errors(){
+    const Shuffle = function ($el) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=+<>,./?[{()}]!@#$%^&*~`\|'.split(''),
+            $source = $el.querySelector('.source'), $target = $el.querySelector('.target');
+    
+        let cursor = 0, scrambleInterval = undefined, cursorDelayInterval = undefined, cursorInterval = undefined;
+    
+        const getRandomizedString = function (len) {
+            let s = '';
+    
+            for (let i = 0; i < len; i++) {
+                s += chars[Math.floor(Math.random() * chars.length)];
+            }
+    
+            return s;
+        };
+    
+        this.start = function () {
+            $source.style.display = 'none';
+            $target.style.display = 'block';
+    
+            scrambleInterval = window.setInterval(() => {
+                if (cursor <= $source.innerText.length) {
+                    $target.innerText = $source.innerText.substring(0, cursor) + getRandomizedString($source.innerText.length - cursor);
+                }
+            }, 450 / 30);
+    
+            cursorDelayInterval = window.setTimeout(() => {
+                cursorInterval = window.setInterval(() => {
+                    if (cursor > $source.innerText.length - 1) {
+                        this.stop();
+                    }
+    
+                    cursor++;
+                }, 70);
+            }, 350);
+        };
+    
+        this.stop = function () {
+            $source.style.display = 'block';
+            $target.style.display = 'none';
+            $target.innerText = '';
+            cursor = 0;
+    
+            if (scrambleInterval !== undefined) {
+                window.clearInterval(scrambleInterval);
+                scrambleInterval = undefined;
+            }
+    
+            if (cursorInterval !== undefined) {
+                window.clearInterval(cursorInterval);
+                cursorInterval = undefined;
+            }
+    
+            if (cursorDelayInterval !== undefined) {
+                window.clearInterval(cursorDelayInterval);
+                cursorDelayInterval = undefined;
+            }
+        };
+    };
+    
+    (new Shuffle(document.getElementById('error_text'))).start();
+    
+    window.setTimeout(function () {
+        document.getElementById('details').classList.remove('hidden');
+    }, 550);
+}

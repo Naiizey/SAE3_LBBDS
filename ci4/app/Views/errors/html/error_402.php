@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Error 404 - Not Found</title>
+    <title>Error 402 - Payment Required</title>
     <link rel="stylesheet" href="<?=base_url()?>/css/style.css"/>
 </head>
     <body>
         <div class="flex-center full-height">
             <div>
                 <div id="error_text">
-                    <span class="source">Error 404: <span data-l10n>Not Found</span></span>
+                    <span class="source">Error 402: <span data-l10n>Payment Required</span></span>
                     <span class="target"></span>
                 </div>
                 <div class="hidden" id="details">
@@ -29,5 +29,5 @@
         </div>
     </body>
 </html>
-<script src="<?= base_url()?>/js/script.js"></script>
+<script src="<?= base_url()?>/js/script.js">errors();</script>
 <script>errors();</script>

@@ -69,8 +69,8 @@
                     <div class="slider">
                         <div class="progress"></div>
                         <div class="range-input">
-                        <input type="range" class="range-min" min="<?= $min_price ?>" max="<?= $max_price - 5 ?>" value="<?php if(isset($_GET["prix_min"])):echo $_GET["prix_min"]; else: echo $min_price;endif?>" step="5">
-                        <input type="range" class="range-max" min="<?= $min_price + 5 ?>" max="<?= $max_price ?>" value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" step="5">
+                        <input type="range" class="range-min" min="<?= $min_price ?>" max="<?= $max_price - 5 ?>" value="<?php if(isset($_GET["prix_min"])):echo $_GET["prix_min"]; else: echo $min_price;endif?>" step="1">
+                        <input type="range" class="range-max" min="<?= $min_price + 5 ?>" max="<?= $max_price ?>" value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" step="1">
                     </div>
                     </div>
                     <input type="number" name="prix_max" id="prix_max" value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" min="1" max="15000">

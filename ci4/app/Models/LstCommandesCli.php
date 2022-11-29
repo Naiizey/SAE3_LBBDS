@@ -22,4 +22,31 @@ class LstCommandesCli extends Model
         return $this->where('num_compte',session()->get("numero"))->findAll();
     }
 
+    public function creerCommande($numClient,$id_adresse_livr){
+
+        
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        do{
+            $numCommande = '';
+            
+            for ($i = 0; $i < 50; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+                $numCommande .= $characters[$index];
+            }
+        }while(!empty($this->db->table('sae3._commande')->where("num_commande",$numCommande)->get()));
+
+
+        $this->db->table('sae3._commande')->insert(array(
+                "num_commande"=>$numCommande,
+                "num_compte"=>$numClient,
+                "id_a"=>$id_adresse_livr
+        ));
+
+
+
+
+            
+            
+    }
+
 }

@@ -78,4 +78,21 @@ final class ExampleDatabaseTest extends CIUnitTestCase
         $this->assertCount(Fabricator::getCount($model->table), $model->findAll());
 
     }
+
+    public function testCommande(){
+        $model_C=model("\App\Models\LstCommandesCli");
+        $model_A=model("\App\Models\AdresseLivraison");
+
+        $client = model("\App\Models\Client")->getClientById(1);
+
+        $fabricator = new Fabricator(AdresseLivraisonTest::class,null,'fr_FR');
+        $ok = $fabricator->make();
+        $id_a=$model_A->enregAdresse($ok);
+
+        $model_C->creerCommande($client->numCli,$id_a);
+
+
+        $this->assertCount(Fabricator::getCount($model_C->table), $model_C->findAll());
+
+    }
 }

@@ -86,7 +86,7 @@ CREATE TABLE _recevoir_facture(
     num_compte INT,
     id_adresse_fact INT PRIMARY KEY,
     CONSTRAINT  fk_recevoir_commande_compte FOREIGN KEY (num_compte) REFERENCES _compte(num_compte),
-    CONSTRAINT  fk_recevoir_commande_adresse FOREIGN KEY (id_adresse_fact) REFERENCES _adresse_livraison(id_adresse_livr)
+    CONSTRAINT  fk_recevoir_commande_adresse FOREIGN KEY (id_adresse_fact) REFERENCES _adresse_facturation(id_adresse_fact)
 );
 
 
@@ -117,14 +117,14 @@ CREATE TABLE _panier_visiteur
 CREATE TABLE _commande
 (
     num_panier INT NOT NULL,
-    num_commande VARCHAR(50),
+    num_commande VARCHAR(50) UNIQUE NOT NULL,
     date_commande DATE NOT NULL,
     date_expedition DATE,
     date_plateformeReg DATE,
     date_plateformeLoc DATE,
     date_arriv DATE,
-    id_a INT NOT NULL, --attendu_a
-    id_adresse INT NOT NULL
+    id_a INT NOT NULL --attendu_a
+
 ) ;
 
 
@@ -318,7 +318,7 @@ ALTER TABLE _avis ADD CONSTRAINT _avis_compte_fk FOREIGN KEY (num_compte) REFERE
 ALTER TABLE _sous_categorie ADD CONSTRAINT _sous_categorie_categorie_code_cat_fk FOREIGN KEY (code_cat) REFERENCES _categorie(code_cat);
 
 -- Association *..1 entre adresse_livraison et commande ✅
-ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY (id_adresse) REFERENCES _adresse_livraison(id_adresse_livr);
+ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY (id_a) REFERENCES _adresse_livraison(id_adresse_livr);
 
 
 -- Association 1..0.3 entre avis et image_avis

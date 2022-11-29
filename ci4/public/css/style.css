@@ -1981,11 +1981,10 @@ a.fleche-page{
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 .divPrincipaleDetail {
-    background-color: white;
     color: #164F57;
 }
 
-.divPrincipaleDetail, .divDetail, .divDroiteDetail > div {
+.divDetail, .divDroiteDetail > div {
     border-radius: 5px;
     border: solid 2px #C6C6C6;
     padding: 1em;
@@ -2083,8 +2082,6 @@ progress::-moz-progress-bar
 }
 
 .divArticles hr {
-    background-color: #D1D1D1;
-    height: 4px;
     margin: .5em 0;
 }
 
@@ -2109,23 +2106,18 @@ progress::-moz-progress-bar
 }
 
 .divDetail {
-    background-color: #F3F3F3;
+    background-color: white;
     width: 100%;
 }
 
-.divDetail hr {
+.divDetail hr, .divDroiteDetail hr {
     background-color: #164F57;
     margin-bottom: .5em;
 }
 
 .divDroiteDetail > div {
-    background-color: #D1D1D1;
-    border: solid 2px #aeaeae;
-}
-
-.divDroiteDetail hr {
     background-color: white;
-    margin-bottom: .5em;
+    border: solid 2px #C6C6C6;
 }
 
 .divBasPageDetail h2 {

@@ -128,8 +128,8 @@ class Panier extends BaseController
             $quantite=$this->request->getPost("quantite");
         }
         
-       if(!is_null($idProd) && !is_null($quantite))
-       {
+        if(!is_null($idProd) && !is_null($quantite))
+        {
             
             if(session()->has("numero"))
             {

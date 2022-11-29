@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Entities\Adresse;
 use CodeIgniter\Model;
 use Generator;
 
@@ -15,7 +16,7 @@ use Generator;
 class AdresseLivraison extends Model
 {
     protected $table      = 'sae3.adresse_livraison';
-    protected $primaryKey = 'numero';
+    protected $primaryKey = 'id_a';
 
     protected $useAutoIncrement = true;
 
@@ -47,6 +48,14 @@ class AdresseLivraison extends Model
     ];
 
 
+    public function enregAdresse(Adresse $adresse){
+        $this->save($adresse);  
+        return $this->selectMax('id_a')->get()->getResult()[0]->id_a;
+    }
+
+    public function getAdresseById($id){
+        return $this->find($id);
+    }
    
 
 

@@ -587,6 +587,7 @@ var formAdresseConstructor = function(){
     this.afterVille = function(response){
     
        this.codePostal.value = response.features[0].properties.postcode;
+       this.supprimerErreur(this.codePostal.parentNode);
         
     }
 

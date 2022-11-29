@@ -422,6 +422,9 @@ class Home extends BaseController
             
             $adresse->fill($post);
             if($adresse->checkAttribute($this->validator)){
+                $expiration=strtotime('+24 hours');
+                $id_a=$model->enregAdresse($adresse);
+                setcookie('id_adresse_livraison',$id_a,array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
                 return redirect()->to("/paiement");
             }
         

@@ -167,6 +167,7 @@
             if(!err){
                 updatePricePanier();
                 updatePriceTotal();
+                
             }
             
 

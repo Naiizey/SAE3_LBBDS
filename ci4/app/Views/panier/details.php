@@ -40,8 +40,12 @@
                                     echo '
                                         <div>
                                             <div>
-                                                <img>
-                                                <p>'.$article->intitule_prod.'</p>
+                                                <a href='.base_url()."/produit/".$article->id_prod.'>
+                                                    <img src='.$article->lien_image_prod.'>
+                                                </a>
+                                                <a href='.base_url()."/produit/".$article->id_prod.'>
+                                                    <p>'.$article->intitule_prod.'</p>
+                                                </a>
                                             </div>
                                             <p>'.$article->prix_ht.'€</p>
                                         </div>

@@ -34,7 +34,7 @@
                         <div id="entête">
 
                             <div class="bouton-selectionner-tout">
-                                <label for="tout<?=$categorie->id?>">Tout sélectionner</label>
+                                <label for="tout<?=$categorie->id?>"><h3>Tout sélectionner</h3></label>
                                 <input class="chk-box-tout" type="checkbox" id="tout<?=$categorie->id?>" name="tout<?=$categorie->id?>" value="tout<?=$categorie->id?>">
                             </div>
                             <hr>
@@ -46,6 +46,7 @@
                             <label for="<?= $sousCat->libelle ?>" class=".sous-categorie-catalogue"><h3><?= $sousCat->libelle ?></h3></label>
                             <input name="<?= $sousCat->libelle ?>" type="checkbox" id="<?= $sousCat->libelle ?>" name="sous-categorie">
                         </div>
+                        <hr>
                         <?php endforeach;?>
                     </details>
                 <?php endforeach;?>

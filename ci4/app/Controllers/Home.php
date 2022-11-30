@@ -533,6 +533,10 @@ class Home extends BaseController
         $model=model("\App\Models\LstCommandesCli");
         $data['infosCommande']=$model->getCommandeById($num_commande);
 
+/*        if (!isset($data['infosCommande'][0]->num_commande)) {
+            throw new Exception("Le numéro de commande entré n'existe pas.", 404);
+        }*/
+
         return view('panier/details.php',$data);
     }
 

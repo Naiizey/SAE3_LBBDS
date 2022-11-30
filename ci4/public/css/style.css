@@ -1511,6 +1511,7 @@ div.image-card{
 main#Catalogue{
     display: flex;
     min-height: 1000px;
+    padding-left: 0%;
 }
 .partie-produits{
     max-width: 75%; 
@@ -1518,6 +1519,9 @@ main#Catalogue{
 .partie-filtre{
     width: 25%;
     min-height: 100%;  
+    /* collé à gauche */
+    
+    left: 0;
 }
 
 .onglets + form{
@@ -1567,6 +1571,33 @@ main#Catalogue{
     width: 55%;
 }
 
+.categorie-catalogue #entête hr 
+{
+    width: 80%;
+    color: #D1D1D1;
+    height: 4px;
+    border-radius: 10px;
+    margin-left: 2%;
+
+}
+
+.categorie-catalogue hr 
+{
+    width: 70%;
+    color: #E7E8E6;
+    height: 4px;
+    border-radius: 10px;
+    /* centré */
+    margin-left: 5%;
+    margin-right: auto;
+}
+
+/* .categorie-catalogue summary ~ div input{
+    width: 20px;
+    height: 20px;
+    margin-right: 1em;
+} */
+
 .categorie-catalogue summary ~ div label h3{
     text-align: left;
     color: #164F57
@@ -1577,10 +1608,13 @@ main#Catalogue{
 }
 
 .categorie-catalogue summary ~ div label ~ input{
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     margin-right: 1em;
+    border-radius: 20px;
 }
+
+
 .categorie-catalogue .bouton-selectionner-tout
 {
     display: flex;
@@ -1589,10 +1623,11 @@ main#Catalogue{
 
 .categorie-catalogue #entête
 {
-    /* items en colonne    */
     display: flex;
     flex-direction: column;
 }
+
+
 
 .categorie-catalogue .sous-categorie
 {
@@ -1603,8 +1638,8 @@ main#Catalogue{
 .categorie-catalogue .bouton-selectionner-tout label{
     cursor: pointer;
     width: auto;
-    width: 55%;
     text-align: left;
+    color: #164F57;
 }
 
 .categorie-catalogue .bouton-selectionner-tout label h3::first-letter{
@@ -2162,14 +2197,20 @@ progress::-moz-progress-bar
     flex-direction: column;
 }
 
+.divArticles a {
+    text-decoration: none;
+    color: #164F57;
+    height: fit-content;
+}
+
+.divArticles p {
+    margin: 0 0 0 1em;
+}
+
 .divArticles div {
     display: flex;
     justify-content: space-between;
     font-size: x-large;
-}
-
-.divArticles div div p {
-    margin-left: 1em;
 }
 
 .divArticles img {

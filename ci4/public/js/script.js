@@ -737,3 +737,27 @@ function errors(){
         document.getElementById('details').classList.remove('hidden');
     }, 550);
 }
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Card Produit                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+function parentTilCard(element){
+    let card = element;
+    //get the parent node of the element until the card
+    while(card.getAttribute('value') == null){
+        card = card.parentNode;
+    }
+    return card
+}
+
+//Only if at least one card in the page
+if(document.querySelector(".card-produit") != null){
+    //Select all cards
+    let cards = document.querySelectorAll(".card-produit");
+    for(card of cards){
+        //Redirection while clicking on products
+        card.addEventListener("click", (e) =>{window.location.href= "produit/" + parentTilCard(e.target).getAttribute('value');});
+    }
+}

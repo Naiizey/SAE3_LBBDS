@@ -1,4 +1,14 @@
-<?php require("header.php"); ?>
+<?php require("header.php"); 
+    function afficheErreurs($e, $codeE)
+    {
+        if (isset($e[$codeE]))
+        {
+            return "<div class='bloc-erreurs'>
+                                <p class='paragraphe-erreur'>$e[$codeE]</p>
+                    </div>";
+        }   
+    }  
+?>
         <main class="mainPanier">
             <div class="divPanierEtAside">
                 <?php if (empty($produits)): ?>
@@ -21,9 +31,11 @@
                         </div>
                     </section>
                     <aside>
-                        <h2>Sous-total (0 article.s) : 0,00€</h2>
-                        <a class="lienPanierVide">Valider le panier</a>
-                        <a class="lienViderPanier desactive">Vider le panier</a>
+                        <div class="divValiderVider">
+                            <h2>Sous-total (0 article.s) : 0,00€</h2>
+                            <a class="lienPanierVide">Valider le panier</a>
+                            <a class="lienViderPanier desactive">Vider le panier</a>
+                        </div>
                     </aside>
                 <?php else: ?>
                     <section class="sectionPanier">
@@ -99,8 +111,15 @@
                     <aside>
                         <div class="divCodeReduc">
                             <h2>Code de réduction</h2>
-                            <input type="text"/>
-                            <a href="<?= base_url() ?>/livraison" class="lienPanier">Valider</a>
+                            <form action="<?= current_url() ?>/validerCode" method="post" name="codeReduc">
+                                <input type="text" name="code" required/>
+                                <input type="submit" value="Valider"/>
+                                <?= 
+                                    afficheErreurs($erreurs, 0) . 
+                                    afficheErreurs($erreurs, 1) .
+                                    afficheErreurs($erreurs, 2)
+                                ?>
+                            </form>
                         </div>
                         <div class="divValiderVider">
                             <h2>Sous-total

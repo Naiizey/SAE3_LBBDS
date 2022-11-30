@@ -117,6 +117,33 @@ function dragNDrop(){
 
 //TODO: voir et cacher le mot de passe avec un bouton (un neuil) dans l'<input>
 
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                Spécifier quantité                               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+document.querySelector("#tabQuant").addEventListener("change", (event) => {
+    if (event.target.value == "10+"){
+        console.log(event.target);
+        event.target.parentNode.classList.toggle("plus-10");
+        document.querySelector(".input-option-plus-10").addEventListener("keypress", (event) => {
+          
+            if(event.keyCode < 48 || event.keyCode > 57){
+                event.preventDefault();
+
+            }
+            
+        })
+        document.querySelector(".input-option-plus-10").addEventListener("blur", (event) => {
+            if(event.target.value > event.target.max){
+                event.value = event.target.max;
+            }
+            
+        })
+    }
+})
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -177,15 +204,40 @@ function requeteDynamHTTP(url="") {
         for (elem of howGetSelect())
         {
             elem.addEventListener("change",(event) =>{
-                let listValue= [
-                    howGetId(event.target),
-                    event.target.value
-                ]
-                requete.put(listValue,callback);
+                if(!isNaN(event.target.value))
+                {
+                    let listValue= [
+                        howGetId(event.target),
+                        event.target.value
+                    ]
+                    requete.put(listValue,callback);
+                }
+                else if (event.target.value == "10+"){
+                    console.log(event.target);
+                    event.target.parentNode.classList.toggle("plus-10");
+                }else { 
+                    alert("Veuillez entrer un nombre");
+                }
+                
+                
                 
             })
         }
     }
+            
+
+
+ 
+    document.querySelector(".input-option-plus-10").addEventListener("keypress", (event) => {
+          
+            
+        if(event.keyCode < 48 || event.keyCode > 57){
+            event.preventDefault();
+
+        }
+        
+    })
+
     
 
 /*

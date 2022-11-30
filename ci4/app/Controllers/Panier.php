@@ -56,12 +56,11 @@ class Panier extends BaseController
     }
     */
 
-
     #TODO: valeur pas update au début.  
-    public function getProduitPanierClient($context = null)
+    public function getProduitPanierClient($context = null, $data = null)
     {
-
-        $data['controller']= "panier";
+        $data['controller'] = "panier";
+        $data['erreurs'] = [];
         if($context == 400) 
         {
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
@@ -243,5 +242,34 @@ class Panier extends BaseController
 
         setcookie('token_panier',$token,array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
         return $token;
+    }
+
+    public function validerCode()
+    {
+        $post=$this->request->getPost();
+        $modelCodeReduc = model("\App\Models\CodeReduction");
+        
+        if (!empty($post))
+        {
+            $codeReduc = $modelCodeReduc->getByCode($post['code']);
+
+            if (empty($codeReduc))
+            {
+                $issues[1] = "Ce code n'existe pas";
+            }
+            else
+            {
+                //if ($codeReduc->)
+            }
+        }
+        else
+        {
+            $issues[0] = "Pas d'entrée";
+        }
+
+        $data["erreurs"] = $issues;
+        $data["controller"] = "panier";
+
+        return redirect()->to("/panier");
     }
 }

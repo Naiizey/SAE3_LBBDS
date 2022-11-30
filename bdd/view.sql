@@ -131,4 +131,5 @@ CREATE OR REPLACE VIEW adresse_livraison AS
     SELECT id_a, nom_a nom, prenom_a prenom, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, infos_comp FROM _adresse NATURAL JOIN _adresse_livraison;
 
 
-
+CREATE OR REPLACE VIEW code_reduction AS
+    SELECT * FROM _code_reduction;

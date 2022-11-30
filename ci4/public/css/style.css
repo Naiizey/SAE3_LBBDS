@@ -1019,7 +1019,7 @@ header ul {
     right: 2%;
 }
 
-.mainPanier .divValiderVider, .mainPanier .divCodeReduc {
+.divValiderVider, .divCodeReduc {
     border: solid 2px;
     border-color: #C6C6C6;
     background-color: white;
@@ -1027,6 +1027,26 @@ header ul {
     flex-direction: column;
     align-items: center;
     padding: 1em;
+    text-align: center;
+}
+
+.divCodeReduc form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mainPanier .divCodeReduc input[type="submit"] {
+    color: white;
+    background-color: #24a064;
+    border-radius: 10px;
+    width: fit-content;
+    padding: 0.5em 1em;
+    height: auto;
+}
+
+.mainPanier .divCodeReduc input[type="submit"]:hover {
+    background-color: #164F57;
 }
 
 .mainPanier .divCodeReduc {
@@ -1036,7 +1056,7 @@ header ul {
 .mainPanier .divCodeReduc input {
     margin-top: 0.5em;
     background-color: #F3F3F3;
-    height: 2.5em;
+    height: 2em;
     border: solid 1px;
     border-color: #C6C6C6;
     padding: 0 0 0 2%;

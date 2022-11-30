@@ -490,8 +490,9 @@ class Home extends BaseController
         $data['controller']= "detail";
         $data['numCommande'] = $num_commande;
 
-        $model=model("\App\Models\LstCommandesCli");
-        $data['infosCommande']=$model->getCommandeById($num_commande);
+        $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
+
+        $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
 
         return view('panier/details.php',$data);
     }

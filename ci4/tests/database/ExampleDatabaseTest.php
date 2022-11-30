@@ -108,4 +108,6 @@ final class ExampleDatabaseTest extends CIUnitTestCase
         $this->assertCount(Fabricator::getCount($model_C->table), $model_C->findAll());
 
     }
+
+    
 }

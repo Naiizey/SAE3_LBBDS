@@ -1,7 +1,7 @@
             <div class="mentionsLegales" style="display: none;">
                 <div class="divFermerCGU">
                     <a href="" class="fermerCGU">
-                        <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/cross.svg")?>
+                        <?= file_get_contents(dirname(__DIR__,3)."/public/images/cross.svg") ?>
                     </a>
                 </div>
                 <h2>Conditions générales d’utilisation</h2>
@@ -24,7 +24,7 @@
                 <p>En utilisant la plateforme, vous reconnaissez avoir lu, compris et accepté l’entièreté et sans aucunes réserves les conditions générales d’utilisation et de ventes présentées ci-dessous.</p>
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo, eaque distinctio tempora reprehenderit voluptatum necessitatibus impedit minima! Incidunt molestias delectus, omnis officiis dolore minima quod aspernatur cupiditate dicta molestiae cum.</p>
                 <div class="remonterCGU">
-                    <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/fleche_haut.svg")?>
+                    <?= file_get_contents(dirname(__DIR__,3)."/public/images/fleche_haut.svg") ?>
                 </div>
             </div>
         <footer>            
@@ -79,7 +79,7 @@
                 </ul>
             </div>
         </footer>
-        <script src="<?=base_url()?>/js/script.js"></script>
+        <script src="<?= base_url() ?>/js/script.js"></script>
     </body>
 </html>
 <script>

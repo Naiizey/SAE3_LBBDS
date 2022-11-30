@@ -20,7 +20,7 @@
                     </div>
                     <div class="divDroite">
                         <div>
-                            <?= '<h2>' . ucfirst($prod -> intitule) . '</h2>' ?>
+                            <h2><?= ucfirst($prod -> intitule)?></h2>
                             <p class="ParaDescProduit"><?= ucfirst($prod->description) ?></p>
                             <section class="sectionAvis">
                                 <h4>Avis clients:</h4>
@@ -31,7 +31,6 @@
                             <?php if ($prod -> stock <= 10): ?>
                             <?= //TODO: Adapter par rapport a quantité dans le panier
                                 "<p>Faites vite, il n'en reste que " . $prod -> stock . '</p>' ?>
-                        
                             <?php endif; ?>
                             <form action= <?= base_url()."/panier/ajouter/$prod->id" ?> method="post">
                                 <div class="divQuantiteProduit">

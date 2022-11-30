@@ -41,12 +41,12 @@
                          </div>
 
                         <!-- Liste des sous-catégories -->
-                        <?php foreach ($categorie->getAllSousCat() as $sousCat): ?>
+                        <?php foreach ($categorie->getAllSousCat() as $key => $sousCat): ?>
                         <div class="sous-categorie" for="<?= $sousCat->libelle ?>">
                             <label for="<?= $sousCat->libelle ?>" class=".sous-categorie-catalogue"><h3><?= $sousCat->libelle ?></h3></label>
                             <input name="<?= $sousCat->libelle ?>" type="checkbox" id="<?= $sousCat->libelle ?>" name="sous-categorie">
                         </div>
-                        <hr>
+                        <?php if($key != array_key_last($categorie->getAllSousCat())): ?> <hr> <?php endif; ?>
                         <?php endforeach;?>
                     </details>
                 <?php endforeach;?>

@@ -1017,6 +1017,12 @@ header ul {
 }
 
 .mainPanier aside {
+    position: fixed;
+    width: 25%; 
+    right: 2%;
+}
+
+.mainPanier .divValiderVider, .mainPanier .divCodeReduc {
     border: solid 2px;
     border-color: #C6C6C6;
     background-color: white;
@@ -1024,9 +1030,22 @@ header ul {
     flex-direction: column;
     align-items: center;
     padding: 1em;
-    position: fixed;
-    right: 2%;  
-    width: 23%; 
+}
+
+.mainPanier .divCodeReduc {
+    margin-bottom: 2em;
+}
+
+.mainPanier .divCodeReduc input {
+    margin-top: 0.5em;
+    background-color: #F3F3F3;
+    height: 2.5em;
+    border: solid 1px;
+    border-color: #C6C6C6;
+    padding: 0 0 0 2%;
+    width: 70%;
+    font-size: larger;
+    font-family: "Montserrat-Regular";
 }
 
 .mainPanier aside .lienPanierVide {
@@ -2400,7 +2419,7 @@ progress::-moz-progress-bar
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                             Errors                                ┃
+┃                                    Errors                                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 .full-height {

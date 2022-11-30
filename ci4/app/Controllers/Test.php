@@ -14,7 +14,7 @@ class Test extends BaseController{
             $data['cardProduit']=service("cardProduit");
             helper('cookie');
             if (session()->has("numero")) {
-                $data['quant'] = model("\App\Model\ProduitPanierModel")->compteurDansPanier(session()->get("numero"));
+                $data['quant'] = model("\App\Model\ProduitPanieCompteModel")->compteurDansPanier(session()->get("numero"));
             } else if (has_cookie("token_panier")) {
                 $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
             } else {

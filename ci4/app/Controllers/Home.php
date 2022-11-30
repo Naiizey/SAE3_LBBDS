@@ -43,7 +43,7 @@ class Home extends BaseController
         $data['cardProduit']=service("cardProduit");
         $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
         if (session()->has("numero")) {
-            $data['quant'] = model("\App\Model\ProduitPanierModel")->compteurDansPanier(session()->get("numero"));
+            $data['quant'] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
         } else if (has_cookie("token_panier")) {
             $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
         } else {
@@ -222,7 +222,7 @@ class Home extends BaseController
         //$ProduitPanierModel -> viderPanierClient
     }  
     
-    private const NBPRODSPAGECATALOGUE = 18;
+    private const NBPRODSPAGECATALOGUE = 20;
     #FIXME: comportement href différent entre $page=null oe $page !=null    
     public function catalogue($page=null)
     {
@@ -357,7 +357,7 @@ class Home extends BaseController
         {
             helper('cookie');
             if (session()->has("numero")) {
-                $data['quant'] = model("\App\Model\ProduitPanierModel")->compteurDansPanier(session()->get("numero"));
+                $data['quant'] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
             } else if (has_cookie("token_panier")) {
                 $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
             } else {

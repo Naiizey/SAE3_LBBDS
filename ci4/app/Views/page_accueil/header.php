@@ -36,7 +36,7 @@
                 top : 8.4em;
             <?php endif; ?>
             <?php if ($controller == "panier" || $controller == "panierVide") : ?>
-                padding: 2em;
+                padding : 2em;
             <?php endif; ?>
             }
         </style>

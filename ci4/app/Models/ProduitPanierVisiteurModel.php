@@ -58,8 +58,8 @@ class ProduitPanierVisiteurModel extends ProduitPanierModel
         return !empty($result);
     } 
 
-
-   
-    
+    public function compteurDansPanier($idUser){
+        return $this->where($this->getColonneProduitIdUser(),$idUser)->countAllResults();
+    }
 
 }

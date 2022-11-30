@@ -15,6 +15,7 @@ class Home extends BaseController
     {
         //permer d'éviter le bug de redirection.
         session();
+        //au cas où __ci_previous_url ne marcherait plus...: session()->set("previous_url",current_url());
         $this->feedback=service("feedback");
     }
 
@@ -53,14 +54,7 @@ class Home extends BaseController
             }
             else if(empty($issues) && session()->has("referer_redirection"))
             {
-                if(parse_url(session()->get("referer_redirection")) === "panier")
-                {
-                    return redirect()->to("/commandes");
-                }
-                else
-                {
-                    return redirect()->to(session()->get("referer_redirection"));
-                }
+                return redirect()->to(session()->get("referer_redirection"));
             }
         }
 

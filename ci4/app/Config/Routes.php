@@ -93,14 +93,17 @@ $routes->set404Override();
     $routes->get('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
     $routes->options('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
 
-    $routes->get('/livraison','Home::infoLivraison');
-    $routes->post('/livraison','Home::infoLivraison');
+    $routes->get('/livraison','Home::infoLivraison',['filter' => 'connexion']);
+    $routes->post('/livraison','Home::infoLivraison',['filter' => 'connexion']);
 
     $routes->get('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
     $routes->post('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
     
-    if(session()->has("numero"))
-    {
+  
+    $routes->get('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
+    $routes->post('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
+    /*
+    if(session()->has("numero")){
         $routes->get('/espaceClient', 'Home::espaceClient');
         $routes->post('/espaceClient', 'Home::espaceClient');
     }
@@ -108,6 +111,7 @@ $routes->set404Override();
     {
         $routes->get('/espaceClient', 'Home::connexion');
     }
+    */
 
     $routes->get('/recherche', 'Recherche::rechercher');
 ##param uri (:any) et dans methode /$1

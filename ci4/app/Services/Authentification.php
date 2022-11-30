@@ -50,13 +50,21 @@ class Authentification
     {   
         $compteModel=model("\App\Models\Client");
         $errors=[];
+
+
+        
         if(!empty($entree))
         {
+            /*
             if(empty($entree->motDePasse) || empty($entree->pseudo) || empty($entree->nom) || empty($entree->prenom) || empty($entree->email)) 
             {
                 $errors[1]="Remplissez le(s) champs vide(s)";
+                dd("$entree->motDePasse  $entree->pseudo  $entree->nom $entree->prenom  $entree->email");
+                
             }
             if(strlen($entree->nom) > 50 || strlen($entree->prenom) > 50)
+            */
+            if(strlen($entree->nom) > 50 && strlen($entree->prenom) > 50)
             {
                 $errors[2]= "50 caractères maximum pour le nom (" . strlen($entree->prenom) . " actuellement) et/ou prénom (" . strlen($entree->nom) . " actuellement)";
             } 
@@ -93,12 +101,13 @@ class Authentification
         if(empty($errors))
         {
             $entree->cryptMotDePasse();
+            
             $compteModel->save($entree);
+            
             $session = session();
             $user=$compteModel->where("email",$entree->email)->findAll()[0];
             $session->set('numero',$user->numero);
-            $session->set('identifiant',$user->identifiant);
-            $session->set('motDePasse',$user->motDePasse);
+            
 
             $session->set("just_connectee",True);
         }

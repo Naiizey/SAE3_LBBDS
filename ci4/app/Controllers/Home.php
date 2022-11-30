@@ -489,10 +489,10 @@ class Home extends BaseController
     {
         $data['controller']= "detail";
         $data['numCommande'] = $num_commande;
-
         $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
-
         $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
+        $data['num_compte'] = $data['infosCommande'][0]->num_compte;
+        $data['adresse']=model("\App\Models\ClientAdresseLivraison")->getAdresse($data['num_compte']);
 
         return view('panier/details.php',$data);
     }

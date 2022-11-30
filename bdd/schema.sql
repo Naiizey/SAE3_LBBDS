@@ -431,3 +431,4 @@ CREATE tRIGGER beforeInsertPanierCli BEFORE INSERT ON _panier_client FOR EACH RO
 CREATE tRIGGER beforeInsertPanierVis BEFORE INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE creerPanier ();
 
 
+select * from _commande;

@@ -532,11 +532,16 @@ class Home extends BaseController
         $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
         $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
         $data['num_compte'] = $data['infosCommande'][0]->num_compte;
+        if (!isset($data['infosCommande'][0]->num_commande)) {
+            throw new Exception("Le numéro de commande entré n'existe pas.", 404);
+        } else {
+            $data['num_compte'] = $data['infosCommande'][0]->num_compte;
+        }
+
         $data['adresse']=model("\App\Models\ClientAdresseLivraison")->getAdresse($data['num_compte']);
 
-/*        if (!isset($data['infosCommande'][0]->num_commande)) {
-            throw new Exception("Le numéro de commande entré n'existe pas.", 404);
-        }*/
+        
+        //un truc genre si num_commande n'a pas d'infos bah erreur
 
         return view('panier/details.php',$data);
     }

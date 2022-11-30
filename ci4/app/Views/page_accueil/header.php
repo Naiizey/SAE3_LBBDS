@@ -30,10 +30,13 @@
             }
             
             main {
-            <?php if ($controller != "index"): ?>
+            <?php if ($controller != "index" && $controller != "produit"): ?>
                 top : 5em;
             <?php else : ?>
                 top : 8.4em;
+            <?php endif; ?>
+            <?php if ($controller == "panier" || $controller == "panierVide") : ?>
+                padding: 2em;
             <?php endif; ?>
             }
         </style>

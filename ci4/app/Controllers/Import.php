@@ -6,14 +6,28 @@ use CodeIgniter\Files\File;
 class Import extends BaseController
 {
     protected $helpers = ['form', 'filesystem'];
+    
+    public function __construct()
+    {
+        helper('cookie');
+        if (session()->has("numero")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+        } else if (has_cookie("token_panier")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
+        } else {
+            $GLOBALS["quant"] = 0;
+        }
+    }
 
     public function index()
     {
+
         $data['controller']= "import";
         return view('page_accueil/import.php', $data);
     }
 
-    public function upload() {        
+    public function upload() {       
+ 
         $data["controller"] = "import";
         $csv = $this->request->getFile('file');
         $filepath = WRITEPATH . 'uploads/' . $csv->store();

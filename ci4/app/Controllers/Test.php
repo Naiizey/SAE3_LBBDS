@@ -12,7 +12,14 @@ class Test extends BaseController{
         public function test()
         {
             $data['cardProduit']=service("cardProduit");
-
+            helper('cookie');
+            if (session()->has("numero")) {
+                $data['quant'] = model("\App\Model\ProduitPanierModel")->compteurDansPanier(session()->get("numero"));
+            } else if (has_cookie("token_panier")) {
+                $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
+            } else {
+                $data['quant'] = 0;
+            }
             $prodModel=model("\App\Models\ProduitCatalogue");
             $data['prod']=$prodModel->find(17);
         

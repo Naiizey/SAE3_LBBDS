@@ -15,12 +15,22 @@ class Home extends BaseController
     {
         //permer d'éviter le bug de redirection.
         session();
+        //Affichage de la quantité panier
+        helper('cookie');
+        if (session()->has("numero")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+        } else if (has_cookie("token_panier")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
+        } else {
+            $GLOBALS["quant"] = 0;
+        }
         //au cas où __ci_previous_url ne marcherait plus...: session()->set("previous_url",current_url());
         $this->feedback=service("feedback");
     }
 
     public function index()
     {
+        helper("cookie");
         if(session()->has("just_connectee") && session()->get("just_connectee")==true){
             
             session()->set("just_connectee",False);
@@ -32,8 +42,14 @@ class Home extends BaseController
 
         $data['cardProduit']=service("cardProduit");
         $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
- 
-        return view('page_accueil/index.php',$data);
+        if (session()->has("numero")) {
+            $data['quant'] = model("\App\Model\ProduitPanierModel")->compteurDansPanier(session()->get("numero"));
+        } else if (has_cookie("token_panier")) {
+            $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
+        } else {
+            $data['quant'] = 0;
+        }
+            return view('page_accueil/index.php',$data);
     }
 
     public function connexion()
@@ -88,6 +104,8 @@ class Home extends BaseController
 
     public function inscription()
     {
+
+        
         $post=$this->request->getPost();
         $issues=[];
 
@@ -148,6 +166,8 @@ class Home extends BaseController
 
     public function produit($idProduit = null)
     {
+
+
         if($idProduit == null)
         {
             return view('errors/html/error_404.php', array('message' => "Pas de produit spécifié"));
@@ -171,7 +191,8 @@ class Home extends BaseController
 
     public function panier($context = null)
     {
-        
+
+
         $data['controller']= "panier";
         if($context == 400)
         {
@@ -184,6 +205,8 @@ class Home extends BaseController
     public function panierVide($context = null)
     {
         $data['controller']= "panierVide";
+
+        
         if($context == 400)
         {
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
@@ -203,6 +226,8 @@ class Home extends BaseController
     #FIXME: comportement href différent entre $page=null oe $page !=null    
     public function catalogue($page=null)
     {
+
+
         $filters=$this->request->getGet();
         $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
         $data['cardProduit']=service("cardProduit");
@@ -298,7 +323,7 @@ class Home extends BaseController
             }
             else return view('errors/html/error_404.php', array('message' => "Page trop haute: pas assez de produit"));
         }
-       
+
         return view("catalogue.php",$data);
     }
 
@@ -339,6 +364,15 @@ class Home extends BaseController
 
         if (!empty($post))
         {
+            helper('cookie');
+            if (session()->has("numero")) {
+                $data['quant'] = model("\App\Model\ProduitPanierModel")->compteurDansPanier(session()->get("numero"));
+            } else if (has_cookie("token_panier")) {
+                $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
+            } else {
+                $data['quant'] = 0;
+            }
+
             //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
             if (!isset($post['motDePasse']))
             {
@@ -399,6 +433,8 @@ class Home extends BaseController
 
     public function infoLivraison(){
         //Assetion Début
+
+
         if(!session()->has("numero")){
             
             throw new Exception("Erreur, vous devez être connecté ",401);
@@ -448,6 +484,7 @@ class Home extends BaseController
 
     public function lstCommandesClient()
     {
+
         $data['controller']= "lstCommandesCli";
         $data['commandesCli']=model("\App\Models\lstCommandesCli")->getCompteCommandes();
         return view('page_accueil/lstCommandesCli.php', $data);
@@ -455,6 +492,7 @@ class Home extends BaseController
 
     public function lstCommandesVendeur()
     {
+
         $data['controller']= "lstCommandesVendeur";
         $data['commandesVend']=model("\App\Models\LstCommandesVendeur")->findAll();
         return view('page_accueil/lstCommandesVendeur.php', $data);
@@ -487,6 +525,8 @@ class Home extends BaseController
 
     public function detail($num_commande)
     {
+
+        
         $data['controller']= "detail";
         $data['numCommande'] = $num_commande;
         $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
@@ -506,16 +546,6 @@ class Home extends BaseController
         echo "oui";
     }
 
-    public function getQuantitePanier() {
-        if (session()->has("numero")) {
-            $model = model("\App\Models\ProduitPanierClientModel");
-            return $model->compteurDansPanier();
-        } else {
-            $model = model("\App\Model\ProduitPanierModel");
-            return $model->compteurDansPanier();
-        }
-    }
-
     public function indice_recherche($article, $champ) {
         $indice = (substr_count(strtolower($article->intitule), strtolower($champ))*0.6)/(.1+strpos($article->intitule, $champ)) + substr_count(strtolower($article->description_prod), strtolower($champ))*0.4;
         return $indice;
@@ -527,6 +557,7 @@ class Home extends BaseController
     }
 
     public function rechercher($page=null) {
+
         $champ = $this->request->getGet()["search"];
         $data['controller'] = "recherche";
         $data['cardProduit']=service("cardProduit");

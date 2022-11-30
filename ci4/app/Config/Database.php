@@ -33,9 +33,9 @@ class Database extends Config
     public $default = [
         'DSN'      => '',# a definir dans .env
         'hostname' => 'localhost',
-        'username' => 'postgres',
+        'username' => 'alex2',
         'password' => '',# a definir dans .env
-        'database' => 'postgres',
+        'database' => 'iutsae3',
         'DBDriver' => 'Postgre',
         'DBPrefix' => '',
         'pConnect' => false,

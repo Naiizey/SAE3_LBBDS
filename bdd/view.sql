@@ -117,7 +117,8 @@ CREATE OR REPLACE VIEW commande_list_client AS
 SELECT * FROM commande_list_client;
 
 CREATE OR REPLACE VIEW commande_list_produits_client AS
-    SELECT num_commande,num_compte,date_commande,date_arriv,(prix_ttc*qte_panier) prix_ttc,(prix_ht*qte_panier) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit NATURAL JOIN _panier_client;
+    SELECT num_commande,intitule_prod,num_compte,date_commande,date_arriv,(prix_ttc*qte_panier) prix_ttc,(prix_ht*qte_panier) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit NATURAL JOIN _panier_client;
+SELECT * FROM commande_list_produits_client;
 
 CREATE OR REPLACE VIEW insert_commande AS
     SELECT num_commande,num_compte,id_a FROM _commande NATURAL JOIN _panier_client;

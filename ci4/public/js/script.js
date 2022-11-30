@@ -462,17 +462,27 @@ function switchEtatFiltre(list){
 */
 
 function barreProgression() {
+    let pointProgress = document.getElementsByClassName("pointProgress");
+    let preuveLivraison = document.querySelector(".preuveLivraison");
+    let progressBar = document.querySelector(".progress-bar-ok");
+
+    if (progressBar.value < 5) {
+        progressBar.value = (progressBar.value - 1)*25 + 12,5;
+    } else {
+        progressBar.value = 100;
+    }
+
     for (let index = 0; index < 5; index++) {
-        if (index*25 <= document.querySelector(".progress-bar-ok").value) {
-            document.getElementsByClassName("pointProgress")[index].classList.add("point-ok");
+        if (index*25 <= progressBar.value) {
+            pointProgress[index].classList.add("point-ok");
         } else {
-            document.getElementsByClassName("pointProgress")[index].classList.add("point-ko");
+            pointProgress[index].classList.add("point-ko");
         }
     }
-    if ((document.getElementsByClassName("pointProgress")[3].classList.contains("point-ok")) && (document.getElementsByClassName("pointProgress")[4].classList.contains("point-ko"))) {
-        document.querySelector(".preuveLivraison").style.backgroundColor = "#BDBFBB";
-        document.querySelector(".preuveLivraison").style.color = "#164F57";
-        document.querySelector(".preuveLivraison").style.cursor = "not-allowed";
+    if (pointProgress[4].classList.contains("point-ko")) {
+        preuveLivraison.style.backgroundColor = "#BDBFBB";
+        preuveLivraison.style.color = "#164F57";
+        preuveLivraison.style.cursor = "not-allowed";
     }
 }
 /*

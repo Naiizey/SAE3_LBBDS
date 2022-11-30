@@ -17,6 +17,9 @@ class Recherche extends BaseController
     private const NBPRODSPAGECATALOGUE = 18;
 
     public function rechercher($page=null) {
+        $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
+        $data['max_price'] = $modelProduitCatalogue->selectMax('prixttc')->find()[0]->prixttc;
+        $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
         $champ = $this->request->getGet()["search"];
         $data['controller'] = "recherche";
         $data['cardProduit']=service("cardProduit");

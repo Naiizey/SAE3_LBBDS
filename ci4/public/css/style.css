@@ -2165,14 +2165,20 @@ progress::-moz-progress-bar
     flex-direction: column;
 }
 
+.divArticles a {
+    text-decoration: none;
+    color: #164F57;
+    height: fit-content;
+}
+
+.divArticles p {
+    margin: 0 0 0 1em;
+}
+
 .divArticles div {
     display: flex;
     justify-content: space-between;
     font-size: x-large;
-}
-
-.divArticles div div p {
-    margin-left: 1em;
 }
 
 .divArticles img {

@@ -494,6 +494,10 @@ class Home extends BaseController
         $data['num_compte'] = $data['infosCommande'][0]->num_compte;
         $data['adresse']=model("\App\Models\ClientAdresseLivraison")->getAdresse($data['num_compte']);
 
+/*        if (!isset($data['infosCommande'][0]->num_commande)) {
+            throw new Exception("Le numéro de commande entré n'existe pas.", 404);
+        }*/
+
         return view('panier/details.php',$data);
     }
 

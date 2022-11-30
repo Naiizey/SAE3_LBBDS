@@ -28,6 +28,14 @@
             :root {
                 --slide-count: 3;
             }
+            
+            main {
+            <?php if ($controller != "index"): ?>
+                top : 5em;
+            <?php else : ?>
+                top : 8.4em;
+            <?php endif; ?>
+            }
         </style>
         <title><?= $controller ?></title>
     </head>

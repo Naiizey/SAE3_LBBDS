@@ -1448,6 +1448,7 @@ main div.card-produit-ext:hover{
     background-color: white;
     color: #164F57;
     padding-top: .2rem;
+    cursor: pointer;
 }
 
 .image-card{

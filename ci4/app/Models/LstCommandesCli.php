@@ -40,13 +40,7 @@ class LstCommandesCli extends Model
                 "num_commande"=>$numCommande,
                 "num_compte"=>$numClient,
                 "id_a"=>$id_adresse_livr
-        ));
-
-
-
-
-            
-            
+        ));            
     }
 
     public function getCommandeById($num_commande){

@@ -10,6 +10,64 @@
                 Filtres
             </h2>
     </button>
+    
+    <section class="partie-filtre">
+        <div class="liste-filtre">
+            <div class="titre-filtre">
+                <h1>Filtres</h1>
+                <button class="fermer-filtre">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+                </button>
+            </div>
+            <div class="onglets">
+                <div class="onglet onglet-selectionnee"><h3>Catégorie</h3></div>
+                <div class="onglet"><h3>Détail</h3></div>
+            </div>
+            <form method="get">
+                <div class="categorie-catalogue">
+                <?php foreach ($categories as $categorie):?>
+                    <details>
+                        <summary class="categorie"><h2><?=$categorie->libelle?></h2></summary>
+                        <!-- Boutton selectionner toutes les sous catégories -->
+                        <div id="entête">
+
+                            <div class="bouton-selectionner-tout">
+                                <label for="tout<?=$categorie->id?>">Tout sélectionner</label>
+                                <input class="chk-box-tout" type="checkbox" id="tout<?=$categorie->id?>" name="tout<?=$categorie->id?>" value="tout<?=$categorie->id?>">
+                            </div>
+                            <hr>
+                         </div>
+
+                        <!-- Liste des sous-catégories -->
+                        <?php foreach ($categorie->getAllSousCat() as $sousCat): ?>
+                        <div class="sous-categorie" for="<?= $sousCat->libelle ?>">
+                            <label for="<?= $sousCat->libelle ?>" class=".sous-categorie-catalogue"><h3><?= $sousCat->libelle ?></h3></label>
+                            <input name="<?= $sousCat->libelle ?>" type="checkbox" id="<?= $sousCat->libelle ?>" name="sous-categorie">
+                        </div>
+                        <?php endforeach;?>
+                    </details>
+                <?php endforeach;?>
+                </div>
+                <section class="prix">
+                    <label>Prix :</label>
+                    <section class="price-range">
+                        <input type="number" name="prix_min" id="prix_min" value="0" min="<?= $min_price ?>" max="<?= $max_price ?>">
+                        <div class="slider">
+                            <div class="progress"></div>
+                            <div class="range-input">
+                            <input type="range" class="range-min" min="<?= $min_price ?>" max="<?= $max_price - 5 ?>" value="0" step="5">
+                            <input type="range" class="range-max" min="<?= $min_price + 5 ?>" max="<?= $max_price ?>" value="15000" step="5">
+                        </div>
+                        </div>
+                        <input type="number" name="prix_max" id="prix_max" value="15000" min="1" max="15000">
+                    </section>
+                </section>
+                <button type="submit">Appliquer le(s) filtre(s)</button>
+            </form>
+        </div>
+    </section>
     <section class="partie-produits">
         <div class="liste-produits">
         <?php for($i=$minProd;$i<$maxProd && $i<sizeof($prods);++$i): ?>
@@ -34,52 +92,6 @@
             </div>
         </div>
     </section>
-    <section class="partie-filtre">
-    <div class="liste-filtre">
-        <div class="titre-filtre">
-            <h1>Filtres</h1>
-            <button class="fermer-filtre">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-            </svg>
-            </button>
-        </div>
-        <div class="onglets">
-            <div class="onglet onglet-selectionnee"><h3>Catégorie</h3></div>
-            <div class="onglet"><h3>Détail</h3></div>
-        </div>
-        <form method="get">
-            <div class="categorie-catalogue">
-            <?php foreach ($categories as $categorie):?>
-                <details>
-                    <summary class="categorie"><h2><?=$categorie->libelle?></h2></summary>
-                    <?php foreach ($categorie->getAllSousCat() as $sousCat): ?>
-                    <div class="sous-categorie_<?= $sousCat->libelle?>" for="<?= $sousCat->libelle ?>">
-                        <input name="<?= $sousCat->libelle ?>" type="checkbox" id="<?= $sousCat->libelle ?>" <?php if(isset($_GET[$sousCat->libelle])): echo "checked"; endif?> name="sous-categorie">
-                        <label for="<?= $sousCat->libelle ?>" class=".sous-categorie-catalogue"><h3><?= $sousCat->libelle ?></h3></label>
-                    </div>
-                    <?php endforeach;?>
-                </details>
-            <?php endforeach;?>
-            </div>
-            <section class="prix">
-                <label>Prix :</label>
-                <section class="price-range">
-                    <input type="number" name="prix_min" id="prix_min" value="<?php if(isset($_GET["prix_min"])):echo $_GET["prix_min"]; else: echo $min_price; endif?>" min="<?= $min_price ?>" max="<?= $max_price ?>">
-                    <div class="slider">
-                        <div class="progress"></div>
-                        <div class="range-input">
-                        <input type="range" class="range-min" min="<?= $min_price ?>" max="<?= $max_price - 5 ?>" value="<?php if(isset($_GET["prix_min"])):echo $_GET["prix_min"]; else: echo $min_price;endif?>" step="1">
-                        <input type="range" class="range-max" min="<?= $min_price + 5 ?>" max="<?= $max_price ?>" value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" step="1">
-                    </div>
-                    </div>
-                    <input type="number" name="prix_max" id="prix_max" value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" min="1" max="15000">
-                </section>
-            </section>
-            <button type="submit">Appliquer le(s) filtre(s)</button>
-        </form>
-    </div>
-    </section>
 </main>
 <?php require("page_accueil/footer.php"); ?>
 <script>
@@ -91,7 +103,7 @@
             window.scrollTo(0,0);
             }
         );
-   
+
     boutonCliquable(
         document.querySelector(".fermer-filtre"),
         () => switchEtatFiltre(document.querySelectorAll(".mobile-ouvrir-filtres, .partie-filtre"))

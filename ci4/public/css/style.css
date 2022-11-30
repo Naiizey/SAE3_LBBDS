@@ -1412,6 +1412,7 @@ main#Catalogue{
 .categorie-catalogue summary ~ div label{
     cursor: pointer;
     width: auto;
+    width: 55%;
 }
 
 .categorie-catalogue summary ~ div label h3{
@@ -1420,6 +1421,41 @@ main#Catalogue{
 }
 
 .categorie-catalogue summary ~ div label h3::first-letter{
+    text-transform: uppercase;
+}
+
+.categorie-catalogue summary ~ div label ~ input{
+    width: 20px;
+    height: 20px;
+    margin-right: 1em;
+}
+.categorie-catalogue .bouton-selectionner-tout
+{
+    display: flex;
+    align-items: center;
+}
+
+.categorie-catalogue #entête
+{
+    /* items en colonne    */
+    display: flex;
+    flex-direction: column;
+}
+
+.categorie-catalogue .sous-categorie
+{
+    display: flex;
+    align-items: center;
+}
+
+.categorie-catalogue .bouton-selectionner-tout label{
+    cursor: pointer;
+    width: auto;
+    width: 55%;
+    text-align: left;
+}
+
+.categorie-catalogue .bouton-selectionner-tout label h3::first-letter{
     text-transform: uppercase;
 }
 
@@ -1547,6 +1583,19 @@ input[type="range"]::-moz-range-thumb {
     text-align: inherit;
     font-family: "Montserrat-Bold";
     font-weight: lighter;
+}
+
+
+
+.bouton-selectionner-tout
+{
+    position: relative;
+    width:fit-content;
+    color: inherit;
+    padding: 15px 0;
+    margin: 0;
+    color : #164F57;
+    font-size: larger;
 }
 
 .categorie-catalogue summary::after{

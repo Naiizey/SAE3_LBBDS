@@ -187,8 +187,7 @@ p {
 
 main {
     position: relative;
-    top: 5em;
-    padding: 2em;
+    top: 8.4em;
     background-color: #f3f3f3;
     flex : 1;
     text-align: center;
@@ -563,7 +562,6 @@ header ul {
 #carousel-container {
     position: relative;
     margin: 0;
-    padding: 4em 0 0 0;
 }
 
 #carousel {
@@ -574,7 +572,6 @@ header ul {
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    --slide-count: 4;
     /* Suppression de la scroll bar*/
     -ms-overflow-style: none; /* pour Internet Explorer, Edge */
     scrollbar-width: none; /* pour Firefox */
@@ -1448,6 +1445,7 @@ main div.card-produit-ext:hover{
     background-color: white;
     color: #164F57;
     padding-top: .2rem;
+    cursor: pointer;
 }
 
 .image-card{

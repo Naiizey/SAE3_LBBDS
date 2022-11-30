@@ -6,6 +6,19 @@ use Exception;
 
 class MdpOublie extends BaseController
 {
+    
+    public function __construct()
+    {
+        helper('cookie');
+        if (session()->has("numero")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+        } else if (has_cookie("token_panier")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
+        } else {
+            $GLOBALS["quant"] = 0;
+        }
+    }
+
     public function mdpOublie($post = null, $data = null)
     {
         $data['controller']= "mdpOublie";
@@ -13,6 +26,8 @@ class MdpOublie extends BaseController
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
         $data['email'] = (isset($post['email'])) ? $post['email'] : "";
         $data['code'] = (isset($post['code'])) ? $post['code'] : "";
+
+
 
         return view('page_accueil/mdpOublie.php', $data);
     }

@@ -14,36 +14,26 @@
                                 <input type="email" name="email" required="required" value="<?= $email?>"/>
                                 <input type="submit" value="Obtenir code"/>
                             </div>
-                            <?php
-                                echo "<div class='bloc-erreurs'>";
-                                if (isset($retour[0])) 
-                                {
-                                    echo "<p class='paragraphe-valid'>" . $retour[0]; 
-                                }
-                                else if (isset($retour[1]))
-                                {
-                                    echo "<p class='paragraphe-erreur'>" . $retour[1];
-                                }
-                                echo "</p></div>";
-                            ?>
+                            <?= "<div class='bloc-erreurs'>" ?>
+                            <?php if (isset($retour[0])): ?>
+                                <p class='paragraphe-valid'><?= $retour[0] ?>
+                            <?php elseif (isset($retour[1])): ?>
+                                <p class='paragraphe-erreur'><?= $retour[1] ?>
+                            <?php endif; ?>
+                            <?= "</p></div>" ?>
                         </form>
                     </div>
                     <div>
                         <form action="<?= base_url() ?>/validerCode" method="post">
                             <label>Entrez le code de récupération :</label>
                             <input type="text" name="code" required="required" value="<?= $code?>"/>
-                            <?php
-                                echo "<div class='bloc-erreurs'>";
-                                if (isset($retour[3])) 
-                                {
-                                    echo "<p class='paragraphe-valid'>" . $retour[3]; 
-                                }
-                                else if (isset($retour[4]))
-                                {
-                                    echo "<p class='paragraphe-erreur'>" . $retour[4];
-                                }
-                                echo "</p></div>";
-                            ?>
+                            <?= "<div class='bloc-erreurs'>" ?>
+                            <?php if (isset($retour[3])): ?>
+                                <p class='paragraphe-valid'><?= $retour[3] ?>
+                            <?php elseif (isset($retour[4])): ?>
+                                <p class='paragraphe-erreur'><?= $retour[4] ?>
+                            <?php endif; ?>
+                            <?= "</p></div>" ?>
                             <input type="submit" value="Valider"/>
                         </form>
                         <a href="<?= base_url() ?>/connexion">Je me souviens de mon mot de passe</a>

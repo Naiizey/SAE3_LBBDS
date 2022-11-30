@@ -61,7 +61,7 @@
                     }
                     else
                     {
-                        echo   '<form class="formRecherche" action="'.base_url().'/recherche"'.'>
+                        echo   '<form class="formRecherche" action="'.base_url().'/catalogue/rech/"'.'>
                                 <input required class="champsRecherche" type="search" name="search" placeholder="Recherche.." value="'; 
                                 if (isset($_GET["search"])) echo $_GET["search"];
                                 echo '">
@@ -72,7 +72,7 @@
                 <div class="divPanierProfil">
                     <a class="lienHPanier" href="<?= base_url() ?>/panier">
                         <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/header/panier.svg"); ?>
-                        <span class="quantPanier">3</span>
+                        <span class="quantPanier"> 3 </span>
                     </a>
                     <a class="lienConnexion" href="<?php if(session()->has("numero")){
                                                             echo base_url()."/espaceClient";

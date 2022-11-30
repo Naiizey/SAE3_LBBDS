@@ -1017,6 +1017,12 @@ header ul {
 }
 
 .mainPanier aside {
+    position: fixed;
+    width: 25%; 
+    right: 2%;
+}
+
+.mainPanier .divValiderVider, .mainPanier .divCodeReduc {
     border: solid 2px;
     border-color: #C6C6C6;
     background-color: white;
@@ -1024,9 +1030,22 @@ header ul {
     flex-direction: column;
     align-items: center;
     padding: 1em;
-    position: fixed;
-    right: 2%;  
-    width: 23%; 
+}
+
+.mainPanier .divCodeReduc {
+    margin-bottom: 2em;
+}
+
+.mainPanier .divCodeReduc input {
+    margin-top: 0.5em;
+    background-color: #F3F3F3;
+    height: 2.5em;
+    border: solid 1px;
+    border-color: #C6C6C6;
+    padding: 0 0 0 2%;
+    width: 70%;
+    font-size: larger;
+    font-family: "Montserrat-Regular";
 }
 
 .mainPanier aside .lienPanierVide {
@@ -1414,6 +1433,7 @@ main div.card-produit-ext:hover{
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
 }
 
 .card-produit{
@@ -1422,29 +1442,35 @@ main div.card-produit-ext:hover{
     border-radius: 5%;
     text-align: center;
     font-family: 'Montserrat-Medium';
-    font-size: 19px ;
+    font-size: 1.4rem ;
     position: relative;
     background-color: white;
     color: #164F57;
+    padding-top: .2rem;
 }
+
 .image-card{
     width: 100%;
-    height: 8rem;
+    height: 11.5rem;
     border-radius: 5% 5% 0 0;
     background-size: cover;
 }
+
 .notation-card{
     background-color: rgba(0, 0, 0, 61%);
     width: 100%;
-    height: 25px;
+    height: 1.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .1rem;
+}
 
-}
-.star{
-    margin: 0 1px;
-}
 .contain-libelle{
-    min-height:85px;
-    max-height:85px;
+    min-height: 5rem;
+    max-height: 5rem;
+    display: flex;
+    align-items: center;
 }
 
 p.libelle{
@@ -1453,6 +1479,10 @@ p.libelle{
     
     margin-bottom: 0;
     word-wrap: break-word;
+}
+
+p.libelle::first-letter{
+    text-transform: uppercase;
 }
 /*TODO: sauvegarder dans bdd position */
 div.image-card{
@@ -1535,6 +1565,7 @@ main#Catalogue{
 .categorie-catalogue summary ~ div label{
     cursor: pointer;
     width: auto;
+    width: 55%;
 }
 
 .categorie-catalogue summary ~ div label h3{
@@ -1543,6 +1574,41 @@ main#Catalogue{
 }
 
 .categorie-catalogue summary ~ div label h3::first-letter{
+    text-transform: uppercase;
+}
+
+.categorie-catalogue summary ~ div label ~ input{
+    width: 20px;
+    height: 20px;
+    margin-right: 1em;
+}
+.categorie-catalogue .bouton-selectionner-tout
+{
+    display: flex;
+    align-items: center;
+}
+
+.categorie-catalogue #entête
+{
+    /* items en colonne    */
+    display: flex;
+    flex-direction: column;
+}
+
+.categorie-catalogue .sous-categorie
+{
+    display: flex;
+    align-items: center;
+}
+
+.categorie-catalogue .bouton-selectionner-tout label{
+    cursor: pointer;
+    width: auto;
+    width: 55%;
+    text-align: left;
+}
+
+.categorie-catalogue .bouton-selectionner-tout label h3::first-letter{
     text-transform: uppercase;
 }
 
@@ -1670,6 +1736,19 @@ input[type="range"]::-moz-range-thumb {
     text-align: inherit;
     font-family: "Montserrat-Bold";
     font-weight: lighter;
+}
+
+
+
+.bouton-selectionner-tout
+{
+    position: relative;
+    width:fit-content;
+    color: inherit;
+    padding: 15px 0;
+    margin: 0;
+    color : #164F57;
+    font-size: larger;
 }
 
 .categorie-catalogue summary::after{
@@ -2351,7 +2430,7 @@ progress::-moz-progress-bar
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                             Errors                                ┃
+┃                                    Errors                                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 .full-height {

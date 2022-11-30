@@ -94,7 +94,6 @@ CREATE TABLE _recevoir_facture(
 CREATE TABLE _panier
 (
     num_panier SERIAL PRIMARY KEY
-
 );
 
 CREATE TABLE _panier_client
@@ -187,10 +186,35 @@ CREATE TABLE _promotion(
     heure_fin DATE NOT NULL
 );
 
+CREATE TABLE _code_reduction(
+    id_reduction SERIAL PRIMARY KEY,
+    code_reduction VARCHAR(50) NOT NULL,
+    montant_reduction FLOAT NOT NULL,
+    pourcentage_reduction FLOAT NOT NULL,
+    date_debut DATE NOT NULL,
+    heure_debut TIME NOT NULL,
+    date_fin DATE NOT NULL,
+    heure_fin TIME NOT NULL
+);
+
+
 /* -----------------------------------------------------------
 -                  Classes association                        -
 -                                                            -
 --------------------------------------------------------------*/
+
+--Classe association entre _panier 1 - * et _code_reduction qui se nomme _reduire
+
+CREATE TABLE _reduire(
+    num_panier INT NOT NULL,
+    id_reduction INT NOT NULL,
+    CONSTRAINT _reduire_pk PRIMARY KEY (num_panier, id_reduction),
+    CONSTRAINT _reduire_panier_fk FOREIGN KEY (num_panier) REFERENCES _panier(num_panier),
+    CONSTRAINT _reduire_reduction_fk FOREIGN KEY (id_reduction) REFERENCES _code_reduction(id_reduction)
+);
+
+
+
 --Classe association entre _compte 1 - *_avis qui se nomme _pouce :white_check_mark: ✅
 
 CREATE TABLE _pouce

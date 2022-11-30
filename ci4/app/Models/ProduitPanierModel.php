@@ -97,7 +97,7 @@ abstract class ProduitPanierModel extends Model
     }   
 
     public function compteurDansPanier($idUser){
-        return $this->where($this->getColonneProduitIdUser(),$idUser)->countAllResults();
+        return $this->where($this->getIdUser(),$idUser)->countAllResults();
     }
 
 }

@@ -188,7 +188,7 @@ CREATE TABLE _promotion(
 
 CREATE TABLE _code_reduction(
     id_reduction SERIAL PRIMARY KEY,
-    code_reduction VARCHAR(50) NOT NULL,
+    code_reduction VARCHAR(50) UNIQUE NOT NULL,
     montant_reduction FLOAT NOT NULL,
     pourcentage_reduction FLOAT NOT NULL,
     date_debut DATE NOT NULL,

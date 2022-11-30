@@ -65,7 +65,7 @@ $routes->set404Override();
     $routes->get('/panier/supprimer/(:num)', 'Panier::supprimerProduitPanier/$1');
     $routes->post('/panier/ajouter/(:num)', 'Panier::ajouterPanier/$1/');
     $routes->get('/panier/ajouter/(:num)', 'Panier::ajouterPanier/$1/');
-
+    $routes->post('/panier/validerCode', 'Panier::validerCode');
     $routes->get('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::modifierProduitPanier/$1/$2');
     $routes->put('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::modifierProduitPanier/$1/$2');
     $routes->options('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::sendCors/$1/$2');

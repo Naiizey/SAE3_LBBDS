@@ -1,3 +1,5 @@
+const base_url = "/ci4/public/";
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                    Footer                                       ┃
@@ -764,6 +766,6 @@ if(document.querySelector(".card-produit") != null){
     let cards = document.querySelectorAll(".card-produit");
     for(card of cards){
         //Redirection while clicking on products
-        card.addEventListener("click", (e) =>{window.location.href= "produit/" + parentTilCard(e.target).getAttribute('value');});
+        card.addEventListener("click", (e) =>{window.location.href=  base_url +  "produit/" + parentTilCard(e.target).getAttribute('value');});
     }
 }

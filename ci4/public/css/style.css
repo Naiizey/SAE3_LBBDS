@@ -574,7 +574,6 @@ header ul {
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    --slide-count: 4;
     /* Suppression de la scroll bar*/
     -ms-overflow-style: none; /* pour Internet Explorer, Edge */
     scrollbar-width: none; /* pour Firefox */

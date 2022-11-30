@@ -24,6 +24,10 @@
                 font-family: "Montserrat-Bold";
                 src: url("<?=base_url() ?>/fonts/Montserrat-Bold.ttf") format("truetype");
             }
+
+            :root {
+                --slide-count: 3;
+            }
         </style>
         <title><?= $controller ?></title>
     </head>
@@ -72,7 +76,11 @@
                 <div class="divPanierProfil">
                     <a class="lienHPanier" href="<?= base_url() ?>/panier">
                         <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/header/panier.svg"); ?>
-                        <span class="quantPanier"> 3 </span>
+                        <?php if ($GLOBALS["quant"] != 0): ?>
+                            <span class="quantPanier"><?= $GLOBALS["quant"] ?></span>
+                        <?php elseif ($GLOBALS["quant"] > 9): ?>
+                            <span class="quantPanier">9+</span>
+                        <?php endif; ?>
                     </a>
                     <a class="lienConnexion" href="<?php if(session()->has("numero")){
                                                             echo base_url()."/espaceClient";

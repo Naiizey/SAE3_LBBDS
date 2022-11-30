@@ -18,6 +18,7 @@ class Produits extends BaseController
     private const NBPRODSPAGECATALOGUE = 18;
 
     public function getAllProduitSelonPage($page=null,$filters=null){
+
         if($filters==null && isset($this->request) && !empty($this->request->getVar())){
             $filters=$this->request->getVar();
         }

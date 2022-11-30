@@ -62,7 +62,7 @@ class CardProduit
                 <div class="contain-libelle"><p class="libelle"><?= $prod->intitule?></p></div>
                 <div class="bottom-card">
                     <p class="prix-card"><?= $prod->prixttc?>€</p>
-                    <a href="<?= base_url().'/panier/ajouter/'.$prod->id ?>" class="addPanier"><?= file_get_contents(dirname(__DIR__,2)."/public/images/header/addPanier.svg")?></a>
+                    <a href="<?= base_url().'/panier/ajouter/'.$prod->id.'/1' ?>" class="addPanier"><?= file_get_contents(dirname(__DIR__,2)."/public/images/header/addPanier.svg")?></a>
                 </div>
             </div>
         </div>

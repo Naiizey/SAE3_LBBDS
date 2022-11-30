@@ -17,7 +17,7 @@ if (is_file(SYSTEMPATH . 'Config/Routes.php')) {
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-#$routes->setDefaultController('Home');
+$routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -99,7 +99,7 @@ $routes->set404Override();
     $routes->get('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
     $routes->post('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
     
-  
+
     $routes->get('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
     $routes->post('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
     /*
@@ -113,7 +113,7 @@ $routes->set404Override();
     }
     */
 
-    $routes->get('/recherche', 'Recherche::rechercher');
+    $routes->get('/catalogue/rech', 'Home::rechercher');
 ##param uri (:any) et dans methode /$1
 
 /*

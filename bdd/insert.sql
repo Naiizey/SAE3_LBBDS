@@ -220,8 +220,26 @@ INSERT INTO _panier_client (num_panier,num_compte) values (null,1);
 INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (2, 32, CURRVAL('sae3._panier_num_panier_seq'));
 
 --10 insertions dans _commande (num_panier, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a, id_adresse)
-INSERT INTO _commande VALUES (1,'1', '2018-01-01', null, null, null, null, 1);
-INSERT INTO _commande VALUES (CURRVAL('sae3._panier_num_panier_seq'),'5', '2018-01-01', '2018-01-02', '2018-01-03', '2018-01-03', '2018-01-05', 1);
-INSERT INTO _commande VALUES (2,'2', '2018-01-01', '2018-01-01', '2018-01-01', null, null, 2);
---INSERT INTO _commande VALUES (3,'3', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 3);
-INSERT INTO _commande VALUES (4,'4', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 1);
+INSERT INTO _commande VALUES (1,'1', '2018-01-01', null, null, null, null, 1, 1);
+INSERT INTO _commande VALUES (2,'2', '2018-01-01', '2018-01-01', '2018-01-01', null, null, 2, 2);
+INSERT INTO _commande VALUES (3,'3', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 3, 3);
+INSERT INTO _commande VALUES (4,'4', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 1, 1);
+
+--10 insertions dans _code_reduction
+INSERT INTO _code_reduction (code_reduction, montant_reduction, pourcentage_reduction, date_debut, heure_debut, date_fin, heure_fin)
+VALUES  ('10EUROS!!!', 10, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
+        ('SOULEVE2EMETITRE', 0, 20, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
+        ('5REDUC!!!', 5, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
+        ('ACHE2ETPAIE1', 0, 50, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
+        ('EUROSREDUIT', 4, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
+        ('20PERCENT', 0, 20, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
+        ('REDUIT10', 10, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
+        ('5EUROS', 5, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
+        ('25POURCENT', 0, 25, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
+        ('10POURCEN', 0, 10, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59');
+
+-- insertion dans _reduire
+INSERT INTO _reduire (num_panier, id_reduction) VALUES (1, 1);
+INSERT INTO _reduire (num_panier, id_reduction) VALUES (2, 2);
+INSERT INTO _reduire (num_panier, id_reduction) VALUES (3, 3);
+INSERT INTO _reduire (num_panier, id_reduction) VALUES (4, 4);

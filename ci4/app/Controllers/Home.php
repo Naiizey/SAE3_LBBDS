@@ -282,13 +282,15 @@ class Home extends BaseController
             }
             $filtersInline = substr($filtersInline,0);
             $filtersInline = "?".$filtersInline;
+            $data['filters'] = $filtersInline;
         }
 
         if(isset($price)){
             $priceInline = "";
             foreach($price as $key => $value){
                 $priceInline .= "&".$key."=".$value;
-            }   
+            }
+            $data['filters'] .= $priceInline;
         }
 
 
@@ -304,18 +306,7 @@ class Home extends BaseController
         {
             if($data['nombreMaxPages']>=$page)
             {
-                if(isset($price) && isset($filters)){
-                    $data['page']=$page . "/" . $filtersInline . $priceInline;
-                }
-                else if(isset($filetrs)){
-                    $data['page']=$page . "/" . $filtersInline;
-                }
-                else if(isset($price)){
-                    $data['page']=$page . "/" . $priceInline;
-                }
-                else{
-                    $data['page']=$page;
-                }
+                $data['page']=$page;
 
                 $data['minProd']=self::NBPRODSPAGECATALOGUE*($page-1);
                 $data['maxProd']=self::NBPRODSPAGECATALOGUE*$page;

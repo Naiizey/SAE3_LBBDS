@@ -54,15 +54,15 @@
                 <section class="prix">
                     <label>Prix :</label>
                     <section class="price-range">
-                        <input type="number" name="prix_min" id="prix_min" value="0" min="<?= $min_price ?>" max="<?= $max_price ?>">
+                        <input type="number" name="prix_min" id="prix_min" value="<?php if(isset($_GET["prix_min"])):echo $_GET["prix_min"]; else: echo $min_price; endif?>" min="<?= $min_price ?>" max="<?= $max_price ?>">
                         <div class="slider">
                             <div class="progress"></div>
                             <div class="range-input">
-                            <input type="range" class="range-min" min="<?= $min_price ?>" max="<?= $max_price - 5 ?>" value="0" step="5">
-                            <input type="range" class="range-max" min="<?= $min_price + 5 ?>" max="<?= $max_price ?>" value="15000" step="5">
+                            <input type="range" class="range-min" min="<?= $min_price ?>" max="<?= $max_price - 5 ?>" value="<?php if(isset($_GET["prix_min"])):echo $_GET["prix_min"]; else: echo $min_price;endif?>" step="1">
+                            <input type="range" class="range-max" min="<?= $min_price + 5 ?>" max="<?= $max_price ?>" value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" step="1">
                         </div>
                         </div>
-                        <input type="number" name="prix_max" id="prix_max" value="15000" min="1" max="15000">
+                        <input type="number" name="prix_max" id="prix_max" value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" min="1" max="15000">
                     </section>
                 </section>
                 <button type="submit">Appliquer le(s) filtre(s)</button>
@@ -81,9 +81,9 @@
                     <?php if($i==$page):?>
                         </div>
                         <div class="current-page">
-                        <a <?=($i>1)?"href='".base_url()."/catalogue/".($i-1)."'":"" ?>  class="fleche-page <?=($i<=1)?"indisponible":"disponible" ?>"><?php include("./images/catalogue/Fleche_page_gauche.svg")?></a>
+                        <a <?=($i>1)?"href='".base_url()."/catalogue/".($i-1).$filters."'":"" ?>  class="fleche-page <?=($i<=1)?"indisponible":"disponible" ?>"><?php include("./images/catalogue/Fleche_page_gauche.svg")?></a>
                         <span><?= $i ?> </span>
-                        <a  <?=($i<$nombreMaxPages)?"href='".base_url()."/catalogue/".($i+1)."'":"" ?> class="fleche-page <?=($i>=$nombreMaxPages)?"indisponible":"disponible" ?>"><?php include("./images/catalogue/Fleche_page_droite.svg")?></a>
+                        <a  <?=($i<$nombreMaxPages)?"href='".base_url()."/catalogue/".($i+1).$filters."'":"" ?> class="fleche-page <?=($i>=$nombreMaxPages)?"indisponible":"disponible" ?>"><?php include("./images/catalogue/Fleche_page_droite.svg")?></a>
                         </div>
                         <div class="apres-current-page">
                     <?php else:?>

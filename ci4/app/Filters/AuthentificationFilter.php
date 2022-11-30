@@ -14,8 +14,17 @@ use CodeIgniter\HTTP\ResponseInterface;
 class AuthentificationFilter implements FilterInterface{
     public function before(RequestInterface $request, $arguments = null)
     {
+        
+        
         if(!session()->has("numero")){
-            return redirect()->to("/connexion/401");
+           
+            
+                
+            session()->set("referer_redirection",current_url());
+            
+            
+            
+            return redirect()->to("/connexion");
         }
     }
 

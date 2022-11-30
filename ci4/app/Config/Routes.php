@@ -17,7 +17,7 @@ if (is_file(SYSTEMPATH . 'Config/Routes.php')) {
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-#$routes->setDefaultController('Home');
+$routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -64,12 +64,14 @@ $routes->set404Override();
     $routes->get('/panier/vider', 'Panier::viderPanier'); 
     $routes->get('/panier/supprimer/(:num)', 'Panier::supprimerProduitPanier/$1');
     $routes->post('/panier/ajouter/(:num)', 'Panier::ajouterPanier/$1/');
+    $routes->get('/panier/ajouter/(:num)', 'Panier::ajouterPanier/$1/');
 
     $routes->get('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::modifierProduitPanier/$1/$2');
     $routes->put('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::modifierProduitPanier/$1/$2');
     $routes->options('/panier/modifier/quantite/([0-9]+£[0-9]+)/(:num)', 'Panier::sendCors/$1/$2');
 
     $routes->get('/paiement', 'Home::paiement');
+    $routes->post('/paiement', 'Home::paiement');
 
     $routes->get('/catalogue', 'Home::catalogue');
     $routes->get('/catalogue/(:num)', 'Home::catalogue/$1');
@@ -84,22 +86,34 @@ $routes->set404Override();
 
     $routes->get('/destroy', 'Test::destroySession');
 
-    $routes->get('/commandes', 'Home::commandeTest',['filter' => 'connexion']);
+    $routes->get('/commandes', 'Home::lstCommandesClient',['filter' => 'connexion']);
 
-    $routes->get('/commandes/detail/(:num)','Commandes::detail/$1',);//['filter' => 'connexion']
+    $routes->get('/commandes/detail/(:num)','Home::detail/$1');//['filter' => 'connexion']
 
     $routes->get('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
     $routes->options('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
 
+    $routes->get('/livraison','Home::infoLivraison',['filter' => 'connexion']);
+    $routes->post('/livraison','Home::infoLivraison',['filter' => 'connexion']);
+
+    $routes->get('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
+    $routes->post('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
+    
+
+    $routes->get('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
+    $routes->post('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
+    /*
     if(session()->has("numero")){
-        $routes->get('/espaceClient', 'EspaceClient::index');
-        $routes->post('/espaceClient', 'EspaceClient::index');
+        $routes->get('/espaceClient', 'Home::espaceClient');
+        $routes->post('/espaceClient', 'Home::espaceClient');
     }
-    else{
+    else
+    {
         $routes->get('/espaceClient', 'Home::connexion');
     }
+    */
 
-    $routes->get('/recherche', 'Recherche::rechercher');
+    $routes->get('/catalogue/rech', 'Home::rechercher');
 ##param uri (:any) et dans methode /$1
 
 /*

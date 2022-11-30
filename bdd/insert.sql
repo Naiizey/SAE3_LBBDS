@@ -197,15 +197,27 @@ INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, 
 INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('hiller', 'adolphe', 3, 'rue de la guerre', 70000, 'lille', 'Batiment C', 'Etage 3');
 
 -- 3 insertions d'adresses de livraison
-INSERT INTO _adresse_livraison (num_compte, infos_comp, id_a) VALUES (1, 'infos complémentaires', 1);
-INSERT INTO _adresse_livraison (num_compte, infos_comp, id_a) VALUES (2, 'infos complémentaires', 2);
-INSERT INTO _adresse_livraison (num_compte, infos_comp, id_a) VALUES (3, 'infos complémentaires', 3);
+INSERT INTO _adresse_livraison (infos_comp, id_a) VALUES ('infos complémentaires', 1);
+INSERT INTO _adresse_livraison (infos_comp, id_a) VALUES ('infos complémentaires', 2);
+INSERT INTO _adresse_livraison (infos_comp, id_a) VALUES ('infos complémentaires', 3);
+
 
 -- 3 insertions d'adresses de facturation
-INSERT INTO _adresse_facturation (num_compte, id_a) VALUES (1, 1);
-INSERT INTO _adresse_facturation (num_compte, id_a) VALUES (2, 2);
-INSERT INTO _adresse_facturation (num_compte, id_a) VALUES (3, 3);
+INSERT INTO _adresse_facturation (id_a) VALUES ( 1);
+INSERT INTO _adresse_facturation (id_a) VALUES ( 2);
+INSERT INTO _adresse_facturation (id_a) VALUES ( 3);
 
+INSERT INTO _recevoir_commande VALUES (1,1);
+INSERT INTO _recevoir_commande VALUES (2,2);
+
+INSERT INTO  _recevoir_facture VALUES (1, 1);
+INSERT INTO  _recevoir_facture VALUES (2, 3);
+INSERT INTO  _recevoir_facture VALUES (3, 2);
+
+
+
+INSERT INTO _panier_client (num_panier,num_compte) values (null,1);
+INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (2, 32, CURRVAL('sae3._panier_num_panier_seq'));
 
 --10 insertions dans _commande (num_panier, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a, id_adresse)
 INSERT INTO _commande VALUES (1,'1', '2018-01-01', null, null, null, null, 1, 1);

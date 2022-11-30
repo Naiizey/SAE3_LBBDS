@@ -235,13 +235,13 @@ function updatePriceTotal() {
         sommeTot += parseFloat(prix);
         prix = prixTabHt[ind].textContent.replace('€','');
         sommeTotHt += parseFloat(prix);
-        console.log(prix);
+        //console.log(prix);
     }
 
     prixTotTab[0].textContent = sommeTot;
     prixTotTab[1].textContent = sommeTot;
 
-    console.log(sommeTotHt);
+    //console.log(sommeTotHt);
     prixTotTabHt[0].textContent = sommeTotHt;
     //prixTotTabHt[1].textContent = sommeToHt;
 }
@@ -255,18 +255,12 @@ function lstCommandes(){
     var lignes=document.getElementsByClassName("lignesCommandes");
     var numCommandes=document.getElementsByClassName("numCommandes");
 
-    for (let numLigne of lignes) {
-        var ligneA=lignes.item(numLigne);
-        var commandeA=numCommandes[numLigne];
-        ligneA.addEventListener("click", lienLigne);
+    for (let numLigne=0; numLigne<lignes.length; numLigne++){
+        let ligneA=lignes.item(numLigne);
+        let commandeA=numCommandes.item(numLigne).textContent;
+        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/commandes/detail/${commandeA}`;});
     }
-    /*
-    function lienLigne(element) {
-        window.location.href = `/commande/${(commandeA.textContent)}`;
-    }
-    */
 }
-
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -310,67 +304,90 @@ function cgu(){
 ┃                                  Espace Client                                  ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-function espaceCli(){
-    var inputModifsCli = document.querySelectorAll(".divInputEtLien input");
+function espaceCli(role)
+{
+    this.form = document.forms["formClient"];
+    var self = this;
+    var lienModif;
     var labelModifsCli = document.querySelectorAll(".mainEspaceCli label");
-    var divModifsCli = document.querySelectorAll(".mainEspaceCli .divInputEtLien");
-    var lienModifsCli = document.querySelectorAll(".divInputEtLien a");
     var ancienMdp = document.getElementsByClassName("labelAncienMdp")[0];
     ancienMdp.innerHTML = "Votre mot de passe :";
-
-    var divCacheModifsCli = document.getElementsByClassName("cacheModifMdp");
-
-    lienModifsCli[0].addEventListener("click", function (event) {
-        event.preventDefault();
-        inputModifsCli[1].disabled = false;
-        inputModifsCli[1].focus();
-    });
-
-    lienModifsCli[1].addEventListener("click", function (event) {
-        event.preventDefault();
-        inputModifsCli[2].disabled = false;
-        inputModifsCli[2].focus();
-    });
-
-    lienModifsCli[2].addEventListener("click", function (event) {
-        event.preventDefault();
-        if (ancienMdp.innerHTML == "Votre mot de passe :") 
+    
+    for (let i = 0; i < this.form.elements.length; i++)
+    {
+        lienModif = this.form.elements[i].parentNode.getElementsByTagName("a")[0];
+        
+        //On sélectionne tous les inputs qui ne sont ni le bouton enregistrer ni les inputs cachés 
+        if (this.form.elements[i].type != "submit" && typeof lienModif !== 'undefined')
         {
-            while (divCacheModifsCli.length)
-            {
-                divCacheModifsCli[0].classList.remove("cacheModifMdp");
-            }
+            lienModif.addEventListener("click", function (event) {
+                event.preventDefault();
 
-            ancienMdp.innerHTML = "Entrez votre ancien mot de passe";
-            inputModifsCli[4].value = "";
-            inputModifsCli[4].disabled = false;
-            inputModifsCli[4].focus();
-            inputModifsCli[5].required = true;
-            inputModifsCli[6].required = true;
-        }
-        else 
-        {
-            inputModifsCli[5].value = "";
-            inputModifsCli[6].value = "";
-            inputModifsCli[5].classList.add("cacheModifMdp");
-            inputModifsCli[6].classList.add("cacheModifMdp");
-            labelModifsCli[5].classList.add("cacheModifMdp");
-            labelModifsCli[6].classList.add("cacheModifMdp");
-            divModifsCli[5].classList.add("cacheModifMdp");
-            divModifsCli[6].classList.add("cacheModifMdp");
-            inputModifsCli[5].required = false;
-            inputModifsCli[6].required = false;
+                if (self.form.elements[i].disabled == true) 
+                {
+                    self.form.elements[i].disabled = false;
+                    self.form.elements[i].required = true;
+                    self.form.elements[i].focus();
 
-            ancienMdp.innerHTML = "Votre mot de passe :";
-            inputModifsCli[4].value = "motDePassemotDePasse";
-            inputModifsCli[4].disabled = true;
+                    //Si on parle de l'input mot de passe
+                    if (self.form.elements[i].type == "password") 
+                    {
+                        self.form.elements[i].value = "";
+
+                        //Si je suis un client alors je vais devoir renseigner des champs en plus pour changer mon mot de passe
+                        if (role == "client")
+                        {
+                            ancienMdp.innerHTML = "Entrez votre ancien mot de passe";
+                            let divCacheModifsCli = document.getElementsByClassName("cacheModifMdp");
+
+                            //On découvre les inputs confirmezAncienMdp, nouveauMdp ainsi que leurs labels et divs
+                            while (divCacheModifsCli.length) {
+                                divCacheModifsCli[0].classList.remove("cacheModifMdp");
+                            }
+
+                            self.form.elements[i + 1].required = true;
+                            self.form.elements[i + 2].required = true;
+                        }
+                    }
+                }
+                else
+                {
+                    self.form.elements[i].disabled = true;
+                    self.form.elements[i].required = false;
+
+                    //Si on parle de l'input mot de passe
+                    if (self.form.elements[i].type == "password") 
+                    {
+                        if (role == "client") 
+                        {
+                            ancienMdp.innerHTML = "Votre mot de passe :";
+                            self.form.elements[i].value = "motDePassemotDePasse";
+
+                            //Inputs confirmezAncienMdp et nouveauMdp
+                            self.form.elements[i + 1].value = "";
+                            self.form.elements[i + 1].classList.add("cacheModifMdp");
+                            self.form.elements[i + 2].value = "";
+                            self.form.elements[i + 2].classList.add("cacheModifMdp");
+
+                            labelModifsCli[5].classList.add("cacheModifMdp");
+                            labelModifsCli[6].classList.add("cacheModifMdp");
+
+                            self.form.elements[i + 1].parentNode.classList.add("cacheModifMdp");
+                            self.form.elements[i + 2].parentNode.classList.add("cacheModifMdp");
+
+                            self.form.elements[i + 1].required = false;
+                            self.form.elements[i + 2].required = false;
+                        }
+                    }
+                }
+            });
         }
-    });
+    }
 }
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                       Catalogue                                   ┃
+┃                                 Catalogue                                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 function cataloguePrice(){
@@ -378,40 +395,52 @@ function cataloguePrice(){
     priceInput = document.querySelectorAll(".price-range input:not(.range-input input)"),
     range = document.querySelector(".slider .progress");
     let priceGap = 100;
+
+    priceInput.forEach(() => {
+        window.addEventListener("load", fctPriceInput);
+    });
+    rangeInput.forEach(() => {
+        window.addEventListener("load", fctRangeInput);
+    });
+
     priceInput.forEach((input) => {
-        input.addEventListener("input", (e) => {
-            let minPrice = parseInt(priceInput[0].value),
-            maxPrice = parseInt(priceInput[1].value);
-            if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
-                if (e.target.id === "prix_min") {
-                    rangeInput[0].value = minPrice;
-                    range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
-                    console.log(minPrice + " | " + maxPrice);
-                } else if(e.target.id === "prix_max") {
-                    rangeInput[1].value = maxPrice;
-                    range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
-                }
-            }
-        });
+        input.addEventListener("input", fctPriceInput);
     });
     rangeInput.forEach((input) => {
-        input.addEventListener("input", (e) => {
-            let minVal = parseInt(rangeInput[0].value),
-            maxVal = parseInt(rangeInput[1].value);
-            if (maxVal - minVal < priceGap) {
-            if (e.target.className === "range-min") {
-                rangeInput[0].value = maxVal - priceGap;
-            } else {
-                rangeInput[1].value = minVal + priceGap;
+        input.addEventListener("input", fctRangeInput);
+    });
+
+    function fctPriceInput(e){
+        let minPrice = parseInt(priceInput[0].value),
+        maxPrice = parseInt(priceInput[1].value);
+        if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
+            if (e.target.id === "prix_min") {
+                rangeInput[0].value = minPrice;
+                range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
+                console.log(minPrice + " | " + maxPrice);
+            } else if(e.target.id === "prix_max") {
+                rangeInput[1].value = maxPrice;
+                range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
             }
-            } else {
+        }
+    }
+
+    function fctRangeInput(e){
+        let minVal = parseInt(rangeInput[0].value),
+        maxVal = parseInt(rangeInput[1].value);
+        if (maxVal - minVal < priceGap) {
+        if (e.target.className === "range-min") {
+            rangeInput[0].value = maxVal - priceGap;
+        } else {
+            rangeInput[1].value = minVal + priceGap;
+        }
+        } else {
             priceInput[0].value = minVal;
             priceInput[1].value = maxVal;
             range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
             range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
-            }
-        });
-    });
+        }
+    }
 }
 
 
@@ -424,4 +453,277 @@ function switchEtatFiltre(list){
     for (n of list){
         n.classList.toggle("est-filtre-ouvert");
     }
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                               Detail commande                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+function barreProgression() {
+    for (let index = 0; index < 5; index++) {
+        if (index*25 <= document.querySelector(".progress-bar-ok").value) {
+            document.getElementsByClassName("pointProgress")[index].classList.add("point-ok");
+        } else {
+            document.getElementsByClassName("pointProgress")[index].classList.add("point-ko");
+        }
+    }
+    if ((document.getElementsByClassName("pointProgress")[3].classList.contains("point-ok")) && (document.getElementsByClassName("pointProgress")[4].classList.contains("point-ko"))) {
+        document.querySelector(".preuveLivraison").style.backgroundColor = "#BDBFBB";
+        document.querySelector(".preuveLivraison").style.color = "#164F57";
+        document.querySelector(".preuveLivraison").style.cursor = "not-allowed";
+    }
+}
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                   formAdresse                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+
+var formAdresseConstructor = function(){
+    this.form=document.forms["form_adresse"];
+    var self =this;
+    this.actionAfterFetch= new Object();
+
+    this.nomEtPrenom =[
+        this.form.elements["nom"],
+        this.form.elements["prenom"]    
+    ];
+
+    this.form.elements["ville"].addEventListener("mousedown",function(){
+        if( document.activeElement == this )return;
+        document.querySelector(this).focus();
+       });
+    
+    this.estRempli = new Array();
+    Array.from(this.form.elements).forEach(elem => {
+        this.estRempli[elem.name]=elem.value.length>0;
+    });
+
+    this.codePostal=this.form.elements["code_postal"];
+    this.ville=this.form.elements["ville"];
+
+    this.utiliserProfil =  (event) => {
+        selfTarget=event.target;
+        this.nomEtPrenom.map(elem => {
+            
+            elem.classList.toggle("blocked-and-completed");
+            if (Array.from(elem.classList).includes("blocked-and-completed")){
+                elem.setAttribute("readOnly","readOnly");
+                
+                elem.dejaMis=elem.value;
+                elem.value=elem.getAttribute("sauvegardee");
+            }
+            else{
+                elem.removeAttribute("readOnly");
+                elem.value=elem.dejaMis;
+                
+                
+            }
+        });
+        this.supprimerErreur(selfTarget.parentNode.parentNode);
+    }
+    this.form.elements["utilise_nom_profil"].addEventListener('change', this.utiliserProfil );
+
+
+
+    
+
+    this.creerErreur =function(destination,message){
+        
+        if(Array.from(destination.children).filter(
+            child => Array.from(child.classList).includes("paragraphe-erreur") && child.textContent==message
+            ).length==0){
+
+            let p=document.createElement('p');
+            p.classList.add("paragraphe-erreur");
+            p.innerText=message
+            destination.appendChild(p)
+          
+        }
+        
+    }
+
+    
+
+    this.supprimerErreur =function(destination){
+
+        Array.from(destination.children)
+        .filter(child => Array.from(child.classList).includes("paragraphe-erreur"))
+        .forEach(child => destination.removeChild(child))
+            
+        
+    }
+
+    this.verifierNomEtPrenom =  (event) => {
+        selfTarget=event.target;
+        if(selfTarget.validity.valueMissing){
+            this.creerErreur(selfTarget.parentNode.parentNode.parentNode,"Attention champ(s) vide(s)");
+        }
+        else{
+            
+            this.supprimerErreur(selfTarget.parentNode.parentNode.parentNode);
+        }
+    };
+    this.nomEtPrenom.map(elem => 
+        elem.addEventListener("blur", this.verifierNomEtPrenom));
+
+    
+
+    Array.from(this.form.elements)
+    .filter(elem => {
+        return elem.required && !Array.from(elem.parentNode.parentNode.classList).includes("nomPrenom")
+    })
+    .forEach(elemRequired => {
+        elemRequired.addEventListener("blur", (event) => {
+        selfTarget=event.target;
+        if(selfTarget.validity.valueMissing){
+            this.creerErreur(selfTarget.parentNode,"Champ vide");
+            this.estRempli[selfTarget.name]=false;
+        }
+        else{
+            this.estRempli[selfTarget.name]=true;
+            this.supprimerErreur(selfTarget.parentNode);
+           
+        }
+        })
+    })
+
+    this.afterVille = function(response){
+    
+       this.codePostal.value = response.features[0].properties.postcode;
+       this.supprimerErreur(this.codePostal.parentNode);
+        
+    }
+
+    this.afterCodePostal = function(response){
+        let datalist= document.getElementById("ville_trouvee");
+        datalist.innerHTML="";
+        response.features.forEach(feature => {
+            console.log(feature.properties.city)
+            let option = document.createElement("option");
+            option.value=feature.properties.city;
+            datalist.appendChild(option);
+        });   
+    }
+
+
+    this.chercheCodePostalVille =  (event) => {
+        selfTarget=event.target;
+      
+        if(selfTarget.value.length > 3){
+            
+            fetch("https://api-adresse.data.gouv.fr/search/?q="+selfTarget.value+"&type=municipality")
+            .then(response => response.json())
+            .then(response => self.afterVille(response))
+            .catch(error => console.error('Error:', error));   
+            
+        }
+    }
+
+    this.ville.addEventListener("blur",this.chercheCodePostalVille);
+
+    this.chercherVilleParCodePostal= (event) => {
+        selfTarget=event.target;
+        if(this.codePostal.validity.patternMismatch){
+            this.creerErreur(selfTarget.parentNode,"Ne correspond à aucun code postal");
+           
+        }
+        else if(!this.codePostal.validity.valueMissing){
+            console.log("Bonsoir, non");
+            this.supprimerErreur(selfTarget.parentNode);
+            
+            
+            
+            fetch("https://api-adresse.data.gouv.fr/search/?q="+selfTarget.value+"&postcode="+selfTarget.value+"&type=municipality")
+            .then(response => response.json())
+            .then(response => self.afterCodePostal(response))
+            .catch(error => {console.error('Error:', error)});   
+                
+            
+           
+        }
+        else{
+            this.supprimerErreur(selfTarget.parentNode);
+            this.creerErreur(selfTarget.parentNode,"Champ vide");
+        }    
+    };
+    this.codePostal.addEventListener("blur", this.chercherVilleParCodePostal);
+ 
+}
+ 
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          Errors                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+function errors(){
+    const Shuffle = function ($el) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=+<>,./?[{()}]!@#$%^&*~`\|'.split(''),
+            $source = $el.querySelector('.source'), $target = $el.querySelector('.target');
+    
+        let cursor = 0, scrambleInterval = undefined, cursorDelayInterval = undefined, cursorInterval = undefined;
+    
+        const getRandomizedString = function (len) {
+            let s = '';
+    
+            for (let i = 0; i < len; i++) {
+                s += chars[Math.floor(Math.random() * chars.length)];
+            }
+    
+            return s;
+        };
+    
+        this.start = function () {
+            $source.style.display = 'none';
+            $target.style.display = 'block';
+    
+            scrambleInterval = window.setInterval(() => {
+                if (cursor <= $source.innerText.length) {
+                    $target.innerText = $source.innerText.substring(0, cursor) + getRandomizedString($source.innerText.length - cursor);
+                }
+            }, 450 / 30);
+    
+            cursorDelayInterval = window.setTimeout(() => {
+                cursorInterval = window.setInterval(() => {
+                    if (cursor > $source.innerText.length - 1) {
+                        this.stop();
+                    }
+    
+                    cursor++;
+                }, 70);
+            }, 350);
+        };
+    
+        this.stop = function () {
+            $source.style.display = 'block';
+            $target.style.display = 'none';
+            $target.innerText = '';
+            cursor = 0;
+    
+            if (scrambleInterval !== undefined) {
+                window.clearInterval(scrambleInterval);
+                scrambleInterval = undefined;
+            }
+    
+            if (cursorInterval !== undefined) {
+                window.clearInterval(cursorInterval);
+                cursorInterval = undefined;
+            }
+    
+            if (cursorDelayInterval !== undefined) {
+                window.clearInterval(cursorDelayInterval);
+                cursorDelayInterval = undefined;
+            }
+        };
+    };
+    
+    (new Shuffle(document.getElementById('error_text'))).start();
+    
+    window.setTimeout(function () {
+        document.getElementById('details').classList.remove('hidden');
+    }, 550);
 }

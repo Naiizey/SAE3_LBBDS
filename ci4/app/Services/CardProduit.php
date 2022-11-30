@@ -55,18 +55,17 @@ class CardProduit
 
     private function cardProduit($prod){ 
         ob_start(); ?>
-        <a href="<?= base_url()."/produit/".$prod->id ?>" class="card-produit-ext">
-        <div class="card-produit">
-    
-            <div class="image-card" style="background-image: url(<?= /*base_url().'/'.*/$prod->lienimage
-    ?>);"></div>
-    
-            <div class="notation-card"><?= $this->notationEtoile($prod->moyenneNote) ?></div>
-            <div class="contain-libelle"><p class="libelle"><?= $prod->intitule?></p></div>
-            <p class="prix-card"><?= $prod->prixttc?>€</p>
-    
+        <div class="card-produit-ext">
+            <div class="card-produit">
+                <div class="image-card" style="background-image: url(<?= /*base_url().'/'.*/$prod->lienimage?>);"></div>
+                <div class="notation-card"><?= $this->notationEtoile($prod->moyenneNote) ?></div>
+                <div class="contain-libelle"><p class="libelle"><?= $prod->intitule?></p></div>
+                <div class="bottom-card">
+                    <p class="prix-card"><?= $prod->prixttc?>€</p>
+                    <a href="<?= base_url().'/panier/ajouter/'.$prod->id ?>" class="addPanier"><?= file_get_contents(dirname(__DIR__,2)."/public/images/header/addPanier.svg")?></a>
+                </div>
+            </div>
         </div>
-        </a>
         <?php return ob_get_clean();
     }
 

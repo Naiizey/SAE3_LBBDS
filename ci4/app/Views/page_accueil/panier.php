@@ -69,8 +69,8 @@
                             echo                   '</select>
                                                     <a href="'.base_url()."/panier/supprimer/$produit->idProd".'">Supprimer</a>
                                                 </div>
-                                                <h3>TTC: <span class="prixTtc" prix="'. $produit -> prixTtc .'" >'. $produit -> prixTtc .'€</span> </h3>
                                                 <h3>HT: <span class="prixHt" prix="'. $produit -> prixHt .'" >'. $produit -> prixHt .'€</span> </h3>
+                                                <h3>TTC: <span class="prixTtc" prix="'. $produit -> prixTtc .'" >'. $produit -> prixTtc .'€</span> </h3>
                                         </article>';
                         }                
                         echo       '    <hr>
@@ -83,7 +83,7 @@
                                 <aside>
 
                                     <h2>Sous-total (<span class="nbArt">' . $sommeNbArticle . '</span> article.s) : <span class="totalTtc">' . $sommePrix . '</span>€</h2>
-                                    <a href="'.base_url().'/commandes" class="lienPanier">Valider le panier</a>
+                                    <a href="'.base_url().'/livraison" class="lienPanier">Valider le panier</a>
                                     <a class="lienViderPanier" href='.base_url().'/panier/vider>Vider le panier</a>
                                 </aside>';
                     }

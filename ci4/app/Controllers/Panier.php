@@ -59,28 +59,21 @@ class Panier extends BaseController
         {
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }
-        else if(session()->has("numero")){
+        else if(session()->has("numero")) {
             $data['produits'] = model("\App\Models\ProduitPanierCompteModel")->getPanier(session()->get("numero"));
 
         }
-        else if(has_cookie("token_panier")){
+        else if(has_cookie("token_panier")) {
             $data['produits'] = model("\App\Models\ProduitPanierVisiteurModel")->getPanier(get_cookie("token_panier"));
         
         }
-        else{
+        else {
             $data['produits']=array();
         }
-
-        
-        
-        
-    
-        
         return view('page_accueil/panier.php', $data);
     }
 
     public function viderPanier() {
-   
         if(session()->has("numero"))
         {
             $panierModel = model("\App\Models\ProduitPanierCompteModel");
@@ -99,28 +92,6 @@ class Panier extends BaseController
         return redirect()->to("panier");
     }
 
-    /*
-    public function ajouterPanier() {
-        $data['controller'] = "panier";
-        $session = session();
-        $panier = $session->get('panier');
-        $idProduit = $this->request->getPost('idProduit');
-        $quantite = $this->request->getPost('quantite');
-        if($panier == null) {
-            $panier = array();
-        }
-        if(array_key_exists($idProduit, $panier)) {
-            $panier[$idProduit] += $quantite;
-        } else {
-            $panier[$idProduit] = $quantite;
-        }
-        $session->set('panier', $panier);
-        $panierModel = model("\App\Models\ProduitPanierModel");
-        $panierModel->ajouterProduitPanier($idProduit, $quantite);
-        return view('page_accueil/panier.php', $data);
-    }
-    */
-
     public function ajouterPanier($idProd=null,$quantite=null) {
         $data['controller'] = "panier";
         
@@ -128,8 +99,8 @@ class Panier extends BaseController
             $quantite=$this->request->getPost("quantite");
         }
         
-       if(!is_null($idProd) && !is_null($quantite))
-       {
+        if(!is_null($idProd) && !is_null($quantite))
+        {
             
             if(session()->has("numero"))
             {
@@ -235,9 +206,6 @@ class Panier extends BaseController
                 return redirect()->to(session()->get("_ci_previous_url"));
             }
             */
-      
-      
-  
     }
 
     public function sendCors($idProd = null, $newQuantite = null){
@@ -246,7 +214,6 @@ class Panier extends BaseController
             return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
             ->setStatusCode(200);
         }
-  
     }
 
     public function creerPanier(){
@@ -258,7 +225,6 @@ class Panier extends BaseController
 
         setcookie('token_panier',$token,array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
         return $token;
-      
     }
 
     public function updatePanier($token){
@@ -270,6 +236,5 @@ class Panier extends BaseController
 
         setcookie('token_panier',$token,array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
         return $token;
-      
     }
 }

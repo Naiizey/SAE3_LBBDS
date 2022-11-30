@@ -50,13 +50,21 @@ class Authentification
     {   
         $compteModel=model("\App\Models\Client");
         $errors=[];
+
+
+        
         if(!empty($entree))
         {
+            /*
             if(empty($entree->motDePasse) || empty($entree->pseudo) || empty($entree->nom) || empty($entree->prenom) || empty($entree->email)) 
             {
                 $errors[1]="Remplissez le(s) champs vide(s)";
+                dd("$entree->motDePasse  $entree->pseudo  $entree->nom $entree->prenom  $entree->email");
+                
             }
             if(strlen($entree->nom) > 50 || strlen($entree->prenom) > 50)
+            */
+            if(strlen($entree->nom) > 50 && strlen($entree->prenom) > 50)
             {
                 $errors[2]= "50 caractères maximum pour le nom (" . strlen($entree->prenom) . " actuellement) et/ou prénom (" . strlen($entree->nom) . " actuellement)";
             } 
@@ -93,12 +101,13 @@ class Authentification
         if(empty($errors))
         {
             $entree->cryptMotDePasse();
+            
             $compteModel->save($entree);
+            
             $session = session();
             $user=$compteModel->where("email",$entree->email)->findAll()[0];
             $session->set('numero',$user->numero);
-            $session->set('identifiant',$user->identifiant);
-            $session->set('motDePasse',$user->motDePasse);
+            
 
             $session->set("just_connectee",True);
         }
@@ -120,27 +129,42 @@ class Authentification
             {
                 $errors[2]= "50 caractères maximum pour le nom (" . strlen($entree->prenom) . " actuellement) et/ou prénom (" . strlen($entree->nom) . " actuellement)";
             }
-            if (($entree->motDePasse != "motDePassemotDePasse") && !empty($verifMdp) && !empty($nouveauMdp)) 
+            if ($entree->motDePasse != "motDePassemotDePasse") 
             {
                 //Le controlleur nous informe par ces valeurs que l'utilisateur a cherché à modifier le mdp, il faut donc tout vérifier
-                if($compteModel->getClientByPseudo($entree -> pseudo, $entree -> motDePasse) == null)
+                if (!empty($verifMdp) && !empty($nouveauMdp))
                 {
-                    $errors[3]="Ceci n'est pas votre ancien mot de passe";
-                }
-                if ($entree->motDePasse == $nouveauMdp) 
+                    if($compteModel->getClientByPseudo($entree -> pseudo, $entree -> motDePasse) == null)
+                    {
+                        $errors[3]="Ceci n'est pas votre ancien mot de passe";
+                    }
+                    if ($entree->motDePasse == $nouveauMdp) 
+                    {
+                        $errors[4]="Le nouveau mot de passe doit être différent de l'ancien";
+                    }
+                    if (preg_match_all("/[a-z]/",$nouveauMdp) < 1 ||  
+                        preg_match_all("/[A-Z]/",$nouveauMdp) < 1 ||  
+                        preg_match_all("/[0-9]/",$nouveauMdp) < 1 ||  
+                        strlen($nouveauMdp) < 12)
+                    {
+                        $errors[5]="Le mot de passe doit faire plus de 12 caractère et doit contenir au moins une majuscule, une minuscule et un chiffre";
+                    }
+                    if($entree->motDePasse != $verifMdp) 
+                    {
+                        $errors[6]="Les mots de passes ne correspondent pas";
+                    }
+                }   
+                //Dans ce cas c'est l'admin qui a cherché à modifier le mdp
+                else
                 {
-                    $errors[4]="Le nouveau mot de passe doit être différent de l'ancien";
-                }
-                if (preg_match_all("/[a-z]/",$nouveauMdp) < 1 ||  
-                    preg_match_all("/[A-Z]/",$nouveauMdp) < 1 ||  
-                    preg_match_all("/[0-9]/",$nouveauMdp) < 1 ||  
-                    strlen($nouveauMdp) < 12)
-                {
-                    $errors[5]="Le mot de passe doit faire plus de 12 caractère et doit contenir au moins une majuscule, une minuscule et un chiffre";
-                }
-                if($entree->motDePasse != $verifMdp) 
-                {
-                    $errors[6]="Les mots de passes ne correspondent pas";
+                    $nouveauMdp = $entree->motDePasse;
+                    if (preg_match_all("/[a-z]/",$entree->motDePasse) < 1 ||  
+                        preg_match_all("/[A-Z]/",$entree->motDePasse) < 1 ||  
+                        preg_match_all("/[0-9]/",$entree->motDePasse) < 1 ||  
+                        strlen($entree->motDePasse) < 12)
+                    {
+                        $errors[5]="Le mot de passe doit faire plus de 12 caractère et doit contenir au moins une majuscule, une minuscule et un chiffre";
+                    }
                 }
             }
         }
@@ -156,6 +180,43 @@ class Authentification
             $compteModel->save($entree);
         }
 
+        return $errors;
+    }
+
+    public function paiement($entree) : array
+    {
+        $errors=[];
+        if(!empty($entree))
+        {
+            if (empty($entree['nomCB']) || empty($entree['numCB']) || empty($entree['dateExpiration']) || empty($entree['CVC']))
+            {
+                $errors[1]="Remplissez le(s) champs vide(s)";
+            }
+            if (preg_match_all("/\d{6}\d{1,12}\d/", $entree['numCB']) < 1  &&
+                preg_match_all("/(\b[4|5|6]\d{3}[\s-]?(\d{4}[\s-]?){2}\d{1,4}\b)|(\b\d{4}[\s-]?\d{6}[\s-]?\d{5}\b)/", $entree['numCB']) < 1)
+            {
+                $errors[2]="Format de numéro de carte bancaire invalide";
+            }
+            if (preg_match_all("/\b(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})\b/", $entree['dateExpiration']) < 1)
+            {
+                $errors[3]="Format de date d'expiration invalide";
+            }
+            else
+            {
+                $annee = substr($entree['dateExpiration'], strlen($entree['dateExpiration']) - 2, strlen($entree['dateExpiration']) - 1);
+                $mois = substr($entree['dateExpiration'], 0, 2);
+
+                //Si l'année actuelle (sur deux chiffres) est inférieure à celle renseignée OU si le mois actuel est inférieur au mois renseigné (+année actuelle égale à celle renseignée)
+                if (((int) $annee) < idate("y") || ((int) $mois) < idate("m") && ((int) $annee) == idate("y"))
+                {
+                    $errors[4]="Votre carte est expirée";
+                }
+            }
+        }
+        else 
+        {
+            $errors[0] ="Pas d'entrée";
+        }
         return $errors;
     }
 }

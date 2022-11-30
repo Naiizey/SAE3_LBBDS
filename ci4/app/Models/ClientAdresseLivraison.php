@@ -5,7 +5,7 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 class ClientAdresseLivraison extends Model{
-    protected $table = "sae3.adresse_livraison";
+    protected $table = "sae3.adresse_livraison_client";
     protected $primaryKey = "num_compte";
 
     protected $allowedFields = ["num_compte",

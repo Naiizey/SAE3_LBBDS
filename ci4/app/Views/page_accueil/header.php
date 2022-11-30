@@ -42,6 +42,9 @@
         </style>
         <title><?= $controller ?></title>
     </head>
+    <script>
+        const base_url = "<?= base_url() ?>";
+    </script>
     <body>
         <header>
             <div class="divHeaderAlizon">

@@ -56,13 +56,13 @@ class CardProduit
     private function cardProduit($prod){ 
         ob_start(); ?>
         <div class="card-produit-ext">
-            <div class="card-produit">
+            <div class="card-produit" value=<?=$prod->id?>>
                 <div class="image-card" style="background-image: url(<?= /*base_url().'/'.*/$prod->lienimage?>);"></div>
                 <div class="notation-card"><?= $this->notationEtoile($prod->moyenneNote) ?></div>
                 <div class="contain-libelle"><p class="libelle"><?= $prod->intitule?></p></div>
                 <div class="bottom-card">
                     <p class="prix-card"><?= $prod->prixttc?>€</p>
-                    <a href="<?= base_url().'/panier/ajouter/'.$prod->id ?>" class="addPanier"><?= file_get_contents(dirname(__DIR__,2)."/public/images/header/addPanier.svg")?></a>
+                    <a href="<?= base_url().'/panier/ajouter/'.$prod->id.'/1' ?>" class="addPanier"><?= file_get_contents(dirname(__DIR__,2)."/public/images/header/addPanier.svg")?></a>
                 </div>
             </div>
         </div>

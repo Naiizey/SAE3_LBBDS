@@ -184,15 +184,11 @@ function requeteDynamHTTP(url="") {
             })
         }
     }
-            
-
-
- 
-   
     
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                Update prix                                      ┃
+┃                            Update prix et quant                                 ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
@@ -202,18 +198,14 @@ function updatePricePanier() {
     let prixTab = document.getElementsByClassName("prixTtc");
     let prixTabHt = document.getElementsByClassName("prixHt");
     let quant, prix, quantTot = 0;
-
     for (let ind = 0; ind < quantites.length; ind++) {
         quant = quantites[ind].value;
         quantTot += parseInt(quant);
-
         prix = prixTab[ind].getAttribute("prix");
         prixTab[ind].textContent = (prix * quant) + '€';
-    
         prix = prixTabHt[ind].getAttribute("prix");
         prixTabHt[ind].textContent = (prix * quant) + '€';
     }
-
     nbArticleTab[0].textContent = quantTot;
     nbArticleTab[1].textContent = quantTot;
     nbArticleTab[2].textContent = quantTot;
@@ -235,15 +227,16 @@ function updatePriceTotal() {
         sommeTot += parseFloat(prix);
         prix = prixTabHt[ind].textContent.replace('€','');
         sommeTotHt += parseFloat(prix);
-        //console.log(prix);
     }
 
     prixTotTab[0].textContent = sommeTot;
     prixTotTab[1].textContent = sommeTot;
-
-    //console.log(sommeTotHt);
     prixTotTabHt[0].textContent = sommeTotHt;
-    //prixTotTabHt[1].textContent = sommeToHt;
+}
+
+function updateQuantite() {
+    let baliseQuant = document.getElementsByClassName("quantPanier")[1];
+
 }
 
 /*
@@ -667,7 +660,7 @@ var formAdresseConstructor = function(){
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                          Errors                                   ┃
+┃                                     Errors                                      ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 function errors(){
@@ -736,4 +729,41 @@ function errors(){
     window.setTimeout(function () {
         document.getElementById('details').classList.remove('hidden');
     }, 550);
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                   Recherche                                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+document.addEventListener('invalid', (function () {
+    return function (e) {
+        e.preventDefault();
+        document.getElementById("name").focus();
+    };
+})(), true);
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                  Card Produit                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+function parentTilCard(element){
+    let card = element;
+    //get the parent node of the element until the card
+    while(card.getAttribute('value') == null){
+        card = card.parentNode;
+    }
+    return card
+}
+
+//Only if at least one card in the page
+if(document.querySelector(".card-produit") != null){
+    //Select all cards
+    let cards = document.querySelectorAll(".card-produit");
+    for(card of cards){
+        //Redirection while clicking on products
+        card.addEventListener("click", (e) =>{window.location.href= "produit/" + parentTilCard(e.target).getAttribute('value');});
+    }
 }

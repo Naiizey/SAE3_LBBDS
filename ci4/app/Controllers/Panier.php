@@ -10,12 +10,18 @@ class Panier extends BaseController
 
     public function __construct()
     {
-
         helper('cookie');
+        if (session()->has("numero")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+        } else if (has_cookie("token_panier")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
+        } else {
+            $GLOBALS["quant"] = 0;
+        }
     }
     public function index()
     {
-        return view('panier/index.php');
+        return view('panier/index.php',);
     }
 
     public function test()
@@ -49,7 +55,6 @@ class Panier extends BaseController
         return $produits;
     }
     */
-
 
     #TODO: valeur pas update au début.  
     public function getProduitPanierClient($context = null, $data = null)

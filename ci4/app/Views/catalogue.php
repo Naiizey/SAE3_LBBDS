@@ -10,30 +10,7 @@
                 Filtres
             </h2>
     </button>
-    <section class="partie-produits">
-        <div class="liste-produits">
-        <?php for($i=$minProd;$i<$maxProd && $i<sizeof($prods);++$i): ?>
-            <?= $cardProduit->display($prods[$i])?>
-        <?php endfor; ?>
-        </div>
-        <div class="nav-page">
-            <div class="avant-current-page">
-            <?php for($i=1;$i<=$nombreMaxPages;++$i): ?>
-                    <?php if($i==$page):?>
-                        </div>
-                        <div class="current-page">
-                        <a <?=($i>1)?"href='".base_url()."/catalogue/".($i-1)."'":"" ?>  class="fleche-page <?=($i<=1)?"indisponible":"disponible" ?>"><?php include("./images/catalogue/Fleche_page_gauche.svg")?></a>
-                        <span><?= $i ?> </span>
-                        <a  <?=($i<$nombreMaxPages)?"href='".base_url()."/catalogue/".($i+1)."'":"" ?> class="fleche-page <?=($i>=$nombreMaxPages)?"indisponible":"disponible" ?>"><?php include("./images/catalogue/Fleche_page_droite.svg")?></a>
-                        </div>
-                        <div class="apres-current-page">
-                    <?php else:?>
-                        <?= $i ?>
-                    <?php endif;?>
-            <?php endfor;?>
-            </div>
-        </div>
-    </section>
+    
     <section class="partie-filtre">
         <div class="liste-filtre">
             <div class="titre-filtre">
@@ -55,14 +32,14 @@
                         <summary class="categorie"><h2><?=$categorie->libelle?></h2></summary>
                         <!-- Boutton selectionner toutes les sous catégories -->
                         <div id="entête">
-                            
+
                             <div class="bouton-selectionner-tout">
                                 <label for="tout<?=$categorie->id?>">Tout sélectionner</label>
                                 <input class="chk-box-tout" type="checkbox" id="tout<?=$categorie->id?>" name="tout<?=$categorie->id?>" value="tout<?=$categorie->id?>">
                             </div>
                             <hr>
                          </div>
-                        
+
                         <!-- Liste des sous-catégories -->
                         <?php foreach ($categorie->getAllSousCat() as $sousCat): ?>
                         <div class="sous-categorie" for="<?= $sousCat->libelle ?>">
@@ -126,7 +103,7 @@
             window.scrollTo(0,0);
             }
         );
-   
+
     boutonCliquable(
         document.querySelector(".fermer-filtre"),
         () => switchEtatFiltre(document.querySelectorAll(".mobile-ouvrir-filtres, .partie-filtre"))

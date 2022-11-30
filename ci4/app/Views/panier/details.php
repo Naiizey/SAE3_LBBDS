@@ -5,7 +5,7 @@
                 <div class="divProgress">
                     <?= "<h2>Commande n°".$numCommande."</h2>"?>
                     <div class="bar">  
-                        <progress class="progress-bar-ok" value="1" max="100"></progress> 
+                        <?= '<progress class="progress-bar-ok" value="'.$infosCommande[0]->etat.'" max="100"></progress>'?> 
                         <div class="buttonProgress">
                             <div>
                                 <div class="pointProgress"></div>
@@ -32,11 +32,11 @@
                 </div>
                 <div class="divBasPageDetail">
                     <div class="divDetail">
-                        <h2>Détail de la commande</h2>
-                        <hr>
-                        <div class="divArticles">
-                            <?php 
-                                foreach ($articles as $article) {
+                        <div>
+                            <h2>Détail de la commande</h2>
+                            <hr>
+                            <div class="divArticles">
+                                <?php foreach ($articles as $article) {
                                     echo '
                                         <div>
                                             <div>
@@ -46,8 +46,9 @@
                                             <p>'.$article->prix_ht.'€</p>
                                         </div>
                                         <hr>';
-                                }
-                            ?>
+                                    }
+                                ?>
+                            </div>
                         </div>
                         <div class="divPrix">
                             <?= "<p>Total HT : ".$infosCommande[0]->prix_ht."€</p>
@@ -59,17 +60,19 @@
                             <h2>Télécharger</h2>
                             <hr>
                             <div class="btnTelecharger">
-                                <a href="">Facture</a>
-                                <a href="">Preuve d'achat</a>
-                                <a href="" class="preuveLivraison">Preuve de livraison</a>
+                                <a href="<?= base_url() ?>/fichiers_telechargeables/Facture.txt" download>Facture</a>
+                                <a href="<?= base_url() ?>/fichiers_telechargeables/Preuve_achat.txt" download>Preuve d'achat</a>
+                                <a href="<?= base_url() ?>/fichiers_telechargeables/Facture.txt" download class="preuveLivraison">Preuve de livraison</a>
                             </div>
                         </div>
                         <div>
                            <h2>Livraison</h2>
                             <hr>
-                            <div class="divDetailLivraison">    
-                                <p>Adresse : </p>
-                                <p>Livreur : </p>
+                            <div class="divDetailLivraison">  
+                                <?php echo '
+                                    <p>Adresse : '.$adresse[0]->numero_rue.' '.$adresse[0]->nom_rue.'</p>
+                                    <p>'.$adresse[0]->code_postal.' '.$adresse[0]->ville.'</p>'
+                                ?>  
                                 <p>N° de suivi : </p>
                                 <p>Lien du suivi : </p>
                             </div>

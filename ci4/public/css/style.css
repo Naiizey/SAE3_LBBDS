@@ -2085,6 +2085,9 @@ a.fleche-page{
     border-radius: 5px;
     border: solid 2px #C6C6C6;
     padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .bar {

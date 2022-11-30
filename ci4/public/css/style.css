@@ -1434,6 +1434,7 @@ main div.card-produit-ext:hover{
     justify-content: center;
     align-items: center;
     gap: 1rem;
+    max-height: 2rem;
 }
 
 .card-produit{

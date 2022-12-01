@@ -114,14 +114,13 @@
                     <aside>
                         <div class="divCodeReduc">
                             <h2>Code de réduction</h2>
-                            <form action="<?= base_url() ?>/panier/validerCode" method="post" name="codeReduc">
-                                <input type="text" name="code" value="<?= $code ?>" required/>
-                                <input type="submit" value="Valider"/>
+                            <form action="<?= current_url() ?>" method="post" name="codeReduc">
+                                <input type="text" name="code" value="<?= $code ?>" required="required"/>
                                 <?= 
                                     afficheErreurs($erreurs, 0) . 
-                                    afficheErreurs($erreurs, 1) .
-                                    afficheErreurs($erreurs, 2)
+                                    afficheErreurs($erreurs, 1) 
                                 ?>
+                                <input type="submit" value="Valider"/>
                             </form>
                         </div>
                         <div class="divValiderVider">

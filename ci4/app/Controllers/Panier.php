@@ -57,16 +57,61 @@ class Panier extends BaseController
     */
 
     #TODO: valeur pas update au début.  
-    public function getProduitPanierClient($context = null, $data = [])
+    public function getProduitPanierClient($context = null)
     {
-        //Initialisation du code de récupération s'il n'a pas été renseigné
-        if (empty($data))
+        $data['controller'] = "panier";
+
+        //Code réduction
+        $post=$this->request->getPost();
+        $modelCodeReduc = model("\App\Models\CodeReduction");
+        $issues = [];
+        $retours = [];
+        
+        if (!empty($post))
+        {
+            //Pré-remplit les champs avec les données renseignées
+            $data['code'] = $post['code'];
+
+            $codeReduc = $modelCodeReduc->getByCode($post['code']);
+
+            if (empty($codeReduc))
+            {
+                $issues[0] = "Ce code n'existe pas";
+            }
+            else
+            {
+                //Le code étant unique dans la base on choisi le premier et seul résultat du findAll
+                $codeReduc = $codeReduc[0];
+
+                $date_ajd = date("Y-m-d H:i:s"); 
+                $date_debut = $codeReduc->date_debut . " " . $codeReduc->heure_debut;
+                $date_fin = $codeReduc->date_fin . " " . $codeReduc->heure_fin;
+
+                if ($date_debut > $date_ajd && $date_ajd < $date_fin)
+                {
+                    $issues[1] = "Ce code est expiré";
+                }
+                else
+                {
+                    //Tout est bon, il reste a savoir si le code réduit le prix avec un montant ou un pourcentage de réduction
+                    if ($codeReduc->montant_reduction != 0)
+                    {
+                        $retours[0] = "Vous économisez <span>" . $codeReduc->montant_reduction . "€</span>";
+                    }
+                    else
+                    {
+                        $retours[1] = "Vous économisez <span>" . $codeReduc->pourcentage_reduction . "%</span>";
+                    }
+                }
+            }
+        }
+        else
         {
             $data['code'] = "";
-            $data['erreurs'] = [];
-            $data['retours'] = [];
         }
-        $data['controller'] = "panier";
+
+        $data['erreurs'] = $issues;
+        $data['retours'] = $retours;
 
         if($context == 400) 
         {
@@ -261,62 +306,5 @@ class Panier extends BaseController
 
         setcookie('token_panier',$token,array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
         return $token;
-    }
-
-    public function validerCode()
-    {
-        $post=$this->request->getPost();
-        $modelCodeReduc = model("\App\Models\CodeReduction");
-        $issues = [];
-        $retours = [];
-        
-        if (!empty($post))
-        {
-            //Pré-remplit les champs avec les données de la base
-            $data['code'] = $post['code'];
-
-            $codeReduc = $modelCodeReduc->getByCode($post['code']);
-
-            if (empty($codeReduc))
-            {
-                $issues[1] = "Ce code n'existe pas";
-            }
-            else
-            {
-                //Le code étant unique dans la base on choisi le premier et seul résultat du findAll
-                $codeReduc = $codeReduc[0];
-
-                $date_ajd = date("Y-m-d H:i:s"); 
-                $date_debut = $codeReduc->date_debut . " " . $codeReduc->heure_debut;
-                $date_fin = $codeReduc->date_fin . " " . $codeReduc->heure_fin;
-
-                if ($date_debut > $date_ajd && $date_ajd < $date_fin)
-                {
-                    $issues[2] = "Ce code est expiré";
-                }
-                else
-                {
-                    //Tout est bon, il reste a savoir si le code réduit le prix avec un montant ou un pourcentage de réduction
-                    if ($codeReduc->montant_reduction != 0)
-                    {
-                        $retours[0] = "Vous économisez <span>" . $codeReduc->montant_reduction . "€</span>";
-                    }
-                    else
-                    {
-                        $retours[1] = "Vous économisez <span>" . $codeReduc->pourcentage_reduction . "%</span>";
-                    }
-                }
-            }
-        }
-        else
-        {
-            $issues[0] = "Pas d'entrée";
-        }
-
-        $context = null;
-        $data['erreurs'] = $issues;
-        $data['retours'] = $retours;
-        
-        return $this->getProduitPanierClient($context, $data);
     }
 }

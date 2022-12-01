@@ -187,7 +187,7 @@ p {
 
 main {
     position: relative;
-    top: 8.4em;
+    margin-top: 8.4em;
     background-color: #f3f3f3;
     flex : 1;
     text-align: center;
@@ -296,7 +296,7 @@ main {
 
 footer {
     position: relative;
-    top: 5em;
+    top: 2em;
     background-color: #164F57;
     text-align: center;
     z-index: 100;
@@ -651,10 +651,25 @@ header ul {
     background-color: #DCE5E6;
 }
 
-.articlesAcceuil {
+.articlesAcceuilPC {
     display: flex;
     margin: 2em 0;
     justify-content: space-around;
+}
+
+.articlesAcceuilMobile{
+    display: none;
+}
+
+@media screen and (max-width: 991px){
+    .articlesAcceuilPC{
+        display: none;
+    }
+
+    .articlesAcceuilMobile{
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
 
 .mainAccueil section p {
@@ -1555,6 +1570,33 @@ div.image-card{
     width: 100%;
 }
 
+@media screen and (max-width: 991px){
+    .card-produit{
+        width: 10rem;
+        height: 14rem;
+        font-size: 1.25rem;
+    }
+
+    .image-card{
+        height: 7rem;
+    }
+
+    .contain-libelle{
+        min-height: 3rem;
+        max-height: 3rem;
+    }
+
+    .prix-card{
+        font-size: 1.25rem;
+    }
+
+    .addPanier{
+        width: 1.5rem;
+        height: 1.5rem;
+        padding: 0.2rem;
+    }
+}
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                          Catalogue (Catalogue.php)                              ┃
@@ -1621,7 +1663,6 @@ main#Catalogue{
 
 .categorie-catalogue summary ~ div{
     width: 100%;
-    display: flex;
     gap: 7%;
     padding-left: 5%;
 }
@@ -1668,12 +1709,13 @@ main#Catalogue{
     margin-right: 1em;
 } */
 
-.categorie-catalogue summary ~ div label h3{
+.categorie-catalogue summary ~ div label{
     text-align: left;
-    color: #164F57
+    color: #164F57;
+    font-size: 1.5rem;
 }
 
-.categorie-catalogue summary ~ div label h3::first-letter{
+.categorie-catalogue summary ~ div label::first-letter{
     text-transform: uppercase;
 }
 
@@ -1698,11 +1740,11 @@ main#Catalogue{
 }
 
 
-
 .categorie-catalogue .sous-categorie
 {
     display: flex;
     align-items: center;
+    height: 2.5rem
 }
 
 .categorie-catalogue .bouton-selectionner-tout label{
@@ -1710,9 +1752,10 @@ main#Catalogue{
     width: auto;
     text-align: left;
     color: #164F57;
+    font-size: 22pt;
 }
 
-.categorie-catalogue .bouton-selectionner-tout label h3::first-letter{
+.categorie-catalogue .bouton-selectionner-tout label::first-letter{
     text-transform: uppercase;
 }
 

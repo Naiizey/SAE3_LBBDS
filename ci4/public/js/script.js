@@ -846,3 +846,35 @@ if(document.querySelector(".card-produit") != null){
         card.addEventListener("click", (e) =>{window.location.href=  base_url +  "/produit/" + parentTilCard(e.target).getAttribute('value');});
     }
 }
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                  Card Produit                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+/*function menuCredit() {
+    let divHoverConnexion = document.querySelector(".divHoverConnexion");
+    let lienConnexion = document.querySelector(".lienConnexion");
+    let hover = false;
+
+    lienConnexion.addEventListener("mouseover", () => {
+        divHoverConnexion.style.display = "flex";
+    })
+
+    lienConnexion.addEventListener("mouseout", () => { 
+        setTimeout(function(){
+            if (hover == false) { 
+                divHoverConnexion.style.display = "none";
+            }
+        }, 1000);
+    })
+
+    divHoverConnexion.addEventListener("mouseover", () => { 
+        divHoverConnexion.style.display = "flex"; 
+        hover = true;
+    })
+
+    divHoverConnexion.addEventListener("mouseout", () => {
+        divHoverConnexion.style.display = "none";
+        hover = false;
+    })
+}*/

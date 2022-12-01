@@ -1,4 +1,4 @@
-const base_url = "/ci4/public/";
+//const base_url = "/ci4/public/";
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -117,6 +117,38 @@ function dragNDrop(){
 
 //TODO: voir et cacher le mot de passe avec un bouton (un neuil) dans l'<input>
 
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                Spécifier quantité                               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+var tabQuant= document.querySelector("#tabQuant")
+
+if (tabQuant){
+    tabQuant.addEventListener("change", (event) => {
+        if (event.target.value == "10+"){
+            console.log(event.target);
+            event.target.parentNode.classList.toggle("plus-10");
+            document.querySelector(".input-option-plus-10").addEventListener("keypress", (event) => {
+              
+                if(event.keyCode < 48 || event.keyCode > 57){
+                    event.preventDefault();
+    
+                }
+                
+            })
+            document.querySelector(".input-option-plus-10").addEventListener("blur", (event) => {
+                if(event.target.value > event.target.max){
+                    event.value = event.target.max;
+                }
+                
+            })
+        }
+    })
+}
+
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -172,20 +204,65 @@ function requeteDynamHTTP(url="") {
 
 
     function reqUpdateQuantite(url,howGetSelect,howGetId,callback){
+
+        this.howGetId=howGetId;
+
+        var process = (event,value=null) => {
+            let listValue= [
+                this.howGetId(event.target),
+                (value===null)?event.target.value:value
+            ]
+            requete.put(listValue,callback);
+        }
         
         let requete = new requeteDynamHTTP(url);
         for (elem of howGetSelect())
         {
+            console.log(elem);
             elem.addEventListener("change",(event) =>{
-                let listValue= [
-                    howGetId(event.target),
-                    event.target.value
-                ]
-                requete.put(listValue,callback);
                 
-            })
+                if(!isNaN(event.target.value))
+                {
+                    if(parseInt(event.target.value) > event.target.max){
+                        event.target.value=event.target.max;
+                    }
+                    process(event);
+                    
+                }
+        
+               
+                
+            });
+            elem.addEventListener("keypress", (event) => {
+              
+                if(event.keyCode < 48 || event.keyCode > 57){
+                    event.preventDefault();
+    
+                }
+                else if(parseInt(event.target.value+String.fromCharCode(event.keyCode)) > event.target.max){
+                    event.preventDefault();
+                    
+                    event.target.value=event.target.max;
+                    process(event); 
+                    
+                }
+                else{
+                    console.log(event.target.value+String.fromCharCode(event.keyCode));
+                    process(event,event.target.value+String.fromCharCode(event.keyCode)); 
+                }
+                    
+                
+                
+            });
+
         }
     }
+            
+
+
+ 
+    
+
     
 
 /*
@@ -766,6 +843,6 @@ if(document.querySelector(".card-produit") != null){
     let cards = document.querySelectorAll(".card-produit");
     for(card of cards){
         //Redirection while clicking on products
-        card.addEventListener("click", (e) =>{window.location.href=  base_url +  "produit/" + parentTilCard(e.target).getAttribute('value');});
+        card.addEventListener("click", (e) =>{window.location.href=  base_url +  "/produit/" + parentTilCard(e.target).getAttribute('value');});
     }
 }

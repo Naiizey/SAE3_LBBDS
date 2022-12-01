@@ -422,8 +422,10 @@ CREATE OR REPLACE FUNCTION creerPanier() RETURNS TRIGGER AS
     $$
 
     BEGIN
-        INSERT INTO sae3._panier DEFAULT VALUES;
-        new.num_panier = CURRVAL('sae3._panier_num_panier_seq');
+        IF new.num_panier is null THEN
+            INSERT INTO sae3._panier DEFAULT VALUES;
+            new.num_panier = CURRVAL('sae3._panier_num_panier_seq');
+        END IF;
         return new;
     end;
     $$ language plpgsql;

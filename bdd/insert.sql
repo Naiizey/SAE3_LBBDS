@@ -94,11 +94,11 @@ INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (149,'ar
 
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (133,'coke',100,150,'carottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (133,'coke',100,150,'carottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 15, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (133,'vins',10,15,'arottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', '../ci4/public/image/produit/vins.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (134,'fines herbes',10,15,'rottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (134,'fines herbes',10,15,'rottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 17, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (134,'cannabis',10,15,'cultivé localement, produits de nos terroirs', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)

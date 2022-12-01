@@ -102,12 +102,20 @@ class Panier extends BaseController
         $data['controller'] = "panier";
         
         if($quantite==null && isset($this->request)){
-            $quantite=$this->request->getPost("quantite");
+            if($this->request->getPost("quantite")==="10+")
+            {
+                $quantite=$this->request->getPost("quantitePlus");
+            }
+            else 
+            {
+                $quantite=$this->request->getPost("quantite");
+            }
+           
         }
         
         if(!is_null($idProd) && !is_null($quantite))
         {
-            
+        
             if(session()->has("numero"))
             {
                             
@@ -134,6 +142,9 @@ class Panier extends BaseController
                 
               
             }
+            
+                
+            
         }
 
         if(isset($this->request)){

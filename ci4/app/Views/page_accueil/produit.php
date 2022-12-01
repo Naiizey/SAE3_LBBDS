@@ -29,21 +29,26 @@
                         </div>
                         <div class="divAcheterProduit">
                             <?php if ($prod -> stock <= 10): ?>
-                            <?= //TODO: Adapter par rapport a quantité dans le panier
-                                "<p>Faites vite, il n'en reste que " . $prod -> stock . '</p>' ?>
+                            <?= "<p>Faites vite, il n'en reste que " . $prod -> stock . '</p>' ?>
+                            <?= (isset($quantitePanier) && $quantitePanier<0)?"<p>Vous avez déjà le produit en $quantitePanier fois dans votre panier</p>":"" ?>
                             <?php endif; ?>
                             <form action= <?= base_url()."/panier/ajouter/$prod->id" ?> method="post">
                                 <div class="divQuantiteProduit">
                                     <p>Quantité :</p>
-                                    <?= '<select name="quantite" id="tabQuant">' . "\n"; ?>
-                                    <?php for ($i = 1; $i <= $prod -> stock; $i++): ?>
+                                    <select name="quantite" id="tabQuant">
+                                    <?php for ($i = 1; $i <= $prod->stock && $i<=10 ; $i++): ?>
                                         <?= '<option value="'. $i .'">' . $i . '</option>' . "\n"; ?>
                                     <?php endfor; ?>
-                                    <?= '</select>' . "\n"; ?>
+                                    <?php if($prod->stock > 10): ?>
+                                        <option class="option-plus-10"> 10+ </option>
+                                    <?php endif; ?>
+                                       
+                                    </select>
+                                    <input class="input-option-plus-10" type="number" name="quantitePlus" min=0 max=<?= $prod -> stock - ((isset($quantitePanier))?$quantitePanier:0) ?> value="10">
                                 </div>
                                 <div>
-                                    <h3><?= "Prix (TTC): " . $prod -> prixttc ?></h3>
-                                    <h3><?= '(HT): ' . $prod -> prixht ?></h3>
+                                    <h3><?= "Prix (HT): " . $prod -> prixht ?></h3>
+                                    <h3><?= '(TTC): ' . $prod -> prixttc ?></h3>
                                 </div>
                                 <button type="submit">Ajouter au panier</button>
                             </form>

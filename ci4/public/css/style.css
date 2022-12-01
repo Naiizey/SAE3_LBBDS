@@ -651,10 +651,25 @@ header ul {
     background-color: #DCE5E6;
 }
 
-.articlesAcceuil {
+.articlesAcceuilPC {
     display: flex;
     margin: 2em 0;
     justify-content: space-around;
+}
+
+.articlesAcceuilMobile{
+    display: none;
+}
+
+@media screen and (max-width: 991px){
+    .articlesAcceuilPC{
+        display: none;
+    }
+
+    .articlesAcceuilMobile{
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
 
 .mainAccueil section p {
@@ -796,7 +811,7 @@ header ul {
     color: #6f98bd;
 }
 
-.nomPrenom, .infoRue, .infoVille {
+.nomPrenom, .infoVille {
     display: flex;
     margin-top: 2%;
 }
@@ -898,6 +913,10 @@ header ul {
 
 }
 
+.infoRue label{
+    margin-top: 3%;
+}
+
 .infoRue div:first-child {
     width: 22%;
     min-width: 155px;
@@ -929,9 +948,14 @@ header ul {
 
 .surNomPrenom{
     margin-top: 30px;
-    background-color: #D9D9D9;
+    background-color: #eeeaea;
+    border: solid 1px #b9b9b9;
     padding: 20px;
 
+}
+
+.infoRue, .infoVille{
+    margin-top: 2%;
 }
 
 .surNomPrenom > .nomPrenom {
@@ -963,6 +987,8 @@ header ul {
 .sauvegarder-adresse{
     padding-top: 20px;
 }
+
+
 
 @media (max-width: 1000px) {
 
@@ -1189,6 +1215,19 @@ header ul {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.input-option-plus-10{
+    display: none;
+    width: 30%;
+}
+
+.plus-10 .input-option-plus-10{
+    display: unset;
+}
+
+.plus-10 select{
+    display: none;
 }
 
 .divQuantite * {
@@ -1531,6 +1570,33 @@ div.image-card{
     width: 100%;
 }
 
+@media screen and (max-width: 991px){
+    .card-produit{
+        width: 10rem;
+        height: 14rem;
+        font-size: 1.25rem;
+    }
+
+    .image-card{
+        height: 7rem;
+    }
+
+    .contain-libelle{
+        min-height: 3rem;
+        max-height: 3rem;
+    }
+
+    .prix-card{
+        font-size: 1.25rem;
+    }
+
+    .addPanier{
+        width: 1.5rem;
+        height: 1.5rem;
+        padding: 0.2rem;
+    }
+}
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                          Catalogue (Catalogue.php)                              ┃
@@ -1589,7 +1655,6 @@ main#Catalogue{
 
 .categorie-catalogue summary ~ div{
     width: 100%;
-    display: flex;
     gap: 7%;
     padding-left: 5%;
 }
@@ -1627,12 +1692,13 @@ main#Catalogue{
     margin-right: 1em;
 } */
 
-.categorie-catalogue summary ~ div label h3{
+.categorie-catalogue summary ~ div label{
     text-align: left;
-    color: #164F57
+    color: #164F57;
+    font-size: 1.5rem;
 }
 
-.categorie-catalogue summary ~ div label h3::first-letter{
+.categorie-catalogue summary ~ div label::first-letter{
     text-transform: uppercase;
 }
 
@@ -1657,11 +1723,11 @@ main#Catalogue{
 }
 
 
-
 .categorie-catalogue .sous-categorie
 {
     display: flex;
     align-items: center;
+    height: 2.5rem
 }
 
 .categorie-catalogue .bouton-selectionner-tout label{
@@ -1669,9 +1735,10 @@ main#Catalogue{
     width: auto;
     text-align: left;
     color: #164F57;
+    font-size: 22pt;
 }
 
-.categorie-catalogue .bouton-selectionner-tout label h3::first-letter{
+.categorie-catalogue .bouton-selectionner-tout label::first-letter{
     text-transform: uppercase;
 }
 

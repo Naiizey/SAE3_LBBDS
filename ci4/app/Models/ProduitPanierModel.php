@@ -66,7 +66,7 @@ abstract class ProduitPanierModel extends Model
         {
             $prod->id="£";
             #FIXME: La vue MVC peut créer cette exception
-            if($prod->quantite > $prod->stock) throw new Exception("Pas assez de stock: $prod->quantite c'est trop");
+            if($prod->quantite > $prod->stock) throw new Exception("Pas assez de stock: $prod->quantite c'est trop",400);
             $this->save($prod);
 
         }
@@ -76,10 +76,10 @@ abstract class ProduitPanierModel extends Model
             $dejaLa=$trouve[0];
 
             $dejaLa->quantite+=(int)$prod->quantite;
-            if($dejaLa->quantite > $dejaLa->stock) throw new Exception("Pas assez de stock: $dejaLa->quantite c'est trop");
+            if($dejaLa->quantite > $dejaLa->stock) throw new Exception("Pas assez de stock: $dejaLa->quantite c'est trop",400);
             $this->save($dejaLa);
         }
-        else throw new Exception("Produit déjà présent dans le panier, et n'a pas été pris en compte");
+        else throw new Exception("Produit déjà présent dans le panier, et n'a pas été pris en compte",400);
 
         
     }
@@ -96,8 +96,16 @@ abstract class ProduitPanierModel extends Model
         
     }   
 
+    public function getQuantiteProduitByIdProd($idProd,$idUser){
+        $retour =$this->where($this->getIdUser(),$idUser)->where('id_prod',$idProd)->findAll();
+   
+        return (empty($retour))?0:$retour[0]->quantite;
+    }
+
     public function compteurDansPanier($idUser){
-        return $this->where($this->getIdUser(),$idUser)->countAllResults();
+        $retour = $this->where($this->getIdUser(),$idUser)->selectSum('quantite','countPanier')->groupBy('id')->first();
+    
+        return (is_null($retour))?0:$retour->countPanier;
     }
 
 }

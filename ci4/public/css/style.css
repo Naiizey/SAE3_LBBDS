@@ -910,12 +910,37 @@ header ul {
     border-top: none;
 }
 .infoRue, .infoVille { 
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start ;
-    flex-wrap: wrap;
+    display: grid;
+    max-width: 100%;
+    grid-template-columns: repeat(20,5%);
+    grid-template-rows: 1fr 1fr 1fr;
 
 }
+
+
+.infoRue .colonne-numero-rue{
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+.infoRue .colonne-nom-rue{
+    grid-column-start:  6;
+    grid-column-end: 20;
+}
+
+.infoVille .colonne-code-postal{
+    grid-column-start: 1    ;
+    grid-column-end: 7;
+}
+
+.infoVille .colonne-ville{
+    grid-column-start:  8   ;
+    grid-column-end: 20;
+}
+
+
+
+
 
 .infoRue label{
     margin-top: 3%;

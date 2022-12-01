@@ -702,6 +702,7 @@ header ul {
     padding: .5em 2em;
     text-decoration: none;
     color: #164F57;
+    transition: background-color .4s;
 }
 
 .mainAccueil section .seeMoreBtn:hover {
@@ -1615,10 +1616,13 @@ main div.card-produit-ext{
     text-decoration: none;
     background-color: transparent;
     padding: 1em;
+    scale: 1;
+    transition: scale .3s ease;
 }
 
 main div.card-produit-ext:hover{
     background-color: transparent;
+    scale: 1.05;
 }
 
 .bottom-card {

@@ -278,8 +278,12 @@ main {
     }
 
     .divSuivi img, .divSuivi svg {
-        height: 10em;
-        width: 10em;
+        height: 3em;
+        width: 3em;
+    }
+
+    .divSuivi h3{
+        font-size: 0.5em;
     }
 
     .divSuivi hr{
@@ -1335,6 +1339,61 @@ h3 > .lienPasArticlePanier {
     text-decoration: underline;
 }
 
+@media screen and (max-width:991px){
+    .divPanierEtAside{
+        flex-direction: column;
+    }
+
+    .sectionPanier{
+        width: auto;
+    }
+
+    .sectionPanier h2{
+        font-size: 1em;
+    }
+
+    .sectionPanier h3{
+        font-size: 0.8em;
+    }
+
+    .mainPanier aside{
+        position: static;
+        width: 100%; 
+    }
+
+    .articlePanier{
+        height: 5em;
+    }
+
+    .articlePanier img{
+        width: 5em;
+        height: 5em;
+    }
+
+    .panierDescription{
+        display: none;
+    }
+
+    .divQuantite{
+        font-size: 0.8em;
+    }
+
+    .divQuantite input{
+        width: 5em;
+    }
+
+    .divQuantite a{
+        font-size: 0.9em;
+    }
+
+    .divQuantite + h3{
+        display: none;
+    }
+
+    .prixHt{
+        display: none;
+    }
+}
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                          Page produit (produit.php)                             ┃

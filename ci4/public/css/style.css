@@ -187,7 +187,7 @@ p {
 
 main {
     position: relative;
-    top: 8.4em;
+    margin-top: 8.4em;
     background-color: #f3f3f3;
     flex : 1;
     text-align: center;
@@ -296,7 +296,7 @@ main {
 
 footer {
     position: relative;
-    top: 5em;
+    top: 2em;
     background-color: #164F57;
     text-align: center;
     z-index: 100;

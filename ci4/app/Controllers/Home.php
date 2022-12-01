@@ -199,6 +199,7 @@ class Home extends BaseController
 
     private const NBPRODSPAGECATALOGUE = 20;
     #FIXME: comportement href différent entre $page=null oe $page !=null
+    
     public function catalogue($page=null)
     {
         $filters=$this->request->getGet();
@@ -210,46 +211,36 @@ class Home extends BaseController
         $data['vide'] = false;
         $data['max_price'] = $modelProduitCatalogue->selectMax('prixttc')->find()[0]->prixttc;
         $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
-        
-
-        if (isset($filters["search"])) {
-            $search = $filters["search"];
-            model("\App\Models\ProduitCatalogue")->like('intitule', $search)->orLike('description_prod', $search)->orderby('intitule, description_prod', 'ASC');
-        }
-        
-        unset($filters["search"]);
-
-        if (isset($filters["prix_min"]) && isset($filters["prix_max"])) {
-            $price = [];
+        if(isset($filters["prix_min"]) && isset($filters["prix_max"])){
             $price = ["prix_min"=>$filters["prix_min"], "prix_max"=>$filters["prix_max"]];
-
-            unset($filters["prix_min"]);
-            unset($filters["prix_max"]);
-
-            $priceQuery = $modelProduitCatalogue->where('prixttc >=', $price["prix_min"])->where('prixttc <=', $price["prix_max"]);
-
-            if (empty($filters)) {
-                $data['prods'] = $priceQuery->orderBy('prixttc')->findAll();
-            } else {
-                foreach (array_keys($filters) as $key) {
-                    $data['prods'] = array_merge($data['prods'], $modelProduitCatalogue->
-                    where('categorie', $key)->where('prixttc >=', $price["prix_min"])->
-                    where('prixttc <=', $price["prix_max"])->findAll());
-                }
-            }
-        } else {
-            if (empty($filters)) {
-                $data['prods']=$modelProduitCatalogue->findAll();
-            } else {
-                foreach (array_keys($filters) as $key) {
-                    $data['prods'] = array_merge($data['prods'], $modelProduitCatalogue->where("categorie", $key)->findAll());
-                }
-            }
         }
+        
+        
 
-        if (empty($data['prods'])) {
-            return view('errors/html/error_404.php', array('message' => "Aucun produit disponible avec les critères sélectionnés"));
+        $result=(new \App\Controllers\Produits())->getAllProduitSelonPage($page,$filters);
+
+        $data['nombreMaxPages']=intdiv(sizeof($result),self::NBPRODSPAGECATALOGUE)
+        + ((sizeof($result) % self::NBPRODSPAGECATALOGUE==0)?0:1) ;
+        if(is_null($page) || $page==0)
+        {   
+            $data['minProd']=0;
+            $data['maxProd']=self::NBPRODSPAGECATALOGUE;
+            $data['page']=1;
         }
+        else
+        {   
+        if($data['nombreMaxPages']>=$page)
+        {
+            
+
+            $data['minProd']=self::NBPRODSPAGECATALOGUE*($page-1);
+            $data['maxProd']=self::NBPRODSPAGECATALOGUE*$page;
+            $data['page']=$page;
+            
+        }
+        else return view('errors/html/error_404.php', array('message' => "Page trop haute: pas assez de produit"));
+        }
+        $data['prods']=$result;
 
         if (isset($filters)) {
             $filtersInline = "";
@@ -269,30 +260,15 @@ class Home extends BaseController
             $data['filters'] .= $priceInline;
         }
 
-
-        $data['nombreMaxPages']=intdiv(sizeof($data['prods']), self::NBPRODSPAGECATALOGUE)
-            + ((sizeof($data['prods']) % self::NBPRODSPAGECATALOGUE==0) ? 0 : 1);
-        if (is_null($page) || $page==0) {
-            $data['minProd']=0;
-            $data['maxProd']=self::NBPRODSPAGECATALOGUE;
-            $data['page']=1;
-        } else {
-            if ($data['nombreMaxPages']>=$page) {
-                $data['page']=$page;
-
-                $data['minProd']=self::NBPRODSPAGECATALOGUE*($page-1);
-                $data['maxProd']=self::NBPRODSPAGECATALOGUE*$page;
-            } else {
-                return view('errors/html/error_404.php', array('message' => "Page trop haute: pas assez de produit"));
-            }
-        }
-
         if ($data['prods']) {
             $data['vide'] = true;
         }
 
         return view("catalogue.php", $data);
     }
+    
+
+ 
 
     public function espaceClient($role = null, $numClient = null)
     {

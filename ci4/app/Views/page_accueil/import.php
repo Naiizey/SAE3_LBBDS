@@ -5,7 +5,7 @@
                 <main>
                         <div id="dropzone">
                                 <p>Déposer un fichier csv dans cette zone<p>
-                                <?= form_open_multipart('import/upload') ?>
+                                <?= form_open_multipart('vendeur/import/upload') ?>
                                 <input type="file" name="file" id="file" accept=".csv">
                                 <input type="submit" name="import" value="Importer"/>
                         </div>

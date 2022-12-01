@@ -272,7 +272,7 @@ function requeteDynamHTTP(url="") {
 */
 
 function updatePricePanier() {
-    let quantites = document.getElementsByTagName("select");
+    let quantites = document.getElementsByTagName("input");
     let nbArticleTab = document.getElementsByClassName("nbArt");
     let prixTab = document.getElementsByClassName("prixTtc");
     let prixTabHt = document.getElementsByClassName("prixHt");
@@ -308,9 +308,21 @@ function updatePriceTotal() {
         sommeTotHt += parseFloat(prix);
     }
 
-    prixTotTab[0].textContent = sommeTot;
-    prixTotTab[1].textContent = sommeTot;
-    prixTotTabHt[0].textContent = sommeTotHt;
+    let reduc = document.querySelector(".bloc-erreurs span");
+    reduc = reduc.innerHTML;
+    if (reduc.includes("%")) 
+    {
+        reduc = parseFloat(reduc.substring(0, reduc.length - 1));
+        prixTotTab[0].textContent = sommeTot * (1 - reduc / 100);
+        prixTotTab[1].textContent = sommeTot * (1 - reduc / 100);
+    }
+    else
+    {
+        reduc = parseFloat(reduc.substring(0, reduc.length - 1));
+        prixTotTab[0].textContent = sommeTot - reduc;
+        prixTotTab[1].textContent = sommeTot - reduc;
+    }
+    prixTotTabHt[0].textContent = sommeTotHt; 
 }
 
 function updateQuantite() {

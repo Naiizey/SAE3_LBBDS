@@ -4,7 +4,16 @@
         if (isset($e[$codeE]))
         {
             return "<div class='bloc-erreurs'>
-                                <p class='paragraphe-erreur'>$e[$codeE]</p>
+                        <p class='paragraphe-erreur'>$e[$codeE]</p>
+                    </div>";
+        }   
+    } 
+    function afficheRetours($r, $codeR)
+    {
+        if (isset($r[$codeR]))
+        {
+            return "<div class='bloc-erreurs'>
+                        <p class='paragraphe-valid'>$r[$codeR]</p>
                     </div>";
         }   
     }  
@@ -84,16 +93,16 @@
                             <hr>
                         </div>
                         <div class="sous-totaux">
-                            <h2>Sous-total HT(
-                                <span class="nbArt">
+                            <h2>Sous-total HT
+                                (<span class="nbArt">
                                     <?= $sommeNbArticle ?>
                                 </span> article.s) :
                                 <span class="totalHt">
                                     <?= $sommePrix ?>
                                 </span>€
                             </h2>
-                            <h2>Sous-total TTC(
-                                <span class="nbArt">
+                            <h2>Sous-total TTC
+                                (<span class="nbArt">
                                     <?= $sommeNbArticle ?>
                                 </span> article.s) :
                                 <span class="totalTtc">
@@ -105,8 +114,8 @@
                     <aside>
                         <div class="divCodeReduc">
                             <h2>Code de réduction</h2>
-                            <form action="<?= current_url() ?>/validerCode" method="post" name="codeReduc">
-                                <input type="text" name="code" required/>
+                            <form action="<?= base_url() ?>/panier/validerCode" method="post" name="codeReduc">
+                                <input type="text" name="code" value="<?= $code ?>" required/>
                                 <input type="submit" value="Valider"/>
                                 <?= 
                                     afficheErreurs($erreurs, 0) . 
@@ -124,6 +133,10 @@
                                     <?= $sommePrix ?>
                                 </span>€
                             </h2>
+                            <?= 
+                                afficheRetours($retours, 0) .
+                                afficheRetours($retours, 1)
+                            ?>
                             <a href="<?= base_url() ?>/livraison" class="lienPanier">Valider le panier</a>
                             <a class="lienViderPanier" href="<?= base_url() ?>/panier/vider">Vider le panier</a>
                         </div>
@@ -173,7 +186,7 @@
 
 <script>
     reqUpdateQuantite(
-        "<?php echo base_url()  .  '/panier/modifier/quantite'?>",
+        "<?php echo  base_url()  .  '/panier/modifier/quantite'?>",
         () => document.querySelectorAll(".divQuantite input"),
         (node) => node.parentNode.parentNode.id,
         (err, resp) => {

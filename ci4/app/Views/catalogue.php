@@ -31,7 +31,7 @@
                     <details>
                         <summary class="categorie"><h2><?=$categorie->libelle?></h2></summary>
                         <!-- Boutton selectionner toutes les sous catégories -->
-                        <div id="entête">
+                        <div id="entête" class="enTete-<?= $categorie->libelle ?>">
                             <div class="bouton-selectionner-tout">
                                 <label for="tout<?=$categorie->id?>">Tout sélectionner</label>
                                 <input class="chk-box-tout" type="checkbox" id="tout<?=$categorie->id?>" name="tout<?=$categorie->id?>" value="tout<?=$categorie->id?>">

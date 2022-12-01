@@ -544,6 +544,45 @@ function switchEtatFiltre(list){
     }
 }
 
+//Tout sélectionner sélectionne toutes les sous catégories
+function selectAll(){
+    //Attrape toutes les checkboxes "Tout sélectionner"
+    let boxes = document.querySelectorAll(".bouton-selectionner-tout > input");
+
+    //Pour chaque checkbox
+    for(let box of boxes){
+        //Lors du coche ou décoche de la checkbox 
+        box.addEventListener("change", (e) => {
+            //Récupère toutes les sous catégories en partant du parent de la target
+            let sousCats = document.querySelectorAll("." + getParentNodeTilClass(e.target).getAttribute("class") + "~ .sous-categorie");
+            let checkboxes = [];
+            //Pour chaque sous catégorie ajoute sa checkbox dans le tableau checkboxes
+            for(let sousCat of sousCats){
+                checkboxes.push(sousCat.querySelector("input"));
+            }
+            //Chaque checkbox du tableau checkboxes prend la valeur de la checkbox "Tout sélectionner"
+            for(let checkbox of checkboxes){
+                checkbox.checked = box.checked;
+            }
+        });
+    }
+}
+
+//Fonction qui récupère le parent d'un élément jusqu'à ce qu'il ait la classe "enTete-'Sousatégorie'"
+function getParentNodeTilClass(element){
+    //Parent prend la valeur de l'élément passé en paramètre 
+    let parent = element;
+    //Regex de correspondance à la classe "enTete-'Sousatégorie'"
+    let reg = /^enTete\-(.*)/;
+
+    //Le parent prend la valeur de son parent tant que la classe ne correspond pas au regex
+    while(!(parent.getAttribute('class').match(reg))){
+        parent = parent.parentNode;
+    }
+
+    return parent;
+}
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                               Detail commande                                   ┃

@@ -96,6 +96,7 @@
 <?php require("page_accueil/footer.php"); ?>
 <script>
     cataloguePrice();
+    
     boutonCliquable(
         document.querySelector(".mobile-ouvrir-filtres"),
         () => {
@@ -108,4 +109,6 @@
         document.querySelector(".fermer-filtre"),
         () => switchEtatFiltre(document.querySelectorAll(".mobile-ouvrir-filtres, .partie-filtre"))
         );
+
+    selectAll();
 </script>

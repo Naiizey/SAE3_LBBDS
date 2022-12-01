@@ -7,12 +7,33 @@
 html {
     height : 100%;
 }
+
 body {
     margin: 0;
-    background-color: #164F57;
+    background-color: rgb(22, 79, 87);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: auto;
+    scrollbar-color: rgb(22, 79, 87);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+*::-webkit-scrollbar-track {
+    background: rgb(22, 79, 87);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #3997a3;
+    border-radius: 10px;
 }
 
 h1 {
@@ -540,7 +561,7 @@ header ul {
     background-color: #f3f3f3;
     transform-origin: 0 bottom 0;
     transform: scaleY(0);
-    transition: 0.4s ease-out;
+    transition: all 0.4s ease-out;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }

@@ -61,9 +61,27 @@ class Panier extends BaseController
     {
         $data['controller'] = "panier";
 
+        if($context == 400) 
+        {
+            $data['error']="<p class='erreur'>Erreur d'authentification</p>";
+        }
+        else if(session()->has("numero")) 
+        {
+            $data['produits'] = model("\App\Models\ProduitPanierCompteModel")->getPanier(session()->get("numero"));
+        }
+        else if(has_cookie("token_panier")) 
+        {
+            $data['produits'] = model("\App\Models\ProduitPanierVisiteurModel")->getPanier(get_cookie("token_panier"));
+        }
+        else 
+        {
+            $data['produits'] = array();
+        }
+
         //Code réduction
         $post=$this->request->getPost();
         $modelCodeReduc = model("\App\Models\CodeReduction");
+        $modelReducPanier = model("\App\Models\ReducPanier");
         $issues = [];
         $retours = [];
         
@@ -91,17 +109,22 @@ class Panier extends BaseController
                 {
                     $issues[1] = "Ce code est expiré";
                 }
+            }
+
+            if (empty($issues))
+            {
+                /*if ($modelReducPanier->doesReducPanierExists(,$codeReduc->id_reduction))
+                {
+
+                }*/
+                //Tout est bon, il reste a savoir si le code réduit le prix avec un montant ou un pourcentage de réduction
+                if ($codeReduc->montant_reduction != 0)
+                {
+                    $retours[0] = "Vous économisez <span>" . $codeReduc->montant_reduction . "€</span>";
+                }
                 else
                 {
-                    //Tout est bon, il reste a savoir si le code réduit le prix avec un montant ou un pourcentage de réduction
-                    if ($codeReduc->montant_reduction != 0)
-                    {
-                        $retours[0] = "Vous économisez <span>" . $codeReduc->montant_reduction . "€</span>";
-                    }
-                    else
-                    {
-                        $retours[1] = "Vous économisez <span>" . $codeReduc->pourcentage_reduction . "%</span>";
-                    }
+                    $retours[1] = "Vous économisez <span>" . $codeReduc->pourcentage_reduction . "%</span>";
                 }
             }
         }
@@ -112,22 +135,6 @@ class Panier extends BaseController
 
         $data['erreurs'] = $issues;
         $data['retours'] = $retours;
-
-        if($context == 400) 
-        {
-            $data['error']="<p class='erreur'>Erreur d'authentification</p>";
-        }
-        else if(session()->has("numero")) {
-            $data['produits'] = model("\App\Models\ProduitPanierCompteModel")->getPanier(session()->get("numero"));
-
-        }
-        else if(has_cookie("token_panier")) {
-            $data['produits'] = model("\App\Models\ProduitPanierVisiteurModel")->getPanier(get_cookie("token_panier"));
-        
-        }
-        else {
-            $data['produits'] = array();
-        }
 
         return view('page_accueil/panier.php', $data);
     }

@@ -118,7 +118,9 @@
                                 <input type="text" name="code" value="<?= $code ?>" required="required"/>
                                 <?= 
                                     afficheErreurs($erreurs, 0) . 
-                                    afficheErreurs($erreurs, 1) 
+                                    afficheErreurs($erreurs, 1) .
+                                    afficheRetours($retours, 0) .
+                                    afficheRetours($retours, 1)
                                 ?>
                                 <input type="submit" value="Valider"/>
                             </form>
@@ -132,10 +134,7 @@
                                     <?= $sommePrix ?>
                                 </span>€
                             </h2>
-                            <?= 
-                                afficheRetours($retours, 0) .
-                                afficheRetours($retours, 1)
-                            ?>
+                            
                             <a href="<?= base_url() ?>/livraison" class="lienPanier">Valider le panier</a>
                             <a class="lienViderPanier" href="<?= base_url() ?>/panier/vider">Vider le panier</a>
                         </div>

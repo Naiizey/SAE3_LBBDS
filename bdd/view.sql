@@ -135,13 +135,10 @@ CREATE OR REPLACE VIEW adresse_livraison AS
 CREATE OR REPLACE VIEW code_reduction AS
     SELECT * FROM _code_reduction;
 
-CREATE OR REPLACE VIEW code_reduc AS SELECT * FROM _reduire;
-
-SELECT * FROM code_reduc;
-
+CREATE OR REPLACE VIEW reduc_panier AS SELECT * FROM _reduire;
 
 -- vérification que num panier n'as pas déja un code de réduction dans la table _reduire
-CREATE OR REPLACE FUNCTION verif_code_reduc() RETURNS TRIGGER AS
+CREATE OR REPLACE FUNCTION verif_reduc_panier() RETURNS TRIGGER AS
     $$
     BEGIN
         IF EXISTS (SELECT * FROM _reduire WHERE num_panier=NEW.num_panier) THEN
@@ -153,4 +150,4 @@ CREATE OR REPLACE FUNCTION verif_code_reduc() RETURNS TRIGGER AS
     END;
     $$ language plpgsql;
     
-CREATE TRIGGER verif_code_reduc INSTEAD OF INSERT ON sae3.code_reduc FOR EACH ROW EXECUTE PROCEDURE verif_code_reduc();
+CREATE TRIGGER verif_reduc_panier INSTEAD OF INSERT ON sae3.reduc_panier FOR EACH ROW EXECUTE PROCEDURE verif_reduc_panier();

@@ -667,7 +667,7 @@ var formAdresseConstructor = function(){
         elemRequired.addEventListener("blur", (event) => {
         selfTarget=event.target;
         if(selfTarget.validity.valueMissing){
-            this.creerErreur(selfTarget.parentNode,"Champ vide");
+            this.creerErreur(document.querySelector(`.position-erreur[for=${selfTarget.name}]`),"Champ vide");
             this.estRempli[selfTarget.name]=false;
         }
         else{
@@ -734,7 +734,7 @@ var formAdresseConstructor = function(){
         }
         else{
             this.supprimerErreur(selfTarget.parentNode);
-            this.creerErreur(selfTarget.parentNode,"Champ vide");
+           
         }    
     };
     this.codePostal.addEventListener("blur", this.chercherVilleParCodePostal);

@@ -37,7 +37,7 @@
                                 <input class="chk-box-tout" type="checkbox" id="tout<?=$categorie->id?>" name="tout<?=$categorie->id?>" value="tout<?=$categorie->id?>">
                             </div>
                             <hr>
-                         </div>
+                        </div>
 
                         <!-- Liste des sous-catégories -->
                         <?php foreach ($categorie->getAllSousCat() as $key => $sousCat): ?>

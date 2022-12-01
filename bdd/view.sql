@@ -151,3 +151,14 @@ CREATE OR REPLACE VIEW reduc_panier AS SELECT * FROM _reduire;
 --     $$ language plpgsql;
     
 -- CREATE TRIGGER verif_reduc_panier INSTEAD OF INSERT ON sae3.reduc_panier FOR EACH ROW EXECUTE PROCEDURE verif_reduc_panier();
+
+-- trigger pour insertion dans la vue reduc_panier
+CREATE OR REPLACE FUNCTION insert_reduc_panier() RETURNS TRIGGER AS
+    $$
+    BEGIN
+        INSERT INTO _reduire VALUES (NEW.num_panier, NEW.id_reduction);
+        RETURN NEW;
+    END;
+    $$ language plpgsql;
+
+CREATE TRIGGER insert_reduc_panier INSTEAD OF INSERT ON sae3.reduc_panier FOR EACH ROW EXECUTE PROCEDURE insert_reduc_panier();

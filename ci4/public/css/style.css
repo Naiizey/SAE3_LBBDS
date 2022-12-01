@@ -1611,6 +1611,14 @@ main#Catalogue{
     align-content: flex-start;   
 }
 
+.liste-filtre{
+
+    /* bordure à droite, en haut, à gauche */
+    border: 5px solid #D9D9D9;
+    border-left: none;
+
+}
+
 .categorie-catalogue summary ~ div{
     width: 100%;
     display: flex;
@@ -1626,7 +1634,7 @@ main#Catalogue{
 
 .categorie-catalogue #entête hr 
 {
-    width: 80%;
+    width: 70%;
     color: #D1D1D1;
     height: 4px;
     border-radius: 10px;
@@ -1636,15 +1644,24 @@ main#Catalogue{
 
 .categorie-catalogue hr 
 {
-    width: 70%;
+    width: 60%;
     color: #E7E8E6;
     height: 4px;
     border-radius: 10px;
     /* centré */
-    margin-left: 5%;
+    margin-left: 12%;
     margin-right: auto;
 }
 
+.titre-filtre
+{
+    border-top-right-radius: 15px;
+}
+
+.liste-filtre form
+{
+    border-bottom-right-radius: 15px;
+}
 /* .categorie-catalogue summary ~ div input{
     width: 20px;
     height: 20px;
@@ -1787,7 +1804,8 @@ input[type="range"]::-moz-range-thumb {
 
 .liste-filtre{  
     width: 100%;
-    min-height: 100%;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
 }
 
 .mobile-ouvrir-filtres{
@@ -1855,7 +1873,7 @@ input[type="range"]::-moz-range-thumb {
 }
 .onglet{
     background-color: #e9e3e3;
-    width: 50%;
+    width: 45%;
     padding-top: 15px;
     padding-bottom: 7px;
     border-top: solid #20535a 8px ;
@@ -1870,6 +1888,7 @@ input[type="range"]::-moz-range-thumb {
     border: none;
     border-top: solid #3997A3 8px ;
     background-color: #EFECEC;
+    width: 55%;
 }
 
 .onglet h3{

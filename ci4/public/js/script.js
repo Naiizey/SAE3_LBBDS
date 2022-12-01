@@ -272,7 +272,7 @@ function requeteDynamHTTP(url="") {
 */
 
 function updatePricePanier() {
-    let quantites = document.getElementsByTagName("select");
+    let quantites = document.querySelectorAll(".divQuantite input");
     let nbArticleTab = document.getElementsByClassName("nbArt");
     let prixTab = document.getElementsByClassName("prixTtc");
     let prixTabHt = document.getElementsByClassName("prixHt");
@@ -308,13 +308,30 @@ function updatePriceTotal() {
         sommeTotHt += parseFloat(prix);
     }
 
-    prixTotTab[0].textContent = sommeTot;
-    prixTotTab[1].textContent = sommeTot;
-    prixTotTabHt[0].textContent = sommeTotHt;
+    let reduc = document.querySelector(".bloc-erreurs span");
+    reduc = reduc.innerHTML;
+    if (reduc.includes("%")) 
+    {
+        reduc = parseFloat(reduc.substring(0, reduc.length - 1));
+        prixTotTab[0].textContent = sommeTot * (1 - reduc / 100);
+        prixTotTab[1].textContent = sommeTot * (1 - reduc / 100);
+    }
+    else
+    {
+        reduc = parseFloat(reduc.substring(0, reduc.length - 1));
+        prixTotTab[0].textContent = sommeTot - reduc;
+        prixTotTab[1].textContent = sommeTot - reduc;
+    }
+    prixTotTabHt[0].textContent = sommeTotHt; 
 }
 
 function updateQuantite() {
-    let baliseQuant = document.getElementsByClassName("quantPanier")[1];
+    let baliseQuant = document.getElementsByClassName("quantPanier")[0];
+    let nbArt = document.getElementsByClassName("nbArt")[0].textContent;
+    if(nbArt > 100)
+        baliseQuant.textContent = "+99";
+    else
+        baliseQuant.textContent = nbArt;
 
 }
 
@@ -662,7 +679,7 @@ var formAdresseConstructor = function(){
         elemRequired.addEventListener("blur", (event) => {
         selfTarget=event.target;
         if(selfTarget.validity.valueMissing){
-            this.creerErreur(selfTarget.parentNode,"Champ vide");
+            this.creerErreur(document.querySelector(`.position-erreur[for=${selfTarget.name}]`),"Champ vide");
             this.estRempli[selfTarget.name]=false;
         }
         else{
@@ -729,7 +746,7 @@ var formAdresseConstructor = function(){
         }
         else{
             this.supprimerErreur(selfTarget.parentNode);
-            this.creerErreur(selfTarget.parentNode,"Champ vide");
+           
         }    
     };
     this.codePostal.addEventListener("blur", this.chercherVilleParCodePostal);

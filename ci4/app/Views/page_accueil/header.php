@@ -76,7 +76,7 @@
                         </div>
                     </div>
                 <?php else: ?>
-                    <form class="formRecherche" action="<?= base_url() ?>/catalogue/rech/">
+                    <form class="formRecherche" action="<?= base_url() ?>/catalogue/">
                         <input required class="champsRecherche" type="search" name="search" placeholder="Recherche.." value="<?= ((isset($_GET["search"])) ? $_GET["search"] : '') ?>"/>
                         <label>
                             <input type="submit"><?= file_get_contents(dirname(__DIR__,3) ."/public/images/header/loupe.svg") ?>

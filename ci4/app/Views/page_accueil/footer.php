@@ -46,7 +46,7 @@
             <div class="mobile">
                 <ul>
                     <li>
-                        <a href="./"> <!-- profile -->
+                        <a href="<?= base_url() ?>/connexion"> <!-- profile -->
                             <?php include("./images/header/profil.svg")?>
                         </a>
                     </li>
@@ -56,7 +56,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="./panier"> <!-- panier -->
+                        <a href="<?= base_url() ?>/panier"> <!-- panier -->
                             <?php include("./images/header/panier.svg")?>
                         </a>
                     </li>

@@ -60,6 +60,11 @@ class Panier extends BaseController
     public function getProduitPanierClient($context = null)
     {
         $data['controller'] = "panier";
+        $data['code'] = "";
+        $issues = [];
+        $retours = [];
+        $modelCodeReduc = model("\App\Models\CodeReduction");
+        $modelReducPanier = model("\App\Models\ReducPanier");
 
         if($context == 400) 
         {
@@ -67,56 +72,85 @@ class Panier extends BaseController
         }
         else if(session()->has("numero")) 
         {
-            $data['produits'] = model("\App\Models\ProduitPanierCompteModel")->getPanier(session()->get("numero"));
+            $modelProduitPanier = model("\App\Models\ProduitPanierCompteModel");
+            $data['produits'] = $modelProduitPanier->getPanier(session()->get("numero"));
         }
         else if(has_cookie("token_panier")) 
         {
-            $data['produits'] = model("\App\Models\ProduitPanierVisiteurModel")->getPanier(get_cookie("token_panier"));
+            $modelProduitPanier = model("\App\Models\ProduitPanierVisiteurModel");
+            $data['produits'] = $modelProduitPanier->getPanier(get_cookie("token_panier"));
         }
         else 
         {
             $data['produits'] = array();
         }
-
-        //Code réduction
-        $post=$this->request->getPost();
-        $modelCodeReduc = model("\App\Models\CodeReduction");
-        $modelReducPanier = model("\App\Models\ReducPanier");
-        $issues = [];
-        $retours = [];
         
-        if (!empty($post))
+        //Si on a un panier qui est rempli (en étant visiteur ou client)
+        if (isset($modelProduitPanier) && !empty($data['produits']))
         {
-            //Pré-remplit les champs avec les données renseignées
-            $data['code'] = $post['code'];
+            //On peut voir le numéro du panier dans l'id d'un produit panier sous cette forme : id_produit£num_panier (ex: 17£1)
+            $numPanier = $data['produits'][0]->id;
+            $numPanier = explode('£', $numPanier);
+            $numPanier = $numPanier[1];
+            
+            $panier = $modelReducPanier->getReducByPanier($numPanier);
 
-            $codeReduc = $modelCodeReduc->getByCode($post['code']);
-
-            if (empty($codeReduc))
+            //S'il y a déjà un code associé à ce panier
+            if (!empty($panier))
             {
-                $issues[0] = "Ce code n'existe pas";
+                //Alors on le récupère (on prend le premier et seul résultat)
+                $panier = $panier[0];
+
+                //Impossible de ne pas avoir de résultat sur ceci, on prend également le premier et seul résultat
+                $codeReduc = $modelCodeReduc->getCodeReducById($panier->id_reduction)[0];
+
+                //On informe la vue qu'il faut afficher le code
+                $data['code'] = $codeReduc->code_reduction;
+
+                if (!empty($post))
+                {
+                    $retours[2] = "Vous avez déjà activé un code";
+                }
             }
             else
             {
-                //Le code étant unique dans la base on choisi le premier et seul résultat du findAll
-                $codeReduc = $codeReduc[0];
-
-                $date_ajd = date("Y-m-d H:i:s"); 
-                $date_debut = $codeReduc->date_debut . " " . $codeReduc->heure_debut;
-                $date_fin = $codeReduc->date_fin . " " . $codeReduc->heure_fin;
-
-                if ($date_debut > $date_ajd && $date_ajd < $date_fin)
+                //Sinon on regarde s'il y a un code donné dans le post
+                $post=$this->request->getPost();
+        
+                if (!empty($post))
                 {
-                    $issues[1] = "Ce code est expiré";
+                    //On informe la vue qu'il faut afficher le code
+                    $data['code'] = $post['code'];
+
+                    $codeReduc = $modelCodeReduc->getCodeReducByCode($post['code']);
+
+                    if (empty($codeReduc))
+                    {
+                        $issues[0] = "Ce code n'existe pas";
+                    }
+                    else
+                    {
+                        //Le code étant unique dans la base on choisi le premier et seul résultat du findAll
+                        $codeReduc = $codeReduc[0];
+
+                        $date_ajd = date("Y-m-d H:i:s"); 
+                        $date_debut = $codeReduc->date_debut . " " . $codeReduc->heure_debut;
+                        $date_fin = $codeReduc->date_fin . " " . $codeReduc->heure_fin;
+
+                        if ($date_debut > $date_ajd && $date_ajd < $date_fin)
+                        {
+                            $issues[1] = "Ce code est expiré";
+                        }
+                        else
+                        {
+                            //Le code est valide on va le lier au panier avec la base de donnée afin qu'il soit tout le temps effectif
+                            $modelReducPanier->associerCodeAPanier($numPanier, $codeReduc->id_reduction);
+                        }
+                    }
                 }
             }
-
-            if (empty($issues))
+            if (isset($codeReduc) && empty($issues))
             {
-                /*if ($modelReducPanier->doesReducPanierExists(,$codeReduc->id_reduction))
-                {
-
-                }*/
                 //Tout est bon, il reste a savoir si le code réduit le prix avec un montant ou un pourcentage de réduction
                 if ($codeReduc->montant_reduction != 0)
                 {
@@ -127,10 +161,6 @@ class Panier extends BaseController
                     $retours[1] = "Vous économisez <span>" . $codeReduc->pourcentage_reduction . "%</span>";
                 }
             }
-        }
-        else
-        {
-            $data['code'] = "";
         }
 
         $data['erreurs'] = $issues;

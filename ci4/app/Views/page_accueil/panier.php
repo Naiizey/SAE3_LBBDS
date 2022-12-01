@@ -122,7 +122,8 @@
                                     afficheErreurs($erreurs, 0) . 
                                     afficheErreurs($erreurs, 1) .
                                     afficheRetours($retours, 0) .
-                                    afficheRetours($retours, 1)
+                                    afficheRetours($retours, 1) .
+                                    afficheRetours($retours, 2)
                                 ?>
                                 <input type="submit" value="Valider"/>
                             </form>

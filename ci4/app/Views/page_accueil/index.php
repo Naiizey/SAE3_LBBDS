@@ -28,9 +28,15 @@
                         <h1>Nos produits phares</h1>
                         <hr>
                     </div>
-                    <div class="articlesAcceuil">
-                        <?php $minProd=0; $maxProd=6?>
-                        <?php for($i=$minProd;$i<$maxProd && $i<sizeof($prods);++$i): ?>
+                    <div class="articlesAcceuilPC">
+                        <?php $minProdPC=0; $maxProdPC=5?>
+                        <?php for($i=$minProdPC;$i<$maxProdPC && $i<sizeof($prods);++$i): ?>
+                            <?= $cardProduit->display($prods[$i]) ?>
+                        <?php endfor; ?>
+                    </div>
+                    <div class="articlesAcceuilMobile">
+                        <?php $minProdMobile=0; $maxProdMobile=4?>
+                        <?php for($i=$minProdMobile;$i<$maxProdMobile && $i<sizeof($prods);++$i): ?>
                             <?= $cardProduit->display($prods[$i]) ?>
                         <?php endfor; ?>
                     </div>
@@ -41,9 +47,14 @@
                         <h1>Nos promotions</h1>
                         <hr>
                     </div>
-                    <div class="articlesAcceuil">
-                        <?php for($i = $minProd; $i < $maxProd && $i < sizeof($prods); ++$i): ?>
+                    <div class="articlesAcceuilPC">
+                        <?php for($i = $minProdPC; $i < $maxProdPC && $i < sizeof($prods); ++$i): ?>
                             <?= $cardProduit->display($prods[$i])?>
+                        <?php endfor; ?>
+                    </div>
+                    <div class="articlesAcceuilMobile">
+                        <?php for($i=$minProdMobile;$i<$maxProdMobile && $i<sizeof($prods);++$i): ?>
+                            <?= $cardProduit->display($prods[$i]) ?>
                         <?php endfor; ?>
                     </div>
                     <h2><a href="" class="seeMoreBtn">Voir les promotions</a></h2>

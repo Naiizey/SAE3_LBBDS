@@ -73,6 +73,7 @@
                                             </p>
                                         </div>
                                     </a>
+                                    <div>
                                     <div class="divQuantite">
                                         <p>Quantité</p>
                                             <input class="" type="number" name="quantite" min=0 max=<?= $produit->stock ?> value=<?=$produit->quantite ?>>
@@ -88,6 +89,7 @@
                                             <?= $produit -> prixTtc ?>€
                                         </span> 
                                     </h3>
+                                    </div>
                                 </article>
                             <?php endforeach; ?>                
                             <hr>

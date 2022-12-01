@@ -40,6 +40,12 @@
                 padding : 2em;
             <?php endif; ?>
             }
+
+            @media screen and (max-width: 991px){
+                main{
+                    top: 0;
+                }    
+            }
         </style>
         <title><?= $controller ?></title>
     </head>

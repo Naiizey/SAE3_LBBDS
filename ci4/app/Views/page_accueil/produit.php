@@ -29,8 +29,8 @@
                         </div>
                         <div class="divAcheterProduit">
                             <?php if ($prod -> stock <= 10): ?>
-                            <?= //TODO: Adapter par rapport a quantité dans le panier
-                                "<p>Faites vite, il n'en reste que " . $prod -> stock . '</p>' ?>
+                            <?= "<p>Faites vite, il n'en reste que " . $prod -> stock . '</p>' ?>
+                            <?= (isset($quantitePanier) && $quantitePanier<0)?"<p>Vous avez déjà le produit en $quantitePanier fois dans votre panier</p>":"" ?>
                             <?php endif; ?>
                             <form action= <?= base_url()."/panier/ajouter/$prod->id" ?> method="post">
                                 <div class="divQuantiteProduit">
@@ -44,7 +44,7 @@
                                     <?php endif; ?>
                                        
                                     </select>
-                                    <input class="input-option-plus-10" type="number" name="quantitePlus" min=0 max=<?= $prod -> stock  ?> value="10">
+                                    <input class="input-option-plus-10" type="number" name="quantitePlus" min=0 max=<?= $prod -> stock - ((isset($quantitePanier))?$quantitePanier:0) ?> value="10">
                                 </div>
                                 <div>
                                     <h3><?= "Prix (HT): " . $prod -> prixht ?></h3>

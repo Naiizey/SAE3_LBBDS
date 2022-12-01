@@ -166,16 +166,26 @@ class Home extends BaseController
 
     public function produit($idProduit = null)
     {
-
-
+        //Assertion
         if($idProduit == null)
         {
             return view('errors/html/error_404.php', array('message' => "Pas de produit spécifié"));
         }
-        
+
+        //Get quantité du panier
+        if(session()->has('numero')){
+            $data["quantitePanier"]=model("\App\Models\ProduitPanierCompteModel")->getQuantiteProduitByIdProd($idProduit,session()->get('numero'));
+        }
+        else if(has_cookie('token_panier')){
+            $data["quantitePanier"]=model("\App\Models\ProduitPanierVisiteurModel")->getQuantiteProduitByIdProd($idProduit,get_cookie('token_panier'));
+
+        }
+
+        //Get produit
         $prodModel = model("\App\Models\ProduitDetail");
         $result = $prodModel->find($idProduit);
         
+        //Affichage selon si produit trouvé ou non
         if($result == null)
         {
             return view('errors/html/error_404.php', array('message' => "Ce produit n'existe pas"));

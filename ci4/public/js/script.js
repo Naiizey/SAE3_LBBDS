@@ -1,4 +1,4 @@
-const base_url = "/ci4/public/";
+//const base_url = "/ci4/public/";
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -123,26 +123,31 @@ function dragNDrop(){
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-document.querySelector("#tabQuant").addEventListener("change", (event) => {
-    if (event.target.value == "10+"){
-        console.log(event.target);
-        event.target.parentNode.classList.toggle("plus-10");
-        document.querySelector(".input-option-plus-10").addEventListener("keypress", (event) => {
-          
-            if(event.keyCode < 48 || event.keyCode > 57){
-                event.preventDefault();
+var tabQuant= document.querySelector("#tabQuant")
 
-            }
-            
-        })
-        document.querySelector(".input-option-plus-10").addEventListener("blur", (event) => {
-            if(event.target.value > event.target.max){
-                event.value = event.target.max;
-            }
-            
-        })
-    }
-})
+if (tabQuant){
+    tabQuant.addEventListener("change", (event) => {
+        if (event.target.value == "10+"){
+            console.log(event.target);
+            event.target.parentNode.classList.toggle("plus-10");
+            document.querySelector(".input-option-plus-10").addEventListener("keypress", (event) => {
+              
+                if(event.keyCode < 48 || event.keyCode > 57){
+                    event.preventDefault();
+    
+                }
+                
+            })
+            document.querySelector(".input-option-plus-10").addEventListener("blur", (event) => {
+                if(event.target.value > event.target.max){
+                    event.value = event.target.max;
+                }
+                
+            })
+        }
+    })
+}
+
 
 
 /*
@@ -199,44 +204,64 @@ function requeteDynamHTTP(url="") {
 
 
     function reqUpdateQuantite(url,howGetSelect,howGetId,callback){
+
+        this.howGetId=howGetId;
+
+        var process = (event,value=null) => {
+            let listValue= [
+                this.howGetId(event.target),
+                (value===null)?event.target.value:value
+            ]
+            requete.put(listValue,callback);
+        }
         
         let requete = new requeteDynamHTTP(url);
         for (elem of howGetSelect())
         {
+            console.log(elem);
             elem.addEventListener("change",(event) =>{
+                
                 if(!isNaN(event.target.value))
                 {
-                    let listValue= [
-                        howGetId(event.target),
-                        event.target.value
-                    ]
-                    requete.put(listValue,callback);
+                    if(parseInt(event.target.value) > event.target.max){
+                        event.target.value=event.target.max;
+                    }
+                    process(event);
+                    
                 }
-                else if (event.target.value == "10+"){
-                    console.log(event.target);
-                    event.target.parentNode.classList.toggle("plus-10");
-                }else { 
-                    alert("Veuillez entrer un nombre");
+        
+               
+                
+            });
+            elem.addEventListener("keypress", (event) => {
+              
+                if(event.keyCode < 48 || event.keyCode > 57){
+                    event.preventDefault();
+    
                 }
+                else if(parseInt(event.target.value+String.fromCharCode(event.keyCode)) > event.target.max){
+                    event.preventDefault();
+                    
+                    event.target.value=event.target.max;
+                    process(event); 
+                    
+                }
+                else{
+                    console.log(event.target.value+String.fromCharCode(event.keyCode));
+                    process(event,event.target.value+String.fromCharCode(event.keyCode)); 
+                }
+                    
                 
                 
-                
-            })
+            });
+
         }
     }
             
 
 
  
-    document.querySelector(".input-option-plus-10").addEventListener("keypress", (event) => {
-          
-            
-        if(event.keyCode < 48 || event.keyCode > 57){
-            event.preventDefault();
-
-        }
-        
-    })
+    
 
     
 

@@ -66,7 +66,7 @@
                                     </a>
                                     <div class="divQuantite">
                                         <p>Quantité</p>
-                                            <input class="" type="number" name="quantite" value=<?=$produit->quantite ?>>
+                                            <input class="" type="number" name="quantite" min=0 max=<?= $produit->stock ?> value=<?=$produit->quantite ?>>
                                         <a href="<?= base_url() ?>/panier/supprimer/<?= $produit->idProd ?>">Supprimer</a>
                                     </div>
                                     <h3>HT: 
@@ -174,7 +174,7 @@
 <script>
     reqUpdateQuantite(
         "<?php echo base_url()  .  '/panier/modifier/quantite'?>",
-        () => document.querySelectorAll(".divQuantite select"),
+        () => document.querySelectorAll(".divQuantite input"),
         (node) => node.parentNode.parentNode.id,
         (err, resp) => {
             if(!err){

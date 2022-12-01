@@ -96,6 +96,12 @@ abstract class ProduitPanierModel extends Model
         
     }   
 
+    public function getQuantiteProduitByIdProd($idProd,$idUser){
+        $retour =$this->where($this->getIdUser(),$idUser)->where('id_prod',$idProd)->findAll();
+   
+        return (empty($retour))?0:$retour[0]->quantite;
+    }
+
     public function compteurDansPanier($idUser){
         $retour = $this->where($this->getIdUser(),$idUser)->selectSum('quantite','countPanier')->groupBy('id')->first();
     

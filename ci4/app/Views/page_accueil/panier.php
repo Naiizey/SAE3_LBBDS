@@ -193,7 +193,8 @@
             if(!err){
                 updatePricePanier();
                 updatePriceTotal();
-                
+                updateQuantite();
+               
             }
             
 

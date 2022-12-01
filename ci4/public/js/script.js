@@ -272,7 +272,7 @@ function requeteDynamHTTP(url="") {
 */
 
 function updatePricePanier() {
-    let quantites = document.getElementsByTagName("input");
+    let quantites = document.querySelectorAll(".divQuantite input");
     let nbArticleTab = document.getElementsByClassName("nbArt");
     let prixTab = document.getElementsByClassName("prixTtc");
     let prixTabHt = document.getElementsByClassName("prixHt");
@@ -326,7 +326,12 @@ function updatePriceTotal() {
 }
 
 function updateQuantite() {
-    let baliseQuant = document.getElementsByClassName("quantPanier")[1];
+    let baliseQuant = document.getElementsByClassName("quantPanier")[0];
+    let nbArt = document.getElementsByClassName("nbArt")[0].textContent;
+    if(nbArt > 100)
+        baliseQuant.textContent = "+99";
+    else
+        baliseQuant.textContent = nbArt;
 
 }
 
@@ -674,7 +679,7 @@ var formAdresseConstructor = function(){
         elemRequired.addEventListener("blur", (event) => {
         selfTarget=event.target;
         if(selfTarget.validity.valueMissing){
-            this.creerErreur(selfTarget.parentNode,"Champ vide");
+            this.creerErreur(document.querySelector(`.position-erreur[for=${selfTarget.name}]`),"Champ vide");
             this.estRempli[selfTarget.name]=false;
         }
         else{
@@ -741,7 +746,7 @@ var formAdresseConstructor = function(){
         }
         else{
             this.supprimerErreur(selfTarget.parentNode);
-            this.creerErreur(selfTarget.parentNode,"Champ vide");
+           
         }    
     };
     this.codePostal.addEventListener("blur", this.chercherVilleParCodePostal);

@@ -4,7 +4,16 @@
         if (isset($e[$codeE]))
         {
             return "<div class='bloc-erreurs'>
-                                <p class='paragraphe-erreur'>$e[$codeE]</p>
+                        <p class='paragraphe-erreur'>$e[$codeE]</p>
+                    </div>";
+        }   
+    } 
+    function afficheRetours($r, $codeR)
+    {
+        if (isset($r[$codeR]))
+        {
+            return "<div class='bloc-erreurs'>
+                        <p class='paragraphe-valid'>$r[$codeR]</p>
                     </div>";
         }   
     }  
@@ -64,6 +73,7 @@
                                             </p>
                                         </div>
                                     </a>
+                                    <div>
                                     <div class="divQuantite">
                                         <p>Quantité</p>
                                             <input class="" type="number" name="quantite" min=0 max=<?= $produit->stock ?> value=<?=$produit->quantite ?>>
@@ -79,21 +89,22 @@
                                             <?= $produit -> prixTtc ?>€
                                         </span> 
                                     </h3>
+                                    </div>
                                 </article>
                             <?php endforeach; ?>                
                             <hr>
                         </div>
                         <div class="sous-totaux">
-                            <h2>Sous-total HT(
-                                <span class="nbArt">
+                            <h2>Sous-total HT
+                                (<span class="nbArt">
                                     <?= $sommeNbArticle ?>
                                 </span> article.s) :
                                 <span class="totalHt">
                                     <?= $sommePrix ?>
                                 </span>€
                             </h2>
-                            <h2>Sous-total TTC(
-                                <span class="nbArt">
+                            <h2>Sous-total TTC
+                                (<span class="nbArt">
                                     <?= $sommeNbArticle ?>
                                 </span> article.s) :
                                 <span class="totalTtc">
@@ -105,14 +116,15 @@
                     <aside>
                         <div class="divCodeReduc">
                             <h2>Code de réduction</h2>
-                            <form action="<?= current_url() ?>/validerCode" method="post" name="codeReduc">
-                                <input type="text" name="code" required/>
-                                <input type="submit" value="Valider"/>
+                            <form action="<?= current_url() ?>" method="post" name="codeReduc">
+                                <input type="text" name="code" value="<?= $code ?>" required="required"/>
                                 <?= 
                                     afficheErreurs($erreurs, 0) . 
                                     afficheErreurs($erreurs, 1) .
-                                    afficheErreurs($erreurs, 2)
+                                    afficheRetours($retours, 0) .
+                                    afficheRetours($retours, 1)
                                 ?>
+                                <input type="submit" value="Valider"/>
                             </form>
                         </div>
                         <div class="divValiderVider">
@@ -124,6 +136,7 @@
                                     <?= $sommePrix ?>
                                 </span>€
                             </h2>
+                            
                             <a href="<?= base_url() ?>/livraison" class="lienPanier">Valider le panier</a>
                             <a class="lienViderPanier" href="<?= base_url() ?>/panier/vider">Vider le panier</a>
                         </div>
@@ -173,14 +186,15 @@
 
 <script>
     reqUpdateQuantite(
-        "<?php echo base_url()  .  '/panier/modifier/quantite'?>",
+        "<?php echo  base_url()  .  '/panier/modifier/quantite'?>",
         () => document.querySelectorAll(".divQuantite input"),
         (node) => node.parentNode.parentNode.id,
         (err, resp) => {
             if(!err){
                 updatePricePanier();
                 updatePriceTotal();
-                
+                updateQuantite();
+               
             }
             
 

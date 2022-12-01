@@ -106,6 +106,7 @@ CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_panier varchar) RETU
     end;
     $$ language plpgsql;
 
+
 --SELECT * FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit;
 CREATE OR REPLACE VIEW commande_list_vendeur AS
     SELECT num_commande,num_compte,date_commande,date_arriv, sum(prix_ht*qte_panier) ht, sum(prix_ttc*qte_panier) ttc, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit NATURAL JOIN _panier_client group by num_commande, num_compte,date_commande,date_arriv,etat;
@@ -133,3 +134,31 @@ CREATE OR REPLACE VIEW adresse_livraison AS
 
 CREATE OR REPLACE VIEW code_reduction AS
     SELECT * FROM _code_reduction;
+
+CREATE OR REPLACE VIEW reduc_panier AS SELECT * FROM _reduire;
+
+-- vérification que num panier n'as pas déja un code de réduction dans la table _reduire
+-- CREATE OR REPLACE FUNCTION verif_reduc_panier() RETURNS TRIGGER AS
+--     $$
+--     BEGIN
+--         IF EXISTS (SELECT * FROM _reduire WHERE num_panier=NEW.num_panier) THEN
+--             RAISE EXCEPTION 'Le panier % a déja un code de réduction', NEW.num_panier;
+--         ELSE
+--             INSERT INTO _reduire VALUES (NEW.num_panier, NEW.id_reduction);
+--         END IF;
+--         RETURN NEW;
+--     END;
+--     $$ language plpgsql;
+    
+-- CREATE TRIGGER verif_reduc_panier INSTEAD OF INSERT ON sae3.reduc_panier FOR EACH ROW EXECUTE PROCEDURE verif_reduc_panier();
+
+-- trigger pour insertion dans la vue reduc_panier
+CREATE OR REPLACE FUNCTION insert_reduc_panier() RETURNS TRIGGER AS
+    $$
+    BEGIN
+        INSERT INTO _reduire VALUES (NEW.num_panier, NEW.id_reduction);
+        RETURN NEW;
+    END;
+    $$ language plpgsql;
+
+CREATE TRIGGER insert_reduc_panier INSTEAD OF INSERT ON sae3.reduc_panier FOR EACH ROW EXECUTE PROCEDURE insert_reduc_panier();

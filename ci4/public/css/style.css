@@ -229,7 +229,7 @@ p {
 
 main {
     position: relative;
-    top: 8.4em;
+    margin-top: 8.4em;
     background-color: #f3f3f3;
     flex : 1;
     text-align: center;
@@ -292,25 +292,31 @@ main {
     }
     
     .divHeaderAlizon{
-        height: 10%;
+        height: 6em;
         justify-content: space-around;
     }
 
+    .lienAlizon{
+        width: 5rem;
+    }
+
     .formRecherche{
-        max-width: 75%;
-        height: 50%;
+        max-width: 65%;
+        height: 35%;
         border-radius: 2.5ex;
+        gap: .25em;
     }
 
     .champsRecherche{
         height: 75%;
-        font-size: 2em;
+        width: 100%;
+        font-size: 1em;
         border-radius: 1ex;
         flex-grow: .95;
     }
 
     .logoLoupe{
-        max-width: 2.5em;
+        max-width: 1.25em;
     }
 
     .divSuivi {
@@ -327,6 +333,10 @@ main {
     .divSuivi hr{
         width: 5%
     }
+
+    main{
+        top: 0;
+    }
 }
 
 /* Format paysage */
@@ -338,7 +348,7 @@ main {
 
 footer {
     position: relative;
-    top: 5em;
+    top: 2em;
     background-color: #164F57;
     text-align: center;
     z-index: 100;
@@ -368,9 +378,14 @@ footer a{
     }
 
     footer .mobile{
+        position: fixed;
+        bottom: 0;
+        background-color: #164f57;
         width: 100%;
-        height: auto;
+        height: 3.5rem;
         display: flex;
+        align-items: center;
+        justify-content: flex-start;
     }
 
     footer .mobile ul{
@@ -378,15 +393,18 @@ footer a{
         justify-content: space-evenly;
         list-style: none;
         padding: 0;
+        margin: 0;
         width: 100%;
     }
 
-    footer .mobile li{
-        width: 7.5%;
+    footer .mobile li{        
+        width: 7%;
+    }
+
+    footer .mobile li, footer .mobile li a{
         display: flex;
+        justify-content: center;
         align-items: center;
-        flex-direction: column;
-        justify-content: space-evenly;
     }
 
     footer .mobile svg{
@@ -394,15 +412,21 @@ footer a{
         height: auto;
     }
 
-    footer .mobile li div:not(.menu){
-        display: block;
+    footer .mobile li:last-of-type{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    footer .mobile li div{
         background-color: #D9D9D9;
-        width: 100%;
-        height: 7.5%;
+        width: 75%;
+        height: .1rem;
         border-radius: 15ex;
     }
 
-    footer .mobile li:last-child:hover div:not(.menu){
+    footer .mobile li:last-child:hover div{
         background-color: #6F98C7;
     }
 
@@ -411,11 +435,11 @@ footer a{
     }
 
     .menu{
-        position: absolute;
-        height: 81.5%;
+        position: fixed;
+        height: 85%;
         width: 100%;
-        top: 10%;
-        left: 0%;
+        top: 6rem;
+        left: 0;
         background-color: #D9D9D9;
         flex-direction: column;
         align-items: center;
@@ -427,8 +451,12 @@ footer a{
     }
 
     .menu p{
-        font-size: 3em;
+        font-size: 1.5em;
         color: #164f57;
+    }
+
+    .alizonCPY{
+        display: none;
     }
 }
 
@@ -693,10 +721,14 @@ header ul {
     background-color: #DCE5E6;
 }
 
-.articlesAcceuil {
+.articlesAcceuilPC {
     display: flex;
     margin: 2em 0;
     justify-content: space-around;
+}
+
+.articlesAcceuilMobile{
+    display: none;
 }
 
 .mainAccueil section p {
@@ -721,6 +753,7 @@ header ul {
     padding: .5em 2em;
     text-decoration: none;
     color: #164F57;
+    transition: background-color .4s;
 }
 
 .mainAccueil section .seeMoreBtn:hover {
@@ -747,6 +780,52 @@ header ul {
 
 .iconesAccueil figure figcaption {
     width: 15em;
+}
+
+@media screen and (max-width: 991px){
+    .mainAccueil{
+        padding-bottom: 4em;
+    }
+
+    .articlesAcceuilPC{
+        display: none;
+    }
+
+    .articlesAcceuilMobile{
+        display: flex;
+        flex-wrap: wrap;
+        margin: 2em 0;
+    }
+
+    .titreAccueil h1{
+        font-size: 1.75rem;
+    }
+
+    .titreAccueil hr{
+        max-width: 20rem;
+    }
+
+    .seeMoreBtn{
+        font-size: .75em;
+        margin: .5em 1.5em;
+    }
+
+    .iconesAccueil{
+        font-size: .5em;
+    }
+
+    .iconesAccueil figure{
+        margin: 1em; 
+    }
+
+    .iconesAccueil .logoIndex{
+        width: 3em;
+        height: 3em;
+    }
+
+    .mainAccueil section{
+        margin: 0;
+    }
 }
 
 /*
@@ -933,12 +1012,37 @@ header ul {
     border-top: none;
 }
 .infoRue, .infoVille { 
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start ;
-    flex-wrap: wrap;
+    display: grid;
+    max-width: 100%;
+    grid-template-columns: repeat(20,5%);
+    grid-template-rows: 1fr 1fr 1fr;
 
 }
+
+
+.infoRue .colonne-numero-rue{
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+.infoRue .colonne-nom-rue{
+    grid-column-start:  6;
+    grid-column-end: 20;
+}
+
+.infoVille .colonne-code-postal{
+    grid-column-start: 1    ;
+    grid-column-end: 7;
+}
+
+.infoVille .colonne-ville{
+    grid-column-start:  8   ;
+    grid-column-end: 20;
+}
+
+
+
+
 
 .infoRue label{
     margin-top: 3%;
@@ -1065,6 +1169,8 @@ header ul {
     border: solid 2px;
     border-color: #164F57;
     border-radius: 3px;
+    width: 10em;
+    height: 10em;
 }
 
 .mainPanier aside {
@@ -1220,17 +1326,24 @@ header ul {
     justify-content: space-between;
     height: 10em;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .articlePanier > a {
     display: flex;
     flex-direction: row;
-    width: 40%;
+    width: 45%;
 }
 
 .articlePanier > a > div {
     padding-left: 1em;
     font-size: 100%;
+}
+
+.articlePanier > a + div {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
 }
 
 .panierDescription {
@@ -1362,6 +1475,100 @@ h3 > .lienPasArticlePanier {
     text-decoration: underline;
 }
 
+@media screen and (max-width:991px){
+    .divPanierEtAside{
+        flex-direction: column;
+    }
+
+    .sectionPanier{
+        width: auto;
+    }
+
+    .sectionPanier h2{
+        font-size: 1em;
+    }
+
+    .sectionPanier h3{
+        font-size: 0.8em;
+    }
+
+    .mainPanier aside{
+        position: static;
+        width: 100%; 
+    }
+
+    .articlePanier{
+        height: 6em;
+    }
+
+    .articlePanier h3{
+        align-self: center;
+    }
+
+    .articlePanier img{
+        width: 4.5em;
+        height: 4.5em;
+    }
+
+    .articlePanier a{
+        width: 100%;
+    }
+
+    .articlePanier > a > div{
+        padding-left: 0.5em;
+    }
+
+    .articlePanier > a + div{
+        width: 100%;
+        margin-top: 0.5em;
+    }
+
+    .panierDescription{
+        display: none;
+    }
+
+    .divQuantite{
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: 0.8em;
+    }
+
+    .divQuantite *{
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .divQuantite p{
+        margin-right: 0.5em;
+    }
+
+    .divQuantite input{
+        width: 5em;
+        margin-right: 0.5em;
+    }
+
+    .divQuantite a{
+        font-size: 0.9em;
+    }
+
+    .divQuantite + h3{
+        display: none;
+    }
+
+    .prixHt{
+        display: none;
+    }
+
+    .mainPanier .divCodeReduc{
+        margin-top: 2em;
+        margin-bottom: 0;
+    }
+
+    .mainPanier .divValiderVider{
+        margin-top: 2em;
+    }
+
+}
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                          Page produit (produit.php)                             ┃
@@ -1506,10 +1713,13 @@ main div.card-produit-ext{
     text-decoration: none;
     background-color: transparent;
     padding: 1em;
+    scale: 1;
+    transition: scale .3s ease;
 }
 
 main div.card-produit-ext:hover{
     background-color: transparent;
+    scale: 1.05;
 }
 
 .bottom-card {
@@ -1597,6 +1807,33 @@ div.image-card{
     width: 100%;
 }
 
+@media screen and (max-width: 991px){
+    .card-produit{
+        width: 10rem;
+        height: 14rem;
+        font-size: 1.25rem;
+    }
+
+    .image-card{
+        height: 7rem;
+    }
+
+    .contain-libelle{
+        min-height: 3rem;
+        max-height: 3rem;
+    }
+
+    .prix-card{
+        font-size: 1.25rem;
+    }
+
+    .addPanier{
+        width: 1.5rem;
+        height: 1.5rem;
+        padding: 0.2rem;
+    }
+}
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                          Catalogue (Catalogue.php)                              ┃
@@ -1653,9 +1890,16 @@ main#Catalogue{
     align-content: flex-start;   
 }
 
+.liste-filtre{
+
+    /* bordure à droite, en haut, à gauche */
+    border: 5px solid #D9D9D9;
+    border-left: none;
+
+}
+
 .categorie-catalogue summary ~ div{
     width: 100%;
-    display: flex;
     gap: 7%;
     padding-left: 5%;
 }
@@ -1668,7 +1912,7 @@ main#Catalogue{
 
 .categorie-catalogue #entête hr 
 {
-    width: 80%;
+    width: 70%;
     color: #D1D1D1;
     height: 4px;
     border-radius: 10px;
@@ -1678,27 +1922,37 @@ main#Catalogue{
 
 .categorie-catalogue hr 
 {
-    width: 70%;
+    width: 60%;
     color: #E7E8E6;
     height: 4px;
     border-radius: 10px;
     /* centré */
-    margin-left: 5%;
+    margin-left: 12%;
     margin-right: auto;
 }
 
+.titre-filtre
+{
+    border-top-right-radius: 15px;
+}
+
+.liste-filtre form
+{
+    border-bottom-right-radius: 15px;
+}
 /* .categorie-catalogue summary ~ div input{
     width: 20px;
     height: 20px;
     margin-right: 1em;
 } */
 
-.categorie-catalogue summary ~ div label h3{
+.categorie-catalogue summary ~ div label{
     text-align: left;
-    color: #164F57
+    color: #164F57;
+    font-size: 1.5rem;
 }
 
-.categorie-catalogue summary ~ div label h3::first-letter{
+.categorie-catalogue summary ~ div label::first-letter{
     text-transform: uppercase;
 }
 
@@ -1723,11 +1977,11 @@ main#Catalogue{
 }
 
 
-
 .categorie-catalogue .sous-categorie
 {
     display: flex;
     align-items: center;
+    height: 2.5rem
 }
 
 .categorie-catalogue .bouton-selectionner-tout label{
@@ -1735,9 +1989,10 @@ main#Catalogue{
     width: auto;
     text-align: left;
     color: #164F57;
+    font-size: 22pt;
 }
 
-.categorie-catalogue .bouton-selectionner-tout label h3::first-letter{
+.categorie-catalogue .bouton-selectionner-tout label::first-letter{
     text-transform: uppercase;
 }
 
@@ -1829,7 +2084,8 @@ input[type="range"]::-moz-range-thumb {
 
 .liste-filtre{  
     width: 100%;
-    min-height: 100%;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
 }
 
 .mobile-ouvrir-filtres{
@@ -1897,7 +2153,7 @@ input[type="range"]::-moz-range-thumb {
 }
 .onglet{
     background-color: #e9e3e3;
-    width: 50%;
+    width: 45%;
     padding-top: 15px;
     padding-bottom: 7px;
     border-top: solid #20535a 8px ;
@@ -1912,6 +2168,7 @@ input[type="range"]::-moz-range-thumb {
     border: none;
     border-top: solid #3997A3 8px ;
     background-color: #EFECEC;
+    width: 55%;
 }
 
 .onglet h3{
@@ -2074,18 +2331,29 @@ a.fleche-page{
     }
     
     .partie-filtre{
-        position: absolute;
+        position: fixed;
         width: 100%;
         height: 100%;
     }
 
     .partie-filtre.est-filtre-ouvert{
         top: 0;
+        padding-bottom: 5em;
+        z-index: 100;
     }
 
     .partie-filtre:not(.est-filtre-ouvert){
         position: fixed;
         bottom: -100vh;
+    }
+
+    .onglets + form{
+        gap: 1.5em;
+        padding-bottom: 7%;
+    }
+
+    .categorie-catalogue summary{
+        padding: 1em 5%;
     }
 }
 

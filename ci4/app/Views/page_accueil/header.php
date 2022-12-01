@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/css/style.css" />
+        <link rel="icon" href="<?=base_url()?>/public/images/header/logo.svg" type="image/svg">
         <style>
             @font-face {
                 font-family: "Expletus Sans";
@@ -31,9 +32,9 @@
             
             main {
             <?php if ($controller != "index" && $controller != "produit"): ?>
-                top : 5em;
+                margin-top : 5em;
             <?php else : ?>
-                top : 8.4em;
+                margin-top : 8.4em;
             <?php endif; ?>
             <?php if ($controller == "panier" || $controller == "panierVide") : ?>
                 padding : 2em;
@@ -75,7 +76,7 @@
                         </div>
                     </div>
                 <?php else: ?>
-                    <form class="formRecherche" action="<?= base_url() ?>/catalogue/rech/">
+                    <form class="formRecherche" action="<?= base_url() ?>/catalogue/">
                         <input required class="champsRecherche" type="search" name="search" placeholder="Recherche.." value="<?= ((isset($_GET["search"])) ? $_GET["search"] : '') ?>"/>
                         <label>
                             <input type="submit"><?= file_get_contents(dirname(__DIR__,3) ."/public/images/header/loupe.svg") ?>
@@ -88,7 +89,7 @@
                         <?php if ($GLOBALS["quant"] != 0): ?>
                             <span class="quantPanier"><?= $GLOBALS["quant"] ?></span>
                         <?php elseif ($GLOBALS["quant"] > 9): ?>
-                            <span class="quantPanier">9+</span>
+                            <span class="quantPanier">+9</span>
                         <?php endif; ?>
                     </a>
                     <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>">

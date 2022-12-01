@@ -53,29 +53,89 @@ class Panier extends BaseController
             $produits[] = $produit;
         }
         return $produits;
-    }
+    } 
     */
 
     #TODO: valeur pas update au début.  
-    public function getProduitPanierClient($context = null, $data = null)
+    public function getProduitPanierClient($context = null)
     {
         $data['controller'] = "panier";
-        $data['erreurs'] = [];
+
         if($context == 400) 
         {
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }
-        else if(session()->has("numero")) {
+        else if(session()->has("numero")) 
+        {
             $data['produits'] = model("\App\Models\ProduitPanierCompteModel")->getPanier(session()->get("numero"));
-
         }
-        else if(has_cookie("token_panier")) {
+        else if(has_cookie("token_panier")) 
+        {
             $data['produits'] = model("\App\Models\ProduitPanierVisiteurModel")->getPanier(get_cookie("token_panier"));
+        }
+        else 
+        {
+            $data['produits'] = array();
+        }
+
+        //Code réduction
+        $post=$this->request->getPost();
+        $modelCodeReduc = model("\App\Models\CodeReduction");
+        $modelReducPanier = model("\App\Models\ReducPanier");
+        $issues = [];
+        $retours = [];
         
+        if (!empty($post))
+        {
+            //Pré-remplit les champs avec les données renseignées
+            $data['code'] = $post['code'];
+
+            $codeReduc = $modelCodeReduc->getByCode($post['code']);
+
+            if (empty($codeReduc))
+            {
+                $issues[0] = "Ce code n'existe pas";
+            }
+            else
+            {
+                //Le code étant unique dans la base on choisi le premier et seul résultat du findAll
+                $codeReduc = $codeReduc[0];
+
+                $date_ajd = date("Y-m-d H:i:s"); 
+                $date_debut = $codeReduc->date_debut . " " . $codeReduc->heure_debut;
+                $date_fin = $codeReduc->date_fin . " " . $codeReduc->heure_fin;
+
+                if ($date_debut > $date_ajd && $date_ajd < $date_fin)
+                {
+                    $issues[1] = "Ce code est expiré";
+                }
+            }
+
+            if (empty($issues))
+            {
+                /*if ($modelReducPanier->doesReducPanierExists(,$codeReduc->id_reduction))
+                {
+
+                }*/
+                //Tout est bon, il reste a savoir si le code réduit le prix avec un montant ou un pourcentage de réduction
+                if ($codeReduc->montant_reduction != 0)
+                {
+                    $retours[0] = "Vous économisez <span>" . $codeReduc->montant_reduction . "€</span>";
+                }
+                else
+                {
+                    $retours[1] = "Vous économisez <span>" . $codeReduc->pourcentage_reduction . "%</span>";
+                }
+            }
         }
-        else {
-            $data['produits']=array();
+        else
+        {
+            $data['code'] = "";
         }
+
+        $data['erreurs'] = $issues;
+        $data['retours'] = $retours;
+
         return view('page_accueil/panier.php', $data);
     }
 
@@ -253,34 +313,5 @@ class Panier extends BaseController
 
         setcookie('token_panier',$token,array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
         return $token;
-    }
-
-    public function validerCode()
-    {
-        $post=$this->request->getPost();
-        $modelCodeReduc = model("\App\Models\CodeReduction");
-        
-        if (!empty($post))
-        {
-            $codeReduc = $modelCodeReduc->getByCode($post['code']);
-
-            if (empty($codeReduc))
-            {
-                $issues[1] = "Ce code n'existe pas";
-            }
-            else
-            {
-                //if ($codeReduc->)
-            }
-        }
-        else
-        {
-            $issues[0] = "Pas d'entrée";
-        }
-
-        $data["erreurs"] = $issues;
-        $data["controller"] = "panier";
-
-        return redirect()->to("/panier");
     }
 }

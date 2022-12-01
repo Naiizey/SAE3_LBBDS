@@ -272,7 +272,7 @@ function requeteDynamHTTP(url="") {
 */
 
 function updatePricePanier() {
-    let quantites = document.getElementsByTagName("select");
+    let quantites = document.querySelectorAll(".divQuantite input");
     let nbArticleTab = document.getElementsByClassName("nbArt");
     let prixTab = document.getElementsByClassName("prixTtc");
     let prixTabHt = document.getElementsByClassName("prixHt");
@@ -308,13 +308,30 @@ function updatePriceTotal() {
         sommeTotHt += parseFloat(prix);
     }
 
-    prixTotTab[0].textContent = sommeTot;
-    prixTotTab[1].textContent = sommeTot;
-    prixTotTabHt[0].textContent = sommeTotHt;
+    let reduc = document.querySelector(".bloc-erreurs span");
+    reduc = reduc.innerHTML;
+    if (reduc.includes("%")) 
+    {
+        reduc = parseFloat(reduc.substring(0, reduc.length - 1));
+        prixTotTab[0].textContent = sommeTot * (1 - reduc / 100);
+        prixTotTab[1].textContent = sommeTot * (1 - reduc / 100);
+    }
+    else
+    {
+        reduc = parseFloat(reduc.substring(0, reduc.length - 1));
+        prixTotTab[0].textContent = sommeTot - reduc;
+        prixTotTab[1].textContent = sommeTot - reduc;
+    }
+    prixTotTabHt[0].textContent = sommeTotHt; 
 }
 
 function updateQuantite() {
-    let baliseQuant = document.getElementsByClassName("quantPanier")[1];
+    let baliseQuant = document.getElementsByClassName("quantPanier")[0];
+    let nbArt = document.getElementsByClassName("nbArt")[0].textContent;
+    if(nbArt > 100)
+        baliseQuant.textContent = "+99";
+    else
+        baliseQuant.textContent = nbArt;
 
 }
 
@@ -527,6 +544,45 @@ function switchEtatFiltre(list){
     }
 }
 
+//Tout sélectionner sélectionne toutes les sous catégories
+function selectAll(){
+    //Attrape toutes les checkboxes "Tout sélectionner"
+    let boxes = document.querySelectorAll(".bouton-selectionner-tout > input");
+
+    //Pour chaque checkbox
+    for(let box of boxes){
+        //Lors du coche ou décoche de la checkbox 
+        box.addEventListener("change", (e) => {
+            //Récupère toutes les sous catégories en partant du parent de la target
+            let sousCats = document.querySelectorAll("." + getParentNodeTilClass(e.target).getAttribute("class") + "~ .sous-categorie");
+            let checkboxes = [];
+            //Pour chaque sous catégorie ajoute sa checkbox dans le tableau checkboxes
+            for(let sousCat of sousCats){
+                checkboxes.push(sousCat.querySelector("input"));
+            }
+            //Chaque checkbox du tableau checkboxes prend la valeur de la checkbox "Tout sélectionner"
+            for(let checkbox of checkboxes){
+                checkbox.checked = box.checked;
+            }
+        });
+    }
+}
+
+//Fonction qui récupère le parent d'un élément jusqu'à ce qu'il ait la classe "enTete-'Sousatégorie'"
+function getParentNodeTilClass(element){
+    //Parent prend la valeur de l'élément passé en paramètre 
+    let parent = element;
+    //Regex de correspondance à la classe "enTete-'Sousatégorie'"
+    let reg = /^enTete\-(.*)/;
+
+    //Le parent prend la valeur de son parent tant que la classe ne correspond pas au regex
+    while(!(parent.getAttribute('class').match(reg))){
+        parent = parent.parentNode;
+    }
+
+    return parent;
+}
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                               Detail commande                                   ┃
@@ -662,7 +718,7 @@ var formAdresseConstructor = function(){
         elemRequired.addEventListener("blur", (event) => {
         selfTarget=event.target;
         if(selfTarget.validity.valueMissing){
-            this.creerErreur(selfTarget.parentNode,"Champ vide");
+            this.creerErreur(document.querySelector(`.position-erreur[for=${selfTarget.name}]`),"Champ vide");
             this.estRempli[selfTarget.name]=false;
         }
         else{
@@ -729,7 +785,7 @@ var formAdresseConstructor = function(){
         }
         else{
             this.supprimerErreur(selfTarget.parentNode);
-            this.creerErreur(selfTarget.parentNode,"Champ vide");
+           
         }    
     };
     this.codePostal.addEventListener("blur", this.chercherVilleParCodePostal);

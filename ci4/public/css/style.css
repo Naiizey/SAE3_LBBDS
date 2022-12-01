@@ -245,12 +245,16 @@ main {
         display: none;
     }
 
+    .lienAlizon{
+        width: auto;
+    }
+
     nav{
         display: none;
     }
     
     .divHeaderAlizon{
-        height: 10%;
+        /*height: 10%;*/
         justify-content: space-around;
     }
 
@@ -1042,6 +1046,8 @@ header ul {
     border: solid 2px;
     border-color: #164F57;
     border-radius: 3px;
+    width: 10em;
+    height: 10em;
 }
 
 .mainPanier aside {
@@ -1197,17 +1203,24 @@ header ul {
     justify-content: space-between;
     height: 10em;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .articlePanier > a {
     display: flex;
     flex-direction: row;
-    width: 40%;
+    width: 45%;
 }
 
 .articlePanier > a > div {
     padding-left: 1em;
     font-size: 100%;
+}
+
+.articlePanier > a + div {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
 }
 
 .panierDescription {
@@ -1362,12 +1375,29 @@ h3 > .lienPasArticlePanier {
     }
 
     .articlePanier{
-        height: 5em;
+        height: 6em;
+    }
+
+    .articlePanier h3{
+        align-self: center;
     }
 
     .articlePanier img{
-        width: 5em;
-        height: 5em;
+        width: 4.5em;
+        height: 4.5em;
+    }
+
+    .articlePanier a{
+        width: 100%;
+    }
+
+    .articlePanier > a > div{
+        padding-left: 0.5em;
+    }
+
+    .articlePanier > a + div{
+        width: 100%;
+        margin-top: 0.5em;
     }
 
     .panierDescription{
@@ -1375,11 +1405,23 @@ h3 > .lienPasArticlePanier {
     }
 
     .divQuantite{
+        flex-direction: row;
+        justify-content: space-between;
         font-size: 0.8em;
+    }
+
+    .divQuantite *{
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .divQuantite p{
+        margin-right: 0.5em;
     }
 
     .divQuantite input{
         width: 5em;
+        margin-right: 0.5em;
     }
 
     .divQuantite a{
@@ -1393,6 +1435,16 @@ h3 > .lienPasArticlePanier {
     .prixHt{
         display: none;
     }
+
+    .mainPanier .divCodeReduc{
+        margin-top: 2em;
+        margin-bottom: 0;
+    }
+
+    .mainPanier .divValiderVider{
+        margin-top: 2em;
+    }
+
 }
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

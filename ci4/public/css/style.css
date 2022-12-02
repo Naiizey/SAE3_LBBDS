@@ -190,20 +190,20 @@ path{
     align-items: center;
 }
 
-.divHoverConnexion {
+.divNotConnected, .divConnected {
     position: absolute;
     background-color: #F3F3F3;
     display: none;
     top: 5.2em;
     right: 0;
-    z-index: 50;
+    z-index: 500;
     border-radius: 5px;
     flex-direction: column;
     width: 150%;
     box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
 }
 
-.divHoverConnexion::before {
+.divNotConnected::before, .divConnected::before {
 	content: '';
 	position: absolute;
 	bottom: 100%;
@@ -212,7 +212,7 @@ path{
 	border-bottom-color: #F3F3F3;
 }
 
-.divHoverConnexion a {
+.divNotConnected a, .divConnected a {
     background-color: #3997A3;
     margin: .5em;
     padding: .2em;
@@ -220,16 +220,29 @@ path{
     text-align: center;
 }
 
-.divHoverConnexion a:hover {
+.divNotConnected a:hover, .divConnected a:hover {
     background-color: #164F57;
 }
 
-.divHoverConnexion a + a {
+.divNotConnected a + a, .divConnected a + a {
     margin-top: 0;
 }
 
-.divHoverConnexion p {
+.divNotConnected p {
     margin: 0;
+}
+
+.divConnected {
+    padding-top: 4%;
+}
+
+.divConnected p {
+    text-align: center;
+    margin: 0;
+}
+
+.pNom {
+    color: #164F57;
 }
 
 hr {

@@ -107,6 +107,7 @@ class Authentification
             $session = session();
             $user=$compteModel->where("email",$entree->email)->findAll()[0];
             $session->set('numero',$user->numero);
+            $session->set('nom',$user->nom);
             
 
             $session->set("just_connectee",True);

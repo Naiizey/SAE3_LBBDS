@@ -451,6 +451,8 @@ class Home extends BaseController
         $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
         if (!isset($data['infosCommande'][0]->num_commande)) {
             throw new Exception("Le numéro de commande entré n'existe pas.", 404);
+        } else if ($data['infosCommande'][0]->num_compte != session()->get("numero")){
+            throw new Exception("Cette commande n'est pas associé à votre compte.", 404);
         } else {
             $data['num_compte'] = $data['infosCommande'][0]->num_compte;
         }

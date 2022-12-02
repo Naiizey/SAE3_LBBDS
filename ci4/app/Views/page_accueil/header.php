@@ -49,10 +49,17 @@
     <body>
         <header>
             <div class="divHeaderAlizon">
-                <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
-                    <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
-                    <h1>Alizon</h1>
-                </a>
+            <?php if ($controller != "panier" && $controller != "panierVide" && $controller != "compte_redirection" && $controller != "infoLivraison" && $controller != "paiement"): ?>
+                    <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
+                        <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
+                        <h1>Alizon</h1>
+                    </a>
+            <?php else : ?>
+                <a class="lienAlizonSuivi" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
+                        <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
+                        <h1>Alizon</h1>
+                    </a>
+            <?php endif; ?>
                 <?php if ($controller == "panier" || $controller == "panierVide" || $controller == "compte_redirection" || $controller == "infoLivraison" || $controller == "paiement"): ?>
                     <div class="divSuivi">
                         <div class="<?= (($controller == "panier" )?"etat-courant-commande":"") ?>">

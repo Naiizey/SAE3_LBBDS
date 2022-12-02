@@ -19,6 +19,12 @@
     }  
 ?>
         <main class="mainPanier">
+            <div>
+                <a class="lienAlizonPanier" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
+                    <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
+                    <h1>Alizon</h1>
+                </a>
+            </div>
             <div class="divPanierEtAside">
                 <?php if (empty($produits)): ?>
                     <section class="sectionPanier">
@@ -74,21 +80,21 @@
                                         </div>
                                     </a>
                                     <div>
-                                    <div class="divQuantite">
-                                        <p>Quantité</p>
-                                            <input class="" type="number" name="quantite" min=0 max=<?= $produit->stock ?> value=<?=$produit->quantite ?>>
-                                        <a href="<?= base_url() ?>/panier/supprimer/<?= $produit->idProd ?>">Supprimer</a>
-                                    </div>
-                                    <h3>HT: 
-                                        <span class="prixHt" prix="<?= $produit -> prixHt ?>">
-                                            <?= $produit -> prixHt ?>€
-                                        </span>
-                                    </h3>
-                                    <h3>TTC: 
-                                        <span class="prixTtc" prix="<?= $produit -> prixTtc ?>">
-                                            <?= $produit -> prixTtc ?>€
-                                        </span> 
-                                    </h3>
+                                        <div class="divQuantite">
+                                            <p>Quantité</p>
+                                                <input class="" type="number" name="quantite" min=0 max=<?= $produit->stock ?> value=<?=$produit->quantite ?>>
+                                            <a href="<?= base_url() ?>/panier/supprimer/<?= $produit->idProd ?>">Supprimer</a>
+                                        </div>
+                                        <h3>HT: 
+                                            <span class="prixHt" prix="<?= $produit -> prixHt ?>">
+                                                <?= $produit -> prixHt ?>€
+                                            </span>
+                                        </h3>
+                                        <h3>TTC: 
+                                            <span class="prixTtc" prix="<?= $produit -> prixTtc ?>">
+                                                <?= $produit -> prixTtc ?>€
+                                            </span> 
+                                        </h3>
                                     </div>
                                 </article>
                             <?php endforeach; ?>                

@@ -1004,11 +1004,10 @@ header ul {
     margin-top: 0;
 }
 
-@media (max-width: 1000px) {
+@media screen and (max-width: 991px){
     .divCredit, .divFormAdresse {
-        font-size: xx-large;
         margin: 0;
-        padding: 10% 0;
+        /*padding: 10% 0;*/
     }
 
     .divAlizon+.divCredit {
@@ -1016,15 +1015,29 @@ header ul {
     }
 
     .divAlizon {
-        padding-bottom: 1.5em;
+        display: none;
     }
 
     .divCredit h2, .divFormAdresse h2 {
-        font-size: 1.8em;
+        font-size: 1.2em;
+    }
+
+    .divCredit {
+        margin: 0 2em;
+        margin-top: 1em;
+    }
+
+    .sectionCredit{
+        padding: 2em;
+        font-size: 0.8em;
     }
 
     .sectionCredit a {
         text-align: center;
+    }
+
+    .sectionCredit + a{
+        font-size: 0.9em;
     }
 
     .nomPrenom,.infoRue {
@@ -1040,7 +1053,11 @@ header ul {
     }
 
     .sectionCredit input[type="submit"] {
-        font-size: 1.3em;
+        font-size: 1.1em;
+    }
+
+    .sectionCredit input[type="submit"]{
+        margin-top: 1.5em;
     }
 }
 
@@ -1788,8 +1805,8 @@ h3 > .lienPasArticlePanier {
 
 @media screen and (max-width:991px){
     .sectionProduit {
-        margin: 0 10%;
-        margin-top: 1.5em;
+        margin: 0 2em;
+        margin-top: 1em;
     }
 
     .mainProduit article{

@@ -354,9 +354,17 @@ main {
         padding-right: 2%;
     }
 
+    .divSuivi div {
+        width: 7rem;
+    }
+
     .divSuivi img, .divSuivi svg {
-        height: 10em;
-        width: 10em;
+        height: 5rem;
+        width: 3rem;
+    }
+
+    .divSuivi h3{
+        font-size: 0.7em;
     }
 
     .divSuivi hr{
@@ -1513,7 +1521,7 @@ h3 > .lienPasArticlePanier {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 1.5em;
+        margin-bottom: 0.5em;
     }
 
     .lienAlizonSuivi{

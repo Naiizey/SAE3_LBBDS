@@ -65,6 +65,7 @@
                 <div class="divInputEtLien <?= $classCacheDiv ?>">
                     <input type="password" name="nouveauMotDePasse" require="<?= $requireInput ?>" value="<?= $nouveauMotDePasse?>"/>
                 </div>
+                
                 <?= 
                     afficheErreurs($erreurs, 1) . 
                     afficheErreurs($erreurs, 4) .

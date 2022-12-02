@@ -282,7 +282,7 @@ class Home extends BaseController
         $data['role'] = "";
         if ($role == "admin" && $numClient != null) {
             $data['role'] = "admin";
-        } else { //if ($role == null)
+        } else { 
             $data['role'] = "client";
             $numClient = session()->get("numero");
         }

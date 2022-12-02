@@ -2,7 +2,4 @@
 
 DIR=$(dirname $0)
 
-psql -U postgres -h localhost -f "$DIR"/schema.sql
-psql -U postgres -h localhost -f "$DIR"/insert.sql
-psql -U postgres -h localhost -f "$DIR"/view.sql
-psql -U postgres -h localhost -f "$DIR"/trigger.sql
+echo "\i $DIR/schema.sql \i $DIR/insert.sql \i $DIR/view.sql \i $DIR/trigger.sql" | psql -d postgres

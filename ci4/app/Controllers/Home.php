@@ -25,15 +25,16 @@ class Home extends BaseController
         }
         //au cas où __ci_previous_url ne marcherait plus...: session()->set("previous_url",current_url());
         $this->feedback=service("feedback");
+        if (session()->has("just_connectee") && session()->get("just_connectee")==true) {
+            session()->set("just_connectee", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Vous êtes connecté !");
+        }
     }
 
     public function index()
     {
         helper("cookie");
-        if (session()->has("just_connectee") && session()->get("just_connectee")==true) {
-            session()->set("just_connectee", false);
-            $data['validation'] = $this->feedback->afficheValidation("Vous êtes connecté !");
-        }
+        
 
         $data['controller']= "index";
 
@@ -287,7 +288,7 @@ class Home extends BaseController
         $data['role'] = "";
         if ($role == "admin" && $numClient != null) {
             $data['role'] = "admin";
-        } else { //if ($role == null)
+        } else { 
             $data['role'] = "client";
             $numClient = session()->get("numero");
         }
@@ -456,6 +457,8 @@ class Home extends BaseController
         $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
         if (!isset($data['infosCommande'][0]->num_commande)) {
             throw new Exception("Le numéro de commande entré n'existe pas.", 404);
+        } else if ($data['infosCommande'][0]->num_compte != session()->get("numero")){
+            throw new Exception("Cette commande n'est pas associé à votre compte.", 404);
         } else {
             $data['num_compte'] = $data['infosCommande'][0]->num_compte;
         }

@@ -306,7 +306,8 @@ function updatePriceTotal() {
         prix = prixTabHt[ind].textContent.replace('€','');
         sommeTotHt += parseFloat(prix);
     }
-    /*
+
+    //Récupération et application du code de réduction 
     let reduc = document.querySelector(".bloc-erreurs span");
     reduc = reduc.innerHTML;
     if (reduc.includes("%")) 
@@ -322,7 +323,7 @@ function updatePriceTotal() {
         prixTotTab[1].textContent = sommeTot - reduc;
     }
     prixTotTabHt[0].textContent = sommeTotHt; 
-    */
+    
 }
 
 function updateQuantite() {
@@ -941,4 +942,38 @@ if(document.querySelector(".card-produit") != null){
         //Redirection while clicking on products
         card.addEventListener("click", (e) =>{window.location.href=  base_url +  "/produit/" + parentTilCard(e.target).getAttribute('value');});
     }
+}
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                 hoverConnexion                                  ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+function menuCredit() {
+    let divHoverConnexion = document.querySelector(".divHoverConnexion");
+    let lienConnexion = document.querySelector(".lienConnexion");
+    let hover = false;
+
+    lienConnexion.addEventListener("mouseover", () => {
+        divHoverConnexion.style.display = "flex";
+        hover = true;
+    })
+
+    lienConnexion.addEventListener("mouseout", () => { 
+        setTimeout(function(){
+            if (hover == false) { 
+                divHoverConnexion.style.display = "none";
+            }
+        }, 1000);
+        hover = false;
+    })
+
+    divHoverConnexion.addEventListener("mouseover", () => { 
+        divHoverConnexion.style.display = "flex"; 
+        hover = true;
+    })
+
+    divHoverConnexion.addEventListener("mouseout", () => {
+        divHoverConnexion.style.display = "none";
+        hover = false;
+    })
 }

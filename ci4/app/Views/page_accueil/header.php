@@ -40,6 +40,12 @@
                 padding : 2em;
             <?php endif; ?>
             }
+
+            @media screen and (max-width: 991px){
+                main{
+                    top: 0;
+                }    
+            }
         </style>
         <title><?= $controller ?></title>
     </head>
@@ -49,10 +55,17 @@
     <body>
         <header>
             <div class="divHeaderAlizon">
-                <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
-                    <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
-                    <h1>Alizon</h1>
-                </a>
+            <?php if ($controller != "panier" && $controller != "panierVide" && $controller != "compte_redirection" && $controller != "infoLivraison" && $controller != "paiement"): ?>
+                    <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
+                        <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
+                        <h1>Alizon</h1>
+                    </a>
+            <?php else : ?>
+                <a class="lienAlizonSuivi" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
+                        <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
+                        <h1>Alizon</h1>
+                    </a>
+            <?php endif; ?>
                 <?php if ($controller == "panier" || $controller == "panierVide" || $controller == "compte_redirection" || $controller == "infoLivraison" || $controller == "paiement"): ?>
                     <div class="divSuivi">
                         <div class="<?= (($controller == "panier" )?"etat-courant-commande":"") ?>">
@@ -95,6 +108,18 @@
                     <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>">
                         <?php include(dirname(__DIR__,3)."/public/images/header/profil.svg")?>
                     </a>
+                    <?php if (session()->has("numero")): ?>
+                        <div class="divHoverConnexion divConnected">
+                            <p class="pNom">Bonjour <?= (session()->get("nom")) ?></p>
+                            <a href="<?= base_url()."/espaceClient"?>"><p>Mon profil</p></a>
+                            <a href="<?= base_url()."/destroy"?>"><p>Se déconnecter</p></a>
+                        </div>
+                    <?php else: ?>
+                        <div class="divHoverConnexion divNotConnected">
+                            <a href="<?= base_url()."/connexion"?>"><p>Se connecter</p></a>
+                            <a href="<?= base_url()."/inscription"?>"><p>S'inscrire</p></a>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             <?php if ($controller == "index" || $controller == "produit"): ?>
@@ -119,4 +144,9 @@
                     </ul>
                 </nav>
             <?php endif; ?>
+            <?php if (isset($GLOBALS['validation'])): ?>
+                <?= $GLOBALS['validation']; ?>
+            <?php endif; ?>
         </header>
+        
+     

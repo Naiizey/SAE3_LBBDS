@@ -33,8 +33,13 @@ class CodeReduction extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
-    public function getByCode($code_reduction)
+    public function getCodeReducByCode($code_reduction)
     {
         return $this->where('code_reduction',$code_reduction)->findAll();
+    }
+
+    public function getCodeReducById($id_reduction)
+    {
+        return $this->where('id_reduction',$id_reduction)->findAll();
     }
 }

@@ -38,6 +38,7 @@ class Authentification
         {
             $session = session();
             $session->set('numero',$user->numero);
+            $session->set('nom',$user->nom);
             $session->set('identifiant',$user->identifiant);
             $session->set('motDePasse',$user->motDePasse);
             $session->set("just_connectee",True);

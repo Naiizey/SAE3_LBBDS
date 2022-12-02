@@ -25,15 +25,16 @@ class Home extends BaseController
         }
         //au cas où __ci_previous_url ne marcherait plus...: session()->set("previous_url",current_url());
         $this->feedback=service("feedback");
+        if (session()->has("just_connectee") && session()->get("just_connectee")==true) {
+            session()->set("just_connectee", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Vous êtes connecté !");
+        }
     }
 
     public function index()
     {
         helper("cookie");
-        if (session()->has("just_connectee") && session()->get("just_connectee")==true) {
-            session()->set("just_connectee", false);
-            $data['validation'] = $this->feedback->afficheValidation("Vous êtes connecté !");
-        }
+        
 
         $data['controller']= "index";
 

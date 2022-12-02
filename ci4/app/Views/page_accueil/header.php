@@ -144,4 +144,9 @@
                     </ul>
                 </nav>
             <?php endif; ?>
+            <?php if (isset($GLOBALS['validation'])): ?>
+                <?= $GLOBALS['validation']; ?>
+            <?php endif; ?>
         </header>
+        
+     

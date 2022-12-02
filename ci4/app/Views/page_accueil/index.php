@@ -2,8 +2,9 @@
 <!--dans le imput de recherche : onkeyup="fonction de recherche en php"-->
 <!-- ajuster les logos -->
 <?php require("header.php"); ?>
-        <?= ((isset($validation)) ? $validation : ""); ?>
+        
         <main class="mainAccueil">
+
             <div id="carousel-container">
                 <div id="carousel">
                     <ul id="carousel-elem"> <!-- Menu ./images -->

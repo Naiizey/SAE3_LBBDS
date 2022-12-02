@@ -18,6 +18,12 @@ class Panier extends BaseController
         } else {
             $GLOBALS["quant"] = 0;
         }
+
+        $this->feedback=service("feedback");
+        if (session()->has("just_connectee") && session()->get("just_connectee")==true) {
+            session()->set("just_connectee", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Vous êtes connecté !");
+        }
     }
     public function index()
     {

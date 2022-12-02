@@ -531,7 +531,7 @@ footer a{
 }
 .alerte-validation{
     color: white;
-    z-index: 100;
+    z-index: -1;
     
    
     
@@ -541,7 +541,7 @@ footer a{
     
     position: fixed;
     top: -500px;
-    right: 20px;
+    left: 20px;
 }
 
 

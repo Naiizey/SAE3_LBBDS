@@ -31,8 +31,9 @@ class Produits extends BaseController
             {
                 
                 $result= model("\App\Models\ProduitCatalogue")->findAll(
-                    $nombreProd*($page-1),
-                    $nombreProd*$page   
+                    $nombreProd*$page,
+                    $nombreProd*($page-1)
+                       
                 );
                 $nbResults=sizeof(model("\App\Models\ProduitCatalogue")->findAll());
                 
@@ -40,13 +41,10 @@ class Produits extends BaseController
             }
             else
             {
-       
-                $result=$this->casFilter($filters,$data)->findAll(
-                    $nombreProd*($page-1),
-                    $nombreProd*$page   
-                );
-              
-                $nbResults=sizeof($this->casFilter($filters,$data)->findAll());
+                
+                $result=$this->casFilter($filters,$data)->findAll();
+                $nbResults=0;
+                //$nbResults=sizeof($this->casFilter($filters,$data)->findAll());
              
                 if(empty($result)){
                     return $this->throwError(new Exception("Aucun produit disponible avec les critères sélectionnés",404));
@@ -84,26 +82,39 @@ class Produits extends BaseController
         
        
         $query = model("\App\Models\ProduitCatalogue",false);
+
+        
+
+
         if (isset($filters["prix_min"]) && isset($filters["prix_max"])) {
             
-            $query = $query->where('prixttc >=', $filters["prix_min"])->where('prixttc <=', $filters["prix_max"]);
+            $query->where('prixttc >=', $filters["prix_min"])->where('prixttc <=', $filters["prix_max"]);
             unset($filters["prix_min"]);
             unset($filters["prix_max"]);
             
         }
-        
-        
-        if(!empty($filters)){
-            foreach (array_keys($filters) as $key) {
-                $query=$query->where('categorie', $key);
-            }
-        }
 
-        if(isset($search)){
-            $query=$query->like('intitule', strToLower($search))->orLike('description_prod', strToLower($search))->orderby('intitule, description_prod', 'ASC');
+
+        if(!empty($filters)){
+            $subQuery = db_connect()->table($query->table)->select('id');
+            foreach (array_keys($filters) as $key) {
+                $subQuery->orWhere('categorie', $key);
+                //d($key);
+            }
+            $query->whereIn('id',$subQuery);
+            //dd(",kl");
+        }
+        
+        
+        
+        
+        
+        if(isset($search) && $search!==""){
+            $query->like('intitule', strToLower($search))->orLike('description_prod', strToLower($search))->orderby('intitule, description_prod', 'ASC');
             
 
         }
+        
         
      
         return $query;
@@ -122,10 +133,12 @@ class Produits extends BaseController
     }
 
     private function giveResult($result,$nbResults){
-        $retour="";
+    
+        $retour=[];
         foreach($result as $prod){
-            $retour.=service("cardProduit")->display($prod);
+            $retour[]=service("cardProduit")->display($prod);
         }
+        
         if(isset($this->request)){
             return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
             ->setStatusCode(200)->setJSON(array("resultat"=>$retour,"nombreTotal"=>$nbResults));

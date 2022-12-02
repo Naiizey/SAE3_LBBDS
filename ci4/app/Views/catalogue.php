@@ -75,21 +75,7 @@
         <?php endfor; ?>
         </div>
         <div class="nav-page">
-            <div class="avant-current-page">
-            <?php for($i=1;$i<=$nombreMaxPages;++$i): ?>
-                    <?php if($i==$page):?>
-                        </div>
-                        <div class="current-page">
-                        <a  id="catalogue-fleche-gauche" <?=($i>1)?"href='".base_url()."/catalogue/".($i-1).$filters."'":"" ?>  class="fleche-page <?=($i<=1)?"indisponible":"disponible" ?>"><?php include("./images/catalogue/Fleche_page_gauche.svg")?></a>
-                        <span id="catalogue-current-page"><?= $i ?> </span>
-                        <a  id="catalogue-fleche-droite"<?=($i<$nombreMaxPages)?"href='".base_url()."/catalogue/".($i+1).$filters."'":"" ?> class="fleche-page <?=($i>=$nombreMaxPages)?"indisponible":"disponible" ?>"><?php include("./images/catalogue/Fleche_page_droite.svg")?></a>
-                        </div>
-                        <div class="apres-current-page">
-                    <?php else:?>
-                        <?= $i ?>
-                    <?php endif;?>
-            <?php endfor;?>
-            </div>
+            <button class="voir-plus"></button>
         </div>
     </section>
 </main>

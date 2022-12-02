@@ -201,12 +201,8 @@
                 updatePricePanier();
                 updatePriceTotal();
                 updateQuantite();
-               
             }
-            
-
         }
-
     );
     updatePricePanier()
     updatePriceTotal()

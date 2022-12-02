@@ -308,6 +308,7 @@ function updatePriceTotal() {
         sommeTotHt += parseFloat(prix);
     }
 
+    //Récupération et application du code de réduction 
     let reduc = document.querySelector(".bloc-erreurs span");
     reduc = reduc.innerHTML;
     if (reduc.includes("%")) 

@@ -88,6 +88,14 @@ header h2, header nav {
     width: 12.5rem;
 }
 
+.lienAlizonSuivi {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 12.5rem;
+}
+
 .formRecherche {
     background-color: #D9D9D9;
     padding: 0.3em 0.5em;
@@ -354,7 +362,7 @@ main {
     }
 
     .divSuivi {
-        width: 70%;
+        width: 100%;
         padding-left: 2%;
         padding-right: 2%;
     }
@@ -365,7 +373,7 @@ main {
     }
 
     .divSuivi hr{
-        width: 5%
+        width: 10%
     }
 
     main{
@@ -1194,6 +1202,10 @@ header ul {
     text-decoration: none;
 }
 
+.lienAlizonPanier{
+    display: none;
+}
+
 .mainPanier hr {
     background-color: #164F57;
     margin: 1em 0;
@@ -1510,6 +1522,38 @@ h3 > .lienPasArticlePanier {
 }
 
 @media screen and (max-width:991px){
+    .mainPanier > div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1.5em;
+    }
+
+    .lienAlizonSuivi{
+        display: none;
+    }
+
+    .lienAlizonPanier h1{
+        display: none;
+    }
+
+    .lienAlizonPanier{
+        display: block;
+    }
+
+    .lienAlizonPanier{
+        width: 25%;
+    }
+
+    .lienAlizonPanier svg{
+        width: 100%;
+        height: auto;
+    }
+
+    .lienAlizonPanier svg path{
+        fill: black;
+    }
+
     .divPanierEtAside{
         flex-direction: column;
     }

@@ -139,3 +139,17 @@ CREATE OR REPLACE FUNCTION insertInsertCommande() RETURNS TRIGGER AS
 $$ language plpgsql;
 CREATE TRIGGER insteadOfInsert_insertCommande INSTEAD OF INSERT ON insert_commande FOR EACH ROW EXECUTE PROCEDURE insertInsertCommande();
 
+-- vérification que num panier n'as pas déja un code de réduction dans la table _reduire
+-- CREATE OR REPLACE FUNCTION verif_reduc_panier() RETURNS TRIGGER AS
+--     $$
+--     BEGIN
+--         IF EXISTS (SELECT * FROM _reduire WHERE num_panier=NEW.num_panier) THEN
+--             RAISE EXCEPTION 'Le panier % a déja un code de réduction', NEW.num_panier;
+--         ELSE
+--             INSERT INTO _reduire VALUES (NEW.num_panier, NEW.id_reduction);
+--         END IF;
+--         RETURN NEW;
+--     END;
+--     $$ language plpgsql;
+    
+-- CREATE TRIGGER verif_reduc_panier INSTEAD OF INSERT ON sae3.reduc_panier FOR EACH ROW EXECUTE PROCEDURE verif_reduc_panier();

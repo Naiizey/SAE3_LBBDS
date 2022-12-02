@@ -33,8 +33,15 @@ class ReducPanier extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
-    public function doesReducPanierExists($num_panier, $id_reduction)
+    public function getReducByPanier($num_panier)
     {
-        return !empty($this->where('num_panier',$num_panier)->where('id_reduction', $id_reduction)->findAll());
+        return $this->where('num_panier',$num_panier)->findAll();
+    }
+    public function associerCodeAPanier($num_panier, $id_reduction)
+    {
+        $reducPanier = new \App\Entities\ReducPanier();
+        $reducPanier->num_panier = $num_panier;
+        $reducPanier->id_reduction = $id_reduction;
+        $this->save($reducPanier);
     }
 }

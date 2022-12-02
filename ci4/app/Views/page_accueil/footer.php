@@ -85,4 +85,5 @@
 <script>
     footer();
     cgu();
+    menuCredit();
 </script>

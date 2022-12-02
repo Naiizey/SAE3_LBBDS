@@ -40,6 +40,12 @@
                 padding : 2em;
             <?php endif; ?>
             }
+
+            @media screen and (max-width: 991px){
+                main{
+                    top: 0;
+                }    
+            }
         </style>
         <title><?= $controller ?></title>
     </head>
@@ -102,6 +108,13 @@
                     <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>">
                         <?php include(dirname(__DIR__,3)."/public/images/header/profil.svg")?>
                     </a>
+                    <!--bonjour, nom com
+                    mon profil
+                    se déconnecter-->
+                    <div class="divHoverConnexion">
+                        <a href=""><p>Se connecter</p></a>
+                        <a href=""><p>S'inscrire</p></a>
+                    </div>
                 </div>
             </div>
             <?php if ($controller == "index" || $controller == "produit"): ?>

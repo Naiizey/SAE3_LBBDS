@@ -5,6 +5,7 @@ namespace App\Controllers;
 use Exception;
 
 use function PHPUnit\Framework\isNull;
+use function PHPUnit\Framework\throwException;
 
 /**
  * @method getAllProduitSelonPage($page=null,$filters=null) permet de récupérer un intervalle de produit selon des filtres 
@@ -23,6 +24,8 @@ class Produits extends BaseController
             $filters=$this->request->getVar();
         }
 
+        $data=array();
+
         try{
             if(is_null($filters) || empty($filters))
             {
@@ -31,53 +34,22 @@ class Produits extends BaseController
             }
             else
             {
-                dd($filters);
-                throw new Exception("Error 501: Pas implémenté");
-            }
-
-            $code=200;
-        }catch(\CodeIgniter\Database\Exceptions\DataException $e){
-            $result = array("error" => $e);
-            $code=500;
-        }
-        if($code=200)
-        {
-            $data['nombreMaxPages']=intdiv(sizeof($result),self::NBPRODSPAGECATALOGUE)
-                + ((sizeof($result) % self::NBPRODSPAGECATALOGUE==0)?0:1) ;
-            if(is_null($page) || $page==0)
-            {
-                $data['minProd']=0;
-                $data['maxProd']=self::NBPRODSPAGECATALOGUE;
-                $data['page']=1;
-            }
-            else
-            {
-                if($data['nombreMaxPages']>=$page)
-                {
-                    
-
-                    $data['minProd']=self::NBPRODSPAGECATALOGUE*($page-1);
-                    $data['maxProd']=self::NBPRODSPAGECATALOGUE*$page;
-                    $data['page']=$page;
-                    
+                $result=$this->casFilter($filters,$data);
+                if(empty($result)){
+                    return $this->throwError(new Exception("Aucun produit disponible avec les critères sélectionnés",404));
                 }
-                else return view('errors/html/error_404.php', array('message' => "Page trop haute: pas assez de produit"));
             }
+
+        
+        }catch(\CodeIgniter\Database\Exceptions\DataException $e){
+            $this->throwError($e);
         }
+       
+           
+        
         
 
-        if(isset($this->request))
-        {
-            return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
-                ->setStatusCode($code)->setJSON($result);
-            
-        }
-        else if($code==200)
-        {
-            $data['prods']=$result;
-            return $data;
-        }
-        else return $result;
+        return $this->giveResult($result);
 
     }
 
@@ -89,6 +61,64 @@ class Produits extends BaseController
         }
   
     }
+
+    private function casFilter($filters,$data){
+        $result = array();
+        $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
+        if (isset($filters["search"])) {
+            $search = $filters["search"];
+            unset($filters["search"]);
+        }
+     
+       
+        $priceQuery = model("\App\Models\ProduitCatalogue",false);
+        if (isset($filters["prix_min"]) && isset($filters["prix_max"])) {
+            
+            $priceQuery = $priceQuery->where('prixttc >=', $filters["prix_min"])->where('prixttc <=', $filters["prix_max"]);
+            unset($filters["prix_min"]);
+            unset($filters["prix_max"]);
+            
+        }
+        
+        
+        if(!empty($filters)){
+            foreach (array_keys($filters) as $key) {
+                $priceQuery=$priceQuery->where('categorie', $key);
+            }
+        }
+
+        if(isset($search)){
+            $priceQuery=$priceQuery->like('intitule', strToLower($search))->orLike('description_prod', strToLower($search))->orderby('intitule, description_prod', 'ASC');
+
+        }
+        $result=$priceQuery->findAll();
+
+        return $result;
+        
+    }
+
+
+    private function throwError(Exception $e){
+        if(isset($this->request)){
+            return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
+            ->setStatusCode($e->getCode())->setJSON(array("message"=>$e->getMessage()));
+        }
+        else{
+            throw $e;
+        }
+    }
+
+    private function giveResult($result){
+        if(isset($this->request)){
+            return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
+            ->setStatusCode(200)->setJSON($result);
+        }
+        else{
+            return $result;
+        }
+    }
+
+    
 
     
 }

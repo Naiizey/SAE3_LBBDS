@@ -431,6 +431,3 @@ CREATE OR REPLACE FUNCTION creerPanier() RETURNS TRIGGER AS
     $$ language plpgsql;
 CREATE tRIGGER beforeInsertPanierCli BEFORE INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE creerPanier ();
 CREATE tRIGGER beforeInsertPanierVis BEFORE INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE creerPanier ();
-
-
-select * from _commande;

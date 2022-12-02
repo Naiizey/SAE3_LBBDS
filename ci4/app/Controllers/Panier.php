@@ -106,49 +106,43 @@ class Panier extends BaseController
 
                 //On informe la vue qu'il faut afficher le code
                 $data['code'] = $codeReduc->code_reduction;
-
-                if (!empty($post))
-                {
-                    $retours[2] = "Vous avez déjà activé un code";
-                }
             }
-            else
+            
+            //On regarde s'il y a un code donné dans le post
+            $post=$this->request->getPost();
+    
+            if (!empty($post))
             {
-                //Sinon on regarde s'il y a un code donné dans le post
-                $post=$this->request->getPost();
-        
-                if (!empty($post))
+                //On informe la vue qu'il faut afficher le code
+                $data['code'] = $post['code'];
+
+                $codeReduc = $modelCodeReduc->getCodeReducByCode($post['code']);
+
+                if (empty($codeReduc))
                 {
-                    //On informe la vue qu'il faut afficher le code
-                    $data['code'] = $post['code'];
+                    $issues[0] = "Ce code n'existe pas";
+                }
+                else
+                {
+                    //Le code étant unique dans la base on choisi le premier et seul résultat du findAll
+                    $codeReduc = $codeReduc[0];
 
-                    $codeReduc = $modelCodeReduc->getCodeReducByCode($post['code']);
+                    $date_ajd = date("Y-m-d H:i:s"); 
+                    $date_debut = $codeReduc->date_debut . " " . $codeReduc->heure_debut;
+                    $date_fin = $codeReduc->date_fin . " " . $codeReduc->heure_fin;
 
-                    if (empty($codeReduc))
+                    if ($date_debut > $date_ajd && $date_ajd < $date_fin)
                     {
-                        $issues[0] = "Ce code n'existe pas";
+                        $issues[1] = "Ce code est expiré";
                     }
                     else
                     {
-                        //Le code étant unique dans la base on choisi le premier et seul résultat du findAll
-                        $codeReduc = $codeReduc[0];
-
-                        $date_ajd = date("Y-m-d H:i:s"); 
-                        $date_debut = $codeReduc->date_debut . " " . $codeReduc->heure_debut;
-                        $date_fin = $codeReduc->date_fin . " " . $codeReduc->heure_fin;
-
-                        if ($date_debut > $date_ajd && $date_ajd < $date_fin)
-                        {
-                            $issues[1] = "Ce code est expiré";
-                        }
-                        else
-                        {
-                            //Le code est valide on va le lier au panier avec la base de donnée afin qu'il soit tout le temps effectif
-                            $modelReducPanier->associerCodeAPanier($numPanier, $codeReduc->id_reduction);
-                        }
+                        //Le code est valide on va le lier au panier avec la base de donnée afin qu'il soit tout le temps effectif
+                        $modelReducPanier->associerCodeAPanier($numPanier, $codeReduc->id_reduction);
                     }
                 }
             }
+
             if (isset($codeReduc) && empty($issues))
             {
                 //Tout est bon, il reste a savoir si le code réduit le prix avec un montant ou un pourcentage de réduction

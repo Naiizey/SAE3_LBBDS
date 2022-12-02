@@ -1786,6 +1786,40 @@ h3 > .lienPasArticlePanier {
     margin: 0;
 }
 
+@media screen and (max-width:991px){
+    .sectionProduit {
+        margin: 0 10%;
+        margin-top: 1.5em;
+    }
+
+    .mainProduit article{
+        flex-direction: column;
+    }
+
+    .divGauche{
+        width: 100%;
+    }
+
+    .divDroite{
+        margin-top: 1em;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .ParaDescProduit{
+        margin-right: 0;
+        text-align: left;
+    }
+
+    .divQuantiteProduit{
+        margin-top: 1em;
+    }
+
+    .divQuantiteProduit + div{
+        display: flex;
+        justify-content: space-between;
+    }
+}
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                          Carte produit (CardProduit.php)                        ┃

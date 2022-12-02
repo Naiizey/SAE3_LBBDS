@@ -6,8 +6,9 @@ class Test extends BaseController{
 
         public function destroySession(){
             $session=session();
-            $session->destroy();
-            return redirect()->to(session()->get("_ci_previous_url"));
+            $session->unset("numero");
+            $session->unset("nom");
+            return redirect()->to("/");
         }
 
         public function test()

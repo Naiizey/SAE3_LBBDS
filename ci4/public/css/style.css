@@ -1546,6 +1546,10 @@ h3 > .lienPasArticlePanier {
     text-decoration: underline;
 }
 
+.cacheNouveauPrix {
+    display: none;
+}
+
 @media screen and (max-width:991px){
     .mainPanier > div{
         display: flex;

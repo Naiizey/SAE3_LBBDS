@@ -208,7 +208,7 @@ CREATE TABLE _code_reduction(
 CREATE TABLE _reduire(
     num_panier INT NOT NULL,
     id_reduction INT NOT NULL,
-    CONSTRAINT _reduire_pk PRIMARY KEY (num_panier, id_reduction),
+    CONSTRAINT _reduire_pk PRIMARY KEY (num_panier),
     CONSTRAINT _reduire_panier_fk FOREIGN KEY (num_panier) REFERENCES _panier(num_panier),
     CONSTRAINT _reduire_reduction_fk FOREIGN KEY (id_reduction) REFERENCES _code_reduction(id_reduction)
 );

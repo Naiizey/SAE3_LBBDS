@@ -143,7 +143,14 @@
                                     <?= $sommePrix ?>
                                 </span>€
                             </h2>
-                            
+                            <h2 class="cacheNouveauPrix">Sous-total
+                                (<span class="nbArt">
+                                    <?= $sommeNbArticle ?>
+                                </span> article.s) : 
+                                <span class="totalTtc">
+                                    <?= $sommePrix ?>
+                                </span>€
+                            </h2>
                             <a href="<?= base_url() ?>/livraison" class="lienPanier">Valider le panier</a>
                             <a class="lienViderPanier" href="<?= base_url() ?>/panier/vider">Vider le panier</a>
                         </div>

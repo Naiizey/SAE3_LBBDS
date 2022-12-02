@@ -38,6 +38,7 @@ class Authentification
         {
             $session = session();
             $session->set('numero',$user->numero);
+            $session->set('nom',$user->nom);
             $session->set('identifiant',$user->identifiant);
             $session->set('motDePasse',$user->motDePasse);
             $session->set("just_connectee",True);
@@ -50,20 +51,13 @@ class Authentification
     {   
         $compteModel=model("\App\Models\Client");
         $errors=[];
-
-
         
         if(!empty($entree))
         {
-            /*
-            if(empty($entree->motDePasse) || empty($entree->pseudo) || empty($entree->nom) || empty($entree->prenom) || empty($entree->email)) 
+            if($entree->motDePasse == "" || $entree->pseudo == "" || $entree->nom == "" || $entree->prenom == "" || $entree->email == "") 
             {
-                $errors[1]="Remplissez le(s) champs vide(s)";
-                dd("$entree->motDePasse  $entree->pseudo  $entree->nom $entree->prenom  $entree->email");
-                
+                $errors[1]= "Remplissez le(s) champs vide(s)";
             }
-            if(strlen($entree->nom) > 50 || strlen($entree->prenom) > 50)
-            */
             if(strlen($entree->nom) > 50 && strlen($entree->prenom) > 50)
             {
                 $errors[2]= "50 caractères maximum pour le nom (" . strlen($entree->prenom) . " actuellement) et/ou prénom (" . strlen($entree->nom) . " actuellement)";
@@ -107,6 +101,7 @@ class Authentification
             $session = session();
             $user=$compteModel->where("email",$entree->email)->findAll()[0];
             $session->set('numero',$user->numero);
+            $session->set('nom',$user->nom);
             
 
             $session->set("just_connectee",True);
@@ -121,9 +116,9 @@ class Authentification
         $errors=[];
         if(!empty($entree))
         {
-            if(empty($entree->motDePasse) || empty($entree->pseudo) || empty($entree->nom) || empty($entree->prenom) || empty($entree->email)) 
+            if($entree->motDePasse == "" || $entree->pseudo == "" || $entree->nom == "" || $entree->prenom == "" || $entree->email == "") 
             {
-                $errors[1]="Remplissez le(s) champs vide(s)";
+                $errors[1]= "Remplissez le(s) champs vide(s)";
             }
             if(strlen($entree->nom) > 50 || strlen($entree->prenom) > 50)
             {
@@ -134,6 +129,10 @@ class Authentification
                 //Le controlleur nous informe par ces valeurs que l'utilisateur a cherché à modifier le mdp, il faut donc tout vérifier
                 if (!empty($verifMdp) && !empty($nouveauMdp))
                 {
+                    if ($verifMdp == "" || $nouveauMdp = "")
+                    {
+                        $errors[1]= "Remplissez le(s) champs vide(s)";
+                    }
                     if($compteModel->getClientByPseudo($entree -> pseudo, $entree -> motDePasse) == null)
                     {
                         $errors[3]="Ceci n'est pas votre ancien mot de passe";

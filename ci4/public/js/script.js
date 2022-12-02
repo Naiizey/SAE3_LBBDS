@@ -907,13 +907,14 @@ if(document.querySelector(".card-produit") != null){
 ┃                                  Card Produit                                   ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-/*function menuCredit() {
+function menuCredit() {
     let divHoverConnexion = document.querySelector(".divHoverConnexion");
     let lienConnexion = document.querySelector(".lienConnexion");
     let hover = false;
 
     lienConnexion.addEventListener("mouseover", () => {
         divHoverConnexion.style.display = "flex";
+        hover = true;
     })
 
     lienConnexion.addEventListener("mouseout", () => { 
@@ -922,6 +923,7 @@ if(document.querySelector(".card-produit") != null){
                 divHoverConnexion.style.display = "none";
             }
         }, 1000);
+        hover = false;
     })
 
     divHoverConnexion.addEventListener("mouseover", () => { 
@@ -933,4 +935,4 @@ if(document.querySelector(".card-produit") != null){
         divHoverConnexion.style.display = "none";
         hover = false;
     })
-}*/
+}

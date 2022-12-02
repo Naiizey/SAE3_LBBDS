@@ -16,9 +16,9 @@ use function PHPUnit\Framework\throwException;
 class Produits extends BaseController 
 {
 
-    private const NBPRODSPAGECATALOGUE = 18;
+    private const NBPRODSPAGEDEFAULT = 18;
 
-    public function getAllProduitSelonPage($page=null,$filters=null){
+    public function getAllProduitSelonPage($page=1,$nombreProd=self::NBPRODSPAGEDEFAULT,$filters=null){
 
         if($filters==null && isset($this->request) && !empty($this->request->getVar())){
             $filters=$this->request->getVar();
@@ -30,11 +30,24 @@ class Produits extends BaseController
             if(is_null($filters) || empty($filters))
             {
                 
-                $result=model("\App\Models\ProduitCatalogue")->findAll();
+                $result= model("\App\Models\ProduitCatalogue")->findAll(
+                    $nombreProd*($page-1),
+                    $nombreProd*$page   
+                );
+                $nbResults=sizeof(model("\App\Models\ProduitCatalogue")->findAll());
+                
+         
             }
             else
             {
-                $result=$this->casFilter($filters,$data);
+       
+                $result=$this->casFilter($filters,$data)->findAll(
+                    $nombreProd*($page-1),
+                    $nombreProd*$page   
+                );
+              
+                $nbResults=sizeof($this->casFilter($filters,$data)->findAll());
+             
                 if(empty($result)){
                     return $this->throwError(new Exception("Aucun produit disponible avec les critères sélectionnés",404));
                 }
@@ -48,15 +61,14 @@ class Produits extends BaseController
            
         
         
-
-        return $this->giveResult($result);
+        return $this->giveResult($result,$nbResults);
 
     }
 
     public function sendCors(){
         
         if(isset($this->request) && $this->request->getMethod()==="options"){
-            return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
+            return $this->response->setHeader('Access-Control-Allow-Methods','GET, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
             ->setStatusCode(200);
         }
   
@@ -64,17 +76,17 @@ class Produits extends BaseController
 
     private function casFilter($filters,$data){
         $result = array();
-        $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
+        
         if (isset($filters["search"])) {
             $search = $filters["search"];
             unset($filters["search"]);
         }
-     
+        
        
-        $priceQuery = model("\App\Models\ProduitCatalogue",false);
+        $query = model("\App\Models\ProduitCatalogue",false);
         if (isset($filters["prix_min"]) && isset($filters["prix_max"])) {
             
-            $priceQuery = $priceQuery->where('prixttc >=', $filters["prix_min"])->where('prixttc <=', $filters["prix_max"]);
+            $query = $query->where('prixttc >=', $filters["prix_min"])->where('prixttc <=', $filters["prix_max"]);
             unset($filters["prix_min"]);
             unset($filters["prix_max"]);
             
@@ -83,17 +95,18 @@ class Produits extends BaseController
         
         if(!empty($filters)){
             foreach (array_keys($filters) as $key) {
-                $priceQuery=$priceQuery->where('categorie', $key);
+                $query=$query->where('categorie', $key);
             }
         }
 
         if(isset($search)){
-            $priceQuery=$priceQuery->like('intitule', strToLower($search))->orLike('description_prod', strToLower($search))->orderby('intitule, description_prod', 'ASC');
+            $query=$query->like('intitule', strToLower($search))->orLike('description_prod', strToLower($search))->orderby('intitule, description_prod', 'ASC');
+            
 
         }
-        $result=$priceQuery->findAll();
-
-        return $result;
+        
+     
+        return $query;
         
     }
 
@@ -108,15 +121,21 @@ class Produits extends BaseController
         }
     }
 
-    private function giveResult($result){
+    private function giveResult($result,$nbResults){
+        $retour="";
+        foreach($result as $prod){
+            $retour.=service("cardProduit")->display($prod);
+        }
         if(isset($this->request)){
             return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
-            ->setStatusCode(200)->setJSON($result);
+            ->setStatusCode(200)->setJSON(array("resultat"=>$retour,"nombreTotal"=>$nbResults));
         }
         else{
-            return $result;
+            return array("resultat"=>$result,"nombreTotal"=>$nbResults);
         }
     }
+
+    
 
     
 

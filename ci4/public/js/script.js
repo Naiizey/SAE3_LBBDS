@@ -1,4 +1,3 @@
-//const base_url = "/ci4/public/";
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -307,7 +306,7 @@ function updatePriceTotal() {
         prix = prixTabHt[ind].textContent.replace('€','');
         sommeTotHt += parseFloat(prix);
     }
-
+    /*
     let reduc = document.querySelector(".bloc-erreurs span");
     reduc = reduc.innerHTML;
     if (reduc.includes("%")) 
@@ -323,6 +322,7 @@ function updatePriceTotal() {
         prixTotTab[1].textContent = sommeTot - reduc;
     }
     prixTotTabHt[0].textContent = sommeTotHt; 
+    */
 }
 
 function updateQuantite() {
@@ -583,7 +583,47 @@ function getParentNodeTilClass(element){
     return parent;
 }
 
-/*
+var filterUpdate = function(form) {
+    this.form = form;
+    this.currPage = parseInt(document.querySelector("#catalogue-current-page").textContent);
+    var self = this;
+    
+    this.send = async ($page=1) => {
+        var fd= new URLSearchParams(new FormData(self.form));
+        fd.append("search",document.querySelector(".champsRecherche").value);
+         
+        console.log("http://localhost/Alizon/ci4/public/produits/page/"+$page+"?" + fd) ;
+        const md= await fetch("http://localhost/Alizon/ci4/public/produits/page/"+$page+"?" +fd); 
+        var result= await md.json();
+        console.log(result);    
+        document.querySelector(".liste-produits").innerHTML = result["resultat"];
+        
+        console.log(Array.from(fd));
+    }
+
+    Array.from(this.form.elements).forEach((el) => {
+        el.addEventListener("change", () => this.send());
+    });
+
+    Array.from(document.querySelectorAll(".fleche-page")).forEach((el) => {
+        if(el.classList.contains("disponible"))
+        {
+            el.addEventListener("click", (event) => {
+
+                event.preventDefault()
+                this.send(self.currPage + (event.target.classList.contains("fleche-page-gauche") ? -1 : 1))
+            });
+        }
+    });
+
+
+}
+
+
+
+
+
+/*  
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                               Detail commande                                   ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛

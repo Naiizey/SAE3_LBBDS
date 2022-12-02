@@ -217,10 +217,14 @@ class Home extends BaseController
         
         
 
-        $result=(new \App\Controllers\Produits())->getAllProduitSelonPage($page,$filters);
+        $result=(new \App\Controllers\Produits())->getAllProduitSelonPage($page,self::NBPRODSPAGECATALOGUE,$filters);
+        $data['prods']=$result["resultat"];
 
-        $data['nombreMaxPages']=intdiv(sizeof($result),self::NBPRODSPAGECATALOGUE)
+        $data['nombreMaxPages']=intdiv($result["nombreTotal"],self::NBPRODSPAGECATALOGUE)
         + ((sizeof($result) % self::NBPRODSPAGECATALOGUE==0)?0:1) ;
+        
+
+       
         if(is_null($page) || $page==0)
         {   
             $data['minProd']=0;
@@ -240,7 +244,8 @@ class Home extends BaseController
         }
         else return view('errors/html/error_404.php', array('message' => "Page trop haute: pas assez de produit"));
         }
-        $data['prods']=$result;
+        
+        
 
         if (isset($filters)) {
             $filtersInline = "";

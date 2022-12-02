@@ -25,7 +25,7 @@
                 <div class="onglet onglet-selectionnee"><h3>Catégorie</h3></div>
                 <div class="onglet"><h3>Détail</h3></div>
             </div>
-            <form method="get">
+            <form name="filters" method="get">
                 <div class="categorie-catalogue">
                 <?php foreach ($categories as $categorie):?>
                     <details>
@@ -80,9 +80,9 @@
                     <?php if($i==$page):?>
                         </div>
                         <div class="current-page">
-                        <a <?=($i>1)?"href='".base_url()."/catalogue/".($i-1).$filters."'":"" ?>  class="fleche-page <?=($i<=1)?"indisponible":"disponible" ?>"><?php include("./images/catalogue/Fleche_page_gauche.svg")?></a>
-                        <span><?= $i ?> </span>
-                        <a  <?=($i<$nombreMaxPages)?"href='".base_url()."/catalogue/".($i+1).$filters."'":"" ?> class="fleche-page <?=($i>=$nombreMaxPages)?"indisponible":"disponible" ?>"><?php include("./images/catalogue/Fleche_page_droite.svg")?></a>
+                        <a  id="catalogue-fleche-gauche" <?=($i>1)?"href='".base_url()."/catalogue/".($i-1).$filters."'":"" ?>  class="fleche-page <?=($i<=1)?"indisponible":"disponible" ?>"><?php include("./images/catalogue/Fleche_page_gauche.svg")?></a>
+                        <span id="catalogue-current-page"><?= $i ?> </span>
+                        <a  id="catalogue-fleche-droite"<?=($i<$nombreMaxPages)?"href='".base_url()."/catalogue/".($i+1).$filters."'":"" ?> class="fleche-page <?=($i>=$nombreMaxPages)?"indisponible":"disponible" ?>"><?php include("./images/catalogue/Fleche_page_droite.svg")?></a>
                         </div>
                         <div class="apres-current-page">
                     <?php else:?>
@@ -111,4 +111,5 @@
         );
 
     selectAll();
+    upFilter = new filterUpdate(document.forms["filters"]);
 </script>

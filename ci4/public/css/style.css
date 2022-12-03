@@ -259,6 +259,7 @@ hr {
     border: none;
     width: 100%;
     margin: 0;
+    border-bottom-right-radius: 10px;
 }
 
 nav {
@@ -788,7 +789,7 @@ header ul {
 }
 
 .produitsPhare {
-    background-color: #DCE5E6;
+    padding-top: 2em;
 }
 
 .articlesAccueilPC {
@@ -813,22 +814,24 @@ header ul {
 }
 
 .mainAccueil section {
-    margin: 4em 0;
     padding-bottom: 3em;
 }
 
 .mainAccueil section .seeMoreBtn {
-    border-radius: 2em;
+    border-radius: 10px;
     background-color: white;
     padding: .5em 2em;
     text-decoration: none;
     color: #164F57;
     transition: background-color .4s;
+    border: solid 2px;
+    border-color: #C6C6C6;
 }
 
 .mainAccueil section .seeMoreBtn:hover {
     background-color: #164F57;
     color: #F3F3F3;
+    border: none;
 }
 
 .iconesAccueil {
@@ -1910,6 +1913,8 @@ main div.card-produit-ext:hover{
     color: #164F57;
     padding-top: .2rem;
     cursor: pointer;
+    border: solid 2px;
+    border-color: #C6C6C6;
 }
 
 .card-produit svg, .card-produit line {
@@ -2066,7 +2071,7 @@ main#Catalogue{
 .liste-filtre{
 
     /* bordure à droite, en haut, à gauche */
-    border: 5px solid #D9D9D9;
+    border: 2px solid #C6C6C6;
     border-left: none;
 
 }

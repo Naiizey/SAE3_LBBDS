@@ -83,7 +83,8 @@ $routes->set404Override();
     $routes->get('vendeur/import', 'Import::index');
     $routes->post('vendeur/import/upload', 'Import::upload');
 
-    $routes->get('vendeur/lstCommandesVendeur', 'Home::lstCommandesVendeur');
+    $routes->get('vendeur/commandesCli', 'Home::lstCommandesVendeur');
+    $routes->get('vendeur/commandesCli/detail/(:num)','Home::detail/$1/true');
 
     $routes->get('/destroy', 'Test::destroySession');
 

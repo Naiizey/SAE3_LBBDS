@@ -371,6 +371,17 @@ function lstCommandes(){
     }
 }
 
+function lstCommandesVendeur(){
+    var lignes=document.getElementsByClassName("lignesCommandes");
+    var numCommandes=document.getElementsByClassName("numCommandes");
+
+    for (let numLigne=0; numLigne<lignes.length; numLigne++){
+        let ligneA=lignes.item(numLigne);
+        let commandeA=numCommandes.item(numLigne).textContent;
+        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/vendeur/commandesCli/detail/${commandeA}`;});
+    }
+}
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                      CGU                                        ┃

@@ -211,14 +211,14 @@ function requeteDynamHTTP(url="") {
                 this.howGetId(event.target),
                 (value===null)?event.target.value:value
             ]
-            console.log(listValue);
+         
             requete.put(listValue,callback);
         }
         
         let requete = new requeteDynamHTTP(url);
         for (elem of howGetSelect())
         {
-            console.log(elem);
+           
             elem.addEventListener("change",(event) =>{
                 
                 if(!isNaN(event.target.value))
@@ -285,9 +285,7 @@ function updatePricePanier() {
         prix = prixTabHt[ind].getAttribute("prix");
         prixTabHt[ind].textContent = (prix * quant) + '€';
     }
-    nbArticleTab[0].textContent = quantTot;
-    nbArticleTab[1].textContent = quantTot;
-    nbArticleTab[2].textContent = quantTot;
+    Array.from(nbArticleTab).forEach(nbArt => nbArt.textContent = quantTot);
 }
 
 function updatePriceTotal() {
@@ -309,7 +307,7 @@ function updatePriceTotal() {
     }
 
     //Récupération et application du code de réduction 
-    let reduc = document.querySelector(".bloc-erreurs span");
+    let reduc = document.querySelector(".bloc-erreurs .paragraphe-valid span");
    
     if (reduc && reduc.length !== 0)
     {
@@ -324,17 +322,19 @@ function updatePriceTotal() {
         //Si le code réduit de xx.xx€
         else {
             reduc = parseFloat(reduc.substring(0, reduc.length - 1));
-            prixTotTab[0].textContent = sommeTot - reduc;
+
             prixTotTab[2].textContent = sommeTot - reduc;
         }
+        console.log(prixTotTab[1]);
+        prixTotTab[0].textContent = sommeTot;
         prixTotTab[1].textContent = sommeTot;
         prixTotTabHt[0].textContent = sommeTotHt;
     }
     else
     {
-        reduc = parseFloat(reduc.substring(0, reduc.length - 1));
-        prixTotTab[0].textContent = sommeTot - reduc;
-        prixTotTab[2].textContent = sommeTot - reduc;
+        
+        prixTotTab[0].textContent = sommeTot;
+        prixTotTab[2].textContent = sommeTot;
     }
     
     prixTotTabHt[0].textContent = sommeTotHt; 

@@ -47,7 +47,7 @@
                     </section>
                     <aside>
                         <div class="divValiderVider">
-                            <h2>Sous-total (0 article.s) : 0,00€</h2>
+                            <h2>Total TTC (0 article.s) : 0,00€</h2>
                             <a class="lienPanierVide">Valider le panier</a>
                             <a class="lienViderPanier desactive">Vider le panier</a>
                         </div>
@@ -56,7 +56,7 @@
                     <section class="sectionPanier">
                         <div class="divPanierArticles">
                             <div class="divPanierHeader">
-                                    <h2>Votre panier</h2>
+                                    <h2>Votre panier (<span class="nbArt"> <?= sizeof($produits)?> </span> article.s) :</h2>
                                     <h3>Prix</h3>
                             </div>
                             <?php
@@ -101,18 +101,12 @@
                             <hr>
                         </div>
                         <div class="sous-totaux">
-                            <h2>Sous-total HT
-                                (<span class="nbArt">
-                                    <?= $sommeNbArticle ?>
-                                </span> article.s) :
+                            <h2>Sous-total HT:
                                 <span class="totalHt">
                                     <?= $sommePrix ?>
                                 </span>€
                             </h2>
-                            <h2>Sous-total TTC
-                                (<span class="nbArt">
-                                    <?= $sommeNbArticle ?>
-                                </span> article.s) :
+                            <h2>Sous-total TTC :
                                 <span class="totalTtc">
                                     <?= $sommePrix ?>
                                 </span>€
@@ -135,7 +129,7 @@
                             </form>
                         </div>
                         <div class="divValiderVider">
-                            <h2>Sous-total
+                            <h2>Total TTC
                                 (<span class="nbArt">
                                     <?= $sommeNbArticle ?>
                                 </span> article.s) : 
@@ -205,7 +199,6 @@
                     throw new Error("Le parent cherché n'as pas été atteint");
                 }
             }
-            console.log(node);
             return node.id;
         },
         (err, resp) => {

@@ -64,7 +64,7 @@
                         <input type="number" name="prix_max" id="prix_max" value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" min="<?= $min_price + 1 ?>" max="<?= $max_price ?>">
                     </section>
                 </section>
-                <button class="normal-button supprimer-filtre">Supprimer le(s) filtre(s)</button>
+                <button class="normal-button vert supprimer-filtre">Supprimer le(s) filtre(s)</button>
             </form>
         </div>
     </section>

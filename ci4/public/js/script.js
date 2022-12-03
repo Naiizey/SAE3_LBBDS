@@ -1082,4 +1082,54 @@ function menuCredit() {
     })
 }
 
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                 Alerte                                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
+class AlerteAlizon{
+    
+    constructor(titre,destination,message="Une alerte survient",method="GET"){
+        this.titre=titre;
+        this.message=message;
+        this.form=document.createElement("form");
+        this.form.action=destination;
+        this.form.method=method;
+        this.display=null;
+    }
+    
+
+    ajouterBouton(intitule,classe,nomForm=intitule){
+        let bouton=document.createElement("button");
+        bouton.name=nomForm;
+        bouton.className=classe;
+        bouton.innerHTML=intitule;
+        bouton.value=1;
+        this.form.appendChild(bouton);
+    }
+    
+    affichage=(message=this.message) => {
+        document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(4px)");
+        this.display = document.createElement("div");
+        this.display.classList.add("sur-alerte");
+        this.display.innerHTML= `
+      
+            <div class="alerte">
+                <h2>${this.titre}</h2>
+                <hr>
+                <p class="message-alerte">${message}</p>
+                <div class="alerte-footer">
+                <hr>
+                <div class="espace-interraction">
+                    ${this.form.outerHTML}
+                </div>
+                </div>
+            </div>
+   
+        `;
+        document.body.appendChild(this.display);
+    }
+
+    
+}

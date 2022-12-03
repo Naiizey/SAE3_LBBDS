@@ -29,6 +29,10 @@ class ProduitPanierCompteModel extends ProduitPanierModel
         return (string)'numCli';
     }
 
+    public function fusionPanier($numPanier,$token){
+        $this->db->callFunction("sae3.transvasagePanier",$token,$numPanier);
+    }
+
 
  
 

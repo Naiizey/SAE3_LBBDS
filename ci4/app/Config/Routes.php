@@ -78,7 +78,7 @@ $routes->set404Override();
     $routes->get('/catalogue/(:num)', 'Home::catalogue/$1');
 
     $routes->get('/test', 'Test::test2');
-    $routes->get('/panier', 'Panier');
+  
 
     $routes->get('vendeur/import', 'Import::index');
     $routes->post('vendeur/import/upload', 'Import::upload');

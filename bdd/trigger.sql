@@ -77,8 +77,8 @@ CREATE OR REPLACE FUNCTION updateProduitPanierVisiteur() RETURNS TRIGGER AS
     end;
     $$ language plpgsql;
 CREATE tRIGGER updateOfInsert_produit_panier_visiteur INSTEAD OF UPDATE ON produit_panier_visiteur FOR EACH ROW EXECUTE PROCEDURE updateProduitPanierVisiteur ();
-/*
-CREATE OR REPLACE FUNCTION transvasagePanier(entree_num_panier int, entree_num_compte int) RETURNS INT AS
+
+CREATE OR REPLACE FUNCTION transvasagePanier(entree_token_panier varchar, entree_num_compte int) RETURNS INT AS
     $$
      DECLARE
         current_panier int;
@@ -102,7 +102,7 @@ CREATE OR REPLACE FUNCTION transvasagePanier(entree_num_panier int, entree_num_c
 
     END;
     $$ language plpgsql;
-*/
+
 
 CREATE OR REPLACE FUNCTION insertAdresseLivraison() RETURNS TRIGGER AS
     $$

@@ -58,4 +58,12 @@ class ProduitPanierVisiteurModel extends ProduitPanierModel
         return !empty($result);
     } 
 
+    public function viderPanier($idUser)
+    {
+        
+        
+        $this->db->table("sae3._panier_visiteur")->where("token_cookie",$idUser)->delete();
+        
+    }
+
 }

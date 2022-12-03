@@ -642,6 +642,58 @@ div.bloc-erreur-liste-produit  {
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                           Composant alerte                                      ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+
+.sur-alerte{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    position: fixed;
+    top:0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+ 
+}
+.alerte{
+    position: relative;
+    background-color: white;
+    min-height: fit-content;
+    width: 55%;
+    max-width: 700px;
+    height: 35%;
+    border: #3997A3 solid 2px;    
+}
+.alerte h2, .alerte p{
+    text-align: left;
+    padding: 0.5em 30px ;  
+}
+.alerte .alerte-footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;    
+}
+.alerte .espace-interraction{
+    
+    
+    padding: 10px 30px;
+    width: auto;
+    
+}
+.alerte form{
+    margin :0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃           Page d'accueil et détail produit (index.php & produit.php)            ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
@@ -2032,9 +2084,20 @@ main#Catalogue{
     padding-bottom: 3%;
 }
 
-.supprimer-filtre{
+.normal-button.vert{
     background-color: #24a064;
     color: white;
+}
+.normal-button.rouge{
+    background-color: #a02424;
+    color: white;
+}
+
+.normal-button.vert:hover{
+    background-color: #164F57;
+}
+.normal-button.rouge:hover{
+    background-color: #571616;
 }
 
 .normal-button{
@@ -2047,9 +2110,13 @@ main#Catalogue{
     align-self: center;
 }
 
-.normal-button.supprimer-filtre:hover{
-    background-color: #164F57;
+.petit-button{
+    
+    padding: 0 2em;
+    width: auto;
 }
+
+
 
 .liste-produits{
     display: flex;

@@ -29,13 +29,13 @@
                         <h1>Nos produits phares</h1>
                         <hr>
                     </div>
-                    <div class="articlesAcceuilPC">
+                    <div class="articlesAccueilPC">
                         <?php $minProdPC=0; $maxProdPC=5?>
                         <?php for($i=$minProdPC;$i<$maxProdPC && $i<sizeof($prods);++$i): ?>
                             <?= $cardProduit->display($prods[$i]) ?>
                         <?php endfor; ?>
                     </div>
-                    <div class="articlesAcceuilMobile">
+                    <div class="articlesAccueilMobile">
                         <?php $minProdMobile=0; $maxProdMobile=4?>
                         <?php for($i=$minProdMobile;$i<$maxProdMobile && $i<sizeof($prods);++$i): ?>
                             <?= $cardProduit->display($prods[$i]) ?>
@@ -48,12 +48,12 @@
                         <h1>Nos promotions</h1>
                         <hr>
                     </div>
-                    <div class="articlesAcceuilPC">
+                    <div class="articlesAccueilPC">
                         <?php for($i = $minProdPC; $i < $maxProdPC && $i < sizeof($prods); ++$i): ?>
                             <?= $cardProduit->display($prods[$i])?>
                         <?php endfor; ?>
                     </div>
-                    <div class="articlesAcceuilMobile">
+                    <div class="articlesAccueilMobile">
                         <?php for($i=$minProdMobile;$i<$maxProdMobile && $i<sizeof($prods);++$i): ?>
                             <?= $cardProduit->display($prods[$i]) ?>
                         <?php endfor; ?>

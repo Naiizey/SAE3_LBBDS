@@ -128,7 +128,7 @@
                     <hr>
                     <ul>
                         <li class="liCategorie">
-                            <a class="categorie" href="<?= base_url() ?>/">Acceuil</a>
+                            <a class="categorie" href="<?= base_url() ?>/">Accueil</a>
                         </li>
                         <li class="liCategorie">
                             <a class="categorie" href="<?= base_url() ?>/catalogue">Catalogue</a>

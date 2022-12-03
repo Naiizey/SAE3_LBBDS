@@ -425,6 +425,10 @@ footer a{
     color: #D9D9D9;
 }
 
+.mentionsLegales + div{
+    display: none;
+}
+
 /* Media query téléphone footer */
 @media screen and (max-width:991px){
     footer .pc{

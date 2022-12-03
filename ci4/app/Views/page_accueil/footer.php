@@ -27,6 +27,17 @@
                     <?= file_get_contents(dirname(__DIR__,3)."/public/images/fleche_haut.svg") ?>
                 </div>
             </div>
+            <div>
+                <a> <!-- Lien mentions légales -->
+                    <p>Mentions légales</p> 
+                </a>
+                <a href="./"> <!-- Lien réseaux sociaux -->
+                    <p>Réseaux sociaux</p>
+                </a>
+                <a href="./"> <!-- Lien aide -->
+                    <p>Besoin d'aide ?</p>
+                </a>
+            </div>
         <footer>            
             <div class="pc">
                 <a href="" class="lienCGU"> <!-- Lien mentions légales -->
@@ -65,17 +76,6 @@
                         <div></div>
                         <div></div>
                     </li>
-                    <div>
-                        <a> <!-- Lien mentions légales -->
-                            <p>Mentions légales</p> 
-                        </a>
-                        <a href="./"> <!-- Lien réseaux sociaux -->
-                            <p>Réseaux sociaux</p>
-                        </a>
-                        <a href="./"> <!-- Lien aide -->
-                            <p>Besoin d'aide ?</p>
-                        </a>
-                    </div>
                 </ul>
             </div>
         </footer>

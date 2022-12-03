@@ -82,15 +82,24 @@ CREATE OR REPLACE FUNCTION transvasagePanier(entree_token_panier varchar, entree
     $$
      DECLARE
         current_panier int;
-         row _refere%ROWTYPE;
+        row sae3._refere%ROWTYPE;
+
     BEGIN
-        PERFORM num_panier FROM sae3._panier_visiteur natural join _refere where num_panier=entree_num_panier;
+        PERFORM num_panier FROM sae3._panier_client natural join sae3._refere where num_compte=entree_num_compte;
         if found then
 
             select max(num_panier) into current_panier from sae3._panier_client where num_compte=entree_num_compte group by num_compte;
-            for row in (SELECT * FROM sae3._refere natural join sae3._panier_visiteur where num_panier=entree_num_panier) loop
-                INSERT INTO _refere VALUES (row.id_prod,current_panier,row.qte_panier);
-                delete from _refere where num_panier=row.num_panier and id_prod=row.id_prod;
+            for row in (SELECT * FROM sae3._refere natural join sae3._panier_visiteur where token_cookie=entree_token_panier) loop
+                Perform * FROM sae3._refere WHERE num_panier=current_panier and id_prod=row.id_prod;
+                If FOUND THEN
+                    UPDATE sae3._refere SET qte_panier=qte_panier+row.qte_panier WHERE num_panier=current_panier and id_prod=row.id_prod;
+                    delete from sae3._refere where num_panier=row.num_panier and id_prod=row.id_prod;
+                ELSE
+                    INSERT INTO sae3._refere VALUES (row.id_prod,current_panier,row.qte_panier);
+                    delete from sae3._refere where num_panier=row.num_panier and id_prod=row.id_prod;
+                end if;
+
+
             end loop;
 
 

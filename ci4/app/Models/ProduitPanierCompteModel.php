@@ -30,7 +30,8 @@ class ProduitPanierCompteModel extends ProduitPanierModel
     }
 
     public function fusionPanier($numPanier,$token){
-        $this->db->callFunction("sae3.transvasagePanier",$token,$numPanier);
+        $this->db->query("SELECT * FROM sae3.transvasagePanier('$token' ,$numPanier)");
+        
     }
 
 

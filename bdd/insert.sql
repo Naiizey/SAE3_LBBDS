@@ -7,9 +7,9 @@ INSERT INTO _compte (nom_compte, prenom_compte, pseudo, email, mot_de_passe) VAL
 INSERT INTO _compte (nom_compte, prenom_compte, pseudo, email, mot_de_passe) VALUES ('illoutchine','nassima','nassima_illoutchine', 'nassima@gmail.com', 'test152687');
 INSERT INTO _compte (nom_compte, prenom_compte, pseudo, email, mot_de_passe) VALUES ('moigne','tania','taniamoigne666999', 'temoigne@gmail.com', 'test152687');
 
-INSERT INTO _tva VALUES (1);
-INSERT INTO _tva VALUES (2);
-INSERT INTO _tva VALUES (3);
+INSERT INTO _tva VALUES (1,0.20);
+INSERT INTO _tva VALUES (2,0.50);
+INSERT INTO _tva VALUES (3,0.15);
 /*
 INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (123,'alimentaire',2);
 INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (124,'vetement',1);

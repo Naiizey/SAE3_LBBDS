@@ -18,7 +18,7 @@ TODO: Faire un shema image pour produit spécifiant l'image, son origine et son 
 CREATE TABLE _tva
 (
     cat_tva INT PRIMARY KEY,
-    taux_tva float
+    taux_tva float NOT NULL
 );
 
 CREATE TABLE _categorie

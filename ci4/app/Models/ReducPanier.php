@@ -17,7 +17,7 @@ class ReducPanier extends Model
     protected $table      = 'sae3.reduc_panier';
     protected $primaryKey = 'num_panier';
 
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
 
     protected $returnType     = \App\Entities\CodeReduction::class;
     protected $useSoftDeletes = false;
@@ -43,5 +43,9 @@ class ReducPanier extends Model
         $reducPanier->num_panier = $num_panier;
         $reducPanier->id_reduction = $id_reduction;
         $this->save($reducPanier);
+    }
+    public function dissocierCodeAPanier($num_panier)
+    {
+        $this->where('num_panier',$num_panier)->delete();
     }
 }

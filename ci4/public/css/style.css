@@ -1566,6 +1566,12 @@ h3 > .lienPasArticlePanier {
     display: none;
 }
 
+.decouvreNouveauPrix {
+    display: inline-block;
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+}
+
 @media screen and (max-width:991px){
     .mainPanier > div{
         display: flex;

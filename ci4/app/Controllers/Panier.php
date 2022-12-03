@@ -67,6 +67,7 @@ class Panier extends BaseController
     {
         $data['controller'] = "panier";
         $data['code'] = "";
+        $data['classCacheDiv'] = "cacheNouveauPrix";
         $issues = [];
         $retours = [];
         $modelCodeReduc = model("\App\Models\CodeReduction");
@@ -104,11 +105,8 @@ class Panier extends BaseController
             //S'il y a déjà un code associé à ce panier
             if (!empty($panier))
             {
-                //Alors on le récupère (on prend le premier et seul résultat)
-                $panier = $panier[0];
-
-                //Impossible de ne pas avoir de résultat sur ceci, on prend également le premier et seul résultat
-                $codeReduc = $modelCodeReduc->getCodeReducById($panier->id_reduction)[0];
+                //Alors on le récupère 
+                $codeReduc = $modelCodeReduc->getCodeReducById($panier[0]->id_reduction)[0];
 
                 //On informe la vue qu'il faut afficher le code
                 $data['code'] = $codeReduc->code_reduction;
@@ -143,6 +141,12 @@ class Panier extends BaseController
                     }
                     else
                     {
+                        //S'il y avait déjà un code associé alors on le supprime
+                        if (!empty($panier))
+                        {
+                            $modelReducPanier->dissocierCodeAPanier($numPanier);
+                        }
+
                         //Le code est valide on va le lier au panier avec la base de donnée afin qu'il soit tout le temps effectif
                         $modelReducPanier->associerCodeAPanier($numPanier, $codeReduc->id_reduction);
                     }
@@ -160,6 +164,9 @@ class Panier extends BaseController
                 {
                     $retours[1] = "Vous économisez <span>" . $codeReduc->pourcentage_reduction . "%</span>";
                 }
+                
+                //On affiche le nouveau prix 
+                $data['classCacheDiv'] = "decouvreNouveauPrix";
             }
         }
 

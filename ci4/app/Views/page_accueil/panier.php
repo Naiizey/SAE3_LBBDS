@@ -139,14 +139,9 @@
                                 (<span class="nbArt">
                                     <?= $sommeNbArticle ?>
                                 </span> article.s) : 
-                                <span class="totalTtc">
-                                    <?= $sommePrix ?>
-                                </span>€
-                            </h2>
-                            <h2 class="cacheNouveauPrix">Sous-total
-                                (<span class="nbArt">
-                                    <?= $sommeNbArticle ?>
-                                </span> article.s) : 
+                                <span class="totalTtc <?= $classCacheDiv ?>">
+                                    <?= $sommePrix ?> 
+                                </span>
                                 <span class="totalTtc">
                                     <?= $sommePrix ?>
                                 </span>€

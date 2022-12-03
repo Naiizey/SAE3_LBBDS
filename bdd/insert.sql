@@ -237,9 +237,3 @@ VALUES  ('10EUROS!!!', 10, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'
         ('5EUROS', 5, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
         ('25POURCENT', 0, 25, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
         ('10POURCEN', 0, 10, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59');
-
--- insertion dans _reduire
-INSERT INTO _reduire (num_panier, id_reduction) VALUES (1, 1);
-INSERT INTO _reduire (num_panier, id_reduction) VALUES (2, 2);
-INSERT INTO _reduire (num_panier, id_reduction) VALUES (3, 3);
-INSERT INTO _reduire (num_panier, id_reduction) VALUES (4, 4);

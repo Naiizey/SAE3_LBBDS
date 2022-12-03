@@ -7,9 +7,13 @@
 function footer(){
     const footerLiList = document.querySelectorAll('footer li');
     const burger = footerLiList[footerLiList.length-1];
-    const menu = document.querySelector('footer ul > div');
+    const menu = document.querySelector('.mentionsLegales + div');
 
-    burger.addEventListener('click', () => {if(menu.classList.contains('menu')){menu.classList.remove('menu');menu.style['display']='none'}else{menu.classList.add('menu');menu.style['display']='flex'}});
+    burger.addEventListener('click', () => {
+        if(menu.classList.contains('menu')){
+            menu.classList.remove('menu');menu.style['display']='none'}
+            else{menu.classList.add('menu');menu.style['display']='flex'}
+        });
 }
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

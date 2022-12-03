@@ -128,19 +128,19 @@
                     <hr>
                     <ul>
                         <li class="liCategorie">
-                            <a class="categorie" href="<?= base_url() ?>/">Catégorie 1</a>
+                            <a class="categorie" href="<?= base_url() ?>/">Acceuil</a>
                         </li>
                         <li class="liCategorie">
-                            <a class="categorie" href="<?= base_url() ?>/">Catégorie 2</a>
+                            <a class="categorie" href="<?= base_url() ?>/catalogue">Catalogue</a>
                         </li>
                         <li class="liCategorie">
-                            <a class="categorie" href="<?= base_url() ?>/">Catégorie 3</a>
+                            <a class="categorie" href="<?= base_url() ?>/">Promotions</a>
                         </li>
                         <li class="liCategorie">
-                            <a class="categorie" href="<?= base_url() ?>/">Catégorie 4</a>
+                            <a class="categorie" href="<?= base_url() ?>/">Catégories</a>
                         </li>
                         <li class="liCategorie">
-                            <a class="categorie" href="<?= base_url() ?>/">Catégorie 5</a>
+                            <a class="categorie" href="<?= base_url() ?>/commandes">Mes commandes</a>
                         </li>
                     </ul>
                 </nav>

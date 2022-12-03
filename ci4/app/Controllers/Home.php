@@ -391,7 +391,7 @@ class Home extends BaseController
     public function lstCommandesClient()
     {
         $data['controller']= "lstCommandesCli";
-        $data['commandesCli']=model("\App\Models\lstCommandesCli")->getCompteCommandes();
+        $data['commandesCli']=model("\App\Models\LstCommandesCli")->getCompteCommandes();
         return view('page_accueil/lstCommandesCli.php', $data);
     }
 

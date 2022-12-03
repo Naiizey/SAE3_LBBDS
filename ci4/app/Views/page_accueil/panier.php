@@ -197,7 +197,17 @@
     reqUpdateQuantite(
         "<?php echo  base_url()  .  '/panier/modifier/quantite'?>",
         () => document.querySelectorAll(".divQuantite input"),
-        (node) => node.parentNode.parentNode.id,
+        (node) => {
+            while(!node.classList.contains("articlePanier")){
+                node=node.parentNode;
+                
+                if(node.nodeName=="MAIN"){
+                    throw new Error("Le parent cherché n'as pas été atteint");
+                }
+            }
+            console.log(node);
+            return node.id;
+        },
         (err, resp) => {
             if(!err){
                 updatePricePanier();

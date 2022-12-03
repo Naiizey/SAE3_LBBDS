@@ -480,6 +480,8 @@ function espaceCli(role)
 ┃                                 Catalogue                                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+
+//FIXME : problème après suppression filtre
 function cataloguePrice(){
     const rangeInput = document.querySelectorAll(".range-input input"),
     priceInput = document.querySelectorAll(".price-range input:not(.range-input input)"),
@@ -584,28 +586,92 @@ function getParentNodeTilClass(element){
     return parent;
 }
 
-var filterUpdate = function(form) {
-    this.form = form;
-    this.currPage = parseInt(document.querySelector("#catalogue-current-page").textContent);
-    var self = this;
+var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFiltre,voirPlus) {
+    this.form = formFilter;
     
-    this.send = async ($page=1) => {
-        var fd= new URLSearchParams(new FormData(self.form));
-        fd.append("search",document.querySelector(".champsRecherche").value);
-         
-        console.log("http://localhost/Alizon/ci4/public/produits/page/"+$page+"?" + fd) ;
-        const md= await fetch("http://localhost/Alizon/ci4/public/produits/page/"+$page+"?" +fd); 
-        var result= await md.json();
-        console.log(result);    
-        document.querySelector(".liste-produits").innerHTML = result["resultat"];
+    this.champRecherche = champRecherche;
+    this.listeProduit=listeProduit
+    this.suppressionFiltre=suppressionFiltre;
+    this.voirPlus=voirPlus;
+    this.currPage = 1//parseInt(document.querySelector("#catalogue-current-page").textContent);
+    //Permet d'éviter les problèmes de scope
+    var self = this;
+ 
+        this.send = async (replace=true) => {
+        //Récupère les valeurs des filtres et transformation en string de type url à laquelle ajoute la recherche
+        var champsGet= new URLSearchParams(new FormData(self.form));
+        if(!self.champRecherche.value===""){
+            champsGet.append("search",self.champRecherche.value);
+        }
+        /*
+        if(self.form.elements["prix_min"].value===self.form.elements["prix_min"].min && self.form.elements["prix_max"].value===self.form.elements["prix_max"].max){
+            champsGet.delete("prix_min");
+            champsGet.delete("prix_max");
+        }
+        */
+        champsGet=champsGet.toString();
+        if(champsGet.length!=0){
+            champsGet="?"+champsGet;
+        }
         
-        console.log(Array.from(fd));
+         
+       //fetch avec un await pour récuperer la réponse asynchrones (de manière procédurale)
+        try{
+            const md= await fetch("http://localhost/Alizon/ci4/public/produits/page/"+((replace)?1:self.currPage)+champsGet);
+            var result= await md.json();
+            
+            //vérifie si la réponse n'est pas une erreur
+            if (md.ok){
+                if(replace){
+                    self.currPage=1;
+                    self.listeProduit.innerHTML="";    
+                }
+                result["resultat"].forEach(produit => self.listeProduit.innerHTML += produit);
+                //reexe, afin que le listener revienne sur les cartes
+                clickProduit();
+            }else{
+                self.listeProduit.innerHTML=`
+                <div class="bloc-erreur-liste-produit">
+                    <p class="paragraphe-erreur">
+                        ${result["message"]}
+                    </p>
+                <div class="erreur-liste-produit">
+                `;   
+            }
+            window.history.pushState({page:1},"Filtres",champsGet);
+    
+        }catch(e){
+            //Les erreurs 404 ne passent pas ici, ce sont les erreurs lié à la fonction et au réseau qui sont catch ici
+            console.log("Oups !, quelque chose s'est mal passé...");
+        }
+        
+        
     }
 
+    
     Array.from(this.form.elements).forEach((el) => {
-        el.addEventListener("change", () => this.send());
+        //if(el.nodeName!=="BUTTON"){
+            el.addEventListener("change", () => this.send());
+        //}
     });
 
+    this.suppressionFiltre.addEventListener('click', (event) => {
+        event.preventDefault();
+        this.form.reset();
+        this.form.elements["prix_min"].value=this.form.elements["prix_min"].min;
+        this.form.elements["prix_max"].value=this.form.elements["prix_max"].max;
+        document.querySelector(".range-min").value=this.form.elements["prix_min"].min;
+        document.querySelector(".range-max").value=this.form.elements["prix_max"].max;
+        this.send();
+        
+    });
+
+    this.voirPlus.addEventListener('click', (event) => {
+        this.currPage++;
+        this.send(false);
+    });
+
+    /*
     Array.from(document.querySelectorAll(".fleche-page")).forEach((el) => {
         if(el.classList.contains("disponible"))
         {
@@ -616,9 +682,11 @@ var filterUpdate = function(form) {
             });
         }
     });
+    */
 
 
 }
+
 
 
 
@@ -670,11 +738,11 @@ var formAdresseConstructor = function(){
         this.form.elements["nom"],
         this.form.elements["prenom"]    
     ];
-
+    //Suggestions dés le clique
     this.form.elements["ville"].addEventListener("mousedown",function(){
         if( document.activeElement == this )return;
         document.querySelector(this).focus();
-       });
+    });
     
     this.estRempli = new Array();
     Array.from(this.form.elements).forEach(elem => {
@@ -750,7 +818,7 @@ var formAdresseConstructor = function(){
         elem.addEventListener("blur", this.verifierNomEtPrenom));
 
     
-
+    //Vérifications des champs requis
     Array.from(this.form.elements)
     .filter(elem => {
         return elem.required && !Array.from(elem.parentNode.parentNode.classList).includes("nomPrenom")
@@ -772,22 +840,22 @@ var formAdresseConstructor = function(){
 
     this.afterVille = function(response){
     
-       this.codePostal.value = response.features[0].properties.postcode;
-       this.supprimerErreur(this.codePostal.parentNode);
-        
-    }
-
-    this.afterCodePostal = function(response){
-        let datalist= document.getElementById("ville_trouvee");
-        datalist.innerHTML="";
-        response.features.forEach(feature => {
-            console.log(feature.properties.city)
-            let option = document.createElement("option");
-            option.value=feature.properties.city;
-            datalist.appendChild(option);
-        });   
-    }
-
+        this.codePostal.value = response.features[0].properties.postcode;
+        this.supprimerErreur(this.codePostal.parentNode);
+         
+     }
+ 
+     this.afterCodePostal = function(response){
+         let datalist= document.getElementById("ville_trouvee");
+         datalist.innerHTML="";
+         response.features.forEach(feature => {
+             console.log(feature.properties.city)
+             let option = document.createElement("option");
+             option.value=feature.properties.city;
+             datalist.appendChild(option);
+         });   
+     }
+ 
 
     this.chercheCodePostalVille =  (event) => {
         selfTarget=event.target;
@@ -801,7 +869,6 @@ var formAdresseConstructor = function(){
             
         }
     }
-
     this.ville.addEventListener("blur",this.chercheCodePostalVille);
 
     this.chercherVilleParCodePostal= (event) => {
@@ -933,15 +1000,17 @@ function parentTilCard(element){
     }
     return card
 }
-
-//Only if at least one card in the page
-if(document.querySelector(".card-produit") != null){
+function clickProduit(){
     //Select all cards
     let cards = document.querySelectorAll(".card-produit");
     for(card of cards){
         //Redirection while clicking on products
         card.addEventListener("click", (e) =>{window.location.href=  base_url +  "/produit/" + parentTilCard(e.target).getAttribute('value');});
     }
+}
+//Only if at least one card in the page
+if(document.querySelector(".card-produit") != null){
+    clickProduit();
 }
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -977,3 +1046,5 @@ function menuCredit() {
         hover = false;
     })
 }
+
+

@@ -608,6 +608,18 @@ div.bloc-erreurs {
     position: relative;
 }
 
+div.bloc-erreur-liste-produit  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px;
+    text-align: center;
+    width: 100%;
+    height: 300px;
+    border-radius: 20px;
+    background-color: white;
+}
+
 .paragraphe-erreur {
     color: red;
     margin-bottom: 0;
@@ -1932,6 +1944,7 @@ main#Catalogue{
     padding-left: 0%;
 }
 .partie-produits{
+    width:100%;
     max-width: 75%; 
 }
 .partie-filtre{
@@ -1950,9 +1963,14 @@ main#Catalogue{
     padding-bottom: 3%;
 }
 
-.onglets + form button{
+.supprimer-filtre{
     background-color: #24a064;
     color: white;
+}
+
+.normal-button{
+    
+    
     border: none;
     width: 65%;
     height: 3em;
@@ -1960,7 +1978,7 @@ main#Catalogue{
     align-self: center;
 }
 
-.onglets + form button:hover{
+.normal-button.supprimer-filtre:hover{
     background-color: #164F57;
 }
 

@@ -201,7 +201,7 @@ class Home extends BaseController
     private const NBPRODSPAGECATALOGUE = 20;
     #FIXME: comportement href différent entre $page=null oe $page !=null
     
-    public function catalogue($page=null)
+    public function catalogue($page=1)
     {
         $filters=$this->request->getGet();
         $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
@@ -221,6 +221,7 @@ class Home extends BaseController
         $result=(new \App\Controllers\Produits())->getAllProduitSelonPage($page,self::NBPRODSPAGECATALOGUE,$filters);
         $data['prods']=$result["resultat"];
 
+        /*
         $data['nombreMaxPages']=intdiv($result["nombreTotal"],self::NBPRODSPAGECATALOGUE)
         + ((sizeof($result) % self::NBPRODSPAGECATALOGUE==0)?0:1) ;
         
@@ -245,6 +246,7 @@ class Home extends BaseController
         }
         else return view('errors/html/error_404.php', array('message' => "Page trop haute: pas assez de produit"));
         }
+        */
         
         
 

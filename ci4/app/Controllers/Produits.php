@@ -19,6 +19,7 @@ class Produits extends BaseController
     private const NBPRODSPAGEDEFAULT = 18;
 
     public function getAllProduitSelonPage($page=1,$nombreProd=self::NBPRODSPAGEDEFAULT,$filters=null){
+       
 
         if($filters==null && isset($this->request) && !empty($this->request->getVar())){
             $filters=$this->request->getVar();
@@ -42,7 +43,11 @@ class Produits extends BaseController
             else
             {
                 
-                $result=$this->casFilter($filters,$data)->findAll();
+                $result=$this->casFilter($filters,$data)->findAll(
+                    $nombreProd*$page,
+                    $nombreProd*($page-1)
+                       
+                );
                 $nbResults=0;
                 //$nbResults=sizeof($this->casFilter($filters,$data)->findAll());
              
@@ -134,12 +139,13 @@ class Produits extends BaseController
 
     private function giveResult($result,$nbResults){
     
-        $retour=[];
-        foreach($result as $prod){
-            $retour[]=service("cardProduit")->display($prod);
-        }
+        
         
         if(isset($this->request)){
+            $retour=[];
+            foreach($result as $prod){
+                $retour[]=service("cardProduit")->display($prod);
+            }
             return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
             ->setStatusCode(200)->setJSON(array("resultat"=>$retour,"nombreTotal"=>$nbResults));
         }

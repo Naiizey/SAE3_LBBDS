@@ -57,32 +57,31 @@
                         <div class="slider">
                             <div class="progress"></div>
                             <div class="range-input">
-                            <input type="range" class="range-min" min="<?= $min_price ?>" max="<?= $max_price - 1 ?>" value="<?php if(isset($_GET["prix_min"])):echo $_GET["prix_min"]; else: echo $min_price;endif?>" step="1">
-                            <input type="range" class="range-max" min="<?= $min_price + 1 ?>" max="<?= $max_price ?>" value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" step="1">
+                            <input type="range" class="range-min" min="<?= $min_price ?>" max="<?= $max_price - 1 ?>"  value="<?php if(isset($_GET["prix_min"])):echo $_GET["prix_min"]; else: echo $min_price;endif?>" step="1">
+                            <input type="range" class="range-max" min="<?= $min_price + 1 ?>" max="<?= $max_price ?>"  value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" step="1">
                         </div>
                         </div>
                         <input type="number" name="prix_max" id="prix_max" value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" min="<?= $min_price + 1 ?>" max="<?= $max_price ?>">
                     </section>
                 </section>
-                <button type="submit">Appliquer le(s) filtre(s)</button>
+                <button class="normal-button supprimer-filtre">Supprimer le(s) filtre(s)</button>
             </form>
         </div>
     </section>
     <section class="partie-produits">
         <div class="liste-produits">
-        <?php for($i=$minProd;$i<$maxProd && $i<sizeof($prods);++$i): ?>
-            <?= $cardProduit->display($prods[$i])?>
-        <?php endfor; ?>
+        <?php foreach($prods as $prod): ?>
+            <?= $cardProduit->display($prod)?>
+        <?php endforeach; ?>
         </div>
         <div class="nav-page">
-            <button class="voir-plus"></button>
+            <button class="normal-button voir-plus">Voir plus</button>
         </div>
     </section>
 </main>
 <?php require("page_accueil/footer.php"); ?>
 <script>
-    cataloguePrice();
-    
+    cataloguePrice();   
     boutonCliquable(
         document.querySelector(".mobile-ouvrir-filtres"),
         () => {
@@ -97,5 +96,10 @@
         );
 
     selectAll();
-    upFilter = new filterUpdate(document.forms["filters"]);
+        var upFilter = new filterUpdate(document.forms["filters"],
+        document.querySelector(".champsRecherche"), 
+        document.querySelector(".liste-produits"),
+        document.querySelector(".supprimer-filtre"),
+        document.querySelector(".voir-plus")
+    );
 </script>

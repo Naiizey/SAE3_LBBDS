@@ -36,7 +36,7 @@ class Produits extends BaseController
                     $nombreProd*($page-1)
                        
                 );
-                $dernier=sizeof($result)<$nombreProd+1;
+                
          
             }
             else
@@ -47,12 +47,18 @@ class Produits extends BaseController
                     $nombreProd*($page-1)
                        
                 );
-                $dernier=sizeof($result)<$nombreProd+1;
+                
                 //$nbResults=sizeof($this->casFilter($filters,$data)->findAll());
              
                 if(empty($result)){
                     return $this->throwError(new Exception("Aucun produit disponible avec les critères sélectionnés",404));
                 }
+            }
+            if(sizeof($result)<$nombreProd+1){
+                $dernier=true;
+            }else{
+                $dernier=false;
+                unset($result[$nombreProd]);
             }
 
         

@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </article>
-                <section class="sectionRecommandationsPanier">
+                <section class="sectionRecommandationsPanierPC">
                     <h2>Recommandations</h2>
                     <hr>
                     <ul>
@@ -87,6 +87,27 @@
                         <li>
                             <a href="">
                                 <img src="<?=base_url() ?>/images/art5.png" alt="article 6" title="Article 6">
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+                <section class="sectionRecommandationsPanierMobile">
+                    <h2>Recommandations</h2>
+                    <hr>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <img src="<?=base_url() ?>/images/art1.png" alt="article 1" title="Article 1">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="<?=base_url() ?>/images/art2.png" alt="article 2" title="Article 2">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="<?=base_url() ?>/images/art3.png" alt="article 3" title="Article 3">
                             </a>
                         </li>
                     </ul>

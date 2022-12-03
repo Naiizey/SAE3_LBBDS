@@ -9,7 +9,7 @@ password=$username@123
 for user in $username
 do
     useradd $user
-    echo $password | passwd --stdin $user
+    echo "$username:$password" | chpasswd
 done
 
 echo "$(wc -l profs) users have been created" 

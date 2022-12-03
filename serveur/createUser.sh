@@ -1,6 +1,6 @@
 #!/bin/bash
 
-userfile=/tmp/userlist 
+userfile=profs
 
 username=$(cat /tmp/userlist | tr 'A-Z'  'a-z')
 

@@ -15,7 +15,7 @@ use CodeIgniter\Model;
 class ReducPanier extends Model
 {
     protected $table      = 'sae3.reduc_panier';
-    protected $primaryKey = 'num_panier, id_reduction';
+    protected $primaryKey = 'num_panier';
 
     protected $useAutoIncrement = true;
 

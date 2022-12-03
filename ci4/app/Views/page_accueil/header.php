@@ -44,6 +44,7 @@
             @media screen and (max-width: 991px){
                 main{
                     top: 0;
+                    margin-top: 5em;
                 }    
             }
         </style>

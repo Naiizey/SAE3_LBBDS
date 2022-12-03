@@ -309,12 +309,30 @@ function updatePriceTotal() {
 
     //Récupération et application du code de réduction 
     let reduc = document.querySelector(".bloc-erreurs span");
-    reduc = reduc.innerHTML;
-    if (reduc.includes("%")) 
+
+    if (reduc.length !== 0)
     {
-        reduc = parseFloat(reduc.substring(0, reduc.length - 1));
-        prixTotTab[0].textContent = sommeTot * (1 - reduc / 100);
-        prixTotTab[1].textContent = sommeTot * (1 - reduc / 100);
+        reduc = reduc.innerHTML;
+
+        //Si le code réduit de xx.xx%
+        if (reduc.includes("%")) {
+            reduc = parseFloat(reduc.substring(0, reduc.length - 1));
+            prixTotTab[0].textContent = sommeTot * (1 - reduc / 100);
+            prixTotTab[1].textContent = sommeTot * (1 - reduc / 100);
+        }
+        //Si le code réduit de xx.xx€
+        else {
+            reduc = parseFloat(reduc.substring(0, reduc.length - 1));
+            prixTotTab[0].textContent = sommeTot - reduc;
+            prixTotTab[1].textContent = sommeTot - reduc;
+        }
+
+        prixTotTabHt[0].textContent = sommeTotHt;
+
+        //On barre l'ancien prix et on affiche le nouveau
+        /*let h2NouvPrix = document.getElementsByClassName(".cacheNouveauPrix")[0];
+        h2NouvPrix.classList.remove("cacheNouveauPrix");*/
+
     }
     else
     {

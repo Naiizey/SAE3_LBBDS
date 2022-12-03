@@ -532,6 +532,7 @@ footer a{
         margin: 0;
     }
 }
+
 .alerte-validation.valide{
     background-color: #3997a3;
 }
@@ -1571,7 +1572,7 @@ header ul {
     color: white;
 }
 
-.sectionRecommandationsPanier {
+.sectionRecommandationsPanierPC, .sectionRecommandationsPanierMobile {
     border: solid 2px;
     border-color: #C6C6C6;  
     color: #164F57;
@@ -1580,7 +1581,7 @@ header ul {
     padding: 1em;
 }
 
-.sectionRecommandationsPanier ul {
+.sectionRecommandationsPanierPC ul, .sectionRecommandationsPanierMobile ul {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -1589,18 +1590,22 @@ header ul {
     padding: 0;
 }
 
-.sectionRecommandationsPanier li {
+.sectionRecommandationsPanierPC li, .sectionRecommandationsPanierMobile li {
     width: 12%;
 }
 
-.sectionRecommandationsPanier img {
+.sectionRecommandationsPanierPC img, .sectionRecommandationsPanierMobile img {
     width: 100%;
     height: auto;
 }
 
-.sectionRecommandationsPanier hr {
+.sectionRecommandationsPanierPC hr, .sectionRecommandationsPanierMobile hr {
     background-color: #164F57;
     margin: 1em 0;
+}
+
+.sectionRecommandationsPanierMobile {
+    display: none;
 }
 
 .divPanierArticles + h2 {
@@ -1785,6 +1790,7 @@ h3 > .lienPasArticlePanier {
 
 .sectionProduit {
     margin: 0 20%;
+    padding-bottom: 3rem;
 }
 
 .sectionProduit > article {
@@ -1888,43 +1894,56 @@ h3 > .lienPasArticlePanier {
     margin: 0;
 }
 
-@media screen and (max-width:991px){
-    .sectionProduit {
-        margin: 0 2em;
-        margin-top: 1em;
+@media screen and (max-width: 991px){
+    .mainProduit{
+        padding: 7.5rem 0;
+        display: flex;
+        justify-content: center;
     }
 
-    .mainProduit article{
+    .sectionProduit{
+        margin: 0;
+        width: 90%;
+    }
+    
+    .sectionProduit > article{
         flex-direction: column;
+        gap: 2em;
     }
 
     .divGauche{
         width: 100%;
     }
 
+    .divGauche div{
+        width: 80%;
+    }
+
+    .divGauche ul{
+        width: 20%;
+    }
+
     .divDroite{
-        margin-top: 1em;
         width: 100%;
         margin-left: 0;
     }
 
     .ParaDescProduit{
-        margin-right: 0;
         text-align: left;
     }
 
-    .divQuantiteProduit{
-        margin-top: 1em;
+    .sectionRecommandationsPanierPC{
+        display: none;
     }
 
-    .divQuantiteProduit + div{
-        display: flex;
-        justify-content: space-between;
+    .sectionRecommandationsPanierMobile{
+        display: block;
     }
 }
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                          Carte produit (CardProduit.php)                        ┃
+┃               Carte produit (CardProduit.php)                     ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
@@ -2599,6 +2618,10 @@ a.fleche-page{
 
     .categorie-catalogue summary{
         padding: 1em 5%;
+    }
+
+    #Catalogue{
+        padding: 7.5rem 0;
     }
 }
 

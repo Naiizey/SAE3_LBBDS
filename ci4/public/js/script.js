@@ -626,6 +626,11 @@ var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFi
                     self.currPage=1;
                     self.listeProduit.innerHTML="";    
                 }
+                if(result["estDernier"]){
+                    self.voirPlus.classList.add("hidden");
+                }else{
+                    self.voirPlus.classList.remove("hidden");
+                }
                 result["resultat"].forEach(produit => self.listeProduit.innerHTML += produit);
                 //reexe, afin que le listener revienne sur les cartes
                 clickProduit();

@@ -32,23 +32,22 @@ class Produits extends BaseController
             {
                 
                 $result= model("\App\Models\ProduitCatalogue")->findAll(
-                    $nombreProd*$page,
+                    ($nombreProd*$page)+1,
                     $nombreProd*($page-1)
                        
                 );
-                $nbResults=sizeof(model("\App\Models\ProduitCatalogue")->findAll());
-                
+                $dernier=sizeof($result)<$nombreProd+1;
          
             }
             else
             {
                 
                 $result=$this->casFilter($filters,$data)->findAll(
-                    $nombreProd*$page,
+                    ($nombreProd*$page)+1,
                     $nombreProd*($page-1)
                        
                 );
-                $nbResults=0;
+                $dernier=sizeof($result)<$nombreProd+1;
                 //$nbResults=sizeof($this->casFilter($filters,$data)->findAll());
              
                 if(empty($result)){
@@ -64,7 +63,7 @@ class Produits extends BaseController
            
         
         
-        return $this->giveResult($result,$nbResults);
+        return $this->giveResult($result,$dernier);
 
     }
 
@@ -137,7 +136,7 @@ class Produits extends BaseController
         }
     }
 
-    private function giveResult($result,$nbResults){
+    private function giveResult($result,$dernier){
     
         
         
@@ -147,10 +146,10 @@ class Produits extends BaseController
                 $retour[]=service("cardProduit")->display($prod);
             }
             return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
-            ->setStatusCode(200)->setJSON(array("resultat"=>$retour,"nombreTotal"=>$nbResults));
+            ->setStatusCode(200)->setJSON(array("resultat"=>$retour,"estDernier"=>$dernier));
         }
         else{
-            return array("resultat"=>$result,"nombreTotal"=>$nbResults);
+            return array("resultat"=>$result,"estDernier"=>$dernier);
         }
     }
 

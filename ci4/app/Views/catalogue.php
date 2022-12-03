@@ -75,7 +75,7 @@
         <?php endforeach; ?>
         </div>
         <div class="nav-page">
-            <button class="normal-button voir-plus">Voir plus</button>
+            <button class="normal-button voir-plus  <?= ($estDernier)?"hidden":"" ?>">Voir plus</button>
         </div>
     </section>
 </main>

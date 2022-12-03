@@ -389,6 +389,10 @@ main {
     }
 }
 
+button.hidden{
+    visibility: hidden;
+}
+
 /* Format paysage */
 @media screen and (max-width: 991px) and (orientation:landscape){
     .divHeaderAlizon{

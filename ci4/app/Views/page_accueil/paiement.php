@@ -49,4 +49,5 @@
 <?php require("footer.php"); ?>
 <script>
     var js = new formAdresseConstructor();
+    setUpPaiement();
 </script>

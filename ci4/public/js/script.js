@@ -1088,39 +1088,41 @@ function menuCredit() {
 ┃                                 Paiement                                        ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-
-document.querySelector("[type='submit']").addEventListener("click", (e) => {
-    e.preventDefault(); 
-    let forms= [
-        document.forms["form_adresse"],
-        document.forms["form_paiement"]
-    ]
-    var theForm= document.createElement("form");    
-
-    let isValid=Array.from(forms).every(form => {
-        
-        if(form.reportValidity ()){
-            for (var elem of form.elements) {
-                theForm.appendChild(elem.cloneNode(true));
+function setUpPaiment(){
+    document.querySelector("[type='submit']").addEventListener("click", (e) => {
+        e.preventDefault(); 
+        let forms= [
+            document.forms["form_adresse"],
+            document.forms["form_paiement"]
+        ]
+        var theForm= document.createElement("form");    
+    
+        let isValid=Array.from(forms).every(form => {
+            
+            if(form.reportValidity ()){
+                for (var elem of form.elements) {
+                    theForm.appendChild(elem.cloneNode(true));
+                }
+               return true;
             }
-           return true;
+            else{
+                return false;
+            }
+        });
+        if (isValid){
+            theForm.method= "POST";
+            theForm.action= base_url + "/paiement";
+            theForm.style.display= "none";
+            document.body.appendChild(theForm);
+            console.log(theForm);
+            theForm.submit();
         }
-        else{
-            return false;
-        }
-    });
-    if (isValid){
-        theForm.method= "POST";
-        theForm.action= base_url + "/paiement";
-        theForm.style.display= "none";
-        document.body.appendChild(theForm);
-        console.log(theForm);
-        theForm.submit();
-    }
+        
     
+        
+    })
+}
 
-    
-})
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

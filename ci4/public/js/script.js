@@ -762,12 +762,16 @@ function barreProgression() {
 ┃                                   formAdresse                                   ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+var seekPositionErreur = function(forNom){
 
+    return document.querySelector(`.position-erreur[for=${forNom}]`);
+}
 
 var formAdresseConstructor = function(){
     this.form=document.forms["form_adresse"];
     var self =this;
     this.actionAfterFetch= new Object();
+
 
     this.nomEtPrenom =[
         this.form.elements["nom"],
@@ -863,12 +867,12 @@ var formAdresseConstructor = function(){
         elemRequired.addEventListener("blur", (event) => {
         selfTarget=event.target;
         if(selfTarget.validity.valueMissing){
-            this.creerErreur(document.querySelector(`.position-erreur[for=${selfTarget.name}]`),"Champ vide");
+            this.creerErreur(seekPositionErreur(selfTarget.name),"Champ vide");
             this.estRempli[selfTarget.name]=false;
         }
         else{
             this.estRempli[selfTarget.name]=true;
-            this.supprimerErreur(selfTarget.parentNode);
+            this.supprimerErreur(seekPositionErreur(selfTarget.name));
            
         }
         })
@@ -877,7 +881,7 @@ var formAdresseConstructor = function(){
     this.afterVille = function(response){
     
         this.codePostal.value = response.features[0].properties.postcode;
-        this.supprimerErreur(this.codePostal.parentNode);
+        this.supprimerErreur(seekPositionErreur(selfTarget.name));
          
      }
  
@@ -915,7 +919,8 @@ var formAdresseConstructor = function(){
         }
         else if(!this.codePostal.validity.valueMissing){
            
-            this.supprimerErreur(selfTarget.parentNode);
+            this.supprimerErreur(seekPositionErreur(selfTarget.name));
+        
             
             
             
@@ -928,7 +933,8 @@ var formAdresseConstructor = function(){
            
         }
         else{
-            this.supprimerErreur(selfTarget.parentNode);
+            this.supprimerErreur(seekPositionErreur(selfTarget.name));
+            
            
         }    
     };
@@ -1089,6 +1095,7 @@ function menuCredit() {
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 function setUpPaiment(){
+    
     document.querySelector("[type='submit']").addEventListener("click", (e) => {
         e.preventDefault(); 
         let forms= [

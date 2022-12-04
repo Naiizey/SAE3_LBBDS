@@ -51,7 +51,7 @@ class AdresseFacturation extends Model
 
     public function enregAdresse(Adresse $adresse){
         $this->save($adresse);  
-        return $this->db->table("sae3._adresse_facturation")->selectMax("id_adresse_fact")->get()->getResult()[0]->id_adresse_fact;
+        return $this->insertID;
     }
 
     public function getAdresseById($id){

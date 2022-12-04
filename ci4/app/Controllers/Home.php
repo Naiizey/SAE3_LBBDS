@@ -378,9 +378,13 @@ class Home extends BaseController
         if (!empty($post)) {
             $adresse->fill($post);
             if ($adresse->checkAttribute($this->validator)) {
-                $expiration=strtotime('+24 hours');
+               
                 $id_a=$model->enregAdresse($adresse);
+                /*
+                $expiration=strtotime('+24 hours');
                 setcookie('id_adresse_livraison', $id_a, array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
+                */
+                session()->set("adresse_livraison",$id_a);
                 return redirect()->to("/paiement");
             }
         }
@@ -437,9 +441,12 @@ class Home extends BaseController
             $issues=$paiement->paiement($post);
             $adresse->fill($post);
             if (empty($issues) && $adresse->checkAttribute($this->validator) ) {
+                /* Cookie = problème de sécurité
                 $expiration=strtotime('+24 hours');
-                $id_a=$model->enregAdresse($adresse);
                 setcookie('id_adresse_facturation', $id_a, array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
+                */
+                $id_a=$model->enregAdresse($adresse);
+                session()->set("adresse_facturation",$id_a);
                 return redirect()->to("/validation");
             }
         }
@@ -472,6 +479,14 @@ class Home extends BaseController
         $data['adresse']=model("\App\Models\ClientAdresseLivraison")->getAdresse($data['num_compte']);
 
         return view('panier/details.php', $data);
+    }
+
+    public function validation(){
+        if(session()->has("adresse_facturation") && session()->has("adresse_livraison")){
+            model("\App\Models\LstCommandesCli")->creerCommande(session()->get("numero"),session()->get("adresse_livraison"));
+            return redirect()->to("/commandes");
+        }
+        else throw new Exception("Vous ne pouvez pas être a cette étape sans avoir valider votre panier et vos adresses de factutation et de livraison",401);
     }
 
     //Tant que commande n'est pas là

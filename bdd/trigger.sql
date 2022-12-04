@@ -153,6 +153,7 @@ CREATE OR REPLACE FUNCTION insertInsertCommande() RETURNS TRIGGER AS
     BEGIN
         select max(num_panier) into current_panier from sae3._panier_client where num_compte=new.num_compte group by num_compte;
         INSERT INTO sae3._commande(num_panier, num_commande, date_commande, id_a) VALUES (current_panier,new.num_commande, current_date,new.id_a);
+        INSERT INTO sae3._panier_client (num_panier,num_compte) values (null,new.num_compte);
         RETURN NEW;
     end
 $$ language plpgsql;

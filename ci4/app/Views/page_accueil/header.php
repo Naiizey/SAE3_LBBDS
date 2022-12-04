@@ -113,6 +113,7 @@
                         <div class="divHoverConnexion divConnected">
                             <p class="pNom">Bonjour <?= (session()->get("nom")) ?></p>
                             <a href="<?= base_url()."/espaceClient"?>"><p>Mon profil</p></a>
+                            <a href="<?= base_url()."/commandes"?>"><p>Mes commandes</p></a>
                             <a href="<?= base_url()."/destroy"?>"><p>Se déconnecter</p></a>
                         </div>
                     <?php else: ?>

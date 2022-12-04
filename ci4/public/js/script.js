@@ -774,9 +774,10 @@ var formAdresseConstructor = function(){
         this.form.elements["prenom"]    
     ];
     //Suggestions dés le clique
-    this.form.elements["ville"].addEventListener("mousedown",function(){
+    this.form.elements["ville"].addEventListener("mousedown",function(event){
         if( document.activeElement == this )return;
-        document.querySelector(this).focus();
+      
+        event.target.focus();
     });
     
     this.estRempli = new Array();
@@ -909,11 +910,11 @@ var formAdresseConstructor = function(){
     this.chercherVilleParCodePostal= (event) => {
         selfTarget=event.target;
         if(this.codePostal.validity.patternMismatch){
-            this.creerErreur(selfTarget.parentNode,"Ne correspond à aucun code postal");
+            this.creerErreur(document.querySelector(`.position-erreur[for=${selfTarget.name}]`),"Ne correspond à aucun code postal");
            
         }
         else if(!this.codePostal.validity.valueMissing){
-            console.log("Bonsoir, non");
+           
             this.supprimerErreur(selfTarget.parentNode);
             
             
@@ -1014,13 +1015,14 @@ function errors(){
 ┃                                   Recherche                                     ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-
+/* Ne sert à rien de tout façon
 document.addEventListener('invalid', (function () {
     return function (e) {
         e.preventDefault();
         document.getElementById("name").focus();
     };
 })(), true);
+*/
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                  Card Produit                                   ┃
@@ -1081,6 +1083,44 @@ function menuCredit() {
         hover = false;
     })
 }
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                 Paiement                                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+document.querySelector("[type='submit']").addEventListener("click", (e) => {
+    e.preventDefault(); 
+    let forms= [
+        document.forms["form_adresse"],
+        document.forms["form_paiement"]
+    ]
+    var theForm= document.createElement("form");    
+
+    let isValid=Array.from(forms).every(form => {
+        
+        if(form.reportValidity ()){
+            for (var elem of form.elements) {
+                theForm.appendChild(elem.cloneNode(true));
+            }
+           return true;
+        }
+        else{
+            return false;
+        }
+    });
+    if (isValid){
+        theForm.method= "POST";
+        theForm.action= base_url + "/paiement";
+        theForm.style.display= "none";
+        document.body.appendChild(theForm);
+        console.log(theForm);
+        theForm.submit();
+    }
+    
+
+    
+})
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

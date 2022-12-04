@@ -442,7 +442,7 @@ class Home extends BaseController
                 $expiration=strtotime('+24 hours');
                 $id_a=$model->enregAdresse($adresse);
                 setcookie('id_adresse_facturation', $id_a, array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
-                return redirect()->to("/");
+                return redirect()->to("/validation");
             }
         }
         $data['erreurs'] = $issues;

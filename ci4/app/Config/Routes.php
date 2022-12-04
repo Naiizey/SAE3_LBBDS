@@ -84,13 +84,13 @@ $routes->set404Override();
     $routes->post('vendeur/import/upload', 'Import::upload');
 
     $routes->get('vendeur/commandesCli', 'Home::lstCommandesVendeur');
-    $routes->get('vendeur/commandesCli/detail/(:num)','Home::detail/$1/true');
+    $routes->get('vendeur/commandesCli/detail/(:alphanum)','Home::detail/$1/true');
 
     $routes->get('/destroy', 'Test::destroySession');
 
     $routes->get('/commandes', 'Home::lstCommandesClient',['filter' => 'connexion']);
 
-    $routes->get('/commandes/detail/(:num)','Home::detail/$1',['filter' => 'connexion']);//['filter' => 'connexion']
+    $routes->get('/commandes/detail/(:alphanum)','Home::detail/$1',['filter' => 'connexion']);//['filter' => 'connexion']
 
     $routes->get('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
     $routes->options('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');

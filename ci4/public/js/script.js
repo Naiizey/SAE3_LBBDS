@@ -630,7 +630,8 @@ var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFi
         this.send = async (replace=true) => {
         //Récupère les valeurs des filtres et transformation en string de type url à laquelle ajoute la recherche
         var champsGet= new URLSearchParams(new FormData(self.form));
-        if(!self.champRecherche.value===""){
+        
+        if(!self.champRecherche.value==""){
             champsGet.append("search",self.champRecherche.value);
         }
         /*
@@ -643,7 +644,7 @@ var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFi
         if(champsGet.length!=0){
             champsGet="?"+champsGet;
         }
-        
+        console.log("http://localhost/Alizon/ci4/public/produits/page/"+((replace)?1:self.currPage)+champsGet);
          
        //fetch avec un await pour récuperer la réponse asynchrones (de manière procédurale)
         try{

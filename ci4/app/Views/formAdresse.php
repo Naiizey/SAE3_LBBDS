@@ -13,14 +13,14 @@
         <main>
             <div class="divFormAdresse">
                 <div class="onglets">
-                    <?php if(isset($controller) && $controller==="paiement"): ?>
+                    <?php if(isset($controller) && $controller === "Paiement"): ?>
                     <div class="onglet">
                         <h3>Adresses sauvegardées</h3>
                     </div>
                     <div class="onglet onglet-selectionnee">
                         <h3>Autre adresse</h3>
                     </div>
-                    <?php elseif(isset($controller) && $controller==="infoLivraison"): ?>
+                    <?php elseif(isset($controller) && $controller === "Livraisons"): ?>
                         <div class="onglet">
                             <h3>Adresses sauvegardées</h3>
                         </div>
@@ -31,7 +31,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="sectionCredit">
-                    <h2><?= (isset($controller) && $controller==="infoLivraison")?"Adresse livraison":"Adresse facture" ?></h2>
+                    <h2><?= (isset($controller) && $controller === "Livraisons")?"Adresse livraison":"Adresse facture" ?></h2>
                   
                     <form action='<?= current_url() ?>' method="post" name="form_adresse">
                         <div class="surNomPrenom">
@@ -95,7 +95,7 @@
                         <label>Complément adresse 2 :</label>
                         <input type="text" name="c_adresse2"  maxlength=150 value="<?= $adresse->c_adresse2 ?>"/>
                         <?= $errors->showError("comp_a2","paragraphe_erreur") ?>
-                        <?php if(isset($controller) && $controller==="infoLivraison"): ?>
+                        <?php if(isset($controller) && $controller === "Livraisons"): ?>
                         
                         <label>Informations complémentaites :</label>
                         <textarea name="info_comp" maxlength=250><?= $adresse->infos_comp ?></textarea>

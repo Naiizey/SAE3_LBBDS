@@ -35,8 +35,7 @@ class Home extends BaseController
     {
         helper("cookie");
         
-
-        $data['controller']= "index";
+        $data["controller"]= "Accueil";
 
         $data['cardProduit']=service("cardProduit");
         $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
@@ -80,10 +79,10 @@ class Home extends BaseController
            
              
             $issues['redirection']="Vous devez vous connectez pour y accéder";
-            $data['controller']= "connexion";
+            $data["controller"]= "Connexion";
             
         } else {
-            $data['controller']= "connexion";
+            $data["controller"]= "Connexion";
         }
 
         $data['erreurs'] = $issues;
@@ -126,13 +125,13 @@ class Home extends BaseController
             $data['linkRedirection']=session()->get("referer_redirection");
             if (parse_url($data['linkRedirection']) === "livraison") {
                 $issues['redirection']="Vous devez vous connectez pour valider votre commande";
-                $data['controller']= "compte_redirection";
+                $data["controller"]= "Compte Redirection";
             } else {
                 $issues['redirection']="Vous devez vous connectez pour accéder à cette espace";
-                $data['controller']= "inscription";
+                $data["controller"]= "Inscription";
             }
         } else {
-            $data['controller']= "inscription";
+            $data["controller"]= "Inscription";
         }
 
         $data['erreurs'] = $issues;
@@ -170,7 +169,7 @@ class Home extends BaseController
         if ($result == null) {
             return view('errors/html/error_404.php', array('message' => "Ce produit n'existe pas"));
         } else {
-            $data['controller'] = "produit";
+            $data["controller"] = "Produit";
 
             $data['prod'] = $result;
             return view('page_accueil/produit.php', $data);
@@ -179,7 +178,7 @@ class Home extends BaseController
 
     public function panier($context = null)
     {
-        $data['controller']= "panier";
+        $data["controller"] = "Panier";
         if ($context == 400) {
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }
@@ -189,8 +188,7 @@ class Home extends BaseController
 
     public function panierVide($context = null)
     {
-        $data['controller']= "panierVide";
-
+        $data["controller"] = "Panier (Vide)";
 
         if ($context == 400) {
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
@@ -215,7 +213,7 @@ class Home extends BaseController
         $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
         $data['cardProduit']=service("cardProduit");
         $data['categories']=model("\App\Models\CategorieModel")->findAll();
-        $data['controller']="Catalogue";
+        $data["controller"] = "Catalogue";
         $data['prods'] = [];
         $data['vide'] = false;
         $data['max_price'] = $modelProduitCatalogue->selectMax('prixttc')->find()[0]->prixttc;
@@ -262,7 +260,7 @@ class Home extends BaseController
 
     public function espaceClient($role = null, $numClient = null)
     {
-        $data['controller'] = "espaceClient";
+        $data["controller"] = "Espace Client";
         $modelFact = model("\App\Models\ClientAdresseFacturation");
         $modelLivr = model("\App\Models\ClientAdresseLivraison");
         $modelClient = model("\App\Models\Client");
@@ -363,7 +361,7 @@ class Home extends BaseController
         $model=model("\App\Models\AdresseLivraison");
 
         $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
-        $data['controller']='infoLivraison';
+        $data["controller"] = "Livraisons";
         $post=$this->request->getPost();
         $adresse = new \App\Entities\Adresse();
 
@@ -398,14 +396,14 @@ class Home extends BaseController
 
     public function lstCommandesClient()
     {
-        $data['controller']= "lstCommandesCli";
+        $data["controller"]= "Commandes Client";
         $data['commandesCli']=model("\App\Models\LstCommandesCli")->getCompteCommandes();
         return view('page_accueil/lstCommandesCli.php', $data);
     }
 
     public function lstCommandesVendeur()
     {
-        $data['controller']= "lstCommandesVendeur";
+        $data["controller"]= "Commandes Vendeur";
         $data['commandesVend']=model("\App\Models\LstCommandesVendeur")->findAll();
         return view('page_accueil/lstCommandesVendeur.php', $data);
     }
@@ -414,7 +412,7 @@ class Home extends BaseController
     {
         $post=$this->request->getPost();
         $issues=[];
-        $data['controller']='paiement';
+        $data["controller"]='Paiement';
 
         if (!empty($post)) {
             $paiement = service('authentification');
@@ -435,7 +433,7 @@ class Home extends BaseController
 
     public function detail($num_commande, $estVendeur=false)
     {
-        $data['controller']= "detail";
+        $data["controller"]= "Détail Commande";
         $data['numCommande'] = $num_commande;
         $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
         $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);

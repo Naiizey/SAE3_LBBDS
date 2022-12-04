@@ -390,20 +390,9 @@ END
 $$
 LANGUAGE PLPGSQL;
 CREATE tRIGGER beforeInsert_pouce BEFORE INSERT ON _pouce FOR EACH ROW EXECUTE PROCEDURE pouce_check() ;
-/*
-CREATE OR REPLACE FUNCTION fixInheritance() RETURNS TRIGGER AS
-$$
-BEGIN
 
-    INSERT INTO sae3._panier (num_panier) VALUES (new.num_panier);
-    return new;
-END;
-$$
-LANGUAGE PLPGSQL;
 
-CREATE tRIGGER afterInsert_panier_compte AFTER INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
-CREATE tRIGGER afterInsert_panier_visiteur AFTER INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE fixInheritance() ;
-*/
+
 
 
 CREATE OR REPLACE FUNCTION creerPremierPanier() RETURNS TRIGGER AS
@@ -422,10 +411,10 @@ CREATE OR REPLACE FUNCTION creerPanier() RETURNS TRIGGER AS
     $$
 
     BEGIN
-        IF new.num_panier is null THEN
-            INSERT INTO sae3._panier DEFAULT VALUES;
-            new.num_panier = CURRVAL('sae3._panier_num_panier_seq');
-        END IF;
+
+        INSERT INTO sae3._panier DEFAULT VALUES;
+        new.num_panier = CURRVAL('sae3._panier_num_panier_seq');
+
         return new;
     end;
     $$ language plpgsql;

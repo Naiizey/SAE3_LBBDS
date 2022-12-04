@@ -94,74 +94,74 @@ INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (149,'ar
 
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (133,'coke',100,150,'carottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 15, 4.5, 5, true);
+VALUES (133,'Breizh cola x6',5,6,'Nouvelle boisson bretonne au cola, issue de d''une agrigulture bio éthique, bio responsable, bio consciente.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 15, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (133,'vins',10,15,'arottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', '../ci4/public/image/produit/vins.jpg', true, 10, 4.5, 5, true);
+VALUES (133,'Vins',10,15,'Ensemble de vins dans une boite en bois qui agrémentera vos soirées ou repas.', '../ci4/public/image/produit/vins.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (134,'fines herbes',10,15,'rottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 17, 4.5, 5, true);
+VALUES (134,'Fines herbes',5,6,'Herbes pour aggrémenter les plats comestibles. Accompagne très bien une côte de boeuf avec un verre de rouge.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 17, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (134,'cannabis',10,15,'cultivé localement, produits de nos terroirs', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (134,'Herbe à chat',10,12,'Cultivé localement, produits de nos terroirs', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (135,'nike',10,15,'ottes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (135,'Néo balances',60,72,'Chaussures de sport et de villes parfaites pour toutes les situation. Imppecable pour se balader.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (135,'néo balances',10,15,'ttes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (137,'Canard',10,12,'Statue de jardin pour tous les adeptes de la collection des nains de jardin, agrémente efficacement tout type de jardin.', '../ci4/public/images/produit/canard.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (136,'gucchivenchi',10,15,'tes mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (140,'Breizhphone 1',200,240,'Tout premier téléphone breton tactile, attention produit assez fragile et disposant d''une batterie limitée', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (136,'le coq pas sportif',10,15,'es mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (134,'Crêpes froment artisanales x12',3,3.6,'Lot de 12 crêpes froment artisanales, sans conservateurs. Provenance : Douarnenez', 'https://images.pexels.com/photos/10248807/pexels-photo-10248807.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', true, 15, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (137,'canard',10,15,'s mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', '../ci4/public/images/produit/canard.jpg', true, 10, 4.5, 5, true);
+VALUES (134,'Kouign-amann',5,6,'Plât emblématique de la bretagne, Kouign-amann 100% beurre idéal pour toute la famille. Provenance : Douarnenez', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (137,'33 tonnes',10,15,'mures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (136,'T-shirt marinière',10,12,'Classique et intemporel, ce t-shirt toujours à la mode s''accordera avec toutes vos tenues. Provenance : Brest', 'https://images.pexels.com/photos/10059111/pexels-photo-10059111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', true, 17, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (138,'RTX9090ti',10,15,'ures et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (134,'Palet breton',10,15,'Biscuits traditionnels bretons, des gâteaux parfait pour vos pauses café. Provenance : Pont-Aven', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (138,'Ryzen -6000RX',10,15,'res et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (136,'Vareuse',40,48,'Veste bretonne issue de voiles de bateau. Provenance: Ouessant', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (139,'cSamsung S22 (SS22)',10,15,'es et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloup', 'https://pbs.twimg.com/media/C3tBUxtUMAAgTPO?format=jpg&name=900x900e.jpg', true, 10, 4.5, 5, true);
+VALUES (136,'Ciret jaune',100,120,'Parfait pour vous protéger du vent et de la pluie en bretagne, ce ciret sera votre meilleur compagnon pour vos jours en Bretagne. Provenance : Trégunc', 'https://images.pexels.com/photos/11421665/pexels-photo-11421665.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (140,'iphone 1',10,15,'s et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (136,'Drapeau Breton',5,6,'Avec cet indispensable pour tout Breton, vous pourrez le porter fièrement à n''importe quel évènement. Provenance : Pontivy', 'https://cdn.pixabay.com/photo/2016/11/20/08/22/breton-1842173_960_720.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (140,'écran de cinéma',10,15,'et bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', '../ci4/public/images/produit/ecran_cinema.jpg', true, 10, 4.5, 5, true);
+VALUES (137,'Autocollant Bidouden',1,1.2,'Ce sticker à coller n''importe où comme sur votre voiture ou votre ordinateur est parfait pour partager votre passion pour la Bretagne. Provenance : Morlaix', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.la-boutique-de-bretagne.fr%2Fautocollant-sticker-l-aise-breizh-noir-la-boutique-de-bretagne__p274819.html&psig=AOvVaw0OlcNuD6MZIG2qTZf9e-d6&ust=1670188558182000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCLiF0K-v3vsCFQAAAAAdAAAAABAE', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (141,'JBL PRO',10,15,'t bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (137,'Parapluie',10,12,'Indispensable pour vos séjours en Bretagne. Provenance : Rennes', 'https://cdn.pixabay.com/photo/2015/07/15/13/42/umbrella-846185_960_720.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (141,'running gag shoes',10,15,'bien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (140,'Ecran de cinéma',1000,1200,'Ecran géant catodique qui permet de faire des diffusions de cassetes vhs.', '../ci4/public/images/produit/ecran_cinema.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (142,'strap',10,15,'ien juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (141,'JBL PRO',300,360,'Enceinte et audio player qui contient une compiliation des meilleurs passage de biniou lors des breizh fests.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (142,'péripatéticienne',10,15,'en juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloup', 'https://media.sudouest.fr/2136676/1000x500/entree-bitche.jpg?v=1618309579e.jpg', true, 10, 4.5, 5, true);
+VALUES (141,'Running gag shoes',50,60,'Chaussures farce et atrappes qui gènérent des son exotiques lors de leur utilisation.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (143,'claymore',10,15,'n juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloup','https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/US_M18a1_claymore_mine.jpg/280px-US_M18a1_claymore_mine.jpge.jpg', true, 10, 4.5, 5, true);
+VALUES (142,'Strap',5,6,'Petit scotch pour tenir n''importe quel objet sur toutes les surfaces', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (143,'rateau',10,15,'juteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', '../ci4/public/images/produit/rateau.jpg', true, 10, 4.5, 5, true);
+VALUES (142,'Attrape mouches',2,2.4,'Vous êtes ennuyé par les mouches, cet outil est fait pour vous !! Grace à ceci les insectes vont se pieger dedans avant de s''endormir pour un long sommeil.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (144,'bêche',10,15,'uteuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloup','https://greensquare.fr/1160-large_default/fourche-beche-kent-and-stowe.jpge.jpg', true, 10, 4.5, 5, true);
+VALUES (143,'Anti nuisible',10,12,'Outil fumigène écologique pour se débarrasser des insect qui attaquent les légumes du jardin.','https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (144,'fraiseuse',10,15,'teuses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (143,'Rateau',10,12,'Outil de jardinage pour permettre de récolter les feuilles du jardin.', '../ci4/public/images/produit/rateau.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (145,'pilon',10,15,'euses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (144,'Bêche',10,12,'Outil de jardinage qui va permettre de labourer son potager d''une manière efficace.','https://greensquare.fr/1160-large_default/fourche-beche-kent-and-stowe.jpge.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (145,'chadior',10,15,'uses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (144,'Fraiseuse',10,12,'Outil breton parfait pour enlever tige d''une fraise qui rappelons le n''est pas comestible.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (146,'oréo',10,15,'ses provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (145,'Pilon',10,12,'Petit outil efficace pour faire de la cuisine ou des tisanes, parfait pour écraser soit même ses feuilles de thé.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (146,'mousse anti vax',10,15,'es provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (145,'Chadior',10,12,'Lorem ipsum, produit plutot inconnu du grand public mais qui en fait est incroyable.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (142,'détartreur pour dentition',10,15,'s provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (146,'Oréa',4,4.8,'Produit dérivé et revisité du célèbre buiscuit oréo mais revisité à la bretonne.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (142,'saut à pied non joint',10,15,'provenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (142,'Saut à pied non joint',10,12,'Manuel sportif traditionnel de bretagne. Déja 12000 vente dans le finistère à Quimper.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (148,'missile javelin',1000,1500, 'très bon missile pour arrêter un T72, Attention à usage unique, provenance: ukraine','../ci4/public/images/produit/missile_javelin.jpg', true, 10, 4.5, 5, true);
+VALUES (148,'Piquets de jardin',100,120, 'Très bon piquet pour arrêter des lapins, attention à usage unique, provenance : Bretagne.','../ci4/public/images/produit/missile_javelin.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (148,'jour',10,15,'rovenant de la provance, excellent légume typiquement francais. Provenance: gouadeloupe', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (148,'Tarte campagnarde',8,9.6,'Carrotes, fromage, jambon, champigons. Produit incroyablement bon qui fond très bien en bouche.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (149,'hélicoptère apache',10000,15000,'héliocptère de fabrique américaine, configuration : 16 missiles hellfire, 1200 obus 30mm, Hydra 70 missile air sol (attention s''épuise très vite à l''usage): contact SAV', '../ci4/public/images/produit/helicoptere_apache.jpg', true, 10, 4.5, 5, true);
+VALUES (149,'Galets bretons',1000,1200,'Galets de fabrique bretonne, configuration : quarz 12%, calcaire 5%, granite 83%; galet certifié de provenance d''une plage de Perros Guirrec.', '../ci4/public/images/produit/helicoptere_apache.jpg', true, 10, 4.5, 5, true);
 
 
-INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('franchement j''en suis très satisfait, rien à redire le missile fonctionne très bien, néammoins attention à la prénétration sur du blindage réactif: on sent bien la limite du produit car il explose à la surface en ne faisant que très peu de dégats',30,1);
-INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('Je suis déçu, à chaque fois que je veux aller faire les courses avec mon produit le rotor se bloque à cause d''un manque de préchauffage, pas très pratique au quotidien',32,2);
-INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('Performant mais a parfois des difficultés',30,1);
+INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('franchement j''en suis très satisfait, rien à redire cde produit est vraiment très bien, j adore',30,1);
+INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('qualité moyenne, à revoir',32,2);
+INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('Performant mais à parfois des difficultés',30,1);
 
 
 INSERT INTO _image_avis (num_avis, lien_image_avis) VALUES (1, 'https://floriangll.fr/Humour/Dark/Masterclass/Masterclass.gif');
@@ -178,7 +178,7 @@ INSERT INTO _panier_visiteur (num_panier,date_suppression, token_cookie) VALUES 
 INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (5, 18, 1);
 INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (1, 17, 1);
 INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (5, 18, 2);
-INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (5, 17, 2);
+INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (3, 17, 5);
 
 INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (5, 18, 1);
 INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3.75, 17, 1);

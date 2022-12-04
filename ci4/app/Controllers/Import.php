@@ -22,7 +22,7 @@ class Import extends BaseController
     public function index()
     {
 
-        $data['controller']= "import";
+        $data["controller"]= "import";
         return view('page_accueil/import.php', $data);
     }
 
@@ -37,7 +37,7 @@ class Import extends BaseController
     }
 
     public function importCSV($filepath) {
-        $data['controller']= "import";
+        $data["controller"]= "import";
         $row = 0;
         $fichier = fopen($filepath, "r");
         $size = fstat($fichier)["size"];

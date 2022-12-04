@@ -84,7 +84,7 @@ class Panier extends BaseController
            
         }
 
-        $data['controller'] = "panier";
+        $data["controller"] = "Panier";
         $data['code'] = "";
         $data['classCacheDiv'] = "cacheNouveauPrix";
         $issues = [];
@@ -215,7 +215,7 @@ class Panier extends BaseController
     }
 
     public function ajouterPanier($idProd=null,$quantite=null) {
-        $data['controller'] = "panier";
+        $data["controller"] = "Panier";
         
         if($quantite==null && isset($this->request)){
             if($this->request->getPost("quantite")==="10+")

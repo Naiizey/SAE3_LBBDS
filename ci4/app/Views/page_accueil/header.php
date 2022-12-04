@@ -31,12 +31,12 @@
             }
             
             main {
-            <?php if ($controller != "index" && $controller != "produit"): ?>
+            <?php if ($controller != "Accueil" && $controller != "Produit"): ?>
                 margin-top : 5em;
             <?php else : ?>
                 margin-top : 8.4em;
             <?php endif; ?>
-            <?php if ($controller == "panier" || $controller == "panierVide") : ?>
+            <?php if ($controller == "Panier" || $controller == "Panier (Vide)") : ?>
                 padding : 2em;
             <?php endif; ?>
             }
@@ -48,7 +48,7 @@
                 }    
             }
         </style>
-        <title><?= $controller ?></title>
+        <title><?= "Alizon - " . $controller ?></title>
     </head>
     <script>
         const base_url = "<?= base_url() ?>";
@@ -56,7 +56,7 @@
     <body>
         <header>
             <div class="divHeaderAlizon">
-            <?php if ($controller != "panier" && $controller != "panierVide" && $controller != "compte_redirection" && $controller != "infoLivraison" && $controller != "paiement"): ?>
+            <?php if ($controller != "Panier" && $controller != "Panier (Vide)" && $controller != "Compte Redirection" && $controller != "Livraisons" && $controller != "Paiement"): ?>
                     <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
                         <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
                         <h1>Alizon</h1>
@@ -67,31 +67,31 @@
                         <h1>Alizon</h1>
                     </a>
             <?php endif; ?>
-                <?php if ($controller == "panier" || $controller == "panierVide" || $controller == "compte_redirection" || $controller == "infoLivraison" || $controller == "paiement"): ?>
+                <?php if ($controller == "Panier" || $controller == "Panier (Vide)" || $controller == "Compte Redirection" || $controller == "Livraisons" || $controller == "Paiement"): ?>
                     <div class="divSuivi">
-                        <div class="<?= (($controller == "panier" )?"etat-courant-commande":"") ?>">
+                        <div class="<?= (($controller == "Panier" )?"etat-courant-commande":"") ?>">
                             <?= file_get_contents(dirname(__DIR__,3)."/public/images/header/panier.svg") ?>
                             <h3>Panier</h3>
                         </div>
                         <hr>
-                        <div class="<?= (($controller == "compte_redirection" )?"etat-courant-commande":"") ?>">
+                        <div class="<?= (($controller == "Compte Redirection" )?"etat-courant-commande":"") ?>">
                             <?= file_get_contents(dirname(__DIR__,3)."/public/images/header/profil.svg") ?>
                             <h3>Identification</h3>
                         </div>
                         <hr>
-                        <div class="<?= (($controller == "infoLivraison" )?"etat-courant-commande":"") ?>">
+                        <div class="<?= (($controller == "Livraisons" )?"etat-courant-commande":"") ?>">
                             <?= file_get_contents(dirname(__DIR__,3)."/public/images/header/carton.svg") ?>
                             <h3>Livraison</h3>
                         </div>
                         <hr>
-                        <div class="<?= (($controller == "paiement" )?"etat-courant-commande":"") ?>">
+                        <div class="<?= (($controller == "Paiement" )?"etat-courant-commande":"") ?>">
                             <?= file_get_contents(dirname(__DIR__,3)."/public/images/header/paiement.svg") ?>
                             <h3>Paiement</h3>
                         </div>
                     </div>
                 <?php else: ?>
                     <form class="formRecherche" action="<?= base_url() ?>/catalogue/">
-                        <input required class="champsRecherche" type="search" name="search" placeholder="Recherche.." value="<?= ((isset($_GET["search"])) ? $_GET["search"] : '') ?>"/>
+                        <input class="champsRecherche" type="search" name="search" placeholder="Recherche.." value="<?= ((isset($_GET["search"])) ? $_GET["search"] : '') ?>"/>
                         <label>
                             <input type="submit"><?= file_get_contents(dirname(__DIR__,3) ."/public/images/header/loupe.svg") ?>
                         </label>
@@ -113,6 +113,7 @@
                         <div class="divHoverConnexion divConnected">
                             <p class="pNom">Bonjour <?= (session()->get("nom")) ?></p>
                             <a href="<?= base_url()."/espaceClient"?>"><p>Mon profil</p></a>
+                            <a href="<?= base_url()."/commandes"?>"><p>Mes commandes</p></a>
                             <a href="<?= base_url()."/destroy"?>"><p>Se déconnecter</p></a>
                         </div>
                     <?php else: ?>
@@ -123,7 +124,7 @@
                     <?php endif; ?>
                 </div>
             </div>
-            <?php if ($controller == "index" || $controller == "produit"): ?>
+            <?php if ($controller == "Accueil" || $controller == "Produit"): ?>
                 <nav>
                     <hr>
                     <ul>

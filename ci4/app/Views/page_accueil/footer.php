@@ -56,11 +56,21 @@
             <p>&copy; 2022 Alizon.bzh et ses affiliés</p>
             <div class="mobile">
                 <ul>
-                    <li>
-                        <a href="<?= base_url() ?>/connexion"> <!-- profile -->
-                            <?php include("./images/header/profil.svg")?>
-                        </a>
-                    </li>
+                <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>">
+                        <?php include(dirname(__DIR__,3)."/public/images/header/profil.svg")?>
+                    </a>
+                    <?php if (session()->has("numero")): ?>
+                        <div class="divHoverConnexion divConnected">
+                            <p class="pNom">Bonjour <?= (session()->get("nom")) ?></p>
+                            <a href="<?= base_url()."/espaceClient"?>"><p>Mon profil</p></a>
+                            <a href="<?= base_url()."/destroy"?>"><p>Se déconnecter</p></a>
+                        </div>
+                    <?php else: ?>
+                        <div class="divHoverConnexion divNotConnected">
+                            <a href="<?= base_url()."/connexion"?>"><p>Se connecter</p></a>
+                            <a href="<?= base_url()."/inscription"?>"><p>S'inscrire</p></a>
+                        </div>
+                    <?php endif; ?>
                     <li>
                         <a href="./"> <!-- contact -->
                             <?php include("./images/header/contact.svg")?>

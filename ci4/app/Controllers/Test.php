@@ -9,6 +9,9 @@ class Test extends BaseController{
             $session->remove("numero");
             $session->remove("nom");
             $session->remove("ignorer");
+            $session->remove("adresse_facturation");
+            $session->remove("adresse_livraison");
+            
             return redirect()->to("/");
         }
 

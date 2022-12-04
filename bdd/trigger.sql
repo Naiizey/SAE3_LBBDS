@@ -83,22 +83,31 @@ CREATE OR REPLACE FUNCTION transvasagePanier(entree_token_panier varchar, entree
      DECLARE
         current_panier int;
         row sae3._refere%ROWTYPE;
+        stock int;
 
     BEGIN
-        PERFORM num_panier FROM sae3._panier_client natural join sae3._refere where num_compte=entree_num_compte;
+        PERFORM num_panier FROM sae3._panier_visiteur natural join sae3._refere where token_cookie=entree_token_panier;
         if found then
 
             select max(num_panier) into current_panier from sae3._panier_client where num_compte=entree_num_compte group by num_compte;
-            for row in (SELECT * FROM sae3._refere natural join sae3._panier_visiteur where token_cookie=entree_token_panier) loop
+            for row in (SELECT id_prod, num_panier, qte_panier FROM sae3._refere natural join sae3._panier_visiteur where token_cookie=entree_token_panier) loop
                 Perform * FROM sae3._refere WHERE num_panier=current_panier and id_prod=row.id_prod;
                 If FOUND THEN
-                    UPDATE sae3._refere SET qte_panier=qte_panier+row.qte_panier WHERE num_panier=current_panier and id_prod=row.id_prod;
-                    delete from sae3._refere where num_panier=row.num_panier and id_prod=row.id_prod;
+                    SELECT stock_prod INTO stock FROM sae3._produit natural join sae3._refere where id_prod=row.id_prod and num_panier=current_panier;
+
+                    UPDATE sae3._refere SET qte_panier=qte_panier+row.qte_panier WHERE num_panier=current_panier and id_prod=row.id_prod and stock >= row.qte_panier+qte_panier;
+
+                    UPDATE sae3._refere SET qte_panier=stock WHERE num_panier=current_panier and id_prod=row.id_prod and stock < row.qte_panier+qte_panier;
+
+
+
                 ELSE
-                    INSERT INTO sae3._refere VALUES (row.id_prod,current_panier,row.qte_panier);
-                    delete from sae3._refere where num_panier=row.num_panier and id_prod=row.id_prod;
+                    INSERT INTO sae3._refere(id_prod, num_panier, qte_panier) VALUES (row.id_prod,current_panier,row.qte_panier);
+
                 end if;
 
+
+                delete from sae3._refere where num_panier=row.num_panier and id_prod=row.id_prod;
 
             end loop;
 
@@ -111,6 +120,7 @@ CREATE OR REPLACE FUNCTION transvasagePanier(entree_token_panier varchar, entree
 
     END;
     $$ language plpgsql;
+
 
 
 CREATE OR REPLACE FUNCTION insertAdresseLivraison() RETURNS TRIGGER AS

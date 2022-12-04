@@ -20,7 +20,12 @@ class AuthentificationFilter implements FilterInterface{
            
             
                 
-            session()->set("referer_redirection",current_url());
+            if(parse_url(current_url(),PHP_URL_PATH) === "/livraison" && has_cookie("token_panier")){
+                session()->set("referer_redirection",base_url()."/panier");
+            }else{
+                session()->set("referer_redirection",current_url());
+            }
+            
             
             
             

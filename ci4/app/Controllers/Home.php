@@ -63,20 +63,25 @@ class Home extends BaseController
 
             if (empty($issues) && !session()->has("referer_redirection")) {
                 return redirect()->to("/");
+            //Dans le cas où on a 2 panier
+            }elseif (empty($issues)) {
+                    session()->remove("referer_redirection");
+                    return redirect()->to("/panier");
             } elseif (empty($issues) && session()->has("referer_redirection")) {
-                return redirect()->to(session()->get("referer_redirection"));
+                
+                $redirection=session()->get("referer_redirection");
+                session()->remove("referer_redirection");
+                return redirect()->to($redirection);
             }
         }
 
         if (session()->has("referer_redirection")) {
             $data['linkRedirection']=session()->get("referer_redirection");
-            if (parse_url($data['linkRedirection']) === "panier") {
-                $issues['redirection']="Vous devez vous connectez pour valider votre commande";
-                $data['controller']= "compte_redirection";
-            } else {
-                $issues['redirection']="Vous devez vous connectez pour y accéder";
-                $data['controller']= "connexion";
-            }
+           
+             
+            $issues['redirection']="Vous devez vous connectez pour y accéder";
+            $data['controller']= "connexion";
+            
         } else {
             $data['controller']= "connexion";
         }
@@ -106,17 +111,20 @@ class Home extends BaseController
             if (empty($issues) && !session()->has("referer_redirection")) {
                 return redirect()->to("/");
             } elseif (empty($issues) && session()->has("referer_redirection")) {
-                if (parse_url(session()->get("referer_redirection")) === "panier") {
-                    return redirect()->to("/commandes");
+                if (parse_url(session()->get("referer_redirection")) === "livraison" && has_cookie("token_panier")) {
+                    session()->remove("referer_redirection");
+                    return redirect()->to("/panier");
                 } else {
-                    return redirect()->to(session()->get("referer_redirection"));
+                    $redirection=session()->get("referer_redirection");
+                    session()->remove("referer_redirection");
+                    return redirect()->to($redirection);
                 }
             }
         }
 
         if (session()->has("referer_redirection")) {
             $data['linkRedirection']=session()->get("referer_redirection");
-            if (parse_url($data['linkRedirection']) === "panier") {
+            if (parse_url($data['linkRedirection']) === "livraison") {
                 $issues['redirection']="Vous devez vous connectez pour valider votre commande";
                 $data['controller']= "compte_redirection";
             } else {

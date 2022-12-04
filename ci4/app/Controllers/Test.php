@@ -9,6 +9,7 @@ class Test extends BaseController{
             $session->remove("numero");
             $session->remove("nom");
             $session->remove("ignorer");
+            
             return redirect()->to("/");
         }
 

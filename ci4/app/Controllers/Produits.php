@@ -16,7 +16,7 @@ use function PHPUnit\Framework\throwException;
 class Produits extends BaseController 
 {
 
-    private const NBPRODSPAGEDEFAULT = 18;
+    private const NBPRODSPAGEDEFAULT = 20;
 
     public function getAllProduitSelonPage($page=1,$nombreProd=self::NBPRODSPAGEDEFAULT,$filters=null){
        
@@ -112,18 +112,21 @@ class Produits extends BaseController
                 //d($key);
             }
             $query->whereIn('id',$subQuery);
-            //dd(",kl");
-        }
-        
-        
-        
-        
-        
-        if(isset($search) && $search!==""){
-            $query->like('intitule', strToLower($search))->orLike('description_prod', strToLower($search))->orderby('intitule, description_prod', 'ASC');
             
-
         }
+        
+
+        if(isset($search) && $search!==""){
+            $subQuery = db_connect()->table($query->table)->select('id');
+            $subQuery->like('intitule', strToLower($search))->orLike('description_prod', strToLower($search))/*->orderby('intitule, description_prod', 'ASC')*/;
+            $query->whereIn('id',$subQuery);    
+            
+        }
+        
+        
+        
+        
+        
         
         
      

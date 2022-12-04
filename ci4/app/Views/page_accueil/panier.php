@@ -235,7 +235,7 @@
     <?php if(session()->has("numero") && has_cookie("token_panier") 
     && !(session()->has("ignorer") && session()->has("ignorer")==true) 
     && !(isset($supprimer) && $supprimer)): ?>
-        var oui = new AlerteAlizon("Récupération panier","<?= current_url() ?>","Voulez-vous récupére le panier que vous avez utiliser <strong>avant</strong> la connexion, en l'associant à votre compte ?");
+        var oui = new AlerteAlizon("Récupération panier","<?= current_url() ?>","Voulez-vous récupérer le panier que vous avez utilisé <strong>avant</strong> la connexion, en l'associant à votre compte ?");
         oui.ajouterBouton("Associer",'normal-button petit-button vert',"Confirmer");
         oui.ajouterBouton("Plus tard",'normal-button petit-button supprimer-filtre',"Ignorer");
         oui.ajouterBouton("Supprimer panier",'normal-button petit-button supprimer-filtre rouge',"Suppression");

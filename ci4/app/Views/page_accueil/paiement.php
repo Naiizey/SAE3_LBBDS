@@ -11,6 +11,7 @@
 ?>
         </header>
         <main>
+            <?= $formAdresse ?>
             <div class="divCredit">
                 <div class="sectionCredit">
                     <h2>Paiement</h2>
@@ -46,3 +47,6 @@
         </main>
 
 <?php require("footer.php"); ?>
+<script>
+    var js = new formAdresseConstructor();
+</script>

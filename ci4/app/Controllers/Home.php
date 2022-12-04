@@ -60,19 +60,18 @@ class Home extends BaseController
             $user= new \App\Entities\Client();
             $user->fill($post);
             $issues=$auth->connexion($user);
-
-            if (empty($issues) && !session()->has("referer_redirection")) {
-                return redirect()->to("/");
-            //Dans le cas où on a 2 panier
-            }elseif (empty($issues)) {
-                    session()->remove("referer_redirection");
-                    return redirect()->to("/panier");
-            } elseif (empty($issues) && session()->has("referer_redirection")) {
+            if(empty($issues)){
+                if (!session()->has("referer_redirection")) {
+                    return redirect()->to("/");
                 
-                $redirection=session()->get("referer_redirection");
-                session()->remove("referer_redirection");
-                return redirect()->to($redirection);
+                }else {
+                    
+                    $redirection=session()->get("referer_redirection");
+                    session()->remove("referer_redirection");
+                    return redirect()->to($redirection);
+                }
             }
+           
         }
 
         if (session()->has("referer_redirection")) {
@@ -108,19 +107,20 @@ class Home extends BaseController
 
             $issues=$auth->inscription($user, $post['confirmezMotDePasse']);
 
-            if (empty($issues) && !session()->has("referer_redirection")) {
-                return redirect()->to("/");
-            } elseif (empty($issues) && session()->has("referer_redirection")) {
-                if (parse_url(session()->get("referer_redirection")) === "livraison" && has_cookie("token_panier")) {
-                    session()->remove("referer_redirection");
-                    return redirect()->to("/panier");
-                } else {
+            if(empty($issues)){
+                if (!session()->has("referer_redirection")) {
+                    return redirect()->to("/");
+                
+                }else {
+                    
                     $redirection=session()->get("referer_redirection");
                     session()->remove("referer_redirection");
                     return redirect()->to($redirection);
                 }
             }
+           
         }
+        
 
         if (session()->has("referer_redirection")) {
             $data['linkRedirection']=session()->get("referer_redirection");
@@ -392,8 +392,8 @@ class Home extends BaseController
         $data['errors']=$this->validator;
 
 
-
-        return view('formAdresse.php', $data);
+        
+        return view('templLivraison.php', $data);
     }
 
     public function lstCommandesClient()
@@ -416,11 +416,32 @@ class Home extends BaseController
         $issues=[];
         $data['controller']='paiement';
 
+        //Partie copié de infoLivraison:
+        $modelLivraison=model("\App\Models\AdresseLivraison");
+        $model=model("\App\Models\AdresseFacturation");
+
+        $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
+        $post=$this->request->getPost();
+        $adresse = new \App\Entities\Adresse();
+
+        if (isset($post["utilise_nom_profil"])) {
+            $data["profil_utilisee"]=true;
+            unset($post["utilise_nom_profil"]);
+        } else {
+            $data["profil_utilisee"]=false;
+        }
+
+        $this->validator = Services::validation();
+        $this->validator->setRules($model->rules);
+
         if (!empty($post)) {
             $paiement = service('authentification');
             $issues=$paiement->paiement($post);
-
-            if (empty($issues)) {
+            $adresse->fill($post);
+            if (empty($issues) && $adresse->checkAttribute($this->validator) ) {
+                $expiration=strtotime('+24 hours');
+                $id_a=$model->enregAdresse($adresse);
+                setcookie('id_adresse_facturation', $id_a, array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
                 return redirect()->to("/");
             }
         }
@@ -429,7 +450,11 @@ class Home extends BaseController
         $data['numCB'] = (isset($_POST['numCB'])) ? $_POST['numCB'] : "";
         $data['dateExpiration'] = (isset($_POST['dateExpiration'])) ? $_POST['dateExpiration'] : "";
         $data['CVC'] = (isset($_POST['CVC'])) ? $_POST['CVC'] : "";
-
+        
+        $data['adresse']=$adresse;
+        $data['client']=$client;
+        $data['errors']=$this->validator;
+        $data["formAdresse"]=view("formAdresse.php",$data);
         return view('page_accueil/paiement.php', $data);
     }
 

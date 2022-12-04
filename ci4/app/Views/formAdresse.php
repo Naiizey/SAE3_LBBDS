@@ -1,21 +1,12 @@
-<?php require("page_accueil/header.php");
-    function afficheErreurs($e, $codeE)
-    {
-        if (isset($e[$codeE]))
-        {
-            return "<div class='bloc-erreurs'>
-                                <p class='paragraphe-erreur'>$e[$codeE]</p>
-                    </div>";
-        }   
-    }  
-?>
-        </header>
-        <main>
+<main>
             <div class="divFormAdresse">
                 <div class="onglets">
                     <?php if(isset($controller) && $controller==="paiement"): ?>
                     <div class="onglet">
                         <h3>Adresses sauvegardées</h3>
+                    </div>
+                    <div class="onglet">
+                        <h3>Même adresse</h3>
                     </div>
                     <div class="onglet onglet-selectionnee">
                         <h3>Autre adresse</h3>
@@ -32,7 +23,7 @@
                 </div>
                 <div class="sectionCredit">
                     <h2><?= (isset($controller) && $controller==="infoLivraison")?"Adresse livraison":"Adresse facture" ?></h2>
-                  
+                    
                     <form action='<?= current_url() ?>' method="post" name="form_adresse">
                         <div class="surNomPrenom">
                             <div>
@@ -113,7 +104,3 @@
                 </div>
             </div>
         </main>
-<?php require("page_accueil/footer.php"); ?>
-<script>
-    var js = new formAdresseConstructor();
-</script>

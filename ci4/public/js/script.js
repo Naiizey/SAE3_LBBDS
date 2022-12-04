@@ -647,7 +647,7 @@ var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFi
          
        //fetch avec un await pour récuperer la réponse asynchrones (de manière procédurale)
         try{
-            const md= await fetch("http://localhost/Alizon/ci4/public/produits/page/"+((replace)?1:self.currPage)+champsGet);
+            const md= await fetch(base_url + "/produits/page/"+((replace)?1:self.currPage)+champsGet);
             var result= await md.json();
             
             //vérifie si la réponse n'est pas une erreur

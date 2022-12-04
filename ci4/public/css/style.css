@@ -3058,6 +3058,20 @@ progress::-moz-progress-bar
     display: none;
 }
 
+@media screen and (max-width: 991px) {
+    .mainEspaceCli{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .divCredit{
+        width: 90%;
+        margin: 0;
+    }
+}
+
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                             Paiement (paiement.php)                             ┃

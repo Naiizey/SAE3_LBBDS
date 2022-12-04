@@ -173,16 +173,16 @@ path{
     fill: black;
 }
 
-.logoProfil:hover path, .logoPanier:hover path, .logoContact:hover path{
+/*.logoProfil:hover path, .logoPanier:hover path, .logoContact:hover path{
     fill: #6f98bd;
 }
 
-.divSuivi div:hover svg path{
+.divSuivi div:hover svg path{        #TODO: Navigation via la div suivi
     fill: #6f98bd;
 }
 .divSuivi div:hover h3{
     color: #6f98bd;
-}
+}*/                             
 
 .etat-courant-commande svg path {
     fill: #6f98bd;
@@ -254,11 +254,12 @@ path{
 }
 
 hr {
-    background-color: #D9D9D9;
+    background-color: #f3f3f3;
     height: 3px;
     border: none;
     width: 100%;
     margin: 0;
+    border-bottom-right-radius: 10px;
 }
 
 nav {
@@ -531,6 +532,7 @@ footer a{
         margin: 0;
     }
 }
+
 .alerte-validation.valide{
     background-color: #3997a3;
 }
@@ -642,6 +644,58 @@ div.bloc-erreur-liste-produit  {
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                           Composant alerte                                      ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+
+.sur-alerte{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    position: fixed;
+    top:0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+ 
+}
+.alerte{
+    position: relative;
+    background-color: white;
+    min-height: fit-content;
+    width: 55%;
+    max-width: 700px;
+    height: 35%;
+    border: #3997A3 solid 2px;    
+}
+.alerte h2, .alerte p{
+    text-align: left;
+    padding: 0.5em 30px ;  
+}
+.alerte .alerte-footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;    
+}
+.alerte .espace-interraction{
+    
+    
+    padding: 10px 30px;
+    width: auto;
+    
+}
+.alerte form{
+    margin :0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃           Page d'accueil et détail produit (index.php & produit.php)            ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
@@ -664,17 +718,17 @@ header ul {
     color: #164F57;
     position: absolute;
     left: 0;
-    bottom: -1px;
+    top: 0;
     content: "";
     display: block;
     width: 100%;
     height: 2.3em;
     background-color: #f3f3f3;
-    transform-origin: 0 bottom 0;
+    transform-origin: 0 top 0;
     transform: scaleY(0);
     transition: all 0.4s ease-out;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .liCategorie:hover .categorie {
@@ -788,16 +842,16 @@ header ul {
 }
 
 .produitsPhare {
-    background-color: #DCE5E6;
+    padding-top: 2em;
 }
 
-.articlesAcceuilPC {
+.articlesAccueilPC {
     display: flex;
     margin: 2em 0;
     justify-content: space-around;
 }
 
-.articlesAcceuilMobile{
+.articlesAccueilMobile{
     display: none;
 }
 
@@ -813,22 +867,24 @@ header ul {
 }
 
 .mainAccueil section {
-    margin: 4em 0;
     padding-bottom: 3em;
 }
 
 .mainAccueil section .seeMoreBtn {
-    border-radius: 2em;
+    border-radius: 10px;
     background-color: white;
     padding: .5em 2em;
     text-decoration: none;
     color: #164F57;
     transition: background-color .4s;
+    border: solid 2px;
+    border-color: #C6C6C6;
 }
 
 .mainAccueil section .seeMoreBtn:hover {
     background-color: #164F57;
     color: #F3F3F3;
+    border: none;
 }
 
 .iconesAccueil {
@@ -857,11 +913,11 @@ header ul {
         padding-bottom: 4em;
     }
 
-    .articlesAcceuilPC{
+    .articlesAccueilPC{
         display: none;
     }
 
-    .articlesAcceuilMobile{
+    .articlesAccueilMobile{
         display: flex;
         flex-wrap: wrap;
         margin: 2em 0;
@@ -1081,6 +1137,7 @@ header ul {
     }
 }
 
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                          Form adresse                                           ┃
@@ -1102,7 +1159,7 @@ header ul {
     display: grid;
     max-width: 100%;
     grid-template-columns: repeat(20,5%);
-    grid-template-rows: 1fr 1fr 1fr;
+    /*grid-template-rows: 1fr 1fr 1fr;*/
 
 }
 
@@ -1173,7 +1230,7 @@ header ul {
 }
 
 .infoRue, .infoVille{
-    margin-top: 2%;
+    margin-top: 3%;
 }
 
 .surNomPrenom > .nomPrenom {
@@ -1207,6 +1264,16 @@ header ul {
 }
 
 
+.infoRue label,.infoVille label {
+    display: flex;
+    align-items: flex-end;
+}
+
+.infoRue label span,.infoVille label span{
+    vertical-align: text-bottom; 
+}
+
+
 
 @media (max-width: 1000px) {
 
@@ -1222,9 +1289,13 @@ header ul {
 
 /*FIXME*/
 
-.divFormAdresse div > div > label,.divFormAdresse .sectionCredit div > div > input {
+
+
+/* nettoyage */
+.infoRue label, .divFormAdresse .infoRue input, .infoVille label,.divFormAdresse .infoVille input , .infoRue p, .infoVille p{
     margin: 0;
 }
+
 
 
 
@@ -1516,7 +1587,7 @@ header ul {
     color: white;
 }
 
-.sectionRecommandationsPanier {
+.sectionRecommandationsPanierPC, .sectionRecommandationsPanierMobile {
     border: solid 2px;
     border-color: #C6C6C6;  
     color: #164F57;
@@ -1525,7 +1596,7 @@ header ul {
     padding: 1em;
 }
 
-.sectionRecommandationsPanier ul {
+.sectionRecommandationsPanierPC ul, .sectionRecommandationsPanierMobile ul {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -1534,18 +1605,22 @@ header ul {
     padding: 0;
 }
 
-.sectionRecommandationsPanier li {
+.sectionRecommandationsPanierPC li, .sectionRecommandationsPanierMobile li {
     width: 12%;
 }
 
-.sectionRecommandationsPanier img {
+.sectionRecommandationsPanierPC img, .sectionRecommandationsPanierMobile img {
     width: 100%;
     height: auto;
 }
 
-.sectionRecommandationsPanier hr {
+.sectionRecommandationsPanierPC hr, .sectionRecommandationsPanierMobile hr {
     background-color: #164F57;
     margin: 1em 0;
+}
+
+.sectionRecommandationsPanierMobile {
+    display: none;
 }
 
 .divPanierArticles + h2 {
@@ -1730,6 +1805,7 @@ h3 > .lienPasArticlePanier {
 
 .sectionProduit {
     margin: 0 20%;
+    padding-bottom: 3rem;
 }
 
 .sectionProduit > article {
@@ -1833,43 +1909,56 @@ h3 > .lienPasArticlePanier {
     margin: 0;
 }
 
-@media screen and (max-width:991px){
-    .sectionProduit {
-        margin: 0 2em;
-        margin-top: 1em;
+@media screen and (max-width: 991px){
+    .mainProduit{
+        padding: 7.5rem 0;
+        display: flex;
+        justify-content: center;
     }
 
-    .mainProduit article{
+    .sectionProduit{
+        margin: 0;
+        width: 90%;
+    }
+    
+    .sectionProduit > article{
         flex-direction: column;
+        gap: 2em;
     }
 
     .divGauche{
         width: 100%;
     }
 
+    .divGauche div{
+        width: 80%;
+    }
+
+    .divGauche ul{
+        width: 20%;
+    }
+
     .divDroite{
-        margin-top: 1em;
         width: 100%;
         margin-left: 0;
     }
 
     .ParaDescProduit{
-        margin-right: 0;
         text-align: left;
     }
 
-    .divQuantiteProduit{
-        margin-top: 1em;
+    .sectionRecommandationsPanierPC{
+        display: none;
     }
 
-    .divQuantiteProduit + div{
-        display: flex;
-        justify-content: space-between;
+    .sectionRecommandationsPanierMobile{
+        display: block;
     }
 }
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                          Carte produit (CardProduit.php)                        ┃
+┃               Carte produit (CardProduit.php)                     ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
@@ -1910,6 +1999,8 @@ main div.card-produit-ext:hover{
     color: #164F57;
     padding-top: .2rem;
     cursor: pointer;
+    border: solid 2px;
+    border-color: #C6C6C6;
 }
 
 .card-produit svg, .card-produit line {
@@ -2032,9 +2123,20 @@ main#Catalogue{
     padding-bottom: 3%;
 }
 
-.supprimer-filtre{
+.normal-button.vert{
     background-color: #24a064;
     color: white;
+}
+.normal-button.rouge{
+    background-color: #a02424;
+    color: white;
+}
+
+.normal-button.vert:hover{
+    background-color: #164F57;
+}
+.normal-button.rouge:hover{
+    background-color: #571616;
 }
 
 .normal-button{
@@ -2047,9 +2149,13 @@ main#Catalogue{
     align-self: center;
 }
 
-.normal-button.supprimer-filtre:hover{
-    background-color: #164F57;
+.petit-button{
+    
+    padding: 0 2em;
+    width: auto;
 }
+
+
 
 .liste-produits{
     display: flex;
@@ -2066,7 +2172,7 @@ main#Catalogue{
 .liste-filtre{
 
     /* bordure à droite, en haut, à gauche */
-    border: 5px solid #D9D9D9;
+    border: 2px solid #C6C6C6;
     border-left: none;
 
 }
@@ -2505,14 +2611,18 @@ a.fleche-page{
     
     .partie-filtre{
         position: fixed;
+ 
         width: 100%;
         height: 100%;
+        min-height: 100%;
     }
 
     .partie-filtre.est-filtre-ouvert{
-        top: 0;
+      
         padding-bottom: 5em;
         z-index: 100;
+        overflow: auto;
+        top: 80px;
     }
 
     .partie-filtre:not(.est-filtre-ouvert){
@@ -2527,6 +2637,10 @@ a.fleche-page{
 
     .categorie-catalogue summary{
         padding: 1em 5%;
+    }
+
+    #Catalogue{
+        padding: 7.5rem 0;
     }
 }
 
@@ -2947,6 +3061,20 @@ progress::-moz-progress-bar
 .cacheModifMdp {
     display: none;
 }
+
+@media screen and (max-width: 991px) {
+    .mainEspaceCli{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .divCredit{
+        width: 90%;
+        margin: auto;
+    }
+}
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

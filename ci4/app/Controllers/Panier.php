@@ -27,7 +27,7 @@ class Panier extends BaseController
     }
     public function index()
     {
-        return view('panier/index.php',);
+        return view('panier/index.php');
     }
 
     public function test()
@@ -65,7 +65,26 @@ class Panier extends BaseController
     #TODO: valeur pas update au début.  
     public function getProduitPanierClient($context = null)
     {
-        $data['controller'] = "panier";
+        $get=$this->request->getGet();
+        if(!empty($get)){
+           
+            if(isset($get["Suppression"]) && $get["Suppression"]==1 ){
+                model("\App\Models\ProduitPanierVisiteurModel")->viderPanier(get_cookie("token_panier"));
+                delete_cookie("token_panier");
+                $data["supprimer"]=true;
+            }
+            else if(isset($get["Ignorer"]) && $get["Ignorer"]==1 ){
+                session()->set("ignorer",true);
+            }
+            else if(isset($get["Confirmer"]) && $get["Confirmer"]==1 ){
+                model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
+                delete_cookie("token_panier");
+                $data["supprimer"]=true;
+            }
+           
+        }
+
+        $data["controller"] = "Panier";
         $data['code'] = "";
         $data['classCacheDiv'] = "cacheNouveauPrix";
         $issues = [];
@@ -186,17 +205,17 @@ class Panier extends BaseController
         {
             $panierModel = model("\App\Models\ProduitPanierVisiteurModel");
             $panierModel->viderPanier(get_cookie("token_panier"));
-            $this->updatePanier(get_cookie("token_panier"));
+            delete_cookie("token_panier");
         }
         else throw new \Exception("Le panier n'existe pas !");
         
         
         
-        return redirect()->to("panier");
+        return redirect()->to("panier")->withCookies();;
     }
 
     public function ajouterPanier($idProd=null,$quantite=null) {
-        $data['controller'] = "panier";
+        $data["controller"] = "Panier";
         
         if($quantite==null && isset($this->request)){
             if($this->request->getPost("quantite")==="10+")

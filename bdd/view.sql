@@ -8,7 +8,7 @@ SET SCHEMA 'sae3';
 
 CREATE OR REPLACE VIEW produit_catalogue AS
     WITH moyenne AS (SELECT id_prod id,avg(note_prod) as moyenneNote FROM _produit natural join _note  group by id_prod)
-    SELECT id_prod  id, intitule_prod intitule, prix_ttc prixTTC,lien_image_prod lienImage,publication_prod, description_prod, libelle_cat categorie, moyenneNote  FROM _produit NATURAL JOIN _sous_categorie LEFT JOIN moyenne on _produit.id_prod = moyenne.id;
+    SELECT id_prod  id, intitule_prod intitule, prix_ht*_tva.taux_tva prixTTC,lien_image_prod lienImage,publication_prod, description_prod, _sous_categorie.libelle_cat categorie, moyenneNote  FROM _produit NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva LEFT JOIN moyenne on _produit.id_prod = moyenne.id;
 
 CREATE OR REPLACE VIEW client AS
     SELECT num_compte numero, nom_compte nom, prenom_compte prenom, email, pseudo identifiant, mot_de_passe motDePasse FROM _compte;
@@ -16,12 +16,12 @@ CREATE OR REPLACE VIEW client AS
 
 CREATE OR REPLACE VIEW produit_detail AS
     WITH moyenne AS (SELECT id_prod id,avg(note_prod) as moyenneNote FROM _produit natural join _note  group by id_prod)
-    SELECT id_prod  id, intitule_prod intitule, prix_ttc prixTTC, prix_ht prixHT, lien_image_prod lienImage,publication_prod  isAffiche, libelle_cat categorie, code_cat codeCategorie,description_prod description, stock_prod stock FROM _produit LEFT JOIN moyenne on _produit.id_prod = moyenne.id NATURAL JOIN _categorie c;
+    SELECT id_prod  id, intitule_prod intitule, prix_ht*taux_tva prixTTC, prix_ht prixHT, lien_image_prod lienImage,publication_prod  isAffiche, _sous_categorie.libelle_cat categorie, _sous_categorie.code_sous_cat codeCategorie,description_prod description, stock_prod stock FROM _produit LEFT JOIN moyenne on _produit.id_prod = moyenne.id  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva;
 
 
 CREATE OR REPLACE VIEW produit_panier_compte AS
     SELECT concat(id_prod,'£',num_panier) id,id_prod, intitule_prod intitule,stock_prod stock, prix_ttc prixTTC,prix_ht, lien_image_prod lienImage, description_prod description, qte_panier quantite,num_compte num_client,num_panier current_panier
-    FROM _produit NATURAL JOIN _refere NATURAL JOIN _panier_client
+    FROM _produit NATURAL JOIN _refere NATURAL JOIN _panier_client where num_panier IN (SELECT max(num_panier) FROM _panier_client group by num_compte)
     ORDER BY id;
 
 CREATE OR REPLACE VIEW produit_panier_visiteur AS

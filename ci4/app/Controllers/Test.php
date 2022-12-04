@@ -8,6 +8,10 @@ class Test extends BaseController{
             $session=session();
             $session->remove("numero");
             $session->remove("nom");
+            $session->remove("ignorer");
+            $session->remove("adresse_facturation");
+            $session->remove("adresse_livraison");
+            
             return redirect()->to("/");
         }
 
@@ -39,12 +43,29 @@ class Test extends BaseController{
           
                 <style>
                     main,body {
-                        background-color: white;
+                        background-color: black;
                     }
+                   
+
+                    
+                   
                 </style>
-                <?= (new \App\Controllers\Home())->afficheInvalidation("Vous êtes connecté !"); ?>
+                <body>
+                    
+                </body>
+                
+                
                
                 <script src="<?=base_url()?>/js/script.js"></script>
+                <script>
+                    
+                    
+                    var oui = new AlerteAlizon("Alerte",'http://localhost/Alizon/ci4/public/test');
+                    oui.ajouterBouton("Confirmer",'normal-button petit-button supprimer-filtre vert');
+                    oui.affichage();
+                   
+                    
+                </script>
             <?php echo ob_get_clean();
         }
 

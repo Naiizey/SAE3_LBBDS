@@ -35,8 +35,7 @@ class Home extends BaseController
     {
         helper("cookie");
         
-
-        $data['controller']= "index";
+        $data["controller"]= "Accueil";
 
         $data['cardProduit']=service("cardProduit");
         $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
@@ -60,25 +59,29 @@ class Home extends BaseController
             $user= new \App\Entities\Client();
             $user->fill($post);
             $issues=$auth->connexion($user);
-
-            if (empty($issues) && !session()->has("referer_redirection")) {
-                return redirect()->to("/");
-            } elseif (empty($issues) && session()->has("referer_redirection")) {
-                return redirect()->to(session()->get("referer_redirection"));
+            if(empty($issues)){
+                if (!session()->has("referer_redirection")) {
+                    return redirect()->to("/");
+                
+                }else {
+                    
+                    $redirection=session()->get("referer_redirection");
+                    session()->remove("referer_redirection");
+                    return redirect()->to($redirection);
+                }
             }
+           
         }
 
         if (session()->has("referer_redirection")) {
             $data['linkRedirection']=session()->get("referer_redirection");
-            if (parse_url($data['linkRedirection']) === "panier") {
-                $issues['redirection']="Vous devez vous connectez pour valider votre commande";
-                $data['controller']= "compte_redirection";
-            } else {
-                $issues['redirection']="Vous devez vous connectez pour y accéder";
-                $data['controller']= "connexion";
-            }
+           
+             
+            $issues['redirection']="Vous devez vous connectez pour y accéder";
+            $data["controller"]= "Connexion";
+            
         } else {
-            $data['controller']= "connexion";
+            $data["controller"]= "Connexion";
         }
 
         $data['erreurs'] = $issues;
@@ -103,28 +106,32 @@ class Home extends BaseController
 
             $issues=$auth->inscription($user, $post['confirmezMotDePasse']);
 
-            if (empty($issues) && !session()->has("referer_redirection")) {
-                return redirect()->to("/");
-            } elseif (empty($issues) && session()->has("referer_redirection")) {
-                if (parse_url(session()->get("referer_redirection")) === "panier") {
-                    return redirect()->to("/commandes");
-                } else {
-                    return redirect()->to(session()->get("referer_redirection"));
+            if(empty($issues)){
+                if (!session()->has("referer_redirection")) {
+                    return redirect()->to("/");
+                
+                }else {
+                    
+                    $redirection=session()->get("referer_redirection");
+                    session()->remove("referer_redirection");
+                    return redirect()->to($redirection);
                 }
             }
+           
         }
+        
 
         if (session()->has("referer_redirection")) {
             $data['linkRedirection']=session()->get("referer_redirection");
-            if (parse_url($data['linkRedirection']) === "panier") {
+            if (parse_url($data['linkRedirection']) === "livraison") {
                 $issues['redirection']="Vous devez vous connectez pour valider votre commande";
-                $data['controller']= "compte_redirection";
+                $data["controller"]= "Compte Redirection";
             } else {
                 $issues['redirection']="Vous devez vous connectez pour accéder à cette espace";
-                $data['controller']= "inscription";
+                $data["controller"]= "Inscription";
             }
         } else {
-            $data['controller']= "inscription";
+            $data["controller"]= "Inscription";
         }
 
         $data['erreurs'] = $issues;
@@ -162,7 +169,7 @@ class Home extends BaseController
         if ($result == null) {
             return view('errors/html/error_404.php', array('message' => "Ce produit n'existe pas"));
         } else {
-            $data['controller'] = "produit";
+            $data["controller"] = "Produit";
 
             $data['prod'] = $result;
             return view('page_accueil/produit.php', $data);
@@ -171,7 +178,7 @@ class Home extends BaseController
 
     public function panier($context = null)
     {
-        $data['controller']= "panier";
+        $data["controller"] = "Panier";
         if ($context == 400) {
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
         }
@@ -181,8 +188,7 @@ class Home extends BaseController
 
     public function panierVide($context = null)
     {
-        $data['controller']= "panierVide";
-
+        $data["controller"] = "Panier (Vide)";
 
         if ($context == 400) {
             $data['error']="<p class='erreur'>Erreur d'authentification</p>";
@@ -207,7 +213,7 @@ class Home extends BaseController
         $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
         $data['cardProduit']=service("cardProduit");
         $data['categories']=model("\App\Models\CategorieModel")->findAll();
-        $data['controller']="Catalogue";
+        $data["controller"] = "Catalogue";
         $data['prods'] = [];
         $data['vide'] = false;
         $data['max_price'] = $modelProduitCatalogue->selectMax('prixttc')->find()[0]->prixttc;
@@ -254,7 +260,7 @@ class Home extends BaseController
 
     public function espaceClient($role = null, $numClient = null)
     {
-        $data['controller'] = "espaceClient";
+        $data["controller"] = "Espace Client";
         $modelFact = model("\App\Models\ClientAdresseFacturation");
         $modelLivr = model("\App\Models\ClientAdresseLivraison");
         $modelClient = model("\App\Models\Client");
@@ -355,7 +361,7 @@ class Home extends BaseController
         $model=model("\App\Models\AdresseLivraison");
 
         $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
-        $data['controller']='infoLivraison';
+        $data["controller"] = "Livraisons";
         $post=$this->request->getPost();
         $adresse = new \App\Entities\Adresse();
 
@@ -372,9 +378,13 @@ class Home extends BaseController
         if (!empty($post)) {
             $adresse->fill($post);
             if ($adresse->checkAttribute($this->validator)) {
-                $expiration=strtotime('+24 hours');
+               
                 $id_a=$model->enregAdresse($adresse);
+                /*
+                $expiration=strtotime('+24 hours');
                 setcookie('id_adresse_livraison', $id_a, array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
+                */
+                session()->set("adresse_livraison",$id_a);
                 return redirect()->to("/paiement");
             }
         }
@@ -384,20 +394,20 @@ class Home extends BaseController
         $data['errors']=$this->validator;
 
 
-
-        return view('formAdresse.php', $data);
+        
+        return view('templLivraison.php', $data);
     }
 
     public function lstCommandesClient()
     {
-        $data['controller']= "lstCommandesCli";
+        $data["controller"]= "Commandes Client";
         $data['commandesCli']=model("\App\Models\LstCommandesCli")->getCompteCommandes();
         return view('page_accueil/lstCommandesCli.php', $data);
     }
 
     public function lstCommandesVendeur()
     {
-        $data['controller']= "lstCommandesVendeur";
+        $data["controller"]= "Commandes Vendeur";
         $data['commandesVend']=model("\App\Models\LstCommandesVendeur")->findAll();
         return view('page_accueil/lstCommandesVendeur.php', $data);
     }
@@ -406,14 +416,38 @@ class Home extends BaseController
     {
         $post=$this->request->getPost();
         $issues=[];
-        $data['controller']='paiement';
+        $data["controller"]='Paiement';
+
+        //Partie copié de infoLivraison:
+        $modelLivraison=model("\App\Models\AdresseLivraison");
+        $model=model("\App\Models\AdresseFacturation");
+
+        $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
+        $post=$this->request->getPost();
+        $adresse = new \App\Entities\Adresse();
+
+        if (isset($post["utilise_nom_profil"])) {
+            $data["profil_utilisee"]=true;
+            unset($post["utilise_nom_profil"]);
+        } else {
+            $data["profil_utilisee"]=false;
+        }
+
+        $this->validator = Services::validation();
+        $this->validator->setRules($model->rules);
 
         if (!empty($post)) {
             $paiement = service('authentification');
             $issues=$paiement->paiement($post);
-
-            if (empty($issues)) {
-                return redirect()->to("/");
+            $adresse->fill($post);
+            if (empty($issues) && $adresse->checkAttribute($this->validator) ) {
+                /* Cookie = problème de sécurité
+                $expiration=strtotime('+24 hours');
+                setcookie('id_adresse_facturation', $id_a, array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
+                */
+                $id_a=$model->enregAdresse($adresse);
+                session()->set("adresse_facturation",$id_a);
+                return redirect()->to("/validation");
             }
         }
         $data['erreurs'] = $issues;
@@ -421,13 +455,17 @@ class Home extends BaseController
         $data['numCB'] = (isset($_POST['numCB'])) ? $_POST['numCB'] : "";
         $data['dateExpiration'] = (isset($_POST['dateExpiration'])) ? $_POST['dateExpiration'] : "";
         $data['CVC'] = (isset($_POST['CVC'])) ? $_POST['CVC'] : "";
-
+        
+        $data['adresse']=$adresse;
+        $data['client']=$client;
+        $data['errors']=$this->validator;
+        $data["formAdresse"]=view("formAdresse.php",$data);
         return view('page_accueil/paiement.php', $data);
     }
 
     public function detail($num_commande, $estVendeur=false)
     {
-        $data['controller']= "detail";
+        $data["controller"]= "Détail Commande";
         $data['numCommande'] = $num_commande;
         $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
         $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
@@ -441,6 +479,14 @@ class Home extends BaseController
         $data['adresse']=model("\App\Models\ClientAdresseLivraison")->getAdresse($data['num_compte']);
 
         return view('panier/details.php', $data);
+    }
+
+    public function validation(){
+        if(session()->has("adresse_facturation") && session()->has("adresse_livraison")){
+            model("\App\Models\LstCommandesCli")->creerCommande(session()->get("numero"),session()->get("adresse_livraison"));
+            return redirect()->to("/commandes");
+        }
+        else throw new Exception("Vous ne pouvez pas être a cette étape sans avoir valider votre panier et vos adresses de factutation et de livraison",401);
     }
 
     //Tant que commande n'est pas là

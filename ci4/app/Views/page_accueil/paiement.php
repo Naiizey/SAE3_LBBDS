@@ -11,10 +11,11 @@
 ?>
         </header>
         <main>
+            <?= (isset($formAdresse))?$formAdresse:"    " ?>
             <div class="divCredit">
                 <div class="sectionCredit">
                     <h2>Paiement</h2>
-                    <form action="<?= current_url() ?>" method="post">
+                    <form action="<?= current_url() ?>" method="post" name="form_paiement">
                         <label>Nom de la carte bancaire<span class="requis">*</span> :</label>
                         <input type="text" name="nomCB" required="required" value="<?= $nomCB?>"/>
                         <label class="labelCB">Numéro de votre carte bancaire<span class="requis">*</span> :</label>
@@ -46,3 +47,7 @@
         </main>
 
 <?php require("footer.php"); ?>
+<script>
+    var js = new formAdresseConstructor();
+    setUpPaiment();
+</script>

@@ -78,19 +78,19 @@ $routes->set404Override();
     $routes->get('/catalogue/(:num)', 'Home::catalogue/$1');
 
     $routes->get('/test', 'Test::test2');
-    $routes->get('/panier', 'Panier');
+  
 
     $routes->get('vendeur/import', 'Import::index');
     $routes->post('vendeur/import/upload', 'Import::upload');
 
     $routes->get('vendeur/commandesCli', 'Home::lstCommandesVendeur');
-    $routes->get('vendeur/commandesCli/detail/(:num)','Home::detail/$1/true');
+    $routes->get('vendeur/commandesCli/detail/(:alphanum)','Home::detail/$1/true');
 
     $routes->get('/destroy', 'Test::destroySession');
 
     $routes->get('/commandes', 'Home::lstCommandesClient',['filter' => 'connexion']);
 
-    $routes->get('/commandes/detail/(:num)','Home::detail/$1',['filter' => 'connexion']);//['filter' => 'connexion']
+    $routes->get('/commandes/detail/(:alphanum)','Home::detail/$1',['filter' => 'connexion']);//['filter' => 'connexion']
 
     $routes->get('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
     $routes->options('/produits/page/(:num)','Produits::getAllProduitSelonPage/$1');
@@ -104,16 +104,10 @@ $routes->set404Override();
 
     $routes->get('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
     $routes->post('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
-    /*
-    if(session()->has("numero")){
-        $routes->get('/espaceClient', 'Home::espaceClient');
-        $routes->post('/espaceClient', 'Home::espaceClient');
-    }
-    else
-    {
-        $routes->get('/espaceClient', 'Home::connexion');
-    }
-    */
+
+    $routes->get('/validation', 'Home::validation' );
+    $routes->post('/validation', 'Home::validation' );
+
 ##param uri (:any) et dans methode /$1
 
 /*

@@ -82,7 +82,7 @@
                                     <div>
                                         <div class="divQuantite">
                                             <p>Quantité</p>
-                                                <input class="" type="number" name="quantite" min=0 max=<?= $produit->stock ?> value=<?=$produit->quantite ?>>
+                                                <input class="" type="number" name="quantite" min=1 max=<?= $produit->stock ?> value=<?=$produit->quantite ?>>
                                             <a href="<?= base_url() ?>/panier/supprimer/<?= $produit->idProd ?>">Supprimer</a>
                                         </div>
                                         <h3>HT: 
@@ -147,7 +147,7 @@
                 <?php endif; ?>
             </div>
             <?php if (empty($produits)): ?>
-                <section class="sectionRecommandationsPanier">
+                <section class="sectionRecommandationsPanierPC">
                     <h2>Recommandations</h2>
                     <hr>
                     <ul>
@@ -182,7 +182,28 @@
                             </a>
                         </li>
                     </ul>
-                </section>   
+                </section>
+                <section class="sectionRecommandationsPanierMobile">
+                    <h2>Recommandations</h2>
+                    <hr>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <img src="<?=base_url() ?>/images/art1.png" alt="article 1" title="Article 1">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="<?=base_url() ?>/images/art2.png" alt="article 2" title="Article 2">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="<?=base_url() ?>/images/art3.png" alt="article 3" title="Article 3">
+                            </a>
+                        </li>
+                    </ul>
+                </section> 
             <?php endif; ?>
         </main>
 <?php require("footer.php"); ?>
@@ -209,6 +230,15 @@
             }
         }
     );
-    updatePricePanier()
-    updatePriceTotal()
+    updatePricePanier();
+    updatePriceTotal();
+    <?php if(session()->has("numero") && has_cookie("token_panier") 
+    && !(session()->has("ignorer") && session()->has("ignorer")==true) 
+    && !(isset($supprimer) && $supprimer)): ?>
+        var oui = new AlerteAlizon("Récupération panier","<?= current_url() ?>","Voulez-vous récupérer le panier que vous avez utilisé <strong>avant</strong> la connexion, en l'associant à votre compte ?");
+        oui.ajouterBouton("Associer",'normal-button petit-button vert',"Confirmer");
+        oui.ajouterBouton("Plus tard",'normal-button petit-button supprimer-filtre',"Ignorer");
+        oui.ajouterBouton("Supprimer panier",'normal-button petit-button supprimer-filtre rouge',"Suppression");
+        oui.affichage();
+    <?php endif; ?>
 </script>

@@ -21,7 +21,7 @@ class MdpOublie extends BaseController
 
     public function mdpOublie($post = null, $data = null)
     {
-        $data['controller']= "mdpOublie";
+        $data["controller"]= "mdpOublie";
 
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
         $data['email'] = (isset($post['email'])) ? $post['email'] : "";

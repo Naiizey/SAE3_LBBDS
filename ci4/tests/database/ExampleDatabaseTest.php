@@ -82,6 +82,8 @@ final class ExampleDatabaseTest extends CIUnitTestCase
     public function testCommande(){
         $model_C=model("\App\Models\LstCommandesCli");
         $model_A=model("\App\Models\AdresseLivraison");
+        $model_Cli=model("\App\Models\Client");
+
         
         
         for($i=0;$i<5;++$i){
@@ -94,17 +96,22 @@ final class ExampleDatabaseTest extends CIUnitTestCase
                 
             ));
 
-            $client=$fabricatorCli->create();
+            $client=$fabricatorCli->make();
+            $client->cryptMotDePasse();
+            $model_Cli->saveClient($client);
+            $client=$model_Cli->where("email",$client->email)->findAll()[0];
+        
 
             $fabricatorAdr = new Fabricator(AdresseLivraisonTest::class,null,'fr_FR');
             $ok = $fabricatorAdr->make();
+            Fabricator::upCount($model_C->table);
             $id_a=$model_A->enregAdresse($ok);
             
-            d($client);
+            d($client->numero);
             $model_C->creerCommande($client->numero,$id_a);
         }
         
-
+        //FIXME: Test ne verifie pas correctement car on est dans un cas de panier vide
         $this->assertCount(Fabricator::getCount($model_C->table), $model_C->findAll());
 
     }

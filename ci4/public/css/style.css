@@ -3067,7 +3067,7 @@ progress::-moz-progress-bar
 
     .divCredit{
         width: 90%;
-        margin: 0;
+        margin: auto;
     }
 }
 

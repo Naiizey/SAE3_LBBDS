@@ -64,7 +64,7 @@ class Home extends BaseController
                     return redirect()->to("/");
                 
                 }else {
-                    
+                 
                     $redirection=session()->get("referer_redirection");
                     session()->remove("referer_redirection");
                     return redirect()->to($redirection);

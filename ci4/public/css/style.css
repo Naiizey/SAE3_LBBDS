@@ -173,16 +173,16 @@ path{
     fill: black;
 }
 
-.logoProfil:hover path, .logoPanier:hover path, .logoContact:hover path{
+/*.logoProfil:hover path, .logoPanier:hover path, .logoContact:hover path{
     fill: #6f98bd;
 }
 
-.divSuivi div:hover svg path{
+.divSuivi div:hover svg path{        #TODO: Navigation via la div suivi
     fill: #6f98bd;
 }
 .divSuivi div:hover h3{
     color: #6f98bd;
-}
+}*/                             
 
 .etat-courant-commande svg path {
     fill: #6f98bd;
@@ -1137,6 +1137,7 @@ header ul {
     }
 }
 
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                          Form adresse                                           ┃
@@ -1158,7 +1159,7 @@ header ul {
     display: grid;
     max-width: 100%;
     grid-template-columns: repeat(20,5%);
-    grid-template-rows: 1fr 1fr 1fr;
+    /*grid-template-rows: 1fr 1fr 1fr;*/
 
 }
 
@@ -1229,7 +1230,7 @@ header ul {
 }
 
 .infoRue, .infoVille{
-    margin-top: 2%;
+    margin-top: 3%;
 }
 
 .surNomPrenom > .nomPrenom {
@@ -1263,6 +1264,16 @@ header ul {
 }
 
 
+.infoRue label,.infoVille label {
+    display: flex;
+    align-items: flex-end;
+}
+
+.infoRue label span,.infoVille label span{
+    vertical-align: text-bottom; 
+}
+
+
 
 @media (max-width: 1000px) {
 
@@ -1278,9 +1289,13 @@ header ul {
 
 /*FIXME*/
 
-.divFormAdresse div > div > label,.divFormAdresse .sectionCredit div > div > input {
+
+
+/* nettoyage */
+.infoRue label, .divFormAdresse .infoRue input, .infoVille label,.divFormAdresse .infoVille input , .infoRue p, .infoVille p{
     margin: 0;
 }
+
 
 
 

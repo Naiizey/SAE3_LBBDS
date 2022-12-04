@@ -178,7 +178,7 @@ INSERT INTO _panier_visiteur (num_panier,date_suppression, token_cookie) VALUES 
 INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (5, 18, 1);
 INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (1, 17, 1);
 INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (5, 18, 2);
-INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (5, 17, 2);
+INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (3, 17, 5);
 
 INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (5, 18, 1);
 INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3.75, 17, 1);

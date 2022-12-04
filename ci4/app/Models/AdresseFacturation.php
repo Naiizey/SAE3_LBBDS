@@ -13,7 +13,7 @@ use Generator;
  * @see TutoCI/CI5_BDD
  * @return \App\Entities\Client
  */
-class AdresseLivraison extends Model
+class AdresseFacturation extends Model
 {
     protected $table      = 'sae3.adresse_livraison';
     protected $primaryKey = 'id_a';
@@ -45,7 +45,6 @@ class AdresseLivraison extends Model
         "ville" => ['rules' => "required", 'errors' => array('required' => "Champs vide")],
         "comp_a1" =>  ['rules' => "max_length[150]", 'errors' => array('max_length' => "Information complémentaire trop longue, pas plus de {param}")], 
         "comp_a2" =>  ['rules' => "max_length[150]", 'errors' => array('max_length' => "Information complémentaire trop longue, pas plus de {param}")], 
-        "infos_comp" => ['rules' => "max_length[250]", 'errors' => array('max_length' => "Information complémentaire trop longue, pas plus de {param} pour cette entrée")]
             
     ];
 

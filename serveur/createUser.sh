@@ -2,15 +2,15 @@
 
 userfile=profs
 
-username=$(cat /tmp/userlist | tr 'A-Z'  'a-z')
+username=$(cat profs | tr 'A-Z'  'a-z')
 
 password=$username@123
 
 for user in $username
 do
     useradd $user
-    echo $password | passwd --stdin $user
+    echo "$username:$password" | chpasswd
 done
 
-echo "$(wc -l /tmp/userlist) users have been created" 
-tail -n$(wc -l /tmp userlist) /etc/passwd
+echo "$(wc -l profs) users have been created" 
+tail -n$(wc -l profs) /etc/passwd

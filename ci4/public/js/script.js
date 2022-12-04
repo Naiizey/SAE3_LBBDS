@@ -762,21 +762,26 @@ function barreProgression() {
 ┃                                   formAdresse                                   ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+var seekPositionErreur = function(forNom){
 
+    return document.querySelector(`.position-erreur[for=${forNom}]`);
+}
 
 var formAdresseConstructor = function(){
     this.form=document.forms["form_adresse"];
     var self =this;
     this.actionAfterFetch= new Object();
 
+
     this.nomEtPrenom =[
         this.form.elements["nom"],
         this.form.elements["prenom"]    
     ];
     //Suggestions dés le clique
-    this.form.elements["ville"].addEventListener("mousedown",function(){
+    this.form.elements["ville"].addEventListener("mousedown",function(event){
         if( document.activeElement == this )return;
-        document.querySelector(this).focus();
+      
+        event.target.focus();
     });
     
     this.estRempli = new Array();
@@ -862,12 +867,12 @@ var formAdresseConstructor = function(){
         elemRequired.addEventListener("blur", (event) => {
         selfTarget=event.target;
         if(selfTarget.validity.valueMissing){
-            this.creerErreur(document.querySelector(`.position-erreur[for=${selfTarget.name}]`),"Champ vide");
+            this.creerErreur(seekPositionErreur(selfTarget.name),"Champ vide");
             this.estRempli[selfTarget.name]=false;
         }
         else{
             this.estRempli[selfTarget.name]=true;
-            this.supprimerErreur(selfTarget.parentNode);
+            this.supprimerErreur(seekPositionErreur(selfTarget.name));
            
         }
         })
@@ -876,7 +881,7 @@ var formAdresseConstructor = function(){
     this.afterVille = function(response){
     
         this.codePostal.value = response.features[0].properties.postcode;
-        this.supprimerErreur(this.codePostal.parentNode);
+        this.supprimerErreur(seekPositionErreur(selfTarget.name));
          
      }
  
@@ -909,12 +914,13 @@ var formAdresseConstructor = function(){
     this.chercherVilleParCodePostal= (event) => {
         selfTarget=event.target;
         if(this.codePostal.validity.patternMismatch){
-            this.creerErreur(selfTarget.parentNode,"Ne correspond à aucun code postal");
+            this.creerErreur(document.querySelector(`.position-erreur[for=${selfTarget.name}]`),"Ne correspond à aucun code postal");
            
         }
         else if(!this.codePostal.validity.valueMissing){
-            console.log("Bonsoir, non");
-            this.supprimerErreur(selfTarget.parentNode);
+           
+            this.supprimerErreur(seekPositionErreur(selfTarget.name));
+        
             
             
             
@@ -927,7 +933,8 @@ var formAdresseConstructor = function(){
            
         }
         else{
-            this.supprimerErreur(selfTarget.parentNode);
+            this.supprimerErreur(seekPositionErreur(selfTarget.name));
+            
            
         }    
     };
@@ -1014,13 +1021,14 @@ function errors(){
 ┃                                   Recherche                                     ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-
+/* Ne sert à rien de tout façon
 document.addEventListener('invalid', (function () {
     return function (e) {
         e.preventDefault();
         document.getElementById("name").focus();
     };
 })(), true);
+*/
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                  Card Produit                                   ┃
@@ -1081,6 +1089,47 @@ function menuCredit() {
         hover = false;
     })
 }
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                 Paiement                                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+function setUpPaiment(){
+    
+    document.querySelector("[type='submit']").addEventListener("click", (e) => {
+        e.preventDefault(); 
+        let forms= [
+            document.forms["form_adresse"],
+            document.forms["form_paiement"]
+        ]
+        var theForm= document.createElement("form");    
+    
+        let isValid=Array.from(forms).every(form => {
+            
+            if(form.reportValidity ()){
+                for (var elem of form.elements) {
+                    theForm.appendChild(elem.cloneNode(true));
+                }
+               return true;
+            }
+            else{
+                return false;
+            }
+        });
+        if (isValid){
+            theForm.method= "POST";
+            theForm.action= base_url + "/paiement";
+            theForm.style.display= "none";
+            document.body.appendChild(theForm);
+            console.log(theForm);
+            theForm.submit();
+        }
+        
+    
+        
+    })
+}
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

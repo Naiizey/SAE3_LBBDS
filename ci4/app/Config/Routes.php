@@ -104,16 +104,10 @@ $routes->set404Override();
 
     $routes->get('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
     $routes->post('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
-    /*
-    if(session()->has("numero")){
-        $routes->get('/espaceClient', 'Home::espaceClient');
-        $routes->post('/espaceClient', 'Home::espaceClient');
-    }
-    else
-    {
-        $routes->get('/espaceClient', 'Home::connexion');
-    }
-    */
+
+    $routes->get('/validation', 'Home::validation' );
+    $routes->post('/validation', 'Home::validation' );
+
 ##param uri (:any) et dans methode /$1
 
 /*

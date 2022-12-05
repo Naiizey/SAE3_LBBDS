@@ -105,8 +105,8 @@
                                     ?>">
                                 </div>
                                 <div>
-                                    <h3><?= "Prix (HT): " . $prod -> prixht ?></h3>
-                                    <h3><?= '(TTC): ' . $prod -> prixttc ?></h3>
+                                    <h3><?= "Prix (HT): " . $prod -> prixht . "€"?></h3>
+                                    <h3><?= '(TTC): ' . $prod -> prixttc . "€"?></h3>
                                 </div>
                                 <button type="submit">Ajouter au panier</button>
                             </form>

@@ -36,7 +36,11 @@ class Home extends BaseController
         helper("cookie");
         
         $data["controller"]= "Accueil";
-
+        if(session()->has("just_ajoute") && session()->get("just_ajoute") == true) {
+            $this->feedback=service("feedback");
+            session()->set("just_ajoute", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Article ajouté");
+        }
         $data['cardProduit']=service("cardProduit");
         $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
         if (session()->has("numero")) {
@@ -216,6 +220,11 @@ class Home extends BaseController
     
     public function catalogue($page=1)
     {
+        if(session()->has("just_ajoute") && session()->get("just_ajoute") == true) {
+            $this->feedback=service("feedback");
+            session()->set("just_ajoute", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Article ajouté");
+        }
         $filters=$this->request->getGet();
         $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
         $data['cardProduit']=service("cardProduit");

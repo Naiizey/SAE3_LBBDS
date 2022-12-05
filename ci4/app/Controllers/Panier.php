@@ -65,6 +65,11 @@ class Panier extends BaseController
     #TODO: valeur pas update au début.  
     public function getProduitPanierClient($context = null)
     {
+        if(session()->has("just_vide") && session()->get("just_ajoute") == true) {
+            $this->feedback=service("feedback");
+            session()->set("just_vide", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Panier vidé");
+        }
         $get=$this->request->getGet();
         if(!empty($get)){
            

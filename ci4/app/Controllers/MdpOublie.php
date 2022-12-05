@@ -47,9 +47,10 @@ class MdpOublie extends BaseController
 
         if ($clientModel->doesEmailExists($post['email'])) 
         {
-            $message = "Bonjour,\nVoici le code généré suite à votre demande de changement de mot de passe :" . $this->code . "\nSi vous n'êtes pas à l'origine de cette demande, veuillez le signaler a ce mail : admin@alizon?net";
+            $message = "Bonjour,\nVoici le code généré suite à votre demande de changement de mot de passe :" . $this->code . "\nSi vous n'êtes pas à l'origine de cette demande, veuillez le signaler a ce mail : admin@alizon.net";
             $message = wordwrap($message, 70, "\r\n");
             mail($post['email'], 'Récupération du mot de passe', $message);
+            echo $this->code;
             $data['retour'][0] = "Renseignez le code qui vous a été envoyé par mail.";
         } 
         else 
@@ -70,9 +71,13 @@ class MdpOublie extends BaseController
 
         if ($post['code'] == $this->code) 
         {
+            $model = model("App\Models\Client");
             $nouveauMDP = $this->motDePasseAlea();
-            
-            $message = "Bonjour,\nVoici votre nouveau mot de passe :" .  . "\nSi vous n'êtes pas à l'origine de cette demande, veuillez le signaler a ce mail : admin@alizon?net";
+            $entree = $model->where("email", $post['email'])->findAll()[0];
+            $entree->motDePasse=$nouveauMDP;
+            $entree->cryptMotDePasse();
+            $model->save($entree);
+            $message = "Bonjour,\nVoici votre nouveau mot de passe :" . $nouveauMDP . "\nSi vous n'êtes pas à l'origine de cette demande, veuillez le signaler a ce mail : admin@alizon.net";
             $message = wordwrap($message, 70, "\r\n");
             mail($post['email'], 'Récupération du mot de passe', $message);
             $data['retour'][0] = "Renseignez le code qui vous a été envoyé par mail.";

@@ -157,7 +157,7 @@ CREATE OR REPLACE FUNCTION insertInsertCommande() RETURNS TRIGGER AS
         RETURN NEW;
     end
 $$ language plpgsql;
-CREATE TRIGGER insteadOfInsert_insertCommande INSTEAD OF INSERT ON insert_commande FOR EACH ROW EXECUTE PROCEDURE insertInsertCommande();
+CREATE TRIGGER insteadOfInsert_insertCommande INSTEAD OF INSERT ON sae3.insert_commande FOR EACH ROW EXECUTE PROCEDURE insertInsertCommande();
 
 -- vérification que num panier n'as pas déja un code de réduction dans la table _reduire
 -- CREATE OR REPLACE FUNCTION verif_reduc_panier() RETURNS TRIGGER AS
@@ -177,13 +177,13 @@ CREATE TRIGGER insteadOfInsert_insertCommande INSTEAD OF INSERT ON insert_comman
 -- trigger insertion dans _compte instead of insert à partir de la vue client
 CREATE OR REPLACE FUNCTION insert_client() RETURNS trigger AS $$
 BEGIN
-    INSERT INTO _compte (nom_compte, prenom_compte, email, pseudo, mot_de_passe) VALUES (NEW.nom, NEW.prenom, NEW.email, NEW.identifiant, NEW.motDePasse);
+    INSERT INTO sae3._compte (nom_compte, prenom_compte, email, pseudo, mot_de_passe) VALUES (NEW.nom, NEW.prenom, NEW.email, NEW.identifiant, NEW.motDePasse);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_client
-    INSTEAD OF INSERT ON client
+    INSTEAD OF INSERT ON sae3.client
     FOR EACH ROW
     EXECUTE PROCEDURE insert_client();
 
@@ -192,11 +192,11 @@ CREATE TRIGGER insert_client
 CREATE OR REPLACE FUNCTION update_client() RETURNS trigger AS $$
 BEGIN
     --on récupère tous les champs qui sont contenus dans l'update
-    UPDATE _compte SET nom_compte = NEW.nom, prenom_compte = NEW.prenom, email = NEW.email, pseudo = NEW.identifiant, mot_de_passe = NEW.motDePasse WHERE num_compte = OLD.numero;
+    UPDATE sae3._compte SET nom_compte = NEW.nom, prenom_compte = NEW.prenom, email = NEW.email, pseudo = NEW.identifiant, mot_de_passe = NEW.motDePasse WHERE num_compte = OLD.numero;
 END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER update_client
-    INSTEAD OF UPDATE ON client
+    INSTEAD OF UPDATE ON sae3.client
     FOR EACH ROW
     EXECUTE PROCEDURE update_client();

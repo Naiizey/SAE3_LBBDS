@@ -11,7 +11,8 @@ CREATE OR REPLACE VIEW produit_catalogue AS
     SELECT id_prod  id, intitule_prod intitule, prix_ht*_tva.taux_tva prixTTC,lien_image_prod lienImage,publication_prod, description_prod, _sous_categorie.libelle_cat categorie, moyenneNote  FROM _produit NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva LEFT JOIN moyenne on _produit.id_prod = moyenne.id;
 
 CREATE OR REPLACE VIEW client AS
-    SELECT num_compte numero, nom_compte nom, prenom_compte prenom, email, pseudo identifiant, mot_de_passe motDePasse FROM _compte;
+    WITH trouve_current_panier AS (select max(num_panier) current_panier,num_compte from sae3._panier_client group by num_compte)
+    SELECT num_compte numero, nom_compte nom, prenom_compte prenom, email, pseudo identifiant, mot_de_passe motDePasse, current_panier FROM _compte NATURAL JOIN trouve_current_panier;
 
 
 CREATE OR REPLACE VIEW produit_detail AS

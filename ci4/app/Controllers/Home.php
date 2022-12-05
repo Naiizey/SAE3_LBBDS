@@ -64,7 +64,7 @@ class Home extends BaseController
                     return redirect()->to("/");
                 
                 }else {
-                    
+                 
                     $redirection=session()->get("referer_redirection");
                     session()->remove("referer_redirection");
                     return redirect()->to($redirection);
@@ -351,8 +351,6 @@ class Home extends BaseController
     public function infoLivraison()
     {
         //Assetion Début
-
-
         if (!session()->has("numero")) {
             throw new Exception("Erreur, vous devez être connecté ", 401);
         }
@@ -419,7 +417,7 @@ class Home extends BaseController
         $data["controller"]='Paiement';
 
         //Partie copié de infoLivraison:
-        $modelLivraison=model("\App\Models\AdresseLivraison");
+        
         $model=model("\App\Models\AdresseFacturation");
 
         $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
@@ -449,7 +447,13 @@ class Home extends BaseController
                 session()->set("adresse_facturation",$id_a);
                 return redirect()->to("/validation");
             }
+        }else if(session()->has("adresse_livraison")){
+            $adresse=model("\App\Models\AdresseLivraison")->find(session()->get("adresse_livraison"));
+            $data["dejaRempli"]="Adresse livraison validé et réutilisé";
         }
+
+
+
         $data['erreurs'] = $issues;
         $data['nomCB'] = (isset($_POST['nomCB'])) ? $_POST['nomCB'] : "";
         $data['numCB'] = (isset($_POST['numCB'])) ? $_POST['numCB'] : "";
@@ -482,9 +486,41 @@ class Home extends BaseController
     }
 
     public function validation(){
+        $data['controller']="Validation";
         if(session()->has("adresse_facturation") && session()->has("adresse_livraison")){
-            model("\App\Models\LstCommandesCli")->creerCommande(session()->get("numero"),session()->get("adresse_livraison"));
-            return redirect()->to("/commandes");
+            $get=$this->request->getGet();
+            if(isset($get["Confirmation"]) && $get["Confirmation"]==1){
+                model("\App\Models\LstCommandesCli")->creerCommande(session()->get("numero"),session()->get("adresse_livraison"));
+                session()->remove("adresse_livraison");
+                session()->remove("adresse_facturation");
+                return redirect()->to("/commandes");
+            }
+            else{
+                $data["adresseLivr"]=model("\App\Models\AdresseLivraison")->find(session()->get("adresse_livraison"));
+                $data["adresseFact"]=model("\App\Models\AdresseFacturation")->find(session()->get("adresse_facturation"));
+                $data['produits'] = model("\App\Models\ProduitPanierCompteModel")->getPanier(session()->get("numero"));
+                $client= model("\App\Models\Client")->find(session()->get("numero"));
+                $panier=model("\App\Models\ReducPanier")->getReducByPanier($client->current_panier);
+                if(!empty($panier)){
+                    $codeReduc = model("\App\Models\CodeReduction")->getCodeReducById($panier[0]->id_reduction)[0];
+                }
+                if(isset($codeReduc))
+                {
+                    if ($codeReduc->montant_reduction != 0)
+                    {
+                        $data['reducMont'] = $codeReduc->montant_reduction;
+                    }
+                    else
+                    {
+                        $data['reducPourc'] = $codeReduc->pourcentage_reduction;
+                    }
+                }
+                $data['totalTtc']= array_sum(array_map(fn($produit) => $produit->prixTtc,$data['produits']));
+                $data['totalHt']= array_sum(array_map(fn($produit) => $produit->prixHt,$data['produits']));
+                return view("recapitulatif.php",$data);
+            }
+            
+            
         }
         else throw new Exception("Vous ne pouvez pas être a cette étape sans avoir valider votre panier et vos adresses de factutation et de livraison",401);
     }

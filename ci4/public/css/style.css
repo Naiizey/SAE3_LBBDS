@@ -996,7 +996,7 @@ header ul {
     align-items: stretch;
 }
 
-.sectionCredit input[type="submit"] {
+.sectionCredit input[type="submit"], .gros-bouton {
     background-color: #24a064;
     color: white;
     margin: 2em 25% 1em 25%;
@@ -1006,7 +1006,7 @@ header ul {
     cursor: pointer;
 }
 
-.sectionCredit input[type="submit"]:hover {
+.sectionCredit input[type="submit"]:hover, .gros-bouton:hover {
     background-color: #164F57;
     color: white;
 }
@@ -1143,6 +1143,32 @@ header ul {
 ┃                          Form adresse                                           ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+
+.sectionCredit a.deja-rempli-lien{
+    color: #24a064;
+    text-decoration: underline;
+    font-size: 0.8em;
+    text-align: center;
+    margin: 20px;
+    fill: #24a064;
+    cursor: pointer;
+   
+}
+.sectionCredit a.deja-rempli-lien:hover{
+    color: #164F57;
+    fill: #164F57;
+}
+.sectionCredit a.deja-rempli-lien span{
+    vertical-align: bottom; ;
+}
+.sectionCredit span svg path{
+    font-size: inherit;
+    height: 64px;
+    width: 64px;
+    fill:inherit
+    
+
+}
 
 .divFormAdresse .onglets{
     height: fit-content
@@ -1424,14 +1450,14 @@ header ul {
     border-color: #C6C6C6;
 }
 
-.sectionPanier h2 {
+.sectionPanier h2{
     font-family: "Montserrat-Regular";
     font-size: 1.4em;
     color: #164F57;
     text-align: left;
 }
 
-.sectionPanier h3 {
+.sectionPanier h3,.recap h3 {
     font-family: "Montserrat-Medium";
     font-size: 1.1em;
     color: #164F57;
@@ -3190,3 +3216,41 @@ progress::-moz-progress-bar
     text-align: left;
     padding-left: .3em;
 }
+
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                    Récap                                       ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+.divRecapPanier {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.divRecapPanier div{
+
+    width: 60%;
+}
+
+
+.divRecapPanier .recap-prod-container {
+    display: grid;
+    margin: 20px 0;
+    font-family: 'Montserrat-Regular';
+    grid-template-columns: 50% 25% 25%;
+    width: 100%;
+    
+}
+.recap-prod-container div{
+    width: fit-content;
+    
+}
+
+
+.divRecapPanier h3{
+    text-align: center;
+}
+

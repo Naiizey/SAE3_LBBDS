@@ -173,3 +173,30 @@ CREATE TRIGGER insteadOfInsert_insertCommande INSTEAD OF INSERT ON insert_comman
 --     $$ language plpgsql;
     
 -- CREATE TRIGGER verif_reduc_panier INSTEAD OF INSERT ON sae3.reduc_panier FOR EACH ROW EXECUTE PROCEDURE verif_reduc_panier();
+
+-- trigger insertion dans _compte instead of insert à partir de la vue client
+CREATE OR REPLACE FUNCTION insert_client() RETURNS trigger AS $$
+BEGIN
+    INSERT INTO _compte (nom_compte, prenom_compte, email, pseudo, mot_de_passe) VALUES (NEW.nom, NEW.prenom, NEW.email, NEW.identifiant, NEW.motDePasse);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_client
+    INSTEAD OF INSERT ON client
+    FOR EACH ROW
+    EXECUTE PROCEDURE insert_client();
+
+-- trigger insertion dans _compte instead of update à partir de la vue client
+
+CREATE OR REPLACE FUNCTION update_client() RETURNS trigger AS $$
+BEGIN
+    --on récupère tous les champs qui sont contenus dans l'update
+    UPDATE _compte SET nom_compte = NEW.nom, prenom_compte = NEW.prenom, email = NEW.email, pseudo = NEW.identifiant, mot_de_passe = NEW.motDePasse WHERE num_compte = OLD.numero;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_client
+    INSTEAD OF UPDATE ON client
+    FOR EACH ROW
+    EXECUTE PROCEDURE update_client();

@@ -465,7 +465,7 @@ class Home extends BaseController
             }
         }else if(session()->has("adresse_livraison")){
             $adresse=model("\App\Models\AdresseLivraison")->find(session()->get("adresse_livraison"));
-            $data["dejaRempli"]="Adresse livraison validé et réutilisé";
+            $data["dejaRempli"] = "Adresse livraison validée et réutilisée";
         }
 
 

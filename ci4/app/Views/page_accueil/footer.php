@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div>
-                <a> <!-- Lien mentions légales -->
+                <a href="" class="lienCGU"> <!-- Lien mentions légales -->
                     <p>Mentions légales</p> 
                 </a>
                 <a href="./"> <!-- Lien réseaux sociaux -->

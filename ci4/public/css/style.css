@@ -3042,6 +3042,12 @@ progress::-moz-progress-bar
     fill: #164F57;
 }
 
+@media screen and (max-width: 991px){
+    .mentionsLegales{
+        margin: 0;
+    }
+}
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                    Page d'espace client (espaceClient.php)                      ┃

@@ -65,6 +65,9 @@ class Panier extends BaseController
     #TODO: valeur pas update au début.  
     public function getProduitPanierClient($context = null)
     {
+        $data['model'] = model("\App\Models\ProduitCatalogue");
+        $data['cardProduit'] = service("cardProduit");
+
         if(session()->has("just_vide") && session()->get("just_ajoute") == true) {
             $this->feedback=service("feedback");
             session()->set("just_vide", false);

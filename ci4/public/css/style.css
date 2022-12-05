@@ -1980,6 +1980,51 @@ h3 > .lienPasArticlePanier {
     .sectionRecommandationsPanierMobile{
         display: block;
     }
+
+    .sectionRecommandationsPanierMobile ul li{
+        width: 5rem;
+        height: 7rem;
+    }
+
+    .sectionRecommandationsPanierMobile .card-produit-ext{
+        width: 5rem;
+        height: 7rem;
+        padding: 0;
+    }
+
+    .sectionRecommandationsPanierMobile .card-produit{
+        width: 5rem;
+        height: 7rem;
+    }
+
+    .sectionRecommandationsPanierMobile .image-card{
+        height: 3.25rem;
+    }
+    
+    .sectionRecommandationsPanierMobile .notation-card{
+        height: .75rem;
+    }
+
+    .sectionRecommandationsPanierMobile .contain-libelle{
+        font-size: .75rem;
+        min-height: 1.5rem;
+        max-height: 1.5rem;
+    }
+
+    .sectionRecommandationsPanierMobile .prix-card{
+        font-size: .75rem;
+    }
+
+    .sectionRecommandationsPanierMobile .addPanier{
+        height: .75rem;
+        width: .75rem;
+        position: relative;
+        top: -.1rem;
+    }
+
+    .sectionRecommandationsPanierMobile .notation-card img{
+        width: .75rem;
+    }
 }
 
 /*

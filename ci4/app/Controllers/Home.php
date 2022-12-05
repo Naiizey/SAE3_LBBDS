@@ -153,6 +153,9 @@ class Home extends BaseController
 
     public function produit($idProduit = null)
     {
+        $data['model'] = model("\App\Models\ProduitCatalogue");
+        $data['cardProduit']=service("cardProduit");
+        
         // Gestion du feedback
         if(session()->has("just_ajoute") && session()->get("just_ajoute") == true) {
             $this->feedback=service("feedback");

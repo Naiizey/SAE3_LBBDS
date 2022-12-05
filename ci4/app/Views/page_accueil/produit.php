@@ -1,4 +1,54 @@
 <?php require("header.php"); ?>
+    <style>
+        .sectionRecommandationsPanierPC ul li{
+            display: flex;
+            justify-content: center;
+        }
+
+        .sectionRecommandationsPanierPC .card-produit-ext{
+            width: 8rem;
+            height: 11.2rem;
+            padding: 0;
+        }
+
+        .card-produit{
+            width: 8rem;
+            height: 11.2rem;
+        }
+
+        .image-card{
+            height: 5.5rem
+        }
+
+        .contain-libelle{
+            min-height: 2rem;
+            max-height: 2rem;
+            font-size: 1rem;
+        }
+
+        .prix-card{
+            font-size: 1rem;
+        }
+
+        .addPanier{
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .addPanier svg{
+            position: relative;
+            top: -.7rem;
+        }
+
+        .noation-card{
+            height: 1.25rem;
+        }
+
+        .card-produit img{
+            border: none;
+            width: 1rem;
+        }
+    </style>
         <main class="mainProduit">
             <section class="sectionProduit">
                 <article>
@@ -67,57 +117,24 @@
                     <h2>Recommandations</h2>
                     <hr>
                     <ul>
-                        <li>
-                            <a href="">
-                                <img src="<?=base_url() ?>/images/art1.png" alt="article 1" title="Article 1">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="<?=base_url() ?>/images/art2.png" alt="article 2" title="Article 2">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="<?=base_url() ?>/images/art3.png" alt="article 3" title="Article 3">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="<?=base_url() ?>/images/art4.png" alt="article 4" title="Article 4">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="<?=base_url() ?>/images/art5.png" alt="article 5" title="Article 5">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="<?=base_url() ?>/images/art5.png" alt="article 6" title="Article 6">
-                            </a>
-                        </li>
+                        <?php $prodsPC = $model->where("intitule <>", $prod->intitule)->findAll(5);?>
+                        <?php foreach($prodsPC as $prod): ?>
+                            <li>
+                                <?= $cardProduit->display($prod)?>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </section>
                 <section class="sectionRecommandationsPanierMobile">
                     <h2>Recommandations</h2>
                     <hr>
                     <ul>
-                        <li>
-                            <a href="">
-                                <img src="<?=base_url() ?>/images/art1.png" alt="article 1" title="Article 1">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="<?=base_url() ?>/images/art2.png" alt="article 2" title="Article 2">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="<?=base_url() ?>/images/art3.png" alt="article 3" title="Article 3">
-                            </a>
-                        </li>
+                        <?php $prodsMobile = $model->where("intitule <>", $prod->intitule)->findAll(3);?>
+                        <?php foreach($prodsMobile as $prod): ?>
+                            <li>
+                                <?= $cardProduit->display($prod)?>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </section>
             </section>

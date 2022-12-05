@@ -18,6 +18,63 @@
         }   
     }  
 ?>
+
+        <style>
+            .sectionRecommandationsPanierPC ul li{
+                display: flex;
+                justify-content: center;
+            }
+
+            .sectionRecommandationsPanierPC .card-produit-ext{
+                width: 10rem;
+                height: 14rem;
+                padding: 0;
+            }
+
+            .card-produit{
+                width: 10rem;
+                height: 14rem;
+            }
+
+            .image-card{
+                height: 7rem
+            }
+
+            .contain-libelle{
+                min-height: 3rem;
+                max-height: 3rem;
+                font-size: 1.25rem;
+            }
+
+            .prix-card{
+                font-size: 1.25rem;
+            }
+
+            .addPanier{
+                width: 1.25rem;
+                height: 1.25rem;
+            }
+
+            .addPanier svg{
+                position: relative;
+                top: -.5rem;
+            }
+
+            .noation-card{
+                height: 1.5rem;
+            }
+
+            .card-produit img{
+                border: none;
+                width: 1.5rem;
+            }
+
+            @media screen and (max-width: 991px){
+                .addPanier svg{
+                    top: -.75rem;
+                }
+            }
+        </style>
         <main class="mainPanier">
             <div>
                 <a class="lienAlizonPanier" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
@@ -151,59 +208,26 @@
                     <h2>Recommandations</h2>
                     <hr>
                     <ul>
-                        <li>
-                            <a href="">
-                                <img src="./images/art1.png" alt="article 1" title="Article 1">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="./images/art2.png" alt="article 2" title="Article 2">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="./images/art3.png" alt="article 3" title="Article 3">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="./images/art4.png" alt="article 4" title="Article 4">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="./images/art5.png" alt="article 5" title="Article 5">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="./images/art5.png" alt="article 6" title="Article 6">
-                            </a>
-                        </li>
+                        <?php $prodsPC = $model->findAll(5);?>
+                        <?php foreach($prodsPC as $prod): ?>
+                            <li>
+                                <?= $cardProduit->display($prod)?>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </section>
                 <section class="sectionRecommandationsPanierMobile">
                     <h2>Recommandations</h2>
                     <hr>
                     <ul>
-                        <li>
-                            <a href="">
-                                <img src="<?=base_url() ?>/images/art1.png" alt="article 1" title="Article 1">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="<?=base_url() ?>/images/art2.png" alt="article 2" title="Article 2">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="<?=base_url() ?>/images/art3.png" alt="article 3" title="Article 3">
-                            </a>
-                        </li>
+                        <?php $prodsMobile = $model->findAll(3);?>
+                        <?php foreach($prodsMobile as $prod): ?>
+                            <li>
+                                <?= $cardProduit->display($prod)?>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
-                </section> 
+                </section>  
             <?php endif; ?>
         </main>
 <?php require("footer.php"); ?>

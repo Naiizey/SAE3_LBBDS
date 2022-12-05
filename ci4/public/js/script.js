@@ -389,7 +389,10 @@ function lstCommandesVendeur(){
 */
 function cgu(){
     var lienCGU = document.getElementsByClassName("lienCGU");
-    lienCGU[0].addEventListener("click", affichageCGU);
+    for(button of lienCGU){
+        button.addEventListener("click", affichageCGU);
+    }
+    
     var mentionsLegales = document.getElementsByClassName("mentionsLegales")[0];
 
     function affichageCGU(event) {

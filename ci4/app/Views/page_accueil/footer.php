@@ -56,7 +56,8 @@
             <p>&copy; 2022 Alizon.bzh et ses affiliés</p>
             <div class="mobile">
                 <ul>
-                <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>">
+                    <li>
+                    <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>">
                         <?php include(dirname(__DIR__,3)."/public/images/header/profil.svg")?>
                     </a>
                     <?php if (session()->has("numero")): ?>
@@ -71,6 +72,7 @@
                             <a href="<?= base_url()."/inscription"?>"><p>S'inscrire</p></a>
                         </div>
                     <?php endif; ?>
+                    </li>
                     <li>
                         <a href="./"> <!-- contact -->
                             <?php include("./images/header/contact.svg")?>

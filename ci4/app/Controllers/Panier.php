@@ -210,7 +210,7 @@ class Panier extends BaseController
         else throw new \Exception("Le panier n'existe pas !");
         
         
-        
+        session()->set("just_vide", true);
         return redirect()->to("panier")->withCookies();;
     }
 
@@ -264,6 +264,7 @@ class Panier extends BaseController
         }
 
         if(isset($this->request)){
+            session()->set("just_ajoute", true);
             return redirect()->to(session()->get("_ci_previous_url"));
         }
        

@@ -149,6 +149,13 @@ class Home extends BaseController
 
     public function produit($idProduit = null)
     {
+        // Gestion du feedback
+        if(session()->has("just_ajoute") && session()->get("just_ajoute") == true) {
+            $this->feedback=service("feedback");
+            session()->set("just_ajoute", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Article ajouté");
+        }
+
         //Assertion
         if ($idProduit == null) {
             return view('errors/html/error_404.php', array('message' => "Pas de produit spécifié"));

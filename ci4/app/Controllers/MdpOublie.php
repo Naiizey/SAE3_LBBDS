@@ -58,15 +58,25 @@ class MdpOublie extends BaseController
         }
 
         return $this->mdpOublie($post, $data);
-    }   
+    }
+
+    public function motDePasseAlea() {
+        return $this->genererCode() . $this->genererCode();
+    }
 
     public function validerCode()
     {
         $post=$this->request->getPost();
 
-        if ($leCodeEstBon) 
+        if ($post['code'] == $this->code) 
         {
-            $data['retour'][3] = "Votre mot de passe a bien été réinitialisé.";
+            $nouveauMDP = $this->motDePasseAlea();
+            
+            $message = "Bonjour,\nVoici votre nouveau mot de passe :" .  . "\nSi vous n'êtes pas à l'origine de cette demande, veuillez le signaler a ce mail : admin@alizon?net";
+            $message = wordwrap($message, 70, "\r\n");
+            mail($post['email'], 'Récupération du mot de passe', $message);
+            $data['retour'][0] = "Renseignez le code qui vous a été envoyé par mail.";
+            $data['retour'][3] = "Un nouveau mot de passe vous a été envoyé par mail.";
         } 
         else 
         {

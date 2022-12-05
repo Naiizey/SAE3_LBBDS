@@ -1,5 +1,6 @@
+-- Active: 1668088521500@@192.168.0.24@5432@postgres
 -- ajout des droits superuser pour pouvoir ensuite supprimer les triggers de vérification de contraintes d'intégrité
-ALTER USER <utilisateur> WITH SUPERUSER;
+ALTER USER postgres WITH SUPERUSER;
 
 
 SET SCHEMA 'sae3';

@@ -27,7 +27,11 @@ class Import extends BaseController
     }
 
     public function upload() {       
- 
+        if(session()->has("just_importe") && session()->get("just_importe") == true) {
+            $this->feedback=service("feedback");
+            session()->set("just_importe", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Catalogue importé");
+        }
         $data["controller"] = "import";
         $csv = $this->request->getFile('file');
         $filepath = WRITEPATH . 'uploads/' . $csv->store();
@@ -66,6 +70,7 @@ class Import extends BaseController
         
         $importModel->CSVimport($result);
         delete_files(WRITEPATH.'uploads/', true);
+        session()->set("just_importe", true);
         return view('page_accueil/import.php', $data);
     }
 }

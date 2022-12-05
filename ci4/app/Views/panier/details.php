@@ -55,8 +55,8 @@
                             </div>
                         </div>
                         <div class="divPrix">
-                            <?= "<p>Total HT : ".$infosCommande[0]->prix_ht."€</p>
-                            <p>Total TTC : ".$infosCommande[0]->prix_ttc."€</p>"?>
+                            <?= "<p>Totaux : ".$infosCommande[0]->prix_ht."€ HT</p>
+                            <p>".$infosCommande[0]->prix_ttc."€ TTC</p>"?>
                         </div>
                     </div>
                     <div class="divDroiteDetail">

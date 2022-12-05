@@ -228,7 +228,7 @@ INSERT INTO _commande VALUES (4,'4', '2018-01-01', '2018-01-01', '2018-01-01', '
 --10 insertions dans _code_reduction
 INSERT INTO _code_reduction (code_reduction, montant_reduction, pourcentage_reduction, date_debut, heure_debut, date_fin, heure_fin)
     VALUES  ('10EUROS!!!', 10, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
-        ('SOULEVE2EMETITRE', 0, 20, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
+            ('SOULEVE2EMETITRE', 0, 20, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
         ('5REDUC!!!', 5, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
         ('ACHE2ETPAIE1', 0, 50, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
         ('EUROSREDUIT', 4, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),

@@ -44,7 +44,15 @@
                                     <?php endif; ?>
                                        
                                     </select>
-                                    <input class="input-option-plus-10" type="number" name="quantitePlus" min=0 max=<?= $prod -> stock - ((isset($quantitePanier))?$quantitePanier:0) ?> value="10">
+                                    <input class="input-option-plus-10" type="number" name="quantitePlus" min=0 max=<?= $prod -> stock - ((isset($quantitePanier))?$quantitePanier:0) ?> 
+                                    value="<?php 
+                                    $max=($prod -> stock - ((isset($quantitePanier))?$quantitePanier:0));
+                                    if(10 > $max){
+                                        echo $max;
+                                    }else{
+                                        echo 10;
+                                    }
+                                    ?>">
                                 </div>
                                 <div>
                                     <h3><?= "Prix (HT): " . $prod -> prixht ?></h3>

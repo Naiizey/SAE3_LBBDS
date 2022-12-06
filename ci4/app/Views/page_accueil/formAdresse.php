@@ -47,7 +47,7 @@
                         <input type="text" name="c_adresse1"  value="<?= $cAdresse1?>"/>
                         <label>Complément adresse 2 :</label>
                         <input type="text" name="c_adresse2"  value="<?= $confirmezMotDePasse?>"/>
-                        <label>Informations complémentaites :</label>
+                        <label>Informations complémentaires :</label>
                         <textarea name="confirmezMotDePasse"  value="<?= $confirmezMotDePasse?>"/>
                         <input type="submit" value="Confirmer"/>
                     </form>

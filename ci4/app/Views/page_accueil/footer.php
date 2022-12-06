@@ -7,7 +7,7 @@
                 <h2>Mentions légales</h2>
                 <p>Tout personne très peu sympathique tentant de récupérer nos mentions légales se verra dénoncé auprès de Bertrand de Villeneuve et sera notifié oralement de notre ingratitude envers cet acte. Dans le cas échéant, il s'engage à nous verser une compensation monétaire d'une hauteur de 100€ pour le dommage intelectuel et moral effectué.</p>
                 <p>Ceci n'est pas une blague.</p>
-                <p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Les vrais mentions légales</a></p>
+                <p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Les vraies mentions légales</a></p>
                 <p></p>
                 <div class="remonterCGU">
                     <?= file_get_contents(dirname(__DIR__,3)."/public/images/fleche_haut.svg") ?>

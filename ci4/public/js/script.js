@@ -361,23 +361,29 @@ function updateQuantite() {
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 function lstCommandes(){
+    // Récupération de toutes les lignes de la liste des commandes
     var lignes=document.getElementsByClassName("lignesCommandes");
+    // Récupération de tous les numéros de commandes
     var numCommandes=document.getElementsByClassName("numCommandes");
 
     for (let numLigne=0; numLigne<lignes.length; numLigne++){
         let ligneA=lignes.item(numLigne);
         let commandeA=numCommandes.item(numLigne).textContent;
+        // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail de la commande récupérée juste avant
         ligneA.addEventListener("click", () => {window.location.href = `${base_url}/commandes/detail/${commandeA}`;});
     }
 }
 
 function lstCommandesVendeur(){
+    // Récupération de toutes les lignes de la liste des commandes
     var lignes=document.getElementsByClassName("lignesCommandes");
+    // Récupération de tous les numéros de commandes
     var numCommandes=document.getElementsByClassName("numCommandes");
 
     for (let numLigne=0; numLigne<lignes.length; numLigne++){
         let ligneA=lignes.item(numLigne);
         let commandeA=numCommandes.item(numLigne).textContent;
+        // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail de la commande récupérée juste avant, en tant que vendeur
         ligneA.addEventListener("click", () => {window.location.href = `${base_url}/vendeur/commandesCli/detail/${commandeA}`;});
     }
 }

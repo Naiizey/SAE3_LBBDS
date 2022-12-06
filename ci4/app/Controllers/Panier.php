@@ -67,7 +67,7 @@ class Panier extends BaseController
     {
         $data['model'] = model("\App\Models\ProduitCatalogue");
         $data['cardProduit'] = service("cardProduit");
-
+        //FIXME: SUS: has just_vide et justa_ajoute true ??
         if(session()->has("just_vide") && session()->get("just_ajoute") == true) {
             $this->feedback=service("feedback");
             session()->set("just_vide", false);
@@ -79,7 +79,7 @@ class Panier extends BaseController
             if(isset($get["Suppression"]) && $get["Suppression"]==1 ){
                 model("\App\Models\ProduitPanierVisiteurModel")->viderPanier(get_cookie("token_panier"));
                 delete_cookie("token_panier");
-                $data["supprimer"]=true;
+                $data["supprimerOuConfirmer"]=true;
             }
             else if(isset($get["Ignorer"]) && $get["Ignorer"]==1 ){
                 session()->set("ignorer",true);
@@ -87,7 +87,7 @@ class Panier extends BaseController
             else if(isset($get["Confirmer"]) && $get["Confirmer"]==1 ){
                 model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
                 delete_cookie("token_panier");
-                $data["supprimer"]=true;
+                $data["supprimerOuConfirmer"]=true;
             }
            
         }
@@ -179,6 +179,7 @@ class Panier extends BaseController
                     }
                 }
             }
+            
 
             if (isset($codeReduc) && empty($issues))
             {
@@ -196,6 +197,14 @@ class Panier extends BaseController
                 $data['classCacheDiv'] = "decouvreNouveauPrix";
             }
         }
+        else if(has_cookie("token_panier") && session()->has("numero"))
+        {   
+            
+            model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
+            delete_cookie("token_panier");
+            $data["supprimerOuConfirmer"]=true;
+        }
+           
 
         $data['erreurs'] = $issues;
         $data['retours'] = $retours;

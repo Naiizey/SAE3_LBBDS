@@ -233,6 +233,7 @@
 <?php require("footer.php"); ?>
 
 <script>
+    <?php if (!empty($produits)): ?>
     reqUpdateQuantite(
         "<?php echo  base_url()  .  '/panier/modifier/quantite'?>",
         () => document.querySelectorAll(".divQuantite input"),
@@ -256,9 +257,10 @@
     );
     updatePricePanier();
     updatePriceTotal();
+    <?php endif; ?>
     <?php if(session()->has("numero") && has_cookie("token_panier") 
-    && !(session()->has("ignorer") && session()->has("ignorer")==true) 
-    && !(isset($supprimer) && $supprimer)): ?>
+    && !(session()->has("ignorer") && session()->get("ignorer")==true) 
+    && !(isset($supprimerOuConfirmer) && $supprimerOuConfirmer)): ?>
         var oui = new AlerteAlizon("Récupération panier","<?= current_url() ?>","Voulez-vous récupérer le panier que vous avez utilisé <strong>avant</strong> la connexion, en l'associant à votre compte ?");
         oui.ajouterBouton("Associer",'normal-button petit-button vert',"Confirmer");
         oui.ajouterBouton("Plus tard",'normal-button petit-button supprimer-filtre',"Ignorer");

@@ -190,33 +190,6 @@ class Home extends BaseController
         }
     }
 
-    public function panier($context = null)
-    {
-        $data["controller"] = "Panier";
-        if ($context == 400) {
-            $data['error']="<p class='erreur'>Erreur d'authentification</p>";
-        }
-
-        return view('page_accueil/panier.php', $data);
-    }
-
-    public function panierVide($context = null)
-    {
-        $data["controller"] = "Panier (Vide)";
-
-        if ($context == 400) {
-            $data['error']="<p class='erreur'>Erreur d'authentification</p>";
-        }
-
-        return view('page_accueil/panier.php', $data);
-    }
-
-    public function viderPanierClient()
-    {
-        session() -> get("numero");
-        $ProduitPanierModel = model("\App\Models\ProduitPanierModel");
-        //$ProduitPanierModel -> viderPanierClient
-    }
 
     private const NBPRODSPAGECATALOGUE = 20;
     #FIXME: comportement href différent entre $page=null oe $page !=null

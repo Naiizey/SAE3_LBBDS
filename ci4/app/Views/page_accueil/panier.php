@@ -142,15 +142,15 @@
                                                 <input class="" type="number" name="quantite" min=1 max=<?= $produit->stock ?> value=<?=$produit->quantite ?>>
                                             <a href="<?= base_url() ?>/panier/supprimer/<?= $produit->idProd ?>">Supprimer</a>
                                         </div>
-                                        <h3>HT: 
+                                        <h3> 
                                             <span class="prixHt" prix="<?= $produit -> prixHt ?>">
                                                 <?= $produit -> prixHt ?>€
-                                            </span>
+                                            </span> HT
                                         </h3>
-                                        <h3>TTC: 
+                                        <h3> 
                                             <span class="prixTtc" prix="<?= $produit -> prixTtc ?>">
                                                 <?= $produit -> prixTtc ?>€
-                                            </span> 
+                                            </span> TTC
                                         </h3>
                                     </div>
                                 </article>
@@ -158,15 +158,15 @@
                             <hr>
                         </div>
                         <div class="sous-totaux">
-                            <h2>Sous-total HT:
+                            <h2>Sous-total :
                                 <span class="totalHt">
                                     <?= $sommePrix ?>
-                                </span>€
+                                </span>€ HT
                             </h2>
-                            <h2>Sous-total TTC :
+                            <h2>Sous-total :
                                 <span class="totalTtc">
                                     <?= $sommePrix ?>
-                                </span>€
+                                </span>€ TTC
                             </h2>
                         </div>
                     </section>
@@ -186,7 +186,7 @@
                             </form>
                         </div>
                         <div class="divValiderVider">
-                            <h2>Total TTC
+                            <h2>Total
                                 (<span class="nbArt">
                                     <?= $sommeNbArticle ?>
                                 </span> article.s) : 
@@ -195,7 +195,7 @@
                                 </span>
                                 <span class="totalTtc">
                                     <?= $sommePrix ?>
-                                </span>€
+                                </span>€ TTC
                             </h2>
                             <a href="<?= base_url() ?>/livraison" class="lienPanier">Valider le panier</a>
                             <a class="lienViderPanier" href="<?= base_url() ?>/panier/vider">Vider le panier</a>

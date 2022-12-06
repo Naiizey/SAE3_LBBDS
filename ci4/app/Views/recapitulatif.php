@@ -7,12 +7,12 @@
                 <h3>Produits à l'achat</h3>
                 <div class="recap-prod-container">
                 <?php foreach($produits as $produit): ?>
-                    <div><?= $produit->intitule ?> </div> <div>ttc:<?= $produit->prixTtc ?>€</div> <div>ht:<?= $produit->prixHt ?>€</div>
+                    <div><?= $produit->intitule ?> </div> <div><?= $produit->prixTtc ?>€ TTC</div> <div><?= $produit->prixHt ?>€ HT</div>
                 <?php endforeach ?>
                 </div>
                 <div class="recap-prod-container">
                     <?php if (isset($reducMont) || isset($reducPourc)): ?>
-                    <div>Sous-totaux </div> <div>ttc:<?= $totalTtc?>€</div> <div>ht:<?= $totalHt ?>€</div>
+                    <div>Sous-totaux </div> <div><?= $totalTtc?>€ TTC</div> <div><?= $totalHt ?>€ HT</div>
                     <div>Remise</div> <div><?= "-".((isset($reducMont))?$reducMont."€":$reducPourc."%") ?></div> <div></div>
                     <?php endif; ?>
                     <div>Total </div> 
@@ -20,10 +20,10 @@
                         <div><?= $totalTtc-$reducMont ?>€</div> 
                         
                     <?php elseif (isset($reducPourc)): ?>
-                        <div>ttc:<?= $totalTtc*(100-$reducPourc)/100  ?>€</div> 
+                        <div><?= $totalTtc*(100-$reducPourc)/100  ?>€ TTC</div> 
                      
                     <?php else: ?>
-                        <div>ttc:<?= $totalTtc?>€</div> 
+                        <div><?= $totalTtc?>€ TTC</div> 
                         
                     <?php endif; ?>
                     <div></div>

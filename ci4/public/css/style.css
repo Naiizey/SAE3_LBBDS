@@ -317,6 +317,7 @@ main {
 
 .requis{
     color: #C63636;
+    font-weight: bolder;
 }
 
 /* Media query téléphone header */
@@ -1016,7 +1017,7 @@ header ul {
 .sectionCredit input[type="email"], 
 .sectionCredit textarea{
     background-color: #F3F3F3;
-    margin: 1% 0 0 0;
+    margin: 0.3em 0 0 0;
     height: 2.5em;
     border: solid 1px;
     border-color: #C6C6C6;
@@ -1192,22 +1193,22 @@ header ul {
 
 .infoRue .colonne-numero-rue{
     grid-column-start: 1;
-    grid-column-end: 5;
+    grid-column-end: 6;
 }
 
 .infoRue .colonne-nom-rue{
-    grid-column-start:  6;
-    grid-column-end: 20;
+    grid-column-start:  7;
+    grid-column-end: 21;
 }
 
 .infoVille .colonne-code-postal{
-    grid-column-start: 1    ;
+    grid-column-start: 1;
     grid-column-end: 7;
 }
 
 .infoVille .colonne-ville{
-    grid-column-start:  8   ;
-    grid-column-end: 20;
+    grid-column-start:  8;
+    grid-column-end: 21;
 }
 
 
@@ -1322,7 +1323,9 @@ header ul {
     margin: 0;
 }
 
-
+div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
+    margin-top: 0.3em;
+}
 
 
 /*

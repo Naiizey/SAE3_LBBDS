@@ -25,7 +25,7 @@ Class ImportCSV extends Model{
 
     function CSVImport($fileArray){
         foreach($fileArray as $value){
-            $this->insert($value);
+                $this->insert($value);
         }
     }
 }

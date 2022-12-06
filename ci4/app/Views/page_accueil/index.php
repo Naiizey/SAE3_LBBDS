@@ -9,13 +9,13 @@
                 <div id="carousel">
                     <ul id="carousel-elem"> <!-- Menu ./images -->
                         <a href="" class="slide">
-                            <img src="<?=base_url()?>/images/art1.jpg" alt="article 1" title="Article 1">
+                            <img src="<?=base_url()?>/images/art1.webp" alt="article 1" title="Article 1">
                         </a>
                         <a href="" class="slide">
-                            <img src="<?=base_url()?>/images/art2.jpg" alt="article 2" title="Article 2">
+                            <img src="<?=base_url()?>/images/art2.webp" alt="article 2" title="Article 2">
                         </a>
                         <a href="" class="slide">
-                            <img src="<?=base_url()?>/images/art3.jpg" alt="article 3" title="Article 3">
+                            <img src="<?=base_url()?>/images/art3.webp" alt="article 3" title="Article 3">
                         </a>
                     </ul>
                 </div>

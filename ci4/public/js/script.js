@@ -387,39 +387,47 @@ function lstCommandesVendeur(){
 ┃                                      CGU                                        ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+// Fonction permettant d'afficher les CGU lors du clic sur le lien des mentions légales dans le footer
 function cgu(){
-    var lienCGU = document.getElementsByClassName("lienCGU");
+    var lienCGU = document.getElementsByClassName("lienCGU"); // Lien des mentions légales
+    
+    // Pour tout les éléments disposant de la classes
     for(button of lienCGU){
-        button.addEventListener("click", affichageCGU);
+        button.addEventListener("click", affichageCGU); // Ajout de l'écouteur pour effectuer les actions
     }
     
-    var mentionsLegales = document.getElementsByClassName("mentionsLegales")[0];
+    var mentionsLegales = document.getElementsByClassName("mentionsLegales")[0]; // La div des CGU qui s'affichera
 
+    // Fonction d'affichage des CGU lors du clic sur le lienCGU
     function affichageCGU(event) {
-        event.preventDefault();
-        let flou = document.querySelectorAll("main>*, header>*, footer>*");
-        let page = document.querySelector("html");
+        event.preventDefault(); // Empêche le refresh de la page lors du clic sur le lienCGU
+        let flou = document.querySelectorAll("main>*, header>*, footer>*"); // Tout l'arrière plan
+        let page = document.querySelector("html"); // Toute la page
 
+        // Si les CGU ne sont pas affichées
         if (mentionsLegales.style.display == "none") {
-            mentionsLegales.style.display = "block";
-            page.style.overflow = "hidden";
-            page.style.pointerEvents = "none";
-            window.scrollTo({top: 0, behavior: 'smooth'});
-            mentionsLegales.scrollTo({top: 0, behavior: 'auto'});
+            mentionsLegales.style.display = "block"; // Fait apparaitre la div des CGU
+            page.style.overflow = "hidden"; // Empêche le scroll sur le reste de la page
+            page.style.pointerEvents = "none"; // Empêche le clic sur le reste de la page
+            window.scrollTo({top: 0, behavior: 'smooth'}); // Scroll jusqu'en haut de la page
+            mentionsLegales.scrollTo({top: 0, behavior: 'auto'}); // Scroll jusqu'en haut de la div des CGU
 
+            // Pour tout les éléments de l'arrière plan
             for (let index = 0; index < flou.length; index++) {
-                flou[index].style.filter = "blur(4px)";
-                mentionsLegales.style.filter = "blur(0)";
+                flou[index].style.filter = "blur(4px)"; // Définit un flou
+                mentionsLegales.style.filter = "blur(0)"; // Retire le flou sur la div des CGU
             }
-            document.getElementsByClassName("fermerCGU").addEventListener("blur", affichageCGU);
+            document.getElementsByClassName("fermerCGU").addEventListener("blur", affichageCGU); // Ferme les CGU lors du clic sur la croix en haut à droite de la div CGU
         }
     }
 
-    var boutonML = document.getElementsByClassName("remonterCGU")[0];
+    let boutonML = document.getElementsByClassName("remonterCGU")[0]; // Bouton pour remonter les CGU
+
+    // Quand on clic le bouton
     boutonML.addEventListener("click", function(e) {
-        mentionsLegales.scrollTo({top: 0, behavior: 'smooth'});
+        mentionsLegales.scrollTo({top: 0, behavior: 'smooth'}); // Scrool tout en haut de la div des CGU
     });
-    //TODO : bouton scroll back en sticky en bas à gauche du bloc    
+    //TODO : bouton scroll back en sticky en bas à gauche du bloc
 }    
 
 /*
@@ -726,41 +734,40 @@ var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFi
 
 }
 
-
-
-
-
-
 /*  
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                               Detail commande                                   ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-
+// Gestion de la barre de progression (pas adaptative en fonction du nombre de points)
 function barreProgression() {
-    let pointProgress = document.getElementsByClassName("pointProgress");
-    let preuveLivraison = document.querySelector(".preuveLivraison");
-    let progressBar = document.querySelector(".progress-bar-ok");
+    let pointProgress = document.getElementsByClassName("pointProgress"); // Les points de la barre de progression
+    let preuveLivraison = document.querySelector(".preuveLivraison"); // Le dernier point qui valide la livraison
+    let progressBar = document.querySelector(".progress-bar-ok"); // La barre de progression
 
-    if (progressBar.value < 5) {
-        progressBar.value = (progressBar.value - 1)*25 + 12,5;
+    // Calcule du pourcentage de la barre de progression en fonction de l'état
+    if (progressBar.value < 5) { // Nombre de points sur la barre de progression
+        progressBar.value = (progressBar.value - 1)*25 + 12,5; // Formule pour que les états 1 = 12,5% ; 2 = 37,5 ; 3 = 62,5 ; 4 = 87,5
     } else {
-        progressBar.value = 100;
+        progressBar.value = 100; // Si l'état = 5 (max), la barre est à 100%
     }
 
-    for (let index = 0; index < 5; index++) {
-        if (index*25 <= progressBar.value) {
-            pointProgress[index].classList.add("point-ok");
+    // Définit la couleur des points en fonction du pourcentage
+    for (let index = 0; index < 5; index++) { // Pour les 5
+        if (index*25 <= progressBar.value) { // Point vert si le pourcentage est supérieur au numéro du point multiplié par 25
+            pointProgress[index].classList.add("point-ok"); // Classe point vert
         } else {
-            pointProgress[index].classList.add("point-ko");
+            pointProgress[index].classList.add("point-ko"); // Classe point rouge
         }
     }
-    if (pointProgress[4].classList.contains("point-ko")) {
+    if (pointProgress[4].classList.contains("point-ko")) { // Si le dernier point est rouge
+        // Le bouton de la preuve de livraison est grisé et non cliquable
         preuveLivraison.style.backgroundColor = "#BDBFBB";
         preuveLivraison.style.color = "#164F57";
         preuveLivraison.style.cursor = "not-allowed";
     }
 }
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                   formAdresse                                   ┃
@@ -1064,33 +1071,38 @@ if(document.querySelector(".card-produit") != null){
 ┃                                 hoverConnexion                                  ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+// Gestion de l'apparition du menu contextuel au niveau lors du passage de la souris sur l'icône de profil à droite du header
 function menuCredit() {
-    let divHoverConnexion = document.querySelector(".divHoverConnexion");
-    let lienConnexion = document.querySelector(".lienConnexion");
-    let hover = false;
+    let divHoverConnexion = document.querySelector(".divHoverConnexion"); // Div contenant le menu contextuel
+    let lienConnexion = document.querySelector(".lienConnexion"); // Icône du profil
+    let hover = false; // Booléen pour savoir si la souris est sur l'un des 2 élément ci dessus
 
+    // Si la souris est sur l'icône de profil
     lienConnexion.addEventListener("mouseover", () => {
-        divHoverConnexion.style.display = "flex";
-        hover = true;
+        divHoverConnexion.style.display = "flex"; // Le menu contextuel apparait
+        hover = true; // Le booléen est vrai
     })
 
+    // Si la souris quitte de l'icône de profil
     lienConnexion.addEventListener("mouseout", () => { 
-        setTimeout(function(){
-            if (hover == false) { 
-                divHoverConnexion.style.display = "none";
+        setTimeout(function(){ // Attente d'une seconde
+            if (hover == false) { // verifie si le booléen est faux (ce qui veut dire que la souris n'est ni sur l'icône du profil ni sur le menu contextuel)
+                divHoverConnexion.style.display = "none"; // Dans ce cas, le menu contextuel est masqué
             }
         }, 1000);
-        hover = false;
+        hover = false; // Le booléen est faux
     })
 
+    // Si la souris est sur le menu contextuel
     divHoverConnexion.addEventListener("mouseover", () => { 
-        divHoverConnexion.style.display = "flex"; 
-        hover = true;
+        divHoverConnexion.style.display = "flex"; // Le menu contextuel apparait (ou reste si il est déjà affiché)
+        hover = true; // Le booléen est vrai
     })
 
+    // Si la souris quitte le menu contextuel
     divHoverConnexion.addEventListener("mouseout", () => {
-        divHoverConnexion.style.display = "none";
-        hover = false;
+        divHoverConnexion.style.display = "none"; // Le menu contextuel disparait
+        hover = false; // Le booléen est faux
     })
 }
 /*

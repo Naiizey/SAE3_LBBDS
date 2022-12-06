@@ -22,7 +22,7 @@
                 <img src="<?= base_url() ?>/images/fleche_gauche.png" alt="flèche gauche" class="btn btn-prev">
                 <img src="<?= base_url() ?>/images/fleche_droite.png" alt="flèche droite" class="btn btn-suiv">
             </div>
-          
+
             <div>
                 <section class="produitsPhare">
                     <div class="titreAccueil">

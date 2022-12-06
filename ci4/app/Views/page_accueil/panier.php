@@ -158,16 +158,19 @@
                             <hr>
                         </div>
                         <div class="sous-totaux">
-                            <h2>Sous-total :
-                                <span class="totalHt">
-                                    <?= $sommePrix ?>
-                                </span>€ HT
-                            </h2>
-                            <h2>Sous-total :
-                                <span class="totalTtc">
-                                    <?= $sommePrix ?>
-                                </span>€ TTC
-                            </h2>
+                            <a class="lienViderPanier" href="<?= base_url() ?>/panier/vider">Vider le panier</a>
+                            <div>
+                                <h2>Sous-totaux :
+                                    <span class="totalHt">
+                                        <?= $sommePrix ?>
+                                    </span>€ HT
+                                </h2>
+                                <h2>
+                                    <span class="totalTtc">
+                                        <?= $sommePrix ?>
+                                    </span>€ TTC
+                                </h2>
+                            </div>
                         </div>
                     </section>
                     <aside>

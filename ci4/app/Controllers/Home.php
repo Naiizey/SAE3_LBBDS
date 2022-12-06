@@ -6,7 +6,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Validation\Validation;
 use Exception;
 
-use function PHPUnit\Framework\throwException;
+
 
 class Home extends BaseController
 {
@@ -33,8 +33,6 @@ class Home extends BaseController
 
     public function index()
     {
-        helper("cookie");
-        
         $data["controller"]= "Accueil";
         if(session()->has("just_ajoute") && session()->get("just_ajoute") == true) {
             $this->feedback=service("feedback");
@@ -175,7 +173,7 @@ class Home extends BaseController
             $data["quantitePanier"]=model("\App\Models\ProduitPanierVisiteurModel")->getQuantiteProduitByIdProd($idProduit, get_cookie('token_panier'));
         }
 
-        //Get produit
+        //Get produituk
         $prodModel = model("\App\Models\ProduitDetail");
         $result = $prodModel->find($idProduit);
 
@@ -472,7 +470,7 @@ class Home extends BaseController
         } else {
             $data['num_compte'] = $data['infosCommande'][0]->num_compte;
         }
-        $data['adresse']=model("\App\Models\ClientAdresseLivraison")->getAdresse($data['num_compte']);
+        $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
 
         return view('panier/details.php', $data);
     }

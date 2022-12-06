@@ -530,11 +530,16 @@ function espaceCli(role)
 
 //FIXME : problème après suppression filtre
 function cataloguePrice(){
+    //On récupère les inputs de type range
     const rangeInput = document.querySelectorAll(".range-input input"),
+    //On récupère les inputs de prix (tous les inputs à l'exception des inputs de type range)
     priceInput = document.querySelectorAll(".price-range input:not(.range-input input)"),
+    //On récupère la barre de progression
     range = document.querySelector(".slider .progress");
-    let priceGap = 100;
+    //Gestion de la différence maximale entre les prix dans le slider
+    let priceGap = 5;
 
+    //Event listeners sur les inputs de type range et de prix
     priceInput.forEach(() => {
         window.addEventListener("load", fctPriceInput);
     });
@@ -549,31 +554,46 @@ function cataloguePrice(){
         input.addEventListener("input", fctRangeInput);
     });
 
+    //Fonctions de gestion des prix
     function fctPriceInput(e){
+        //Récupère les valeurs des inputs de prix pour obtenir le min et le max
         let minPrice = parseInt(priceInput[0].value),
         maxPrice = parseInt(priceInput[1].value);
+        //Vérification que  la différence entre les prix est supérieure au gap et inférieure ou égale à la valeur maximale du slider 
         if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
+            //Si la target a pour ID prix_min alors on modifie la valeur de l'input du minimum du slider
             if (e.target.id === "prix_min") {
                 rangeInput[0].value = minPrice;
                 range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
                 console.log(minPrice + " | " + maxPrice);
-            } else if(e.target.id === "prix_max") {
+            }
+            //Si la target a pour ID prix_max alors on modifie la valeur de l'input du maximum du slider 
+            else if(e.target.id === "prix_max") {
                 rangeInput[1].value = maxPrice;
                 range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
             }
         }
     }
 
+    //Fonctions de gestion du slider
     function fctRangeInput(e){
+        //Récupère les valeurs des inputs de slider pour obtenir le min et le max
         let minVal = parseInt(rangeInput[0].value),
         maxVal = parseInt(rangeInput[1].value);
+        //Vérification que la différence entre les prix est inférieur au gap
         if (maxVal - minVal < priceGap) {
-        if (e.target.className === "range-min") {
-            rangeInput[0].value = maxVal - priceGap;
-        } else {
-            rangeInput[1].value = minVal + priceGap;
+            //Si la target a pour classe range-min alors on modifie la valeur de l'input du minimum du slider
+            if (e.target.className === "range-min") {
+                rangeInput[0].value = maxVal - priceGap;
+            }
+            //Sinon on modifie la valeur de l'input du maximum du slider
+            else {
+                rangeInput[1].value = minVal + priceGap;
+            }
+        
         }
-        } else {
+        //Si la différence entre les prix est supérieure ou égale au gap alors on modifie les valeurs des inputs de prix pour les inverser 
+        else {
             priceInput[0].value = minVal;
             priceInput[1].value = maxVal;
             range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
@@ -582,12 +602,12 @@ function cataloguePrice(){
     }
 }
 
-
+//Click bouton filtre media query
 function boutonCliquable(bouton,action){
-    
     bouton.addEventListener("click",action);
 }
 
+//Ajout de la classe "est-filtre-ouvert" au filtre
 function switchEtatFiltre(list){
     for (n of list){
         n.classList.toggle("est-filtre-ouvert");

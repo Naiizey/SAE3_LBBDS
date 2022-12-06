@@ -1086,7 +1086,7 @@ function menuCredit() {
     // Si la souris est sur l'icône de profil
     lienConnexion.addEventListener("mouseover", () => {
         divHoverConnexion.style.display = "flex"; // Le menu contextuel apparait
-        hover = true; // Le booléen est vrai
+        hover = true;
     })
 
     // Si la souris quitte de l'icône de profil
@@ -1096,19 +1096,19 @@ function menuCredit() {
                 divHoverConnexion.style.display = "none"; // Dans ce cas, le menu contextuel est masqué
             }
         }, 1000);
-        hover = false; // Le booléen est faux
+        hover = false;
     })
 
     // Si la souris est sur le menu contextuel
     divHoverConnexion.addEventListener("mouseover", () => { 
         divHoverConnexion.style.display = "flex"; // Le menu contextuel apparait (ou reste si il est déjà affiché)
-        hover = true; // Le booléen est vrai
+        hover = true;
     })
 
     // Si la souris quitte le menu contextuel
     divHoverConnexion.addEventListener("mouseout", () => {
         divHoverConnexion.style.display = "none"; // Le menu contextuel disparait
-        hover = false; // Le booléen est faux
+        hover = false;
     })
 }
 /*

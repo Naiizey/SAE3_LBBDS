@@ -7,6 +7,7 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
+
         gtag('config', 'G-YLXNF3F94Y');
         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>

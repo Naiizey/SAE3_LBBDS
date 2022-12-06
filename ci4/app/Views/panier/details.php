@@ -75,17 +75,19 @@
                             <?php endforeach; ?>
                             <hr>
                         </div>
-                        <div class="sous-totaux">
-                            <h2>Sous-total :
-                                <span class="totalHt">
-                                    <?= $infosCommande[0]->prix_ht ?>
-                                </span>€ HT
-                            </h2>
-                            <h2>Sous-total :
-                                <span class="totalTtc">
-                                    <?= $infosCommande[0]->prix_ttc ?>
-                                </span>€ TTC
-                            </h2>
+                        <div class="sous-totaux divSousTotauxDetailCommande">
+                            <div>
+                                <h2>Sous-totaux :
+                                    <span class="totalHt">
+                                        <?= $infosCommande[0]->prix_ht ?>
+                                    </span>€ HT
+                                </h2>
+                                <h2>
+                                    <span class="totalTtc">
+                                        <?= $infosCommande[0]->prix_ttc ?>
+                                    </span>€ TTC
+                                </h2>
+                            </div>
                         </div>
                     </section>
 

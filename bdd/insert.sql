@@ -60,53 +60,55 @@ INSERT INTO _sous_categorie(code_cat,code_sous_cat) VALUES (129,147);
 INSERT INTO _sous_categorie(code_cat,code_sous_cat) VALUES (129,148);
 INSERT INTO _sous_categorie(code_cat,code_sous_cat) VALUES (130,149);
 */
-INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (123,'alimentaire',2);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (131,'fruit',123);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (132,'legumes',123);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (133,'boissons',123);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (134,'epicerie',123);
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (123,'Alimentaire',2);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (131,'Fruits',123);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (132,'Légumes',123);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (133,'Boissons',123);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (134,'Epicerie',123);
 
-INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (124,'vetement',1);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (135,'chaussures',124);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (136,'vetements',124);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (137,'accessoires',124);
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (124,'Vêtements',1);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (135,'Chaussures',124);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (136,'Vêtements',124);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (137,'Accessoires',124);
 
-INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (125,'electronique',2);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (138,'informatique',125);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (139,'telephonie',125);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (140,'audiovisuel',125);
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (125,'Electronique',2);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (138,'Informatique',125);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (139,'Télephonie',125);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (140,'Audiovisuel',125);
 
-INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (126,'loisir',1);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (141,'sport',126);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (142,'loisir',126);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (148,'jeux',126);
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (126,'Loisir',1);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (141,'Sport',126);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (142,'Loisir',126);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (148,'Jeux',126);
 
-INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (127,'jardinage',2);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (143,'jardinage',127);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (144,'bricolage',127);
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (127,'Jardinage',2);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (143,'Jardinage',127);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (144,'Bricolage',127);
 
-INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (128,'beaute',3);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (145,'beaute',128);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (146,'hygiene',128);
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (128,'Beauté',3);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (145,'Beauté',128);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (146,'Hygiène',128);
 
-INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (130,'autre',3);
-INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (149,'artisanat',130);
+INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (130,'Autres',3);
+INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (149,'Artisanat',130);
 
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (133,'Breizh cola x6',5,6,'Nouvelle boisson bretonne au cola, issue de d''une agrigulture bio éthique, bio responsable, bio consciente.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 15, 4.5, 5, true);
+VALUES (133,'Cola x6',5,6,'Nouvelle boisson bretonne au cola, issue de d''une agrigulture bio éthique, bio responsable, bio consciente.', 'https://images.pexels.com/photos/8879617/pexels-photo-8879617.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', true, 15, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (133,'Vins',10,15,'Ensemble de vins dans une boite en bois qui agrémentera vos soirées ou repas.', '../ci4/public/image/produit/vins.jpg', true, 10, 4.5, 5, true);
+VALUES (133,'Vin rouge',10,15,'Ensemble de vins dans une boite en bois qui agrémentera vos soirées ou repas.', 'https://images.pexels.com/photos/5086617/pexels-photo-5086617.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (134,'Fines herbes',5,6,'Herbes pour aggrémenter les plats comestibles. Accompagne très bien une côte de boeuf avec un verre de rouge.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 17, 4.5, 5, true);
+VALUES (133,'Vin blanc',10,15,'Elaboré à partir de nos raisons blancs bretons, ce vin blanc est idéal pour vos dîner.', 'https://images.pexels.com/photos/1123260/pexels-photo-1123260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (134,'Herbe à chat',10,12,'Cultivé localement, produits de nos terroirs', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (134,'Fines herbes',5,6,'Herbes pour aggrémenter les plats comestibles. Accompagne très bien une côte de boeuf avec un verre de rouge.', 'https://images.pexels.com/photos/105863/pexels-photo-105863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', true, 17, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (135,'Néo balances',60,72,'Chaussures de sport et de villes parfaites pour toutes les situations. Imppecable pour se balader.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (134,'Herbe à chat',10,12,'Issue de nos cultures locales, ce produit rendra fou votre chat. Chat non fourni.', 'https://static.vecteezy.com/system/resources/previews/008/118/057/non_2x/beautiful-adorable-leopard-color-cat-sleeping-on-the-grass-free-photo.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (137,'Canard',10,12,'Statue de jardin pour tous les adeptes de la collection des nains de jardin, agrémente efficacement tout type de jardin.', '../ci4/public/images/produit/canard.jpg', true, 10, 4.5, 5, true);
+VALUES (135,'Néo balances',60,72,'Chaussures de sport et de villes parfaites pour toutes les situations. Imppecable pour se balader.', 'https://cdn.pixabay.com/photo/2020/01/06/13/24/womens-shoes-4745347_960_720.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (140,'Breizhphone 1',200,240,'Tout premier téléphone breton tactile, attention produit assez fragile et disposant d''une batterie limitée', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (137,'Canard',10,12,'Statue de jardin pour tous les adeptes de la collection des nains de jardin, agrémente efficacement tout type de jardin.', 'https://static.vecteezy.com/system/resources/previews/005/543/922/non_2x/decorative-decoration-in-the-form-of-a-duck-and-duckling-in-our-garden-free-photo.jpeg', true, 10, 4.5, 5, true);
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
+VALUES (140,'Breizhphone 1',200,240,'Tout premier téléphone breton tactile, attention produit assez fragile et disposant d''une batterie limitée', 'https://static.vecteezy.com/system/resources/previews/002/078/414/non_2x/blank-phone-on-orange-free-photo.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (134,'Crêpes froment artisanales x12',3,3.6,'Lot de 12 crêpes froment artisanales, sans conservateurs. Provenance : Douarnenez', 'https://images.pexels.com/photos/10248807/pexels-photo-10248807.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', true, 15, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
@@ -122,29 +124,27 @@ VALUES (136,'Ciret jaune',100,120,'Parfait pour vous protéger du vent et de la 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (136,'Drapeau Breton',5,6,'Cet indispensable que vous pourrez le porter fièrement à n''importe quel évènement. Provenance : Pontivy', 'https://cdn.pixabay.com/photo/2016/11/20/08/22/breton-1842173_960_720.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (137,'Autocollant Bidouden',1,1.2,'Ce sticker à coller n''importe où, sur votre voiture ou votre ordinateur, est parfait pour partager votre passion pour la Bretagne. Provenance : Morlaix', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.la-boutique-de-bretagne.fr%2Fautocollant-sticker-l-aise-breizh-noir-la-boutique-de-bretagne__p274819.html&psig=AOvVaw0OlcNuD6MZIG2qTZf9e-d6&ust=1670188558182000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCLiF0K-v3vsCFQAAAAAdAAAAABAE', true, 10, 4.5, 5, true);
+VALUES (137,'Autocollant Bidouden',1,1.2,'Ce sticker à coller n''importe où, sur votre voiture ou votre ordinateur, est parfait pour partager votre passion pour la Bretagne. Provenance : Morlaix', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (137,'Parapluie',10,12,'Indispensable pour vos séjours en Bretagne. Provenance : Rennes', 'https://cdn.pixabay.com/photo/2015/07/15/13/42/umbrella-846185_960_720.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (140,'Ecran de cinéma',1000,1200,'Ecran géant cathodique qui permet de faire des diffusions de cassettes vhs.', '../ci4/public/images/produit/ecran_cinema.jpg', true, 10, 4.5, 5, true);
+VALUES (140,'Ecran de cinéma',1000,1200,'Ecran géant cathodique qui permet de faire des diffusions de cassettes vhs.', 'https://images.pexels.com/photos/7513421/pexels-photo-7513421.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (141,'JBL PRO',300,360,'Enceinte et audio player qui contient une compilation des meilleurs passage de biniou lors des breizh fests.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (141,'Tongues bretonnes',50,60,'Idéal pour la plage, ces tongues 100% bretonnes vous permettront d''éviter le sable dans les chaussures.', 'https://cdn.pixabay.com/photo/2014/05/12/17/36/sandals-342672_960_720.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (141,'Running gag shoes',50,60,'Chaussures farce et attrapes qui génèrent des sons exotiques lors de leur utilisation.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (142,'Strap',5,6,'Petit scotch pour tenir n''importe quel objet sur toutes les surfaces', 'https://static.vecteezy.com/system/resources/previews/007/789/648/non_2x/white-sport-tape-isolated-on-white-background-athletic-taping-porous-adhesive-tape-medical-tape-multipurpose-porous-tape-for-wound-care-and-sprain-first-aid-medical-supplies-sport-bandage-free-photo.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (142,'Strap',5,6,'Petit scotch pour tenir n''importe quel objet sur toutes les surfaces', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (142,'Plante carnivore attrape mouches',2,2.4,'Vous êtes ennuyé par les mouches, cet plante est faite pour vous !', 'https://images.pexels.com/photos/2483389/pexels-photo-2483389.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (142,'Attrape mouches',2,2.4,'Vous êtes ennuyé par les mouches, cet outil est fait pour vous !! Grace à ceci les insectes vont se piéger dedans avant de s''endormir pour un long sommeil.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (143,'Anti nuisible',10,12,'Outil fumigène écologique pour se débarrasser des insectes qui attaquent les légumes du jardin.','https://static.vecteezy.com/system/resources/previews/006/588/373/non_2x/field-with-dry-grass-reeds-and-power-line-burns-with-a-strong-fire-free-photo.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (143,'Anti nuisible',10,12,'Outil fumigène écologique pour se débarrasser des insectes qui attaquent les légumes du jardin.','https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
-INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (143,'Rateau',10,12,'Outil de jardinage pour permettre de récolter les feuilles du jardin.', '../ci4/public/images/produit/rateau.jpg', true, 10, 4.5, 5, true);
+VALUES (143,'Rateau',10,12,'Outil de jardinage pour permettre de récolter les feuilles du jardin.', 'https://static.vecteezy.com/system/resources/previews/008/200/211/non_2x/black-plastic-leaf-rake-on-green-grass-or-lawn-free-photo.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (144,'Bêche',10,12,'Outil de jardinage qui va permettre de labourer son potager d''une manière efficace.','https://greensquare.fr/1160-large_default/fourche-beche-kent-and-stowe.jpge.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (144,'Fraiseuse',10,12,'Outil breton parfait pour enlever tige d''une fraise qui rappelons le, n''est pas comestible.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (144,'Fraiseuse',10,12,'Outil breton parfait pour enlever tige d''une fraise qui rappelons le, n''est pas comestible.', 'https://static.vecteezy.com/system/resources/previews/008/820/294/non_2x/cnc-milling-machine-with-metallic-end-mill-carbide-in-industrial-manufacture-factory-professional-cutting-tools-cutting-metal-technology-lathe-workshop-of-automotive-industry-for-auto-parts-free-photo.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (145,'Pilon',10,12,'Petit outil efficace pour faire de la cuisine ou des tisanes, parfait pour écraser soi-même ses feuilles de thé.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
+VALUES (145,'Pilon',10,12,'Petit outil efficace pour faire de la cuisine ou des tisanes, parfait pour écraser soi-même ses feuilles de thé. Issu de granite de Perros-Guirec', 'https://static.vecteezy.com/system/resources/previews/011/041/405/non_2x/rock-mortar-and-pestle-on-white-background-free-photo.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (145,'Chadior',10,12,'Produit plutôt inconnu du grand public mais qui en fait est incroyable.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
@@ -156,12 +156,12 @@ VALUES (148,'Piquets de jardin',100,120, 'Très bon piquet pour arrêter des lap
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (148,'Tarte campagnarde',8,9.6,'Carrotes, fromage, jambon, champigons. Produit incroyablement bon qui fond très bien en bouche.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (149,'Galets bretons',1000,1200,'Galets de fabrique bretonne, configuration : quartz 12%, calcaire 5%, granite 83%; galet certifié de provenance d''une plage de Perros Guirrec.', '../ci4/public/images/produit/helicoptere_apache.jpg', true, 10, 4.5, 5, true);
+VALUES (149,'Galets bretons',1000,1200,'Galets de fabrique bretonne, configuration : quartz 12%, calcaire 5%, granite 83%; galet certifié de provenance d''une plage de Perros-Guirec.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 
 
-INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('franchement j''en suis très satisfait, rien à redire cde produit est vraiment très bien, j''adore',30,1);
-INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('qualité moyenne, à revoir',32,2);
-INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('Performant mais à parfois des difficultés',30,1);
+INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('Franchement j''en suis très satisfait, rien à redire, ce produit est vraiment très bien, j''adore !',30,1);
+INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('Qualité moyenne, à revoir...',32,2);
+INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('Performant mais a parfois des difficultés.',30,1);
 
 
 INSERT INTO _image_avis (num_avis, lien_image_avis) VALUES (1, 'https://floriangll.fr/Humour/Dark/Masterclass/Masterclass.gif');

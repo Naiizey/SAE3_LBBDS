@@ -1359,6 +1359,7 @@ header ul {
     border-radius: 3px;
     width: 10em;
     height: 10em;
+    object-fit: cover;
 }
 
 .mainPanier aside {
@@ -2918,48 +2919,6 @@ progress::-moz-progress-bar
     margin: .6em 0 0 0;
 }
 
-.divArticles {
-    display: flex;
-    flex-direction: column;
-}
-
-.divArticles a {
-    text-decoration: none;
-    color: #164F57;
-    height: fit-content;
-}
-
-.divArticles p {
-    margin: 0 0 0 1em;
-}
-
-.divArticles div {
-    display: flex;
-    justify-content: space-between;
-    font-size: x-large;
-}
-
-.divArticles img {
-    width: 5em;
-    height: 5em;
-    border-radius: 5px;
-    border: solid 2px #164F57;
-}
-
-.divArticles hr {
-    margin: .5em 0;
-}
-
-.divPrix {
-    text-align: right;
-    font-size: x-large;
-    font-weight: bold;
-}
-
-.divPrix p {
-    margin: .5em 0 0 0;
-}
-
 .divDroiteDetail {
     display: flex;
     flex-direction: column;
@@ -3009,6 +2968,10 @@ progress::-moz-progress-bar
     color: #C6C6C6;
     font-size: x-large;
     border-radius: 5px;
+}
+
+.divSousTotauxDetailCommande {
+    justify-content: end;
 }
 
 /*

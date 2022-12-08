@@ -537,7 +537,7 @@ function cataloguePrice(){
     //On récupère la barre de progression
     range = document.querySelector(".slider .progress");
     //Gestion de la différence maximale entre les prix dans le slider
-    let priceGap = 5;
+    let priceGap = 1;
 
     //Event listeners sur les inputs de type range et de prix
     priceInput.forEach(() => {
@@ -575,11 +575,11 @@ function cataloguePrice(){
         }
     }
 
-    //Fonctions de gestion du slider
+    //Fonction de gestion du slider
     function fctRangeInput(e){
         //Récupère les valeurs des inputs de slider pour obtenir le min et le max
         let minVal = parseInt(rangeInput[0].value),
-        maxVal = parseInt(rangeInput[1].value);
+        maxVal = parseInt(rangeInput[1].value) + 1;
         //Vérification que la différence entre les prix est inférieur au gap
         if (maxVal - minVal < priceGap) {
             //Si la target a pour classe range-min alors on modifie la valeur de l'input du minimum du slider

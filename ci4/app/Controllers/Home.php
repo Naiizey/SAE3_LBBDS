@@ -394,10 +394,11 @@ class Home extends BaseController
         return view('page_accueil/lstCommandesCli.php', $data);
     }
 
-    public function lstCommandesVendeur()
+    public function lstCommandesVendeur( $estVendeur=false)
     {
         $data["controller"]= "Commandes Vendeur";
         $data['commandesVend']=model("\App\Models\LstCommandesVendeur")->findAll();
+        $data['estVendeur']=$estVendeur;
         return view('page_accueil/lstCommandesVendeur.php', $data);
     }
 

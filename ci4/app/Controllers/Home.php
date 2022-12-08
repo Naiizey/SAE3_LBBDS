@@ -465,6 +465,7 @@ class Home extends BaseController
         $data['numCommande'] = $num_commande;
         $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
         $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
+        $data['estVendeur']=$estVendeur;
         if (!isset($data['infosCommande'][0]->num_commande)) {
             throw new Exception("Le numéro de commande entré n'existe pas.", 404);
         } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){

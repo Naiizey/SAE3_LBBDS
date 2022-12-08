@@ -193,6 +193,7 @@ CREATE OR REPLACE FUNCTION update_client() RETURNS trigger AS $$
 BEGIN
     --on récupère tous les champs qui sont contenus dans l'update
     UPDATE sae3._compte SET nom_compte = NEW.nom, prenom_compte = NEW.prenom, email = NEW.email, pseudo = NEW.identifiant, mot_de_passe = NEW.motDePasse WHERE num_compte = OLD.numero;
+    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 

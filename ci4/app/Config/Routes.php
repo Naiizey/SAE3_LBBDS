@@ -86,7 +86,7 @@ $routes->set404Override();
     $routes->get('vendeur/commandesCli', 'Home::lstCommandesVendeur/true');
     $routes->get('vendeur/commandesCli/detail/(:alphanum)','Home::detail/$1/true');
 
-    $routes->get('/destroy', 'Test::destroySession');
+    $routes->get('/destroy', 'Home::destroySession');
 
     $routes->get('/commandes', 'Home::lstCommandesClient',['filter' => 'connexion']);
 

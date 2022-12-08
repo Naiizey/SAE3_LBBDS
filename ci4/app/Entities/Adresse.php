@@ -33,8 +33,8 @@ class Adresse extends Entity
     public function getAll()
     {
         return array('<p>Nom : '.$this->nom.'</p>', 
-                     '<p>Prenom : '.$this->prenom.'</p>',
-                     '<p>Adresse : '.$this->numero_rue.'</p>',
+                     '<p>Prénom : '.$this->prenom.'</p>',
+                     '<p>Numéro de rue : '.$this->numero_rue.'</p>',
                      '<p>Nom de rue : '.$this->nom_rue.'</p>',
                      '<p>Ville : '.$this->ville.'</p>',
                      '<p>Code postal : '.$this->code_postal.'</p>');

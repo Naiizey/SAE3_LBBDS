@@ -1115,7 +1115,7 @@ function menuCredit() {
             if (hover == false) { // verifie si le booléen est faux (ce qui veut dire que la souris n'est ni sur l'icône du profil ni sur le menu contextuel)
                 divHoverConnexion.style.display = "none"; // Dans ce cas, le menu contextuel est masqué
             }
-        }, 1000);
+        }, 1400);
         hover = false;
     })
 

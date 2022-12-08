@@ -523,4 +523,11 @@ class Home extends BaseController
     {
         echo "oui";
     }
+
+    public function admin()
+    {
+        $data['role'] = "admin";
+        $data["controller"] = "Administration";
+        return view("page_accueil/admin.php", $data);
+    }
 }

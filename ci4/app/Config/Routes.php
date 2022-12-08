@@ -108,6 +108,8 @@ $routes->set404Override();
     $routes->get('/validation', 'Home::validation' );
     $routes->post('/validation', 'Home::validation' );
 
+    $routes->get('/admin', 'Home::admin');
+
 ##param uri (:any) et dans methode /$1
 
 /*

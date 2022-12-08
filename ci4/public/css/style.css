@@ -3280,3 +3280,19 @@ progress::-moz-progress-bar
     text-align: center;
 }
 
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                             Page admin (admin.php)                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.sectionAdmin {
+    display: grid;
+    grid-template-columns: repeat(20, 5%);
+}
+
+.sectionAdmin h2 {
+    grid-column-start: 1;
+    grid-column-end: 21;
+    text-align: left;
+}

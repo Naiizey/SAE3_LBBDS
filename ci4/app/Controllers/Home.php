@@ -207,6 +207,7 @@ class Home extends BaseController
         $data['prods'] = [];
         $data['vide'] = false;
         $data['max_price'] = $modelProduitCatalogue->selectMax('prixttc')->find()[0]->prixttc;
+        //dd($data['max_price']);
         $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
         if(isset($filters["prix_min"]) && isset($filters["prix_max"])){
             $price = ["prix_min"=>$filters["prix_min"], "prix_max"=>$filters["prix_max"]];

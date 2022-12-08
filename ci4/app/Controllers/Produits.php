@@ -8,8 +8,7 @@ use function PHPUnit\Framework\isNull;
 use function PHPUnit\Framework\throwException;
 
 /**
- * @method getAllProduitSelonPage($page=null,$filters=null) permet de récupérer un intervalle de produit selon des filtres 
- * la méthode peut être appelé via une autre méthode php ou via XML.
+ * @method getAllProduitSelonPage($page=null,$filters=null)
  * 
  */
 
@@ -17,7 +16,18 @@ class Produits extends BaseController
 {
 
     private const NBPRODSPAGEDEFAULT = 20;
-
+    
+    /**
+     * @method getAllProduitSelonPage
+     * Permet de récupérer un intervalle de produit selon des filtres la méthode peut être appelé via une autre méthode php ou via XML.
+     * 
+     * @param $page=1  
+     * @param $nombreProd=self::NBPRODSPAGEDEFAULT 
+     * @param $filters=null 
+     *
+     * Pour return:
+     * @see giveResult();
+     */
     public function getAllProduitSelonPage($page=1,$nombreProd=self::NBPRODSPAGEDEFAULT,$filters=null){
        
 
@@ -34,6 +44,8 @@ class Produits extends BaseController
                 $result= model("\App\Models\ProduitCatalogue")->findAll(
                     ($nombreProd*$page)+1,
                     $nombreProd*($page-1)
+                    
+                    
                        
                 );
                 
@@ -47,7 +59,7 @@ class Produits extends BaseController
                     $nombreProd*($page-1)
                        
                 );
-                
+                //dd("dz");
                 //$nbResults=sizeof($this->casFilter($filters,$data)->findAll());
              
                 if(empty($result)){
@@ -68,7 +80,8 @@ class Produits extends BaseController
        
            
         
-        
+        //dd($result,$dernier,($nombreProd*$page)+1,
+        //  $nombreProd*($page-1));
         return $this->giveResult($result,$dernier);
 
     }
@@ -82,7 +95,17 @@ class Produits extends BaseController
   
     }
 
-    private function casFilter($filters,$data){
+       
+    /**
+     * @method casFilter
+     * Construit une requête sql qui filtre les produits en fonction des recherches et des filtres
+     *
+     * @param $filters array 
+     * @param $data $data 
+     *
+     * @return \App\Models\ProduitCatalogue
+     */
+    private function casFilter($filters,$data) : object{
         $result = array();
         
         if (isset($filters["search"])) {
@@ -118,7 +141,7 @@ class Produits extends BaseController
 
         if(isset($search) && $search!==""){
             $subQuery = db_connect()->table($query->table)->select('id');
-            $subQuery->like('intitule', strToLower($search))->orLike('description_prod', strToLower($search))/*->orderby('intitule, description_prod', 'ASC')*/;
+            $subQuery->like('LOWER(intitule)', strToLower($search))->orLike('LOWER(description_prod)', strToLower($search))/*->orderby('intitule, description_prod', 'ASC')*/;
             $query->whereIn('id',$subQuery);    
             
         }
@@ -134,7 +157,15 @@ class Produits extends BaseController
         
     }
 
-
+        
+    /**
+     * @method throwError
+     * Throw l'erreur en fonction de si on la fonction a été appelé apr une autre fonction ou si elle a été appelle par une requête
+     *
+     * @param Exception $e 
+     *
+     * 
+     */
     private function throwError(Exception $e){
         if(isset($this->request)){
             return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
@@ -145,6 +176,17 @@ class Produits extends BaseController
         }
     }
 
+        
+    /**
+     * Method giveResult
+     *
+     * @param $result 
+     * @param $dernier 
+     *
+     * Return en fonction de si la fonction est appelé par une autre fonction array et retourne un JSON si appelé par une requête
+     * 
+     * 
+     */
     private function giveResult($result,$dernier){
     
         

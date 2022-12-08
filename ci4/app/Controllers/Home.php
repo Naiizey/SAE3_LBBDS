@@ -6,7 +6,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Validation\Validation;
 use Exception;
 
-use function PHPUnit\Framework\throwException;
+
 
 class Home extends BaseController
 {
@@ -33,8 +33,6 @@ class Home extends BaseController
 
     public function index()
     {
-        helper("cookie");
-        
         $data["controller"]= "Accueil";
         if(session()->has("just_ajoute") && session()->get("just_ajoute") == true) {
             $this->feedback=service("feedback");
@@ -175,7 +173,7 @@ class Home extends BaseController
             $data["quantitePanier"]=model("\App\Models\ProduitPanierVisiteurModel")->getQuantiteProduitByIdProd($idProduit, get_cookie('token_panier'));
         }
 
-        //Get produit
+        //Get produituk
         $prodModel = model("\App\Models\ProduitDetail");
         $result = $prodModel->find($idProduit);
 
@@ -209,6 +207,7 @@ class Home extends BaseController
         $data['prods'] = [];
         $data['vide'] = false;
         $data['max_price'] = $modelProduitCatalogue->selectMax('prixttc')->find()[0]->prixttc;
+        //dd($data['max_price']);
         $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
         if(isset($filters["prix_min"]) && isset($filters["prix_max"])){
             $price = ["prix_min"=>$filters["prix_min"], "prix_max"=>$filters["prix_max"]];
@@ -465,6 +464,7 @@ class Home extends BaseController
         $data['numCommande'] = $num_commande;
         $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
         $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
+        $data['estVendeur']=$estVendeur;
         if (!isset($data['infosCommande'][0]->num_commande)) {
             throw new Exception("Le numéro de commande entré n'existe pas.", 404);
         } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
@@ -472,7 +472,7 @@ class Home extends BaseController
         } else {
             $data['num_compte'] = $data['infosCommande'][0]->num_compte;
         }
-        $data['adresse']=model("\App\Models\ClientAdresseLivraison")->getAdresse($data['num_compte']);
+        $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
 
         return view('panier/details.php', $data);
     }

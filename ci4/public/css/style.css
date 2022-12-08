@@ -66,6 +66,10 @@ header{
     height: 5em;
 }
 
+.divHeaderAdmin, .divHeaderVendeur{
+    background-color: black;
+}
+
 header h2:hover {
     color: #6F98C7;
 }

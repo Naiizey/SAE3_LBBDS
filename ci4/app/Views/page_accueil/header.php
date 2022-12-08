@@ -64,7 +64,15 @@
     </script>
     <body>
         <header>
-            <div class="divHeaderAlizon">
+            <div class="divHeaderAlizon 
+                <?php if (isset($role)): ?>
+                    <?php if ($role == "admin"): ?> <?= "divHeaderAdmin" ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+                <?php if (isset($estVendeur)): ?>
+                    <?php if ($estVendeur == true): ?> <?= "divHeaderVendeur" ?>
+                    <?php endif; ?>
+                <?php endif; ?> ">
             <?php if ($controller != "Panier" && $controller != "Panier (Vide)" && $controller != "Compte Redirection" && $controller != "Livraisons" && $controller != "Paiement" && $controller != "Validation"): ?>
                     <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
                         <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>

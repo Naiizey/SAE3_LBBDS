@@ -29,7 +29,7 @@ class LstCommandesCli extends Model
         do{
             $numCommande = '';
             
-            for ($i = 0; $i < 50; $i++) {
+            for ($i = 0; $i < 10; $i++) {
             $index = rand(0, strlen($characters) - 1);
                 $numCommande .= $characters[$index];
             }

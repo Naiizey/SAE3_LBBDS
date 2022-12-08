@@ -667,19 +667,21 @@ var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFi
         this.send = async (replace=true) => {
         //Récupère les valeurs des filtres et transformation en string de type url à laquelle ajoute la recherche
         var champsGet= new URLSearchParams(new FormData(self.form));
-        
+        console.log(champsGet.toString());
         if(!self.champRecherche.value==""){
             champsGet.append("search",self.champRecherche.value);
         }
-        /*
+        //FIXME: problème de précison avec min et max. arrondir pour éviter les problèmes ?
         if(self.form.elements["prix_min"].value===self.form.elements["prix_min"].min && self.form.elements["prix_max"].value===self.form.elements["prix_max"].max){
+           
             champsGet.delete("prix_min");
             champsGet.delete("prix_max");
         }
-        */
+        
         champsGet=champsGet.toString();
         if(champsGet.length!=0){
             champsGet="?"+champsGet;
+            //champsGet="";
         }
         console.log("http://localhost/Alizon/ci4/public/produits/page/"+((replace)?1:self.currPage)+champsGet);
          

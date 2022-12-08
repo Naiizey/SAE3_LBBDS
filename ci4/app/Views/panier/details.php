@@ -109,8 +109,8 @@
                             <hr>
                             <div class="divDetailLivraison">  
                                 <?php echo '
-                                    <p>Adresse : '.$adresse[0]->numero_rue.' '.$adresse[0]->nom_rue.'</p>
-                                    <p>'.$adresse[0]->code_postal.' '.$adresse[0]->ville.'</p>'
+                                    <p>Adresse : '.$adresse->numero_rue.' '.$adresse->nom_rue.'</p>
+                                    <p>'.$adresse->code_postal.' '.$adresse->ville.'</p>'
                                 ?>  
                                 <p>N° de suivi : </p>
                                 <p>Lien du suivi : </p>

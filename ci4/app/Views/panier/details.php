@@ -31,34 +31,69 @@
                     </div>
                 </div>
                 <div class="divBasPageDetail">
-                    <div class="divDetail">
-                        <div>
-                            <h2>Détail de la commande</h2>
-                            <hr>
-                            <div class="divArticles">
-                                <?php foreach ($articles as $article) {
-                                    echo '
+
+
+
+                    <section class="sectionPanier mainPanier divDetail">
+                        <div class="divPanierArticles">
+                            <div class="divPanierHeader">
+                                    <h2>Votre commande (<span class="nbArt"> <?= sizeof($articles)?> </span> article.s) :</h2>
+                                    <h3>Prix</h3>
+                            </div>
+                            <?php
+                                foreach ($articles as $article):
+                            ?>
+                                <hr>
+                                <article id="<?= $article->id_prod ?>" class="articlePanier">
+                                    <a href="<?= base_url() ?>/produit/<?= $article->id_prod ?>">
+                                        <img src="<?= $article -> lien_image_prod ?>" alt="article 1" title="Article 1">
                                         <div>
-                                            <div>
-                                                <a href='.base_url()."/produit/".$article->id_prod.'>
-                                                    <img src='.$article->lien_image_prod.'>
-                                                </a>
-                                                <a href='.base_url()."/produit/".$article->id_prod.'>
-                                                    <p>'.$article->intitule_prod.'</p>
-                                                </a>
-                                            </div>
-                                            <p>'.$article->prix_ht.'€</p>
+                                            <h2>
+                                                <?= $article -> intitule_prod ?>
+                                            </h2>
+                                            <p class="panierDescription">
+                                                <?= $article -> description_prod ?>
+                                            </p>
                                         </div>
-                                        <hr>';
-                                    }
-                                ?>
+                                    </a>
+                                    <div>
+                                        <div class="divQuantite">
+                                            <p>Quantité : <?= $article->qte?></p>
+                                        </div>
+                                        <h3> 
+                                            <span class="prixHt" prix="<?= $article -> prix_ht ?>">
+                                                <?= $article -> prix_ht ?>€
+                                            </span> HT
+                                        </h3>
+                                        <h3> 
+                                            <span class="prixTtc" prix="<?= $article -> prix_ttc ?>">
+                                                <?= $article -> prix_ttc ?>€
+                                            </span> TTC
+                                        </h3>
+                                    </div>
+                                </article>
+                            <?php endforeach; ?>
+                            <hr>
+                        </div>
+                        <div class="sous-totaux divSousTotauxDetailCommande">
+                            <div>
+                                <h2>Sous-totaux :
+                                    <span class="totalHt">
+                                        <?= $infosCommande[0]->prix_ht ?>
+                                    </span>€ HT
+                                </h2>
+                                <h2>
+                                    <span class="totalTtc">
+                                        <?= $infosCommande[0]->prix_ttc ?>
+                                    </span>€ TTC
+                                </h2>
                             </div>
                         </div>
-                        <div class="divPrix">
-                            <?= "<p>Totaux : ".$infosCommande[0]->prix_ht."€ HT</p>
-                            <p>".$infosCommande[0]->prix_ttc."€ TTC</p>"?>
-                        </div>
-                    </div>
+                    </section>
+
+
+
+                    
                     <div class="divDroiteDetail">
                         <div>
                             <h2>Télécharger</h2>

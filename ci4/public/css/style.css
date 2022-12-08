@@ -321,6 +321,7 @@ main {
 
 .requis{
     color: #C63636;
+    font-weight: bolder;
 }
 
 /* Media query téléphone header */
@@ -1020,7 +1021,7 @@ header ul {
 .sectionCredit input[type="email"], 
 .sectionCredit textarea{
     background-color: #F3F3F3;
-    margin: 1% 0 0 0;
+    margin: 0.3em 0 0 0;
     height: 2.5em;
     border: solid 1px;
     border-color: #C6C6C6;
@@ -1196,22 +1197,22 @@ header ul {
 
 .infoRue .colonne-numero-rue{
     grid-column-start: 1;
-    grid-column-end: 5;
+    grid-column-end: 6;
 }
 
 .infoRue .colonne-nom-rue{
-    grid-column-start:  6;
-    grid-column-end: 20;
+    grid-column-start:  7;
+    grid-column-end: 21;
 }
 
 .infoVille .colonne-code-postal{
-    grid-column-start: 1    ;
+    grid-column-start: 1;
     grid-column-end: 7;
 }
 
 .infoVille .colonne-ville{
-    grid-column-start:  8   ;
-    grid-column-end: 20;
+    grid-column-start:  8;
+    grid-column-end: 21;
 }
 
 
@@ -1326,7 +1327,9 @@ header ul {
     margin: 0;
 }
 
-
+div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
+    margin-top: 0.3em;
+}
 
 
 /*
@@ -1363,6 +1366,7 @@ header ul {
     border-radius: 3px;
     width: 10em;
     height: 10em;
+    object-fit: cover;
 }
 
 .mainPanier aside {
@@ -2922,48 +2926,6 @@ progress::-moz-progress-bar
     margin: .6em 0 0 0;
 }
 
-.divArticles {
-    display: flex;
-    flex-direction: column;
-}
-
-.divArticles a {
-    text-decoration: none;
-    color: #164F57;
-    height: fit-content;
-}
-
-.divArticles p {
-    margin: 0 0 0 1em;
-}
-
-.divArticles div {
-    display: flex;
-    justify-content: space-between;
-    font-size: x-large;
-}
-
-.divArticles img {
-    width: 5em;
-    height: 5em;
-    border-radius: 5px;
-    border: solid 2px #164F57;
-}
-
-.divArticles hr {
-    margin: .5em 0;
-}
-
-.divPrix {
-    text-align: right;
-    font-size: x-large;
-    font-weight: bold;
-}
-
-.divPrix p {
-    margin: .5em 0 0 0;
-}
-
 .divDroiteDetail {
     display: flex;
     flex-direction: column;
@@ -3013,6 +2975,10 @@ progress::-moz-progress-bar
     color: #C6C6C6;
     font-size: x-large;
     border-radius: 5px;
+}
+
+.divSousTotauxDetailCommande {
+    justify-content: end;
 }
 
 /*

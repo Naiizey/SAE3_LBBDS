@@ -119,7 +119,7 @@ CREATE OR REPLACE VIEW commande_list_client AS
 SELECT * FROM commande_list_client;
 
 CREATE OR REPLACE VIEW commande_list_produits_client AS
-    SELECT num_commande,id_prod, intitule_prod, lien_image_prod,num_compte,date_commande,date_arriv,(prix_ttc*qte_panier) prix_ttc,(prix_ttc*qte_panier) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit NATURAL JOIN _panier_client;
+    SELECT num_commande,id_prod, intitule_prod, lien_image_prod,description_prod,num_compte,date_commande,date_arriv,(prix_ttc*qte_panier) prix_ttc,(prix_ttc*qte_panier) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _panier NATURAL JOIN _refere NATURAL JOIN _produit NATURAL JOIN _panier_client;
 
 CREATE OR REPLACE VIEW insert_commande AS
     SELECT num_commande,num_compte,id_a FROM _commande NATURAL JOIN _panier_client;
@@ -128,7 +128,7 @@ CREATE OR REPLACE VIEW adresse_facturation AS
     SELECT * FROM _adresse NATURAL JOIN _adresse_facturation;
 
 CREATE OR REPLACE VIEW adresse_livraison AS
-    SELECT id_a, nom_a nom, prenom_a prenom, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, infos_comp FROM _adresse NATURAL JOIN _adresse_livraison;
+    SELECT _adresse.id_a, nom_a nom, prenom_a prenom, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, infos_comp, num_commande FROM _adresse NATURAL JOIN _adresse_livraison INNER JOIN _commande c on _adresse.id_a = c.id_a ;
 
 
 CREATE OR REPLACE VIEW code_reduction AS

@@ -49,7 +49,7 @@
 
                         <div class="infoRue">
                             
-                                <label class="colonne-numero-rue" for="numero_rue"><span>Numéro rue <span class="requis">*</span> :</span></label>
+                                <label class="colonne-numero-rue" for="numero_rue"><span>Numéro rue<span class="requis">*</span> :</span></label>
                                 <label class="colonne-nom-rue" for="nom_rue"><span>Nom rue<span class="requis">*</span> :</span></label>
                                 
                                 <input class="colonne-numero-rue" type="text" name="numero_rue" required="required" value="<?= $adresse->numero_rue  ?>"/>
@@ -87,7 +87,7 @@
                         <?= $errors->showError("comp_a2","paragraphe_erreur") ?>
                         <?php if(isset($controller) && $controller === "Livraisons"): ?>
                         
-                        <label>Informations complémentaites :</label>
+                        <label>Informations complémentaires :</label>
                         <textarea name="info_comp" maxlength=250><?= $adresse->infos_comp ?></textarea>
 
                         <div class="sauvegarder-adresse">

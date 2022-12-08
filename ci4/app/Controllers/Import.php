@@ -19,7 +19,7 @@ class Import extends BaseController
         }
     }
 
-    public function index($estVendeur)
+    public function index($estVendeur=false)
     {
         $data["estVendeur"] = $estVendeur;
         $data["controller"]= "import";

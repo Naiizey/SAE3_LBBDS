@@ -28,7 +28,12 @@ class Home extends BaseController
         if (session()->has("just_connectee") && session()->get("just_connectee")==true) {
             session()->set("just_connectee", false);
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Vous êtes connecté !");
+        } else if (session()->has("just_deconnectee") && session()->get("just_deconnectee")==true) {
+            session()->set("just_deconnectee", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Vous êtes déconnecté !");
         }
+        
+        
     }
 
     public function index()
@@ -529,5 +534,18 @@ class Home extends BaseController
         $data['role'] = "admin";
         $data["controller"] = "Administration";
         return view("page_accueil/admin.php", $data);
+    }
+
+    public function destroySession()
+    {
+        $session=session();
+        $session->remove("numero");
+        $session->remove("nom");
+        $session->remove("ignorer");
+        $session->remove("adresse_facturation");
+        $session->remove("adresse_livraison");
+        $session->set("just_deconnectee",True);
+        
+        return redirect()->to("/");
     }
 }

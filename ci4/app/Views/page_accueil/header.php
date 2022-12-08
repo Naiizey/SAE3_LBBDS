@@ -62,7 +62,16 @@
     <script>
         const base_url = "<?= base_url() ?>";
     </script>
-    <body>
+    <body <?php if(isset($role)):?>
+                <?php if($role == "admin"):?>
+                    <?= "class=bodyAdmin" ?>
+                <?php endif;?>
+            <?php endif; ?>
+            <?php if(isset($estVendeur)):?>
+                <?php if($estVendeur == true):?>
+                    <?= "class=bodyVendeur" ?>
+                <?php endif;?>
+            <?php endif; ?>> 
         <header>
             <div class="divHeaderAlizon 
                 <?php if (isset($role)): ?>

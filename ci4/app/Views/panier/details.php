@@ -31,9 +31,6 @@
                     </div>
                 </div>
                 <div class="divBasPageDetail">
-
-
-
                     <section class="sectionPanier mainPanier divDetail">
                         <div class="divPanierArticles">
                             <div class="divPanierHeader">
@@ -90,10 +87,6 @@
                             </div>
                         </div>
                     </section>
-
-
-
-                    
                     <div class="divDroiteDetail">
                         <div>
                             <h2>Télécharger</h2>
@@ -109,8 +102,8 @@
                             <hr>
                             <div class="divDetailLivraison">  
                                 <?php echo '
-                                    <p>Adresse : '.$adresse->numero_rue.' '.$adresse->nom_rue.'</p>
-                                    <p>'.$adresse->code_postal.' '.$adresse->ville.'</p>'
+                                    <p>Rue : '.$adresse[0]->numero_rue.' '.$adresse[0]->nom_rue.'</p>
+                                    <p>Ville : '.$adresse[0]->code_postal.' '.$adresse[0]->ville.'</p>'
                                 ?>  
                                 <p>N° de suivi : </p>
                                 <p>Lien du suivi : </p>

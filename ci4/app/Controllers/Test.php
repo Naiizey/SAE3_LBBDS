@@ -4,17 +4,6 @@ use App\Controllers\BaseController;
 
 class Test extends BaseController{
 
-        public function destroySession(){
-            $session=session();
-            $session->remove("numero");
-            $session->remove("nom");
-            $session->remove("ignorer");
-            $session->remove("adresse_facturation");
-            $session->remove("adresse_livraison");
-            
-            return redirect()->to("/");
-        }
-
         public function test()
         {
             $data['cardProduit']=service("cardProduit");

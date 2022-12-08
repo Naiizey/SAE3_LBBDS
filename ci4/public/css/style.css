@@ -16,6 +16,10 @@ body {
     min-height: 100vh;
 }
 
+.bodyAdmin, .bodyVendeur {
+    background-color: black;
+}
+
 /* Firefox */
 * {
     scrollbar-width: auto;
@@ -412,6 +416,10 @@ footer {
     background-color: #164F57;
     text-align: center;
     z-index: 100;
+}
+
+.footerAdmin, .footerVendeur{
+    background-color: black;
 }
 
 footer .pc {

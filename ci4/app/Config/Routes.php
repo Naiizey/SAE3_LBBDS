@@ -80,7 +80,7 @@ $routes->set404Override();
     $routes->get('/test', 'Test::test2');
   
 
-    $routes->get('vendeur/import', 'Import::index');
+    $routes->get('vendeur/import', 'Import::index/true');
     $routes->post('vendeur/import/upload', 'Import::upload');
 
     $routes->get('vendeur/commandesCli', 'Home::lstCommandesVendeur/true');

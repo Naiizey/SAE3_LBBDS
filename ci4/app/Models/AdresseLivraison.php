@@ -59,6 +59,14 @@ class AdresseLivraison extends Model
         return $this->find($id);
     }
    
+    public function getByCommande($numCommande){
+   
+        $retour = $this->where('num_commande',$numCommande)->findAll();
+        if(empty($retour)){
+            return null;
+        }
+        return $retour[0];
+    }  
 
 
 

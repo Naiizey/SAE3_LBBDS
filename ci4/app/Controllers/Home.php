@@ -28,7 +28,12 @@ class Home extends BaseController
         if (session()->has("just_connectee") && session()->get("just_connectee")==true) {
             session()->set("just_connectee", false);
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Vous êtes connecté !");
+        } else if (session()->has("just_deconnectee") && session()->get("just_deconnectee")==true) {
+            session()->set("just_deconnectee", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Vous êtes déconnecté !");
         }
+        
+        
     }
 
     public function index()
@@ -399,10 +404,11 @@ class Home extends BaseController
         return view('page_accueil/lstCommandesCli.php', $data);
     }
 
-    public function lstCommandesVendeur()
+    public function lstCommandesVendeur( $estVendeur=false)
     {
         $data["controller"]= "Commandes Vendeur";
         $data['commandesVend']=model("\App\Models\LstCommandesVendeur")->findAll();
+        $data['estVendeur']=$estVendeur;
         return view('page_accueil/lstCommandesVendeur.php', $data);
     }
 
@@ -473,6 +479,7 @@ class Home extends BaseController
         $data['numCommande'] = $num_commande;
         $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
         $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
+        $data['estVendeur']=$estVendeur;
         if (!isset($data['infosCommande'][0]->num_commande)) {
             throw new Exception("Le numéro de commande entré n'existe pas.", 404);
         } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
@@ -529,5 +536,25 @@ class Home extends BaseController
     public function commandeTest()
     {
         echo "oui";
+    }
+
+    public function admin()
+    {
+        $data['role'] = "admin";
+        $data["controller"] = "Administration";
+        return view("page_accueil/admin.php", $data);
+    }
+
+    public function destroySession()
+    {
+        $session=session();
+        $session->remove("numero");
+        $session->remove("nom");
+        $session->remove("ignorer");
+        $session->remove("adresse_facturation");
+        $session->remove("adresse_livraison");
+        $session->set("just_deconnectee",True);
+        
+        return redirect()->to("/");
     }
 }

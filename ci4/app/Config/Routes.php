@@ -80,13 +80,13 @@ $routes->set404Override();
     $routes->get('/test', 'Test::test2');
   
 
-    $routes->get('vendeur/import', 'Import::index');
+    $routes->get('vendeur/import', 'Import::index/true');
     $routes->post('vendeur/import/upload', 'Import::upload');
 
-    $routes->get('vendeur/commandesCli', 'Home::lstCommandesVendeur');
+    $routes->get('vendeur/commandesCli', 'Home::lstCommandesVendeur/true');
     $routes->get('vendeur/commandesCli/detail/(:alphanum)','Home::detail/$1/true');
 
-    $routes->get('/destroy', 'Test::destroySession');
+    $routes->get('/destroy', 'Home::destroySession');
 
     $routes->get('/commandes', 'Home::lstCommandesClient',['filter' => 'connexion']);
 
@@ -107,6 +107,8 @@ $routes->set404Override();
 
     $routes->get('/validation', 'Home::validation' );
     $routes->post('/validation', 'Home::validation' );
+
+    $routes->get('/admin', 'Home::admin');
 
 ##param uri (:any) et dans methode /$1
 

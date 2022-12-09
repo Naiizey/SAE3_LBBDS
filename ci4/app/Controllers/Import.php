@@ -19,9 +19,9 @@ class Import extends BaseController
         }
     }
 
-    public function index()
+    public function index($estVendeur=false)
     {
-
+        $data["estVendeur"] = $estVendeur;
         $data["controller"]= "import";
         return view('page_accueil/import.php', $data);
     }

@@ -49,8 +49,8 @@
 
                         <div class="infoRue">
                             
-                                <label class="colonne-numero-rue" for="numero_rue"><span>Numéro rue<span class="requis">*</span> :</span></label>
-                                <label class="colonne-nom-rue" for="nom_rue"><span>Nom rue<span class="requis">*</span> :</span></label>
+                                <label class="colonne-numero-rue" for="numero_rue"><span>Numéro de rue<span class="requis">*</span> :</span></label>
+                                <label class="colonne-nom-rue" for="nom_rue"><span>Nom de rue<span class="requis">*</span> :</span></label>
                                 
                                 <input class="colonne-numero-rue" type="text" name="numero_rue" required="required" value="<?= $adresse->numero_rue  ?>"/>
                                 <input class="colonne-nom-rue" type="text" name="nom_rue" required="required" value="<?= $adresse->nom_rue ?>"/>

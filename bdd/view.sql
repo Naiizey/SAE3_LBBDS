@@ -128,7 +128,7 @@ CREATE OR REPLACE VIEW adresse_facturation AS
     SELECT * FROM _adresse NATURAL JOIN _adresse_facturation;
 
 CREATE OR REPLACE VIEW adresse_livraison AS
-    SELECT _adresse.id_a, nom_a nom, prenom_a prenom, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, infos_comp, num_commande FROM _adresse NATURAL JOIN _adresse_livraison INNER JOIN _commande c on _adresse.id_a = c.id_a ;
+    SELECT _adresse.id_a, nom_a nom, prenom_a prenom, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, infos_comp, num_commande FROM _adresse NATURAL JOIN _adresse_livraison LEFT JOIN _commande c on _adresse.id_a = c.id_a ;
 
 
 CREATE OR REPLACE VIEW code_reduction AS

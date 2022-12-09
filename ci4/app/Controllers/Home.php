@@ -355,6 +355,7 @@ class Home extends BaseController
         $model=model("\App\Models\AdresseLivraison");
 
         $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
+      
         $data["controller"] = "Livraisons";
         $post=$this->request->getPost();
         $adresse = new \App\Entities\Adresse();
@@ -381,6 +382,10 @@ class Home extends BaseController
                 session()->set("adresse_livraison",$id_a);
                 return redirect()->to("/paiement");
             }
+        }else if(session()->has("adresse_livraison")){
+            $adresse=model("\App\Models\AdresseLivraison")->find(session()->get("adresse_livraison"));
+            $data["dejaRempli"] = "Adresse livraison validée et réutilisée";
+            
         }
 
         $data['adresse']=$adresse;
@@ -418,6 +423,7 @@ class Home extends BaseController
         $model=model("\App\Models\AdresseFacturation");
 
         $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
+        //dd($client);
         $post=$this->request->getPost();
         $adresse = new \App\Entities\Adresse();
 
@@ -430,11 +436,12 @@ class Home extends BaseController
 
         $this->validator = Services::validation();
         $this->validator->setRules($model->rules);
-
+        
         if (!empty($post)) {
             $paiement = service('authentification');
             $issues=$paiement->paiement($post);
             $adresse->fill($post);
+            dd($adresse);
             if (empty($issues) && $adresse->checkAttribute($this->validator) ) {
                 /* Cookie = problème de sécurité
                 $expiration=strtotime('+24 hours');
@@ -447,6 +454,7 @@ class Home extends BaseController
         }else if(session()->has("adresse_livraison")){
             $adresse=model("\App\Models\AdresseLivraison")->find(session()->get("adresse_livraison"));
             $data["dejaRempli"] = "Adresse livraison validée et réutilisée";
+            
         }
 
 
@@ -458,6 +466,7 @@ class Home extends BaseController
         $data['CVC'] = (isset($_POST['CVC'])) ? $_POST['CVC'] : "";
         
         $data['adresse']=$adresse;
+        
         $data['client']=$client;
         $data['errors']=$this->validator;
         $data["formAdresse"]=view("formAdresse.php",$data);

@@ -165,6 +165,7 @@ CREATE TABLE _retour(
 CREATE TABLE _avis(
     num_avis SERIAL PRIMARY KEY ,
     contenu_av VARCHAR NOT NULL,
+    date_av DATE NOT NULL,
     id_prod INT NOT NULL, -- sur,
     num_compte INT NOT NULL --auteur
 );

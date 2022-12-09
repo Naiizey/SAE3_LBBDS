@@ -216,6 +216,53 @@ class Authentification
         {
             $errors[0] ="Pas d'entrée";
         }
+
+        if (empty($errors))
+        {
+            //Vérification de la validité de la carte (Algorithme de Luhn)
+            //Formatage de la liste de chiffres 
+            $chiffres = str_replace(" ", "", $chiffres);
+            $chiffres = strrev($chiffres);
+
+            //Sauvegarde du premier chiffre et initialisation d'une variable qui contiendra les chiffres non utilisés
+            $chiffresRestants = intval($chiffres[0]);
+
+            //On retire le dernier chiffre
+            $chiffres = substr($chiffres, 1);
+
+            //On sauvegarde le double des chiffres tirés une fois sur 2 
+            //On ne peux pas les additionner directement, il nous faut les séparer s'ils sont composés de 2 chiffres
+            //On additionne entre eux les chiffres non utilisés
+            $chiffresUtilises = "";
+            for ($i = 0; $i < strlen($chiffres); $i++)
+            {
+                if ($i % 2 == 0)
+                {
+                    $chiffresUtilises .= strval(intval($chiffres[$i])*2);
+                }
+                else
+                {
+                    $chiffresRestants += intval($chiffres[$i]);
+                }
+            }
+
+            //On convertit tous les éléments de la liste en int
+            $chiffresUtilises = str_split($chiffresUtilises);
+            for ($i = 0; $i < count($chiffresUtilises); $i++)
+            {
+                $chiffresUtilises[$i] = intval($chiffresUtilises[$i]);
+            }
+
+            //On additionne tous les chiffres de la liste
+            $res = array_sum($chiffresUtilises);
+
+            //Et si la somme de nos deux additions modulo 10 est égale à 0, alors la carte est valide
+            if (($res + $chiffresRestants) % 10 != 0)
+            {
+                $errors[5] = "Carte invalide";
+            }
+        }
+
         return $errors;
     }
 }

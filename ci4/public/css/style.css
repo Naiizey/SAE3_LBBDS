@@ -3286,13 +3286,76 @@ progress::-moz-progress-bar
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-.sectionAdmin {
+.sectionAdmin div {
     display: grid;
-    grid-template-columns: repeat(20, 5%);
+    column-gap: 1em;
 }
 
-.sectionAdmin h2 {
+.sectionAdmin h3 {
     grid-column-start: 1;
-    grid-column-end: 21;
+    grid-column-end: 6;
     text-align: left;
+    margin: 0.5em 0;
+    font-family: 'Montserrat-Medium';
+}
+
+.sectionAdmin a {
+    background-color: #3997A3;
+    border-radius: 7px;
+    color: white;
+    padding: 0.5em 1em;
+}
+
+.sectionAdmin a:hover {
+    background-color: #164F57;
+    color: white;
+}
+
+/* Gestion de comptes */
+.sectionAdmin a:nth-child(2) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.sectionAdmin a:nth-child(3) {
+    grid-column-start: 3;
+    grid-column-end: 6;
+}
+
+/* Bannissements */
+.sectionAdmin a:nth-child(5) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.sectionAdmin a:nth-child(6) {
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+.sectionAdmin a:nth-child(7) {
+    grid-column-start: 4;
+    grid-column-end: 6;
+}
+
+/* Commentaires signalés */
+.sectionAdmin a:nth-child(9) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.sectionAdmin a:nth-child(10) {
+    grid-column-start: 2;
+    grid-column-end: 6;
+}
+
+/* Avertissements */
+.sectionAdmin a:nth-child(12) {
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.sectionAdmin a:nth-child(13) {
+    grid-column-start: 4;
+    grid-column-end: 6;
 }

@@ -73,7 +73,7 @@
                             <h2><?= ucfirst($prod -> intitule)?></h2>
                             <p class="ParaDescProduit"><?= ucfirst($prod->description) ?></p>
                             <section class="sectionAvis">
-                                <h4>Avis clients:</h4>
+                                <a href="#divLesAvis"><h4>Avis clients:</h4></a>
                                 <img src="<?=base_url() ?>/images/produit/avis.png"/>
                             </section>
                         </div>
@@ -137,6 +137,32 @@
                         <?php endforeach; ?>
                     </ul>
                 </section>
+                <div id="divLesAvis">
+                    <div class="moyenneAvis">
+                        <p>ici c'est la moyenne des avis</p>
+                    </div>
+                    <div class="divListeAvis">
+                        <div class="divUnAvis">
+                            <section class="sectionUnAvis">
+                                <div class="divNomCommentaire">
+                                    <img src="<?=base_url() ?>/images/header/profil.svg">
+                                    <div class="divNomDate">
+                                        <h3>Denis Vaillant : </h3>
+                                        <p>Publié le 12/12/2022</p>
+                                    </div>
+                                </div>
+                                <div class="divAvisCommentaire">
+                                    <img src="<?=base_url() ?>/images/produit/avis.png"/>
+                                    <p>5/5</p>
+                                </div>
+                            </section>
+                            <p>C'est super !
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit, architecto quos inventore aliquam explicabo eum adipisci distinctio eligendi quae quis numquam debitis et cum corrupti vel! Sunt incidunt natus nulla.
+                            </p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
             </section>
         </main>
 <?php require("footer.php"); ?>

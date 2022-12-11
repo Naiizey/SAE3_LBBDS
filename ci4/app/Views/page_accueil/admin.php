@@ -2,14 +2,22 @@
         <main>
             <div class="divCredit">
                 <section class="sectionCredit sectionAdmin">
-                    <h2>Gestion de comptes<h2>
-                    <!-- Modifier un compte client, supprimer un compte client -->
-                    <h2>Timeouts</h2>
-                    <!-- TO un utilisateur, enlever le TO d'un utilisateur -->
-                    <h2>Commentaires signalés</h2>
-                    <!-- Voir les signalements, supprimer des signalements -->
-                    <h2>Avertissements</h2>
-                    <!-- Avertir un utilisateur, annuler l'avertissement -->
+                    <h2>Administration</h2>
+                    <div>
+                        <h3>Gestion de comptes</h3>
+                        <a href="<?= base_url() ?>/espaceClient/admin/1">Modifier un compte</a>
+                        <a>Supprimer un compte</a>
+                        <h3>Bannissements</h3>
+                        <a>Bannir temporairement un utilisateur</a>
+                        <a>Bannir définitivement un utilisateur</a>
+                        <a>Annuler un bannissement</a>
+                        <h3>Commentaires signalés</h3>
+                        <a>Voir les signalements</a>
+                        <a>Supprimer des signalements </a>
+                        <h3>Avertissements</h3>
+                        <a>Avertir un utilisateur</a>
+                        <a>Annuler un avertissement</a>
+                    </div>
                 </section>
             </div>
         </main>

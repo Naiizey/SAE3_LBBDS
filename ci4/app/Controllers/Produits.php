@@ -28,71 +28,70 @@ class Produits extends BaseController
      * Pour return:
      * @see giveResult();
      */
-    public function getAllProduitSelonPage($page=1,$nombreProd=self::NBPRODSPAGEDEFAULT,$filters=null){
-       
-
-        if($filters==null && isset($this->request) && !empty($this->request->getVar())){
+    public function getAllProduitSelonPage($page=1,$nombreProd=self::NBPRODSPAGEDEFAULT,$filters=null)
+    {
+        if($filters==null && isset($this->request) && !empty($this->request->getVar()))
+        {
             $filters=$this->request->getVar();
         }
 
         $data=array();
 
-        try{
+        try
+        {
             if(is_null($filters) || empty($filters))
             {
                 
                 $result= model("\App\Models\ProduitCatalogue")->findAll(
                     ($nombreProd*$page)+1,
-                    $nombreProd*($page-1)
-                    
-                    
-                       
+                    $nombreProd*($page-1) 
                 );
-                
-         
             }
             else
             {
-                
                 $result=$this->casFilter($filters,$data)->findAll(
                     ($nombreProd*$page)+1,
-                    $nombreProd*($page-1)
-                       
+                    $nombreProd*($page-1)    
                 );
                 //dd("dz");
                 //$nbResults=sizeof($this->casFilter($filters,$data)->findAll());
              
-                if(empty($result)){
+                if(empty($result))
+                {
                     return $this->throwError(new Exception("Aucun produit disponible avec les critères sélectionnés",404));
                 }
             }
-            if(sizeof($result)<$nombreProd+1){
+            if(sizeof($result)<$nombreProd+1)
+            {
                 $dernier=true;
-            }else{
+            }
+            else
+            {
                 $dernier=false;
                 unset($result[$nombreProd]);
             }
-
-        
-        }catch(\CodeIgniter\Database\Exceptions\DataException $e){
+        }
+        catch(\CodeIgniter\Database\Exceptions\DataException $e)
+        {
             $this->throwError($e);
         }
        
-           
-        
         //dd($result,$dernier,($nombreProd*$page)+1,
         //  $nombreProd*($page-1));
-        return $this->giveResult($result,$dernier);
 
+        //Commentaires
+        
+
+        return $this->giveResult($result,$dernier);
     }
 
-    public function sendCors(){
-        
-        if(isset($this->request) && $this->request->getMethod()==="options"){
+    public function sendCors()
+    {
+        if(isset($this->request) && $this->request->getMethod()==="options")
+        {
             return $this->response->setHeader('Access-Control-Allow-Methods','GET, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
             ->setStatusCode(200);
         }
-  
     }
 
        

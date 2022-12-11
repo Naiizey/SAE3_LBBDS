@@ -191,12 +191,22 @@ class Authentification
             {
                 $errors[1]="Remplissez le(s) champs vide(s)";
             }
-            if (preg_match_all("/\d{6}\d{1,12}\d/", $entree['numCB']) < 1  &&
-                preg_match_all("/(\b[4|5|6]\d{3}[\s-]?(\d{4}[\s-]?){2}\d{1,4}\b)|(\b\d{4}[\s-]?\d{6}[\s-]?\d{5}\b)/", $entree['numCB']) < 1)
+
+            //https://www.ibm.com/docs/fr/order-management-sw/9.3.0?topic=cpms-handling-credit-cards 
+            $numCartePropre = str_replace(" ", "", $entree['numCB']);
+            
+            if (preg_match_all("/^(34|37)\d{13}$/", $numCartePropre) < 1                                //American Express
+             && preg_match_all("/^(51|55)\d{14}$/", $numCartePropre) < 1                               //MasterCard
+             && preg_match_all("/^4(\d{15}|\d{12})$/", $numCartePropre) < 1                           //Visa
+             && preg_match_all("/^(36\d|38\d|300|301|302|303|304|305)\d{11}$/", $numCartePropre) < 1 //Diners Club et Carte Blanche
+             && preg_match_all("/^6011\d{12}$/", $numCartePropre) < 1                               //Discover
+             && preg_match_all("/^(2123|1800)\d{11}$/", $numCartePropre) < 1                       //JCB
+             && preg_match_all("/^3\d{15}$/", $numCartePropre) < 1)                               //JCB
             {
                 $errors[2]="Format de numéro de carte bancaire invalide";
             }
-            if (preg_match_all("/\b(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})\b/", $entree['dateExpiration']) < 1)
+
+            if (preg_match_all("/^(0[1-9]|1[0-2])\/?[0-9]{2}$/", $entree['dateExpiration']) < 1)
             {
                 $errors[3]="Format de date d'expiration invalide";
             }
@@ -216,6 +226,54 @@ class Authentification
         {
             $errors[0] ="Pas d'entrée";
         }
+
+        if (empty($errors))
+        {
+            //Vérification de la validité de la carte (Algorithme de Luhn)
+            //https://www.ibm.com/docs/fr/order-management-sw/9.3.0?topic=cpms-handling-credit-cards 
+            //Formatage de la liste de chiffres 
+            $chiffres = str_replace(" ", "", $chiffres);
+            $chiffres = strrev($chiffres);
+
+            //Sauvegarde du premier chiffre et initialisation d'une variable qui contiendra les chiffres non utilisés
+            $chiffresRestants = intval($chiffres[0]);
+
+            //On retire le dernier chiffre
+            $chiffres = substr($chiffres, 1);
+
+            //On sauvegarde le double des chiffres tirés une fois sur 2 
+            //On ne peux pas les additionner directement, il nous faut les séparer s'ils sont composés de 2 chiffres
+            //On additionne entre eux les chiffres non utilisés
+            $chiffresUtilises = "";
+            for ($i = 0; $i < strlen($chiffres); $i++)
+            {
+                if ($i % 2 == 0)
+                {
+                    $chiffresUtilises .= strval(intval($chiffres[$i])*2);
+                }
+                else
+                {
+                    $chiffresRestants += intval($chiffres[$i]);
+                }
+            }
+
+            //On convertit tous les éléments de la liste en int
+            $chiffresUtilises = str_split($chiffresUtilises);
+            for ($i = 0; $i < count($chiffresUtilises); $i++)
+            {
+                $chiffresUtilises[$i] = intval($chiffresUtilises[$i]);
+            }
+
+            //On additionne tous les chiffres de la liste
+            $res = array_sum($chiffresUtilises);
+
+            //Et si la somme de nos deux additions modulo 10 est égale à 0, alors la carte est valide
+            if (($res + $chiffresRestants) % 10 != 0)
+            {
+                $errors[5] = "Carte invalide";
+            }
+        }
+
         return $errors;
     }
 }

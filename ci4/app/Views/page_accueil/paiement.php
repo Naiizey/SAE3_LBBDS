@@ -38,7 +38,8 @@
                             afficheErreurs($erreurs, 0) . 
                             afficheErreurs($erreurs, 1) .
                             afficheErreurs($erreurs, 3) .
-                            afficheErreurs($erreurs, 4)
+                            afficheErreurs($erreurs, 4) .
+                            afficheErreurs($erreurs, 5) 
                         ?>
                         <input type="submit" value="Continuer"/>
                     </form>

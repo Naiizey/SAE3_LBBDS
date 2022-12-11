@@ -655,7 +655,7 @@ function getParentNodeTilClass(element){
 
 var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFiltre,voirPlus) {
     this.form = formFilter;
-    
+    this.erroBloc=document.querySelector("div.bloc-erreur-liste-produit");
     this.champRecherche = champRecherche;
     this.listeProduit=listeProduit
     this.suppressionFiltre=suppressionFiltre;
@@ -702,16 +702,15 @@ var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFi
                     self.voirPlus.classList.remove("hidden");
                 }
                 result["resultat"].forEach(produit => self.listeProduit.innerHTML += produit);
+                self.erroBloc.classList.add("hidden");
                 //reexe, afin que le listener revienne sur les cartes
                 clickProduit();
             }else{
-                self.listeProduit.innerHTML=`
-                <div class="bloc-erreur-liste-produit">
-                    <p class="paragraphe-erreur">
-                        ${result["message"]}
-                    </p>
-                <div class="erreur-liste-produit">
-                `;   
+             
+                self.erroBloc.classList.remove("hidden");
+                self.erroBloc.children[0].innerHTML=result["message"];
+               
+                
             }
             window.history.pushState({page:1},"Filtres",champsGet);
     

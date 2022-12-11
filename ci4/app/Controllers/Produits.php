@@ -172,7 +172,7 @@ class Produits extends BaseController
             ->setStatusCode($e->getCode())->setJSON(array("message"=>$e->getMessage()));
         }
         else{
-            throw $e;
+            return array("resultat"=>[],"estDernier"=>true,"message"=>$e->getMessage());
         }
     }
 

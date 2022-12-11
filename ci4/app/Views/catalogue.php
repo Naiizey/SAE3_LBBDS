@@ -43,7 +43,7 @@
                         <?php foreach ($categorie->getAllSousCat() as $key => $sousCat): ?>
                         <div class="sous-categorie" for="<?= $sousCat->libelle ?>">
                             <label for="<?= $sousCat->libelle ?>" class=".sous-categorie-catalogue"><?= $sousCat->libelle ?></label>
-                            <input name="<?= $sousCat->libelle ?>" type="checkbox" id="<?= $sousCat->libelle ?>" name="sous-categorie">
+                            <input <?= ((isset($filters[$sousCat->libelle]) && $filters[$sousCat->libelle]=="on")?"checked":"") ?> name="<?= $sousCat->libelle ?>" type="checkbox" id="<?= $sousCat->libelle ?>">
                         </div>
                         <?php if($key != array_key_last($categorie->getAllSousCat())): ?> <hr> <?php endif; ?>
                         <?php endforeach;?>
@@ -70,13 +70,23 @@
     </section>
     <section class="partie-produits">
         <div class="liste-produits">
-        <?php foreach($prods as $prod): ?>
-            <?= $cardProduit->display($prod)?>
-        <?php endforeach; ?>
+        <?php if(isset($prods) && !empty($prods)): ?>
+            <?php foreach($prods as $prod): ?>
+                <?= $cardProduit->display($prod)?>  
+            <?php endforeach; ?>
+            
+                
+        <?php endif; ?>
         </div>
         <div class="nav-page">
             <button class="normal-button voir-plus  <?= ($estDernier)?"hidden":"" ?>">Voir plus</button>
         </div>
+        <div class="bloc-erreur-liste-produit <?= (isset($message))?"":"hidden"; ?>">
+                    <p class="paragraphe-erreur">
+                        <?= (isset($message))?$message:"" ?>
+                    </p>
+        <div class="erreur-liste-produit">
+       
     </section>
 </main>
 <?php require("page_accueil/footer.php"); ?>

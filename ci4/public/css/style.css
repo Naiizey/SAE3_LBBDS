@@ -2669,6 +2669,10 @@ a.fleche-page{
     background-color: transparent;
 }
 
+.bloc-erreur-liste-produit.hidden{
+    display: none;
+}
+
 @media (max-width: 1400px) {
     .partie-produits{
         width: 60%;

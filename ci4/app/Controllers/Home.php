@@ -205,6 +205,7 @@ class Home extends BaseController
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Article ajouté");
         }
         $filters=$this->request->getGet();
+        $data["filters"]=$filters;
         $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
         $data['cardProduit']=service("cardProduit");
         $data['categories']=model("\App\Models\CategorieModel")->findAll();
@@ -224,28 +225,12 @@ class Home extends BaseController
         $data['prods']=$result["resultat"];
         $data['estDernier']=$result["estDernier"];
         
+    
+
         
 
-        if (isset($filters)) {
-            $filtersInline = "";
-            foreach ($filters as $key => $value) {
-                $filtersInline .= "&".$key."=".$value;
-            }
-            $filtersInline = substr($filtersInline, 0);
-            $filtersInline = "?".$filtersInline;
-            $data['filters'] = $filtersInline;
-        }
-
-        if (isset($price)) {
-            $priceInline = "";
-            foreach ($price as $key => $value) {
-                $priceInline .= "&".$key."=".$value;
-            }
-            $data['filters'] .= $priceInline;
-        }
-
-        if ($data['prods']) {
-            $data['vide'] = true;
+        if (!isset($data['prods']) || empty($data['prods'])) {
+            $data['message'] = $result["message"];
         }
 
         return view("catalogue.php", $data);

@@ -42,7 +42,7 @@ class Produits extends BaseController
             if(is_null($filters) || empty($filters))
             {
                 
-                $result= model("\App\Models\ProduitCatalogue")->findAll(
+                $result= model("\App\Models\ProduitCatalogue")->orderBy("id")->findAll(
                     ($nombreProd*$page)+1,
                     $nombreProd*($page-1) 
                 );
@@ -105,7 +105,7 @@ class Produits extends BaseController
      * @return \App\Models\ProduitCatalogue
      */
     private function casFilter($filters,$data) : object{
-        $result = array();
+        
         
         if (isset($filters["search"])) {
             $search = $filters["search"];
@@ -126,7 +126,7 @@ class Produits extends BaseController
             
         }
 
-
+        
         if(!empty($filters)){
             $subQuery = db_connect()->table($query->table)->select('id');
             foreach (array_keys($filters) as $key) {
@@ -137,15 +137,17 @@ class Produits extends BaseController
             
         }
         
+        
 
         if(isset($search) && $search!==""){
             $subQuery = db_connect()->table($query->table)->select('id');
             $subQuery->like('LOWER(intitule)', strToLower($search))->orLike('LOWER(description_prod)', strToLower($search))/*->orderby('intitule, description_prod', 'ASC')*/;
-            $query->whereIn('id',$subQuery);    
+            $query->whereIn('id',$subQuery);
+             
             
         }
         
-        
+        $query->orderBy("id");
         
         
         
@@ -187,7 +189,7 @@ class Produits extends BaseController
      * 
      */
     private function giveResult($result,$dernier){
-    
+        
         
         
         if(isset($this->request)){

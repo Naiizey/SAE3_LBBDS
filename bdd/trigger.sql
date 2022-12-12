@@ -201,3 +201,8 @@ CREATE TRIGGER update_client
     INSTEAD OF UPDATE ON sae3.client
     FOR EACH ROW
     EXECUTE PROCEDURE update_client();
+
+
+
+SELECT * FROM produit_catalogue WHERE prixttc >= 1 and prixttc <= 1500 ORDER BY id LIMIT 20 OFFSET 0;
+SELECT * FROM produit_catalogue WHERE prixttc >= 1 and prixttc <= 1500 ORDER BY id LIMIT 40 OFFSET 20;

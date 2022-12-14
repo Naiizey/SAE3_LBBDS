@@ -64,8 +64,8 @@
                                 <img src="<?= $prod -> lienimage ?>" />
                             </li>
                         </ul>
-                        <div>
-                            <img src="<?= $prod -> lienimage ?>" />
+                        <div class="zoom" onmousemove="zoomProduit(event)" style="background-image: url(<?= $prod -> lienimage ?>)">
+                            <img src="<?= $prod -> lienimage ?>"/>
                         </div>
                     </div>
                     <div class="divDroite">
@@ -166,3 +166,6 @@
             </section>
         </main>
 <?php require("footer.php"); ?>
+<script>
+    zoomProduit();
+</script>

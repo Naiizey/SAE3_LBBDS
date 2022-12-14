@@ -6,7 +6,6 @@
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
-#include <stdbool.h>
 #include <getopt.h>
 
 int main(int argc, char *argv[])
@@ -49,14 +48,62 @@ int main(int argc, char *argv[])
         perror("Connexion échouée");
     }
 
-    //Fonction read() et write() (exo2et3)
+    //On créé un tableau de structures pour stocker les options
+    struct option
+    {
+        char *name;
+        char *value;
+    };
+    struct option options[5];
+
+    //Tant qu'il y a des options à lire
+    //L'argument de la fonction getopt() "a:b:c:d:" correspond aux différentes options disponibles 
+    //Les : sont comme des slicers en python, ils signifient que suite à l'option il faut renseigner un mot
+    //Exemple : ./simulateur -a -b <mot> -c <mot> -d <mot> -e <mot>
+    //À noter que l'option a n'a pas de mot car il n'y a pas de : à sa suite dans l'argument de la fonction getopt()
+    //Le mot est récupéré dans la variable optarg et n'est pas utilisable si l'option n'a pas de mot
+    int i = 0;
+    int opt;
+    while ((opt = getopt(argc, argv, "ab:c:d:e:")) != -1)
+    {
+        switch (opt)
+        {
+            case 'a':
+                options[i].name = "a";
+                options[i].value = NULL;
+                break;
+            case 'b':
+                options[i].name = "b";
+                options[i].value = optarg;
+                break;
+            case 'c':
+                options[i].name = "c";
+                options[i].value = optarg;
+                break;
+            case 'd':
+                options[i].name = "d";
+                options[i].value = optarg;
+                break;
+            case 'e':
+                options[i].name = "e";
+                options[i].value = optarg;
+                break;
+            default:
+                options[i].name = "inconnue";
+                options[i].value = NULL;
+                break;
+        }
+        i++;
+    }
+
+    //Fonction read() et write() 
+    //On initialise les variables
     char buf[512];
     char res[10];
     int N = 0;
-    bool onContinue = true;
+    int onContinue = 1;
 
-    int opt;
-
+    //Tant que le client ne nous envoie pas "BYE\r"
     while (onContinue)
     {
         size = read(cnx, buf, 512);
@@ -80,41 +127,24 @@ int main(int argc, char *argv[])
         }
         else if (strncmp(buf, "LBBDS\r", strlen("LBBDS\r")) == 0)
         {
-            //Tant qu'il y a des options à lire
-            //L'argument de la fonction getopt() "a:b:c:d:" correspond aux différentes options disponibles 
-            //Les : sont comme des slicers en python, ils signifient que suite à l'option il faut renseigner un mot
-            //Exemple : ./simulateur -a -b <mot> -c <mot> -d <mot> -e <mot>
-            //À noter que l'option a n'a pas de mot car il n'y a pas de : à sa suite dans l'argument de la fonction getopt()
-            //Le mot est récupéré dans la variable optarg et n'est pas utilisable si l'option n'a pas de mot
-            while ((opt = getopt(argc, argv, "ab:c:d:e:")) != -1)
+            //Parcours des options sauvegardées en fonction de la longueur du tableau des options sauvegardées
+            for (int i = 0; i < sizeof(options) / sizeof(options[0]); i++)
             {
                 //On vide la string res
                 memset(res, 0, sizeof(res));
-
-                switch (opt)
+                strcat(res, "Option ");
+                strcat(res, options[i].name);
+                
+                //Si l'option a un mot, on l'affiche
+                if (options[i].value != NULL)
                 {
-                    case 'a':
-                        strcat(res, "Option a reconnue");
-                        break;
-                    case 'b':
-                        strcat(res, "Option b: ");
-                        strcat(res, optarg);
-                        break;
-                    case 'c':
-                        strcat(res, "Option c: ");
-                        strcat(res, optarg);
-                        break;
-                    case 'd':
-                        strcat(res, "Option d: ");
-                        strcat(res, optarg);
-                        break;
-                    case 'e':
-                        strcat(res, "Option e: ");
-                        strcat(res, optarg);
-                        break;
-                    default:
-                        strcat(res, "Option inconnue");
-                        break;
+                    strcat(res, ": ");
+                    strcat(res, options[i].value);
+                }
+                //Si l'option n'a pas de mot et qu'elle n'en requiert pas
+                else if (strcmp(options[i].name, "inconnue") != 0)
+                {
+                    strcat(res, " reconnue");
                 }
                 strcat(res, "\n");
 
@@ -124,7 +154,7 @@ int main(int argc, char *argv[])
         }
         else if (strncmp(buf, "BYE\r", strlen("BYE\r")) == 0)
         {
-            onContinue = false;
+            onContinue = 0;
         }
     }
 

@@ -26,20 +26,18 @@ int main(int argc, char *argv[])
 
     //Tant qu'il y a des options à lire
     //L'argument de la fonction getopt() "a:b:c:d:" correspond aux différentes options disponibles 
-    //Les : sont comme des slicers en python, ils signifient que suite à l'option il faut renseigner un mot
-    //Exemple : ./simulateur -a -b <mot> -c <mot> -d <mot> -e <mot>
-    //À noter que l'option a n'a pas de mot car il n'y a pas de : à sa suite dans l'argument de la fonction getopt()
-    //Le mot est récupéré dans la variable optarg et n'est pas utilisable si l'option n'a pas de mot
-    int i = 0;
-    int opt;
+    //Les : sont comme des slicers en python, ils signifient que suite à l'option il faut renseigner une valeur (ou attribut lié à l'option)
+    //Exemple : ./simulateur -a -b <valeur> -c <valeur> -d <valeur> -e <valeur>
+    //À noter que l'option a n'a pas de valeur car il n'y a pas de : à sa suite dans l'argument de la fonction getopt()
+    //Le mot est récupéré dans la variable optarg et n'est pas utilisable si l'option n'a pas de valeur
+    int opt, i = 0, nbArguments = 0;
     while ((opt = getopt(argc, argv, "ab:c:d:e:")) != -1)
     {
         switch (opt)
         {
             case 'a':
                 options[i].name = "a";
-                options[i].value = NULL;
-                printf("dx");
+                options[i].value = NULL; 
                 break;
             case 'b':
                 options[i].name = "b";
@@ -58,12 +56,41 @@ int main(int argc, char *argv[])
                 options[i].value = optarg;
                 break;
             default:
-                printf("Erreur: Option inconnue\n");
+                //On laisse getopt gérer les erreurs dans ce cas
                 exit(EXIT_FAILURE);
                 break;
         }
+
+        //Si l'option à un valeur
+        if (options[i].value != NULL)
+        {
+            //Alors cette option ajoute 2 arguments (le nom de l'option et sa valeur)
+            nbArguments += 2;
+
+            //On vérifie si une option n'a pas été prise par erreur dans la valeur d'une autre option
+            if (strchr(optarg, '-') != NULL)
+            {
+                printf("Erreur: L'option requiert un argument\n");
+                exit(EXIT_FAILURE);
+            }
+        }
+        //Sinon l'option n'a pas de valeur
+        else
+        {
+            //Alors cette option ajoute 1 seul argument (le nom de l'option)
+            nbArguments++;
+        }
         i++;
     }
+
+    //On vérifie si le nombre d'arguments passés au fichier est égal au nombre normal d'arguments correspondant aux options et leurs valeurs (si existantes
+    //On fait -1 sur argc car il compte le nom du fichier en lui même
+    if (nbArguments != argc - 1)
+    {
+        printf("Erreur: L'option ne requiert pas de valeur\n");
+        exit(EXIT_FAILURE);
+    }
+
     //On finit le tableau des options par une option vide
     options[i].name = NULL;
     options[i].value = NULL;
@@ -86,7 +113,12 @@ int main(int argc, char *argv[])
     struct sockaddr_in addr;
     addr.sin_addr.s_addr = inet_addr("127.0.0.1");
     addr.sin_family = AF_INET;
-    addr.sin_port = htons(8080);
+
+    int temp;
+    printf("Port: \n");   //Temp
+    scanf("%d", &temp);
+
+    addr.sin_port = htons(temp);
     ret = bind(sock, (struct sockaddr *)&addr, sizeof(addr));
     if (ret != 0)
     {
@@ -120,8 +152,7 @@ int main(int argc, char *argv[])
     //On initialise les variables
     char buf[512];
     char res[10];
-    int N = 0;
-    int onContinue, ilResteDesOptions = 1;
+    int N = 0, onContinue = 1, ilResteDesOptions = 1;
 
     //Fonction read() et write() 
     //Tant que le client ne nous envoie pas "STOP\r"
@@ -153,14 +184,14 @@ int main(int argc, char *argv[])
             while (ilResteDesOptions)
             {
                 //Si on est pas encore arrivé à l'option vide qui signe la fin du tableau
-                if (options[i].name != NULL && options[i].value != NULL)
+                if (options[i].name != NULL)
                 {
                     //On vide la string res
                     memset(res, 0, sizeof(res));
                     strcat(res, "Option ");
                     strcat(res, options[i].name);
                     
-                    //Si l'option a un mot, on l'affiche
+                    //Si l'option a un valeur, on l'affiche
                     if (options[i].value != NULL)
                     {
                         strcat(res, ": ");

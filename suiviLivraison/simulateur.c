@@ -1,8 +1,3 @@
-/**
- * @author AUBRY Mathis
- * @brief
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
@@ -12,6 +7,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <getopt.h>
 
 int main(int argc, char *argv[])
 {
@@ -78,35 +74,26 @@ int main(int argc, char *argv[])
         }
         else if (strncmp(buf, "OPT\r", strlen("OPT\r")) == 0)
         {
-            // put ':' in the starting of the
-            // string so that program can 
-            //distinguish between '?' and ':' 
-            while((opt = getopt(argc, argv, ":if:lrx")) != -1)
+            while ((opt = getopt(argc, argv, "abcd")) != -1)
             {
-                switch(opt)
+                switch (opt)
                 {
-                    case 'i':
-                    case 'l':
-                    case 'r':
-                        printf("option: %c\n", opt);
+                    case 'a':
+                        write(cnx, "Option a\n", strlen("Option a\n"));
                         break;
-                    case 'f':
-                        printf("filename: %s\n", optarg);
+                    case 'b':
+                        write(cnx, "Option b\n", strlen("Option b\n"));
                         break;
-                    case ':':
-                        printf("option needs a value\n");
+                    case 'c':
+                        write(cnx, "Option c\n", strlen("Option c\n"));
                         break;
-                    case '?':
-                        printf("unknown option: %c\n", optopt);
+                    case 'd':
+                        write(cnx, "Option d\n", strlen("Option d\n"));
+                        break;
+                    default:
+                        write(cnx, "Option inconnue\n", strlen("Option inconnue\n"));
                         break;
                 }
-            }
-     
-            //optind is for the extra arguments
-            //which are not parsed
-            for (int optind = 0; optind < argc; optind++)
-            {
-                printf("extra arguments: %s\n", argv[optind]);
             }
         }
         else if (strncmp(buf, "BYE\r", strlen("BYE\r")) == 0)

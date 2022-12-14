@@ -15,15 +15,6 @@ int main(int argc, char *argv[])
     ┃                                   Options                                       ┃
     ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
     */
-    //On définit les options possibles
-    static struct option long_options[] =
-    {
-        {"add",     no_argument,       0, 'a'},
-        {"append",  no_argument,       0, 'b'},
-        {"delete",  required_argument, 0, 'c'},
-        {"create",  required_argument, 0, 'd'},
-        {"file",    required_argument, 0, 'e'}
-    };
 
     //On créé un tableau de structures pour stocker les options
     struct option
@@ -31,7 +22,7 @@ int main(int argc, char *argv[])
         char *name;
         char *value;
     };
-    struct option options[15]; //Renseigner ici le nombre maximum d'options
+    struct option options[20]; //Renseigner ici le nombre maximum d'options
 
     //Tant qu'il y a des options à lire
     //L'argument de la fonction getopt() "a:b:c:d:" correspond aux différentes options disponibles 
@@ -41,17 +32,18 @@ int main(int argc, char *argv[])
     //Le mot est récupéré dans la variable optarg et n'est pas utilisable si l'option n'a pas de mot
     int i = 0;
     int opt;
-    while ((opt = getopt_long(argc, argv, "abc:d:e:", long_options, &i)) != -1)
+    while ((opt = getopt(argc, argv, "ab:c:d:e:")) != -1)
     {
         switch (opt)
         {
             case 'a':
                 options[i].name = "a";
                 options[i].value = NULL;
+                printf("dx");
                 break;
             case 'b':
                 options[i].name = "b";
-                options[i].value = NULL;
+                options[i].value = optarg;
                 break;
             case 'c':
                 options[i].name = "c";
@@ -66,8 +58,9 @@ int main(int argc, char *argv[])
                 options[i].value = optarg;
                 break;
             default:
-                //Option inconnue
+                printf("Erreur: Option inconnue\n");
                 exit(EXIT_FAILURE);
+                break;
         }
         i++;
     }
@@ -157,7 +150,6 @@ int main(int argc, char *argv[])
         {
             i = 0;
             ilResteDesOptions = 1;
-            printf("%s", options[i].name);
             while (ilResteDesOptions)
             {
                 //Si on est pas encore arrivé à l'option vide qui signe la fin du tableau

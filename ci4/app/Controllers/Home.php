@@ -404,11 +404,12 @@ class Home extends BaseController
         $data["controller"]='Paiement';
 
         //Partie copié de infoLivraison:
-        
-        $model=model("\App\Models\AdresseFacturation");
+        if(session()->has("numero")){
+            $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
+        }else throw new Exception("Vous n'êtes pas connecté",401);
 
-        $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
-        //dd($client);
+        $model=model("\App\Models\AdresseFacturation");
+        
         $post=$this->request->getPost();
         $adresse = new \App\Entities\Adresse();
 

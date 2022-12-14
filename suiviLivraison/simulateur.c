@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 
     //Fonction read() et write() (exo2et3)
     char buf[512];
-    char Ns[10];
+    char res[10];
     int N = 0;
     bool onContinue = true;
 
@@ -63,37 +63,63 @@ int main(int argc, char *argv[])
         N++;
         if (strncmp(buf, "AVANCE\r", strlen("AVANCE\r")) == 0)
         {
-            
+            //On envoie la réponse
             write(cnx, "J'ai avancé\n", strlen("J'ai avancé\n"));
         }
         else if (strncmp(buf, "ETAT\r", strlen("ETAT\r")) == 0)
         {
-            sprintf(Ns, "%d", N);
-            strcat(Ns, "\n");
-            write(cnx, Ns, strlen(Ns));
+            //On vide la string res
+            memset(res, 0, sizeof(res));
+
+            //On convertit N en string
+            sprintf(res, "%d", N);
+            strcat(res, "\n");
+
+            //On envoie la réponse
+            write(cnx, res, strlen(res));
         }
-        else if (strncmp(buf, "OPT\r", strlen("OPT\r")) == 0)
+        else if (strncmp(buf, "LBBDS\r", strlen("LBBDS\r")) == 0)
         {
-            while ((opt = getopt(argc, argv, "abcd")) != -1)
+            //Tant qu'il y a des options à lire
+            //L'argument de la fonction getopt() "a:b:c:d:" correspond aux différentes options disponibles 
+            //Les : sont comme des slicers en python, ils signifient que suite à l'option il faut renseigner un mot
+            //Exemple : ./simulateur -a -b <mot> -c <mot> -d <mot> -e <mot>
+            //À noter que l'option a n'a pas de mot car il n'y a pas de : à sa suite dans l'argument de la fonction getopt()
+            //Le mot est récupéré dans la variable optarg et n'est pas utilisable si l'option n'a pas de mot
+            while ((opt = getopt(argc, argv, "ab:c:d:e:")) != -1)
             {
+                //On vide la string res
+                memset(res, 0, sizeof(res));
+
                 switch (opt)
                 {
                     case 'a':
-                        write(cnx, "Option a\n", strlen("Option a\n"));
+                        strcat(res, "Option a reconnue");
                         break;
                     case 'b':
-                        write(cnx, "Option b\n", strlen("Option b\n"));
+                        strcat(res, "Option b: ");
+                        strcat(res, optarg);
                         break;
                     case 'c':
-                        write(cnx, "Option c\n", strlen("Option c\n"));
+                        strcat(res, "Option c: ");
+                        strcat(res, optarg);
                         break;
                     case 'd':
-                        write(cnx, "Option d\n", strlen("Option d\n"));
+                        strcat(res, "Option d: ");
+                        strcat(res, optarg);
+                        break;
+                    case 'e':
+                        strcat(res, "Option e: ");
+                        strcat(res, optarg);
                         break;
                     default:
-                        write(cnx, "Option inconnue\n", strlen("Option inconnue\n"));
+                        strcat(res, "Option inconnue");
                         break;
                 }
+                strcat(res, "\n");
+
+                //On envoie la réponse
+                write(cnx, res, strlen(res));
             }
         }
         else if (strncmp(buf, "BYE\r", strlen("BYE\r")) == 0)

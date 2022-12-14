@@ -158,10 +158,14 @@ VALUES (148,'Tarte campagnarde',8,9.6,'Carrotes, fromage, jambon, champigons. Pr
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, lien_image_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (149,'Galets bretons',1000,1200,'Galets de fabrique bretonne, configuration : quartz 12%, calcaire 5%, granite 83%; galet certifié de provenance d''une plage de Perros-Guirec.', 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true, 10, 4.5, 5, true);
 
+INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (5, 18, 1);
+INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3.75, 17, 1);
+INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (5, 18, 2);
+-- INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3, 17, 1);
 
-INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('Franchement j''en suis très satisfait, rien à redire, ce produit est vraiment très bien, j''adore !',30,1);
-INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('Qualité moyenne, à revoir...',32,2);
-INSERT INTO _avis (contenu_av,id_prod,num_compte) VALUES ('Performant mais a parfois des difficultés.',30,1);
+INSERT INTO _avis (contenu_av,id_note, date_av) VALUES ('Franchement j''en suis très satisfait, rien à redire, ce produit est vraiment très bien, j''adore !',1, current_date);
+INSERT INTO _avis (contenu_av,id_note, date_av) VALUES ('Qualité moyenne, à revoir...',2, current_date);
+INSERT INTO _avis (contenu_av,id_note,date_av) VALUES ('Performant mais a parfois des difficultés.',1, current_date);
 
 
 INSERT INTO _image_avis (num_avis, lien_image_avis) VALUES (1, 'https://floriangll.fr/Humour/Dark/Masterclass/Masterclass.gif');
@@ -180,10 +184,6 @@ INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (1, 17, 1);
 INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (5, 18, 2);
 INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (3, 17, 5);
 
-INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (5, 18, 1);
-INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3.75, 17, 1);
-INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (5, 18, 2);
--- INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3, 17, 1);
 
 INSERT INTO _liste_souhait (id_prod, num_compte) VALUES (18, 1);
 INSERT INTO _liste_souhait ( id_prod, num_compte) VALUES (17, 1);

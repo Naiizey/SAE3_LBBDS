@@ -162,12 +162,22 @@ CREATE TABLE _retour(
     num_panier INT NOT NULL --renvoie
 );
 
+CREATE TABLE _note
+(
+    id_note SERIAL,
+    id_prod INT NOT NULL,--recoit
+    num_compte INT NOT NULL,--donne
+    note_prod FLOAT NOT NULL,
+    CONSTRAINT _note_pk PRIMARY KEY (id_note)
+
+
+);
+
 CREATE TABLE _avis(
     num_avis SERIAL PRIMARY KEY ,
     contenu_av VARCHAR NOT NULL,
     date_av DATE NOT NULL,
-    id_prod INT NOT NULL, -- sur,
-    num_compte INT NOT NULL --auteur
+    id_note INT NOT NULL --est_detaille_par
 );
 
 CREATE TABLE _image_avis(
@@ -231,17 +241,8 @@ CREATE TABLE _pouce
 
 
 
---Classe association entre _compte * - *_produit qui se nomme note ✅
-CREATE TABLE _note
-(
-    id_prod INT NOT NULL,
-    num_compte INT NOT NULL,
-    note_prod FLOAT NOT NULL,
-    CONSTRAINT _note_pk PRIMARY KEY (id_prod, num_compte),
 
-    CONSTRAINT _note_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod),
-    CONSTRAINT _note_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte)
-);
+
 
 
 --Classe association entre _compte * - *_produit qui se nomme _liste_souhait ✅
@@ -332,12 +333,11 @@ ALTER TABLE _avoirs ADD CONSTRAINT _avoirs_compte_fk FOREIGN KEY (num_compte) RE
 --Association 1..* entre _compte et _adresse_livraison ✅
 --ALTER TABLE _adresse_livraison ADD CONSTRAINT _adresse_facturation_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
---Association 1..* entre _produit et _avis (sur) ✅
-ALTER TABLE _avis ADD CONSTRAINT _avis_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod);
 
--- Association *..1 entre _compte et _avis (auteur) ✅
+
+-- Association *..1 entre _compte et _avis (est_detaille_par) ✅
 -- ALTER TABLE _avis ADD CONSTRAINT _avis_pk PRIMARY KEY (id_prod,num_compte);
-ALTER TABLE _avis ADD CONSTRAINT _avis_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+ALTER TABLE _avis ADD CONSTRAINT _avis_note_fk FOREIGN KEY (id_note) REFERENCES _note(id_note);
 
 -- Association *..1 entre catégorie et catégorie (sous) ✅
 ALTER TABLE _sous_categorie ADD CONSTRAINT _sous_categorie_categorie_code_cat_fk FOREIGN KEY (code_cat) REFERENCES _categorie(code_cat);
@@ -357,7 +357,11 @@ ADD CONSTRAINT _adresse_facturation_id_a_fk FOREIGN KEY (id_a) REFERENCES _adres
 ALTER TABLE _adresse_livraison
 ADD CONSTRAINT _adresse_livraison_id_a_fk FOREIGN KEY (id_a) REFERENCES _adresse(id_a);
 
-
+ALTER TABLE _note
+    --containte avec _produit (recoit)
+    ADD CONSTRAINT _note_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod),
+    --contrainte avec _compte (donne)
+    ADD CONSTRAINT _note_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
 
 
@@ -382,7 +386,7 @@ ALTER TABLE _commande ADD CONSTRAINT _commande_panier_client_fk FOREIGN KEY (num
 CREATE OR REPLACE FUNCTION pouce_check() RETURNS TRIGGER AS
 $$
 BEGIN
-    PERFORM num_compte FROM _avis inner join _pouce on _avis.num_compte = new.num_compte WHERE _avis.num_avis = new.num_avis;
+    PERFORM num_compte FROM _avis natural join _note inner join _pouce on _note.num_compte = new.num_compte WHERE _avis.num_avis = new.num_avis;
     IF FOUND THEN
         RAISE EXCEPTION 'IMPOSSIBLE DE S''AUTO LIKE';
     END IF;

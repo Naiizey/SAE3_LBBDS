@@ -135,3 +135,6 @@ CREATE OR REPLACE VIEW code_reduction AS
     SELECT * FROM _code_reduction;
 
 CREATE OR REPLACE VIEW reduc_panier AS SELECT * FROM _reduire;
+
+drop view commentaire;
+CREATE OR REPLACE VIEW commentaire AS SELECT num_avis, contenu_av, date_av, n.id_note, id_prod, num_compte, note_prod,c.pseudo  FROM _avis a natural join _note n natural join _compte c;

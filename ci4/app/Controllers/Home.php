@@ -182,6 +182,10 @@ class Home extends BaseController
         $prodModel = model("\App\Models\ProduitDetail");
         $result = $prodModel->find($idProduit);
 
+        // Avis/commentaires
+        $data['cardProduit']=service("cardProduit");
+        $data['avis']=model("\App\Models\Commentaires")->getCommentairesByProduit($idProduit);
+
         //Affichage selon si produit trouvé ou non
         if ($result == null) {
             return view('errors/html/error_404.php', array('message' => "Ce produit n'existe pas"));
@@ -194,6 +198,7 @@ class Home extends BaseController
     }
 
 
+    //Nombre maximal de produits par page
     private const NBPRODSPAGECATALOGUE = 20;
     #FIXME: comportement href différent entre $page=null oe $page !=null
     
@@ -204,31 +209,35 @@ class Home extends BaseController
             session()->set("just_ajoute", false);
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Article ajouté");
         }
-        $filters=$this->request->getGet();
-        $data["filters"]=$filters;
-        $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
-        $data['cardProduit']=service("cardProduit");
-        $data['categories']=model("\App\Models\CategorieModel")->findAll();
-        $data["controller"] = "Catalogue";
-        $data['prods'] = [];
-        $data['vide'] = false;
-        $data['max_price'] = $modelProduitCatalogue->selectMax('prixttc')->find()[0]->prixttc;
-        //dd($data['max_price']);
-        $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
-        if(isset($filters["prix_min"]) && isset($filters["prix_max"])){
-            $price = ["prix_min"=>$filters["prix_min"], "prix_max"=>$filters["prix_max"]];
-        }
-        
-        
 
+        //Récupération des filtres présents dans le get
+        $filters=$this->request->getGet();
+        //Ajout des filtres dans le tableau data pour les utiliser dans la vue
+        $data["filters"]=$filters;
+        //Chargement du modèle Produit Catalogue
+        $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
+
+        //Récupération des cartes produits
+        $data['cardProduit']=service("cardProduit");
+        //Chargement du modèle Categorie dans le tableau data pour l'utiliser dans la vue
+        $data['categories']=model("\App\Models\CategorieModel")->findAll();
+        //Set du controller Catalogue pour la vue
+        $data["controller"] = "Catalogue";
+        //Initialisation du tableau des produits à afficher
+        $data['prods'] = [];
+        //Initialisation de la variable indiquant si la page est vide
+        $data['vide'] = false;
+        //Chargement du prix maximal dans la Base de données pour utiliser dans la vue
+        $data['max_price'] = $modelProduitCatalogue->selectMax('prixttc')->find()[0]->prixttc;
+        //Chargement du prix minimal dans la Base de données pour utiliser dans la vue
+        $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;        
+        
+        //Chargement des produits selon les filtres
         $result=(new \App\Controllers\Produits())->getAllProduitSelonPage($page,self::NBPRODSPAGECATALOGUE,$filters);
         $data['prods']=$result["resultat"];
         $data['estDernier']=$result["estDernier"];
         
-    
-
-        
-
+        //Si la page est vide, on affiche un message
         if (!isset($data['prods']) || empty($data['prods'])) {
             $data['message'] = $result["message"];
         }
@@ -608,5 +617,12 @@ class Home extends BaseController
         $session->set("just_deconnectee",True);
         
         return redirect()->to("/");
+    }
+
+    public function lstClients(){
+        $data["controller"]="Liste des clients";
+        $data["role"]="admin";
+        $data["clients"]=model("\App\Models\Client")->findAll();
+        return view("page_accueil/lstClients.php",$data);
     }
 }

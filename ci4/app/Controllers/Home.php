@@ -182,6 +182,10 @@ class Home extends BaseController
         $prodModel = model("\App\Models\ProduitDetail");
         $result = $prodModel->find($idProduit);
 
+        // Avis/commentaires
+        $data['cardProduit']=service("cardProduit");
+        $data['avis']=model("\App\Models\Commentaires")->getCommentairesByProduit($idProduit);
+
         //Affichage selon si produit trouvé ou non
         if ($result == null) {
             return view('errors/html/error_404.php', array('message' => "Ce produit n'existe pas"));
@@ -550,5 +554,12 @@ class Home extends BaseController
         $session->set("just_deconnectee",True);
         
         return redirect()->to("/");
+    }
+
+    public function lstClients(){
+        $data["controller"]="Liste des clients";
+        $data["role"]="admin";
+        $data["clients"]=model("\App\Models\Client")->findAll();
+        return view("page_accueil/lstClients.php",$data);
     }
 }

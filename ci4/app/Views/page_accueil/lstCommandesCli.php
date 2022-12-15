@@ -1,8 +1,8 @@
 <?php require("header.php");?>
     <main>
-        <div id="divLstCommandes">
+        <div class="divLst">
             <?php if(!empty($commandesCli)): ?>
-                <table id='tableLstCommandes'>
+                <table class='tableLst'>
                     <thead>
                         <tr>
                             <th>N° commande</th>

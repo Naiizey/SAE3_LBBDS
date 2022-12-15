@@ -73,8 +73,9 @@
                             <h2><?= ucfirst($prod -> intitule)?></h2>
                             <p class="ParaDescProduit"><?= ucfirst($prod->description) ?></p>
                             <section class="sectionAvis">
-                                <a href="#divLesAvis"><h4>Avis clients:</h4></a>
-                                <img src="<?=base_url() ?>/images/produit/avis.png"/>
+                                <a href="#divLesAvis"><h4>Avis clients :</h4></a>
+                                <div class="noteAvis"><?= $cardProduit->notationEtoile($prod->moyenne) ?></div>
+                                <p><?= $prod->moyenne ?>/5</p>
                             </section>
                         </div>
                         <div class="divAcheterProduit">
@@ -137,35 +138,55 @@
                         <?php endforeach; ?>
                     </ul>
                 </section>
-                <div id="divLesAvis">
-                    <div class="moyenneAvis">
-                        <p>ici c'est la moyenne des avis</p>
-                    </div>
-                    <div class="divListeAvis">
-                        <div class="divUnAvis">
-                            <section class="sectionUnAvis">
-                                <div class="divNomCommentaire">
-                                    <img src="<?=base_url() ?>/images/header/profil.svg">
-                                    <div class="divNomDate">
-                                        <h3>Denis Vaillant : </h3>
-                                        <p>Publié le 12/12/2022</p>
+                <div class="divAvis">
+                    <h2>Avis</h2>
+                    <hr>
+                    <?php if (empty($avis)): ?>
+                    <p>Aucun utilisateur n'a laissé d'avis sur cet article.</p>
+                    <?php else : ?>
+                    <div id="divLesAvis">
+                        <div class="moyennesAvis">
+                            <?php for ($i=5; $i > 0 ; $i--) : ?>
+                            <div>
+                                <p><?= $i ?></p>
+                                <progress class="barreAvis" value="0" max="1"></progress>
+                                <p class="pAvis"></p>
+                            </div>
+                            <?php endfor; ?>
+                        </div>
+                        <div class="divListeAvis">
+                            <?php 
+                                end($avis);
+                                $fin = key($avis);
+                                foreach ($avis as $cle => $unAvis): 
+                            ?>
+                            <div class="divUnAvis">
+                                <section class="sectionUnAvis">
+                                    <div class="divNomCommentaire">
+                                        <img src="<?=base_url() ?>/images/header/profil.svg">
+                                        <div class="divNomDate">
+                                            <h3><?= $unAvis->pseudo ?> : </h3>
+                                            <p>Publié le <?= $unAvis->date_av ?></p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="divAvisCommentaire">
-                                    <img src="<?=base_url() ?>/images/produit/avis.png"/>
-                                    <p>5/5</p>
-                                </div>
-                            </section>
-                            <p>C'est super !
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit, architecto quos inventore aliquam explicabo eum adipisci distinctio eligendi quae quis numquam debitis et cum corrupti vel! Sunt incidunt natus nulla.
-                            </p>
-                            <hr>
+                                    <div class="divAvisCommentaire">
+                                        <div class="noteAvis"><?= $cardProduit->notationEtoile($unAvis->note_prod) ?></div>
+                                        <p><?= $unAvis->note_prod ?>/5</p>
+                                    </div>
+                                </section>
+                                <p><?= $unAvis->contenu_av ?></p>
+                                <?php if ($cle != $fin): ?>
+                                <hr>
+                                <?php endif; ?>
+                            </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
+                    <?php endif ?>
                 </div>
             </section>
         </main>
 <?php require("footer.php"); ?>
 <script>
-    zoomProduit();
+    avisProduit();
 </script>

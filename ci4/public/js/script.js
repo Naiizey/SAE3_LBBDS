@@ -313,6 +313,7 @@ function updatePriceTotal() {
     //Récupération et application du code de réduction 
     let reduc = document.querySelector(".bloc-erreurs .paragraphe-valid span");
    
+
     if (reduc && reduc.length !== 0)
     {
         reduc = reduc.innerHTML;
@@ -385,6 +386,34 @@ function lstCommandesVendeur(){
         let commandeA=numCommandes.item(numLigne).textContent;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail de la commande récupérée juste avant, en tant que vendeur
         ligneA.addEventListener("click", () => {window.location.href = `${base_url}/vendeur/commandesCli/detail/${commandeA}`;});
+    }
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                           Liens aux lignes de lstClients                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+function lstClients(){
+    // Récupération de toutes les lignes de la liste des clients
+    var lignes=document.getElementsByClassName("lignesClients");
+    // Récupération de tous les numéros de clients
+    var numClients=document.getElementsByClassName("numClients");
+    // Récupération de tous les anchors de la liste des clients
+    var anchors=document.getElementsByClassName("anchorClient");
+
+    for (let numLigne=0; numLigne<lignes.length; numLigne++){
+        let ligneA=lignes.item(numLigne);
+        let clientA=numClients.item(numLigne).textContent;
+        // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
+        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/espaceClient/admin/${clientA}`;});
+        let anchorA=anchors.item(numLigne);
+        // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
+        anchorA.addEventListener("click", () => {
+            var a = new AlerteAlizon(`Sanctionner le client n°${clientA} ?`,current_url, "Quelle type de sanction ?");
+            a.ajouterBouton("Bannir temporairement", "normal-button rouge");
+            a.affichage();
     }
 }
 
@@ -1239,4 +1268,35 @@ function zoomProduit(e) {
     x = offsetX/zoomer.offsetWidth*100
     y = offsetY/zoomer.offsetHeight*100
     zoomer.style.backgroundPosition = x + '% ' + y + '%';
+}
+
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                 Avis Produit                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+function avisProduit() {
+    let tabAvis = document.querySelectorAll(".divAvisCommentaire p");
+    let moyennes = [0, 0, 0, 0, 0];
+    tabAvis.forEach(element => {
+        for (let index = 0; index < 5; index++) {
+            if ((parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) >= (index+1)) && (parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) < (index + 2))) {
+                moyennes[index] = moyennes[index] + 1;
+            }
+        }
+    });
+
+    let lesBarres = document.querySelectorAll(".barreAvis");
+    for (let index = (lesBarres.length-1); index > 0; index--) {
+        lesBarres[lesBarres.length-index-1].max = tabAvis.length;
+        lesBarres[lesBarres.length-index-1].value = moyennes[index];
+    }
+/*
+    let pourcentages = [0, 0, 0, 0, 0];
+    let lesP = document.querySelectorAll(".barreAvis");
+    for (let index = 0; index < moyennes.length; index++) {
+        pourcentages[index] = moyennes[index] / tabAvis.length * 100;
+        lesP[index].textContent = pourcentages[index];
+    }*/
 }

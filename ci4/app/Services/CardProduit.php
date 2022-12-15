@@ -33,7 +33,7 @@ class CardProduit
     }
 
 
-    private function notationEtoile($note){
+    public function notationEtoile($note){
         $retour="";
         for($i=1;$i<6;$i++){
             if($note >= $i)

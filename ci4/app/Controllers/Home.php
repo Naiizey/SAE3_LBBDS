@@ -329,6 +329,76 @@ class Home extends BaseController
         return view('/page_accueil/espaceClient.php', $data);
     }
 
+    public function facture()
+    {
+        $post=$this->request->getPost();
+        $issues=[];
+        $data["controller"]='Facture';
+
+        //Partie copié de infoLivraison:
+        if(session()->has("numero")){
+            $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
+        }else throw new Exception("Vous n'êtes pas connecté",401);
+
+        $model=model("\App\Models\AdresseFacturation");
+        
+        $post=$this->request->getPost();
+        $adresse = new \App\Entities\Adresse();
+
+        if (isset($post["utilise_nom_profil"])) 
+        {
+            $data["profil_utilisee"]=true;
+            unset($post["utilise_nom_profil"]);
+        } 
+        else 
+        {
+            $data["profil_utilisee"]=false;
+        }
+
+        $this->validator = Services::validation();
+        $this->validator->setRules($model->rules);
+        
+        if (!empty($post)) 
+        {
+           
+        
+            $adresse->fill($post);
+            if (empty($issues) && $adresse->checkAttribute($this->validator) ) 
+            {
+                /* Cookie = problème de sécurité
+                $expiration=strtotime('+24 hours');
+                setcookie('id_adresse_facturation', $id_a, array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
+                */
+                $id_a=$model->enregAdresse($adresse);
+                session()->set("adresse_facturation",$id_a);
+                if(session()->has("adresse_livraison")){
+                    return redirect()->to("/paiement");
+                }else{
+                    return redirect()->to("/livraison");
+                }
+                
+            }
+        }
+        else if(session()->has("adresse_facturation")){
+            $adresse=model("\App\Models\AdresseFacturation")->find(session()->get("adresse_facturation"));
+            $data["dejaRempli"] = "Adresse facture validée et réutilisée";
+
+        }else if(session()->has("adresse_livraison"))
+        {
+            $adresse=model("\App\Models\AdresseLivraison")->find(session()->get("adresse_livraison"));
+            $data["dejaRempli"] = "Adresse livraison validée et réutilisée";
+        }
+
+        
+        
+        $data['adresse']=$adresse;
+        
+        $data['client']=$client;
+        $data['errors']=$this->validator;
+    
+        return view("templLivraison.php",$data);
+    }
+
     public function infoLivraison()
     {
         //Assetion Début
@@ -365,12 +435,20 @@ class Home extends BaseController
                 setcookie('id_adresse_livraison', $id_a, array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
                 */
                 session()->set("adresse_livraison",$id_a);
-                return redirect()->to("/paiement");
+                if(session()->has("adresse_facturation")){
+                    return redirect()->to("/paiement");
+                }else{
+                    return redirect()->to("/facture");
+                }
             }
         }else if(session()->has("adresse_livraison")){
             $adresse=model("\App\Models\AdresseLivraison")->find(session()->get("adresse_livraison"));
             $data["dejaRempli"] = "Adresse livraison validée et réutilisée";
             
+        }else if(session()->has("adresse_facturation")){
+            $adresse=model("\App\Models\AdresseFacturation")->find(session()->get("adresse_facturation"));
+            $data["dejaRempli"] = "Adresse facture validée et réutilisée";
+
         }
 
         $data['adresse']=$adresse;
@@ -408,59 +486,44 @@ class Home extends BaseController
             $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
         }else throw new Exception("Vous n'êtes pas connecté",401);
 
-        $model=model("\App\Models\AdresseFacturation");
+        
         
         $post=$this->request->getPost();
-        $adresse = new \App\Entities\Adresse();
 
-        if (isset($post["utilise_nom_profil"])) 
-        {
-            $data["profil_utilisee"]=true;
-            unset($post["utilise_nom_profil"]);
-        } 
-        else 
-        {
-            $data["profil_utilisee"]=false;
-        }
+
 
         $this->validator = Services::validation();
-        $this->validator->setRules($model->rules);
+   
         
         if (!empty($post)) 
         {
             $paiement = service('authentification');
             $issues=$paiement->paiement($post);
-            $adresse->fill($post);
-            if (empty($issues) && $adresse->checkAttribute($this->validator) ) 
+           
+            if (empty($issues)) 
             {
-                /* Cookie = problème de sécurité
-                $expiration=strtotime('+24 hours');
-                setcookie('id_adresse_facturation', $id_a, array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
-                */
-                $id_a=$model->enregAdresse($adresse);
-                session()->set("adresse_facturation",$id_a);
-                return redirect()->to("/validation");
+               
+              
+                    return redirect()->to("/facture");
+       
             }
         }
-        else if(session()->has("adresse_livraison"))
-        {
-            $adresse=model("\App\Models\AdresseLivraison")->find(session()->get("adresse_livraison"));
-            $data["dejaRempli"] = "Adresse livraison validée et réutilisée";
-        }
-
+        
         $data['erreurs'] = $issues;
         $data['nomCB'] = (isset($_POST['nomCB'])) ? $_POST['nomCB'] : "";
         $data['numCB'] = (isset($_POST['numCB'])) ? $_POST['numCB'] : "";
         $data['dateExpiration'] = (isset($_POST['dateExpiration'])) ? $_POST['dateExpiration'] : "";
         $data['CVC'] = (isset($_POST['CVC'])) ? $_POST['CVC'] : "";
         
-        $data['adresse']=$adresse;
+       
         
         $data['client']=$client;
         $data['errors']=$this->validator;
-        $data["formAdresse"]=view("formAdresse.php",$data);
+      
         return view('page_accueil/paiement.php', $data);
     }
+
+    
 
     public function detail($num_commande, $estVendeur=false)
     {

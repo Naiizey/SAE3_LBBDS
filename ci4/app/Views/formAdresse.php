@@ -1,13 +1,16 @@
 <main>
             <div class="divFormAdresse">
                 <div class="onglets">
-                    
-                        <div class="onglet">
-                            <h3>Adresses sauvegardées</h3>
-                        </div>
-                        <div class="onglet onglet-selectionnee">
-                            <h3>Autre adresse</h3>
-                        </div>
+                        
+                        
+                        <a class="onglet <?= ($controller==="Facture")?"onglet-selectionnee":"" ?>" href="<?= base_url()."/facture" ?>">
+                            <h3>Facture</h3>
+                        </a>
+
+                        <a class="onglet <?= ($controller==="Livraisons")?"onglet-selectionnee":"" ?>"  href="<?= base_url()."/livraison" ?>"> 
+                            <h3>Livraison</h3>
+                        </a>
+                       
                     
                     
                 </div>
@@ -95,9 +98,11 @@
                             <label for="sauvegarder_adresse">Sauvegarder cette adresse</label>
                         </div>
         
-                        <input type="submit" value="Confirmer"/>
+                        
                         
                         <?php endif; ?>
+
+                        <input type="submit" value="Confirmer"/>
                     </form>
                 
                 </div>

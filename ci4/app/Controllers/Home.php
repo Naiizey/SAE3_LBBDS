@@ -551,4 +551,11 @@ class Home extends BaseController
         
         return redirect()->to("/");
     }
+
+    public function lstClients(){
+        $data["controller"]="Liste des clients";
+        $data["role"]="admin";
+        $data["clients"]=model("\App\Models\Client")->findAll();
+        return view("page_accueil/lstClients.php",$data);
+    }
 }

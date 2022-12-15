@@ -2891,52 +2891,58 @@ a.fleche-page{
 }
 
 /*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃          Page pour lister les commandes (lstCommandesVendeur.php & lstCommandesCli.php)         ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃          Page pour lister les commandes (lstCommandesVendeur.php, lstCommandesCli.php & lstClients.php)         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-#divLstCommandes{
+.divLst{
     font-family: "Montserrat-Regular";
     border: solid 2px #C6C6C6;
     background-color: white;
 }
 
-#divLstCommandes h2{
+.divLstCommandes h2{
     margin: 0.5em 0;
 }
 
-#tableLstCommandes{
+.tableLst{
     width: 100%;
     border-collapse: collapse;
 }
 
-#tableLstCommandes thead{
+.tableLst thead{
     background-color: #D9D9D9;
 }
 
-#tableLstCommandes tr{
+.tableLst tr{
     height: 3em;
 }
 
-#tableLstCommandes tbody tr{
+.tableLst tbody tr{
     border-bottom: 3px solid #404E58;
 }
 
-#tableLstCommandes tbody tr:hover{
+.tableLst tbody tr:hover{
     cursor: pointer;
     outline: none;
     background-color: #f3f3f3;
 }
 
-#tableLstCommandes tbody tr:last-child{
+.tableLst tbody tr:last-child{
     border-bottom: none;
 }
 
-#tableLstCommandes th, #tableLstCommandes td{
+.tableLst th, .tableLst td{
     width: 5em;
 }
 
+.lignesClients a{
+    background-color: #571616;
+    text-decoration: none;
+    width: 0.5em;
+    height: 0.5em;
+}
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

@@ -1627,7 +1627,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
     color: white;
 }
 
-.sectionRecommandationsPanierPC, .sectionRecommandationsPanierMobile, #divLesAvis {
+.sectionRecommandationsPanierPC, .sectionRecommandationsPanierMobile, .divAvis {
     border: solid 2px;
     border-color: #C6C6C6;  
     color: #164F57;
@@ -1908,8 +1908,13 @@ h3 > .lienPasArticlePanier {
 
 .divDroite img, .sectionUnAvis img {
     border: none;
-    width: 8em;
+    width: 3em;
     height: auto;
+}
+
+.divNomCommentaire img {
+    margin-right: 1em;
+
 }
 
 .divDroite h2 {
@@ -1924,7 +1929,11 @@ h3 > .lienPasArticlePanier {
 }
 
 .sectionAvis h4 {
-    margin: 0 1em 0 0;
+    margin: 0 .5em 0 0;
+}
+
+.sectionAvis p {
+    margin-left: .5em;
 }
 
 .divAcheterProduit {
@@ -1994,7 +2003,6 @@ h3 > .lienPasArticlePanier {
 .divAvisCommentaire {
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
 .sectionUnAvis p {
@@ -2006,23 +2014,33 @@ h3 > .lienPasArticlePanier {
 }
 
 .divAvisCommentaire p {
-    margin-left: 1em;
+    margin-left: .5em;
 }
 
-.divNomCommentaire img {
-    height: 3em;
-    width: auto;
-    margin-right: 1em;
+.noteAvis {
+    display: flex;
+    align-items: center;
+}
+
+.noteAvis img {
+    width: 1.5em;
+    height: auto;
 }
 
 .divListeAvis {
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 60%;
 }
 
 .divUnAvis p {
     text-align: justify;
+    margin-bottom: 0;
+}
+
+.divAvis hr {
+    background-color: #164F57;
+    margin: 1em 0;
 }
 
 #divLesAvis {
@@ -2032,15 +2050,41 @@ h3 > .lienPasArticlePanier {
 
 .divUnAvis hr {
     background-color: #164F57;
-    margin-bottom: 1em;
+    margin: 1em 0;
 }
 
-.moyenneAvis {
-    width: 25%;
+.notation-card {
+    width: 20%;
 }
 
-.moyenneAvis img {
+.moyennesAvis {
+    width: 35%;
+}
+
+.moyennesAvis div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pPasAvis {
+    color: #164F57;
+}
+
+.moyennesAvis progress {
+    background-color: #D9D9D9;
+    height: 10px;
+    width: 75%;
     border: none;
+    border-radius: 4px;
+    margin: .5em 0 .5em 1em;
+}
+
+.moyennesAvis progress::-moz-progress-bar 
+{ 
+    background: #FFCA28;
+    height: 10px;
+    border-radius: 4px;
 }
 
 @media screen and (max-width: 991px){
@@ -2195,7 +2239,7 @@ main div.card-produit-ext:hover{
 }
 
 .notation-card{
-    background-color: rgba(0, 0, 0, 61%);
+    background-color: #164F57;
     width: 100%;
     height: 1.75rem;
     display: flex;

@@ -17,7 +17,7 @@ CREATE OR REPLACE VIEW client AS
 
 CREATE OR REPLACE VIEW produit_detail AS
     WITH moyenne AS (SELECT id_prod id,avg(note_prod) as moyenneNote FROM _produit natural join _note  group by id_prod)
-    SELECT id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*taux_tva) prixTTC, prix_ht prixHT, lien_image_prod lienImage,publication_prod  isAffiche, _sous_categorie.libelle_cat categorie, _sous_categorie.code_sous_cat codeCategorie,description_prod description, stock_prod stock FROM _produit LEFT JOIN moyenne on _produit.id_prod = moyenne.id  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva;
+    SELECT id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*taux_tva) prixTTC, prix_ht prixHT, lien_image_prod lienImage,publication_prod  isAffiche, _sous_categorie.libelle_cat categorie, _sous_categorie.code_sous_cat codeCategorie,description_prod description, stock_prod stock, moyenneNote moyenne FROM _produit LEFT JOIN moyenne on _produit.id_prod = moyenne.id  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva;
 
 
 CREATE OR REPLACE VIEW produit_panier_compte AS
@@ -136,7 +136,7 @@ CREATE OR REPLACE VIEW code_reduction AS
 
 CREATE OR REPLACE VIEW reduc_panier AS SELECT * FROM _reduire;
 
-CREATE OR REPLACE VIEW commentaire AS SELECT num_avis, contenu_av, date_av, n.id_note, id_prod, num_compte, note_prod,c.pseudo  FROM _avis a natural join _note n natural join _compte c;
+CREATE OR REPLACE VIEW commentaire AS SELECT num_avis, contenu_av, date_av, n.id_note, id_prod, num_compte, note_prod,c.pseudo, moyenneNote moyenne FROM _avis a natural join _note n natural join _compte c;
 
 CREATE OR REPLACE VIEW sanction_temporaire AS 
     SELECT id_sanction, raison, num_compte, date_debut, heure_debut, date_fin, heure_fin FROM _sanction_temporaire NATURAL JOIN _duree;

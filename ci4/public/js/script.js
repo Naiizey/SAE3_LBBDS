@@ -313,6 +313,7 @@ function updatePriceTotal() {
     //Récupération et application du code de réduction 
     let reduc = document.querySelector(".bloc-erreurs .paragraphe-valid span");
    
+
     if (reduc && reduc.length !== 0)
     {
         reduc = reduc.innerHTML;
@@ -1267,4 +1268,35 @@ function zoomProduit(e) {
     x = offsetX/zoomer.offsetWidth*100
     y = offsetY/zoomer.offsetHeight*100
     zoomer.style.backgroundPosition = x + '% ' + y + '%';
+}
+
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                 Avis Produit                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+function avisProduit() {
+    let tabAvis = document.querySelectorAll(".divAvisCommentaire p");
+    let moyennes = [0, 0, 0, 0, 0];
+    tabAvis.forEach(element => {
+        for (let index = 0; index < 5; index++) {
+            if ((parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) >= (index+1)) && (parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) < (index + 2))) {
+                moyennes[index] = moyennes[index] + 1;
+            }
+        }
+    });
+
+    let lesBarres = document.querySelectorAll(".barreAvis");
+    for (let index = (lesBarres.length-1); index > 0; index--) {
+        lesBarres[lesBarres.length-index-1].max = tabAvis.length;
+        lesBarres[lesBarres.length-index-1].value = moyennes[index];
+    }
+/*
+    let pourcentages = [0, 0, 0, 0, 0];
+    let lesP = document.querySelectorAll(".barreAvis");
+    for (let index = 0; index < moyennes.length; index++) {
+        pourcentages[index] = moyennes[index] / tabAvis.length * 100;
+        lesP[index].textContent = pourcentages[index];
+    }*/
 }

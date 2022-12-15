@@ -182,6 +182,10 @@ class Home extends BaseController
         $prodModel = model("\App\Models\ProduitDetail");
         $result = $prodModel->find($idProduit);
 
+        // Avis/commentaires
+        $data['cardProduit']=service("cardProduit");
+        $data['avis']=model("\App\Models\Commentaires")->getCommentairesByProduit($idProduit);
+
         //Affichage selon si produit trouvé ou non
         if ($result == null) {
             return view('errors/html/error_404.php', array('message' => "Ce produit n'existe pas"));

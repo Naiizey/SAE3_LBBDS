@@ -204,3 +204,15 @@ CREATE TRIGGER update_client
 
 
 
+CREATE OR REPLACE FUNCTION insert_sanction_temporaire() RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO sae3._duree (date_debut, heure_debut, date_fin, heure_fin) VALUES (NEW.date_debut, NEW.heure_debut, NEW.date_fin, NEW.heure_fin);
+    INSERT INTO sae3._sanction_temporaire (raison, num_compte) VALUES (NEW.raison, NEW.id_compte);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_sanction_temporaire
+    INSTEAD OF INSERT ON sae3.sanction_temporaire
+    FOR EACH ROW
+    EXECUTE PROCEDURE insert_sanction_temporaire();

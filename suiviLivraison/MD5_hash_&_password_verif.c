@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+//TODO: Passage en option du path vers le fichier, du mot de passe et de l'identifiant
+
 // Taille maximale du buffer de read ( 1000 caractères )
 int size = 1001;
 

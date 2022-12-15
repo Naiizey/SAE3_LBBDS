@@ -135,7 +135,6 @@ CREATE TABLE _produit
     prix_ht FLOAT NOT NULL,
     prix_ttc FLOAT NOT NULL,
     description_prod VARCHAR UNIQUE NOT NULL,
-    lien_image_prod VARCHAR NOT NULL,
     publication_prod BOOLEAN NOT NULL,
     stock_prod INT NOT NULL,
     moyenne_note_prod FLOAT NOT NULL,
@@ -215,6 +214,18 @@ CREATE TABLE _sanction_temporaire(
     raison VARCHAR(50) NOT NULL,
     id_duree INT NOT NULL,
     num_compte INT NOT NULL
+);
+
+CREATE TABLE _image_prod(
+    id_prod int,
+    num_image SERIAL,
+    lien_image varchar(500),
+    estInterne boolean DEFAULT false,
+
+    CONSTRAINT pk_image_prod PRIMARY KEY (id_prod, num_image),
+    CONSTRAINT fk_image_prod FOREIGN KEY (id_prod) REFERENCES _produit(id_prod)
+
+
 );
 
 
@@ -446,3 +457,21 @@ CREATE OR REPLACE FUNCTION creerPanier() RETURNS TRIGGER AS
     $$ language plpgsql;
 CREATE tRIGGER beforeInsertPanierCli BEFORE INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE creerPanier ();
 CREATE tRIGGER beforeInsertPanierVis BEFORE INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE creerPanier ();
+
+
+CREATE OR REPLACE FUNCTION limiteImageProd() RETURNS TRIGGER AS
+    $$
+    DECLARE
+        compteur int;
+    BEGIN
+        SELECT count(num_image) into compteur from sae3._image_prod natural join sae3._produit where new.id_prod=sae3._produit.id_prod;
+        IF compteur < 4 THEN
+            return new;
+        ELSE
+            raise exception 'Limite d''images atteinte';
+        end if;
+
+
+end
+$$ language plpgsql;
+CREATE TRIGGER nouvelleImageProd BEFORE INSERT ON _image_prod FOR EACH ROW EXECUTE PROCEDURE limiteImageProd();

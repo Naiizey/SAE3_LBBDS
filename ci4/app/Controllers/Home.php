@@ -413,22 +413,26 @@ class Home extends BaseController
         $post=$this->request->getPost();
         $adresse = new \App\Entities\Adresse();
 
-        if (isset($post["utilise_nom_profil"])) {
+        if (isset($post["utilise_nom_profil"])) 
+        {
             $data["profil_utilisee"]=true;
             unset($post["utilise_nom_profil"]);
-        } else {
+        } 
+        else 
+        {
             $data["profil_utilisee"]=false;
         }
 
         $this->validator = Services::validation();
         $this->validator->setRules($model->rules);
         
-        if (!empty($post)) {
+        if (!empty($post)) 
+        {
             $paiement = service('authentification');
             $issues=$paiement->paiement($post);
             $adresse->fill($post);
-            dd($adresse);
-            if (empty($issues) && $adresse->checkAttribute($this->validator) ) {
+            if (empty($issues) && $adresse->checkAttribute($this->validator) ) 
+            {
                 /* Cookie = problème de sécurité
                 $expiration=strtotime('+24 hours');
                 setcookie('id_adresse_facturation', $id_a, array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
@@ -437,13 +441,12 @@ class Home extends BaseController
                 session()->set("adresse_facturation",$id_a);
                 return redirect()->to("/validation");
             }
-        }else if(session()->has("adresse_livraison")){
+        }
+        else if(session()->has("adresse_livraison"))
+        {
             $adresse=model("\App\Models\AdresseLivraison")->find(session()->get("adresse_livraison"));
             $data["dejaRempli"] = "Adresse livraison validée et réutilisée";
-            
         }
-
-
 
         $data['erreurs'] = $issues;
         $data['nomCB'] = (isset($_POST['nomCB'])) ? $_POST['nomCB'] : "";

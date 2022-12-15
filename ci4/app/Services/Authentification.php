@@ -232,8 +232,7 @@ class Authentification
             //Vérification de la validité de la carte (Algorithme de Luhn)
             //https://www.ibm.com/docs/fr/order-management-sw/9.3.0?topic=cpms-handling-credit-cards 
             //Formatage de la liste de chiffres 
-            $chiffres = str_replace(" ", "", $chiffres);
-            $chiffres = strrev($chiffres);
+            $chiffres = strrev($numCartePropre);
 
             //Sauvegarde du premier chiffre et initialisation d'une variable qui contiendra les chiffres non utilisés
             $chiffresRestants = intval($chiffres[0]);

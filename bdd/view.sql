@@ -132,9 +132,11 @@ CREATE OR REPLACE VIEW adresse_livraison AS
 
 
 CREATE OR REPLACE VIEW code_reduction AS
-    SELECT * FROM _code_reduction;
+    SELECT id_reduction, code_reduction, montant_reduction, pourcentage_reduction, date_debut, heure_debut, date_fin, heure_fin FROM _code_reduction NATURAL JOIN _duree;
 
 CREATE OR REPLACE VIEW reduc_panier AS SELECT * FROM _reduire;
 
-drop view commentaire;
-CREATE OR REPLACE VIEW commentaires AS SELECT num_avis, contenu_av, date_av, n.id_note, id_prod, num_compte, note_prod,c.pseudo  FROM _avis a natural join _note n natural join _compte c;
+CREATE OR REPLACE VIEW commentaire AS SELECT num_avis, contenu_av, date_av, n.id_note, id_prod, num_compte, note_prod,c.pseudo  FROM _avis a natural join _note n natural join _compte c;
+
+CREATE OR REPLACE VIEW sanction_temporaire AS 
+    SELECT id_sanction, raison, num_compte, date_debut, heure_debut, date_fin, heure_fin FROM _sanction_temporaire NATURAL JOIN _duree;

@@ -191,10 +191,7 @@ CREATE TABLE _promotion(
     texte_promo text NOT NULL ,
     banniere VARCHAR(50) NOT NULL,
     remise int NOT NULL ,
-    date_debut DATE NOT NULL ,
-    heure_debut TIME NOT NULL ,
-    date_fin DATE NOT NULL ,
-    heure_fin DATE NOT NULL
+    id_duree INT NOT NULL
 );
 
 CREATE TABLE _code_reduction(
@@ -202,10 +199,22 @@ CREATE TABLE _code_reduction(
     code_reduction VARCHAR(50) UNIQUE NOT NULL,
     montant_reduction FLOAT NOT NULL,
     pourcentage_reduction FLOAT NOT NULL,
+    id_duree INT NOT NULL
+);
+
+CREATE TABLE _duree(
+    id_duree SERIAL PRIMARY KEY,
     date_debut DATE NOT NULL,
     heure_debut TIME NOT NULL,
     date_fin DATE NOT NULL,
     heure_fin TIME NOT NULL
+);
+
+CREATE TABLE _sanction_temporaire(
+    id_sanction SERIAL PRIMARY KEY,
+    raison VARCHAR(50) NOT NULL,
+    id_duree INT NOT NULL,
+    num_compte INT NOT NULL
 );
 
 
@@ -375,6 +384,18 @@ ALTER TABLE _panier_client ADD CONSTRAINT _panier_client_pk PRIMARY KEY (num_pan
 
 -- foreign key entre _commande et _panier_client ✅
 ALTER TABLE _commande ADD CONSTRAINT _commande_panier_client_fk FOREIGN KEY (num_panier) REFERENCES _panier_client(num_panier);
+
+-- association entre _promotion et _duree
+ALTER TABLE _promotion ADD CONSTRAINT _promotion_duree_fk FOREIGN KEY (id_duree) REFERENCES _duree(id_duree);
+
+-- association entre _code_reduction et _duree
+ALTER TABLE _code_reduction ADD CONSTRAINT _code_reduction_duree_fk FOREIGN KEY (id_duree) REFERENCES _duree(id_duree);
+
+-- association entre _sanction_temporaire et _duree
+ALTER TABLE _sanction_temporaire ADD CONSTRAINT _sanction_temporaire_duree_fk FOREIGN KEY (id_duree) REFERENCES _duree(id_duree);
+
+-- asociation entre _sanction_temporaire et _compte
+ALTER TABLE _sanction_temporaire ADD CONSTRAINT _sanction_temporaire_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
 /* -----------------------------------------------------------
 -                  Trigger schema                        -

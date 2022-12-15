@@ -225,15 +225,20 @@ INSERT INTO _commande VALUES (2,'2', '2018-01-01', '2018-01-01', '2018-01-01', n
 INSERT INTO _commande VALUES (3,'3', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 3);
 INSERT INTO _commande VALUES (4,'4', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 1);
 
+-- 2 insertions dans _duree (date_debut, heure_debut, date_fin, heure_fin)
+INSERT INTO _duree (date_debut, heure_debut, date_fin, heure_fin) 
+    VALUES  ('2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
+        ('2022-11-25', '00:00:00', '2022-11-29','23:59:59');
+
 --10 insertions dans _code_reduction
-INSERT INTO _code_reduction (code_reduction, montant_reduction, pourcentage_reduction, date_debut, heure_debut, date_fin, heure_fin)
-    VALUES  ('10EUROS!!!', 10, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
-            ('SOULEVE2EMETITRE', 0, 20, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
-        ('5REDUC!!!', 5, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
-        ('ACHE2ETPAIE1', 0, 50, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
-        ('EUROSREDUIT', 4, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
-        ('20PERCENT', 0, 20, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
-        ('REDUIT10', 10, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
-        ('5EUROS', 5, 0, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
-        ('25POURCENT', 0, 25, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59'),
-        ('10POURCEN', 0, 10, '2022-01-01', '00:00:00', '2023-12-31', '23:59:59');
+INSERT INTO _code_reduction (code_reduction, montant_reduction, pourcentage_reduction, id_duree)
+    VALUES  ('10EUROS!!!', 10, 0, 1),
+            ('SOULEVE2EMETITRE', 0, 20, 1),
+        ('5REDUC!!!', 5, 0, 1),
+        ('ACHE2ETPAIE1', 0, 50, 1),
+        ('EUROSREDUIT', 4, 0, 1),
+        ('20PERCENT', 0, 20, 1),
+        ('REDUIT10', 10, 0, 1),
+        ('5EUROS', 5, 0, 1),
+        ('25POURCENT', 0, 25, 1),
+        ('10POURCEN', 0, 10, 1);

@@ -316,10 +316,10 @@ INSERT INTO _panier_client (num_panier,num_compte) values (null,1);
 INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (2, 32, CURRVAL('sae3._panier_num_panier_seq'));
 
 --10 insertions dans _commande (num_panier, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a, id_adresse)
-INSERT INTO _commande VALUES (1,'1', '2018-01-01', null, null, null, null, 1);
-INSERT INTO _commande VALUES (2,'2', '2018-01-01', '2018-01-01', '2018-01-01', null, null, 2);
-INSERT INTO _commande VALUES (3,'3', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 3);
-INSERT INTO _commande VALUES (4,'4', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 1);
+INSERT INTO _commande VALUES ('1', '2018-01-01', null, null, null, null, 1);
+INSERT INTO _commande VALUES ('2', '2018-01-01', '2018-01-01', '2018-01-01', null, null, 2);
+INSERT INTO _commande VALUES ('3', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 3);
+INSERT INTO _commande VALUES ('4', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 1);
 
 -- 2 insertions dans _duree (date_debut, heure_debut, date_fin, heure_fin)
 INSERT INTO _duree (date_debut, heure_debut, date_fin, heure_fin) 

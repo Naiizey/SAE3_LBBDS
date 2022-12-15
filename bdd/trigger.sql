@@ -120,7 +120,36 @@ CREATE OR REPLACE FUNCTION transvasagePanier(entree_token_panier varchar, entree
 
     END;
     $$ language plpgsql;
+CREATE OR REPLACE FUNCTION transvasagePanierToCommande(entree_num_compte int, entree_num_commande varchar) RETURNS INT AS
+    $$
+     DECLARE
+        current_panier int;
+        row sae3._refere%ROWTYPE;
+        stock int;
 
+    BEGIN
+        PERFORM num_panier FROM sae3._panier_client natural join sae3._refere where num_compte=entree_num_compte;
+        if found then
+
+            select max(num_panier) into current_panier from sae3._panier_client where num_compte=entree_num_compte group by num_compte;
+            for row in (SELECT id_prod, num_panier, qte_panier, prix_ht+(prix_ht*taux_tva) prixTTC FROM sae3._refere
+            natural join sae3._panier_client natural join sae3._produit natural join sae3._sous_categorie natural join sae3._categorie natural join sae3._tva
+            where num_compte=entree_num_compte) loop
+
+                    INSERT INTO sae3._refere_commande(id_prod, num_commande, qte_panier, prix_fixeettc) VALUES (row.id_prod,entree_num_commande,row.qte_panier, row.prixTTC);
+                    delete from sae3._refere where num_panier=row.num_panier and id_prod=row.id_prod;
+
+            end loop;
+
+
+        else
+            raise notice 'il n''y  pas de produits dans ce panier';
+            RETURN 1;
+        end if;
+        RETURN 0;
+
+    END;
+    $$ language plpgsql;
 
 
 CREATE OR REPLACE FUNCTION insertAdresseLivraison() RETURNS TRIGGER AS

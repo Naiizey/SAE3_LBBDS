@@ -115,8 +115,8 @@ CREATE TABLE _panier_visiteur
 
 CREATE TABLE _commande
 (
-    num_panier INT NOT NULL,
-    num_commande VARCHAR(50) UNIQUE NOT NULL,
+
+    num_commande VARCHAR(50) UNIQUE NOT NULL PRIMARY KEY ,
     date_commande DATE NOT NULL,
     date_expedition DATE,
     date_plateformeReg DATE,
@@ -158,7 +158,7 @@ CREATE TABLE _retour(
     motif VARCHAR(50) NOT NULL,
     etat_remb BOOLEAN NOT NULL,
     conf_ret BOOLEAN NOT NULL,
-    num_panier INT NOT NULL --renvoie
+    num_commande varchar NOT NULL --renvoie
 );
 
 CREATE TABLE _note
@@ -292,6 +292,21 @@ CREATE TABLE _refere
 );
 
 
+CREATE TABLE _refere_commande
+(
+    id_prod int not null,
+    num_commande varchar NOT NULL,
+    qte_panier INT NOT NULL,
+    prix_fixeeTTC FLOAT not null,
+    CONSTRAINT _refere_commande_pk PRIMARY KEY (id_prod, num_commande),
+
+
+    CONSTRAINT _refere_commande_fk FOREIGN KEY (num_commande) REFERENCES _commande(num_commande),
+    CONSTRAINT _refere_commande_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod)
+);
+
+
+
 CREATE TABLE _est_en_remise_sous
 (
     id_prod INT,
@@ -330,14 +345,13 @@ ALTER TABLE _panier_client ADD CONSTRAINT _panier_compte_fk FOREIGN KEY (num_com
 -- PRIMARY KEY _panier_visiteur
 --ALTER TABLE _panier_visiteur ADD CONSTRAINT _panier_visiteur_pk PRIMARY KEY (num_compte);
 
--- PRIMARY KEY _commande
-ALTER TABLE _commande ADD CONSTRAINT _commande_pk PRIMARY KEY (num_panier);
+
 
 --Association 1..* entre _adresse et _commande ✅ (attendu_a)
 ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_fk FOREIGN KEY (id_a) REFERENCES _adresse(id_a);
 
 --Association 1..* entre _commande et _retour (rembourse) ✅
-ALTER TABLE _retour ADD CONSTRAINT _retour_commande_fk FOREIGN KEY (num_panier) REFERENCES _commande(num_panier);
+ALTER TABLE _retour ADD CONSTRAINT _retour_commande_fk FOREIGN KEY (num_commande) REFERENCES _commande(num_commande);
 
 --Association 1..* entre _compte et _avoirs () ✅
 ALTER TABLE _avoirs ADD CONSTRAINT _avoirs_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
@@ -393,8 +407,7 @@ ALTER TABLE _panier_visiteur ADD CONSTRAINT _panier_visiteur_pk PRIMARY KEY (num
 ALTER TABLE _panier_client ADD CONSTRAINT _panier_client_fk FOREIGN KEY (num_panier) REFERENCES _panier(num_panier);
 ALTER TABLE _panier_client ADD CONSTRAINT _panier_client_pk PRIMARY KEY (num_panier);
 
--- foreign key entre _commande et _panier_client ✅
-ALTER TABLE _commande ADD CONSTRAINT _commande_panier_client_fk FOREIGN KEY (num_panier) REFERENCES _panier_client(num_panier);
+
 
 -- association entre _promotion et _duree
 ALTER TABLE _promotion ADD CONSTRAINT _promotion_duree_fk FOREIGN KEY (id_duree) REFERENCES _duree(id_duree);
@@ -475,3 +488,14 @@ CREATE OR REPLACE FUNCTION limiteImageProd() RETURNS TRIGGER AS
 end
 $$ language plpgsql;
 CREATE TRIGGER nouvelleImageProd BEFORE INSERT ON _image_prod FOR EACH ROW EXECUTE PROCEDURE limiteImageProd();
+
+CREATE OR REPLACE FUNCTION  frozenPrix() RETURNS TRIGGER AS
+    $$
+        BEGIN
+            IF (new.prix_fixeettc != old.prix_fixeettc) THEN
+                raise notice 'Tentative de changer un valeur constante ';
+                new.prix_fixeettc = old.prix_fixeettc;
+            end if;
+        return new;
+end
+    $$ language plpgsql;

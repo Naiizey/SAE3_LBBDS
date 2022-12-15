@@ -413,8 +413,9 @@ function lstClients(){
         anchorA.addEventListener("click", () => {
             var a = new AlerteAlizon(`Sanctionner le client n°${clientA} ?`,current_url, "Quelle type de sanction ?");
             a.ajouterBouton("Bannir temporairement", "normal-button rouge");
-            a.affichage();
-    }
+            a.affichage()
+    })
+}
 }
 
 /*
@@ -737,6 +738,8 @@ var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFi
             }else{
              
                 self.erroBloc.classList.remove("hidden");
+                self.voirPlus.classList.add("hidden");
+                self.listeProduit.innerHTML="";
                 self.erroBloc.children[0].innerHTML=result["message"];
                
                 

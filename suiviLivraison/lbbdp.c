@@ -207,9 +207,10 @@ int main(int argc, char *argv[])
     while (onContinue)
     {
         size = read(cnx, buf, 512);
-        N++;
         if (strncmp(buf, "AVANCE\r", strlen("AVANCE\r")) == 0)
         {
+            N++;
+            
             //On envoie la réponse
             write(cnx, "J'ai avancé\n", strlen("J'ai avancé\n"));
         }

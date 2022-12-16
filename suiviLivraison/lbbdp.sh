@@ -1,4 +1,5 @@
 #!/bin/bash
+#Si vous utilisez ./lbbdp.sh pour lancer le script ne pas oublier de chmod +x lbbdp.sh 
 if [ $(id -u) -ne 0 ]; then
     echo "Vous devez lancer ce script avec sudo"
     exit 1

@@ -136,7 +136,7 @@ CREATE OR REPLACE VIEW code_reduction AS
 
 CREATE OR REPLACE VIEW reduc_panier AS SELECT * FROM _reduire;
 
-CREATE OR REPLACE VIEW commentaire AS
+CREATE OR REPLACE VIEW commentaires AS
     WITH moyenne AS (SELECT id_prod id,avg(note_prod) as moyenneNote FROM _produit natural join _note  group by id_prod)
     SELECT num_avis, contenu_av, date_av, n.id_note, id_prod, num_compte, note_prod,c.pseudo, moyenneNote moyenne FROM _avis a  natural join _note n natural join _compte c left join moyenne on n.id_prod = moyenne.id;
 

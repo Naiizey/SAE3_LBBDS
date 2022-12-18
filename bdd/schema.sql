@@ -99,7 +99,7 @@ CREATE TABLE _panier
 CREATE TABLE _panier_client
 (
     num_panier INT NOT NULL,
-    num_compte INT NOT NULL
+    num_compte INT NOT NULL UNIQUE
 );
 
 
@@ -122,7 +122,8 @@ CREATE TABLE _commande
     date_plateformeReg DATE,
     date_plateformeLoc DATE,
     date_arriv DATE,
-    id_a INT NOT NULL --attendu_a
+    id_a INT NOT NULL, --attendu_a
+    num_compte INT NOT NULL --fait_par
 
 ) ;
 
@@ -234,7 +235,8 @@ CREATE TABLE _image_prod(
 -                                                            -
 --------------------------------------------------------------*/
 
---Classe association entre _panier 1 - * et _code_reduction qui se nomme _reduire
+--Classe association
+-- entre _panier 1 - * et _code_reduction qui se nomme _reduire
 
 CREATE TABLE _reduire(
     num_panier INT NOT NULL,
@@ -358,8 +360,6 @@ ALTER TABLE _avoirs ADD CONSTRAINT _avoirs_compte_fk FOREIGN KEY (num_compte) RE
 
 
 
-
-
 --Association 1..* entre _compte et _adresse_facturation (possedeF) ✅
 --ALTER TABLE _adresse_facturation ADD CONSTRAINT _adresse_facturation_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
@@ -379,6 +379,8 @@ ALTER TABLE _sous_categorie ADD CONSTRAINT _sous_categorie_categorie_code_cat_fk
 -- Association *..1 entre adresse_livraison et commande ✅
 ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY (id_a) REFERENCES _adresse_livraison(id_adresse_livr);
 
+--Association * -- 1 entre _commande et _compte
+ALTER TABLE _commande ADD CONSTRAINT fk_commande_compte FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
 -- Association 1..0.3 entre avis et image_avis
 ALTER TABLE _image_avis ADD CONSTRAINT _image_avis_avis_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
@@ -499,3 +501,6 @@ CREATE OR REPLACE FUNCTION  frozenPrix() RETURNS TRIGGER AS
         return new;
 end
     $$ language plpgsql;
+
+
+

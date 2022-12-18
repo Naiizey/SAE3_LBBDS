@@ -494,7 +494,6 @@ class Home extends BaseController
         if(session()->has("numero")){
             $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
         }else throw new Exception("Vous n'êtes pas connecté",401);
-
         
         
         $post=$this->request->getPost();
@@ -513,7 +512,7 @@ class Home extends BaseController
             {
                
               
-                    return redirect()->to("/facture");
+                return redirect()->to("/validation");
        
             }
         }

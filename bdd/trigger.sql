@@ -120,38 +120,38 @@ CREATE OR REPLACE FUNCTION transvasagePanier(entree_token_panier varchar, entree
 
     END;
     $$ language plpgsql;
-CREATE OR REPLACE FUNCTION transvasagePanierToCommande(entree_num_compte int, entree_num_commande varchar) RETURNS INT AS
+CREATE OR REPLACE FUNCTION transvasagePanierToCommande(entree_num_compte int, entree_num_commande character varying) RETURNS INT AS
+
     $$
      DECLARE
-        current_panier int;
-        row sae3._refere%ROWTYPE;
-        stock int;
+
+        row sae3._refere_commande%ROWTYPE;
+
 
     BEGIN
         PERFORM num_panier FROM sae3._panier_client natural join sae3._refere where num_compte=entree_num_compte;
         if found then
 
-            select max(num_panier) into current_panier from sae3._panier_client where num_compte=entree_num_compte group by num_compte;
-            for row in (SELECT id_prod, num_panier, qte_panier, prix_ht+(prix_ht*taux_tva) prixTTC FROM sae3._refere
-            natural join sae3._panier_client natural join sae3._produit natural join sae3._sous_categorie natural join sae3._categorie natural join sae3._tva
+
+            for row in (SELECT id_prod, num_panier, qte_panier,  prix_ht+(prix_ht*taux_tva) prix_fixeeTTC FROM sae3._refere
+            natural join sae3._panier_client natural join sae3._produit natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva
             where num_compte=entree_num_compte) loop
 
-                    INSERT INTO sae3._refere_commande(id_prod, num_commande, qte_panier, prix_fixeettc) VALUES (row.id_prod,entree_num_commande,row.qte_panier, row.prixTTC);
-                    delete from sae3._refere where num_panier=row.num_panier and id_prod=row.id_prod;
+                    INSERT INTO sae3._refere_commande(id_prod, num_commande, qte_panier, prix_fixeettc) VALUES (row.id_prod,entree_num_commande,row.qte_panier, row.prix_fixeeTTC);
+                    delete from sae3._refere where num_panier in (select num_panier from sae3._panier_client where num_compte=entree_num_compte) and id_prod=row.id_prod;
 
             end loop;
 
 
         else
-            raise notice 'il n''y  pas de produits dans ce panier';
-            RETURN 1;
+            raise exception 'il n''y  pas de produits dans ce panier';
         end if;
         RETURN 0;
 
     END;
     $$ language plpgsql;
 
-
+SELECT
 CREATE OR REPLACE FUNCTION insertAdresseLivraison() RETURNS TRIGGER AS
     $$
     BEGIN
@@ -178,11 +178,13 @@ CREATE TRIGGER insteadOfInsert_adresse_facture INSTEAD OF INSERT ON adresse_fact
 CREATE OR REPLACE FUNCTION insertInsertCommande() RETURNS TRIGGER AS
     $$
     DECLARE
-        current_panier integer;
+
+        retour integer;
+
     BEGIN
-        select max(num_panier) into current_panier from sae3._panier_client where num_compte=new.num_compte group by num_compte;
-        INSERT INTO sae3._commande(num_panier, num_commande, date_commande, id_a) VALUES (current_panier,new.num_commande, current_date,new.id_a);
-        INSERT INTO sae3._panier_client (num_panier,num_compte) values (null,new.num_compte);
+
+        INSERT INTO sae3._commande(num_commande, date_commande, id_a,num_compte) VALUES (new.num_commande, current_date,new.id_a,new.num_compte);
+        SELECT INTO retour FROM transvasagePanierToCommande(new.num_compte,new.num_commande);
         RETURN NEW;
     end
 $$ language plpgsql;
@@ -245,3 +247,6 @@ CREATE TRIGGER insert_sanction_temporaire
     INSTEAD OF INSERT ON sae3.sanction_temporaire
     FOR EACH ROW
     EXECUTE PROCEDURE insert_sanction_temporaire();
+
+
+SELECT * FROM transvasagePanierToCommande(1,'iCzMwO2lZn');

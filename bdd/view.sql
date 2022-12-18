@@ -84,11 +84,11 @@ CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_commande varchar) RE
 CREATE OR REPLACE VIEW commande_list_vendeur AS
     SELECT num_commande,num_compte,date_commande,date_arriv, sum(prix_ht*qte_panier) ht, sum(prix_ttc*qte_panier) ttc, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _refere_commande NATURAL JOIN _produit group by num_commande, num_compte,date_commande,date_arriv,etat;
     
-SELECT * FROM commande_list_vendeur;
+
 
 CREATE OR REPLACE VIEW commande_list_client AS
     SELECT num_commande,num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat FROM _commande  NATURAL JOIN _refere_commande NATURAL JOIN _produit group by num_commande, num_compte,date_commande,date_arriv,etat;
-SELECT * FROM commande_list_client;
+
 
 CREATE OR REPLACE VIEW commande_list_produits_client AS
     SELECT num_commande,id_prod, intitule_prod, lien_image,description_prod,num_compte,date_commande,date_arriv,prix_fixeettc prix_ttc,prix_fixeettc/(1+_tva.taux_tva) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _image_prod NATURAL JOIN _refere_commande NATURAL JOIN _produit natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva;

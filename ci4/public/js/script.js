@@ -117,6 +117,54 @@ function dragNDrop(){
     }
 }
 
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                  PreviewCSV                                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+function previewCSV(){
+    let fileInput = document.getElementById("file");
+    let preview = document.getElementById("preview");
+    let file = fileInput.files[0];
+    let csvFile = /csv.*/;
+    preview.innerHTML = "Veillez choisir un fichier CSV";
+    //boucle qui teste toues les secondes si un fichier est importé
+    setInterval(function () {
+
+        //si un ficher est importé
+        if (fileInput.files.length > 0) {
+            file = fileInput.files[0];
+            //affiche les 10 premières lignes du fichier
+            if (file.type.match(csvFile)) {
+                //affiche les 10 premières lignes en le moins de code possible
+                preview.innerHTML = "verification en cours...";
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    let text = reader.result;
+                    let lines = text.split(";");
+                    let result = [];
+                    let start = 0;
+                    let end = 0;
+                    for (let i = 0; i < 10; i++) {
+                        console.log(lines.indexOf(" ", start + 1));
+                        end = lines.indexOf(" ", start + 1);
+                        result.push(lines.slice(start, end).join(""));
+                        start = end + 1;
+                    }
+                    preview.innerHTML = result.join(" ");
+                }
+
+            } else {
+                preview.innerHTML = "Veillez choisir un fichier CSV";
+            }
+                    
+        }
+
+    }, 1000);
+}
+
+
 
 //TODO: voir et cacher le mot de passe avec un bouton (un neuil) dans l'<input>
 

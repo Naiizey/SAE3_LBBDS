@@ -148,12 +148,33 @@ CREATE TRIGGER insteadOfInsert_adresse_facture INSTEAD OF INSERT ON adresse_fact
 
 CREATE OR REPLACE FUNCTION insertInsertCommande() RETURNS TRIGGER AS
     $$
-    DECLARE
-        current_panier integer;
+DECLARE
+
+        row sae3._refere_commande%ROWTYPE;
+
     BEGIN
-        select max(num_panier) into current_panier from sae3._panier_client where num_compte=new.num_compte group by num_compte;
-        INSERT INTO sae3._commande(num_panier, num_commande, date_commande, id_a) VALUES (current_panier,new.num_commande, current_date,new.id_a);
-        INSERT INTO sae3._panier_client (num_panier,num_compte) values (null,new.num_compte);
+
+        INSERT INTO sae3._commande(num_commande, date_commande, id_a,num_compte) VALUES (new.num_commande, current_date,new.id_a,new.num_compte);
+
+
+        PERFORM num_panier FROM sae3._panier_client natural join sae3._refere where num_compte=new.num_compte;
+        if found then
+
+
+            for row in (SELECT id_prod, num_panier, qte_panier,  prix_ht+(prix_ht*taux_tva) prix_fixeeTTC FROM sae3._refere
+            natural join sae3._panier_client natural join sae3._produit natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva
+            where num_compte=new.num_compte) loop
+
+                    INSERT INTO sae3._refere_commande(id_prod, num_commande, qte_panier, prix_fixeettc) VALUES (row.id_prod,new.num_commande,row.qte_panier, row.prix_fixeeTTC);
+                    delete from sae3._refere where num_panier in (select num_panier from sae3._panier_client where num_compte=new.num_compte) and id_prod=row.id_prod;
+
+            end loop;
+
+
+        else
+            raise exception 'il n''y  pas de produits dans ce panier';
+        end if;
+
         RETURN NEW;
     end
 $$ language plpgsql;
@@ -202,5 +223,19 @@ CREATE TRIGGER update_client
     FOR EACH ROW
     EXECUTE PROCEDURE update_client();
 
+
+
+CREATE OR REPLACE FUNCTION insert_sanction_temporaire() RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO sae3._duree (date_debut, heure_debut, date_fin, heure_fin) VALUES (NEW.date_debut, NEW.heure_debut, NEW.date_fin, NEW.heure_fin);
+    INSERT INTO sae3._sanction_temporaire (raison, num_compte) VALUES (NEW.raison, NEW.id_compte);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_sanction_temporaire
+    INSTEAD OF INSERT ON sae3.sanction_temporaire
+    FOR EACH ROW
+    EXECUTE PROCEDURE insert_sanction_temporaire();
 
 

@@ -97,6 +97,8 @@ $routes->set404Override();
 
     $routes->get('/livraison','Home::infoLivraison',['filter' => 'connexion']);
     $routes->post('/livraison','Home::infoLivraison',['filter' => 'connexion']);
+    $routes->get('/facture','Home::facture',['filter' => 'connexion']);
+    $routes->post('/facture','Home::facture',['filter' => 'connexion']);
 
     $routes->get('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
     $routes->post('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
@@ -109,6 +111,7 @@ $routes->set404Override();
     $routes->post('/validation', 'Home::validation' );
 
     $routes->get('/admin', 'Home::admin');
+    $routes->get('/admin/lstClients', 'Home::lstClients');
 
 ##param uri (:any) et dans methode /$1
 

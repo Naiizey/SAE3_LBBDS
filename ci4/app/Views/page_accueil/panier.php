@@ -200,7 +200,7 @@
                                     <?= $sommePrix ?>
                                 </span>€ TTC
                             </h2>
-                            <a href="<?= base_url() ?>/livraison" class="lienPanier">Valider le panier</a>
+                            <a href="<?= base_url() ?>/facture" class="lienPanier">Valider le panier</a>
                             <a class="lienViderPanier" href="<?= base_url() ?>/panier/vider">Vider le panier</a>
                         </div>
                     </aside>

@@ -45,7 +45,7 @@
                 </ul>
             </div>
             <div>
-                <h3>Vote adresse de livraison :</h3>
+                <h3>Votre adresse de livraison :</h3>
                 <ul>
                     
                         <?php foreach ($adresseLivr->getAll() as $champs): ?>

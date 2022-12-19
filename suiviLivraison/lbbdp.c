@@ -8,6 +8,18 @@
 #include <unistd.h>
 #include <getopt.h>
 
+#define MAX_OPTIONS 10
+#define OPTIONS "hc:j:f:"
+
+struct Option
+{
+    int given;
+    char *name;
+    char *value;
+};
+
+int trouveIdOption(char name, struct Option options[MAX_OPTIONS]);
+
 int main(int argc, char *argv[])
 {
     /*
@@ -17,12 +29,48 @@ int main(int argc, char *argv[])
     */
 
     //On créé un tableau de structures pour stocker les options
-    struct option
+    struct Option options[MAX_OPTIONS]; //Renseigner ici le nombre maximum d'options
+    
+    char optionList[MAX_OPTIONS*2], optionListSP[MAX_OPTIONS*2]; //Fois deux parce que ya les :
+    strcpy(optionList, OPTIONS);
+    strcpy(optionListSP, OPTIONS);
+
+    //On retire les : de la chaîne de caractères afin d'obtenir la liste des options possibles
+    int i = 0;
+    while(i < strlen(optionListSP))
     {
-        char *name;
-        char *value;
-    };
-    struct option options[20]; //Renseigner ici le nombre maximum d'options
+        if (optionListSP[i] == ':') 
+        { 
+            for (int j = i; j < strlen(optionListSP); j++)
+            {
+                optionListSP[j] = optionListSP[j + 1];   
+            }
+        }
+        else
+        {
+            i++;
+        }
+    }
+
+    //On créé un tableau de structures pour stocker les informations relatives aux options
+    for (i = 0; i < strlen(optionListSP); i++)
+    {
+        options[i].given = 0;
+        options[i].name = malloc(2);
+        options[i].name[0] = optionListSP[i];
+        options[i].name[1] = '\0';
+    }
+
+    //On renseigne les valeurs par défaut des options
+    options[0].value = NULL;                         //Option aide (help) -h 
+    options[1].value = "5";                          //Option pour renseigner la capacité de livraison
+    options[2].value = "7";                          //Option pour renseigner une durée de jour personnalisée (en minutes)
+    options[3].value = "listeIdentifications.txt";   //Option pour renseigner le chemin d'un fichier de liste d'identification
+
+    //On finit le tableau des options par une option vide
+    options[i].given = 0;
+    options[i].name = NULL;
+    options[i].value = NULL;
 
     //Tant qu'il y a des options à lire
     //L'argument de la fonction getopt() "a:b:c:d:" correspond aux différentes options disponibles 
@@ -30,30 +78,34 @@ int main(int argc, char *argv[])
     //Exemple : ./simulateur -a -b <valeur> -c <valeur> -d <valeur> -e <valeur>
     //À noter que l'option a n'a pas de valeur car il n'y a pas de : à sa suite dans l'argument de la fonction getopt()
     //Le mot est récupéré dans la variable optarg et n'est pas utilisable si l'option n'a pas de valeur
-    int opt, i = 0, nbArguments = 0;
-    while ((opt = getopt(argc, argv, "ab:c:d:e:")) != -1)
+    int idOption, opt, nbArguments = 0;
+    while ((opt = getopt(argc, argv, optionList)) != -1)
     {
         switch (opt)
         {
-            case 'a':
-                options[i].name = "a";
-                options[i].value = NULL; 
-                break;
-            case 'b':
-                options[i].name = "b";
-                options[i].value = optarg;
+            case 'h':
+                //Option aide (help) -h 
+                idOption = trouveIdOption('h', options);
+                options[idOption].given = 1;
+                //On laisse options[idOption].value car l'options aide n'a pas de valeur
                 break;
             case 'c':
-                options[i].name = "c";
-                options[i].value = optarg;
+                //Option pour renseigner la capacité de livraison
+                idOption = trouveIdOption('c', options);
+                options[idOption].given = 1;
+                options[idOption].value = optarg; 
                 break;
-            case 'd':
-                options[i].name = "d";
-                options[i].value = optarg;
+            case 'j':
+                //Option pour renseigner une durée de jour personnalisée
+                idOption = trouveIdOption('j', options);
+                options[idOption].given = 1;
+                options[idOption].value = optarg;
                 break;
-            case 'e':
-                options[i].name = "e";
-                options[i].value = optarg;
+            case 'f':
+                //Option pour renseigner le chemin d'un fichier de liste d'identification
+                idOption = trouveIdOption('f', options);
+                options[idOption].given = 1;
+                options[idOption].value = optarg;
                 break;
             default:
                 //On laisse getopt gérer les erreurs dans ce cas
@@ -62,7 +114,7 @@ int main(int argc, char *argv[])
         }
 
         //Si l'option à un valeur
-        if (options[i].value != NULL)
+        if (options[idOption].value != NULL)
         {
             //Alors cette option ajoute 2 arguments (le nom de l'option et sa valeur)
             nbArguments += 2;
@@ -90,10 +142,6 @@ int main(int argc, char *argv[])
         printf("Erreur: L'option ne requiert pas de valeur\n");
         exit(EXIT_FAILURE);
     }
-
-    //On finit le tableau des options par une option vide
-    options[i].name = NULL;
-    options[i].value = NULL;
 
     /*
     ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -152,16 +200,17 @@ int main(int argc, char *argv[])
     //On initialise les variables
     char buf[512];
     char res[10];
-    int N = 0, onContinue = 1, ilResteDesOptions = 1;
+    int N = 0, onContinue = 1;
 
     //Fonction read() et write() 
     //Tant que le client ne nous envoie pas "STOP\r"
     while (onContinue)
     {
         size = read(cnx, buf, 512);
-        N++;
         if (strncmp(buf, "AVANCE\r", strlen("AVANCE\r")) == 0)
         {
+            N++;
+            
             //On envoie la réponse
             write(cnx, "J'ai avancé\n", strlen("J'ai avancé\n"));
         }
@@ -180,31 +229,35 @@ int main(int argc, char *argv[])
         else if (strncmp(buf, "LBBDS\r", strlen("LBBDS\r")) == 0)
         {
             i = 0;
-            ilResteDesOptions = 1;
+            int ilResteDesOptions = 1;
             while (ilResteDesOptions)
             {
                 //Si on est pas encore arrivé à l'option vide qui signe la fin du tableau
                 if (options[i].name != NULL)
                 {
-                    //On vide la string res
-                    memset(res, 0, sizeof(res));
-                    strcat(res, "Option ");
-                    strcat(res, options[i].name);
-                    
-                    //Si l'option a un valeur, on l'affiche
-                    if (options[i].value != NULL)
+                    //Si l'option a été donnée
+                    if (options[i].given)
                     {
-                        strcat(res, ": ");
-                        strcat(res, options[i].value);
-                    }
-                    else
-                    {
-                        strcat(res, " reconnue");
-                    }
-                    strcat(res, "\n");
+                        //On vide la string res
+                        memset(res, 0, sizeof(res));
+                        strcat(res, "Option ");
+                        strcat(res, options[i].name);
+                        
+                        //Si l'option a un valeur, on l'affiche
+                        if (options[i].value != NULL)
+                        {
+                            strcat(res, ": ");
+                            strcat(res, options[i].value);
+                        }
+                        else
+                        {
+                            strcat(res, " reconnue");
+                        }
+                        strcat(res, "\n");
 
-                    //On envoie la réponse
-                    write(cnx, res, strlen(res));
+                        //On envoie la réponse
+                        write(cnx, res, strlen(res));
+                    }
                 }
                 else
                 {
@@ -220,4 +273,18 @@ int main(int argc, char *argv[])
     }
 
     return EXIT_SUCCESS;
+}
+
+int trouveIdOption(char name, struct Option options[MAX_OPTIONS])
+{
+    int i = 0;
+    while (options[i].name != NULL)
+    {
+        if (*(options[i].name) == name)
+        {
+            return i;
+        }
+        i++;
+    }
+    return -1;
 }

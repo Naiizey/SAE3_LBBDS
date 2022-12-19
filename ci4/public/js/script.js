@@ -124,45 +124,49 @@ function dragNDrop(){
 */
 
 function previewCSV(){
-    let fileInput = document.getElementById("file");
     let preview = document.getElementById("preview");
-    let file = fileInput.files[0];
-    let csvFile = /csv.*/;
-    preview.innerHTML = "Veillez choisir un fichier CSV";
-    //boucle qui teste toues les secondes si un fichier est importé
-    setInterval(function () {
+    //ajout d'un event listener sur le changement de fichier
+    document.getElementById("file").addEventListener("change", function (e) {
+        preview.innerHTML = " chargement du fichier...";
+        //récupération du fichier
+        let file = e.target.files[0];
+        //création d'un objet FileReader
+        let reader = new FileReader();
+        //lecture du fichier
+        reader.readAsText(file);
+        //ajout d'un event listener sur le chargement du fichier
+        reader.addEventListener("load", function () {
+            preview.innerHTML = "<br><h3>Prévisualisation</h3><br>";
 
-        //si un ficher est importé
-        if (fileInput.files.length > 0) {
-            file = fileInput.files[0];
-            //affiche les 10 premières lignes du fichier
-            if (file.type.match(csvFile)) {
-                //affiche les 10 premières lignes en le moins de code possible
-                preview.innerHTML = "verification en cours...";
-                let reader = new FileReader();
-                reader.onload = function (e) {
-                    let text = reader.result;
-                    let lines = text.split(";");
-                    let result = [];
-                    let start = 0;
-                    let end = 0;
-                    for (let i = 0; i < 10; i++) {
-                        console.log(lines.indexOf(" ", start + 1));
-                        end = lines.indexOf(" ", start + 1);
-                        result.push(lines.slice(start, end).join(""));
-                        start = end + 1;
+
+
+
+            var table = document.createElement("table");
+            //récupération du fichier
+            let csv = reader.result;
+            //création d'un tableau contenant les lignes du fichier
+            let lines = csv.split("\n");
+            for (let i = 0; i < 10 && i < lines.length; i++) {
+                let line = lines[i];
+                let cells = line.split(";");
+                let row = table.insertRow(-1);
+                for (let j = 0; j < cells.length; j++) {
+                    //si la cellule est > 20 caractères, on la coupe
+                    if (cells[j].length > 20) {
+                        cells[j] = cells[j].substring(0, 20) + "...";
                     }
-                    preview.innerHTML = result.join(" ");
+                    let cell = row.insertCell(-1);
+                    cell.innerHTML = cells[j];
                 }
-
-            } else {
-                preview.innerHTML = "Veillez choisir un fichier CSV";
             }
-                    
-        }
+            preview.appendChild(table);
+            
 
-    }, 1000);
+       });
+    });
 }
+
+
 
 
 

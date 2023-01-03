@@ -123,6 +123,33 @@ function dragNDrop(){
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+/**
+ * Fonction qui va récupérer à l'aide du controlleur Import.php la première ligne du fichier CSV
+ * @returns {array} tableau contenant les entêtes du fichier CSV
+ */
+function getentete(){
+    console.log("getentete");
+    let xhttp = new XMLHttpRequest();
+    console.log("sending request")
+    xhttp.open("POST", "Import.php", true);
+    console.log("request sent")
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    console.log("request header set")
+    xhttp.send("entete=1");
+    console.log("request sent")
+    xhttp.onreadystatechange = function() {
+        console.log("ready state changed")
+        if (this.readyState == 4 && this.status == 200) {
+            return this.responseText;
+        }
+    }
+}
+
+
+/**
+ * Fonction qui permet de prévisualiser un fichier CSV
+ * @returns {void}
+ */
 function previewCSV(){
     let preview = document.getElementById("preview");
     //ajout d'un event listener sur le changement de fichier
@@ -133,25 +160,21 @@ function previewCSV(){
         //création d'un objet FileReader
         let reader = new FileReader();
         //lecture du fichier
+        //prend l'en-tête du fichier et l'ajoute au tableau
+        let entete = getentete();
         reader.readAsText(file);
         //ajout d'un event listener sur le chargement du fichier
         reader.addEventListener("load", function () {
             preview.innerHTML = "<br><h3>Prévisualisation</h3><br>";
-
-
-
-
             var table = document.createElement("table");
-            //récupération du fichier
             let csv = reader.result;
-            //création d'un tableau contenant les lignes du fichier
+            //création du tableau
             let lines = csv.split("\n");
             for (let i = 0; i < 10 && i < lines.length; i++) {
                 let line = lines[i];
                 let cells = line.split(";");
                 let row = table.insertRow(-1);
                 for (let j = 0; j < cells.length; j++) {
-                    //si la cellule est > 20 caractères, on la coupe
                     if (cells[j].length > 20) {
                         cells[j] = cells[j].substring(0, 20) + "...";
                     }
@@ -160,8 +183,6 @@ function previewCSV(){
                 }
             }
             preview.appendChild(table);
-            
-
        });
     });
 }

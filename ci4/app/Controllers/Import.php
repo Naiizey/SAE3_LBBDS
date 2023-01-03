@@ -73,4 +73,17 @@ class Import extends BaseController
         session()->set("just_importe", true);
         return view('page_accueil/import.php', $data);
     }
+
+    /**
+        * this function is used to get the column names of the table _produit  with their type in json format
+        * @param $noparam
+        * @return json 
+     */
+    public function getentetes()
+    {
+        $importModel = model("\App\Models\ImportCSV");
+        $entetes = $importModel->getentete();
+        $entetes = json_encode($entetes);
+        echo $entetes;
+    }
 }

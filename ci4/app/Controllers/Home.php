@@ -622,6 +622,15 @@ class Home extends BaseController
         $data["controller"]="Liste des clients";
         $data["role"]="admin";
         $data["clients"]=model("\App\Models\Client")->findAll();
+
+        $get=$this->request->getPost();
+
+        if(!empty($get)){
+            if(isset($get["Timeout"]) && $get["Timeout"]==1){
+                return view("page_accueil/admin.php", $data);
+            }
+        }
+
         return view("page_accueil/lstClients.php",$data);
     }
 }

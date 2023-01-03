@@ -16,9 +16,7 @@
                                 <td class='numClients'><?= $client->numero ?></td>
                                 <td><?= $client->identifiant ?></td>
                                 <td>
-                                    <a class="anchorClient">
-                                        <div></div>
-                                    </a>
+                                    <button class="anchorClient"></button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

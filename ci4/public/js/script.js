@@ -117,6 +117,58 @@ function dragNDrop(){
     }
 }
 
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                  PreviewCSV                                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+function previewCSV(){
+    let preview = document.getElementById("preview");
+    //ajout d'un event listener sur le changement de fichier
+    document.getElementById("file").addEventListener("change", function (e) {
+        preview.innerHTML = " chargement du fichier...";
+        //récupération du fichier
+        let file = e.target.files[0];
+        //création d'un objet FileReader
+        let reader = new FileReader();
+        //lecture du fichier
+        reader.readAsText(file);
+        //ajout d'un event listener sur le chargement du fichier
+        reader.addEventListener("load", function () {
+            preview.innerHTML = "<br><h3>Prévisualisation</h3><br>";
+
+
+
+
+            var table = document.createElement("table");
+            //récupération du fichier
+            let csv = reader.result;
+            //création d'un tableau contenant les lignes du fichier
+            let lines = csv.split("\n");
+            for (let i = 0; i < 10 && i < lines.length; i++) {
+                let line = lines[i];
+                let cells = line.split(";");
+                let row = table.insertRow(-1);
+                for (let j = 0; j < cells.length; j++) {
+                    //si la cellule est > 20 caractères, on la coupe
+                    if (cells[j].length > 20) {
+                        cells[j] = cells[j].substring(0, 20) + "...";
+                    }
+                    let cell = row.insertCell(-1);
+                    cell.innerHTML = cells[j];
+                }
+            }
+            preview.appendChild(table);
+            
+
+       });
+    });
+}
+
+
+
+
 
 //TODO: voir et cacher le mot de passe avec un bouton (un neuil) dans l'<input>
 

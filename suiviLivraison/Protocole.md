@@ -12,7 +12,7 @@ Le protocole prend son inpiration d'une communication avec une API Rest avec l'u
 ### 1.1 Le but
 
 Ce protocole de niveau application nécessite une communication internet.
-L'objectif de ce protocole est de pouvoir faire communiqué le livreur et son client(Un site marchand, e-commerce, etc...). Au vu de la précision de notre besoin et le fait que l'ambtion n'est pas de créer un protocole qui serait vraiment utilisé, le protocole sera décris est précis et laisse peut de marge de main d'oeuvre pour pouvoir s'adapter à d'autre besoin.
+L'objectif de ce protocole est de pouvoir faire communiquer le livreur et son client(Un site marchand, e-commerce, etc...). Au vu de la précision de notre besoin et le fait que l'ambtion n'est pas de créer un protocole qui serait vraiment utilisé, le protocole sera décris est précis et laisse peut de marge de main d'oeuvre pour pouvoir s'adapter à d'autre besoin.
 
 
 ### 1.2 Terminologie
@@ -46,7 +46,7 @@ compléments les informations supplémentaires à formulé selon les opérations
 
 ### 2.1 AUT : Authentification
 
-Permet au client de se authentifié, lui permettant d'avoir accés aux autres requêtes.
+Permet au client de s'authentifier, lui permettant d'avoir accés aux autres requêtes.
 Il indique 
 
 ### 2.2 NEW : Prise en charge d'une commande
@@ -59,10 +59,10 @@ Pour cela il faut indiquer dans le contenu et dans une clé d'array ou attribut 
 Cette opération permet de récupérer les états de toutes les commandes qui sont prises en charges. On peut filtrer en indiquent les états que l'ont veut récupérer.
 Pour cela il faut indiquer une des compléments ci-dessous:  
 - tout: récupérer toute commande
-- nouvelle: Les commade qui ont été prise en charge
-- regionale : Les commandes en platemforme régionale
+- nouvelle: Les commandes qui ont été prise en charge
+- regionale : Les commandes en plateforme régionale
 - locale : Les commmandes en plateforme locale
-- destinaire : Les commandes arrivé au client
+- destinataire : Les commandes arrivées au client
 - perdue : La commande a été perdue
 
 

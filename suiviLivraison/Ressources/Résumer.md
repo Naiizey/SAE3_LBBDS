@@ -33,3 +33,10 @@ Accusé de réception de clôture de cycle : instantané
 
 Commande perdue | Jours de retard
 Parsing into JSON
+
+
+# Contenu d'une livraison
+- Identifiant livraison
+- Timestamp de la rentré dans le fifo
+- État de la livraison
+- Jours de retards

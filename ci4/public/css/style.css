@@ -2981,11 +2981,11 @@ a.fleche-page{
     width: 5em;
 }
 
-.lignesClients a{
+.lignesClients div{
     background-color: #571616;
-    text-decoration: none;
-    width: 0.5em;
-    height: 0.5em;
+    width: 1em;
+    height: 1em;
+    margin: auto;
 }
 
 /*

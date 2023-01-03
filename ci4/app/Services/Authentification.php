@@ -215,8 +215,8 @@ class Authentification
                 $annee = substr($entree['dateExpiration'], strlen($entree['dateExpiration']) - 2, strlen($entree['dateExpiration']) - 1);
                 $mois = substr($entree['dateExpiration'], 0, 2);
 
-                //Si l'année actuelle (sur deux chiffres) est inférieure à celle renseignée OU si le mois actuel est inférieur au mois renseigné (+année actuelle égale à celle renseignée)
-                if (((int) $annee) < idate("y") || ((int) $mois) < idate("m") && ((int) $annee) == idate("y"))
+                //Si l'année actuelle (sur deux chiffres) est inférieure à celle renseignée OU si le mois actuel est inférieur ou égal au mois renseigné (+année actuelle égale à celle renseignée)
+                if (((int) $annee) < idate("y") || ((int) $mois) <= idate("m") && ((int) $annee) == idate("y"))
                 {
                     $errors[4]="Votre carte est expirée";
                 }

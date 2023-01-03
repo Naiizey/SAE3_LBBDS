@@ -10,6 +10,10 @@
 
 #define MAX_OPTIONS 10
 #define OPTIONS "hc:j:f:"
+#define OPTION_DEFAUT_1 NULL                        //Option aide (help) -h 
+#define OPTION_DEFAUT_2 "5"                         //Option pour renseigner la capacité de livraison
+#define OPTION_DEFAUT_3 "7"                         //Option pour renseigner une durée de jour personnalisée (en minutes)
+#define OPTION_DEFAUT_4 "listeIdentifications.txt"  //Option pour renseigner le chemin d'un fichier de liste d'identification
 
 struct Option
 {
@@ -52,7 +56,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    //On créé un tableau de structures pour stocker les informations relatives aux options
+    //On créé un tableau de structures en définissant toutes les options possibles avec la liste des options sans les :
     for (i = 0; i < strlen(optionListSP); i++)
     {
         options[i].given = 0;
@@ -62,10 +66,10 @@ int main(int argc, char *argv[])
     }
 
     //On renseigne les valeurs par défaut des options
-    options[0].value = NULL;                         //Option aide (help) -h 
-    options[1].value = "5";                          //Option pour renseigner la capacité de livraison
-    options[2].value = "7";                          //Option pour renseigner une durée de jour personnalisée (en minutes)
-    options[3].value = "listeIdentifications.txt";   //Option pour renseigner le chemin d'un fichier de liste d'identification
+    options[0].value = OPTION_DEFAUT_1;             
+    options[1].value = OPTION_DEFAUT_2;             
+    options[2].value = OPTION_DEFAUT_3;             
+    options[3].value = OPTION_DEFAUT_4;             
 
     //On finit le tableau des options par une option vide
     options[i].given = 0;
@@ -73,7 +77,7 @@ int main(int argc, char *argv[])
     options[i].value = NULL;
 
     //Tant qu'il y a des options à lire
-    //L'argument de la fonction getopt() "a:b:c:d:" correspond aux différentes options disponibles 
+    //L'argument de la fonction getopt() "ab:c:d:e:" correspond aux différentes options disponibles 
     //Les : sont comme des slicers en python, ils signifient que suite à l'option il faut renseigner une valeur (ou attribut lié à l'option)
     //Exemple : ./simulateur -a -b <valeur> -c <valeur> -d <valeur> -e <valeur>
     //À noter que l'option a n'a pas de valeur car il n'y a pas de : à sa suite dans l'argument de la fonction getopt()
@@ -141,6 +145,13 @@ int main(int argc, char *argv[])
     {
         printf("Erreur: L'option ne requiert pas de valeur\n");
         exit(EXIT_FAILURE);
+    }
+
+    //Si il n'y a aucune option renseignée, on en informe le programme en mettant le nom de l'option à NULL
+    //Lorsque l'on parcourra le tableau d'options, on pourra ainsi savoir si il y a des options ou non
+    if (nbArguments == 0)
+    {
+        options[0].name = NULL;
     }
 
     /*
@@ -262,6 +273,10 @@ int main(int argc, char *argv[])
                 else
                 {
                     ilResteDesOptions = 0;
+                    if (i == 0)
+                    {
+                        write(cnx, "Aucune option n'a été reconnue\n", strlen("Aucune option n'a été reconnue\n"));
+                    }
                 }
                 i++;
             }
@@ -269,6 +284,10 @@ int main(int argc, char *argv[])
         else if (strncmp(buf, "STOP\r", strlen("STOP\r")) == 0)
         {
             onContinue = 0;
+        }
+        else
+        {
+            write(cnx, "Commande inconnue\n", strlen("Commande inconnue\n"));
         }
     }
 

@@ -466,8 +466,8 @@ function lstClients(){
             var a = new AlerteAlizon(`Sanctionner le client n°${clientA} ?`,current_url, "Quelle type de sanction ?");
             a.ajouterBouton("Bannir temporairement", "normal-button rouge");
             a.affichage()
-    })
-}
+        })
+    }
 }
 
 /*

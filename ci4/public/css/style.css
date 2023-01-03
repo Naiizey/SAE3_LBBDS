@@ -2986,10 +2986,10 @@ a.fleche-page{
     width: 5em;
 }
 
-.lignesClients div{
+.lignesClients .anchorClient{
     background-color: #571616;
-    width: 1em;
-    height: 1em;
+    width: 2em;
+    height: 2em;
     margin: auto;
 }
 

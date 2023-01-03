@@ -15,7 +15,11 @@
                             <tr class='lignesClients'>
                                 <td class='numClients'><?= $client->numero ?></td>
                                 <td><?= $client->identifiant ?></td>
-                                <td><a href="" class="anchorClient">...</a></td>
+                                <td>
+                                    <a class="anchorClient">
+                                        <div></div>
+                                    </a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -27,6 +31,6 @@
     </main>
 <?php require("footer.php");?>
 <script>
-    var current_url = <?= current_url() ?>;
+    var current_url = "<?= current_url() ?>";
     lstClients();
 </script>

@@ -1,0 +1,20 @@
+.TH LBBDP 1 2022-12-15 "GNU" "Linux Programmer's Manual"
+.SH NAME
+md5_hasher, verify_password
+.SH SYNOPSIS
+.nf
+.B #include "sim.h"
+.B compilation : (g)cc sim.c <filename.c> -o <filename> -lssl -lcrypto
+.PP
+.BI "void md5_hasher(char *string, char *hash)"
+.BI "bool verify_password(char *path, char *id, char *hashedPass)"
+.PP
+.SH DESCRIPTION
+Protocol made by LBBDS used to track a delivery
+.TP
+.BR md5_hasher ()
+hash string using md5 method
+.TP
+.BR verify_password ()
+verify the password of the deliverer
+.TP

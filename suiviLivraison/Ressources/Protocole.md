@@ -41,29 +41,65 @@ Chaque réquête est formulé de cette façon:
 où OPT est le nom de l'opérations,  
 compléments les informations supplémentaires à formulé selon les opérations.
 
+### 1.5 En tête des répones
+`OPT code LBBDP/1.0`
+
+où OPT est le nom de l'opérations, 
+et le CODE correspond au code réponse.
+
+### 1.6 Le contenu
+
+Le format du contenu est en JSON, ainsi le contenu débute après l'introduction d'un premier caractère du type '{' ou '[' juste après l'en-tête.
 
 ## 2. Requêtes
 
-### 2.1 AUT : Authentification
-
-Permet au client de se authentifié, lui permettant d'avoir accés aux autres requêtes.
-Il indique 
-
-### 2.2 NEW : Prise en charge d'une commande
+### 2.1 NEW : Prise en charge d'une commande
 
 Cette opération permet de faire prendre en charge une commande. 
 Pour cela il faut indiquer dans le contenu et dans une clé d'array ou attribut d'objet "numéro commande" avec comme valeur le numéro de la commande.
 
-### 2.3 ACT : Actualisation des commandes 
+Ainsi, dans le contenu il demandandé de renseigné 2 propriété:
+- id
+- pass
+
+### 2.2 ACT : Actualisation des commandes 
 
 Cette opération permet de récupérer les états de toutes les commandes qui sont prises en charges. On peut filtrer en indiquent les états que l'ont veut récupérer.
 Pour cela il faut indiquer une des compléments ci-dessous:  
 - tout: récupérer toute commande
-- nouvelle: Les commade qui ont été prise en charge
+- nouvelle: Les commande qui ont été prise en charge
 - regionale : Les commandes en platemforme régionale
 - locale : Les commmandes en plateforme locale
 - destinaire : Les commandes arrivé au client
 - perdue : La commande a été perdue
+
+## 3. Réponses
+
+
+### 3.1 Code réponse
+Soit la requête a été prise en compte :
+- 00(Réusite):
+    - 01(Execution) : Envoie simplement la réponse attendue, afin de confirmé la requête
+    - 02 (En attente) : Attente d'un accusé de réception de certaines données
+
+Autrement, La requête n'a pas été prise ne compte pour un certaine raison:
+- 10 (Erreur format):
+    - 11(Opération inconnue) :  l'opération n'a pas été reconnue.
+    - 12(Complément non nécessaire) : compléments indiqué mais est inutile.
+    - 13(Complément inconnue) : compléments non reconnnue pour l'opération
+
+- 20 (Authentification):
+    - 21(Authentification manquante) : il faut s'identifié pour avoir la permission d'éxecuté cette opération.
+    - 22(Authentifivation erronée) : L'identification est erronée
+
+- 30(Erreur logique) 
+    - 31(File pleine): la prise en charge n'est plus possible, il faut attendre que des places soient libérés.
+
+- 40 (Erreur format contenu)
+    - 41(Erreur format JSON): le contenu ne correspond pas aux normes JSON.
+    - 42(Erreur contenu JSON): les propriétes ne sont pas celles qui ont été demandés.
+
+### 3.2 Contenu de réponse
 
 
 

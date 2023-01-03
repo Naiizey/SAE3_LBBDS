@@ -14,6 +14,8 @@ else
     else
         #On crée un lien symbolique vers l'exécutable
         ln -s $cheminLbbdp lbbdp
+        sudo cp lbbdp.1.gz /usr/share/man/man1/lbbdp.1.gz
+        sudo cp lbbdp.3.gz /usr/share/man/man3/lbbdp.3.gz
         echo "La commande lbbdp été installée"
     fi
 fi

@@ -997,7 +997,7 @@ header ul {
     margin-bottom: .5em;
 }
 
-.sectionCredit input, label, a {
+.sectionCredit input, label, a, .aucunAvis {
     font-family: "Montserrat-Regular";
     font-size: larger;
 }
@@ -1833,7 +1833,7 @@ h3 > .lienPasArticlePanier {
     font-family: 'Montserrat-Regular';
 }
 
-.mainProduit a {
+.mainProduit a, .aucunAvis {
     text-decoration: none;
     color: #164F57;
 }
@@ -1841,9 +1841,6 @@ h3 > .lienPasArticlePanier {
 .mainProduit img {
     width: 100%;
     height: auto;
-    border: solid 2px;
-    border-color: #164F57;
-    border-radius: 3px;
     object-fit: cover;
 }
 
@@ -2063,12 +2060,19 @@ h3 > .lienPasArticlePanier {
 
 .moyennesAvis div {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
-.pPasAvis {
-    color: #164F57;
+.moyennesAvis p {
+    margin: .7em 0;
+}
+
+.numAvis {
+    flex-basis: 7%;
+}
+
+.pAvis {
+    flex-basis: 13%;
 }
 
 .moyennesAvis progress {
@@ -2077,7 +2081,8 @@ h3 > .lienPasArticlePanier {
     width: 75%;
     border: none;
     border-radius: 4px;
-    margin: .5em 0 .5em 1em;
+    margin: .5em 0;
+    flex-basis : 80%
 }
 
 .moyennesAvis progress::-moz-progress-bar 

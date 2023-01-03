@@ -74,8 +74,12 @@
                             <p class="ParaDescProduit"><?= ucfirst($prod->description) ?></p>
                             <section class="sectionAvis">
                                 <a href="#divLesAvis"><h4>Avis clients :</h4></a>
+                                <?php if (empty($avis)): ?>
+                                <h4 class="aucunAvis">Aucun avis</h4>
+                                <?php else : ?>
                                 <div class="noteAvis"><?= $cardProduit->notationEtoile($prod->moyenne) ?></div>
                                 <p><?= $prod->moyenne ?>/5</p>
+                                <?php endif ?>
                             </section>
                         </div>
                         <div class="divAcheterProduit">
@@ -142,13 +146,13 @@
                     <h2>Avis</h2>
                     <hr>
                     <?php if (empty($avis)): ?>
-                    <p>Aucun utilisateur n'a laissé d'avis sur cet article.</p>
+                    <p id="divLesAvis">Aucun utilisateur n'a laissé d'avis sur cet article.</p>
                     <?php else : ?>
                     <div id="divLesAvis">
                         <div class="moyennesAvis">
                             <?php for ($i=5; $i > 0 ; $i--) : ?>
                             <div>
-                                <p><?= $i ?></p>
+                                <p class="numAvis"><?= $i ?></p>
                                 <progress class="barreAvis" value="0" max="1"></progress>
                                 <p class="pAvis"></p>
                             </div>

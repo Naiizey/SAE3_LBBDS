@@ -123,6 +123,33 @@ function dragNDrop(){
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+/**
+ * Fonction qui va récupérer à l'aide du controlleur Import.php la première ligne du fichier CSV
+ * @returns {array} tableau contenant les entêtes du fichier CSV
+ */
+function getentete(){
+    console.log("getentete");
+    let xhttp = new XMLHttpRequest();
+    console.log("sending request")
+    xhttp.open("POST", "Import.php", true);
+    console.log("request sent")
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    console.log("request header set")
+    xhttp.send("entete=1");
+    console.log("request sent")
+    xhttp.onreadystatechange = function() {
+        console.log("ready state changed")
+        if (this.readyState == 4 && this.status == 200) {
+            return this.responseText;
+        }
+    }
+}
+
+
+/**
+ * Fonction qui permet de prévisualiser un fichier CSV
+ * @returns {void}
+ */
 function previewCSV(){
     let preview = document.getElementById("preview");
     //ajout d'un event listener sur le changement de fichier
@@ -133,25 +160,21 @@ function previewCSV(){
         //création d'un objet FileReader
         let reader = new FileReader();
         //lecture du fichier
+        //prend l'en-tête du fichier et l'ajoute au tableau
+        let entete = getentete();
         reader.readAsText(file);
         //ajout d'un event listener sur le chargement du fichier
         reader.addEventListener("load", function () {
             preview.innerHTML = "<br><h3>Prévisualisation</h3><br>";
-
-
-
-
             var table = document.createElement("table");
-            //récupération du fichier
             let csv = reader.result;
-            //création d'un tableau contenant les lignes du fichier
+            //création du tableau
             let lines = csv.split("\n");
             for (let i = 0; i < 10 && i < lines.length; i++) {
                 let line = lines[i];
                 let cells = line.split(";");
                 let row = table.insertRow(-1);
                 for (let j = 0; j < cells.length; j++) {
-                    //si la cellule est > 20 caractères, on la coupe
                     if (cells[j].length > 20) {
                         cells[j] = cells[j].substring(0, 20) + "...";
                     }
@@ -160,8 +183,6 @@ function previewCSV(){
                 }
             }
             preview.appendChild(table);
-            
-
        });
     });
 }
@@ -1341,26 +1362,39 @@ function zoomProduit(e) {
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 function avisProduit() {
-    let tabAvis = document.querySelectorAll(".divAvisCommentaire p");
-    let moyennes = [0, 0, 0, 0, 0];
+    let tabAvis = document.querySelectorAll(".divAvisCommentaire p"); // séléctionne les avis
+    let moyennes = [0, 0, 0, 0, 0]; // tableau des moyennes pour chaque étoile
+    // définit le nombre d'avis correspondant à telle étoile
     tabAvis.forEach(element => {
         for (let index = 0; index < 5; index++) {
+            // si note contenue entre 1 et 1.99 ; 2 et 2.99 ; ...
             if ((parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) >= (index+1)) && (parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) < (index + 2))) {
-                moyennes[index] = moyennes[index] + 1;
+                moyennes[index] = moyennes[index] + 1; // ajoute 1 à l'étoile correspondante à l'avis
             }
         }
     });
 
-    let lesBarres = document.querySelectorAll(".barreAvis");
+    let lesBarres = document.querySelectorAll(".barreAvis"); // séléctionne les barres de progression 
+    // définit le max et la valeur pour chaque barre de progression
     for (let index = (lesBarres.length-1); index > 0; index--) {
-        lesBarres[lesBarres.length-index-1].max = tabAvis.length;
+        lesBarres[lesBarres.length-index-1].max = tabAvis.length; // max pour les barres de progression (nombre total d'avis)
         lesBarres[lesBarres.length-index-1].value = moyennes[index];
     }
-/*
-    let pourcentages = [0, 0, 0, 0, 0];
-    let lesP = document.querySelectorAll(".barreAvis");
+
+    let pourcentages = [0, 0, 0, 0, 0]; // tableau des pourcentages
+    let lesP = document.querySelectorAll(".pAvis"); // les p pour faire y ajouter les pourcentages afin de les faire apparaitre sur la page
+    // définit les pourcentages d'avis correspondant à tel nombre d'étoiles
     for (let index = 0; index < moyennes.length; index++) {
-        pourcentages[index] = moyennes[index] / tabAvis.length * 100;
-        lesP[index].textContent = pourcentages[index];
-    }*/
+        pourcentages[index] = moyennes[index] / tabAvis.length * 100; //divise le nb d'avis par étoile par le nombre total d'avis afin d'avoir le pourcentage
+    }
+
+    let count = moyennes.length - 1; // index pour parcourir le tableau dans l'autre sens car l'index 0 des pourcentages correspond à l'index 4 des barres de progression
+    // place les pourcentages en parcourant le tableau 
+    for (let index = 0; index < moyennes.length; index++) {
+        lesP[index].textContent = pourcentages[count] + "%"; // ajoute au p le pourcentage
+        count = count - 1; // continue de parcourir le tableau dans l'autre sens 
+        if (count == -1) {
+            count = moyennes.length - 1; // réinitialise au cas où
+        }
+    }
 }

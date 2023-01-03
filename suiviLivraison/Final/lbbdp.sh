@@ -4,19 +4,16 @@ if [ $(id -u) -ne 0 ]; then
     echo "Vous devez lancer ce script avec sudo"
     exit 1
 else
-    #On sauvegarde le chemin de l'exécutable avant de se déplacer
-    cheminLbbdp=$(dirname $0)/lbbdp
-
-    cd /usr/bin
-    if [ -L lbbdp ]; then
+    if [ -L /usr/bin/lbbdp ]; then
         echo "La commande lbbdp existe déjà"
         exit 1
     else
         #On crée un lien symbolique vers l'exécutable
-        ln -s $cheminLbbdp lbbdp
+        sudo ln -s $(dirname $0)/lbbdp /usr/bin/lbbdp
+
         # Copie des archives de man dans le dossier contenant les différents man de l'OS
-        sudo cp lbbdp.1.gz /usr/share/man/man1/lbbdp.1.gz
-        sudo cp lbbdp.3.gz /usr/share/man/man3/lbbdp.3.gz
+        sudo cp $(dirname $0)/lbbdp.1.gz /usr/share/man/man1/lbbdp.1.gz
+        sudo cp $(dirname $0)/lbbdp.3.gz /usr/share/man/man3/lbbdp.3.gz
         
         # Ajout du man pour l'utilisateur et non l'OS
         # sudo mkdir /usr/local/man/man1

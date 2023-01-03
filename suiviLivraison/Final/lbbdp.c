@@ -10,10 +10,10 @@
 
 #define MAX_OPTIONS 10
 #define OPTIONS "hc:j:f:"
-#define OPTION_DEFAUT_1 NULL
-#define OPTION_DEFAUT_2 "5"
-#define OPTION_DEFAUT_3 "7"
-#define OPTION_DEFAUT_4 "listeIdentifications.txt"
+#define OPTION_DEFAUT_1 NULL                        //Option aide (help) -h 
+#define OPTION_DEFAUT_2 "5"                         //Option pour renseigner la capacité de livraison
+#define OPTION_DEFAUT_3 "7"                         //Option pour renseigner une durée de jour personnalisée (en minutes)
+#define OPTION_DEFAUT_4 "listeIdentifications.txt"  //Option pour renseigner le chemin d'un fichier de liste d'identification
 
 struct Option
 {
@@ -66,10 +66,10 @@ int main(int argc, char *argv[])
     }
 
     //On renseigne les valeurs par défaut des options
-    options[0].value = OPTION_DEFAUT_1;             //Option aide (help) -h 
-    options[1].value = OPTION_DEFAUT_2;             //Option pour renseigner la capacité de livraison
-    options[2].value = OPTION_DEFAUT_3;             //Option pour renseigner une durée de jour personnalisée (en minutes)
-    options[3].value = OPTION_DEFAUT_4;             //Option pour renseigner le chemin d'un fichier de liste d'identification
+    options[0].value = OPTION_DEFAUT_1;             
+    options[1].value = OPTION_DEFAUT_2;             
+    options[2].value = OPTION_DEFAUT_3;             
+    options[3].value = OPTION_DEFAUT_4;             
 
     //On finit le tableau des options par une option vide
     options[i].given = 0;

@@ -12,7 +12,7 @@ class DetailsCommande extends Model
 
     protected $useAutoIncrement = false;
 
-    protected $returnType     = DetailsCommande::class;
+    protected $returnType     = CommandeCli::class;
     protected $useSoftDeletes = false;
     
     protected $allowedFields = ['num_commande', 'id_prod','intitule_prod', 'lien_image_prod', 'description_prod','num_compte','date_commande','date_arriv','prix_ttc','prix_ht','qte','etat'];

@@ -548,7 +548,7 @@ class Home extends BaseController
             $data['num_compte'] = $data['infosCommande'][0]->num_compte;
         }
         $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
-
+        //dd($data);
         return view('panier/details.php', $data);
     }
 

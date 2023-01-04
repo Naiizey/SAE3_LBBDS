@@ -9,12 +9,6 @@
         })(window,document,'script','dataLayer','GTM-PCVRSM3');</script>
         <!-- End Google Tag Manager -->
 
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-YLXNF3F94Y');
-        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/css/style.css" />

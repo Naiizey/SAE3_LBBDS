@@ -13,7 +13,7 @@
                 <div class="recap-prod-container">
                     <?php if (isset($reducMont) || isset($reducPourc)): ?>
                     <div>Sous-totaux </div> <div><?= $totalTtc?>€ TTC</div> <div><?= $totalHt ?>€ HT</div>
-                    <div>Remise</div> <div><?= "-".((isset($reducMont))?$reducMont."€":$reducPourc."%") ?></div> <div></div>
+                    <div>Code de réduction</div> <div><?= "-".((isset($reducMont))?$reducMont."€":$reducPourc."%") ?></div> <div></div>
                     <?php endif; ?>
                     <div>Total </div> 
                     <?php if (isset($reducMont)): ?>

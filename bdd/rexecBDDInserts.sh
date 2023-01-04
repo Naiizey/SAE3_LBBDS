@@ -2,4 +2,4 @@
 
 DIR=$(dirname $0)
 
-echo "\i $DIR/schema.sql \i $DIR/view.sql \i $DIR/trigger.sql \i $DIR/insert.sql" | psql -d postgres
+echo "\i $DIR/schema.sql \i $DIR/insert.sql \i $DIR/view.sql \i $DIR/trigger.sql" | psql -d sc2marines

@@ -239,3 +239,41 @@ CREATE TRIGGER insert_sanction_temporaire
     EXECUTE PROCEDURE insert_sanction_temporaire();
 
 
+--
+
+CREATE OR REPLACE FUNCTION insert_commentaire() RETURNS TRIGGER AS
+$$
+    BEGIN
+        Insert Into sae3._note(id_prod, num_compte, note_prod) VALUES (new.id_prod, new.num_compte, new.note_prod);
+        Insert Into sae3._avis(contenu_av, date_av, id_note) VALUES (new.contenu_av, current_date, currval('sae3._note_id_note_seq'));
+
+        return new;
+    end;
+$$ language plpgsql;
+CREATE TRIGGER when_insert_commentaire INSTEAD OF INSERT ON commentaires FOR EACH ROW EXECUTE PROCEDURE insert_commentaire();
+
+CREATE OR REPLACE FUNCTION update_commentaire() RETURNS TRIGGER AS
+$$
+    BEGIN
+        update sae3._note set note_prod=new.note_prod where id_note=old.id_note;
+        update sae3._avis set contenu_av=new.contenu_av where num_avis=old.num_avis;
+
+        return new;
+    end;
+$$ language plpgsql;
+
+--CREATE TRIGGER when_update_commentaire INSTEAD OF UPDATE ON commentaires FOR EACH ROW EXECUTE PROCEDURE update_commentaire();
+
+CREATE OR REPLACE FUNCTION delete_commentaire() RETURNS TRIGGER AS
+$$
+    BEGIN
+        delete from sae3._avis where num_avis=old.num_avis;
+        delete from sae3._note where id_note=old.id_note;
+
+        --coir a delete réponse du vendeur aussi
+        return old;
+    end;
+$$ language plpgsql;
+
+CREATE TRIGGER when_delete_commentaire INSTEAD OF DELETE ON commentaires FOR EACH ROW EXECUTE PROCEDURE delete_commentaire();
+

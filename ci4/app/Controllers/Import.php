@@ -75,8 +75,8 @@ class Import extends BaseController
     }
 
     /**
-        * this function is used to get the column names of the table _produit  with their type in json format
-        * @param $noparam
+        * cette fonction prend les entêtes de la table produit et les retourne au format json /!\ Non finit !!!
+        * @param none
         * @return json 
      */
     public function getentetes()

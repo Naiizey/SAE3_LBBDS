@@ -92,7 +92,7 @@ class Panier extends BaseController
             if(isset($get["Suppression"]) && $get["Suppression"]==1 ){
                 model("\App\Models\ProduitPanierVisiteurModel")->viderPanier(get_cookie("token_panier"));
                 delete_cookie("token_panier");
-                $data["supprimerOuConfirmer"]=true;
+                $data["ecraserOuFusionner"]=true;
             }
             else if(isset($get["Ignorer"]) && $get["Ignorer"]==1 ){
                 session()->set("ignorer",true);
@@ -100,7 +100,7 @@ class Panier extends BaseController
             else if(isset($get["Confirmer"]) && $get["Confirmer"]==1 ){
                 model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
                 delete_cookie("token_panier");
-                $data["supprimerOuConfirmer"]=true;
+                $data["ecraserOuFusionner"]=true;
             }
            
         }
@@ -213,7 +213,7 @@ class Panier extends BaseController
             
             model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
             delete_cookie("token_panier");
-            $data["supprimerOuConfirmer"]=true;
+            $data["ecraserOuFusionner"]=true;
             $data["produits"]=$modelProduitPanier->getPanier(session()->get("numero"));
         }
            

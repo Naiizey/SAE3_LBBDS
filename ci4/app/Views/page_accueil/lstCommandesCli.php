@@ -27,7 +27,7 @@
                     </tbody>
                 </table>
             <?php else: ?>
-                <h2>Aucune commande n'a été réalisé pour le moment.</h2>
+                <h2>Aucune commande n'a été réalisée pour le moment.</h2>
             <?php endif; ?>
         </div>
     </main>

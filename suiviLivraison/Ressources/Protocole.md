@@ -51,8 +51,13 @@ et le CODE correspond au code réponse.
 
 Le format du contenu est en JSON, ainsi le contenu débute après l'introduction d'un premier caractère du type '{' ou '[' juste après l'en-tête.
 
+
 Permet au client de s'authentifier, lui permettant d'avoir accés aux autres requêtes.
-Il indique 
+
+https://www.json.org/json-fr.html 
+
+## 2. Requêtes
+
 
 ### 2.1 NEW : Prise en charge d'une commande
 

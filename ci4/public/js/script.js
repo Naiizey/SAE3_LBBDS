@@ -468,11 +468,6 @@ function lstCommandesVendeur(){
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-function liensLstClients(event){
-    event.cancelBubble = true;
-    window.location.assign(`${base_url}/espaceClient/admin/${event.currentTarget.clientA}`);
-}
-
 function lstClients(){
     // Récupération de toutes les lignes de la liste des clients
     var lignes=document.getElementsByClassName("lignesClients");
@@ -485,8 +480,7 @@ function lstClients(){
         let ligneA=lignes.item(numLigne);
         let clientA=numClients.item(numLigne).textContent;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
-        ligneA.addEventListener("click", liensLstClients);
-        ligneA.clientA=clientA;
+        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/espaceClient/admin/${clientA}`;});
         let anchorA=anchors.item(numLigne);
         // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
         anchorA.addEventListener("click", () => {
@@ -673,7 +667,7 @@ function cataloguePrice(){
     //On récupère la barre de progression
     range = document.querySelector(".slider .progress");
     //Gestion de la différence maximale entre les prix dans le slider
-    let priceGap = 5;
+    let priceGap = 1;
 
     //Event listeners sur les inputs de type range et de prix
     priceInput.forEach(() => {
@@ -711,11 +705,11 @@ function cataloguePrice(){
         }
     }
 
-    //Fonctions de gestion du slider
+    //Fonction de gestion du slider
     function fctRangeInput(e){
         //Récupère les valeurs des inputs de slider pour obtenir le min et le max
         let minVal = parseInt(rangeInput[0].value),
-        maxVal = parseInt(rangeInput[1].value);
+        maxVal = parseInt(rangeInput[1].value) + 1;
         //Vérification que la différence entre les prix est inférieur au gap
         if (maxVal - minVal < priceGap) {
             //Si la target a pour classe range-min alors on modifie la valeur de l'input du minimum du slider

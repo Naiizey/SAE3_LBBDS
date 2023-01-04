@@ -9,6 +9,15 @@
         })(window,document,'script','dataLayer','GTM-PCVRSM3');</script>
         <!-- End Google Tag Manager -->
 
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZFWDD0W22"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-ZZFWDD0W22');
+        </script>
+
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/css/style.css" />

@@ -541,14 +541,14 @@ class Home extends BaseController
         $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
         $data['estVendeur']=$estVendeur;
         if (!isset($data['infosCommande'][0]->num_commande)) {
-            throw new Exception("Le numéro de commande entré n'existe pas.", 404);
+            throw new Exception("Le numéro de commande renseigné n'existe pas.", 404);
         } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
-            throw new Exception("Cette commande n'est pas associé à votre compte.", 404);
+            throw new Exception("Cette commande n'est pas associée à votre compte.", 404);
         } else {
             $data['num_compte'] = $data['infosCommande'][0]->num_compte;
         }
         $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
-
+      
         return view('panier/details.php', $data);
     }
 
@@ -589,7 +589,7 @@ class Home extends BaseController
             
             
         }
-        else throw new Exception("Vous ne pouvez pas être a cette étape sans avoir valider votre panier et vos adresses de factutation et de livraison",401);
+        else throw new Exception("Vous n'avez pas validé votre panier, vos adresses de facturation et de livraison",401);
     }
 
     //Tant que commande n'est pas là
@@ -623,12 +623,11 @@ class Home extends BaseController
         $data["role"]="admin";
         $data["clients"]=model("\App\Models\Client")->findAll();
 
-        $get=$this->request->getPost();
+        $post=$this->request->getPost();
 
-        if(!empty($get)){
-            if(isset($get["Timeout"]) && $get["Timeout"]==1){
-                return view("page_accueil/admin.php", $data);
-            }
+        if(!empty($post)){
+            $sanctions = model("\App\Models\SanctionTemp");
+            $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
         }
 
         return view("page_accueil/lstClients.php",$data);

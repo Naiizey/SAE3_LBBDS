@@ -99,7 +99,7 @@ CREATE TABLE _panier
 CREATE TABLE _panier_client
 (
     num_panier INT NOT NULL,
-    num_compte INT NOT NULL
+    num_compte INT NOT NULL UNIQUE
 );
 
 
@@ -115,14 +115,15 @@ CREATE TABLE _panier_visiteur
 
 CREATE TABLE _commande
 (
-    num_panier INT NOT NULL,
-    num_commande VARCHAR(50) UNIQUE NOT NULL,
+
+    num_commande VARCHAR(50) UNIQUE NOT NULL PRIMARY KEY ,
     date_commande DATE NOT NULL,
     date_expedition DATE,
     date_plateformeReg DATE,
     date_plateformeLoc DATE,
     date_arriv DATE,
-    id_a INT NOT NULL --attendu_a
+    id_a INT NOT NULL, --attendu_a
+    num_compte INT NOT NULL --fait_par
 
 ) ;
 
@@ -135,7 +136,6 @@ CREATE TABLE _produit
     prix_ht FLOAT NOT NULL,
     prix_ttc FLOAT NOT NULL,
     description_prod VARCHAR UNIQUE NOT NULL,
-    lien_image_prod VARCHAR NOT NULL,
     publication_prod BOOLEAN NOT NULL,
     stock_prod INT NOT NULL,
     moyenne_note_prod FLOAT NOT NULL,
@@ -159,14 +159,25 @@ CREATE TABLE _retour(
     motif VARCHAR(50) NOT NULL,
     etat_remb BOOLEAN NOT NULL,
     conf_ret BOOLEAN NOT NULL,
-    num_panier INT NOT NULL --renvoie
+    num_commande varchar NOT NULL --renvoie
+);
+
+CREATE TABLE _note
+(
+    id_note SERIAL,
+    id_prod INT NOT NULL,--recoit
+    num_compte INT NOT NULL,--donne
+    note_prod FLOAT NOT NULL,
+    CONSTRAINT _note_pk PRIMARY KEY (id_note)
+
+
 );
 
 CREATE TABLE _avis(
     num_avis SERIAL PRIMARY KEY ,
     contenu_av VARCHAR NOT NULL,
-    id_prod INT NOT NULL, -- sur,
-    num_compte INT NOT NULL --auteur
+    date_av DATE NOT NULL,
+    id_note INT NOT NULL --est_detaille_par
 );
 
 CREATE TABLE _image_avis(
@@ -180,10 +191,7 @@ CREATE TABLE _promotion(
     texte_promo text NOT NULL ,
     banniere VARCHAR(50) NOT NULL,
     remise int NOT NULL ,
-    date_debut DATE NOT NULL ,
-    heure_debut TIME NOT NULL ,
-    date_fin DATE NOT NULL ,
-    heure_fin DATE NOT NULL
+    id_duree INT NOT NULL
 );
 
 CREATE TABLE _code_reduction(
@@ -191,10 +199,34 @@ CREATE TABLE _code_reduction(
     code_reduction VARCHAR(50) UNIQUE NOT NULL,
     montant_reduction FLOAT NOT NULL,
     pourcentage_reduction FLOAT NOT NULL,
+    id_duree INT NOT NULL
+);
+
+CREATE TABLE _duree(
+    id_duree SERIAL PRIMARY KEY,
     date_debut DATE NOT NULL,
     heure_debut TIME NOT NULL,
     date_fin DATE NOT NULL,
     heure_fin TIME NOT NULL
+);
+
+CREATE TABLE _sanction_temporaire(
+    id_sanction SERIAL PRIMARY KEY,
+    raison VARCHAR(50) NOT NULL,
+    id_duree INT NOT NULL,
+    num_compte INT NOT NULL
+);
+
+CREATE TABLE _image_prod(
+    id_prod int,
+    num_image SERIAL,
+    lien_image varchar(500),
+    estInterne boolean DEFAULT false,
+
+    CONSTRAINT pk_image_prod PRIMARY KEY (id_prod, num_image),
+    CONSTRAINT fk_image_prod FOREIGN KEY (id_prod) REFERENCES _produit(id_prod)
+
+
 );
 
 
@@ -203,7 +235,8 @@ CREATE TABLE _code_reduction(
 -                                                            -
 --------------------------------------------------------------*/
 
---Classe association entre _panier 1 - * et _code_reduction qui se nomme _reduire
+--Classe association
+-- entre _panier 1 - * et _code_reduction qui se nomme _reduire
 
 CREATE TABLE _reduire(
     num_panier INT NOT NULL,
@@ -230,17 +263,8 @@ CREATE TABLE _pouce
 
 
 
---Classe association entre _compte * - *_produit qui se nomme note ✅
-CREATE TABLE _note
-(
-    id_prod INT NOT NULL,
-    num_compte INT NOT NULL,
-    note_prod FLOAT NOT NULL,
-    CONSTRAINT _note_pk PRIMARY KEY (id_prod, num_compte),
 
-    CONSTRAINT _note_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod),
-    CONSTRAINT _note_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte)
-);
+
 
 
 --Classe association entre _compte * - *_produit qui se nomme _liste_souhait ✅
@@ -268,6 +292,21 @@ CREATE TABLE _refere
     CONSTRAINT _refere_panier_fk FOREIGN KEY (num_panier) REFERENCES _panier(num_panier),
     CONSTRAINT _refere_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod)
 );
+
+
+CREATE TABLE _refere_commande
+(
+    id_prod int not null,
+    num_commande varchar NOT NULL,
+    qte_panier INT NOT NULL,
+    prix_fixeeTTC FLOAT not null,
+    CONSTRAINT _refere_commande_pk PRIMARY KEY (id_prod, num_commande),
+
+
+    CONSTRAINT _refere_commande_fk FOREIGN KEY (num_commande) REFERENCES _commande(num_commande),
+    CONSTRAINT _refere_commande_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod)
+);
+
 
 
 CREATE TABLE _est_en_remise_sous
@@ -308,19 +347,16 @@ ALTER TABLE _panier_client ADD CONSTRAINT _panier_compte_fk FOREIGN KEY (num_com
 -- PRIMARY KEY _panier_visiteur
 --ALTER TABLE _panier_visiteur ADD CONSTRAINT _panier_visiteur_pk PRIMARY KEY (num_compte);
 
--- PRIMARY KEY _commande
-ALTER TABLE _commande ADD CONSTRAINT _commande_pk PRIMARY KEY (num_panier);
+
 
 --Association 1..* entre _adresse et _commande ✅ (attendu_a)
 ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_fk FOREIGN KEY (id_a) REFERENCES _adresse(id_a);
 
 --Association 1..* entre _commande et _retour (rembourse) ✅
-ALTER TABLE _retour ADD CONSTRAINT _retour_commande_fk FOREIGN KEY (num_panier) REFERENCES _commande(num_panier);
+ALTER TABLE _retour ADD CONSTRAINT _retour_commande_fk FOREIGN KEY (num_commande) REFERENCES _commande(num_commande);
 
 --Association 1..* entre _compte et _avoirs () ✅
 ALTER TABLE _avoirs ADD CONSTRAINT _avoirs_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
-
-
 
 
 
@@ -331,12 +367,11 @@ ALTER TABLE _avoirs ADD CONSTRAINT _avoirs_compte_fk FOREIGN KEY (num_compte) RE
 --Association 1..* entre _compte et _adresse_livraison ✅
 --ALTER TABLE _adresse_livraison ADD CONSTRAINT _adresse_facturation_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
---Association 1..* entre _produit et _avis (sur) ✅
-ALTER TABLE _avis ADD CONSTRAINT _avis_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod);
 
--- Association *..1 entre _compte et _avis (auteur) ✅
+
+-- Association *..1 entre _compte et _avis (est_detaille_par) ✅
 -- ALTER TABLE _avis ADD CONSTRAINT _avis_pk PRIMARY KEY (id_prod,num_compte);
-ALTER TABLE _avis ADD CONSTRAINT _avis_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+ALTER TABLE _avis ADD CONSTRAINT _avis_note_fk FOREIGN KEY (id_note) REFERENCES _note(id_note);
 
 -- Association *..1 entre catégorie et catégorie (sous) ✅
 ALTER TABLE _sous_categorie ADD CONSTRAINT _sous_categorie_categorie_code_cat_fk FOREIGN KEY (code_cat) REFERENCES _categorie(code_cat);
@@ -344,6 +379,8 @@ ALTER TABLE _sous_categorie ADD CONSTRAINT _sous_categorie_categorie_code_cat_fk
 -- Association *..1 entre adresse_livraison et commande ✅
 ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY (id_a) REFERENCES _adresse_livraison(id_adresse_livr);
 
+--Association * -- 1 entre _commande et _compte
+ALTER TABLE _commande ADD CONSTRAINT fk_commande_compte FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
 -- Association 1..0.3 entre avis et image_avis
 ALTER TABLE _image_avis ADD CONSTRAINT _image_avis_avis_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
@@ -356,7 +393,11 @@ ADD CONSTRAINT _adresse_facturation_id_a_fk FOREIGN KEY (id_a) REFERENCES _adres
 ALTER TABLE _adresse_livraison
 ADD CONSTRAINT _adresse_livraison_id_a_fk FOREIGN KEY (id_a) REFERENCES _adresse(id_a);
 
-
+ALTER TABLE _note
+    --containte avec _produit (recoit)
+    ADD CONSTRAINT _note_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod),
+    --contrainte avec _compte (donne)
+    ADD CONSTRAINT _note_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
 
 
@@ -368,8 +409,19 @@ ALTER TABLE _panier_visiteur ADD CONSTRAINT _panier_visiteur_pk PRIMARY KEY (num
 ALTER TABLE _panier_client ADD CONSTRAINT _panier_client_fk FOREIGN KEY (num_panier) REFERENCES _panier(num_panier);
 ALTER TABLE _panier_client ADD CONSTRAINT _panier_client_pk PRIMARY KEY (num_panier);
 
--- foreign key entre _commande et _panier_client ✅
-ALTER TABLE _commande ADD CONSTRAINT _commande_panier_client_fk FOREIGN KEY (num_panier) REFERENCES _panier_client(num_panier);
+
+
+-- association entre _promotion et _duree
+ALTER TABLE _promotion ADD CONSTRAINT _promotion_duree_fk FOREIGN KEY (id_duree) REFERENCES _duree(id_duree);
+
+-- association entre _code_reduction et _duree
+ALTER TABLE _code_reduction ADD CONSTRAINT _code_reduction_duree_fk FOREIGN KEY (id_duree) REFERENCES _duree(id_duree);
+
+-- association entre _sanction_temporaire et _duree
+ALTER TABLE _sanction_temporaire ADD CONSTRAINT _sanction_temporaire_duree_fk FOREIGN KEY (id_duree) REFERENCES _duree(id_duree);
+
+-- asociation entre _sanction_temporaire et _compte
+ALTER TABLE _sanction_temporaire ADD CONSTRAINT _sanction_temporaire_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
 /* -----------------------------------------------------------
 -                  Trigger schema                        -
@@ -381,7 +433,7 @@ ALTER TABLE _commande ADD CONSTRAINT _commande_panier_client_fk FOREIGN KEY (num
 CREATE OR REPLACE FUNCTION pouce_check() RETURNS TRIGGER AS
 $$
 BEGIN
-    PERFORM num_compte FROM _avis inner join _pouce on _avis.num_compte = new.num_compte WHERE _avis.num_avis = new.num_avis;
+    PERFORM num_compte FROM _avis natural join _note inner join _pouce on _note.num_compte = new.num_compte WHERE _avis.num_avis = new.num_avis;
     IF FOUND THEN
         RAISE EXCEPTION 'IMPOSSIBLE DE S''AUTO LIKE';
     END IF;
@@ -420,3 +472,35 @@ CREATE OR REPLACE FUNCTION creerPanier() RETURNS TRIGGER AS
     $$ language plpgsql;
 CREATE tRIGGER beforeInsertPanierCli BEFORE INSERT ON _panier_client FOR EACH ROW EXECUTE PROCEDURE creerPanier ();
 CREATE tRIGGER beforeInsertPanierVis BEFORE INSERT ON _panier_visiteur FOR EACH ROW EXECUTE PROCEDURE creerPanier ();
+
+
+CREATE OR REPLACE FUNCTION limiteImageProd() RETURNS TRIGGER AS
+    $$
+    DECLARE
+        compteur int;
+    BEGIN
+        SELECT count(num_image) into compteur from sae3._image_prod natural join sae3._produit where new.id_prod=sae3._produit.id_prod;
+        IF compteur < 4 THEN
+            return new;
+        ELSE
+            raise exception 'Limite d''images atteinte';
+        end if;
+
+
+end
+$$ language plpgsql;
+CREATE TRIGGER nouvelleImageProd BEFORE INSERT ON _image_prod FOR EACH ROW EXECUTE PROCEDURE limiteImageProd();
+
+CREATE OR REPLACE FUNCTION  frozenPrix() RETURNS TRIGGER AS
+    $$
+        BEGIN
+            IF (new.prix_fixeettc != old.prix_fixeettc) THEN
+                raise notice 'Tentative de changer un valeur constante ';
+                new.prix_fixeettc = old.prix_fixeettc;
+            end if;
+        return new;
+end
+    $$ language plpgsql;
+
+
+

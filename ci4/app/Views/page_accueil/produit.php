@@ -64,8 +64,8 @@
                                 <img src="<?= $prod -> lienimage ?>" />
                             </li>
                         </ul>
-                        <div>
-                            <img src="<?= $prod -> lienimage ?>" />
+                        <div class="zoom" onmousemove="zoomProduit(event)" style="background-image: url(<?= $prod -> lienimage ?>)">
+                            <img src="<?= $prod -> lienimage ?>"/>
                         </div>
                     </div>
                     <div class="divDroite">
@@ -73,8 +73,13 @@
                             <h2><?= ucfirst($prod -> intitule)?></h2>
                             <p class="ParaDescProduit"><?= ucfirst($prod->description) ?></p>
                             <section class="sectionAvis">
-                                <h4>Avis clients:</h4>
-                                <img src="<?=base_url() ?>/images/produit/avis.png"/>
+                                <a href="#divLesAvis"><h4>Avis clients :</h4></a>
+                                <?php if (empty($avis)): ?>
+                                <h4 class="aucunAvis">Aucun avis</h4>
+                                <?php else : ?>
+                                <div class="noteAvis"><?= $cardProduit->notationEtoile($prod->moyenne) ?></div>
+                                <p><?= $prod->moyenne ?>/5</p>
+                                <?php endif ?>
                             </section>
                         </div>
                         <div class="divAcheterProduit">
@@ -137,6 +142,55 @@
                         <?php endforeach; ?>
                     </ul>
                 </section>
+                <div class="divAvis">
+                    <h2>Avis</h2>
+                    <hr>
+                    <?php if (empty($avis)): ?>
+                    <p id="divLesAvis">Aucun utilisateur n'a laissé d'avis sur cet article.</p>
+                    <?php else : ?>
+                    <div id="divLesAvis">
+                        <div class="moyennesAvis">
+                            <?php for ($i=5; $i > 0 ; $i--) : ?>
+                            <div>
+                                <p class="numAvis"><?= $i ?></p>
+                                <progress class="barreAvis" value="0" max="1"></progress>
+                                <p class="pAvis"></p>
+                            </div>
+                            <?php endfor; ?>
+                        </div>
+                        <div class="divListeAvis">
+                            <?php 
+                                end($avis);
+                                $fin = key($avis);
+                                foreach ($avis as $cle => $unAvis): 
+                            ?>
+                            <div class="divUnAvis">
+                                <section class="sectionUnAvis">
+                                    <div class="divNomCommentaire">
+                                        <img src="<?=base_url() ?>/images/header/profil.svg">
+                                        <div class="divNomDate">
+                                            <h3><?= $unAvis->pseudo ?> : </h3>
+                                            <p>Publié le <?= $unAvis->date_av ?></p>
+                                        </div>
+                                    </div>
+                                    <div class="divAvisCommentaire">
+                                        <div class="noteAvis"><?= $cardProduit->notationEtoile($unAvis->note_prod) ?></div>
+                                        <p><?= $unAvis->note_prod ?>/5</p>
+                                    </div>
+                                </section>
+                                <p><?= $unAvis->contenu_av ?></p>
+                                <?php if ($cle != $fin): ?>
+                                <hr>
+                                <?php endif; ?>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php endif ?>
+                </div>
             </section>
         </main>
 <?php require("footer.php"); ?>
+<script>
+    avisProduit();
+</script>

@@ -117,6 +117,79 @@ function dragNDrop(){
     }
 }
 
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                  PreviewCSV                                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+/**
+ * Fonction qui va récupérer à l'aide du controlleur Import.php la première ligne du fichier CSV
+ * @returns {array} tableau contenant les entêtes du fichier CSV
+ */
+function getentete(){
+    console.log("getentete");
+    let xhttp = new XMLHttpRequest();
+    console.log("sending request")
+    xhttp.open("POST", "Import.php", true);
+    console.log("request sent")
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    console.log("request header set")
+    xhttp.send("entete=1");
+    console.log("request sent")
+    xhttp.onreadystatechange = function() {
+        console.log("ready state changed")
+        if (this.readyState == 4 && this.status == 200) {
+            return this.responseText;
+        }
+    }
+}
+
+
+/**
+ * Fonction qui permet de prévisualiser un fichier CSV
+ * @returns {void}
+ */
+function previewCSV(){
+    let preview = document.getElementById("preview");
+    //ajout d'un event listener sur le changement de fichier
+    document.getElementById("file").addEventListener("change", function (e) {
+        preview.innerHTML = " chargement du fichier...";
+        //récupération du fichier
+        let file = e.target.files[0];
+        //création d'un objet FileReader
+        let reader = new FileReader();
+        //lecture du fichier
+        //prend l'en-tête du fichier et l'ajoute au tableau
+        let entete = getentete();
+        reader.readAsText(file);
+        //ajout d'un event listener sur le chargement du fichier
+        reader.addEventListener("load", function () {
+            preview.innerHTML = "<br><h3>Prévisualisation</h3><br>";
+            var table = document.createElement("table");
+            let csv = reader.result;
+            //création du tableau
+            let lines = csv.split("\n");
+            for (let i = 0; i < 10 && i < lines.length; i++) {
+                let line = lines[i];
+                let cells = line.split(";");
+                let row = table.insertRow(-1);
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].length > 20) {
+                        cells[j] = cells[j].substring(0, 20) + "...";
+                    }
+                    let cell = row.insertCell(-1);
+                    cell.innerHTML = cells[j];
+                }
+            }
+            preview.appendChild(table);
+       });
+    });
+}
+
+
+
+
 
 //TODO: voir et cacher le mot de passe avec un bouton (un neuil) dans l'<input>
 
@@ -313,6 +386,7 @@ function updatePriceTotal() {
     //Récupération et application du code de réduction 
     let reduc = document.querySelector(".bloc-erreurs .paragraphe-valid span");
    
+
     if (reduc && reduc.length !== 0)
     {
         reduc = reduc.innerHTML;
@@ -385,6 +459,35 @@ function lstCommandesVendeur(){
         let commandeA=numCommandes.item(numLigne).textContent;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail de la commande récupérée juste avant, en tant que vendeur
         ligneA.addEventListener("click", () => {window.location.href = `${base_url}/vendeur/commandesCli/detail/${commandeA}`;});
+    }
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                           Liens aux lignes de lstClients                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+function lstClients(){
+    // Récupération de toutes les lignes de la liste des clients
+    var lignes=document.getElementsByClassName("lignesClients");
+    // Récupération de tous les numéros de clients
+    var numClients=document.getElementsByClassName("numClients");
+    // Récupération de tous les anchors de la liste des clients
+    var anchors=document.getElementsByClassName("anchorClient");
+
+    for (let numLigne=0; numLigne<lignes.length; numLigne++){
+        let ligneA=lignes.item(numLigne);
+        let clientA=numClients.item(numLigne).textContent;
+        // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
+        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/espaceClient/admin/${clientA}`;});
+        let anchorA=anchors.item(numLigne);
+        // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
+        anchorA.addEventListener("click", () => {
+            var a = new AlerteAlizon(`Sanctionner le client n°${clientA} ?`,current_url, "Quelle type de sanction ?");
+            a.ajouterBouton("Bannir temporairement", "normal-button rouge");
+            a.affichage()
+        })
     }
 }
 
@@ -655,7 +758,7 @@ function getParentNodeTilClass(element){
 
 var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFiltre,voirPlus) {
     this.form = formFilter;
-    
+    this.erroBloc=document.querySelector("div.bloc-erreur-liste-produit");
     this.champRecherche = champRecherche;
     this.listeProduit=listeProduit
     this.suppressionFiltre=suppressionFiltre;
@@ -667,19 +770,21 @@ var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFi
         this.send = async (replace=true) => {
         //Récupère les valeurs des filtres et transformation en string de type url à laquelle ajoute la recherche
         var champsGet= new URLSearchParams(new FormData(self.form));
-        
+        console.log(champsGet.toString());
         if(!self.champRecherche.value==""){
             champsGet.append("search",self.champRecherche.value);
         }
-        /*
+        //FIXME: problème de précison avec min et max. arrondir pour éviter les problèmes ?
         if(self.form.elements["prix_min"].value===self.form.elements["prix_min"].min && self.form.elements["prix_max"].value===self.form.elements["prix_max"].max){
+           
             champsGet.delete("prix_min");
             champsGet.delete("prix_max");
         }
-        */
+        
         champsGet=champsGet.toString();
         if(champsGet.length!=0){
             champsGet="?"+champsGet;
+            //champsGet="";
         }
         console.log("http://localhost/Alizon/ci4/public/produits/page/"+((replace)?1:self.currPage)+champsGet);
          
@@ -700,16 +805,17 @@ var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFi
                     self.voirPlus.classList.remove("hidden");
                 }
                 result["resultat"].forEach(produit => self.listeProduit.innerHTML += produit);
+                self.erroBloc.classList.add("hidden");
                 //reexe, afin que le listener revienne sur les cartes
                 clickProduit();
             }else{
-                self.listeProduit.innerHTML=`
-                <div class="bloc-erreur-liste-produit">
-                    <p class="paragraphe-erreur">
-                        ${result["message"]}
-                    </p>
-                <div class="erreur-liste-produit">
-                `;   
+             
+                self.erroBloc.classList.remove("hidden");
+                self.voirPlus.classList.add("hidden");
+                self.listeProduit.innerHTML="";
+                self.erroBloc.children[0].innerHTML=result["message"];
+               
+                
             }
             window.history.pushState({page:1},"Filtres",champsGet);
     
@@ -1115,7 +1221,7 @@ function menuCredit() {
             if (hover == false) { // verifie si le booléen est faux (ce qui veut dire que la souris n'est ni sur l'icône du profil ni sur le menu contextuel)
                 divHoverConnexion.style.display = "none"; // Dans ce cas, le menu contextuel est masqué
             }
-        }, 1000);
+        }, 1400);
         hover = false;
     })
 
@@ -1223,4 +1329,63 @@ class AlerteAlizon{
     }
 
     
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                 Zoom Produit                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+function zoomProduit(e) {
+    var zoomer = e.currentTarget;
+    e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
+    e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
+    x = offsetX/zoomer.offsetWidth*100
+    y = offsetY/zoomer.offsetHeight*100
+    zoomer.style.backgroundPosition = x + '% ' + y + '%';
+}
+
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                 Avis Produit                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+function avisProduit() {
+    let tabAvis = document.querySelectorAll(".divAvisCommentaire p"); // séléctionne les avis
+    let moyennes = [0, 0, 0, 0, 0]; // tableau des moyennes pour chaque étoile
+    // définit le nombre d'avis correspondant à telle étoile
+    tabAvis.forEach(element => {
+        for (let index = 0; index < 5; index++) {
+            // si note contenue entre 1 et 1.99 ; 2 et 2.99 ; ...
+            if ((parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) >= (index+1)) && (parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) < (index + 2))) {
+                moyennes[index] = moyennes[index] + 1; // ajoute 1 à l'étoile correspondante à l'avis
+            }
+        }
+    });
+
+    let lesBarres = document.querySelectorAll(".barreAvis"); // séléctionne les barres de progression 
+    // définit le max et la valeur pour chaque barre de progression
+    for (let index = (lesBarres.length-1); index > 0; index--) {
+        lesBarres[lesBarres.length-index-1].max = tabAvis.length; // max pour les barres de progression (nombre total d'avis)
+        lesBarres[lesBarres.length-index-1].value = moyennes[index];
+    }
+
+    let pourcentages = [0, 0, 0, 0, 0]; // tableau des pourcentages
+    let lesP = document.querySelectorAll(".pAvis"); // les p pour faire y ajouter les pourcentages afin de les faire apparaitre sur la page
+    // définit les pourcentages d'avis correspondant à tel nombre d'étoiles
+    for (let index = 0; index < moyennes.length; index++) {
+        pourcentages[index] = moyennes[index] / tabAvis.length * 100; //divise le nb d'avis par étoile par le nombre total d'avis afin d'avoir le pourcentage
+    }
+
+    let count = moyennes.length - 1; // index pour parcourir le tableau dans l'autre sens car l'index 0 des pourcentages correspond à l'index 4 des barres de progression
+    // place les pourcentages en parcourant le tableau 
+    for (let index = 0; index < moyennes.length; index++) {
+        lesP[index].textContent = pourcentages[count] + "%"; // ajoute au p le pourcentage
+        count = count - 1; // continue de parcourir le tableau dans l'autre sens 
+        if (count == -1) {
+            count = moyennes.length - 1; // réinitialise au cas où
+        }
+    }
 }

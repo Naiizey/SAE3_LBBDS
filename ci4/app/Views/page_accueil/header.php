@@ -62,9 +62,26 @@
     <script>
         const base_url = "<?= base_url() ?>";
     </script>
-    <body>
+    <body <?php if(isset($role)):?>
+                <?php if($role == "admin"):?>
+                    <?= "class=bodyAdmin" ?>
+                <?php endif;?>
+            <?php endif; ?>
+            <?php if(isset($estVendeur)):?>
+                <?php if($estVendeur == true):?>
+                    <?= "class=bodyVendeur" ?>
+                <?php endif;?>
+            <?php endif; ?>> 
         <header>
-            <div class="divHeaderAlizon">
+            <div class="divHeaderAlizon 
+                <?php if (isset($role)): ?>
+                    <?php if ($role == "admin"): ?> <?= "divHeaderAdmin" ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+                <?php if (isset($estVendeur)): ?>
+                    <?php if ($estVendeur == true): ?> <?= "divHeaderVendeur" ?>
+                    <?php endif; ?>
+                <?php endif; ?> ">
             <?php if ($controller != "Panier" && $controller != "Panier (Vide)" && $controller != "Compte Redirection" && $controller != "Livraisons" && $controller != "Paiement" && $controller != "Validation"): ?>
                     <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
                         <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
@@ -76,7 +93,7 @@
                         <h1>Alizon</h1>
                     </a>
             <?php endif; ?>
-                <?php if ($controller == "Panier" || $controller == "Panier (Vide)" || $controller == "Compte Redirection" || $controller == "Livraisons" || $controller == "Paiement" || $controller == "Validation"): ?>
+                <?php if ($controller == "Panier" || $controller == "Panier (Vide)" || $controller == "Compte Redirection" || $controller == "Livraisons" || $controller == "Facture" || $controller == "Paiement" || $controller == "Validation"): ?>
                     <div class="divSuivi">
                         <div class="<?= (($controller == "Panier" )?"etat-courant-commande":"") ?>">
                             <?= file_get_contents(dirname(__DIR__,3)."/public/images/header/panier.svg") ?>
@@ -88,9 +105,9 @@
                             <h3>Identification</h3>
                         </div>
                         <hr>
-                        <div class="<?= (($controller == "Livraisons" )?"etat-courant-commande":"") ?>">
+                        <div class="<?= (($controller == "Livraisons" || $controller == "Facture")?"etat-courant-commande":"") ?>">
                             <?= file_get_contents(dirname(__DIR__,3)."/public/images/header/carton.svg") ?>
-                            <h3>Livraison</h3>
+                            <h3>Adresses</h3>
                         </div>
                         <hr>
                         <div class="<?= (($controller == "Paiement" || $controller == "Validation")?"etat-courant-commande":"") ?>">

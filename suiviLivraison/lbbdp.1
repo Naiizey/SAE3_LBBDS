@@ -1,0 +1,33 @@
+.TH LBBDP 1 2022-12-15 "LBBDS Programmer's Manual"
+.SH NAME
+.TP
+lbbdp
+.SH SYNOPSIS
+.TP
+.nf
+.B lbbdp 
+.RB [ " \-cfhj " ]
+.SH DESCRIPTION
+.TP
+Protocol made by LBBDS used to track a delivery/order, used to make deliverer and client (marketplace, ecommerce, ...) communicate.
+.TP
+This protocol is unlikely to be used in real purpose as it's meant for a project and will be hard to adapt for other situations
+.TP
+Without any options, it will create errors, at least <options needed for the command to work>
+.SH OPTIONS
+.TP
+.B \-c
+Capacity of the delivery, deliverer as to fill in the capacity of his delivery in order to be able to take orders
+.TP
+.B \-f
+Path to the identification file, deliverer as to put a file path, the file will contain his id and password (not hashed)
+.TP
+.B \-h
+Display a help screnn and quit
+.TP
+.B \-j
+Simulation : Lenght of a day for the simulation in seconds
+.TP
+.SH ENVIRONMENT
+.TP
+Need to execute the lbbdp bash file before being able to use the command. For an optimal use, requires SUDO rights

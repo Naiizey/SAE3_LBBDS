@@ -24,7 +24,16 @@
                     <p>Besoin d'aide ?</p>
                 </a>
             </div>
-        <footer>            
+        <footer <?php if(isset($role)):?>
+                <?php if($role == "admin"):?>
+                    <?= "class=footerAdmin" ?>
+                <?php endif;?>
+            <?php endif; ?>
+            <?php if(isset($estVendeur)):?>
+                <?php if($estVendeur == true):?>
+                    <?= "class=footerVendeur" ?>
+                <?php endif;?>
+            <?php endif; ?>>            
             <div class="pc">
                 <a href="" class="lienCGU"> <!-- Lien mentions légales -->
                     <p>Mentions légales</p>

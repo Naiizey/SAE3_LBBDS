@@ -6,6 +6,7 @@
 
 html {
     height : 100%;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -14,6 +15,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+}
+
+.bodyAdmin, .bodyVendeur {
+    background-color: black;
 }
 
 /* Firefox */
@@ -64,6 +69,10 @@ header{
     justify-content: space-between;
     align-items: center;
     height: 5em;
+}
+
+.divHeaderAdmin, .divHeaderVendeur{
+    background-color: black;
 }
 
 header h2:hover {
@@ -410,6 +419,10 @@ footer {
     z-index: 100;
 }
 
+.footerAdmin, .footerVendeur{
+    background-color: black;
+}
+
 footer .pc {
     display: flex;
     justify-content: space-around;
@@ -581,7 +594,7 @@ footer a{
 
 .alerte-validation{
     animation-name: jmenvais;
-    animation-duration: 2.5s;
+    animation-duration: 4s;
     
     animation-direction: alternate;
     animation-iteration-count: 2;
@@ -604,8 +617,6 @@ footer a{
         opacity: 1;
     
     }
-     
-    
 }
 
 /*
@@ -986,7 +997,7 @@ header ul {
     margin-bottom: .5em;
 }
 
-.sectionCredit input, label, a {
+.sectionCredit input, label, a, .aucunAvis {
     font-family: "Montserrat-Regular";
     font-size: larger;
 }
@@ -1516,7 +1527,6 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 10em;
     width: 100%;
     flex-wrap: wrap;
 }
@@ -1617,7 +1627,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
     color: white;
 }
 
-.sectionRecommandationsPanierPC, .sectionRecommandationsPanierMobile {
+.sectionRecommandationsPanierPC, .sectionRecommandationsPanierMobile, .divAvis {
     border: solid 2px;
     border-color: #C6C6C6;  
     color: #164F57;
@@ -1823,12 +1833,15 @@ h3 > .lienPasArticlePanier {
     font-family: 'Montserrat-Regular';
 }
 
+.mainProduit a, .aucunAvis {
+    text-decoration: none;
+    color: #164F57;
+}
+
 .mainProduit img {
     width: 100%;
     height: auto;
-    border: solid 2px;
-    border-color: #164F57;
-    border-radius: 3px;
+    object-fit: cover;
 }
 
 .mainProduit article {
@@ -1852,6 +1865,16 @@ h3 > .lienPasArticlePanier {
     flex-direction: row;
     padding-right: 1em;
     width: 60%;
+}
+
+.divGauche img {
+    width: 50vh;
+    height: 50vh;
+}
+
+.divGauche ul img {
+    width: 15vh;
+    height: 15vh;
 }
 
 .divGauche ul {
@@ -1880,10 +1903,15 @@ h3 > .lienPasArticlePanier {
     margin-left: 1em;
 }
 
-.divDroite img {
+.divDroite img, .sectionUnAvis img {
     border: none;
-    width: 6em;
+    width: 3em;
     height: auto;
+}
+
+.divNomCommentaire img {
+    margin-right: 1em;
+
 }
 
 .divDroite h2 {
@@ -1898,7 +1926,11 @@ h3 > .lienPasArticlePanier {
 }
 
 .sectionAvis h4 {
-    margin: 0 1em 0 0;
+    margin: 0 .5em 0 0;
+}
+
+.sectionAvis p {
+    margin-left: .5em;
 }
 
 .divAcheterProduit {
@@ -1942,6 +1974,122 @@ h3 > .lienPasArticlePanier {
 
 .divQuantiteProduit + div h3 {
     margin: 0;
+}
+
+.sectionUnAvis {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.sectionUnAvis h3 {
+    margin: 0;
+}
+
+.sectionUnAvis img {
+    object-fit: contain;
+}
+
+.divNomDate {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.divAvisCommentaire {
+    display: flex;
+    align-items: center;
+}
+
+.sectionUnAvis p {
+    margin: 0;
+}
+
+.divNomCommentaire {
+    display: flex;
+}
+
+.divAvisCommentaire p {
+    margin-left: .5em;
+}
+
+.noteAvis {
+    display: flex;
+    align-items: center;
+}
+
+.noteAvis img {
+    width: 1.5em;
+    height: auto;
+}
+
+.divListeAvis {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.divUnAvis p {
+    text-align: justify;
+    margin-bottom: 0;
+}
+
+.divAvis hr {
+    background-color: #164F57;
+    margin: 1em 0;
+}
+
+#divLesAvis {
+    display: flex;
+    justify-content: space-between;
+}
+
+.divUnAvis hr {
+    background-color: #164F57;
+    margin: 1em 0;
+}
+
+.notation-card {
+    width: 20%;
+}
+
+.moyennesAvis {
+    width: 35%;
+}
+
+.moyennesAvis div {
+    display: flex;
+    align-items: center;
+}
+
+.moyennesAvis p {
+    margin: .7em 0;
+}
+
+.numAvis {
+    flex-basis: 7%;
+}
+
+.pAvis {
+    flex-basis: 13%;
+}
+
+.moyennesAvis progress {
+    background-color: #D9D9D9;
+    height: 10px;
+    width: 75%;
+    border: none;
+    border-radius: 4px;
+    margin: .5em 0;
+    flex-basis : 80%
+}
+
+.moyennesAvis progress::-moz-progress-bar 
+{ 
+    background: #FFCA28;
+    height: 10px;
+    border-radius: 4px;
 }
 
 @media screen and (max-width: 991px){
@@ -2096,7 +2244,7 @@ main div.card-produit-ext:hover{
 }
 
 .notation-card{
-    background-color: rgba(0, 0, 0, 61%);
+    background-color: #164F57;
     width: 100%;
     height: 1.75rem;
     display: flex;
@@ -2660,6 +2808,10 @@ a.fleche-page{
     background-color: transparent;
 }
 
+.bloc-erreur-liste-produit.hidden{
+    display: none;
+}
+
 @media (max-width: 1400px) {
     .partie-produits{
         width: 60%;
@@ -2788,52 +2940,58 @@ a.fleche-page{
 }
 
 /*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃          Page pour lister les commandes (lstCommandesVendeur.php & lstCommandesCli.php)         ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃          Page pour lister les commandes (lstCommandesVendeur.php, lstCommandesCli.php & lstClients.php)         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-#divLstCommandes{
+.divLst{
     font-family: "Montserrat-Regular";
     border: solid 2px #C6C6C6;
     background-color: white;
 }
 
-#divLstCommandes h2{
+.divLstCommandes h2{
     margin: 0.5em 0;
 }
 
-#tableLstCommandes{
+.tableLst{
     width: 100%;
     border-collapse: collapse;
 }
 
-#tableLstCommandes thead{
+.tableLst thead{
     background-color: #D9D9D9;
 }
 
-#tableLstCommandes tr{
+.tableLst tr{
     height: 3em;
 }
 
-#tableLstCommandes tbody tr{
+.tableLst tbody tr{
     border-bottom: 3px solid #404E58;
 }
 
-#tableLstCommandes tbody tr:hover{
+.tableLst tbody tr:hover{
     cursor: pointer;
     outline: none;
     background-color: #f3f3f3;
 }
 
-#tableLstCommandes tbody tr:last-child{
+.tableLst tbody tr:last-child{
     border-bottom: none;
 }
 
-#tableLstCommandes th, #tableLstCommandes td{
+.tableLst th, .tableLst td{
     width: 5em;
 }
 
+.lignesClients .anchorClient{
+    background-color: #571616;
+    width: 2em;
+    height: 2em;
+    margin: auto;
+}
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -2939,16 +3097,11 @@ progress::-moz-progress-bar
 
 .divDetail hr, .divDroiteDetail hr {
     background-color: #164F57;
-    margin-bottom: .5em;
 }
 
 .divDroiteDetail > div {
     background-color: white;
     border: solid 2px #C6C6C6;
-}
-
-.divBasPageDetail h2 {
-    margin-bottom: .6em;
 }
 
 .divBasPageDetail {
@@ -3276,3 +3429,107 @@ progress::-moz-progress-bar
     text-align: center;
 }
 
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                             Page admin (admin.php)                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.sectionAdmin div {
+    display: grid;
+    column-gap: 1em;
+}
+
+.sectionAdmin h3 {
+    grid-column-start: 1;
+    grid-column-end: 6;
+    text-align: left;
+    margin: 0.5em 0;
+    font-family: 'Montserrat-Medium';
+}
+
+.sectionAdmin a {
+    background-color: #3997A3;
+    border-radius: 7px;
+    color: white;
+    padding: 0.5em 1em;
+}
+
+.sectionAdmin a:hover {
+    background-color: #164F57;
+    color: white;
+}
+
+/* Gestion de comptes */
+.sectionAdmin a:nth-child(2) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.sectionAdmin a:nth-child(3) {
+    grid-column-start: 3;
+    grid-column-end: 6;
+}
+
+/* Bannissements */
+.sectionAdmin a:nth-child(5) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.sectionAdmin a:nth-child(6) {
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+.sectionAdmin a:nth-child(7) {
+    grid-column-start: 4;
+    grid-column-end: 6;
+}
+
+/* Commentaires signalés */
+.sectionAdmin a:nth-child(9) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.sectionAdmin a:nth-child(10) {
+    grid-column-start: 2;
+    grid-column-end: 6;
+}
+
+/* Avertissements */
+.sectionAdmin a:nth-child(12) {
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.sectionAdmin a:nth-child(13) {
+    grid-column-start: 4;
+    grid-column-end: 6;
+}
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                  Zoom produit                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+div.zoom {
+    cursor: zoom-in;
+    object-fit: cover;
+    width: 50vh;
+    height: 50vh;
+    border: solid 2px;
+    border-color: #164F57;
+    border-radius: 3px;
+  }
+  
+  div.zoom img:hover {
+    opacity: 0;
+  }
+  
+  div.zoom img {
+    transition: opacity 0.5s;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }

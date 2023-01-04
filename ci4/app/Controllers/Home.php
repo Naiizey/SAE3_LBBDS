@@ -6,7 +6,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Validation\Validation;
 use Exception;
 
-use function PHPUnit\Framework\throwException;
+
 
 class Home extends BaseController
 {
@@ -28,13 +28,16 @@ class Home extends BaseController
         if (session()->has("just_connectee") && session()->get("just_connectee")==true) {
             session()->set("just_connectee", false);
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Vous êtes connecté !");
+        } else if (session()->has("just_deconnectee") && session()->get("just_deconnectee")==true) {
+            session()->set("just_deconnectee", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Vous êtes déconnecté !");
         }
+        
+        
     }
 
     public function index()
     {
-        helper("cookie");
-        
         $data["controller"]= "Accueil";
         if(session()->has("just_ajoute") && session()->get("just_ajoute") == true) {
             $this->feedback=service("feedback");
@@ -175,9 +178,13 @@ class Home extends BaseController
             $data["quantitePanier"]=model("\App\Models\ProduitPanierVisiteurModel")->getQuantiteProduitByIdProd($idProduit, get_cookie('token_panier'));
         }
 
-        //Get produit
+        //Get produituk
         $prodModel = model("\App\Models\ProduitDetail");
         $result = $prodModel->find($idProduit);
+
+        // Avis/commentaires
+        $data['cardProduit']=service("cardProduit");
+        $data['avis']=model("\App\Models\Commentaires")->getCommentairesByProduit($idProduit);
 
         //Affichage selon si produit trouvé ou non
         if ($result == null) {
@@ -191,6 +198,7 @@ class Home extends BaseController
     }
 
 
+    //Nombre maximal de produits par page
     private const NBPRODSPAGECATALOGUE = 20;
     #FIXME: comportement href différent entre $page=null oe $page !=null
     
@@ -201,47 +209,37 @@ class Home extends BaseController
             session()->set("just_ajoute", false);
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Article ajouté");
         }
-        $filters=$this->request->getGet();
-        $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
-        $data['cardProduit']=service("cardProduit");
-        $data['categories']=model("\App\Models\CategorieModel")->findAll();
-        $data["controller"] = "Catalogue";
-        $data['prods'] = [];
-        $data['vide'] = false;
-        $data['max_price'] = $modelProduitCatalogue->selectMax('prixttc')->find()[0]->prixttc;
-        $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
-        if(isset($filters["prix_min"]) && isset($filters["prix_max"])){
-            $price = ["prix_min"=>$filters["prix_min"], "prix_max"=>$filters["prix_max"]];
-        }
-        
-        
 
+        //Récupération des filtres présents dans le get
+        $filters=$this->request->getGet();
+        //Ajout des filtres dans le tableau data pour les utiliser dans la vue
+        $data["filters"]=$filters;
+        //Chargement du modèle Produit Catalogue
+        $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
+
+        //Récupération des cartes produits
+        $data['cardProduit']=service("cardProduit");
+        //Chargement du modèle Categorie dans le tableau data pour l'utiliser dans la vue
+        $data['categories']=model("\App\Models\CategorieModel")->findAll();
+        //Set du controller Catalogue pour la vue
+        $data["controller"] = "Catalogue";
+        //Initialisation du tableau des produits à afficher
+        $data['prods'] = [];
+        //Initialisation de la variable indiquant si la page est vide
+        $data['vide'] = false;
+        //Chargement du prix maximal dans la Base de données pour utiliser dans la vue
+        $data['max_price'] = $modelProduitCatalogue->selectMax('prixttc')->find()[0]->prixttc;
+        //Chargement du prix minimal dans la Base de données pour utiliser dans la vue
+        $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;        
+        
+        //Chargement des produits selon les filtres
         $result=(new \App\Controllers\Produits())->getAllProduitSelonPage($page,self::NBPRODSPAGECATALOGUE,$filters);
         $data['prods']=$result["resultat"];
         $data['estDernier']=$result["estDernier"];
         
-        
-
-        if (isset($filters)) {
-            $filtersInline = "";
-            foreach ($filters as $key => $value) {
-                $filtersInline .= "&".$key."=".$value;
-            }
-            $filtersInline = substr($filtersInline, 0);
-            $filtersInline = "?".$filtersInline;
-            $data['filters'] = $filtersInline;
-        }
-
-        if (isset($price)) {
-            $priceInline = "";
-            foreach ($price as $key => $value) {
-                $priceInline .= "&".$key."=".$value;
-            }
-            $data['filters'] .= $priceInline;
-        }
-
-        if ($data['prods']) {
-            $data['vide'] = true;
+        //Si la page est vide, on affiche un message
+        if (!isset($data['prods']) || empty($data['prods'])) {
+            $data['message'] = $result["message"];
         }
 
         return view("catalogue.php", $data);
@@ -340,6 +338,76 @@ class Home extends BaseController
         return view('/page_accueil/espaceClient.php', $data);
     }
 
+    public function facture()
+    {
+        $post=$this->request->getPost();
+        $issues=[];
+        $data["controller"]='Facture';
+
+        //Partie copié de infoLivraison:
+        if(session()->has("numero")){
+            $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
+        }else throw new Exception("Vous n'êtes pas connecté",401);
+
+        $model=model("\App\Models\AdresseFacturation");
+        
+        $post=$this->request->getPost();
+        $adresse = new \App\Entities\Adresse();
+
+        if (isset($post["utilise_nom_profil"])) 
+        {
+            $data["profil_utilisee"]=true;
+            unset($post["utilise_nom_profil"]);
+        } 
+        else 
+        {
+            $data["profil_utilisee"]=false;
+        }
+
+        $this->validator = Services::validation();
+        $this->validator->setRules($model->rules);
+        
+        if (!empty($post)) 
+        {
+           
+        
+            $adresse->fill($post);
+            if (empty($issues) && $adresse->checkAttribute($this->validator) ) 
+            {
+                /* Cookie = problème de sécurité
+                $expiration=strtotime('+24 hours');
+                setcookie('id_adresse_facturation', $id_a, array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
+                */
+                $id_a=$model->enregAdresse($adresse);
+                session()->set("adresse_facturation",$id_a);
+                if(session()->has("adresse_livraison")){
+                    return redirect()->to("/paiement");
+                }else{
+                    return redirect()->to("/livraison");
+                }
+                
+            }
+        }
+        else if(session()->has("adresse_facturation")){
+            $adresse=model("\App\Models\AdresseFacturation")->find(session()->get("adresse_facturation"));
+            $data["dejaRempli"] = "Adresse facture validée et réutilisée";
+
+        }else if(session()->has("adresse_livraison"))
+        {
+            $adresse=model("\App\Models\AdresseLivraison")->find(session()->get("adresse_livraison"));
+            $data["dejaRempli"] = "Adresse livraison validée et réutilisée";
+        }
+
+        
+        
+        $data['adresse']=$adresse;
+        
+        $data['client']=$client;
+        $data['errors']=$this->validator;
+    
+        return view("templLivraison.php",$data);
+    }
+
     public function infoLivraison()
     {
         //Assetion Début
@@ -351,6 +419,7 @@ class Home extends BaseController
         $model=model("\App\Models\AdresseLivraison");
 
         $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
+      
         $data["controller"] = "Livraisons";
         $post=$this->request->getPost();
         $adresse = new \App\Entities\Adresse();
@@ -375,8 +444,20 @@ class Home extends BaseController
                 setcookie('id_adresse_livraison', $id_a, array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
                 */
                 session()->set("adresse_livraison",$id_a);
-                return redirect()->to("/paiement");
+                if(session()->has("adresse_facturation")){
+                    return redirect()->to("/paiement");
+                }else{
+                    return redirect()->to("/facture");
+                }
             }
+        }else if(session()->has("adresse_livraison")){
+            $adresse=model("\App\Models\AdresseLivraison")->find(session()->get("adresse_livraison"));
+            $data["dejaRempli"] = "Adresse livraison validée et réutilisée";
+            
+        }else if(session()->has("adresse_facturation")){
+            $adresse=model("\App\Models\AdresseFacturation")->find(session()->get("adresse_facturation"));
+            $data["dejaRempli"] = "Adresse facture validée et réutilisée";
+
         }
 
         $data['adresse']=$adresse;
@@ -395,10 +476,11 @@ class Home extends BaseController
         return view('page_accueil/lstCommandesCli.php', $data);
     }
 
-    public function lstCommandesVendeur()
+    public function lstCommandesVendeur( $estVendeur=false)
     {
         $data["controller"]= "Commandes Vendeur";
         $data['commandesVend']=model("\App\Models\LstCommandesVendeur")->findAll();
+        $data['estVendeur']=$estVendeur;
         return view('page_accueil/lstCommandesVendeur.php', $data);
     }
 
@@ -409,55 +491,47 @@ class Home extends BaseController
         $data["controller"]='Paiement';
 
         //Partie copié de infoLivraison:
+        if(session()->has("numero")){
+            $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
+        }else throw new Exception("Vous n'êtes pas connecté",401);
         
-        $model=model("\App\Models\AdresseFacturation");
-
-        $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
+        
         $post=$this->request->getPost();
-        $adresse = new \App\Entities\Adresse();
 
-        if (isset($post["utilise_nom_profil"])) {
-            $data["profil_utilisee"]=true;
-            unset($post["utilise_nom_profil"]);
-        } else {
-            $data["profil_utilisee"]=false;
-        }
+
 
         $this->validator = Services::validation();
-        $this->validator->setRules($model->rules);
-
-        if (!empty($post)) {
+   
+        
+        if (!empty($post)) 
+        {
             $paiement = service('authentification');
             $issues=$paiement->paiement($post);
-            $adresse->fill($post);
-            if (empty($issues) && $adresse->checkAttribute($this->validator) ) {
-                /* Cookie = problème de sécurité
-                $expiration=strtotime('+24 hours');
-                setcookie('id_adresse_facturation', $id_a, array('expires'=>$expiration,'path'=>'/','samesite'=>'Strict'));
-                */
-                $id_a=$model->enregAdresse($adresse);
-                session()->set("adresse_facturation",$id_a);
+           
+            if (empty($issues)) 
+            {
+               
+              
                 return redirect()->to("/validation");
+       
             }
-        }else if(session()->has("adresse_livraison")){
-            $adresse=model("\App\Models\AdresseLivraison")->find(session()->get("adresse_livraison"));
-            $data["dejaRempli"] = "Adresse livraison validée et réutilisée";
         }
-
-
-
+        
         $data['erreurs'] = $issues;
         $data['nomCB'] = (isset($_POST['nomCB'])) ? $_POST['nomCB'] : "";
         $data['numCB'] = (isset($_POST['numCB'])) ? $_POST['numCB'] : "";
         $data['dateExpiration'] = (isset($_POST['dateExpiration'])) ? $_POST['dateExpiration'] : "";
         $data['CVC'] = (isset($_POST['CVC'])) ? $_POST['CVC'] : "";
         
-        $data['adresse']=$adresse;
+       
+        
         $data['client']=$client;
         $data['errors']=$this->validator;
-        $data["formAdresse"]=view("formAdresse.php",$data);
+      
         return view('page_accueil/paiement.php', $data);
     }
+
+    
 
     public function detail($num_commande, $estVendeur=false)
     {
@@ -465,6 +539,7 @@ class Home extends BaseController
         $data['numCommande'] = $num_commande;
         $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
         $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
+        $data['estVendeur']=$estVendeur;
         if (!isset($data['infosCommande'][0]->num_commande)) {
             throw new Exception("Le numéro de commande entré n'existe pas.", 404);
         } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
@@ -472,7 +547,7 @@ class Home extends BaseController
         } else {
             $data['num_compte'] = $data['infosCommande'][0]->num_compte;
         }
-        $data['adresse']=model("\App\Models\ClientAdresseLivraison")->getAdresse($data['num_compte']);
+        $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
 
         return view('panier/details.php', $data);
     }
@@ -521,5 +596,41 @@ class Home extends BaseController
     public function commandeTest()
     {
         echo "oui";
+    }
+
+    public function admin()
+    {
+        $data['role'] = "admin";
+        $data["controller"] = "Administration";
+        return view("page_accueil/admin.php", $data);
+    }
+
+    public function destroySession()
+    {
+        $session=session();
+        $session->remove("numero");
+        $session->remove("nom");
+        $session->remove("ignorer");
+        $session->remove("adresse_facturation");
+        $session->remove("adresse_livraison");
+        $session->set("just_deconnectee",True);
+        
+        return redirect()->to("/");
+    }
+
+    public function lstClients(){
+        $data["controller"]="Liste des clients";
+        $data["role"]="admin";
+        $data["clients"]=model("\App\Models\Client")->findAll();
+
+        $get=$this->request->getPost();
+
+        if(!empty($get)){
+            if(isset($get["Timeout"]) && $get["Timeout"]==1){
+                return view("page_accueil/admin.php", $data);
+            }
+        }
+
+        return view("page_accueil/lstClients.php",$data);
     }
 }

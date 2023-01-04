@@ -62,18 +62,31 @@ class Panier extends BaseController
     } 
     */
 
-    #TODO: valeur pas update au début.  
-    public function getProduitPanierClient($context = null)
+         
+    /**
+     * @method getProduitPanierClient
+     * Récupére tout les produits du panier:
+     *  -Vérification pour le feedback
+     *  -Vérification et application des choix sur l'alerte fusion
+     *  -Récupération contenu du panier
+     *  Si panier rempli:
+     *         -Récupération code réduction
+     *
+     * @return void
+     */
+    public function getProduitPanierClient()
     {
         $data['model'] = model("\App\Models\ProduitCatalogue");
         $data['cardProduit'] = service("cardProduit");
-        //FIXME: SUS: has just_vide et justa_ajoute true ??
-        if(session()->has("just_vide") && session()->get("just_ajoute") == true) {
+        
+        if(session()->has("just_vide") && session()->get("just_vide") == true) {
             $this->feedback=service("feedback");
             session()->set("just_vide", false);
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Panier vidé");
         }
         $get=$this->request->getGet();
+
+        //Choix alerte fusion
         if(!empty($get)){
            
             if(isset($get["Suppression"]) && $get["Suppression"]==1 ){
@@ -91,8 +104,8 @@ class Panier extends BaseController
             }
            
         }
-
         $data["controller"] = "Panier";
+     
         $data['code'] = "";
         $data['classCacheDiv'] = "cacheNouveauPrix";
         $issues = [];
@@ -100,11 +113,8 @@ class Panier extends BaseController
         $modelCodeReduc = model("\App\Models\CodeReduction");
         $modelReducPanier = model("\App\Models\ReducPanier");
 
-        if($context == 400) 
-        {
-            $data['error']="<p class='erreur'>Erreur d'authentification</p>";
-        }
-        else if(session()->has("numero")) 
+        //Récupération des produits du panier
+        if(session()->has("numero")) 
         {
             $modelProduitPanier = model("\App\Models\ProduitPanierCompteModel");
             $data['produits'] = $modelProduitPanier->getPanier(session()->get("numero"));
@@ -197,12 +207,14 @@ class Panier extends BaseController
                 $data['classCacheDiv'] = "decouvreNouveauPrix";
             }
         }
+        //Fusion automatique du panier
         else if(has_cookie("token_panier") && session()->has("numero"))
         {   
             
             model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
             delete_cookie("token_panier");
             $data["supprimerOuConfirmer"]=true;
+            $data["produits"]=$modelProduitPanier->getPanier(session()->get("numero"));
         }
            
 

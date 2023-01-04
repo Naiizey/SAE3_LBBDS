@@ -19,9 +19,9 @@ class Import extends BaseController
         }
     }
 
-    public function index()
+    public function index($estVendeur=false)
     {
-
+        $data["estVendeur"] = $estVendeur;
         $data["controller"]= "import";
         return view('page_accueil/import.php', $data);
     }
@@ -72,5 +72,18 @@ class Import extends BaseController
         delete_files(WRITEPATH.'uploads/', true);
         session()->set("just_importe", true);
         return view('page_accueil/import.php', $data);
+    }
+
+    /**
+        * cette fonction prend les entêtes de la table produit et les retourne au format json /!\ Non finit !!!
+        * @param none
+        * @return json 
+     */
+    public function getentetes()
+    {
+        $importModel = model("\App\Models\ImportCSV");
+        $entetes = $importModel->getentete();
+        $entetes = json_encode($entetes);
+        echo $entetes;
     }
 }

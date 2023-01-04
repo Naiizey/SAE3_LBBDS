@@ -148,12 +148,33 @@ CREATE TRIGGER insteadOfInsert_adresse_facture INSTEAD OF INSERT ON adresse_fact
 
 CREATE OR REPLACE FUNCTION insertInsertCommande() RETURNS TRIGGER AS
     $$
-    DECLARE
-        current_panier integer;
+DECLARE
+
+        row sae3._refere_commande%ROWTYPE;
+
     BEGIN
-        select max(num_panier) into current_panier from sae3._panier_client where num_compte=new.num_compte group by num_compte;
-        INSERT INTO sae3._commande(num_panier, num_commande, date_commande, id_a) VALUES (current_panier,new.num_commande, current_date,new.id_a);
-        INSERT INTO sae3._panier_client (num_panier,num_compte) values (null,new.num_compte);
+
+        INSERT INTO sae3._commande(num_commande, date_commande, id_a,num_compte) VALUES (new.num_commande, current_date,new.id_a,new.num_compte);
+
+
+        PERFORM num_panier FROM sae3._panier_client natural join sae3._refere where num_compte=new.num_compte;
+        if found then
+
+
+            for row in (SELECT id_prod, num_panier, qte_panier,  prix_ht+(prix_ht*taux_tva) prix_fixeeTTC FROM sae3._refere
+            natural join sae3._panier_client natural join sae3._produit natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva
+            where num_compte=new.num_compte) loop
+
+                    INSERT INTO sae3._refere_commande(id_prod, num_commande, qte_panier, prix_fixeettc) VALUES (row.id_prod,new.num_commande,row.qte_panier, row.prix_fixeeTTC);
+                    delete from sae3._refere where num_panier in (select num_panier from sae3._panier_client where num_compte=new.num_compte) and id_prod=row.id_prod;
+
+            end loop;
+
+
+        else
+            raise exception 'il n''y  pas de produits dans ce panier';
+        end if;
+
         RETURN NEW;
     end
 $$ language plpgsql;
@@ -193,6 +214,7 @@ CREATE OR REPLACE FUNCTION update_client() RETURNS trigger AS $$
 BEGIN
     --on récupère tous les champs qui sont contenus dans l'update
     UPDATE sae3._compte SET nom_compte = NEW.nom, prenom_compte = NEW.prenom, email = NEW.email, pseudo = NEW.identifiant, mot_de_passe = NEW.motDePasse WHERE num_compte = OLD.numero;
+    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -200,3 +222,58 @@ CREATE TRIGGER update_client
     INSTEAD OF UPDATE ON sae3.client
     FOR EACH ROW
     EXECUTE PROCEDURE update_client();
+
+
+
+CREATE OR REPLACE FUNCTION insert_sanction_temporaire() RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO sae3._duree (date_debut, heure_debut, date_fin, heure_fin) VALUES (NEW.date_debut, NEW.heure_debut, NEW.date_fin, NEW.heure_fin);
+    INSERT INTO sae3._sanction_temporaire (raison, num_compte) VALUES (NEW.raison, NEW.id_compte);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_sanction_temporaire
+    INSTEAD OF INSERT ON sae3.sanction_temporaire
+    FOR EACH ROW
+    EXECUTE PROCEDURE insert_sanction_temporaire();
+
+
+--
+
+CREATE OR REPLACE FUNCTION insert_commentaire() RETURNS TRIGGER AS
+$$
+    BEGIN
+        Insert Into sae3._note(id_prod, num_compte, note_prod) VALUES (new.id_prod, new.num_compte, new.note_prod);
+        Insert Into sae3._avis(contenu_av, date_av, id_note) VALUES (new.contenu_av, current_date, currval('sae3._note_id_note_seq'));
+
+        return new;
+    end;
+$$ language plpgsql;
+CREATE TRIGGER when_insert_commentaire INSTEAD OF INSERT ON commentaires FOR EACH ROW EXECUTE PROCEDURE insert_commentaire();
+
+CREATE OR REPLACE FUNCTION update_commentaire() RETURNS TRIGGER AS
+$$
+    BEGIN
+        update sae3._note set note_prod=new.note_prod where id_note=old.id_note;
+        update sae3._avis set contenu_av=new.contenu_av where num_avis=old.num_avis;
+
+        return new;
+    end;
+$$ language plpgsql;
+
+--CREATE TRIGGER when_update_commentaire INSTEAD OF UPDATE ON commentaires FOR EACH ROW EXECUTE PROCEDURE update_commentaire();
+
+CREATE OR REPLACE FUNCTION delete_commentaire() RETURNS TRIGGER AS
+$$
+    BEGIN
+        delete from sae3._avis where num_avis=old.num_avis;
+        delete from sae3._note where id_note=old.id_note;
+
+        --coir a delete réponse du vendeur aussi
+        return old;
+    end;
+$$ language plpgsql;
+
+CREATE TRIGGER when_delete_commentaire INSTEAD OF DELETE ON commentaires FOR EACH ROW EXECUTE PROCEDURE delete_commentaire();
+

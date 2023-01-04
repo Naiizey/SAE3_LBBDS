@@ -53,13 +53,28 @@ void setJoursRetard(fifo *f, int joursRetard) {
 
 // - Ajouter un élément dans la fifo
 void addFifo(fifo *f, int identifiant, time_t timestamp, char *etat, int joursRetard) {
-    fifo *newFifo = malloc(sizeof(fifo));
-    setIdentifiant(newFifo, identifiant);
-    setTimestamp(newFifo, timestamp);
-    setEtat(newFifo, etat);
-    setJoursRetard(newFifo, joursRetard);
-    newFifo->next = f;
-    f = newFifo;
+    //check if fifo is empty
+    if (f == NULL) {
+        f = malloc(sizeof(fifo));
+        setIdentifiant(f, identifiant);
+        setTimestamp(f, timestamp);
+        setEtat(f, etat);
+        setJoursRetard(f, joursRetard);
+        f->next = NULL;
+    }
+    else
+    {
+        fifo *tmp = f;
+        while (tmp->next != NULL) {
+            tmp = tmp->next;
+        }
+        tmp->next = malloc(sizeof(fifo));
+        setIdentifiant(tmp->next, identifiant);
+        setTimestamp(tmp->next, timestamp);
+        setEtat(tmp->next, etat);
+        setJoursRetard(tmp->next, joursRetard);
+        tmp->next->next = NULL;
+    }        
 }
 
 // - Supprimer un élément de la fifo
@@ -72,15 +87,15 @@ void removeFifo(fifo *f) {
 // - Afficher la fifo
 void printFifo(fifo *f) {
     printf("Affichage de la fifo \n");
-    fifo *tmp = f;
-    if (tmp == NULL) {
+    // fifo *tmp = f;
+    if (f == NULL) {
         printf("La fifo est vide \n");
     }
     else
     {
-        while (tmp != NULL) {
-            printf("Identifiant : %d - Timestamp : %ld - État : %s - Jours de retards : %d \n", getIdentifiant(tmp), getTimestamp(tmp), getEtat(tmp), getJoursRetard(tmp));
-            tmp = tmp->next;
+        while (f != NULL) {
+            printf("Identifiant : %d - Timestamp : %ld - État : %s - Jours de retards : %d \n", getIdentifiant(f), getTimestamp(f), getEtat(f), getJoursRetard(f));
+            f = f->next;
         }
     }
 
@@ -158,4 +173,5 @@ int main() {
     printFifo(f);
     //save fifo
     saveFifo(f);
+    return 0;
 } 

@@ -345,3 +345,5 @@ INSERT INTO _code_reduction (code_reduction, montant_reduction, pourcentage_redu
         ('5EUROS', 5, 0, 1),
         ('25POURCENT', 0, 25, 1),
         ('10POURCEN', 0, 10, 1);
+
+INSERT INTO commentaires(id_prod,num_compte,note_prod,contenu_av) VALUES (1,1,3,'Pas fou');

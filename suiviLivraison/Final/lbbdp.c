@@ -183,12 +183,17 @@ int main(int argc, char *argv[])
     {
         perror("Nommage du socket échoué");
     }
+    
 
     //Fonction listen() - Serveur seulement
     ret = listen(sock, 1);
     if (ret != 0)
     {
         perror("Écoute échouée");
+    }
+    else
+    {
+        printf("En attente du client (telnet localhost %d)\n", temp);
     }
 
     //Fonction accept() - Serveur seulement
@@ -200,6 +205,10 @@ int main(int argc, char *argv[])
     if (cnx == -1)
     {
         perror("Connexion échouée");
+    }
+    else
+    {
+        printf("Connexion établie, en attente d'instructions\n");
     }
 
     /*

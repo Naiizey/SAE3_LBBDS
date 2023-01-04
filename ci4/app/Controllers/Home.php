@@ -548,7 +548,7 @@ class Home extends BaseController
             $data['num_compte'] = $data['infosCommande'][0]->num_compte;
         }
         $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
-        //dd($data);
+      
         return view('panier/details.php', $data);
     }
 
@@ -623,12 +623,11 @@ class Home extends BaseController
         $data["role"]="admin";
         $data["clients"]=model("\App\Models\Client")->findAll();
 
-        $get=$this->request->getPost();
+        $post=$this->request->getPost();
 
-        if(!empty($get)){
-            if(isset($get["Timeout"]) && $get["Timeout"]==1){
-                return view("page_accueil/admin.php", $data);
-            }
+        if(!empty($post)){
+            $sanctions = model("\App\Models\SanctionTemp");
+            $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
         }
 
         return view("page_accueil/lstClients.php",$data);

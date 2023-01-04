@@ -124,3 +124,6 @@ CREATE OR REPLACE VIEW commentaires AS
 
 CREATE OR REPLACE VIEW sanction_temporaire AS 
     SELECT id_sanction, raison, num_compte, date_debut, heure_debut, date_fin, heure_fin FROM _sanction_temporaire NATURAL JOIN _duree;
+
+
+

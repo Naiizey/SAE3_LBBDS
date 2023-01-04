@@ -623,12 +623,11 @@ class Home extends BaseController
         $data["role"]="admin";
         $data["clients"]=model("\App\Models\Client")->findAll();
 
-        $get=$this->request->getPost();
+        $post=$this->request->getPost();
 
-        if(!empty($get)){
-            if(isset($get["Timeout"]) && $get["Timeout"]==1){
-                return view("page_accueil/admin.php", $data);
-            }
+        if(!empty($post)){
+            $sanctions = model("\App\Models\SanctionTemp");
+            $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
         }
 
         return view("page_accueil/lstClients.php",$data);

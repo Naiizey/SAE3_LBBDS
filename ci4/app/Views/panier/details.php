@@ -43,7 +43,7 @@
                                 <hr>
                                 <article id="<?= $article->id_prod ?>" class="articlePanier">
                                     <a href="<?= base_url() ?>/produit/<?= $article->id_prod ?>">
-                                        <img src="<?= $article -> lien_image_prod ?>" alt="article 1" title="Article 1">
+                                        <img src="<?= $article -> lien_image ?>" alt="article 1" title="Article 1">
                                         <div>
                                             <h2>
                                                 <?= $article -> intitule_prod ?>

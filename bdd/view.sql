@@ -94,7 +94,6 @@ CREATE OR REPLACE VIEW commande_list_vendeur AS
 CREATE OR REPLACE VIEW commande_list_client AS
     SELECT num_commande,num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat FROM _commande  NATURAL JOIN _refere_commande NATURAL JOIN _produit group by num_commande, num_compte,date_commande,date_arriv,etat;
 
-drop view commande_list_produits_client;
 CREATE OR REPLACE VIEW commande_list_produits_client AS
     WITH solo_image AS (SELECT min(num_image),lien_image,id_prod FROM _image_prod group by id_prod,num_image,lien_image having num_image=min(num_image))
     SELECT num_commande,id_prod, intitule_prod, lien_image lienImage,description_prod,num_compte,date_commande,date_arriv,round(prix_fixeettc::numeric,2) prix_ttc,round((prix_fixeettc/(1+_tva.taux_tva))::numeric,2) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN solo_image NATURAL JOIN _refere_commande NATURAL JOIN _produit natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva;

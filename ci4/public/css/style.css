@@ -17,8 +17,12 @@ body {
     min-height: 100vh;
 }
 
-.bodyAdmin, .bodyVendeur {
+.bodyAdmin {
     background-color: black;
+}
+
+.bodyVendeur {
+    background-color: #3997a3;
 }
 
 /* Firefox */
@@ -71,8 +75,12 @@ header{
     height: 5em;
 }
 
-.divHeaderAdmin, .divHeaderVendeur{
+.divHeaderAdmin {
     background-color: black;
+}
+
+.divHeaderVendeur {
+    background-color: #3997a3;
 }
 
 header h2:hover {
@@ -419,8 +427,12 @@ footer {
     z-index: 100;
 }
 
-.footerAdmin, .footerVendeur{
+.footerAdmin {
     background-color: black;
+}
+
+.footerVendeur {
+    background-color: #3997a3;
 }
 
 footer .pc {

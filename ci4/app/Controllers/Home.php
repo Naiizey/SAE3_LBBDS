@@ -10,6 +10,7 @@ use Exception;
 
 class Home extends BaseController
 {
+    public $feedback;
     public function __construct()
     {
         //permer d'éviter le bug de redirection.

@@ -182,6 +182,15 @@ class Home extends BaseController
         $prodModel = model("\App\Models\ProduitDetail");
         $result = $prodModel->find($idProduit);
 
+        //Autres images du produit
+        $prodModelAutre = model("\App\Models\ProduitDetailAutre");
+        $autresImages = $prodModelAutre->getAutresImages($idProduit);
+
+        if (!empty($autresImages)) 
+        {
+            $data['autresImages'] = $autresImages;
+        }
+
         // Avis/commentaires
         $data['cardProduit']=service("cardProduit");
         $data['avis']=model("\App\Models\Commentaires")->getCommentairesByProduit($idProduit);

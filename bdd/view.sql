@@ -22,8 +22,9 @@ CREATE OR REPLACE VIEW produit_detail AS
     SELECT id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*taux_tva) prixTTC, prix_ht prixHT, lien_image lienImage,publication_prod  isAffiche, _sous_categorie.libelle_cat categorie, _sous_categorie.code_sous_cat codeCategorie,description_prod description, stock_prod stock,moyenneNote moyenne FROM _produit LEFT JOIN moyenne on _produit.id_prod = moyenne.id   NATURAL JOIN solo_image NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva;
 
 CREATE OR REPLACE VIEW autre_image AS
-    WITH solo_image AS (SELECT num_image,lien_image,id_prod FROM _image_prod group by id_prod,num_image having num_image!=min(num_image) )
-    SELECT * FROM solo_image;
+    SELECT num_image,lien_image,id_prod FROM sae3._image_prod WHERE num_image != 0;
+
+SELECT * FROM sae3.autre_image WHERE id_prod = 18;
 
 CREATE OR REPLACE VIEW produit_panier_compte AS
     SELECT concat(id_prod,'£',num_panier) id,id_prod, intitule_prod intitule,stock_prod stock, prix_ht+(prix_ht*taux_tva) prixTTC,prix_ht, lien_image lienImage, description_prod description, qte_panier quantite,num_compte num_client,num_panier current_panier

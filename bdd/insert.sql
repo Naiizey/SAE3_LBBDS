@@ -97,6 +97,12 @@ INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, descripti
 VALUES (133,'Cola x6',5,6,'Nouvelle boisson bretonne au cola, issue de d''une agrigulture bio éthique, bio responsable, bio consciente.', true, 15, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://images.pexels.com/photos/8879617/pexels-photo-8879617.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',0);
+INSERT INTO _image_prod(id_prod, lien_image,num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://cdn.pixabay.com/photo/2017/09/20/18/00/ice-cubes-2769457_960_720.jpg',1);
+INSERT INTO _image_prod(id_prod, lien_image,num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://cdn.pixabay.com/photo/2017/09/12/04/42/soft-drink-2741251_960_720.jpg',2);
+INSERT INTO _image_prod(id_prod, lien_image,num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://cdn.pixabay.com/photo/2017/08/05/14/30/coca-cola-2584031_960_720.jpg',3);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (133,'Vin rouge',10,15,'Ensemble de vins dans une boite en bois qui agrémentera vos soirées ou repas.', true, 10, 4.5, 5, true);

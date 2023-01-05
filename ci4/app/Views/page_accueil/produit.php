@@ -54,15 +54,19 @@
                 <article>
                     <div class="divGauche">
                         <ul>
-                            <li>
-                                <img src="<?= $prod -> lienimage ?>" />
-                            </li>
-                            <li>
-                                <img src="<?= $prod -> lienimage ?>" />
-                            </li>
-                            <li>
-                                <img src="<?= $prod -> lienimage ?>" />
-                            </li>
+                            <?php if (isset($autresImages)): ?>
+                                <?php for ($i = 0; $i < count($autresImages) && $i < 3; $i++): ?>
+                                    <li>
+                                        <img src="<?= $autresImages[$i] -> lien_image ?>" />
+                                    </li>
+                                <?php endfor; ?>
+                            <?php else: ?>
+                                <?php for ($i = 0; $i < 3; $i++): ?>
+                                    <li>
+                                        <img src="<?= $prod -> lienimage ?>" />
+                                    </li>
+                                <?php endfor; ?>
+                            <?php endif; ?>
                         </ul>
                         <div class="zoom" onmousemove="zoomProduit(event)" style="background-image: url(<?= $prod -> lienimage ?>)">
                             <img src="<?= $prod -> lienimage ?>"/>

@@ -1,11 +1,6 @@
 -- Active: 1655031515408@@127.0.0.1@5432@postgres
 SET SCHEMA 'sae3';
 
-
-
-
-
-
 CREATE OR REPLACE VIEW produit_catalogue AS
     WITH moyenne AS (SELECT id_prod id,avg(note_prod) as moyenneNote FROM _produit natural join _note  group by id_prod),
     solo_image AS (SELECT min(num_image),lien_image,id_prod FROM _image_prod group by id_prod,num_image,lien_image having num_image=min(num_image))
@@ -23,8 +18,6 @@ CREATE OR REPLACE VIEW produit_detail AS
 
 CREATE OR REPLACE VIEW autre_image AS
     SELECT num_image,lien_image,id_prod FROM sae3._image_prod WHERE num_image != 0;
-
-SELECT * FROM sae3.autre_image WHERE id_prod = 18;
 
 CREATE OR REPLACE VIEW produit_panier_compte AS
     SELECT concat(id_prod,'£',num_panier) id,id_prod, intitule_prod intitule,stock_prod stock, prix_ht+(prix_ht*taux_tva) prixTTC,prix_ht, lien_image lienImage, description_prod description, qte_panier quantite,num_compte num_client,num_panier current_panier

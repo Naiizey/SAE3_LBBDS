@@ -463,10 +463,15 @@ function lstCommandesVendeur(){
 }
 
 /*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                           Liens aux lignes de lstClients                            ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                    Liens aux lignes de lstClients && sanctions                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+
+function liensLstClients(event){
+    event.cancelBubble = true;
+    window.location.assign(`${base_url}/espaceClient/admin/${event.currentTarget.clientA}`);
+}
 
 function lstClients(){
     // Récupération de toutes les lignes de la liste des clients
@@ -480,15 +485,43 @@ function lstClients(){
         let ligneA=lignes.item(numLigne);
         let clientA=numClients.item(numLigne).textContent;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
-        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/espaceClient/admin/${clientA}`;});
+        ligneA.addEventListener("click", liensLstClients);
+        ligneA.clientA=clientA;
         let anchorA=anchors.item(numLigne);
         // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
         anchorA.addEventListener("click", () => {
-            var a = new AlerteAlizon(`Sanctionner le client n°${clientA} ?`,current_url, "Quelle type de sanction ?");
-            a.ajouterBouton("Bannir temporairement", "normal-button rouge");
+            ligneA.removeEventListener("click", liensLstClients);
+            var a = new AlerteAlizonSanctions(`Sanctionner le client n°${clientA} ?`);
+            a.ajouterBouton("Bannir temporairement", "normal-button petit-button rouge","timeout");
+            a.ajouterBouton("Arrêter", "normal-button petit-button vert","fermer");
             a.affichage()
+
+            a.getBouton("timeout").addEventListener("click", () => {
+                timeoutClient(clientA);
+                a.fermer();
+            })
+
+            a.getBouton("fermer").addEventListener("click", () => {
+                a.fermer();
+                a.unBlur();
+                ligneA.addEventListener("click", liensLstClients);
+            })
         })
     }
+}
+
+function timeoutClient(numClient){
+    var a = new AlerteAlizonSanctionner(`Bannir le client n°${numClient} ?`, numClient);
+    a.ajouterInput("Durée (secondes)<span class='requis'>*</span> : ","duree","duree");
+    a.ajouterTextArea("Raison<span class='requis'>*</span> : ","raison","raison");
+    a.ajouterBouton("Bannir", "normal-button petit-button rouge","timeoutClient");
+    a.ajouterBouton("Fermer", "normal-button petit-button vert");
+    a.affichage();
+
+    a.getBouton("Fermer").addEventListener("click", () => {
+        a.fermer();
+        a.unBlur();
+    })
 }
 
 /*
@@ -1317,10 +1350,10 @@ class AlerteAlizon{
                 <hr>
                 <p class="message-alerte">${message}</p>
                 <div class="alerte-footer">
-                <hr>
-                <div class="espace-interraction">
-                    ${this.form.outerHTML}
-                </div>
+                    <hr>
+                    <div class="espace-interraction">
+                        ${this.form.outerHTML}
+                    </div>
                 </div>
             </div>
    
@@ -1329,6 +1362,148 @@ class AlerteAlizon{
     }
 
     
+}
+
+class AlerteAlizonSanctionner{
+    constructor(titre,numClient, method="POST"){
+        this.numCli=numClient;
+        this.titre=titre;
+        this.form=document.createElement("form");
+        this.form.method=method;
+        this.divInputs=document.createElement("div");
+        this.divInputs.className="div-inputs"
+        this.divBouton=document.createElement("div");
+        this.display=null;
+    }
+
+    ajouterTextArea(texte,classe,nomForm=intitule){
+        let label=document.createElement("label");
+        label.innerHTML=texte;
+        let textarea=document.createElement("textarea");
+        textarea.rows=3;
+        textarea.name=nomForm;
+        textarea.required=true;
+        let divInput=document.createElement("div");
+        divInput.className=classe;
+        divInput.appendChild(label);
+        divInput.appendChild(textarea);
+        this.divInputs.appendChild(divInput);
+    }
+
+    ajouterInput(texte,classe,nomForm=intitule){
+        let label=document.createElement("label");
+        label.innerHTML=texte;
+        let input=document.createElement("input");
+        input.name=nomForm;
+        input.required=true;
+        let divInput=document.createElement("div");
+        divInput.className=classe;
+        divInput.appendChild(label);
+        divInput.appendChild(input);
+        this.divInputs.appendChild(divInput);
+    }
+
+    ajouterBouton(intitule,classe,nomForm=intitule){
+        let bouton=document.createElement("button");
+        bouton.name=nomForm;
+        bouton.setAttribute("id",intitule);
+        bouton.className=classe;
+        bouton.innerHTML=intitule;
+        bouton.value=1;
+        this.divBouton.appendChild(bouton);
+    }
+
+    getBouton(id){
+        return document.getElementById(id);
+    }
+
+    affichage=(message=this.message) => {
+        let num=document.createElement("input");
+        num.type="hidden";
+        num.name="numClient";
+        num.value=this.numCli;
+        this.form.appendChild(num);
+        document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(4px)");
+        this.display = document.createElement("div");
+        this.display.classList.add("sur-alerte");
+        this.form.appendChild(this.divInputs);
+        let divAlerteFooter=document.createElement("div");
+        divAlerteFooter.classList.add("alerte-footer");
+        let hr=document.createElement("hr");
+        divAlerteFooter.appendChild(hr);
+        let divEspaceInterraction=document.createElement("div");
+        divEspaceInterraction.classList.add("espace-interraction");
+        divEspaceInterraction.appendChild(this.divBouton);
+        divAlerteFooter.appendChild(divEspaceInterraction);
+        this.form.appendChild(divAlerteFooter);
+        this.display.innerHTML= `
+      
+            <div class="alerte">
+                <h2>${this.titre}</h2>
+                <hr>
+                ${this.form.outerHTML}
+            </div>
+   
+        `;
+        document.body.appendChild(this.display);
+    }
+
+    fermer(){
+        document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(0px)");
+        this.display.remove();
+    }
+}
+
+class AlerteAlizonSanctions{
+    
+    constructor (titre,message="Quelle type de sanction ?"){
+        this.titre=titre;
+        this.message=message;
+        this.divBouton=document.createElement("div");
+        this.display=null;
+    }
+
+    ajouterBouton(intitule,classe,id){
+        let bouton=document.createElement("button");
+        bouton.setAttribute("id",id);
+        bouton.className=classe;
+        bouton.innerHTML=intitule;
+        this.divBouton.appendChild(bouton);
+    }
+
+    getBouton(id){
+        return document.getElementById(id);
+    }
+
+    affichage=(message=this.message) => {
+        document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(4px)");
+        this.display = document.createElement("div");
+        this.display.classList.add("sur-alerte");
+        this.display.innerHTML= `
+      
+            <div class="alerte">
+                <h2>${this.titre}</h2>
+                <hr>
+                <p class="message-alerte">${message}</p>
+                <div class="alerte-footer">
+                <hr>
+                <div class="espace-interraction">
+                    ${this.divBouton.outerHTML}
+                </div>
+                </div>
+            </div>
+   
+        `;
+        document.body.appendChild(this.display);
+    }
+
+    fermer(){
+        this.display.remove();
+    }
+
+    unBlur(){
+        document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(0px)");
+    }
 }
 
 /*

@@ -698,12 +698,33 @@ div.bloc-erreur-liste-produit  {
     width: auto;
     
 }
-.alerte form{
+.alerte form, .espace-interraction div{
     margin :0;
     width: 100%;
     display: flex;
     justify-content: space-between;
     
+}
+
+.div-inputs{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 1em;
+}
+
+.div-inputs div{
+    width: 100%;
+    margin: 0.5em 0;
+}
+
+.raison label{
+    vertical-align: top;
+}
+
+.raison textarea{
+    width: 80%;
 }
 
 /*

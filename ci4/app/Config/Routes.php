@@ -112,6 +112,7 @@ $routes->set404Override();
 
     $routes->get('/admin', 'Home::admin');
     $routes->get('/admin/lstClients', 'Home::lstClients');
+    $routes->post('/admin/lstClients', 'Home::lstClients');
 
 ##param uri (:any) et dans methode /$1
 

@@ -6,7 +6,8 @@ use Exception;
 
 class MdpOublie extends BaseController
 {
-    
+    private $email;
+
     public function __construct()
     {
         helper('cookie');
@@ -17,14 +18,24 @@ class MdpOublie extends BaseController
         } else {
             $GLOBALS["quant"] = 0;
         }
-        $this->code = $this->genererCode();
+        $config['protocol'] = 'smtp';
+        $config['SMTPHost'] = 'smtp-relay.sendinblue.com';
+        $config['SMTPUser'] = 'lucienherve3009@gmail.com';
+        $config['SMTPPass']  = 'TZDvz75mkVL6A4tJ';
+        $config['SMTPPort'] = '587';
+        $this->email = \Config\Services::email();
+        $this->email->initialize($config);
+        if (!isset($_SESSION['code'])) {
+            $_SESSION['code'] = $this->genererCode();
+        }   
+        $this->email->setFrom('admin@alizon.net', 'Admin Alizon');
     }
 
     public function mdpOublie($post = null, $data = null)
     {
         $data["controller"]= "mdpOublie";
 
-        //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
+        //Pré-remplit les champs s'ils ont déjà été renseignés juste avant de potentielles erreurs
         $data['email'] = (isset($post['email'])) ? $post['email'] : "";
         $data['code'] = (isset($post['code'])) ? $post['code'] : "";
         return view('page_accueil/mdpOublie.php', $data);
@@ -37,27 +48,30 @@ class MdpOublie extends BaseController
         for ($i = 0; $i < 5; $i++) {
             $code .= $caracteres[rand(0, $charactersLength - 1)];
         }
+        strval($code);
         return $code;
     }
 
     public function obtenirCode() 
     {
         $post=$this->request->getPost();
+        $_SESSION["userMail"] = $post['email'];
         $clientModel = model("\App\Models\Client");
-
-        if ($clientModel->doesEmailExists($post['email'])) 
+        if ($clientModel->doesEmailExists($_SESSION["userMail"]))
         {
-            $message = "Bonjour,\nVoici le code généré suite à votre demande de changement de mot de passe :" . $this->code . "\nSi vous n'êtes pas à l'origine de cette demande, veuillez le signaler a ce mail : admin@alizon.net";
-            $message = wordwrap($message, 70, "\r\n");
-            mail($post['email'], 'Récupération du mot de passe', $message);
-            echo $this->code;
+            $_SESSION['code'] = $this->genererCode();
+            $message = "Bonjour,\nVoici le code généré suite à votre demande de changement de mot de passe :" . $_SESSION['code'] . "\nSi vous n'êtes pas à l'origine de cette demande, veuillez le signaler a cet email : admin@alizon.net";
+            $this->email->setFrom('admin@alizon.net', 'Admin - [ALIZON]');
+            $this->email->setTo($_SESSION["userMail"]);
+            $this->email->setSubject('Récupération de mot de passe');
+            $this->email->setMessage($message);
+            $this->email->send();
             $data['retour'][0] = "Renseignez le code qui vous a été envoyé par mail.";
         } 
         else 
         {
             $data['retour'][1] = "L'adresse mail ne correspond à aucun compte.";
         }
-
         return $this->mdpOublie($post, $data);
     }
 
@@ -68,18 +82,21 @@ class MdpOublie extends BaseController
     public function validerCode()
     {
         $post=$this->request->getPost();
-
-        if ($post['code'] == $this->code) 
+        echo($_SESSION['code']);
+        if ($post['code'] == $_SESSION['code']) 
         {
             $model = model("App\Models\Client");
             $nouveauMDP = $this->motDePasseAlea();
-            $entree = $model->where("email", $post['email'])->findAll()[0];
+            $entree = $model->where('email',$_SESSION["userMail"])->findAll()[0];
             $entree->motDePasse=$nouveauMDP;
             $entree->cryptMotDePasse();
             $model->save($entree);
-            $message = "Bonjour,\nVoici votre nouveau mot de passe :" . $nouveauMDP . "\nSi vous n'êtes pas à l'origine de cette demande, veuillez le signaler a ce mail : admin@alizon.net";
-            $message = wordwrap($message, 70, "\r\n");
-            mail($post['email'], 'Récupération du mot de passe', $message);
+            $message = "Bonjour,\nVoici votre nouveau mot de passe :" . $nouveauMDP . "\nSi vous n'êtes pas à l'origine de cette demande, veuillez le signaler a cet email : admin@alizon.net";
+            $this->email->setFrom('admin@alizon.net', 'Admin - [ALIZON]');
+            $this->email->setTo($_SESSION["userMail"]);
+            $this->email->setSubject('Nouveau mot de passe');
+            $this->email->setMessage($message);
+            $this->email->send();
             $data['retour'][0] = "Renseignez le code qui vous a été envoyé par mail.";
             $data['retour'][3] = "Un nouveau mot de passe vous a été envoyé par mail.";
         } 

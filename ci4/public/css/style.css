@@ -2381,6 +2381,11 @@ main#Catalogue{
     padding-bottom: 3%;
 }
 
+.normal-button.blanc{
+    color: #164F57;
+    background-color: white;
+    border: #404E58 solid 1px;
+}
 .normal-button.vert{
     background-color: #24a064;
     color: white;
@@ -2388,6 +2393,10 @@ main#Catalogue{
 .normal-button.rouge{
     background-color: #a02424;
     color: white;
+}
+
+.normal-button.blanc:hover{
+    background-color: #C6C6C6;
 }
 
 .normal-button.vert:hover{
@@ -3016,7 +3025,7 @@ a.fleche-page{
     width: 5em;
 }
 
-.lignesClients .anchorClient{
+.lignesClients .buttonSanction{
     background-color: #571616;
     width: 2em;
     height: 2em;

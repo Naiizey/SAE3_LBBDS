@@ -468,6 +468,11 @@ function lstCommandesVendeur(){
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+function liensLstClients(event){
+    event.cancelBubble = true;
+    window.location.assign(`${base_url}/espaceClient/admin/${event.currentTarget.clientA}`);
+}
+
 function lstClients(){
     // Récupération de toutes les lignes de la liste des clients
     var lignes=document.getElementsByClassName("lignesClients");
@@ -480,7 +485,8 @@ function lstClients(){
         let ligneA=lignes.item(numLigne);
         let clientA=numClients.item(numLigne).textContent;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
-        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/espaceClient/admin/${clientA}`;});
+        ligneA.addEventListener("click", liensLstClients);
+        ligneA.clientA=clientA;
         let anchorA=anchors.item(numLigne);
         // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
         anchorA.addEventListener("click", () => {

@@ -1529,38 +1529,42 @@ function zoomProduit(e) {
 */
 function avisProduit() {
     let tabAvis = document.querySelectorAll(".divAvisCommentaire p"); // séléctionne les avis
-    let moyennes = [0, 0, 0, 0, 0]; // tableau des moyennes pour chaque étoile
-    // définit le nombre d'avis correspondant à telle étoile
-    tabAvis.forEach(element => {
-        for (let index = 0; index < 5; index++) {
-            // si note contenue entre 1 et 1.99 ; 2 et 2.99 ; ...
-            if ((parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) >= (index+1)) && (parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) < (index + 2))) {
-                moyennes[index] = moyennes[index] + 1; // ajoute 1 à l'étoile correspondante à l'avis
+    
+    // seulement si il y a des avis
+    if (tabAvis.length != 0) {
+        let moyennes = [0, 0, 0, 0, 0]; // tableau des moyennes pour chaque étoile
+        // définit le nombre d'avis correspondant à telle étoile
+        tabAvis.forEach(element => {
+            for (let index = 0; index < 5; index++) {
+                // si note contenue entre 1 et 1.99 ; 2 et 2.99 ; ...
+                if ((parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) >= (index+1)) && (parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) < (index + 2))) {
+                    moyennes[index] = moyennes[index] + 1; // ajoute 1 à l'étoile correspondante à l'avis
+                }
             }
+        });
+
+        let lesBarres = document.querySelectorAll(".barreAvis"); // séléctionne les barres de progression 
+        // définit le max et la valeur pour chaque barre de progression
+        for (let index = (lesBarres.length-1); index > 0; index--) {
+            lesBarres[lesBarres.length-index-1].max = tabAvis.length; // max pour les barres de progression (nombre total d'avis)
+            lesBarres[lesBarres.length-index-1].value = moyennes[index];
         }
-    });
 
-    let lesBarres = document.querySelectorAll(".barreAvis"); // séléctionne les barres de progression 
-    // définit le max et la valeur pour chaque barre de progression
-    for (let index = (lesBarres.length-1); index > 0; index--) {
-        lesBarres[lesBarres.length-index-1].max = tabAvis.length; // max pour les barres de progression (nombre total d'avis)
-        lesBarres[lesBarres.length-index-1].value = moyennes[index];
-    }
-
-    let pourcentages = [0, 0, 0, 0, 0]; // tableau des pourcentages
-    let lesP = document.querySelectorAll(".pAvis"); // les p pour faire y ajouter les pourcentages afin de les faire apparaitre sur la page
-    // définit les pourcentages d'avis correspondant à tel nombre d'étoiles
-    for (let index = 0; index < moyennes.length; index++) {
-        pourcentages[index] = moyennes[index] / tabAvis.length * 100; //divise le nb d'avis par étoile par le nombre total d'avis afin d'avoir le pourcentage
-    }
-
-    let count = moyennes.length - 1; // index pour parcourir le tableau dans l'autre sens car l'index 0 des pourcentages correspond à l'index 4 des barres de progression
-    // place les pourcentages en parcourant le tableau 
-    for (let index = 0; index < moyennes.length; index++) {
-        lesP[index].textContent = pourcentages[count] + "%"; // ajoute au p le pourcentage
-        count = count - 1; // continue de parcourir le tableau dans l'autre sens 
-        if (count == -1) {
-            count = moyennes.length - 1; // réinitialise au cas où
+        let pourcentages = [0, 0, 0, 0, 0]; // tableau des pourcentages
+        let lesP = document.querySelectorAll(".pAvis"); // les p pour faire y ajouter les pourcentages afin de les faire apparaitre sur la page
+        // définit les pourcentages d'avis correspondant à tel nombre d'étoiles
+        for (let index = 0; index < moyennes.length; index++) {
+            pourcentages[index] = moyennes[index] / tabAvis.length * 100; //divise le nb d'avis par étoile par le nombre total d'avis afin d'avoir le pourcentage
         }
+
+        let count = moyennes.length - 1; // index pour parcourir le tableau dans l'autre sens car l'index 0 des pourcentages correspond à l'index 4 des barres de progression
+        // place les pourcentages en parcourant le tableau 
+        for (let index = 0; index < moyennes.length; index++) {
+            lesP[index].textContent = pourcentages[count] + "%"; // ajoute au p le pourcentage
+            count = count - 1; // continue de parcourir le tableau dans l'autre sens 
+            if (count == -1) {
+                count = moyennes.length - 1; // réinitialise au cas où
+            }
+        }   
     }
 }

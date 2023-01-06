@@ -479,7 +479,7 @@ function lstClients(){
     // Récupération de tous les numéros de clients
     var numClients=document.getElementsByClassName("numClients");
     // Récupération de tous les anchors de la liste des clients
-    var anchors=document.getElementsByClassName("anchorClient");
+    var buttons=document.getElementsByClassName("buttonSanction");
 
     for (let numLigne=0; numLigne<lignes.length; numLigne++){
         let ligneA=lignes.item(numLigne);
@@ -487,18 +487,19 @@ function lstClients(){
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
         ligneA.addEventListener("click", liensLstClients);
         ligneA.clientA=clientA;
-        let anchorA=anchors.item(numLigne);
+        let buttonA=buttons.item(numLigne);
         // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
-        anchorA.addEventListener("click", () => {
+        buttonA.addEventListener("click", () => {
             ligneA.removeEventListener("click", liensLstClients);
             var a = new AlerteAlizonSanctions(`Sanctionner le client n°${clientA} ?`);
             a.ajouterBouton("Bannir temporairement", "normal-button petit-button rouge","timeout");
-            a.ajouterBouton("Arrêter", "normal-button petit-button vert","fermer");
+            a.ajouterBouton("Fermer", "normal-button petit-button blanc","fermer");
             a.affichage()
 
             a.getBouton("timeout").addEventListener("click", () => {
                 timeoutClient(clientA);
                 a.fermer();
+                ligneA.addEventListener("click", liensLstClients);
             })
 
             a.getBouton("fermer").addEventListener("click", () => {
@@ -515,12 +516,13 @@ function timeoutClient(numClient){
     a.ajouterInput("Durée (secondes)<span class='requis'>*</span> : ","duree","duree");
     a.ajouterTextArea("Raison<span class='requis'>*</span> : ","raison","raison");
     a.ajouterBouton("Bannir", "normal-button petit-button rouge","timeoutClient");
-    a.ajouterBouton("Fermer", "normal-button petit-button vert");
+    a.ajouterBouton("Fermer", "normal-button petit-button blanc");
     a.affichage();
 
     a.getBouton("Fermer").addEventListener("click", () => {
         a.fermer();
         a.unBlur();
+        ligneA.addEventListener("click", liensLstClients);
     })
 }
 
@@ -1318,15 +1320,23 @@ function setUpPaiment(){
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-class AlerteAlizon{
+class Alerte{
+
+    constructor(titre){
+        this.titre=titre;
+        this.display=null;
+    }
+}
+
+class AlerteAlizon extends Alerte{
     
     constructor(titre,destination,message="Une alerte survient",method="GET"){
-        this.titre=titre;
+        super(titre);
         this.message=message;
+        this.destination=destination;
         this.form=document.createElement("form");
         this.form.action=destination;
         this.form.method=method;
-        this.display=null;
     }
     
 
@@ -1364,16 +1374,15 @@ class AlerteAlizon{
     
 }
 
-class AlerteAlizonSanctionner{
+class AlerteAlizonSanctionner extends Alerte{
     constructor(titre,numClient, method="POST"){
+        super(titre);
         this.numCli=numClient;
-        this.titre=titre;
         this.form=document.createElement("form");
         this.form.method=method;
         this.divInputs=document.createElement("div");
         this.divInputs.className="div-inputs"
         this.divBouton=document.createElement("div");
-        this.display=null;
     }
 
     ajouterTextArea(texte,classe,nomForm=intitule){
@@ -1504,6 +1513,23 @@ class AlerteAlizonSanctions{
     unBlur(){
         document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(0px)");
     }
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                            Changement image produit                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+function changeImageProduit(e) 
+{
+    //Permute l'image cliquée avec l'image principale
+    let image = e.currentTarget;
+    let divImagePrincipale = document.getElementsByClassName("zoom")[0];
+    let imagePrincipale = divImagePrincipale.getElementsByTagName("img")[0];
+    console.log(image);
+    console.log(divImagePrincipale);
+    console.log(imagePrincipale);
 }
 
 /*

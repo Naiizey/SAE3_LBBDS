@@ -57,7 +57,9 @@
                             <?php if (isset($autresImages)): ?>
                                 <?php for ($i = 0; $i < count($autresImages) && $i < 3; $i++): ?>
                                     <li>
-                                        <img src="<?= $autresImages[$i] -> lien_image ?>" />
+                                        <a href="" onclick="changeImageProduit(event)">
+                                            <img src="<?= $autresImages[$i] -> lien_image ?>" />
+                                        </a>
                                     </li>
                                 <?php endfor; ?>
                             <?php else: ?>

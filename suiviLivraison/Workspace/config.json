@@ -1,0 +1,21 @@
+{
+    "auth":
+    {
+        "id" : "string",
+        "pass" : "string"
+    }
+    ,
+    "livraison": {
+            "identifiant" : 0,
+            "nombre" : 0,
+            "time" : 0,
+            "etat" : 0,
+            "retard":0
+    
+    } 
+    , 
+    "erreur" : {
+        "message": "string"
+    }
+
+}

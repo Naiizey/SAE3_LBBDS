@@ -219,7 +219,7 @@ CREATE TABLE _sanction_temporaire(
 
 CREATE TABLE _image_prod(
     id_prod int,
-    num_image SERIAL,
+    num_image int,
     lien_image varchar(500),
     estInterne boolean DEFAULT false,
 

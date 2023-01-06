@@ -51,7 +51,7 @@ abstract class ProduitPanierModel extends Model
     public function ajouterProduit($idProd,$quantite,$idUser, $siDejaLaAjoute=false)
     {
         if($quantite==0){
-            throw new Exception("Pas d'ajout de produit à la quantité null");
+            throw new Exception("Impossible d'ajouter une quantité nulle");
         }
         
         $colonne=$this->getColonneProduitIdUser();
@@ -66,7 +66,7 @@ abstract class ProduitPanierModel extends Model
         {
             $prod->id="£";
             #FIXME: La vue MVC peut créer cette exception
-            if($prod->quantite > $prod->stock) throw new Exception("Pas assez de stock: $prod->quantite c'est trop",400);
+            if($prod->quantite > $prod->stock) throw new Exception("Il n'y a pas assez de stock pour ajouter $prod->quantite produits",400);
             $this->save($prod);
 
         }
@@ -76,10 +76,10 @@ abstract class ProduitPanierModel extends Model
             $dejaLa=$trouve[0];
 
             $dejaLa->quantite+=(int)$prod->quantite;
-            if($dejaLa->quantite > $dejaLa->stock) throw new Exception("Pas assez de stock: $dejaLa->quantite c'est trop",400);
+            if($dejaLa->quantite > $dejaLa->stock) throw new Exception("Il n'y a pas assez de stock pour ajouter $dejaLa->quantite produits",400);
             $this->save($dejaLa);
         }
-        else throw new Exception("Produit déjà présent dans le panier, et n'a pas été pris en compte",400);
+        else throw new Exception("Produit déjà présent dans le panier, ajout ignoré",400);
 
         
     }
@@ -92,7 +92,7 @@ abstract class ProduitPanierModel extends Model
             $prod->fill(array('id'=>$id,'quantite'=>$newQuanite,$this->getIdUser()=>$idUser));
             $this->save($prod);
         }
-        else throw new Exception("Ce produit n'est pas dans le panier !");
+        else throw new Exception("Ce produit n'est pas dans le panier");
         
     }   
 

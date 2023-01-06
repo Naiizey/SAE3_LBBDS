@@ -456,10 +456,15 @@ function lstCommandesVendeur(){
 }
 
 /*
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                           Liens aux lignes de lstClients                            ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                    Liens aux lignes de lstClients && sanctions                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+
+function liensLstClients(event){
+    event.cancelBubble = true;
+    window.location.assign(`${base_url}/espaceClient/admin/${event.currentTarget.clientA}`);
+}
 
 function lstClients(){
     // Récupération de toutes les lignes de la liste des clients
@@ -467,21 +472,51 @@ function lstClients(){
     // Récupération de tous les numéros de clients
     var numClients=document.getElementsByClassName("numClients");
     // Récupération de tous les anchors de la liste des clients
-    var anchors=document.getElementsByClassName("anchorClient");
+    var buttons=document.getElementsByClassName("buttonSanction");
 
     for (let numLigne=0; numLigne<lignes.length; numLigne++){
         let ligneA=lignes.item(numLigne);
         let clientA=numClients.item(numLigne).textContent;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
-        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/espaceClient/admin/${clientA}`;});
-        let anchorA=anchors.item(numLigne);
+        ligneA.addEventListener("click", liensLstClients);
+        ligneA.clientA=clientA;
+        let buttonA=buttons.item(numLigne);
         // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
-        anchorA.addEventListener("click", () => {
-            var a = new AlerteAlizon(`Sanctionner le client n°${clientA} ?`,current_url, "Quelle type de sanction ?");
-            a.ajouterBouton("Bannir temporairement", "normal-button rouge");
+        buttonA.addEventListener("click", () => {
+            ligneA.removeEventListener("click", liensLstClients);
+            var a = new AlerteAlizonSanctions(`Sanctionner le client n°${clientA} ?`);
+            a.ajouterBouton("Bannir temporairement", "normal-button petit-button rouge","timeout");
+            a.ajouterBouton("Fermer", "normal-button petit-button blanc","fermer");
             a.affichage()
+
+            a.getBouton("timeout").addEventListener("click", () => {
+                timeoutClient(clientA);
+                a.fermer();
+                ligneA.addEventListener("click", liensLstClients);
+            })
+
+            a.getBouton("fermer").addEventListener("click", () => {
+                a.fermer();
+                a.unBlur();
+                ligneA.addEventListener("click", liensLstClients);
+            })
         })
     }
+}
+
+function timeoutClient(numClient){
+    var a = new AlerteAlizonSanctionner(`Bannir le client n°${numClient} ?`, numClient);
+    a.ajouterInput("Durée (secondes)<span class='requis'>*</span> : ","duree","duree");
+    a.ajouterTextArea("Raison<span class='requis'>*</span> : ","raison","raison");
+    a.ajouterBouton("Bannir", "normal-button petit-button rouge","timeoutClient");
+    a.ajouterBouton("Fermer", "normal-button petit-button blanc");
+    a.affichage();
+
+    a.getBouton("Fermer").addEventListener("click", () => {
+        a.fermer();
+        a.unBlur();
+        ligneA.addEventListener("click", liensLstClients);
+    })
 }
 
 /*
@@ -633,7 +668,7 @@ function cataloguePrice(){
     //On récupère la barre de progression
     range = document.querySelector(".slider .progress");
     //Gestion de la différence maximale entre les prix dans le slider
-    let priceGap = 5;
+    let priceGap = 1;
 
     //Event listeners sur les inputs de type range et de prix
     priceInput.forEach(() => {
@@ -671,11 +706,11 @@ function cataloguePrice(){
         }
     }
 
-    //Fonctions de gestion du slider
+    //Fonction de gestion du slider
     function fctRangeInput(e){
         //Récupère les valeurs des inputs de slider pour obtenir le min et le max
         let minVal = parseInt(rangeInput[0].value),
-        maxVal = parseInt(rangeInput[1].value);
+        maxVal = parseInt(rangeInput[1].value) + 1;
         //Vérification que la différence entre les prix est inférieur au gap
         if (maxVal - minVal < priceGap) {
             //Si la target a pour classe range-min alors on modifie la valeur de l'input du minimum du slider
@@ -1278,15 +1313,23 @@ function setUpPaiment(){
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-class AlerteAlizon{
+class Alerte{
+
+    constructor(titre){
+        this.titre=titre;
+        this.display=null;
+    }
+}
+
+class AlerteAlizon extends Alerte{
     
     constructor(titre,destination,message="Une alerte survient",method="GET"){
-        this.titre=titre;
+        super(titre);
         this.message=message;
+        this.destination=destination;
         this.form=document.createElement("form");
         this.form.action=destination;
         this.form.method=method;
-        this.display=null;
     }
     
 
@@ -1310,10 +1353,10 @@ class AlerteAlizon{
                 <hr>
                 <p class="message-alerte">${message}</p>
                 <div class="alerte-footer">
-                <hr>
-                <div class="espace-interraction">
-                    ${this.form.outerHTML}
-                </div>
+                    <hr>
+                    <div class="espace-interraction">
+                        ${this.form.outerHTML}
+                    </div>
                 </div>
             </div>
    
@@ -1322,6 +1365,166 @@ class AlerteAlizon{
     }
 
     
+}
+
+class AlerteAlizonSanctionner extends Alerte{
+    constructor(titre,numClient, method="POST"){
+        super(titre);
+        this.numCli=numClient;
+        this.form=document.createElement("form");
+        this.form.method=method;
+        this.divInputs=document.createElement("div");
+        this.divInputs.className="div-inputs"
+        this.divBouton=document.createElement("div");
+    }
+
+    ajouterTextArea(texte,classe,nomForm=intitule){
+        let label=document.createElement("label");
+        label.innerHTML=texte;
+        let textarea=document.createElement("textarea");
+        textarea.rows=3;
+        textarea.name=nomForm;
+        textarea.required=true;
+        let divInput=document.createElement("div");
+        divInput.className=classe;
+        divInput.appendChild(label);
+        divInput.appendChild(textarea);
+        this.divInputs.appendChild(divInput);
+    }
+
+    ajouterInput(texte,classe,nomForm=intitule){
+        let label=document.createElement("label");
+        label.innerHTML=texte;
+        let input=document.createElement("input");
+        input.name=nomForm;
+        input.required=true;
+        let divInput=document.createElement("div");
+        divInput.className=classe;
+        divInput.appendChild(label);
+        divInput.appendChild(input);
+        this.divInputs.appendChild(divInput);
+    }
+
+    ajouterBouton(intitule,classe,nomForm=intitule){
+        let bouton=document.createElement("button");
+        bouton.name=nomForm;
+        bouton.setAttribute("id",intitule);
+        bouton.className=classe;
+        bouton.innerHTML=intitule;
+        bouton.value=1;
+        this.divBouton.appendChild(bouton);
+    }
+
+    getBouton(id){
+        return document.getElementById(id);
+    }
+
+    affichage=(message=this.message) => {
+        let num=document.createElement("input");
+        num.type="hidden";
+        num.name="numClient";
+        num.value=this.numCli;
+        this.form.appendChild(num);
+        document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(4px)");
+        this.display = document.createElement("div");
+        this.display.classList.add("sur-alerte");
+        this.form.appendChild(this.divInputs);
+        let divAlerteFooter=document.createElement("div");
+        divAlerteFooter.classList.add("alerte-footer");
+        let hr=document.createElement("hr");
+        divAlerteFooter.appendChild(hr);
+        let divEspaceInterraction=document.createElement("div");
+        divEspaceInterraction.classList.add("espace-interraction");
+        divEspaceInterraction.appendChild(this.divBouton);
+        divAlerteFooter.appendChild(divEspaceInterraction);
+        this.form.appendChild(divAlerteFooter);
+        this.display.innerHTML= `
+      
+            <div class="alerte">
+                <h2>${this.titre}</h2>
+                <hr>
+                ${this.form.outerHTML}
+            </div>
+   
+        `;
+        document.body.appendChild(this.display);
+    }
+
+    fermer(){
+        document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(0px)");
+        this.display.remove();
+    }
+}
+
+class AlerteAlizonSanctions{
+    
+    constructor (titre,message="Quelle type de sanction ?"){
+        this.titre=titre;
+        this.message=message;
+        this.divBouton=document.createElement("div");
+        this.display=null;
+    }
+
+    ajouterBouton(intitule,classe,id){
+        let bouton=document.createElement("button");
+        bouton.setAttribute("id",id);
+        bouton.className=classe;
+        bouton.innerHTML=intitule;
+        this.divBouton.appendChild(bouton);
+    }
+
+    getBouton(id){
+        return document.getElementById(id);
+    }
+
+    affichage=(message=this.message) => {
+        document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(4px)");
+        this.display = document.createElement("div");
+        this.display.classList.add("sur-alerte");
+        this.display.innerHTML= `
+      
+            <div class="alerte">
+                <h2>${this.titre}</h2>
+                <hr>
+                <p class="message-alerte">${message}</p>
+                <div class="alerte-footer">
+                <hr>
+                <div class="espace-interraction">
+                    ${this.divBouton.outerHTML}
+                </div>
+                </div>
+            </div>
+   
+        `;
+        document.body.appendChild(this.display);
+    }
+
+    fermer(){
+        this.display.remove();
+    }
+
+    unBlur(){
+        document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(0px)");
+    }
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                            Changement image produit                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+function changeImageProduit(e) 
+{
+    e.preventDefault();
+
+    let image = e.currentTarget.getElementsByTagName("img")[0];
+    let divImagePrincipale = document.getElementsByClassName("zoom")[0];
+    let imagePrincipale = divImagePrincipale.getElementsByTagName("img")[0];
+    
+    //Change l'image principale par l'image cliquée
+    imagePrincipale.src = image.src;
+    divImagePrincipale.style.backgroundImage = "url("+image.src+")";
 }
 
 /*
@@ -1347,38 +1550,42 @@ function zoomProduit(e) {
 */
 function avisProduit() {
     let tabAvis = document.querySelectorAll(".divAvisCommentaire p"); // séléctionne les avis
-    let moyennes = [0, 0, 0, 0, 0]; // tableau des moyennes pour chaque étoile
-    // définit le nombre d'avis correspondant à telle étoile
-    tabAvis.forEach(element => {
-        for (let index = 0; index < 5; index++) {
-            // si note contenue entre 1 et 1.99 ; 2 et 2.99 ; ...
-            if ((parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) >= (index+1)) && (parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) < (index + 2))) {
-                moyennes[index] = moyennes[index] + 1; // ajoute 1 à l'étoile correspondante à l'avis
+    
+    // seulement si il y a des avis
+    if (tabAvis.length != 0) {
+        let moyennes = [0, 0, 0, 0, 0]; // tableau des moyennes pour chaque étoile
+        // définit le nombre d'avis correspondant à telle étoile
+        tabAvis.forEach(element => {
+            for (let index = 0; index < 5; index++) {
+                // si note contenue entre 1 et 1.99 ; 2 et 2.99 ; ...
+                if ((parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) >= (index+1)) && (parseInt(element.innerHTML.substring(0, element.innerHTML.length - 2)) < (index + 2))) {
+                    moyennes[index] = moyennes[index] + 1; // ajoute 1 à l'étoile correspondante à l'avis
+                }
             }
+        });
+
+        let lesBarres = document.querySelectorAll(".barreAvis"); // séléctionne les barres de progression 
+        // définit le max et la valeur pour chaque barre de progression
+        for (let index = (lesBarres.length-1); index > 0; index--) {
+            lesBarres[lesBarres.length-index-1].max = tabAvis.length; // max pour les barres de progression (nombre total d'avis)
+            lesBarres[lesBarres.length-index-1].value = moyennes[index];
         }
-    });
 
-    let lesBarres = document.querySelectorAll(".barreAvis"); // séléctionne les barres de progression 
-    // définit le max et la valeur pour chaque barre de progression
-    for (let index = (lesBarres.length-1); index > 0; index--) {
-        lesBarres[lesBarres.length-index-1].max = tabAvis.length; // max pour les barres de progression (nombre total d'avis)
-        lesBarres[lesBarres.length-index-1].value = moyennes[index];
-    }
-
-    let pourcentages = [0, 0, 0, 0, 0]; // tableau des pourcentages
-    let lesP = document.querySelectorAll(".pAvis"); // les p pour faire y ajouter les pourcentages afin de les faire apparaitre sur la page
-    // définit les pourcentages d'avis correspondant à tel nombre d'étoiles
-    for (let index = 0; index < moyennes.length; index++) {
-        pourcentages[index] = moyennes[index] / tabAvis.length * 100; //divise le nb d'avis par étoile par le nombre total d'avis afin d'avoir le pourcentage
-    }
-
-    let count = moyennes.length - 1; // index pour parcourir le tableau dans l'autre sens car l'index 0 des pourcentages correspond à l'index 4 des barres de progression
-    // place les pourcentages en parcourant le tableau 
-    for (let index = 0; index < moyennes.length; index++) {
-        lesP[index].textContent = pourcentages[count] + "%"; // ajoute au p le pourcentage
-        count = count - 1; // continue de parcourir le tableau dans l'autre sens 
-        if (count == -1) {
-            count = moyennes.length - 1; // réinitialise au cas où
+        let pourcentages = [0, 0, 0, 0, 0]; // tableau des pourcentages
+        let lesP = document.querySelectorAll(".pAvis"); // les p pour faire y ajouter les pourcentages afin de les faire apparaitre sur la page
+        // définit les pourcentages d'avis correspondant à tel nombre d'étoiles
+        for (let index = 0; index < moyennes.length; index++) {
+            pourcentages[index] = moyennes[index] / tabAvis.length * 100; //divise le nb d'avis par étoile par le nombre total d'avis afin d'avoir le pourcentage
         }
+
+        let count = moyennes.length - 1; // index pour parcourir le tableau dans l'autre sens car l'index 0 des pourcentages correspond à l'index 4 des barres de progression
+        // place les pourcentages en parcourant le tableau 
+        for (let index = 0; index < moyennes.length; index++) {
+            lesP[index].textContent = pourcentages[count] + "%"; // ajoute au p le pourcentage
+            count = count - 1; // continue de parcourir le tableau dans l'autre sens 
+            if (count == -1) {
+                count = moyennes.length - 1; // réinitialise au cas où
+            }
+        }   
     }
 }

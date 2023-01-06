@@ -263,11 +263,11 @@
     <?php endif; ?>
     <?php if(session()->has("numero") && has_cookie("token_panier") 
     && !(session()->has("ignorer") && session()->get("ignorer")==true) 
-    && !(isset($supprimerOuConfirmer) && $supprimerOuConfirmer)): ?>
-        var oui = new AlerteAlizon("Récupération panier","<?= current_url() ?>","Voulez-vous récupérer le panier que vous avez utilisé <strong>avant</strong> la connexion, en l'associant à votre compte ?");
-        oui.ajouterBouton("Associer",'normal-button petit-button vert',"Confirmer");
+    && !(isset($ecraserOuFusionner) && $ecraserOuFusionner)): ?>
+        var oui = new AlerteAlizon("Récupération panier","<?= current_url() ?>","Il y a déjà un panier associé à votre compte, voulez-vous écraser le panier précédent ou fusionner les deux paniers ?");
+        oui.ajouterBouton("Écraser",'normal-button petit-button supprimer-filtre rouge',"Suppression");
         oui.ajouterBouton("Plus tard",'normal-button petit-button supprimer-filtre',"Ignorer");
-        oui.ajouterBouton("Supprimer panier",'normal-button petit-button supprimer-filtre rouge',"Suppression");
+        oui.ajouterBouton("Fusionner",'normal-button petit-button vert',"Confirmer");
         oui.affichage();
     <?php endif; ?>
 </script>

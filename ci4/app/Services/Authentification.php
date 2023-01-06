@@ -129,7 +129,7 @@ class Authentification
                 //Le controlleur nous informe par ces valeurs que l'utilisateur a cherché à modifier le mdp, il faut donc tout vérifier
                 if (!empty($verifMdp) && !empty($nouveauMdp))
                 {
-                    if ($verifMdp == "" || $nouveauMdp = "")
+                    if ($verifMdp == "" || $nouveauMdp == "")
                     {
                         $errors[1]= "Remplissez le(s) champs vide(s)";
                     }
@@ -174,8 +174,17 @@ class Authentification
         
         if(empty($errors))
         {
-            $entree->motDePasse=$nouveauMdp;
-            $entree->cryptMotDePasse();
+            //Si l'utilisateur a cherché à modifier le mdp, on le crypte
+            if ($entree->motDePasse != "motDePassemotDePasse") 
+            {
+                $entree->motDePasse=$nouveauMdp;
+                $entree->cryptMotDePasse();
+            }
+            //Sinon on le supprime pour ne pas le modifier
+            else
+            {
+                unset($entree->motDePasse);
+            }
             $compteModel->save($entree);
         }
 
@@ -266,7 +275,7 @@ class Authentification
             //On additionne tous les chiffres de la liste
             $res = array_sum($chiffresUtilises);
 
-            //Et si la somme de nos deux additions modulo 10 est égale à 0, alors la carte est valide
+            //Et si la somme de nos deux additions modulo 10 n'est pas égale à 0, alors la carte est invalide
             if (($res + $chiffresRestants) % 10 != 0)
             {
                 $errors[5] = "Carte invalide";

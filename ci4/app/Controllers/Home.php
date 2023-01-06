@@ -70,21 +70,16 @@ class Home extends BaseController
             if(empty($issues)){
                 if (!session()->has("referer_redirection")) {
                     return redirect()->to("/");
-                
                 }else {
-                 
                     $redirection=session()->get("referer_redirection");
                     session()->remove("referer_redirection");
                     return redirect()->to($redirection);
                 }
             }
-           
         }
 
         if (session()->has("referer_redirection")) {
             $data['linkRedirection']=session()->get("referer_redirection");
-           
-             
             $issues['redirection']="Vous devez vous connectez pour y accéder";
             $data["controller"]= "Connexion";
             
@@ -105,27 +100,21 @@ class Home extends BaseController
     {
         $post=$this->request->getPost();
         $issues=[];
-
         if (!empty($post)) {
             $auth = service('authentification');
             $user= new \App\Entities\Client();
             $user->fill($post);
-
-
             $issues=$auth->inscription($user, $post['confirmezMotDePasse']);
-
             if(empty($issues)){
                 if (!session()->has("referer_redirection")) {
                     return redirect()->to("/");
-                
                 }else {
-                    
                     $redirection=session()->get("referer_redirection");
                     session()->remove("referer_redirection");
                     return redirect()->to($redirection);
                 }
             }
-           
+            
         }
         
 

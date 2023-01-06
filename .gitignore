@@ -3,3 +3,4 @@ ci4/.env
 .vscode/settings.json
 vendor
 suiviLivraison/simulateur
+.history/*

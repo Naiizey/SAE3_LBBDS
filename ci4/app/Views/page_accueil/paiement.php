@@ -23,23 +23,25 @@
                             <?php include(dirname(__DIR__,3)."/public/images/header/paiement.svg")?>
                             <input type="text" name="numCB" required="required" value="<?= $numCB?>"/>
                         </div>
-                        <?= afficheErreurs($erreurs, 2) ?>
+                        <?= 
+                            afficheErreurs($erreurs, 2) .
+                            afficheErreurs($erreurs, 5)  
+                        ?>
                         <div class="nomPrenom">
                             <div>
                                 <label>Date d'expiration<span class="requis">*</span> :</label>
-                                <input type="text" placeholder="mm/aa" pattern=".*/.*" name="dateExpiration" required="required" value="<?= $dateExpiration?>"/>
+                                <input type="text" placeholder="mm/aa" pattern="\d{2}/\d{2}" title="mm/aa" name="dateExpiration" required="required" value="<?= $dateExpiration?>"/>
                             </div>
                             <div>
                                 <label>Cryptogramme visuel<span class="requis">*</span> :</label>
-                                <input type="text" pattern="[0-9][0-9][0-9]" name="CVC" required="required" value="<?= $CVC?>"/>
+                                <input type="text" pattern="[0-9][0-9][0-9]" title="123" name="CVC" required="required" value="<?= $CVC?>"/>
                             </div>
                         </div>
                         <?= 
                             afficheErreurs($erreurs, 0) . 
                             afficheErreurs($erreurs, 1) .
                             afficheErreurs($erreurs, 3) .
-                            afficheErreurs($erreurs, 4) .
-                            afficheErreurs($erreurs, 5) 
+                            afficheErreurs($erreurs, 4)
                         ?>
                         <input type="submit" value="Continuer"/>
                     </form>

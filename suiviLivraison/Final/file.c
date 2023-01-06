@@ -1,177 +1,252 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 
-
-
-//fifo list
-// - Identifiant livraison
-// - Timestamp de la rentré dans le fifo
-// - État de la livraison
-// - Jours de retards
-typedef struct fifo {
+typedef struct Element Element;
+struct Element
+{
     int identifiant;
     time_t timestamp;
-    char * etat; 
+    char *etat;
     int joursRetard;
-    struct fifo *next;
-} fifo;
+    Element *suivant;
+};
+
+typedef struct File File;
+struct File
+{
+    Element *premier;
+};
+
+//déclaration des fonctions
+Element create_element(int identifiant, time_t timestamp, char *etat, int joursRetard);
+void enfiler(File *file, Element *nvElement);
+Element defiler(File *file);
+void afficherElement(Element *e, bool returnLine);
+void afficherFile(File *file);
+void eraseFile(File *file);
+File copier_file(File *file, File *file2);
+Element *trouverElement(File *file, int identifiant);
 
 //getters
-int getIdentifiant(fifo *f) {
-    return f->identifiant;
+int getIdentifiant(Element *e) {
+    return e->identifiant;
 }
 
-time_t getTimestamp(fifo *f) {
-    return f->timestamp;
+time_t getTimestamp(Element *e) {
+    return e->timestamp;
 }
 
-char *getEtat(fifo *f) {
-    return f->etat;
+char *getEtat(Element *e) {
+    return e->etat;
 }
 
-int getJoursRetard(fifo *f) {
-    return f->joursRetard;
+int getJoursRetard(Element *e) {
+    return e->joursRetard;
 }
 
 //setters
-void setIdentifiant(fifo *f, int identifiant) {
-    f->identifiant = identifiant;
+void setIdentifiant(Element *e, int identifiant) {
+    e->identifiant = identifiant;
 }
 
-void setTimestamp(fifo *f, time_t timestamp) {
-    f->timestamp = timestamp;
+void setTimestamp(Element *e, time_t timestamp) {
+    e->timestamp = timestamp;
 }
 
-void setEtat(fifo *f, char *etat) {
-    f->etat = etat;
+void setEtat(Element *e, char *etat) {
+    e->etat = etat;
 }
 
-void setJoursRetard(fifo *f, int joursRetard) {
-    f->joursRetard = joursRetard;
+Element create_element(int identifiant, time_t timestamp, char *etat, int joursRetard) {
+    Element *e = malloc(sizeof(*e));
+    setIdentifiant(e, identifiant);
+    setTimestamp(e, timestamp);
+    setEtat(e, etat);
+    e->joursRetard = joursRetard;
+    e->suivant = NULL;
+    return *e;
 }
 
-// - Ajouter un élément dans la fifo
-void addFifo(fifo *f, int identifiant, time_t timestamp, char *etat, int joursRetard) {
-    //check if fifo is empty
-    if (f == NULL) {
-        f = malloc(sizeof(fifo));
-        setIdentifiant(f, identifiant);
-        setTimestamp(f, timestamp);
-        setEtat(f, etat);
-        setJoursRetard(f, joursRetard);
-        f->next = NULL;
-    }
-    else
+void enfiler(File *file, Element *nvElement)
+{
+    Element *nouveau = malloc(sizeof(*nouveau));
+    if (file == NULL || nouveau == NULL)
     {
-        fifo *tmp = f;
-        while (tmp->next != NULL) {
-            tmp = tmp->next;
-        }
-        tmp->next = malloc(sizeof(fifo));
-        setIdentifiant(tmp->next, identifiant);
-        setTimestamp(tmp->next, timestamp);
-        setEtat(tmp->next, etat);
-        setJoursRetard(tmp->next, joursRetard);
-        tmp->next->next = NULL;
-    }        
-}
-
-// - Supprimer un élément de la fifo
-void removeFifo(fifo *f) {
-    fifo *tmp = f;
-    f = f->next;
-    free(tmp);
-}
-
-// - Afficher la fifo
-void printFifo(fifo *f) {
-    printf("Affichage de la fifo \n");
-    // fifo *tmp = f;
-    if (f == NULL) {
-        printf("La fifo est vide \n");
+        exit(EXIT_FAILURE);
     }
-    else
+
+    nouveau->identifiant = nvElement->identifiant;
+    nouveau->timestamp = nvElement->timestamp;
+    nouveau->etat = nvElement->etat;
+    nouveau->joursRetard = nvElement->joursRetard;
+    nouveau->suivant = NULL;
+    
+
+    if (file->premier != NULL) /* La file n'est pas vide */
     {
-        while (f != NULL) {
-            printf("Identifiant : %d - Timestamp : %ld - État : %s - Jours de retards : %d \n", getIdentifiant(f), getTimestamp(f), getEtat(f), getJoursRetard(f));
-            f = f->next;
+        /* On se positionne à la fin de la file */
+        Element *elementActuel = file->premier;
+        while (elementActuel->suivant != NULL)
+        {
+            elementActuel = elementActuel->suivant;
         }
+        elementActuel->suivant = nouveau;
     }
-
-}
-
-// - Vider la fifo
-void emptyFifo(fifo *f) {
-    fifo *tmp = f;
-    while (tmp != NULL) {
-        removeFifo(tmp);
-        tmp = tmp->next;
+    else /* La file est vide, notre élément est le premier */
+    {
+        file->premier = nouveau;
     }
 }
 
-// - Sauvegarder la fifo dans un fichier
-void saveFifo(fifo *f) {
-    FILE *file = fopen("fifo.txt", "w");
-    fifo *tmp = f;
-    while (tmp != NULL) {
-        fprintf(file, "Identifiant : %d - Timestamp : %ld - État : %s - Jours de retards : %d \n", getIdentifiant(tmp), getTimestamp(tmp), getEtat(tmp), getJoursRetard(tmp));
-        tmp = tmp->next;
+void eraseFile(File *file)
+{
+    //on détruit la file
+    Element *elementActuel = file->premier;
+    while (elementActuel != NULL)
+    {
+        Element *temp = elementActuel;
+        elementActuel = elementActuel->suivant;
+        free(temp);
     }
-    fclose(file);
+    file->premier = NULL;
 }
 
-// - Charger la fifo depuis un fichier
-void loadFifo(fifo *f) {
-    FILE *file = fopen("fifo.txt", "r");
-    char line[100];
-    while (fgets(line, 100, file) != NULL) {
-        int identifiant = 0;
-        time_t timestamp = 0;
-        char etat[100];
-        int joursRetard = 0;
-        sscanf(line, "Identifiant : %d - Timestamp : %ld - État : %s - Jours de retards : %d \n", &identifiant, &timestamp, etat, &joursRetard);
-        addFifo(f, identifiant, timestamp, etat, joursRetard);
+Element defiler(File *file)
+{
+    if (file == NULL)
+    {
+        exit(EXIT_FAILURE);
     }
-    fclose(file);
+
+    Element *temp = malloc(sizeof(*temp));
+    
+    
+
+    /* On vérifie s'il y a quelque chose à défiler */
+    if (file->premier != NULL)
+    {
+        Element *elementDefile = file->premier;
+        *temp = *file->premier;
+        file->premier = elementDefile->suivant;
+        afficherFile(file);
+        printf("\n");
+        free(elementDefile);
+        afficherFile(file);
+        printf("\n");
+    }
+
+    return *temp;
 }
 
-// - Récupérer la taille de la fifo
-int getFifoSize(fifo *f) {
-    int size = 0;
-    fifo *tmp = f;
-    while (tmp != NULL) {
-        size++;
-        tmp = tmp->next;
+void afficherElement(Element *e, bool returnLine)
+{
+    printf("%d ,%s ,%d ,%ld -> ", e->identifiant, e->etat, e->joursRetard, e->timestamp);
+    if (returnLine)
+    {
+        printf(" \n");
     }
-    return size;
 }
 
-// - Récupérer un élément de la fifo
-fifo *getFifo(fifo *f, int index) {
-    fifo *tmp = f;
-    int i = 0;
-    while (i < index) {
-        tmp = tmp->next;
-        i++;
+void afficherFile(File *file)
+{
+    if (file == NULL)
+    {
+        exit(EXIT_FAILURE);
     }
-    return tmp;
+
+    Element *actuel = file->premier;
+
+    while (actuel != NULL)
+    {
+        afficherElement(actuel, false);
+        actuel = actuel->suivant;
+    }
 }
 
-int main() {
-    //print a text
-    printf("Hello World \n");
-    //create fifo
-    fifo *f = NULL;
-    //fill fifo
-    addFifo(f, 1, time(NULL), "En cours", 0);
-    addFifo(f, 2, time(NULL), "En cours", 0);
-    addFifo(f, 3, time(NULL), "En cours", 0);
-    addFifo(f, 4, time(NULL), "En cours", 0);
-    addFifo(f, 5, time(NULL), "En cours", 0);
-    //print fifo
-    printFifo(f);
-    //save fifo
-    saveFifo(f);
+Element *trouverElement(File *file, int identifiant)
+{
+    if (file == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    Element *actuel = file->premier;
+
+    while (actuel != NULL)
+    {
+        if (actuel->identifiant == identifiant)
+        {
+            return actuel;
+        }
+        actuel = actuel->suivant;
+    }
+    return NULL;
+}
+
+/*
+* copier_file copie une file dans une autre
+* @param file la file à copier
+* @param file2 la file dans laquelle on copie
+* @return la file2
+*/
+File copier_file(File *file, File *file2)
+{
+    if (file == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    Element *actuel = file->premier;
+
+    while (actuel != NULL)
+    {
+        enfiler(file2, actuel);
+        actuel = actuel->suivant;
+    }
+    return *file2;
+}
+
+int main(int argc, char *argv[])
+{
+    File file = {NULL};
+
+    //creation d'un element
+    Element *e = malloc(sizeof(*e));
+    *e = create_element(1, time(NULL), "en cours", 0);
+    afficherElement(e, true);
+    enfiler(&file, e);
+    afficherFile(&file);
+    
+
+    //defiler
+    // Element *temp = malloc(sizeof(*temp));
+    // *temp = defiler(&file);
+    // afficherElement(temp,true);
+
+    //copier file
+    File file2 = {NULL};
+    printf("\ncopie de file dans file2 \n");
+    copier_file(&file, &file2);
+    printf("file2 : \n");
+    afficherFile(&file2);
+    //vide file1
+    printf("vider file1 \n");
+    eraseFile(&file);
+    printf("file1 : \n");
+    afficherFile(&file);
+    printf("\n");
+    printf("file2 : \n");
+    afficherFile(&file2);
+    printf("\n");
+
+    Element *e2 = malloc(sizeof(*e2));
+    //on touvre l'element 1
+    *e2 = *trouverElement(&file2, 1);
+    printf("element 1 trouvé: \n");
+    afficherElement(e2, true);
+
+
     return 0;
-} 
+}

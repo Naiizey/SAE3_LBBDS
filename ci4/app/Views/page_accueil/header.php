@@ -178,6 +178,9 @@
             <?php if (isset($GLOBALS['validation'])): ?>
                 <?= $GLOBALS['validation']; ?>
             <?php endif; ?>
+            <?php if (isset($GLOBALS['invalidation'])): ?>
+                <?= $GLOBALS['invalidation']; ?>
+            <?php endif; ?>
         </header>
         
      

@@ -17,8 +17,12 @@ body {
     min-height: 100vh;
 }
 
-.bodyAdmin, .bodyVendeur {
+.bodyAdmin {
     background-color: black;
+}
+
+.bodyVendeur {
+    background-color: #3997a3;
 }
 
 /* Firefox */
@@ -71,8 +75,12 @@ header{
     height: 5em;
 }
 
-.divHeaderAdmin, .divHeaderVendeur{
+.divHeaderAdmin {
     background-color: black;
+}
+
+.divHeaderVendeur {
+    background-color: #3997a3;
 }
 
 header h2:hover {
@@ -419,8 +427,12 @@ footer {
     z-index: 100;
 }
 
-.footerAdmin, .footerVendeur{
+.footerAdmin {
     background-color: black;
+}
+
+.footerVendeur {
+    background-color: #3997a3;
 }
 
 footer .pc {
@@ -2456,6 +2468,11 @@ main#Catalogue{
     padding-bottom: 3%;
 }
 
+.normal-button.blanc{
+    color: #164F57;
+    background-color: white;
+    border: #404E58 solid 1px;
+}
 .normal-button.vert{
     background-color: #24a064;
     color: white;
@@ -2463,6 +2480,10 @@ main#Catalogue{
 .normal-button.rouge{
     background-color: #a02424;
     color: white;
+}
+
+.normal-button.blanc:hover{
+    background-color: #C6C6C6;
 }
 
 .normal-button.vert:hover{
@@ -3091,7 +3112,7 @@ a.fleche-page{
     width: 5em;
 }
 
-.lignesClients .anchorClient{
+.lignesClients .buttonSanction{
     background-color: #571616;
     width: 2em;
     height: 2em;

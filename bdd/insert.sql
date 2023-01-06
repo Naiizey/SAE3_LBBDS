@@ -101,18 +101,22 @@ INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://cdn.pixabay.com/photo/2017/09/20/18/00/ice-cubes-2769457_960_720.jpg',1);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://cdn.pixabay.com/photo/2017/09/12/04/42/soft-drink-2741251_960_720.jpg',2);
-INSERT INTO _image_prod(id_prod, lien_image,num_image)
-VALUES (currval('sae3._produit_id_prod_seq'), 'https://cdn.pixabay.com/photo/2017/08/05/14/30/coca-cola-2584031_960_720.jpg',3);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (133,'Vin rouge',10,15,'Ensemble de vins dans une boite en bois qui agrémentera vos soirées ou repas.', true, 10, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://images.pexels.com/photos/5086617/pexels-photo-5086617.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',0);
+INSERT INTO _image_prod(id_prod, lien_image,num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://cdn.pixabay.com/photo/2016/07/26/16/16/wine-1543170_960_720.jpg',1);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (133,'Vin blanc',10,15,'Elaboré à partir de nos raisons blancs bretons, ce vin blanc est idéal pour vos dîner.', true, 10, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image, num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://images.pexels.com/photos/1123260/pexels-photo-1123260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',0);
+INSERT INTO _image_prod(id_prod, lien_image, num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://cdn.pixabay.com/photo/2017/09/26/16/44/wine-2789265_960_720.jpg',1);
+INSERT INTO _image_prod(id_prod, lien_image, num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://cdn.pixabay.com/photo/2018/10/10/21/06/after-work-3738337_960_720.jpg',2);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (134,'Fines herbes',5,6,'Herbes pour aggrémenter les plats comestibles. Accompagne très bien une côte de boeuf avec un verre de rouge.',  true, 17, 4.5, 5, true);

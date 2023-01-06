@@ -275,7 +275,7 @@ class Authentification
             //On additionne tous les chiffres de la liste
             $res = array_sum($chiffresUtilises);
 
-            //Et si la somme de nos deux additions modulo 10 est égale à 0, alors la carte est valide
+            //Et si la somme de nos deux additions modulo 10 n'est pas égale à 0, alors la carte est invalide
             if (($res + $chiffresRestants) % 10 != 0)
             {
                 $errors[5] = "Carte invalide";

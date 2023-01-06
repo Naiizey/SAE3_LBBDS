@@ -1321,11 +1321,6 @@ function setUpPaiment(){
 */
 
 class Alerte{
-    constructor(titre,message="Une alerte survient"){
-        this.titre=titre;
-        this.message=message;
-        this.display=null;
-    }
 
     constructor(titre){
         this.titre=titre;
@@ -1336,7 +1331,8 @@ class Alerte{
 class AlerteAlizon extends Alerte{
     
     constructor(titre,destination,message="Une alerte survient",method="GET"){
-        super(titre,message);
+        super(titre);
+        this.message=message;
         this.destination=destination;
         this.form=document.createElement("form");
         this.form.action=destination;

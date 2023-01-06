@@ -55,7 +55,12 @@
                     <div class="divGauche">
                         <ul>
                             <?php if (isset($autresImages)): ?>
-                                <?php for ($i = 0; $i < count($autresImages) && $i < 3; $i++): ?>
+                                <li>
+                                    <a href="" onclick="changeImageProduit(event)">
+                                        <img src="<?= $prod -> lienimage ?>" />
+                                    </a>
+                                </li>
+                                <?php for ($i = 0; $i < count($autresImages) && $i < 5; $i++): ?>
                                     <li>
                                         <a href="" onclick="changeImageProduit(event)">
                                             <img src="<?= $autresImages[$i] -> lien_image ?>" />

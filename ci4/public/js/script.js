@@ -1523,13 +1523,15 @@ class AlerteAlizonSanctions{
 
 function changeImageProduit(e) 
 {
-    //Permute l'image cliquée avec l'image principale
-    let image = e.currentTarget;
+    e.preventDefault();
+
+    let image = e.currentTarget.getElementsByTagName("img")[0];
     let divImagePrincipale = document.getElementsByClassName("zoom")[0];
     let imagePrincipale = divImagePrincipale.getElementsByTagName("img")[0];
-    console.log(image);
-    console.log(divImagePrincipale);
-    console.log(imagePrincipale);
+    
+    //Change l'image principale par l'image cliquée
+    imagePrincipale.src = image.src;
+    divImagePrincipale.style.backgroundImage = "url("+image.src+")";
 }
 
 /*

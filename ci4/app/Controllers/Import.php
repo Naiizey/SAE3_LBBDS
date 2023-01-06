@@ -84,6 +84,6 @@ class Import extends BaseController
         $importModel = model("\App\Models\ImportCSV");
         $entetes = $importModel->getentete();
         $entetes = json_encode($entetes);
-        echo $entetes;
+        return $entetes;
     }
 }

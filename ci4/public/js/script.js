@@ -131,18 +131,11 @@ function getentete(){
     console.log("getentete");
     let xhttp = new XMLHttpRequest();
     console.log("sending request")
-    xhttp.open("POST", "Import.php", true);
+    //request at baseurl/admin/import/entetes
+    xhttp.open("GET", "/vendeur/import/entetes", false);
     console.log("request sent")
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    console.log("request header set")
-    xhttp.send("entete=1");
-    console.log("request sent")
-    xhttp.onreadystatechange = function() {
-        console.log("ready state changed")
-        if (this.readyState == 4 && this.status == 200) {
-            return this.responseText;
-        }
-    }
+    //print what the server send
+    console.log(xhttp.responseText);
 }
 
 

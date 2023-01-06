@@ -113,6 +113,7 @@ $routes->set404Override();
     $routes->get('/admin', 'Home::admin');
     $routes->get('/admin/lstClients', 'Home::lstClients');
 
+    $routes->get('/vendeur/import/entetes', 'Import::getentetes');
 ##param uri (:any) et dans methode /$1
 
 /*

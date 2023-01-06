@@ -34,7 +34,7 @@ class Home extends BaseController
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Vous êtes déconnecté !");
         }
         
-        
+        $this->verifTimeout();
     }
 
     public function index()
@@ -626,6 +626,26 @@ class Home extends BaseController
         $session->set("just_deconnectee",True);
         
         return redirect()->to("/");
+    }
+
+    public function sessionIsTimeout(){
+       return model("\App\Models\SanctionTemp")->isTimeout(session()->get("numero"));
+    }
+
+    public function verifTimeout(){
+        if (session()->get("numero")!=NULL) {
+            if($this->sessionIsTimeout()){
+                $session=session();
+                $session->remove("numero");
+                $session->remove("nom");
+                $session->remove("ignorer");
+                $session->remove("adresse_facturation");
+                $session->remove("adresse_livraison");
+                $session->set("just_deconnectee",False);
+                $GLOBALS['invalidation'] = $this->feedback->afficheInvalidation("Vous avez été banni temporairement !");
+                return redirect()->to("/");
+            }
+        }
     }
 
     public function lstClients(){

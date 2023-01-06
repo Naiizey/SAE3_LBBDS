@@ -1463,13 +1463,12 @@ class AlerteAlizonSanctionner extends Alerte{
     }
 }
 
-class AlerteAlizonSanctions{
+class AlerteAlizonSanctions extends Alerte{
     
     constructor (titre,message="Quelle type de sanction ?"){
-        this.titre=titre;
+        super(titre);
         this.message=message;
         this.divBouton=document.createElement("div");
-        this.display=null;
     }
 
     ajouterBouton(intitule,classe,id){

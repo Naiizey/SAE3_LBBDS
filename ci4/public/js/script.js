@@ -1521,6 +1521,23 @@ class AlerteAlizonSanctions{
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                            Changement image produit                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+function changeImageProduit(e) 
+{
+    //Permute l'image cliquée avec l'image principale
+    let image = e.currentTarget;
+    let divImagePrincipale = document.getElementsByClassName("zoom")[0];
+    let imagePrincipale = divImagePrincipale.getElementsByTagName("img")[0];
+    console.log(image);
+    console.log(divImagePrincipale);
+    console.log(imagePrincipale);
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                 Zoom Produit                                    ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */

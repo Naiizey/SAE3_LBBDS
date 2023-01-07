@@ -6,7 +6,6 @@ SET SCHEMA 'sae3';
 /*
 TODO: Contrainte -> bloquer un numéro de compte même si le compte relié est supprimé (attendre maj UML)
 TODO: Contraintes current_panier(voir UML) à revoir (mineur)
-TODO: Faire un shema image pour produit spécifiant l'image, son origine et son encadrement.
 */
 /* -----------------------------------------------------------
 -                    Classes                                 -
@@ -424,7 +423,8 @@ ALTER TABLE _sanction_temporaire ADD CONSTRAINT _sanction_temporaire_duree_fk FO
 ALTER TABLE _sanction_temporaire ADD CONSTRAINT _sanction_temporaire_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
 /* -----------------------------------------------------------
--                  Trigger schema                        -
+-                  TRIGGER DE CONTRAINTES:                   -
+   TRIGGER PERMETTANT DE FAIRE RESPECTER UNE CONTRAINTE                       -
 -                                                            -
 --------------------------------------------------------------*/
 
@@ -491,6 +491,7 @@ end
 $$ language plpgsql;
 CREATE TRIGGER nouvelleImageProd BEFORE INSERT ON _image_prod FOR EACH ROW EXECUTE PROCEDURE limiteImageProd();
 
+
 CREATE OR REPLACE FUNCTION  frozenPrix() RETURNS TRIGGER AS
     $$
         BEGIN
@@ -501,6 +502,8 @@ CREATE OR REPLACE FUNCTION  frozenPrix() RETURNS TRIGGER AS
         return new;
 end
     $$ language plpgsql;
+
+CREATE TRIGGER update_frozen BEFORE UPDATE ON _refere_commande FOR EACH ROW EXECUTE PROCEDURE frozenPrix();
 
 
 

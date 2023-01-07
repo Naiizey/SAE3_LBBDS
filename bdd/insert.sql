@@ -253,6 +253,8 @@ INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, descripti
 VALUES (148,'Piquets de jardin',100,120, 'Très bon piquet pour arrêter des lapins, attention à usage unique, provenance : Bretagne.', true, 10, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image, estinterne,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), '../ci4/public/images/produit/missile_javelin.jpg', true,0);
+INSERT INTO _image_prod(id_prod, lien_image, estinterne,num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), '../ci4/public/images/produit/missile_javelin.jpg', true,1);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (148,'Tarte campagnarde',8,9.6,'Carrotes, fromage, jambon, champigons. Produit incroyablement bon qui fond très bien en bouche.',  true, 10, 4.5, 5, true);

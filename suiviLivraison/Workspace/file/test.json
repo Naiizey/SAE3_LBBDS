@@ -1,9 +1,9 @@
 {
     "livraison" : {
         "identifiant" : 0,
-        "nombre" : 6,
+        "nombre" : 5,
         "time" : 0,
-        "tout" : "string",
+        "etat" : "tout",
         "retard": 2
     }
     

@@ -6,23 +6,14 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <string.h>
+#include "file.h"
 
 
 #define MAX_PA 30
-#define TEST false
+#define TEST true
 const int MAX_ETAPE=6;
 
 
-
-//!! A ENLEVER PLUS TARD : 
-typedef struct fifo {
-    int identifiant;
-    int nombre;
-    time_t timestamp;
-    char * etat; 
-    int joursRetard;
-    struct fifo *next;
-} fifo;
 
 
 
@@ -37,12 +28,11 @@ bool verifEtat(char * etat);
  * @brief A partir d'un objet json, on collecte les information correspondante à une livraison
  * 
  * @param json un Objet json
- * @return fifo* 
+ * @return Element* 
  */
-fifo * collectLivraison(cJSON * json){
-    fifo * new =(fifo *)malloc(sizeof(fifo));
+Element * collectLivraison(cJSON * json){
+    Element * new =(Element *)malloc(sizeof(Element));
     new->identifiant=-1;
-    new->nombre=-1;
     new->timestamp=0;
     new->joursRetard=0;
     new->etat=NULL;
@@ -59,9 +49,7 @@ fifo * collectLivraison(cJSON * json){
             if(strcmp(json->string,"identifiant")==0 && json->type==cJSON_Number){
                 new->identifiant=json->valueint;
             }
-            else if(strcmp(json->string,"nombre")==0 ){
-                new->nombre=json->valueint;
-            }else if(strcmp(json->string, "time")==0){
+            else if(strcmp(json->string, "time")==0){
                 new->timestamp=time(NULL);
             }else if(strcmp(json->string,"retard")==0 ){
                 new->joursRetard=json->valueint;
@@ -85,7 +73,7 @@ fifo * collectLivraison(cJSON * json){
 }
 
 
-if(new->etat!=NULL && new->identifiant>=0 && new->nombre>=0)
+if(new->etat!=NULL && new->identifiant>=0)
     return new;
 else
     return NULL;
@@ -110,11 +98,11 @@ typedef struct cJSON
 */
 
 
-int parcoursLivraisons(cJSON *json, fifo **liste){
+int parcoursLivraisons(cJSON *json, Element **liste){
     #if TEST == true
     printf("Parcours...\n");
     #endif
-    fifo * result;
+    Element * result;
     if(json->type == cJSON_Object)
     {
         if (json->child==NULL || json->child->string==NULL) return -1;
@@ -216,11 +204,11 @@ int main(int argc, char const *argv[])
         printf(cJSON_Print(json));
         #endif
         
-        fifo * liste = (fifo *)malloc(sizeof(fifo));
+        Element * liste = (Element *)malloc(sizeof(Element));
 
         
         int retour = parcoursLivraisons(json,&liste);
-        printf("Result : %d\n {%d,%s}\n", retour,liste->nombre,liste->etat);
+        printf("Result : %d\n {%ld,%s}\n", retour,liste->timestamp,liste->etat);
        
 
     }

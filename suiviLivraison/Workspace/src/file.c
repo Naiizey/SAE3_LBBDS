@@ -159,8 +159,8 @@ Element *trouverElement(File *file, int identifiant)
     return NULL;
 }
 
-/*
-* copier_file copie une file dans une autre
+/**
+* @brief copier_file copie une file dans une autre
 * @param file la file à copier
 * @param file2 la file dans laquelle on copie
 * @return la file2

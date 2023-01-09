@@ -599,9 +599,29 @@ class Home extends BaseController
 
     public function admin()
     {
-        $data['role'] = "admin";
+        $data["role"] = "admin";
         $data["controller"] = "Administration";
         return view("page_accueil/admin.php", $data);
+    }
+
+    public function lstSignalements()
+    {
+        $data["role"] = "admin";
+        $data["controller"] = "Administration - Signalements";
+        $data["signalements"] = model("\App\Models\LstSignalements")->findAll();
+        $data["produitSignalements"] = array();
+        $modelCommentaires = model("\App\Models\Commentaires");
+
+        for ($i = 0; $i < count($data["signalements"]); $i++) 
+        {
+            //On récupère tous les champs de l'avis signalé
+            $data["produitSignalements"][$i] = $modelCommentaires->getAvisById($data["signalements"][$i]->num_avis);
+            
+            //On s'intéresse particulièrement à l'id produit
+            $data["produitSignalements"][$i] = $data["produitSignalements"][$i]->id_prod;
+        }
+
+        return view("page_accueil/signalements.php", $data);
     }
 
     public function destroySession()

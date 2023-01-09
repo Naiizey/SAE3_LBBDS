@@ -145,6 +145,4 @@ CREATE OR REPLACE VIEW code_reduction AS
 
 CREATE OR REPLACE VIEW reduc_panier AS SELECT * FROM _reduire;
 
-
-
-
+CREATE OR REPLACE VIEW signalement AS SELECT * FROM _signalement;

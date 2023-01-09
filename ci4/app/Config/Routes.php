@@ -100,9 +100,11 @@ $routes->set404Override();
     $routes->get('/facture','Home::facture',['filter' => 'connexion']);
     $routes->post('/facture','Home::facture',['filter' => 'connexion']);
 
-    $routes->get('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
-    $routes->post('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
-    
+    $routes->get('/(admin)/signalements', 'Home::lstSignalements');
+    $routes->post('/(admin)/signalements', 'Home::lstSignalements');
+
+    $routes->get('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');
+    $routes->post('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');
 
     $routes->get('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
     $routes->post('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);

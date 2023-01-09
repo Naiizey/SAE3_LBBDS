@@ -153,7 +153,7 @@
                         <?php endforeach; ?>
                     </ul>
                 </section>
-                <div class="divAvis">
+                <div class="divAvis" id="avis">
                     <h2>Avis</h2>
                     <hr>
                     <?php if (empty($avis)): ?>

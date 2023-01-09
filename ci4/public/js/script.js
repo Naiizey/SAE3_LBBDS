@@ -474,14 +474,16 @@ function lstSignalements()
 
     //Récupération de tous les numéros de produit associés au signalement et donc à l'avis
     var numProduit = document.getElementsByClassName("numProduit");
+    var numAvis = document.getElementsByClassName("numAvis");
 
     for (let numLigne = 0; numLigne < lignes.length; numLigne++)
     {
         let ligneA = lignes.item(numLigne);
-        let commandeA = numProduit.item(numLigne).textContent;
+        let idProduit = numProduit.item(numLigne).textContent;
+        let idAvis = numAvis.item(numLigne).textContent;
 
         //Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du produit associé au signalement (ancre avis pour accéder à l'avis directement)
-        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/produit/${commandeA}#avis`;});
+        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/produit/${idProduit}/${idAvis}#avis`;});
     }
 }
 
@@ -493,7 +495,7 @@ function lstSignalements()
 
 function liensLstClients(event){
     event.cancelBubble = true;
-    window.location.assign(`${base_url}/espaceClient/admin/${event.currentTarget.clientA}`);
+    window.location.assign(`${base_url}/admin/espaceClient/${event.currentTarget.clientA}`);
 }
 
 function lstClients(){
@@ -1577,7 +1579,36 @@ function zoomProduit(e) {
 ┃                                 Avis Produit                                    ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-function avisProduit() {
+function avisProduit() 
+{
+    //Mise en valeur d'un avis avec une box-shadow
+    var bgopacity = 1.0;
+    var bgfade = function() 
+    {
+        var avisEnValeur = document.getElementById("avisEnValeur");
+        bgopacity -= 0.02
+        avisEnValeur.style.boxShadow = "0 0 10px rgba(0, 0, 0, " + bgopacity + ")";
+        avisEnValeur.style.borderRadius = "5px";
+
+        if (bgopacity >= 0) 
+        {
+            setTimeout(bgfade, 30);
+        }
+        else
+        {
+            //On retire le #avis à la fin de l'url quand l'animation est finie c'est plus propre
+            //window.history.pushState({}, document.title, window.location.pathname);
+
+            //Malheureusement ça reload la page mais c'est d'une puissance ce truc
+            //On retire l'avis en valeur de l'url
+            //window.location.href = window.location.href.replace(/\/[0-9]$/, "");
+        }
+    }
+
+    bgfade();
+    //printing the current url
+    //console.log(window.location.href);
+
     let tabAvis = document.querySelectorAll(".divAvisCommentaire p"); // séléctionne les avis
     
     // seulement si il y a des avis

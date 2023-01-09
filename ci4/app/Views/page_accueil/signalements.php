@@ -17,7 +17,7 @@
                             <tr class='lignesSignalements'>
                                 <td><?= $signalements[$i]->id_signal ?></td>
                                 <td><?= $signalements[$i]->raison ?></td>
-                                <td><?= $signalements[$i]->num_avis ?></td>
+                                <td class='numAvis'><?= $signalements[$i]->num_avis ?></td>
                                 <td><?= $signalements[$i]->num_compte ?></td>
                                 <td class='numProduit'><?= $produitSignalements[$i] ?></td> 
                             </tr>

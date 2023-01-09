@@ -531,7 +531,7 @@ function lstClients(){
 
     function liensLstClients(event){
         event.cancelBubble = true;
-        window.location.assign(`${base_url}/espaceClient/admin/${event.currentTarget.clientA}`);
+        window.location.assign(`${base_url}/admin/espaceClient/${event.currentTarget.clientA}`);
     }
 
     function afficherSanctions(){

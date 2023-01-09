@@ -128,14 +128,21 @@ function dragNDrop(){
  * @returns {array} tableau contenant les entêtes du fichier CSV
  */
 function getentete(){
-    console.log("getentete");
-    let xhttp = new XMLHttpRequest();
-    console.log("sending request")
-    //request at baseurl/admin/import/entetes
-    xhttp.open("GET", "/vendeur/import/entetes", false);
-    console.log("request sent")
-    //print what the server send
-    console.log(xhttp.responseText);
+
+    //dico avec les entêtes du dessus
+    let entete = [];
+    //récupération des entêtes
+    $.ajax({
+        url: "Import.php",
+        type: "POST",
+        data: {action: "getentete"},
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            entete = data;
+        }
+    });
+    return entete;
 }
 
 
@@ -452,6 +459,31 @@ function lstCommandesVendeur(){
         let commandeA=numCommandes.item(numLigne).textContent;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail de la commande récupérée juste avant, en tant que vendeur
         ligneA.addEventListener("click", () => {window.location.href = `${base_url}/vendeur/commandesCli/detail/${commandeA}`;});
+    }
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                        Liens aux lignes de lstSignalements                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+function lstSignalements()
+{
+    //Récupération de toutes les lignes de la liste des signalements
+    var lignes = document.getElementsByClassName("lignesSignalements");
+
+    //Récupération de tous les numéros de produit associés au signalement et donc à l'avis
+    var numProduit = document.getElementsByClassName("numProduit");
+    var numAvis = document.getElementsByClassName("numAvis");
+
+    for (let numLigne = 0; numLigne < lignes.length; numLigne++)
+    {
+        let ligneA = lignes.item(numLigne);
+        let idProduit = numProduit.item(numLigne).textContent;
+        let idAvis = numAvis.item(numLigne).textContent;
+
+        //Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du produit associé au signalement (ancre avis pour accéder à l'avis directement)
+        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/produit/${idProduit}/${idAvis}#avis`;});
     }
 }
 
@@ -1443,7 +1475,36 @@ function zoomProduit(e) {
 ┃                                 Avis Produit                                    ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-function avisProduit() {
+function avisProduit() 
+{
+    //Mise en valeur d'un avis avec une box-shadow
+    var bgopacity = 1.0;
+    var bgfade = function() 
+    {
+        var avisEnValeur = document.getElementById("avisEnValeur");
+        bgopacity -= 0.02
+        avisEnValeur.style.boxShadow = "0 0 10px rgba(0, 0, 0, " + bgopacity + ")";
+        avisEnValeur.style.borderRadius = "5px";
+
+        if (bgopacity >= 0) 
+        {
+            setTimeout(bgfade, 30);
+        }
+        else
+        {
+            //On retire le #avis à la fin de l'url quand l'animation est finie c'est plus propre
+            //window.history.pushState({}, document.title, window.location.pathname);
+
+            //Malheureusement ça reload la page mais c'est d'une puissance ce truc
+            //On retire l'avis en valeur de l'url
+            //window.location.href = window.location.href.replace(/\/[0-9]$/, "");
+        }
+    }
+
+    bgfade();
+    //printing the current url
+    //console.log(window.location.href);
+
     let tabAvis = document.querySelectorAll(".divAvisCommentaire p"); // séléctionne les avis
     
     // seulement si il y a des avis

@@ -1,33 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <stdbool.h>
-
-typedef struct Element Element;
-struct Element
-{
-    int identifiant;
-    time_t timestamp;
-    char *etat;
-    int joursRetard;
-    Element *suivant;
-};
-
-typedef struct File File;
-struct File
-{
-    Element *premier;
-};
-
-//déclaration des fonctions
-Element create_element(int identifiant, time_t timestamp, char *etat, int joursRetard);
-void enfiler(File *file, Element *nvElement);
-Element defiler(File *file);
-void afficherElement(Element *e, bool returnLine);
-void afficherFile(File *file);
-void eraseFile(File *file);
-File copier_file(File *file, File *file2);
-Element *trouverElement(File *file, int identifiant);
+#include "file.h"
 
 //getters
 int getIdentifiant(Element *e) {
@@ -185,8 +159,8 @@ Element *trouverElement(File *file, int identifiant)
     return NULL;
 }
 
-/*
-* copier_file copie une file dans une autre
+/**
+* @brief copier_file copie une file dans une autre
 * @param file la file à copier
 * @param file2 la file dans laquelle on copie
 * @return la file2

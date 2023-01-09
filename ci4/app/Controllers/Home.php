@@ -144,7 +144,7 @@ class Home extends BaseController
         return view('page_accueil/inscription.php', $data);
     }
 
-    public function produit($idProduit = null)
+    public function produit($idProduit = null, $numAvisEnValeur = null)
     {
         $data['model'] = model("\App\Models\ProduitCatalogue");
         $data['cardProduit']=service("cardProduit");
@@ -184,6 +184,16 @@ class Home extends BaseController
         // Avis/commentaires
         $data['cardProduit']=service("cardProduit");
         $data['avis']=model("\App\Models\Commentaires")->getCommentairesByProduit($idProduit);
+
+        //Passage de l'id de l'avis en valeur si il y en a un à la vue
+        if ($numAvisEnValeur != null) 
+        {
+            $data['avisEnValeur'] = $numAvisEnValeur;
+        }
+        else
+        {
+            $data['avisEnValeur'] = -1;
+        }
 
         //Affichage selon si produit trouvé ou non
         if ($result == null) {
@@ -311,15 +321,21 @@ class Home extends BaseController
             $user->fill($post);
             $issues=$auth->modifEspaceClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
 
-            if (!empty($issues)) {
+            if (!empty($issues)) 
+            {
                 //En cas d'erreur(s), on pré-remplit les champs avec les données déjà renseignées
                 $data['motDePasse'] = $post['motDePasse'];
                 $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
                 $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
-            } else {
-                if ($role == "admin") {
-                    return redirect()->to("/espaceClient/admin/" . $numClient);
-                } else {
+            } 
+            else 
+            {
+                if ($role == "admin") 
+                {
+                    return redirect()->to("/admin/espaceClient/" . $numClient);
+                } 
+                else 
+                {
                     return redirect()->to("/espaceClient");
                 }
             }
@@ -599,9 +615,29 @@ class Home extends BaseController
 
     public function admin()
     {
-        $data['role'] = "admin";
+        $data["role"] = "admin";
         $data["controller"] = "Administration";
         return view("page_accueil/admin.php", $data);
+    }
+
+    public function lstSignalements()
+    {
+        $data["role"] = "admin";
+        $data["controller"] = "Administration - Signalements";
+        $data["signalements"] = model("\App\Models\LstSignalements")->findAll();
+        $data["produitSignalements"] = array();
+        $modelCommentaires = model("\App\Models\Commentaires");
+
+        for ($i = 0; $i < count($data["signalements"]); $i++) 
+        {
+            //On récupère tous les champs de l'avis signalé
+            $data["produitSignalements"][$i] = $modelCommentaires->getAvisById($data["signalements"][$i]->num_avis);
+            
+            //On s'intéresse particulièrement à l'id produit
+            $data["produitSignalements"][$i] = $data["produitSignalements"][$i]->id_prod;
+        }
+
+        return view("page_accueil/signalements.php", $data);
     }
 
     public function destroySession()

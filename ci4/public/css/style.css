@@ -2367,7 +2367,6 @@ main div.card-produit-ext:hover{
     position: relative;
     background-color: white;
     color: #164F57;
-    padding-top: .2rem;
     cursor: pointer;
     border: solid 2px;
     border-color: #C6C6C6;
@@ -3303,12 +3302,42 @@ progress::-moz-progress-bar
     overflow-y: scroll;
     max-height: 80vh;
     pointer-events: all;
-    text-align: center;
+    text-align: justify;
+}
+
+.mentionsLegales h2 {
+    font-size: xx-large;
+}
+
+.mentionsLegales h3 {
+    font-family: 'Montserrat-Medium';
+}
+
+.mentionsLegales h3 + p, .mentionsLegales p + p {
+    margin-left: 2em;
 }
 
 .mentionsLegales div {
     display: flex;
     flex-direction: row-reverse;
+}
+
+.mentionsLegales ul {
+    font-family: 'Montserrat-Regular';
+    list-style-type: none;
+}
+
+.mentionsLegales > ul {
+    margin-left: 5em;
+    padding: 0;
+}
+
+.mentionsLegales ul > li {
+    font-weight: bold;
+}
+
+.mentionsLegales ul ul li {
+    font-weight: normal;
 }
 
 .divFermerCGU {

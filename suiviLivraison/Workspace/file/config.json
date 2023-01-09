@@ -9,7 +9,7 @@
             "identifiant" : 0,
             "nombre" : 0,
             "time" : 0,
-            "etat" : 0,
+            "etat" : "string",
             "retard":0
     
     } 

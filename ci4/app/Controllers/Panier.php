@@ -7,6 +7,7 @@ use Exception;
 
 class Panier extends BaseController
 {
+    private $feedback;
 
     public function __construct()
     {
@@ -88,24 +89,24 @@ class Panier extends BaseController
 
         //Choix alerte fusion
         if(!empty($get)){
-           
-            if(isset($get["Suppression"]) && $get["Suppression"]==1 ){
+            if(isset($get["SupprActuel"]) && $get["SupprActuel"]==1 ){
                 model("\App\Models\ProduitPanierVisiteurModel")->viderPanier(get_cookie("token_panier"));
                 delete_cookie("token_panier");
                 $data["ecraserOuFusionner"]=true;
-            }
-            else if(isset($get["Ignorer"]) && $get["Ignorer"]==1 ){
-                session()->set("ignorer",true);
-            }
-            else if(isset($get["Confirmer"]) && $get["Confirmer"]==1 ){
+            } else if(isset($get["SupprAncien"]) && $get["SupprAncien"]==1 ){
+                model("\App\Models\ProduitPanierCompteModel")->viderPanier(session()->get("numero"));
                 model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
                 delete_cookie("token_panier");
                 $data["ecraserOuFusionner"]=true;
-            }
-           
+            } else if(isset($get["Ignorer"]) && $get["Ignorer"]==1 ){
+                session()->set("ignorer",true);
+            } else if(isset($get["Confirmer"]) && $get["Confirmer"]==1 ){
+                model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
+                delete_cookie("token_panier");
+                $data["ecraserOuFusionner"]=true;
+            }  
         }
         $data["controller"] = "Panier";
-     
         $data['code'] = "";
         $data['classCacheDiv'] = "cacheNouveauPrix";
         $issues = [];

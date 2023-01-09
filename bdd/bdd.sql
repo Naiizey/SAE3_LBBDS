@@ -442,3 +442,6 @@ INSERT INTO _liste_souhait (etat_stock, id_prod, num_compte) VALUES (true, 17, 1
 INSERT INTO _liste_souhait (etat_stock, id_prod, num_compte) VALUES (false, 18, 2);
 INSERT INTO _liste_souhait (etat_stock, id_prod, num_compte) VALUES (true, 17, 2);
 -- INSERT INTO _liste_souhait (etat_stock, id_prod, num_compte) VALUES (false, 18, 1);
+
+INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis n''apporte rien du tout, il ne justifie pas sa note.', 4, 1);
+INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis ne parle pas du produit', 5, 2);

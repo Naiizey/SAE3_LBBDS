@@ -1,7 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1"
 	 id="svg83" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg" class="logoProfil"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 497.5 497.7"
 	 style="enable-background:new 0 0 497.5 497.7;" xml:space="preserve">
+<style type="text/css">
+	circle{fill:#93DD72;}
+</style>
 <g id="g81" transform="matrix(0.07716,0,0,-0.07716,-1.29243,499.00003)">
 	<path id="path77" d="M3015,6460c-1227-77-2317-870-2775-2020c-103-259-167-513-206-815c-23-179-23-590,0-770
 		c80-626,308-1167,695-1647c56-70,115-138,131-152c42-35,99-42,153-18c53,24,59,38,87,197c98,569,411,1069,874,1402
@@ -19,4 +24,5 @@
 		c430-54,784-393,860-824c16-87,13-266-5-354c-63-310-292-592-584-718c-115-50-219-74-345-81c-451-23-865,276-1002,723
 		c-24,81-27,104-27,259c-1,147,2,181,22,255c90,335,347,600,682,704C3097,5157,3216,5167,3359,5150z"/>
 </g>
+<circle cx="429.1" cy="407.5" r="57.9" stroke="white" stroke-width="20px"/>
 </svg>

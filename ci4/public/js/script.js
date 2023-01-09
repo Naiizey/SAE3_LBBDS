@@ -128,14 +128,21 @@ function dragNDrop(){
  * @returns {array} tableau contenant les entêtes du fichier CSV
  */
 function getentete(){
-    console.log("getentete");
-    let xhttp = new XMLHttpRequest();
-    console.log("sending request")
-    //request at baseurl/admin/import/entetes
-    xhttp.open("GET", "/vendeur/import/entetes", false);
-    console.log("request sent")
-    //print what the server send
-    console.log(xhttp.responseText);
+
+    //dico avec les entêtes du dessus
+    let entete = [];
+    //récupération des entêtes
+    $.ajax({
+        url: "Import.php",
+        type: "POST",
+        data: {action: "getentete"},
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            entete = data;
+        }
+    });
+    return entete;
 }
 
 

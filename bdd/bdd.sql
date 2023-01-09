@@ -154,6 +154,12 @@ CREATE TABLE _image_avis(
     lien_image_avis VARCHAR NOT NULL
 );
 
+CREATE TABLE _signalement
+(
+    id_signal INT PRIMARY KEY,
+    raison VARCHAR NOT NULL
+)
+
 /* -----------------------------------------------------------
 -                                                            -
 -                                                            -
@@ -247,6 +253,10 @@ ALTER TABLE _pouce ADD COLUMN num_compte INT NOT NULL;
 ALTER TABLE _pouce ADD CONSTRAINT _pouce_produit_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
 ALTER TABLE _pouce ADD CONSTRAINT _pouce_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 ALTER TABLE _pouce ADD CONSTRAINT _pouce_pk PRIMARY KEY (num_avis, num_compte);
+
+-- Association *..1 entre avis et signalement 
+ALTER TABLE _signalement ADD COLUMN num_avis INT NOT NULL;
+ALTER TABLE _signalement ADD CONSTRAINT _signalement_avis_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
 
 -- ajout d'un check : un compte ne peut pas mettre un pouce à son propre avis ✅
 CREATE OR REPLACE FUNCTION pouce_check() RETURNS TRIGGER AS

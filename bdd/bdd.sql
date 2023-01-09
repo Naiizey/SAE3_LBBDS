@@ -442,6 +442,3 @@ INSERT INTO _liste_souhait (etat_stock, id_prod, num_compte) VALUES (true, 17, 1
 INSERT INTO _liste_souhait (etat_stock, id_prod, num_compte) VALUES (false, 18, 2);
 INSERT INTO _liste_souhait (etat_stock, id_prod, num_compte) VALUES (true, 17, 2);
 -- INSERT INTO _liste_souhait (etat_stock, id_prod, num_compte) VALUES (false, 18, 1);
-
--- ajout de 3 signalements
-INSERT INTO _signalement (raison) VALUES ('ce produit est dangereux');

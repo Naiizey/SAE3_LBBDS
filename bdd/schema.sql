@@ -319,6 +319,11 @@ CREATE TABLE _est_en_remise_sous
 
 );
 
+CREATE TABLE _signalement
+(
+    id_signal SERIAL PRIMARY KEY,
+    raison VARCHAR NOT NULL
+);
 
 
 /* -----------------------------------------------------------
@@ -421,6 +426,13 @@ ALTER TABLE _sanction_temporaire ADD CONSTRAINT _sanction_temporaire_duree_fk FO
 
 -- asociation entre _sanction_temporaire et _compte
 ALTER TABLE _sanction_temporaire ADD CONSTRAINT _sanction_temporaire_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+
+-- Association *..1 entre avis et signalement 
+ALTER TABLE _signalement ADD COLUMN num_avis INT NOT NULL;
+ALTER TABLE _signalement ADD CONSTRAINT _signalement_avis_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
+-- Association 0..1 entre _signalement et _compte
+ALTER TABLE _signalement ADD COLUMN num_compte INT NOT NULL;
+ALTER TABLE _signalement ADD CONSTRAINT _signalement_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
 
 /* -----------------------------------------------------------
 -                  TRIGGER DE CONTRAINTES:                   -

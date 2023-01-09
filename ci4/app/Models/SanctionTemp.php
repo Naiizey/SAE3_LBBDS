@@ -32,6 +32,9 @@ class SanctionTemp extends Model
         $sanction->heure_fin=$fin->toTimeString();
         $this->save($sanction);
     }
-    
 
+    public function isTimeout($numCompte){
+        return ($this->where('num_compte',strval($numCompte))->where('date_fin',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin >',Time::now("Europe/Paris",'fr-FR')->toTimeString())->countAllResults()) > 0;
+    }
+    
 }

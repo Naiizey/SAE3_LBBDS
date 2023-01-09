@@ -2009,6 +2009,89 @@ h3 > .lienPasArticlePanier {
     margin: 0;
 }
 
+.divAjoutComment form {
+    display: flex;
+    flex-direction: column;
+}
+
+.divAjoutComment textarea {
+    resize: none;
+    width: 100%;
+    height: 1.5em;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    border-bottom: #d9d9d9 solid 2px;
+    font-family: "Montserrat-Regular";
+}
+
+#noteComment {
+    width: .5em;
+    border: none;
+    margin-left: .5em;
+    color: #164F57;
+}
+
+.divBoutonsComment {
+    align-self: flex-end;
+}
+
+.divBoutonsComment button {
+    font-family: "Montserrat-Regular";
+    font-size: medium;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.divBoutonsComment input {
+    font-family: "Montserrat-Regular";
+    font-size: medium;
+    border: none;
+    border-radius: 30px;
+    background: #BDBFBB;
+    cursor: not-allowed;
+    padding: .2em 1em;
+    margin: .2em 0 1em .3em;
+}
+
+.divEtoilesComment {
+    display: flex;
+}
+
+.divEtoilesComment img {
+    width: 1em;
+    height: 1em;
+}
+
+.divEtoilesComment {
+    align-self: flex-end;
+    display: flex;
+    align-items: center;
+}
+
+.divEtoilesComment img {
+    width: 1.5em;
+    height: auto;
+}
+
+.divEtoilesComment p {
+    margin: 0;
+}
+
+.divProfilText {
+    display: flex;
+    align-items: center;
+}
+
+.divProfilText img {
+    height: 3em;
+    width: 3em;
+    margin-right: 1em;
+}
+
 .sectionUnAvis {
     display: flex;
     width: 100%;
@@ -2066,6 +2149,10 @@ h3 > .lienPasArticlePanier {
 .divUnAvis p {
     text-align: justify;
     margin-bottom: 0;
+}
+
+.sectionUnAvis + p {
+    color: black;
 }
 
 .divAvis hr {
@@ -3185,12 +3272,42 @@ progress::-moz-progress-bar
     overflow-y: scroll;
     max-height: 80vh;
     pointer-events: all;
-    text-align: center;
+    text-align: justify;
+}
+
+.mentionsLegales h2 {
+    font-size: xx-large;
+}
+
+.mentionsLegales h3 {
+    font-family: 'Montserrat-Medium';
+}
+
+.mentionsLegales h3 + p, .mentionsLegales p + p {
+    margin-left: 2em;
 }
 
 .mentionsLegales div {
     display: flex;
     flex-direction: row-reverse;
+}
+
+.mentionsLegales ul {
+    font-family: 'Montserrat-Regular';
+    list-style-type: none;
+}
+
+.mentionsLegales > ul {
+    margin-left: 5em;
+    padding: 0;
+}
+
+.mentionsLegales ul > li {
+    font-weight: bold;
+}
+
+.mentionsLegales ul ul li {
+    font-weight: normal;
 }
 
 .divFermerCGU {

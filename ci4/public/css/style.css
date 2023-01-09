@@ -683,29 +683,33 @@ div.bloc-erreur-liste-produit  {
     right: 0;
     width: 100%;
     height: 100%;
- 
 }
+
+.sur-alerte.sur-alerteTimeout, .sur-alerte.sur-alerteSanctions{
+    display: none;
+}
+
 .alerte{
     position: relative;
     background-color: white;
     min-height: fit-content;
     width: 55%;
     max-width: 700px;
-    height: 35%;
+    /*height: 35%;*/
     border: #3997A3 solid 2px;    
 }
+
 .alerte h2, .alerte p{
     text-align: left;
     padding: 0.5em 30px ;  
 }
+
 .alerte .alerte-footer{
-    position: absolute;
-    bottom: 0;
+    /*position: absolute;
+    bottom: 0;*/
     width: 100%;    
 }
 .alerte .espace-interraction{
-    
-    
     padding: 10px 30px;
     width: auto;
     
@@ -715,7 +719,7 @@ div.bloc-erreur-liste-produit  {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    
+    flex-wrap: wrap;
 }
 
 .div-inputs{
@@ -737,6 +741,27 @@ div.bloc-erreur-liste-produit  {
 
 .raison textarea{
     width: 80%;
+}
+
+@media screen and (max-width: 991px){
+
+    .alerte{
+        width: 70%;
+    }
+
+    .alerte form, .espace-interraction div{
+        flex-direction: column;
+        height: 8em;
+    }
+
+    .sur-alerte.sur-alerteTimeout form{
+        height: auto;
+    }
+
+    .sur-alerte.sur-alerteTimeout .espace-interraction div{
+        flex-direction: row;
+        height: auto;
+    }
 }
 
 /*
@@ -3117,6 +3142,12 @@ a.fleche-page{
     width: 2em;
     height: 2em;
     margin: auto;
+}
+
+/* ━━━ Div des sanctions ━━━ */
+
+.divSanctions{
+    display: none;
 }
 
 /*

@@ -8,6 +8,7 @@ Le protocole prend son inpiration d'une communication avec une API Rest avec l'u
 
 
 ## 1.   Introduction
+---
 
 ### 1.1 Le but
 
@@ -57,6 +58,7 @@ Permet au client de s'authentifier, lui permettant d'avoir accés aux autres req
 https://www.json.org/json-fr.html 
 
 ## 2. Requêtes
+---
 
 
 ### 2.1 NEW : Prise en charge d'une commande
@@ -74,15 +76,13 @@ Cette opération permet de récupérer les états de toutes les commandes qui so
 Pour cela il faut indiquer une des compléments ci-dessous:  
 - tout: récupérer toute commande
 - nouvelle: Les commandes qui ont été prise en charge
-- regionale : Les commandes en plateforme régionale
+- regional : Les commandes en plateforme régionale
 - locale : Les commmandes en plateforme locale
 - destinataire : Les commandes arrivées au client
-- perdue : La commande a été perdue
+- perdu : La commande a été perdue
 
 ## 3. Réponses
 
-
-### 3.1 Code réponse
 Soit la requête a été prise en compte :
 - 00(Réusite):
     - 01(Execution) : Envoie simplement la réponse attendue, afin de confirmé la requête
@@ -105,12 +105,49 @@ Autrement, La requête n'a pas été prise ne compte pour un certaine raison:
     - 41(Erreur format JSON): le contenu ne correspond pas aux normes JSON.
     - 42(Erreur contenu JSON): les propriétes ne sont pas celles qui ont été demandés.
 
-### 3.2 Contenu de réponse
+## 4. Détails des contenus
+---
 
+### 4.1 L'objet commande
+```json
+{  
+        "identifiant" : <"nombre">,  
+        "nombre" : <"nombre">,  
+        "time" : <"nombre">,
+        "etat" : <"enum">,   
+        "retard": <"nombre">  
+}  
+```
+`<"enum">` :"tout", "regional", "nouvelle", "local", "perdu" ou "destinataire"
 
+### 4.2 Une commande unique
+```json
+{  
+    "livraison" : <"commande">
+}  
+```
+`<"commande">`: voir 4.1: objet commande
 
+### 4.3 liste de commandes
+```json
+[  
+    <"commande">,  
+    <"commande">,  
+    <"commande">  
+]  
+```
+`<"commande">`: voir 4.1: objet commande
 
-
+### 4.4 Une authentification
+```json
+{  
+    "auth":  
+    {  
+        "id" : <"chaine">,  
+        "pass" : <"chaine">  
+    }  
+}  
+```
 
 
 

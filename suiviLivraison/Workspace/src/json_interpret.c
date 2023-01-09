@@ -10,7 +10,7 @@
 
 
 #define MAX_PA 30
-#define TEST false
+#define TEST true
 const int MAX_ETAPE=6;
 
 
@@ -63,6 +63,9 @@ Element * collectLivraison(cJSON * json){
             }
             */
         }else{
+            #if TEST == true
+            printf("Refus format...\n");
+            #endif
             return NULL;
         }
         
@@ -76,7 +79,13 @@ Element * collectLivraison(cJSON * json){
 if(new->etat!=NULL && new->identifiant>=0)
     return new;
 else
+{
+    #if TEST == true
+    printf("Refus résultat...{%d,%s,%d,%d}\n",new->identifiant, new->etat, json->type, 1 << 6);
+    #endif
     return NULL;
+}
+    
 }
 
 user collectInfoUser(cJSON * json);
@@ -97,15 +106,26 @@ typedef struct cJSON
 
 */
 
-
-int parcoursLivraisons(cJSON *json, Element **liste){
+/**
+ * @brief Parcour une ou des livraisons et remplie la file en conséquence, on va aussi vérifier que le format est standard au Protocole
+ * 
+ * @param json le root du json
+ * @param liste la file
+ * @return int 
+ */
+int parcoursLivraisons(cJSON *json, FILE *liste){
     #if TEST == true
-    printf("Parcours...\n");
+    printf("Test type...\n");
     #endif
+
     Element * result;
-    if(json->type == cJSON_Object)
+    if (json->child==NULL || json->child->string==NULL) return -1;
+    if(json->child->type == cJSON_Object)
     {
-        if (json->child==NULL || json->child->string==NULL) return -1;
+        #if TEST == true
+        printf("Objets...\n");
+        #endif
+        
         if(strcmp(json->child->string,"livraison")==0){
             result=collectLivraison(json->child->child);
   
@@ -118,14 +138,18 @@ int parcoursLivraisons(cJSON *json, Element **liste){
         }
        
     }
-    else if(json->type == cJSON_Array)
+    else if(json->child->type == cJSON_Array)
     {
+        #if TEST == true
+        printf("Array...\n");
+        #endif
         //if (verif(json,context->string) < 0) return -1;
-        if(strcmp(json->string,"livraisons")==0){
-                json=json->child;
+        if(strcmp(json->child->string,"livraisons")==0){
+                json=json->child->child;
                 while(json!=NULL){
-                    result=collectLivraison(json);
+                    result=collectLivraison(json->child);
                     if(result==NULL) return -1;
+ 
                     json=json->next;
                 }
 
@@ -137,15 +161,20 @@ int parcoursLivraisons(cJSON *json, Element **liste){
         return -1;
     }
 
-    
-    if(json->next!=NULL){
+    #if TEST == true
+        printf("Fin parcours...\n");
+    #endif
+    if(json != NULL && json->next!=NULL){
+
         return parcoursLivraisons(json->next,liste);
     }else if(result!=NULL){
-        *liste=result;
+        
+        enfiler(liste,result);
         return 0;
     }else
         return -1;
 }
+
 /*
 int parcoursAuth(cJSON *json, user *theUser){
     printf("Parcours...\n");

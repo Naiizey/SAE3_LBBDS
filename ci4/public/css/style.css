@@ -683,29 +683,33 @@ div.bloc-erreur-liste-produit  {
     right: 0;
     width: 100%;
     height: 100%;
- 
 }
+
+.sur-alerte.sur-alerteTimeout, .sur-alerte.sur-alerteSanctions{
+    display: none;
+}
+
 .alerte{
     position: relative;
     background-color: white;
     min-height: fit-content;
     width: 55%;
     max-width: 700px;
-    height: 35%;
+    /*height: 35%;*/
     border: #3997A3 solid 2px;    
 }
+
 .alerte h2, .alerte p{
     text-align: left;
     padding: 0.5em 30px ;  
 }
+
 .alerte .alerte-footer{
-    position: absolute;
-    bottom: 0;
+    /*position: absolute;
+    bottom: 0;*/
     width: 100%;    
 }
 .alerte .espace-interraction{
-    
-    
     padding: 10px 30px;
     width: auto;
     
@@ -715,7 +719,7 @@ div.bloc-erreur-liste-produit  {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    
+    flex-wrap: wrap;
 }
 
 .div-inputs{
@@ -737,6 +741,27 @@ div.bloc-erreur-liste-produit  {
 
 .raison textarea{
     width: 80%;
+}
+
+@media screen and (max-width: 991px){
+
+    .alerte{
+        width: 70%;
+    }
+
+    .alerte form, .espace-interraction div{
+        flex-direction: column;
+        height: 8em;
+    }
+
+    .sur-alerte.sur-alerteTimeout form{
+        height: auto;
+    }
+
+    .sur-alerte.sur-alerteTimeout .espace-interraction div{
+        flex-direction: row;
+        height: auto;
+    }
 }
 
 /*
@@ -2026,13 +2051,6 @@ h3 > .lienPasArticlePanier {
     font-family: "Montserrat-Regular";
 }
 
-#noteComment {
-    width: .5em;
-    border: none;
-    margin-left: .5em;
-    color: #164F57;
-}
-
 .divBoutonsComment {
     align-self: flex-end;
 }
@@ -2052,18 +2070,22 @@ h3 > .lienPasArticlePanier {
     border: none;
     border-radius: 30px;
     background: #BDBFBB;
-    cursor: not-allowed;
     padding: .2em 1em;
     margin: .2em 0 1em .3em;
-}
-
-.divEtoilesComment {
-    display: flex;
+    pointer-events: none;
 }
 
 .divEtoilesComment img {
     width: 1em;
     height: 1em;
+}
+
+.divEtoilesComment svg path {
+    cursor: pointer;
+}
+
+.etoileActive, .etoilesValide {
+    fill: #FFCA28;
 }
 
 .divEtoilesComment {
@@ -2078,7 +2100,7 @@ h3 > .lienPasArticlePanier {
 }
 
 .divEtoilesComment p {
-    margin: 0;
+    margin: 0 0 0 .5em;
 }
 
 .divProfilText {
@@ -2342,7 +2364,6 @@ main div.card-produit-ext:hover{
     position: relative;
     background-color: white;
     color: #164F57;
-    padding-top: .2rem;
     cursor: pointer;
     border: solid 2px;
     border-color: #C6C6C6;
@@ -3119,6 +3140,12 @@ a.fleche-page{
     margin: auto;
 }
 
+/* ━━━ Div des sanctions ━━━ */
+
+.divSanctions{
+    display: none;
+}
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                          Page détail commande (details.php)                               ┃
@@ -3619,48 +3646,53 @@ progress::-moz-progress-bar
 /* Gestion de comptes */
 .sectionAdmin a:nth-child(2) {
     grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-.sectionAdmin a:nth-child(3) {
-    grid-column-start: 3;
-    grid-column-end: 6;
-}
-
-/* Bannissements */
-.sectionAdmin a:nth-child(5) {
-    grid-column-start: 1;
     grid-column-end: 2;
 }
 
-.sectionAdmin a:nth-child(6) {
+.sectionAdmin a:nth-child(3) {
     grid-column-start: 2;
     grid-column-end: 4;
 }
 
+.sectionAdmin a:nth-child(4) {
+    grid-column-start: 4;
+    grid-column-end: 6;
+}
+
+/* Bannissements */
+.sectionAdmin a:nth-child(6) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
 .sectionAdmin a:nth-child(7) {
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+.sectionAdmin a:nth-child(8) {
     grid-column-start: 4;
     grid-column-end: 6;
 }
 
 /* Commentaires signalés */
-.sectionAdmin a:nth-child(9) {
+.sectionAdmin a:nth-child(10) {
     grid-column-start: 1;
     grid-column-end: 2;
 }
 
-.sectionAdmin a:nth-child(10) {
+.sectionAdmin a:nth-child(11) {
     grid-column-start: 2;
     grid-column-end: 6;
 }
 
 /* Avertissements */
-.sectionAdmin a:nth-child(12) {
+.sectionAdmin a:nth-child(13) {
     grid-column-start: 1;
     grid-column-end: 4;
 }
 
-.sectionAdmin a:nth-child(13) {
+.sectionAdmin a:nth-child(14) {
     grid-column-start: 4;
     grid-column-end: 6;
 }

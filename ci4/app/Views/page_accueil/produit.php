@@ -153,7 +153,7 @@
                         <?php endforeach; ?>
                     </ul>
                 </section>
-                <div class="divAvis">
+                <div class="divAvis" id="avis">
                     <h2>Avis</h2>
                     <hr>
                     <?php if (empty($avis)): ?>
@@ -173,48 +173,46 @@
                             <div class="divAjoutComment">
                                 <form action="" method="POST">
                                     <div class="divEtoilesComment">
-                                        <img src="<?=base_url() ?>/images/Star-empty.svg" alt="">
-                                        <img src="<?=base_url() ?>/images/Star-empty.svg" alt="">
-                                        <img src="<?=base_url() ?>/images/Star-empty.svg" alt="">
-                                        <img src="<?=base_url() ?>/images/Star-empty.svg" alt="">
-                                        <img src="<?=base_url() ?>/images/Star-empty.svg" alt="">
-                                        <textarea id="noteComment" placeholder="x"></textarea>
-                                        <p>/5</p>
+                                        <?= file_get_contents(dirname(__DIR__,3)."/public/images/Star-empty.svg")?>
+                                        <?= file_get_contents(dirname(__DIR__,3)."/public/images/Star-empty.svg")?>
+                                        <?= file_get_contents(dirname(__DIR__,3)."/public/images/Star-empty.svg")?>
+                                        <?= file_get_contents(dirname(__DIR__,3)."/public/images/Star-empty.svg")?>
+                                        <?= file_get_contents(dirname(__DIR__,3)."/public/images/Star-empty.svg")?>
+                                        <p>_/5</p>
                                     </div>
                                     <div class="divProfilText">
                                         <img src="<?=base_url() ?>/images/header/profil.svg">
-                                        <textarea id="contenuComment" placeholder="Ajouter un commentaire..."></textarea>
+                                        <textarea id="contenuComment" placeholder="Ajouter un commentaire... (optionnel)"></textarea>
                                     </div>
                                     <div class="divBoutonsComment">
                                         <button type="reset" value="Reset">Annuler</button>
-                                        <input type="submit" name="submit" value="Poster">
+                                        <input type="submit" value="Poster">
                                     </div>
                                 </form>
                             </div>
                             <?php 
                                 end($avis);
                                 $fin = key($avis);
-                                foreach ($avis as $cle => $unAvis): 
-                            ?>
-                            <div class="divUnAvis">
-                                <section class="sectionUnAvis">
-                                    <div class="divNomCommentaire">
-                                        <img src="<?=base_url() ?>/images/header/profil.svg">
-                                        <div class="divNomDate">
-                                            <h3><?= $unAvis->pseudo ?> : </h3>
-                                            <p>Publié le <?= $unAvis->date_av ?></p>
-                                        </div>
+                                foreach ($avis as $cle => $unAvis): ?>
+                                    <div class="divUnAvis" <?php if ($unAvis->num_avis == $avisEnValeur) {echo 'id="avisEnValeur"';} ?>>
+                                        <section class="sectionUnAvis">
+                                            <div class="divNomCommentaire">
+                                                <img src="<?=base_url() ?>/images/header/profil.svg">
+                                                <div class="divNomDate">
+                                                    <h3><?= $unAvis->pseudo ?> : </h3>
+                                                    <p>Publié le <?= $unAvis->date_av ?></p>
+                                                </div>
+                                            </div>
+                                            <div class="divAvisCommentaire">
+                                                <div class="noteAvis"><?= $cardProduit->notationEtoile($unAvis->note_prod) ?></div>
+                                                <p><?= $unAvis->note_prod ?>/5</p>
+                                            </div>
+                                        </section>
+                                        <p><?= $unAvis->contenu_av ?></p>
+                                        <?php if ($cle != $fin): ?>
+                                        <hr>
+                                        <?php endif; ?>
                                     </div>
-                                    <div class="divAvisCommentaire">
-                                        <div class="noteAvis"><?= $cardProduit->notationEtoile($unAvis->note_prod) ?></div>
-                                        <p><?= $unAvis->note_prod ?>/5</p>
-                                    </div>
-                                </section>
-                                <p><?= $unAvis->contenu_av ?></p>
-                                <?php if ($cle != $fin): ?>
-                                <hr>
-                                <?php endif; ?>
-                            </div>
                             <?php endforeach; ?>
                         </div>
                     </div>

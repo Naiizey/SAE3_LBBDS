@@ -38,10 +38,7 @@ abstract class ProduitPanierModel extends Model
 
     public function viderPanier($idUser)
     {
-        
-        
         foreach($this->getPanier($idUser) as $prod){
-         
             $this->delete($prod->id);
         }
         
@@ -53,15 +50,11 @@ abstract class ProduitPanierModel extends Model
         if($quantite==0){
             throw new Exception("Impossible d'ajouter une quantité nulle");
         }
-        
         $colonne=$this->getColonneProduitIdUser();
-        
         $prod=model("\App\Models\ProduitDetail")->find($idProd)->convertForPanier();
         $prod->quantite=$quantite;
         $prod->$colonne=$idUser;
-        
         $trouve=$this->where($this->getIdUser(),$prod->$colonne)->where("id_prod",$prod->idProd)->findAll();
-        
         if(empty($trouve))
         {
             $prod->id="£";
@@ -80,14 +73,11 @@ abstract class ProduitPanierModel extends Model
             $this->save($dejaLa);
         }
         else throw new Exception("Produit déjà présent dans le panier, ajout ignoré",400);
-
-        
     }
 
 
     public function changerQuantite($id,$idUser,$newQuanite){
         $prod=$this->where($this->getIdUser(),$idUser)->find($id);
-
         if($prod != null){
             $prod->fill(array('id'=>$id,'quantite'=>$newQuanite,$this->getIdUser()=>$idUser));
             $this->save($prod);
@@ -98,13 +88,11 @@ abstract class ProduitPanierModel extends Model
 
     public function getQuantiteProduitByIdProd($idProd,$idUser){
         $retour =$this->where($this->getIdUser(),$idUser)->where('id_prod',$idProd)->findAll();
-   
         return (empty($retour))?0:$retour[0]->quantite;
     }
 
     public function compteurDansPanier($idUser){
         $retour = $this->where($this->getIdUser(),$idUser)->selectSum('quantite','countPanier')->first();
-    
         return (is_null($retour))?0:$retour->countPanier;
     }
 

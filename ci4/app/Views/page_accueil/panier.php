@@ -264,8 +264,9 @@
     <?php if(session()->has("numero") && has_cookie("token_panier") 
     && !(session()->has("ignorer") && session()->get("ignorer")==true) 
     && !(isset($ecraserOuFusionner) && $ecraserOuFusionner)): ?>
-        var oui = new AlerteAlizon("Récupération panier","<?= current_url() ?>","Il y a déjà un panier associé à votre compte, voulez-vous écraser le panier précédent ou fusionner les deux paniers ?");
-        oui.ajouterBouton("Écraser",'normal-button petit-button supprimer-filtre rouge',"Suppression");
+        var oui = new AlerteAlizon("Récupération panier","<?= current_url() ?>","Il y a déjà un panier associé à votre compte, voulez vous garder le panier que vous venez de faire, garder le panier enregistré sur votre compte ou fusionner les 2 ?");
+        oui.ajouterBouton("Garder le nouveau",'normal-button petit-button supprimer-filtre rouge',"SupprAncien");
+        oui.ajouterBouton("Garder celui du compte",'normal-button petit-button supprimer-filtre rouge',"SupprActuel");
         oui.ajouterBouton("Plus tard",'normal-button petit-button supprimer-filtre',"Ignorer");
         oui.ajouterBouton("Fusionner",'normal-button petit-button vert',"Confirmer");
         oui.affichage();

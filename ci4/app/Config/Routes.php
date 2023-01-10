@@ -59,6 +59,8 @@ $routes->set404Override();
     $routes->get('/produit', 'Home::produit');
     $routes->get('/produit/(:num)', 'Home::produit/$1');
     $routes->post('/produit/(:num)', 'Home::produit/$1');
+    $routes->get('/produit/(:num)/(:num)', 'Home::produit/$1/$2');
+    $routes->post('/produit/(:num)/(:num)', 'Home::produit/$1/$2');
 
     $routes->get('/panier', 'Panier::getProduitPanierClient');
     $routes->post('/panier', 'Panier::getProduitPanierClient');
@@ -100,9 +102,11 @@ $routes->set404Override();
     $routes->get('/facture','Home::facture',['filter' => 'connexion']);
     $routes->post('/facture','Home::facture',['filter' => 'connexion']);
 
-    $routes->get('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
-    $routes->post('/espaceClient/(admin)/(:num)', 'Home::espaceClient/$1/$2');
-    
+    $routes->get('/(admin)/signalements', 'Home::lstSignalements');
+    $routes->post('/(admin)/signalements', 'Home::lstSignalements');
+
+    $routes->get('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');
+    $routes->post('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');
 
     $routes->get('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
     $routes->post('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
@@ -111,9 +115,10 @@ $routes->set404Override();
     $routes->post('/validation', 'Home::validation' );
 
     $routes->get('/admin', 'Home::admin');
-    $routes->get('/admin/lstClients', 'Home::lstClients');
-    $routes->post('/admin/lstClients', 'Home::lstClients');
+    $routes->get('/admin/Clients', 'Home::lstClients');
+    $routes->post('/admin/Clients', 'Home::lstClients');
 
+    $routes->get('/vendeur/import/entetes', 'Import::getentetes');
 ##param uri (:any) et dans methode /$1
 
 /*

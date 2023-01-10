@@ -128,21 +128,21 @@ function dragNDrop(){
  * @returns {array} tableau contenant les entêtes du fichier CSV
  */
 function getentete(){
-    console.log("getentete");
-    let xhttp = new XMLHttpRequest();
-    console.log("sending request")
-    xhttp.open("POST", "Import.php", true);
-    console.log("request sent")
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    console.log("request header set")
-    xhttp.send("entete=1");
-    console.log("request sent")
-    xhttp.onreadystatechange = function() {
-        console.log("ready state changed")
-        if (this.readyState == 4 && this.status == 200) {
-            return this.responseText;
+
+    //dico avec les entêtes du dessus
+    let entete = [];
+    //récupération des entêtes
+    $.ajax({
+        url: "Import.php",
+        type: "POST",
+        data: {action: "getentete"},
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            entete = data;
         }
-    }
+    });
+    return entete;
 }
 
 
@@ -463,15 +463,35 @@ function lstCommandesVendeur(){
 }
 
 /*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                        Liens aux lignes de lstSignalements                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+function lstSignalements()
+{
+    //Récupération de toutes les lignes de la liste des signalements
+    var lignes = document.getElementsByClassName("lignesSignalements");
+
+    //Récupération de tous les numéros de produit associés au signalement et donc à l'avis
+    var numProduit = document.getElementsByClassName("numProduit");
+    var numAvis = document.getElementsByClassName("numAvis");
+
+    for (let numLigne = 0; numLigne < lignes.length; numLigne++)
+    {
+        let ligneA = lignes.item(numLigne);
+        let idProduit = numProduit.item(numLigne).textContent;
+        let idAvis = numAvis.item(numLigne).textContent;
+
+        //Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du produit associé au signalement (ancre avis pour accéder à l'avis directement)
+        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/produit/${idProduit}/${idAvis}#avis`;});
+    }
+}
+
+/*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                    Liens aux lignes de lstClients && sanctions                            ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-
-function liensLstClients(event){
-    event.cancelBubble = true;
-    window.location.assign(`${base_url}/espaceClient/admin/${event.currentTarget.clientA}`);
-}
 
 function lstClients(){
     // Récupération de toutes les lignes de la liste des clients
@@ -483,7 +503,7 @@ function lstClients(){
 
     for (let numLigne=0; numLigne<lignes.length; numLigne++){
         let ligneA=lignes.item(numLigne);
-        let clientA=numClients.item(numLigne).textContent;
+        var clientA=numClients.item(numLigne).textContent;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
         ligneA.addEventListener("click", liensLstClients);
         ligneA.clientA=clientA;
@@ -491,39 +511,87 @@ function lstClients(){
         // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
         buttonA.addEventListener("click", () => {
             ligneA.removeEventListener("click", liensLstClients);
-            var a = new AlerteAlizonSanctions(`Sanctionner le client n°${clientA} ?`);
-            a.ajouterBouton("Bannir temporairement", "normal-button petit-button rouge","timeout");
-            a.ajouterBouton("Fermer", "normal-button petit-button blanc","fermer");
-            a.affichage()
 
-            a.getBouton("timeout").addEventListener("click", () => {
-                timeoutClient(clientA);
-                a.fermer();
+            afficherSanctions();
+
+            document.getElementsByClassName("titreSanction")[0].innerHTML = `Sanctionner le client n°${clientA} ?`;
+
+            document.getElementById("timeout").addEventListener("click", () => {
+                cacherSanctions();
+                afficherTimeout(clientA);
                 ligneA.addEventListener("click", liensLstClients);
             })
 
-            a.getBouton("fermer").addEventListener("click", () => {
-                a.fermer();
-                a.unBlur();
+            document.getElementById("fermer").addEventListener("click", () => {
+                cacherSanctions();
                 ligneA.addEventListener("click", liensLstClients);
             })
         })
     }
-}
 
-function timeoutClient(numClient){
-    var a = new AlerteAlizonSanctionner(`Bannir le client n°${numClient} ?`, numClient);
-    a.ajouterInput("Durée (secondes)<span class='requis'>*</span> : ","duree","duree");
-    a.ajouterTextArea("Raison<span class='requis'>*</span> : ","raison","raison");
-    a.ajouterBouton("Bannir", "normal-button petit-button rouge","timeoutClient");
-    a.ajouterBouton("Fermer", "normal-button petit-button blanc");
-    a.affichage();
+    function liensLstClients(event){
+        event.cancelBubble = true;
+        window.location.assign(`${base_url}/admin/espaceClient/${event.currentTarget.clientA}`);
+    }
 
-    a.getBouton("Fermer").addEventListener("click", () => {
-        a.fermer();
-        a.unBlur();
-        ligneA.addEventListener("click", liensLstClients);
-    })
+    function afficherSanctions(){
+        let sur_alerte = document.getElementsByClassName("sur-alerteSanctions")[0];
+        let page = document.querySelectorAll("main, header, footer");
+        page.forEach(element => element.style.filter="blur(4px)");
+        page.forEach(element => element.style.pointerEvents = "none");
+        if(sur_alerte.style.display!="flex"){
+            sur_alerte.style.display="flex";
+        }
+    }
+
+    function cacherSanctions(){
+        let sur_alerte = document.getElementsByClassName("sur-alerte")[0];
+        let page = document.querySelectorAll("main, header, footer");
+        page.forEach(element => element.style.filter="blur(0px)");
+        page.forEach(element => element.style.pointerEvents = "auto");
+        if(sur_alerte.style.display=="flex"){
+            sur_alerte.style.display="none";
+        }
+    }
+
+    function afficherTimeout(clientA){
+        document.getElementById("numClient").value = clientA;
+        document.getElementsByClassName("titreSanction")[1].innerHTML = `Bannir temporairement le client n°${clientA} ?`;
+        let sur_alerteTimeout = document.getElementsByClassName("sur-alerteTimeout")[0];
+        let page = document.querySelectorAll("main, header, footer");
+        page.forEach(element => element.style.filter="blur(4px)");
+        page.forEach(element => element.style.pointerEvents = "none");
+        if(sur_alerteTimeout.style.display!="flex"){
+            sur_alerteTimeout.style.display="flex";
+        }
+
+        document.getElementById("fermerTimeout").addEventListener("click", cacherTimeout)
+    }
+
+    function cacherTimeout(){
+        let sur_alerteTimeout = document.getElementsByClassName("sur-alerteTimeout")[0];
+        let page = document.querySelectorAll("main, header, footer");
+        page.forEach(element => element.style.filter="blur(0px)");
+        page.forEach(element => element.style.pointerEvents = "auto");
+        if(sur_alerteTimeout.style.display=="flex"){
+            sur_alerteTimeout.style.display="none";
+        }
+    }
+
+    function timeoutClient(numClient){
+        var a = new AlerteAlizonSanctionner(`Bannir le client n°${numClient} ?`, numClient);
+        a.ajouterInput("Durée (secondes)<span class='requis'>*</span> : ","duree","duree");
+        a.ajouterTextArea("Raison<span class='requis'>*</span> : ","raison","raison");
+        a.ajouterBouton("Bannir", "normal-button petit-button rouge","timeoutClient");
+        a.ajouterBouton("Fermer", "normal-button petit-button blanc");
+        a.affichage();
+    
+        a.getBouton("Fermer").addEventListener("click", () => {
+            a.fermer();
+            a.unBlur();
+            ligneA.addEventListener("click", liensLstClients);
+        })
+    }
 }
 
 /*
@@ -1320,18 +1388,11 @@ function setUpPaiment(){
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-class Alerte{
-
-    constructor(titre){
-        this.titre=titre;
-        this.display=null;
-    }
-}
-
-class AlerteAlizon extends Alerte{
+class AlerteAlizon{
     
     constructor(titre,destination,message="Une alerte survient",method="GET"){
-        super(titre);
+        this.titre=titre;
+        this.display=null;
         this.message=message;
         this.destination=destination;
         this.form=document.createElement("form");
@@ -1374,147 +1435,6 @@ class AlerteAlizon extends Alerte{
     
 }
 
-class AlerteAlizonSanctionner extends Alerte{
-    constructor(titre,numClient, method="POST"){
-        super(titre);
-        this.numCli=numClient;
-        this.form=document.createElement("form");
-        this.form.method=method;
-        this.divInputs=document.createElement("div");
-        this.divInputs.className="div-inputs"
-        this.divBouton=document.createElement("div");
-    }
-
-    ajouterTextArea(texte,classe,nomForm=intitule){
-        let label=document.createElement("label");
-        label.innerHTML=texte;
-        let textarea=document.createElement("textarea");
-        textarea.rows=3;
-        textarea.name=nomForm;
-        textarea.required=true;
-        let divInput=document.createElement("div");
-        divInput.className=classe;
-        divInput.appendChild(label);
-        divInput.appendChild(textarea);
-        this.divInputs.appendChild(divInput);
-    }
-
-    ajouterInput(texte,classe,nomForm=intitule){
-        let label=document.createElement("label");
-        label.innerHTML=texte;
-        let input=document.createElement("input");
-        input.name=nomForm;
-        input.required=true;
-        let divInput=document.createElement("div");
-        divInput.className=classe;
-        divInput.appendChild(label);
-        divInput.appendChild(input);
-        this.divInputs.appendChild(divInput);
-    }
-
-    ajouterBouton(intitule,classe,nomForm=intitule){
-        let bouton=document.createElement("button");
-        bouton.name=nomForm;
-        bouton.setAttribute("id",intitule);
-        bouton.className=classe;
-        bouton.innerHTML=intitule;
-        bouton.value=1;
-        this.divBouton.appendChild(bouton);
-    }
-
-    getBouton(id){
-        return document.getElementById(id);
-    }
-
-    affichage=(message=this.message) => {
-        let num=document.createElement("input");
-        num.type="hidden";
-        num.name="numClient";
-        num.value=this.numCli;
-        this.form.appendChild(num);
-        document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(4px)");
-        this.display = document.createElement("div");
-        this.display.classList.add("sur-alerte");
-        this.form.appendChild(this.divInputs);
-        let divAlerteFooter=document.createElement("div");
-        divAlerteFooter.classList.add("alerte-footer");
-        let hr=document.createElement("hr");
-        divAlerteFooter.appendChild(hr);
-        let divEspaceInterraction=document.createElement("div");
-        divEspaceInterraction.classList.add("espace-interraction");
-        divEspaceInterraction.appendChild(this.divBouton);
-        divAlerteFooter.appendChild(divEspaceInterraction);
-        this.form.appendChild(divAlerteFooter);
-        this.display.innerHTML= `
-      
-            <div class="alerte">
-                <h2>${this.titre}</h2>
-                <hr>
-                ${this.form.outerHTML}
-            </div>
-   
-        `;
-        document.body.appendChild(this.display);
-    }
-
-    fermer(){
-        document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(0px)");
-        this.display.remove();
-    }
-}
-
-class AlerteAlizonSanctions{
-    
-    constructor (titre,message="Quelle type de sanction ?"){
-        this.titre=titre;
-        this.message=message;
-        this.divBouton=document.createElement("div");
-        this.display=null;
-    }
-
-    ajouterBouton(intitule,classe,id){
-        let bouton=document.createElement("button");
-        bouton.setAttribute("id",id);
-        bouton.className=classe;
-        bouton.innerHTML=intitule;
-        this.divBouton.appendChild(bouton);
-    }
-
-    getBouton(id){
-        return document.getElementById(id);
-    }
-
-    affichage=(message=this.message) => {
-        document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(4px)");
-        this.display = document.createElement("div");
-        this.display.classList.add("sur-alerte");
-        this.display.innerHTML= `
-      
-            <div class="alerte">
-                <h2>${this.titre}</h2>
-                <hr>
-                <p class="message-alerte">${message}</p>
-                <div class="alerte-footer">
-                <hr>
-                <div class="espace-interraction">
-                    ${this.divBouton.outerHTML}
-                </div>
-                </div>
-            </div>
-   
-        `;
-        document.body.appendChild(this.display);
-    }
-
-    fermer(){
-        this.display.remove();
-    }
-
-    unBlur(){
-        document.querySelectorAll("main, header, footer").forEach(element => element.style.filter="blur(0px)");
-    }
-}
-
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                            Changement image produit                             ┃
@@ -1555,7 +1475,36 @@ function zoomProduit(e) {
 ┃                                 Avis Produit                                    ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-function avisProduit() {
+function avisProduit() 
+{
+    //Mise en valeur d'un avis avec une box-shadow
+    var bgopacity = 1.0;
+    var bgfade = function() 
+    {
+        var avisEnValeur = document.getElementById("avisEnValeur");
+        bgopacity -= 0.02
+        avisEnValeur.style.boxShadow = "0 0 10px rgba(0, 0, 0, " + bgopacity + ")";
+        avisEnValeur.style.borderRadius = "5px";
+
+        if (bgopacity >= 0) 
+        {
+            setTimeout(bgfade, 30);
+        }
+        else
+        {
+            //On retire le #avis à la fin de l'url quand l'animation est finie c'est plus propre
+            //window.history.pushState({}, document.title, window.location.pathname);
+
+            //Malheureusement ça reload la page mais c'est d'une puissance ce truc
+            //On retire l'avis en valeur de l'url
+            //window.location.href = window.location.href.replace(/\/[0-9]$/, "");
+        }
+    }
+
+    bgfade();
+    //printing the current url
+    //console.log(window.location.href);
+
     let tabAvis = document.querySelectorAll(".divAvisCommentaire p"); // séléctionne les avis
     
     // seulement si il y a des avis

@@ -153,7 +153,7 @@
                         <?php endforeach; ?>
                     </ul>
                 </section>
-                <div class="divAvis">
+                <div class="divAvis" id="avis">
                     <h2>Avis</h2>
                     <hr>
                     <?php if (empty($avis)): ?>
@@ -193,27 +193,26 @@
                             <?php 
                                 end($avis);
                                 $fin = key($avis);
-                                foreach ($avis as $cle => $unAvis): 
-                            ?>
-                            <div class="divUnAvis">
-                                <section class="sectionUnAvis">
-                                    <div class="divNomCommentaire">
-                                        <img src="<?=base_url() ?>/images/header/profil.svg">
-                                        <div class="divNomDate">
-                                            <h3><?= $unAvis->pseudo ?> : </h3>
-                                            <p>Publié le <?= $unAvis->date_av ?></p>
-                                        </div>
+                                foreach ($avis as $cle => $unAvis): ?>
+                                    <div class="divUnAvis" <?php if ($unAvis->num_avis == $avisEnValeur) {echo 'id="avisEnValeur"';} ?>>
+                                        <section class="sectionUnAvis">
+                                            <div class="divNomCommentaire">
+                                                <img src="<?=base_url() ?>/images/header/profil.svg">
+                                                <div class="divNomDate">
+                                                    <h3><?= $unAvis->pseudo ?> : </h3>
+                                                    <p>Publié le <?= $unAvis->date_av ?></p>
+                                                </div>
+                                            </div>
+                                            <div class="divAvisCommentaire">
+                                                <div class="noteAvis"><?= $cardProduit->notationEtoile($unAvis->note_prod) ?></div>
+                                                <p><?= $unAvis->note_prod ?>/5</p>
+                                            </div>
+                                        </section>
+                                        <p><?= $unAvis->contenu_av ?></p>
+                                        <?php if ($cle != $fin): ?>
+                                        <hr>
+                                        <?php endif; ?>
                                     </div>
-                                    <div class="divAvisCommentaire">
-                                        <div class="noteAvis"><?= $cardProduit->notationEtoile($unAvis->note_prod) ?></div>
-                                        <p><?= $unAvis->note_prod ?>/5</p>
-                                    </div>
-                                </section>
-                                <p><?= $unAvis->contenu_av ?></p>
-                                <?php if ($cle != $fin): ?>
-                                <hr>
-                                <?php endif; ?>
-                            </div>
                             <?php endforeach; ?>
                         </div>
                     </div>

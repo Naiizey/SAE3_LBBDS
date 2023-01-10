@@ -136,7 +136,11 @@
                         <?php endif; ?>
                     </a>
                     <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>">
-                        <?php include(dirname(__DIR__,3)."/public/images/header/profil.svg")?>
+                    <?php if (session()->has("numero")) {
+                        include(dirname(__DIR__,3)."/public/images/header/profilCon.svg");
+                    } else {
+                        include(dirname(__DIR__,3)."/public/images/header/profil.svg");
+                    } ?>
                     </a>
                     <?php if (session()->has("numero")): ?>
                         <div class="divHoverConnexion divConnected">
@@ -178,6 +182,7 @@
             <?php if (isset($GLOBALS['validation'])): ?>
                 <?= $GLOBALS['validation']; ?>
             <?php endif; ?>
+            <?php if (isset($GLOBALS['invalidation'])): ?>
+                <?= $GLOBALS['invalidation']; ?>
+            <?php endif; ?>
         </header>
-        
-     

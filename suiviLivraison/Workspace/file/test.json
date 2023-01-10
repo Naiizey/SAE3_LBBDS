@@ -1,0 +1,19 @@
+{
+    "livraisons" : [
+    {
+        "identifiant" : 0,
+        "nombre" : 5,
+        "time" : 0,
+        "etat" : "tout",
+        "retard": 2
+    },
+    {
+        "identifiant" : 0,
+        "nombre" : 5,
+        "time" : 0,
+        "etat" : "tout",
+        "retard": 2
+    }
+    
+    ]
+}

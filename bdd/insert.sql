@@ -253,6 +253,8 @@ INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, descripti
 VALUES (148,'Piquets de jardin',100,120, 'Très bon piquet pour arrêter des lapins, attention à usage unique, provenance : Bretagne.', true, 10, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image, estinterne,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), '../ci4/public/images/produit/missile_javelin.jpg', true,0);
+INSERT INTO _image_prod(id_prod, lien_image, estinterne,num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), '../ci4/public/images/produit/missile_javelin.jpg', true,1);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (148,'Tarte campagnarde',8,9.6,'Carrotes, fromage, jambon, champigons. Produit incroyablement bon qui fond très bien en bouche.',  true, 10, 4.5, 5, true);
@@ -356,4 +358,8 @@ INSERT INTO _code_reduction (code_reduction, montant_reduction, pourcentage_redu
         ('25POURCENT', 0, 25, 1),
         ('10POURCEN', 0, 10, 1);
 
-INSERT INTO commentaires(id_prod,num_compte,note_prod,contenu_av) VALUES (1,1,3,'Pas fou');
+INSERT INTO commentaires(id_prod,num_compte,note_prod,contenu_av) VALUES (18,1,3,'Pas fou');
+INSERT INTO commentaires(id_prod,num_compte,note_prod,contenu_av) VALUES (17,2,1,'Je n''ai pas reçu mon produit...');
+
+INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis n''apporte rien du tout, il ne justifie pas sa note.', 4, 1);
+INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis ne parle pas du produit', 5, 2);

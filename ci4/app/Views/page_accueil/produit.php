@@ -210,8 +210,23 @@
                                             </div>
                                         </section>
                                         <p><?= $unAvis->contenu_av ?></p>
+                                        <?php if ($unAvis->num_avis == $avisEnValeur): ?>
+                                            <div class="div-signalement">
+                                                <p>
+                                                    <?php
+                                                        foreach ($signalements as $cle => $signalement)
+                                                        {
+                                                            if ($signalement->num_avis == $unAvis->num_avis)
+                                                            {
+                                                                echo "Signalement: " . $signalement->raison;
+                                                            }
+                                                        }
+                                                    ?>
+                                                </p>
+                                            </div>
+                                        <?php endif; ?>
                                         <?php if ($cle != $fin): ?>
-                                        <hr>
+                                            <hr>
                                         <?php endif; ?>
                                     </div>
                             <?php endforeach; ?>

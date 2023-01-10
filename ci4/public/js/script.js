@@ -1586,7 +1586,7 @@ function avisProduit()
     var bgfade = function() 
     {
         var avisEnValeur = document.getElementById("avisEnValeur");
-        bgopacity -= 0.02
+        bgopacity -= 0.015
         avisEnValeur.style.boxShadow = "0 0 10px rgba(0, 0, 0, " + bgopacity + ")";
         avisEnValeur.style.borderRadius = "5px";
 

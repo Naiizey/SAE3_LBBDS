@@ -666,6 +666,11 @@ div.bloc-erreur-liste-produit  {
     text-align: left;
 }
 
+.div-signalement {
+    color: red;
+    margin-left: 1em;
+}
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                           Composant alerte                                      ┃

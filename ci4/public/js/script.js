@@ -1143,7 +1143,7 @@ function errors(){
             return s;
         };
     
-        this.start = function () {
+        this.etoilet = function () {
             $source.style.display = 'none';
             $target.style.display = 'block';
     
@@ -1187,7 +1187,7 @@ function errors(){
         };
     };
     
-    (new Shuffle(document.getElementById('error_text'))).start();
+    (new Shuffle(document.getElementById('error_text'))).etoilet();
     
     window.setTimeout(function () {
         document.getElementById('details').classList.remove('hidden');
@@ -1594,5 +1594,61 @@ function avisProduit() {
                 count = moyennes.length - 1; // réinitialise au cas où
             }
         }   
+    }
+
+    // écouteurs sur les étoiles pour noter un produit
+    let etoiles = document.querySelectorAll(".divEtoilesComment svg path");
+    etoiles.forEach(etoile => {
+        etoile.addEventListener('mouseover', hoveretoile);
+        etoile.addEventListener('mouseout', outetoile);
+    });
+
+    // met en jaune l'étoile sur laquelle on est ainsi que les précédentes    
+    function hoveretoile() {
+        // pour toutes les etoiles
+        for(let i=0; i< etoiles.length; ++i) {
+            etoiles[i].classList.add('etoileActive'); // ajoute une classe qui met en jaune
+
+            // jusqu'à ce quon arrive à l'étoile sur laquelle on est 
+            if(etoiles[i] === this) {
+                return;
+            }
+        }
+    }
+
+    // quand on quitte les etoiles
+    function outetoile() {
+        for (let index = 0; index < etoiles.length; index++) {
+            etoiles[index].classList.remove('etoileActive'); // remet tout en gris
+        }
+    }
+
+    // pareil qu'au dessus, mais cette fois bloque la couleur et fait quelques autres trucs (détaillés plus loin)
+    etoiles.forEach(etoile => {
+        etoile.addEventListener('click', validerEtoile);
+    });
+
+    function validerEtoile() {
+        for(let i=0; i< etoiles.length; ++i) {
+            etoiles[i].classList.add('etoilesValide'); 
+             
+            if(etoiles[i] === this) {
+                document.querySelector(".divEtoilesComment p").textContent = (i + 1) + "/5"; // écrit le numéro de la note à coté des étoiles
+
+                btnPoster = document.querySelector(".divBoutonsComment input");
+                btnPoster.style.cursor = "pointer";
+                btnPoster.style.background = "#55C044";
+                btnPoster.style.pointerEvents = "auto";
+                
+                // retire le jaune des suivantes au cas ou on clique plusieurs fois
+                while (i+1 != 5) {
+                    etoiles[i+1].classList.remove('etoilesValide'); 
+                    i = i +1;
+                }
+                return;
+            }
+        }
+
+        
     }
 }

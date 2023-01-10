@@ -2026,13 +2026,6 @@ h3 > .lienPasArticlePanier {
     font-family: "Montserrat-Regular";
 }
 
-#noteComment {
-    width: .5em;
-    border: none;
-    margin-left: .5em;
-    color: #164F57;
-}
-
 .divBoutonsComment {
     align-self: flex-end;
 }
@@ -2052,18 +2045,22 @@ h3 > .lienPasArticlePanier {
     border: none;
     border-radius: 30px;
     background: #BDBFBB;
-    cursor: not-allowed;
     padding: .2em 1em;
     margin: .2em 0 1em .3em;
-}
-
-.divEtoilesComment {
-    display: flex;
+    pointer-events: none;
 }
 
 .divEtoilesComment img {
     width: 1em;
     height: 1em;
+}
+
+.divEtoilesComment svg path {
+    cursor: pointer;
+}
+
+.etoileActive, .etoilesValide {
+    fill: #FFCA28;
 }
 
 .divEtoilesComment {
@@ -2078,7 +2075,7 @@ h3 > .lienPasArticlePanier {
 }
 
 .divEtoilesComment p {
-    margin: 0;
+    margin: 0 0 0 .5em;
 }
 
 .divProfilText {

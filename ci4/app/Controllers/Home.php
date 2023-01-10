@@ -638,6 +638,13 @@ class Home extends BaseController
             $data["produitSignalements"][$i] = $data["produitSignalements"][$i]->id_prod;
         }
 
+        $post = $this->request->getPost();
+        if (!empty($post))
+        {
+            $modelSignalements = model("\App\Models\LstSignalements");
+            $modelSignalements->delete($post["id_signal"]);
+        }
+
         return view("page_accueil/signalements.php", $data);
     }
 

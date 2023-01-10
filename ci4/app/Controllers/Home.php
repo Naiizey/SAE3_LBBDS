@@ -146,6 +146,7 @@ class Home extends BaseController
 
     public function produit($idProduit = null, $numAvisEnValeur = null)
     {
+        $data["signalements"] = model("\App\Models\LstSignalements")->findAll();
         $data['model'] = model("\App\Models\ProduitCatalogue");
         $data['cardProduit']=service("cardProduit");
         
@@ -659,6 +660,13 @@ class Home extends BaseController
 
     public function lstSignalements()
     {
+        $post = $this->request->getPost();
+        if (!empty($post))
+        {
+            $modelSignalements = model("\App\Models\LstSignalements");
+            $modelSignalements->delete($post["id_signal"]);
+        }
+        
         $data["role"] = "admin";
         $data["controller"] = "Administration - Signalements";
         $data["signalements"] = model("\App\Models\LstSignalements")->findAll();
@@ -710,16 +718,20 @@ class Home extends BaseController
         }
     }
 
-    public function lstClients(){
+    public function lstClients($which){
         $data["controller"]="Liste des clients";
         $data["role"]="admin";
         $data["clients"]=model("\App\Models\Client")->findAll();
 
-        $post=$this->request->getPost();
+        if($which=="bannir"){
+            $data["bannir"]=true;
 
-        if(!empty($post)){
-            $sanctions = model("\App\Models\SanctionTemp");
-            $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+            $post=$this->request->getPost();
+
+            if(!empty($post)){
+                $sanctions = model("\App\Models\SanctionTemp");
+                $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+            }
         }
 
         return view("page_accueil/lstClients.php",$data);

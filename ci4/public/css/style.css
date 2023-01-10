@@ -406,6 +406,18 @@ main {
     main{
         top: 0;
     }
+
+    .bodyAdmin, .bodyVendeur{
+        background-color: #f3f3f3;
+    }
+
+    .footerAdmin .mobile {
+        background-color: black;
+    }
+
+    .footerVendeur .mobile {
+        background-color: #3997a3;
+    }
 }
 
 button.hidden{
@@ -677,6 +689,11 @@ div.bloc-erreur-liste-produit  {
     text-align: left;
 }
 
+.div-signalement {
+    color: red;
+    margin-left: 1em;
+}
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                           Composant alerte                                      ┃
@@ -725,7 +742,7 @@ div.bloc-erreur-liste-produit  {
     width: auto;
     
 }
-.alerte form, .espace-interraction div{
+.alerte form, .espace-interraction{
     margin :0;
     width: 100%;
     display: flex;
@@ -756,11 +773,15 @@ div.bloc-erreur-liste-produit  {
 
 @media screen and (max-width: 991px){
 
+    .sur-alerte{
+        z-index: 101;
+    }
+
     .alerte{
         width: 70%;
     }
 
-    .alerte form, .espace-interraction div{
+    .alerte form, .espace-interraction{
         flex-direction: column;
         height: 8em;
     }
@@ -769,7 +790,7 @@ div.bloc-erreur-liste-produit  {
         height: auto;
     }
 
-    .sur-alerte.sur-alerteTimeout .espace-interraction div{
+    .sur-alerte.sur-alerteTimeout .espace-interraction{
         flex-direction: row;
         height: auto;
     }
@@ -1770,6 +1791,55 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
     display: none;
 }
 
+.sectionRecommandationsPanierPC ul li{
+    display: flex;
+    justify-content: center;
+}
+
+.sectionRecommandationsPanierPC .card-produit-ext{
+    width: 8rem;
+    height: 11.2rem;
+    padding: 0;
+}
+
+.sectionRecommandationsPanierPC .card-produit{
+    width: 8rem;
+    height: 11.2rem;
+}
+
+.sectionRecommandationsPanierPC .image-card{
+    height: 5.5rem
+}
+
+.sectionRecommandationsPanierPC .contain-libelle{
+    min-height: 2rem;
+    max-height: 2rem;
+    font-size: 1rem;
+}
+
+.sectionRecommandationsPanierPC .prix-card{
+    font-size: 1rem;
+}
+
+.sectionRecommandationsPanierPC .addPanier{
+    width: 1rem;
+    height: 1rem;
+}
+
+.sectionRecommandationsPanierPC .addPanier svg{
+    position: relative;
+    top: -.7rem;
+}
+
+.sectionRecommandationsPanierPC .notation-card{
+    height: 1.25rem;
+}
+
+.sectionRecommandationsPanierPC .card-produit img{
+    border: none;
+    width: 1rem;
+}
+
 .divPanierArticles + h2 {
     text-align: right;
 }
@@ -2634,8 +2704,7 @@ main#Catalogue{
 }
 
 .normal-button{
-    
-    
+    cursor: pointer;
     border: none;
     width: 65%;
     height: 3em;
@@ -3253,11 +3322,11 @@ a.fleche-page{
     width: 5em;
 }
 
-.lignesClients .buttonSanction{
-    background-color: #571616;
+.buttonSanction {
     width: 2em;
     height: 2em;
     margin: auto;
+    border: solid red 2px;
 }
 
 /* ━━━ Div des sanctions ━━━ */
@@ -3879,24 +3948,25 @@ progress::-moz-progress-bar
 /* Commentaires signalés */
 .sectionAdmin a:nth-child(10) {
     grid-column-start: 1;
-    grid-column-end: 2;
+    grid-column-end: 3;
 }
 
 .sectionAdmin a:nth-child(11) {
-    grid-column-start: 2;
+    grid-column-start: 3;
     grid-column-end: 6;
 }
 
 /* Avertissements */
 .sectionAdmin a:nth-child(13) {
     grid-column-start: 1;
-    grid-column-end: 4;
+    grid-column-end: 3;
 }
 
 .sectionAdmin a:nth-child(14) {
-    grid-column-start: 4;
+    grid-column-start: 3;
     grid-column-end: 6;
 }
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                  Zoom produit                                   ┃

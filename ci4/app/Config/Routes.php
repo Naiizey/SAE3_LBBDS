@@ -102,12 +102,6 @@ $routes->set404Override();
     $routes->get('/facture','Home::facture',['filter' => 'connexion']);
     $routes->post('/facture','Home::facture',['filter' => 'connexion']);
 
-    $routes->get('/(admin)/signalements', 'Home::lstSignalements');
-    $routes->post('/(admin)/signalements', 'Home::lstSignalements');
-
-    $routes->get('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');
-    $routes->post('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');
-
     $routes->get('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
     $routes->post('/espaceClient', 'Home::espaceClient' ,['filter' => 'connexion']);
 
@@ -115,8 +109,16 @@ $routes->set404Override();
     $routes->post('/validation', 'Home::validation' );
 
     $routes->get('/admin', 'Home::admin');
-    $routes->get('/admin/Clients', 'Home::lstClients');
-    $routes->post('/admin/Clients', 'Home::lstClients');
+    
+    $routes->get('/admin/Clients', 'Home::lstClients/liste');
+    $routes->get('/admin/Clients/bannir', 'Home::lstClients/bannir');
+    $routes->post('/admin/Clients/bannir', 'Home::lstClients/bannir');
+
+    $routes->get('/(admin)/signalements', 'Home::lstSignalements');
+    $routes->post('/(admin)/signalements', 'Home::lstSignalements');
+
+    $routes->get('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');
+    $routes->post('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');
 
     $routes->get('/vendeur/import/entetes', 'Import::getentetes');
 ##param uri (:any) et dans methode /$1

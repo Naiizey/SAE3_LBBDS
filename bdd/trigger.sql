@@ -250,7 +250,9 @@ CREATE OR REPLACE FUNCTION insert_commentaire() RETURNS TRIGGER AS
 $$
     BEGIN
         Insert Into sae3._note(id_prod, num_compte, note_prod) VALUES (new.id_prod, new.num_compte, new.note_prod);
-        Insert Into sae3._avis(contenu_av, date_av, id_note) VALUES (new.contenu_av, current_date, currval('sae3._note_id_note_seq'));
+        IF new.contenu_av is not null and new.contenu_av > '' THEN
+                Insert Into sae3._avis(contenu_av, date_av, id_note) VALUES (new.contenu_av, current_date, currval('sae3._note_id_note_seq'));
+        end if;
 
         return new;
     end;

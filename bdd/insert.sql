@@ -266,10 +266,10 @@ VALUES (149,'Galets bretons',1000,1200,'Galets de fabrique bretonne, configurati
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'),'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg',0 );
 
-INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (5, 18, 1);
-INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3.75, 17, 1);
-INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (5, 18, 2);
--- INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3, 17, 1);
+-- (note_prod, id_prod, num_compte) VALUES (5, 18, 1);
+INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3.75, 14, 1);
+INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (5, 12, 2);
+INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3, 13, 1);
 
 INSERT INTO _avis (contenu_av,id_note, date_av) VALUES ('Franchement j''en suis très satisfait, rien à redire, ce produit est vraiment très bien, j''adore !',1, current_date);
 INSERT INTO _avis (contenu_av,id_note, date_av) VALUES ('Qualité moyenne, à revoir...',2, current_date);

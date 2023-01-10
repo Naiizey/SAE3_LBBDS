@@ -339,7 +339,7 @@ main {
 
 /* Media query téléphone header */
 
-@media screen and (max-width: 991px){
+@media screen and (max-width: 960px){
     .divPanierProfil{
         display: none;
     }
@@ -413,7 +413,7 @@ button.hidden{
 }
 
 /* Format paysage */
-@media screen and (max-width: 991px) and (orientation:landscape){
+@media screen and (max-width: 480px) and (orientation:landscape){
     .divHeaderAlizon{
         height: 20%
     }
@@ -457,7 +457,7 @@ footer a{
 }
 
 /* Media query téléphone footer */
-@media screen and (max-width:991px){
+@media screen and (max-width:960px){
     footer .pc{
         display: none;
     }
@@ -541,6 +541,10 @@ footer a{
     }
 
     .alizonCPY{
+        display: none;
+    }
+
+    footer div + p{
         display: none;
     }
 }
@@ -3525,7 +3529,7 @@ progress::-moz-progress-bar
     fill: #164F57;
 }
 
-@media screen and (max-width: 960px){
+@media screen and (max-width: 480px){
     .mentionsLegales{
         margin: 0;
     }
@@ -3622,87 +3626,19 @@ progress::-moz-progress-bar
     display: none;
 }
 
-@media screen and (max-width: 960px){
+@media screen and (max-width: 991px) {
     .mainEspaceCli{
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-bottom: 7.5em;
     }
 
     .divCredit{
         width: 90%;
-    }
-
-    .divCredit, .divFormAdresse {
-        margin: 0;
-        /*padding: 10% 0;*/
-    }
-
-    .divAlizon+.divCredit {
-        padding-top: 0;
-    }
-
-    .divAlizon {
-        display: none;
-    }
-
-    .divCredit h2, .divFormAdresse h2 {
-        font-size: 1.2em;
-    }
-
-    .divCredit {
-        margin: 0 2em;
-        margin-top: 1em;
-    }
-
-    .sectionCredit{
-        padding: 2em;
-        font-size: 0.8em;
-    }
-
-    .sectionCredit a {
-        text-align: center;
-    }
-
-    .sectionCredit + a{
-        font-size: 0.9em;
-    }
-
-    .nomPrenom,.infoRue {
-        display: block;
-    }
-
-    .nomPrenom div, .infoRue div, .infoVille div {
-        width: 100%;
-    }
-
-    .nomPrenom div input {
-        width: 100%;
-    }
-
-    .sectionCredit input[type="submit"] {
-        font-size: 1.1em;
-    }
-
-    .sectionCredit input[type="submit"]{
-        margin-top: 1.5em;
-    }
-
-    .divAdressesCli > div{
-        width: 42.5%;
+        margin: auto;
     }
 }
 
-@media screen and (max-width: 960px) and (min-width: 480px){
-    .divEspaceCli{
-        margin: 0 5%;
-    }
-
-    .divAdressesCli > div{
-        width: 47.5%;
-    }
-}
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

@@ -7,7 +7,11 @@
                         <tr>
                             <th>N° client</th>
                             <th>Identifiant</th>
-                            <th>Sanctionner</th>                           
+                            <? if(isset($bannir)) : ?>
+                                <?php if ($bannir) : ?>
+                                    <th>Bannir</th>
+                                <? endif; ?>
+                            <? endif; ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -15,9 +19,13 @@
                             <tr class='lignesClients'>
                                 <td class='numClients'><?= $client->numero ?></td>
                                 <td><?= $client->identifiant ?></td>
-                                <td>
-                                    <button class="buttonSanction"></button>
-                                </td>
+                                <?php if(isset($bannir)) : ?>
+                                    <?php if ($bannir) : ?>
+                                        <td>
+                                            <button class="buttonSanction"></button>
+                                        </td>
+                                    <?php endif; ?>
+                                <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -74,5 +82,10 @@
     </div>
 <?php require("footer.php");?>
 <script>
+    <? if(isset($bannir)): ?>
+        var bannir = <?= $bannir ?>;
+    <? else: ?>
+        var bannir = false;
+    <? endif; ?>
     lstClients();
 </script>

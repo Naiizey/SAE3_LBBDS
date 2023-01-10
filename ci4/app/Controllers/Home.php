@@ -681,16 +681,20 @@ class Home extends BaseController
         }
     }
 
-    public function lstClients(){
+    public function lstClients($which){
         $data["controller"]="Liste des clients";
         $data["role"]="admin";
         $data["clients"]=model("\App\Models\Client")->findAll();
 
-        $post=$this->request->getPost();
+        if($which=="bannir"){
+            $data["bannir"]=true;
 
-        if(!empty($post)){
-            $sanctions = model("\App\Models\SanctionTemp");
-            $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+            $post=$this->request->getPost();
+
+            if(!empty($post)){
+                $sanctions = model("\App\Models\SanctionTemp");
+                $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+            }
         }
 
         return view("page_accueil/lstClients.php",$data);

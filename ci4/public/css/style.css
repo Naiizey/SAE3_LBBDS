@@ -1775,6 +1775,55 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
     display: none;
 }
 
+.sectionRecommandationsPanierPC ul li{
+    display: flex;
+    justify-content: center;
+}
+
+.sectionRecommandationsPanierPC .card-produit-ext{
+    width: 8rem;
+    height: 11.2rem;
+    padding: 0;
+}
+
+.sectionRecommandationsPanierPC .card-produit{
+    width: 8rem;
+    height: 11.2rem;
+}
+
+.sectionRecommandationsPanierPC .image-card{
+    height: 5.5rem
+}
+
+.sectionRecommandationsPanierPC .contain-libelle{
+    min-height: 2rem;
+    max-height: 2rem;
+    font-size: 1rem;
+}
+
+.sectionRecommandationsPanierPC .prix-card{
+    font-size: 1rem;
+}
+
+.sectionRecommandationsPanierPC .addPanier{
+    width: 1rem;
+    height: 1rem;
+}
+
+.sectionRecommandationsPanierPC .addPanier svg{
+    position: relative;
+    top: -.7rem;
+}
+
+.sectionRecommandationsPanierPC .notation-card{
+    height: 1.25rem;
+}
+
+.sectionRecommandationsPanierPC .card-produit img{
+    border: none;
+    width: 1rem;
+}
+
 .divPanierArticles + h2 {
     text-align: right;
 }
@@ -2624,8 +2673,7 @@ main#Catalogue{
 }
 
 .normal-button{
-    
-    
+    cursor: pointer;
     border: none;
     width: 65%;
     height: 3em;
@@ -3869,24 +3917,25 @@ progress::-moz-progress-bar
 /* Commentaires signalés */
 .sectionAdmin a:nth-child(10) {
     grid-column-start: 1;
-    grid-column-end: 2;
+    grid-column-end: 3;
 }
 
 .sectionAdmin a:nth-child(11) {
-    grid-column-start: 2;
+    grid-column-start: 3;
     grid-column-end: 6;
 }
 
 /* Avertissements */
 .sectionAdmin a:nth-child(13) {
     grid-column-start: 1;
-    grid-column-end: 4;
+    grid-column-end: 3;
 }
 
 .sectionAdmin a:nth-child(14) {
-    grid-column-start: 4;
+    grid-column-start: 3;
     grid-column-end: 6;
 }
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                  Zoom produit                                   ┃

@@ -508,24 +508,26 @@ function lstClients(){
         ligneA.clientA=clientA;
         let buttonA=buttons.item(numLigne);
         // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
-        buttonA.addEventListener("click", () => {
-            ligneA.removeEventListener("click", liensLstClients);
-
-            afficherSanctions();
-
-            document.getElementsByClassName("titreSanction")[0].innerHTML = `Sanctionner le client n°${clientA} ?`;
-
-            document.getElementById("timeout").addEventListener("click", () => {
-                cacherSanctions();
-                afficherTimeout(clientA);
-                ligneA.addEventListener("click", liensLstClients);
+        if(bannir){
+            buttonA.addEventListener("click", () => {
+                ligneA.removeEventListener("click", liensLstClients);
+    
+                afficherSanctions();
+    
+                document.getElementsByClassName("titreSanction")[0].innerHTML = `Sanctionner le client n°${clientA} ?`;
+    
+                document.getElementById("timeout").addEventListener("click", () => {
+                    cacherSanctions();
+                    afficherTimeout(clientA);
+                    ligneA.addEventListener("click", liensLstClients);
+                })
+    
+                document.getElementById("fermer").addEventListener("click", () => {
+                    cacherSanctions();
+                    ligneA.addEventListener("click", liensLstClients);
+                })
             })
-
-            document.getElementById("fermer").addEventListener("click", () => {
-                cacherSanctions();
-                ligneA.addEventListener("click", liensLstClients);
-            })
-        })
+        }
     }
 
     function liensLstClients(event){
@@ -575,21 +577,6 @@ function lstClients(){
         if(sur_alerteTimeout.style.display=="flex"){
             sur_alerteTimeout.style.display="none";
         }
-    }
-
-    function timeoutClient(numClient){
-        var a = new AlerteAlizonSanctionner(`Bannir le client n°${numClient} ?`, numClient);
-        a.ajouterInput("Durée (secondes)<span class='requis'>*</span> : ","duree","duree");
-        a.ajouterTextArea("Raison<span class='requis'>*</span> : ","raison","raison");
-        a.ajouterBouton("Bannir", "normal-button petit-button rouge","timeoutClient");
-        a.ajouterBouton("Fermer", "normal-button petit-button blanc");
-        a.affichage();
-    
-        a.getBouton("Fermer").addEventListener("click", () => {
-            a.fermer();
-            a.unBlur();
-            ligneA.addEventListener("click", liensLstClients);
-        })
     }
 }
 

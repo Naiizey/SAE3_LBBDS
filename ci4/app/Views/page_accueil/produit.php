@@ -173,21 +173,20 @@
                             <div class="divAjoutComment">
                                 <form action="" method="POST">
                                     <div class="divEtoilesComment">
-                                        <img src="<?=base_url() ?>/images/Star-empty.svg" alt="">
-                                        <img src="<?=base_url() ?>/images/Star-empty.svg" alt="">
-                                        <img src="<?=base_url() ?>/images/Star-empty.svg" alt="">
-                                        <img src="<?=base_url() ?>/images/Star-empty.svg" alt="">
-                                        <img src="<?=base_url() ?>/images/Star-empty.svg" alt="">
-                                        <textarea id="noteComment" placeholder="x"></textarea>
-                                        <p>/5</p>
+                                        <?php for ($i=0; $i < 5 ; $i++) : ?>
+                                        <?= file_get_contents(dirname(__DIR__,3)."/public/images/Star-empty.svg")?>
+                                        <?php endfor; ?>
+                                        <p>_/5</p>
                                     </div>
                                     <div class="divProfilText">
                                         <img src="<?=base_url() ?>/images/header/profil.svg">
-                                        <textarea id="contenuComment" placeholder="Ajouter un commentaire..."></textarea>
+                                        <textarea id="contenuComment" placeholder="Ajouter un commentaire... (optionnel)"></textarea>
                                     </div>
                                     <div class="divBoutonsComment">
                                         <button type="reset" value="Reset">Annuler</button>
-                                        <input type="submit" name="submit" value="Poster">
+                                        <div>
+                                            <input type="submit" value="Poster">
+                                        </div>
                                     </div>
                                 </form>
                             </div>

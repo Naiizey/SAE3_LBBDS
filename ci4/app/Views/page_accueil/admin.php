@@ -5,6 +5,7 @@
                     <h2>Administration</h2>
                     <div>
                         <h3>Gestion de comptes</h3>
+                        <a href="<?= base_url() ?>/admin/Clients">Voir tous les comptes clients</a>
                         <a href="<?= base_url() ?>/admin/espaceClient/1">Modifier un compte</a>
                         <a>Supprimer un compte</a>
                         <h3>Bannissements</h3>

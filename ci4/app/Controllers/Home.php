@@ -623,6 +623,13 @@ class Home extends BaseController
 
     public function lstSignalements()
     {
+        $post = $this->request->getPost();
+        if (!empty($post))
+        {
+            $modelSignalements = model("\App\Models\LstSignalements");
+            $modelSignalements->delete($post["id_signal"]);
+        }
+        
         $data["role"] = "admin";
         $data["controller"] = "Administration - Signalements";
         $data["signalements"] = model("\App\Models\LstSignalements")->findAll();
@@ -636,13 +643,6 @@ class Home extends BaseController
             
             //On s'intéresse particulièrement à l'id produit
             $data["produitSignalements"][$i] = $data["produitSignalements"][$i]->id_prod;
-        }
-
-        $post = $this->request->getPost();
-        if (!empty($post))
-        {
-            $modelSignalements = model("\App\Models\LstSignalements");
-            $modelSignalements->delete($post["id_signal"]);
         }
 
         return view("page_accueil/signalements.php", $data);

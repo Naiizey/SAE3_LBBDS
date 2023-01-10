@@ -67,7 +67,7 @@
                             <?php if (isset($autresImages)): ?>
                                 <li>
                                     <a href="" onclick="changeImageProduit(event)">
-                                        <img src="<?= $autresImages[$i] -> lien_image ?>" />
+                                        <img src="<?= $prod -> lienimage ?>" />
                                     </a>
                                 </li>
                                 <?php for ($i = 0; $i < count($autresImages) && $i < 5; $i++): ?>
@@ -94,7 +94,7 @@
                             <h2><?= ucfirst($prod -> intitule)?></h2>
                             <p class="ParaDescProduit"><?= ucfirst($prod->description) ?></p>
                             <section class="sectionAvis">
-                                <a href="#divLesAvis"><h4>Avis clients :</h4></a>
+                                <a href="#avis"><h4>Avis clients :</h4></a>
                                 <?php if (empty($avis)): ?>
                                 <h4 class="aucunAvis">Aucun avis</h4>
                                 <?php else : ?>
@@ -167,9 +167,11 @@
                     <h2>Avis</h2>
                     <hr>
                     <?php if (empty($avis)): ?>
-                    <p id="divLesAvis">Aucun utilisateur n'a laissé d'avis sur cet article.</p>
-                    <?php else : ?>
-                    <div id="divLesAvis">
+                    <p>Soyez le premier à commenter ce produit.</p>
+                    <?php endif ?>
+                    <div class="divLesAvis">
+
+                        <?php if (!empty($avis)): ?>
                         <div class="moyennesAvis">
                             <?php for ($i=5; $i > 0 ; $i--) : ?>
                             <div>
@@ -179,19 +181,30 @@
                             </div>
                             <?php endfor; ?>
                         </div>
+                        <?php endif ?>
+
+
                         <div class="divListeAvis">
+
+                            
+                            <?php if (!empty($avis)): ?>
                             <div class="divAjoutComment">
-                                <form action="" method="POST">
+                            <?php else: ?>
+                            <div class="divAjoutComment divAjoutCommentVide">
+                            <?php endif ?>
+                                <form action="<?= current_url()."#avis" ?>" method="post">
                                     <div class="divEtoilesComment">
                                         <?php for ($i=0; $i < 5 ; $i++) : ?>
                                         <?= file_get_contents(dirname(__DIR__,3)."/public/images/Star-empty.svg")?>
                                         <?php endfor; ?>
                                         <p>_/5</p>
+                                        <input type="text" class="inputInvisible" name="noteAvis">
                                     </div>
                                     <div class="divProfilText">
                                         <img src="<?=base_url() ?>/images/header/profil.svg">
-                                        <textarea id="contenuComment" placeholder="Ajouter un commentaire... (optionnel)"></textarea>
+                                        <input type="textarea" name="contenuAvis" placeholder="Ajouter un commentaire... (optionnel)" autocomplete="off"></textarea>
                                     </div>
+                                    <?= afficheErreurs($erreurs,0) . afficheErreurs($erreurs,1) ?>
                                     <div class="divBoutonsComment">
                                         <button type="reset" value="Reset">Annuler</button>
                                         <div>
@@ -200,33 +213,40 @@
                                     </div>
                                 </form>
                             </div>
-                            <?php 
-                                end($avis);
-                                $fin = key($avis);
-                                foreach ($avis as $cle => $unAvis): ?>
-                                    <div class="divUnAvis" <?php if ($unAvis->num_avis == $avisEnValeur) {echo 'id="avisEnValeur"';} ?>>
-                                        <section class="sectionUnAvis">
-                                            <div class="divNomCommentaire">
-                                                <img src="<?=base_url() ?>/images/header/profil.svg">
-                                                <div class="divNomDate">
-                                                    <h3><?= $unAvis->pseudo ?> : </h3>
-                                                    <p>Publié le <?= $unAvis->date_av ?></p>
+
+                            
+                            <?php if (!empty($avis)): ?>
+                                <?php
+                                    end($avis);
+                                    $fin = key($avis);
+                                    foreach ($avis as $cle => $unAvis): ?>
+                                        <div class="divUnAvis" <?php if ($unAvis->num_avis == $avisEnValeur) {echo 'id="avisEnValeur"';} ?>>
+                                            <section class="sectionUnAvis">
+                                                <div class="divNomCommentaire">
+                                                    <img src="<?=base_url() ?>/images/header/profil.svg">
+                                                    <div class="divNomDate">
+                                                        <h3><?= $unAvis->pseudo ?> : </h3>
+                                                        <p>Publié le <?= $unAvis->date_av ?></p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="divAvisCommentaire">
-                                                <div class="noteAvis"><?= $cardProduit->notationEtoile($unAvis->note_prod) ?></div>
-                                                <p><?= $unAvis->note_prod ?>/5</p>
-                                            </div>
-                                        </section>
-                                        <p><?= $unAvis->contenu_av ?></p>
-                                        <?php if ($cle != $fin): ?>
-                                        <hr>
-                                        <?php endif; ?>
-                                    </div>
-                            <?php endforeach; ?>
+                                                <div class="divAvisCommentaire">
+                                                    <div class="noteAvis"><?= $cardProduit->notationEtoile($unAvis->note_prod) ?></div>
+                                                    <p><?= $unAvis->note_prod ?>/5</p>
+                                                </div>
+                                            </section>
+                                            <p><?= $unAvis->contenu_av ?></p>
+                                            <?php if ($cle != $fin): ?>
+                                            <hr>
+                                            <?php endif; ?>
+                                        </div>
+                                <?php endforeach; ?>
+                            <?php endif ?>
+
+
                         </div>
                     </div>
-                    <?php endif ?>
+                    
+
                 </div>
             </section>
         </main>

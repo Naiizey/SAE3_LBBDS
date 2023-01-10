@@ -410,12 +410,11 @@ function updatePriceTotal() {
     }
     else
     {
-        
-        prixTotTab[0].textContent = sommeTot;
-        prixTotTab[2].textContent = sommeTot;
+        prixTotTab[0].textContent = (sommeTot.toFixed(1).toString().replace(/^0+/,''));
+        prixTotTab[2].textContent = (sommeTot.toFixed(1).toString().replace(/^0+/,''));
     }
     
-    prixTotTabHt[0].textContent = sommeTotHt; 
+    prixTotTabHt[0].textContent = (sommeTotHt.toFixed(1).toString().replace(/^0+/,'')); 
     
 }
 
@@ -1482,9 +1481,11 @@ function avisProduit()
     var bgfade = function() 
     {
         var avisEnValeur = document.getElementById("avisEnValeur");
-        bgopacity -= 0.02
-        avisEnValeur.style.boxShadow = "0 0 10px rgba(0, 0, 0, " + bgopacity + ")";
-        avisEnValeur.style.borderRadius = "5px";
+        bgopacity -= 0.015
+        if (avisEnValeur != null) {
+            avisEnValeur.style.boxShadow = "0 0 10px rgba(0, 0, 0, " + bgopacity + ")";
+            avisEnValeur.style.borderRadius = "5px";
+        }
 
         if (bgopacity >= 0) 
         {
@@ -1537,7 +1538,7 @@ function avisProduit()
         let count = moyennes.length - 1; // index pour parcourir le tableau dans l'autre sens car l'index 0 des pourcentages correspond à l'index 4 des barres de progression
         // place les pourcentages en parcourant le tableau 
         for (let index = 0; index < moyennes.length; index++) {
-            lesP[index].textContent = pourcentages[count] + "%"; // ajoute au p le pourcentage
+            lesP[index].textContent = pourcentages[count].toFixed(0) + "%"; // ajoute au p le pourcentage
             count = count - 1; // continue de parcourir le tableau dans l'autre sens 
             if (count == -1) {
                 count = moyennes.length - 1; // réinitialise au cas où
@@ -1597,7 +1598,5 @@ function avisProduit()
                 return;
             }
         }
-
-        
     }
 }

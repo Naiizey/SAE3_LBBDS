@@ -146,6 +146,7 @@ class Home extends BaseController
 
     public function produit($idProduit = null, $numAvisEnValeur = null)
     {
+        $data["signalements"] = model("\App\Models\LstSignalements")->findAll();
         $data['model'] = model("\App\Models\ProduitCatalogue");
         $data['cardProduit']=service("cardProduit");
         

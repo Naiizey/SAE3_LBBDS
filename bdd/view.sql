@@ -11,7 +11,7 @@ CREATE OR REPLACE VIEW soloImageProduit AS
     SELECT id_prod, lien_image, estinterne FROM _image_prod WHERE _image_prod.num_image IN (SELECT num_image FROM min_image);
 
 CREATE OR REPLACE VIEW moyenneProduit AS
-       SELECT id_prod id,avg(note_prod) as moyenneNote FROM _produit natural join _note  group by id_prod;
+       SELECT id_prod id,avg(note_prod)::numeric(4,2) as moyenneNote FROM _produit natural join _note  group by id_prod;
 
 CREATE OR REPLACE VIEW autre_image AS
     WITH min_image AS (SELECT min(num_image) num_image, id_prod FROM _image_prod  group by id_prod )

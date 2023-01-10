@@ -2116,9 +2116,14 @@ h3 > .lienPasArticlePanier {
 .divAjoutComment form {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
-.divAjoutComment textarea {
+.divAjoutCommentVide {
+    width: 166.5%;
+}
+
+.divProfilText input {
     resize: none;
     width: 100%;
     height: 1.5em;
@@ -2128,12 +2133,21 @@ h3 > .lienPasArticlePanier {
     outline: none;
     border-bottom: #d9d9d9 solid 2px;
     font-family: "Montserrat-Regular";
+    font-size: medium;
+}
+
+.inputInvisible {
+    display: none;
 }
 
 .divBoutonsComment {
     align-self: flex-end;
-    display: flex;
-    margin: .2em 0 1em 0;
+    display: none;
+    margin: -.8em 0 1em 0;
+}
+
+.divListeAvis .bloc-erreurs {
+    margin: -1em 0 1em 0;
 }
 
 .divBoutonsComment button {
@@ -2191,6 +2205,7 @@ h3 > .lienPasArticlePanier {
 .divProfilText {
     display: flex;
     align-items: center;
+    margin-bottom: 1em;
 }
 
 .divProfilText img {
@@ -2267,7 +2282,7 @@ h3 > .lienPasArticlePanier {
     margin: 1em 0;
 }
 
-#divLesAvis {
+.divLesAvis {
     display: flex;
     justify-content: space-between;
 }

@@ -1524,7 +1524,7 @@ function avisProduit()
 
         let lesBarres = document.querySelectorAll(".barreAvis"); // séléctionne les barres de progression 
         // définit le max et la valeur pour chaque barre de progression
-        for (let index = (lesBarres.length-1); index > 0; index--) {
+        for (let index = (lesBarres.length-1); index > -1; index--) {
             lesBarres[lesBarres.length-index-1].max = tabAvis.length; // max pour les barres de progression (nombre total d'avis)
             lesBarres[lesBarres.length-index-1].value = moyennes[index];
         }
@@ -1552,6 +1552,21 @@ function avisProduit()
     etoiles.forEach(etoile => {
         etoile.addEventListener('mouseover', hoveretoile);
         etoile.addEventListener('mouseout', outetoile);
+    });
+
+    document.querySelector(".divProfilText input").addEventListener("input", function() {
+        document.querySelector(".divBoutonsComment").style.display = "flex";
+    });
+
+    document.querySelector(".divBoutonsComment button").addEventListener("click", function(){
+        etoiles.forEach(element => {
+            element.removeAttribute("class");
+            document.querySelector(".divBoutonsComment").style.display = "none";
+            document.querySelector(".divEtoilesComment p").textContent = "_/5";
+            if (document.querySelector(".bloc-erreurs") != null) {
+                document.querySelector(".bloc-erreurs").style.display = "none";
+            }
+        });
     });
 
     // met en jaune l'étoile sur laquelle on est ainsi que les précédentes    
@@ -1585,10 +1600,14 @@ function avisProduit()
              
             if(etoiles[i] === this) {
                 document.querySelector(".divEtoilesComment p").textContent = (i + 1) + "/5"; // écrit le numéro de la note à coté des étoiles
+                document.querySelector(".inputInvisible").value = (i + 1);
 
+                document.querySelector(".divBoutonsComment div").style.cursor = "auto"
+                document.querySelector(".divBoutonsComment").style.display = "flex";
                 btnPoster = document.querySelector(".divBoutonsComment input");
                 btnPoster.style.cursor = "pointer";
-                btnPoster.style.background = "#55C044";
+                btnPoster.style.background = "#24a064";
+                btnPoster.style.color = "white";
                 btnPoster.style.pointerEvents = "auto";
                 
                 // retire le jaune des suivantes au cas ou on clique plusieurs fois

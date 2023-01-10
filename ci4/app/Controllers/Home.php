@@ -183,7 +183,50 @@ class Home extends BaseController
 
         // Avis/commentaires
         $data['cardProduit']=service("cardProduit");
-        $data['avis']=model("\App\Models\Commentaires")->getCommentairesByProduit($idProduit);
+        $data['avis']=model("\App\Models\LstAvis")->getAvisByProduit($idProduit);
+
+        // Post des avis
+        $post=$this->request->getPost();
+        $data["erreurs"] = [];
+        $commandesCli = model("\App\Models\LstCommandesCli")->getCompteCommandes();
+        $articles = model("\App\Models\DetailsCommande")->getArticles(session()->get("numero"));
+        $client = model("\App\Models\Client")->getClientById(session()->get("numero"));
+
+        if (!empty($post)) {
+            # verifie que la session n'a pas déjà commenté cet article.
+            foreach ($data['avis'] as $unAvis) {
+                if (session()->get("numero") == $unAvis->num_compte) {
+                    $data["erreurs"][0] = "Vous avez déjà commenté ce produit.";
+                }
+            }
+
+            # verifie que l'utilisateur à déjà acheté ce produit
+            $dejaAchete = false;
+            foreach ($commandesCli as $commande) {
+                foreach ($articles as $article) {
+                    if ($article->id_prod == $idProduit) {
+                        $dejaAchete = true;
+                    }
+                }
+            }
+
+            # si il n'a jamais acheté : erreur
+            if ($dejaAchete == false) {
+                $data["erreurs"][1] = "Vous ne pouvez pas commenter un produit que vous n'avez jamais acheté.";
+            }
+
+            if (empty($data["erreurs"])) {
+                $avis = new \App\Entities\Avis();
+                $avis->contenu_av = $post['contenuAvis'];
+                $avis->id_prod = $idProduit;
+                $avis->num_compte = session()->get("numero");
+                $avis->note_prod = $post['noteAvis'];
+                $avis->pseudo = $client->identifiant;
+                model("\App\Models\LstAvis")->enregAvis($avis);
+            }
+        }
+
+        $data['avis']=model("\App\Models\LstAvis")->getAvisByProduit($idProduit);
 
         //Passage de l'id de l'avis en valeur si il y en a un à la vue
         if ($numAvisEnValeur != null) 
@@ -192,7 +235,7 @@ class Home extends BaseController
         }
         else
         {
-            $data['avisEnValeur'] = -1;
+            $data["avisEnValeur"] = -1;
         }
 
         //Affichage selon si produit trouvé ou non
@@ -607,12 +650,6 @@ class Home extends BaseController
         else throw new Exception("Vous n'avez pas validé votre panier, vos adresses de facturation et de livraison",401);
     }
 
-    //Tant que commande n'est pas là
-    public function commandeTest()
-    {
-        echo "oui";
-    }
-
     public function admin()
     {
         $data["role"] = "admin";
@@ -626,7 +663,7 @@ class Home extends BaseController
         $data["controller"] = "Administration - Signalements";
         $data["signalements"] = model("\App\Models\LstSignalements")->findAll();
         $data["produitSignalements"] = array();
-        $modelCommentaires = model("\App\Models\Commentaires");
+        $modelCommentaires = model("\App\Models\LstAvis");
 
         for ($i = 0; $i < count($data["signalements"]); $i++) 
         {

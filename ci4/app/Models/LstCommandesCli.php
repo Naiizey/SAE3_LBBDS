@@ -18,7 +18,8 @@ class LstCommandesCli extends Model
     
     protected $allowedFields = ['num_commande','num_compte','date_commande','date_arriv','prix_ht','prix_ttc','etat'];
 
-    public function getCompteCommandes(){
+    public function getCompteCommandes() : array
+    { 
         return $this->where('num_compte',session()->get("numero"))->findAll();
     }
 

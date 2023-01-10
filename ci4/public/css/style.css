@@ -2053,6 +2053,8 @@ h3 > .lienPasArticlePanier {
 
 .divBoutonsComment {
     align-self: flex-end;
+    display: flex;
+    margin: .2em 0 1em 0;
 }
 
 .divBoutonsComment button {
@@ -2064,6 +2066,10 @@ h3 > .lienPasArticlePanier {
     cursor: pointer;
 }
 
+.divBoutonsComment div {
+    cursor: not-allowed;
+}
+
 .divBoutonsComment input {
     font-family: "Montserrat-Regular";
     font-size: medium;
@@ -2071,7 +2077,7 @@ h3 > .lienPasArticlePanier {
     border-radius: 30px;
     background: #BDBFBB;
     padding: .2em 1em;
-    margin: .2em 0 1em .3em;
+    margin: .3em;
     pointer-events: none;
 }
 

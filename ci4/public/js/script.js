@@ -410,12 +410,11 @@ function updatePriceTotal() {
     }
     else
     {
-        
-        prixTotTab[0].textContent = sommeTot;
-        prixTotTab[2].textContent = sommeTot;
+        prixTotTab[0].textContent = (sommeTot.toFixed(1).toString().replace(/^0+/,''));
+        prixTotTab[2].textContent = (sommeTot.toFixed(1).toString().replace(/^0+/,''));
     }
     
-    prixTotTabHt[0].textContent = sommeTotHt; 
+    prixTotTabHt[0].textContent = (sommeTotHt.toFixed(1).toString().replace(/^0+/,'')); 
     
 }
 

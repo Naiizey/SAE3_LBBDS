@@ -3243,11 +3243,11 @@ a.fleche-page{
     width: 5em;
 }
 
-.lignesClients .buttonSanction{
-    background-color: #571616;
+.buttonSanction {
     width: 2em;
     height: 2em;
     margin: auto;
+    border: solid red 2px;
 }
 
 /* ━━━ Div des sanctions ━━━ */

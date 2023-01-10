@@ -2624,8 +2624,7 @@ main#Catalogue{
 }
 
 .normal-button{
-    
-    
+    cursor: pointer;
     border: none;
     width: 65%;
     height: 3em;

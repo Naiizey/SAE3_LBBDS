@@ -514,7 +514,7 @@ function lstClients(){
     
                 afficherSanctions();
     
-                document.getElementsByClassName("titreSanction")[0].innerHTML = `Sanctionner le client n°${clientA} ?`;
+                document.getElementsByClassName("titreSanction")[0].innerHTML = `Bannir le client n°${clientA} ?`;
     
                 document.getElementById("timeout").addEventListener("click", () => {
                     cacherSanctions();

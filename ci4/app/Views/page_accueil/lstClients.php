@@ -39,7 +39,7 @@
         <div class="alerte">
             <h2 class="titreSanction"></h2>
             <hr>
-            <p class="message-alerte">Quel type de sanction ?</p>
+            <p class="message-alerte">Quel type de ban ?</p>
             <div class="alerte-footer">
                 <hr>
                 <div class="espace-interraction">

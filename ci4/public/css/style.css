@@ -3853,32 +3853,37 @@ progress::-moz-progress-bar
 /* Bannissements */
 .sectionAdmin a:nth-child(6) {
     grid-column-start: 1;
-    grid-column-end: 3;
+    grid-column-end: 2;
 }
 
 .sectionAdmin a:nth-child(7) {
-    grid-column-start: 3;
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+.sectionAdmin a:nth-child(8) {
+    grid-column-start: 4;
     grid-column-end: 6;
 }
 
 /* Commentaires signalés */
-.sectionAdmin a:nth-child(9) {
+.sectionAdmin a:nth-child(10) {
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
-.sectionAdmin a:nth-child(10) {
+.sectionAdmin a:nth-child(11) {
     grid-column-start: 3;
     grid-column-end: 6;
 }
 
 /* Avertissements */
-.sectionAdmin a:nth-child(12) {
+.sectionAdmin a:nth-child(13) {
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
-.sectionAdmin a:nth-child(13) {
+.sectionAdmin a:nth-child(14) {
     grid-column-start: 3;
     grid-column-end: 6;
 }

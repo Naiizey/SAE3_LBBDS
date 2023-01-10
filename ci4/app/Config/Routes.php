@@ -115,8 +115,9 @@ $routes->set404Override();
     $routes->post('/validation', 'Home::validation' );
 
     $routes->get('/admin', 'Home::admin');
-    $routes->get('/admin/Clients', 'Home::lstClients');
-    $routes->post('/admin/Clients', 'Home::lstClients');
+    $routes->get('/admin/Clients', 'Home::lstClients/liste');
+    $routes->get('/admin/Clients/bannir', 'Home::lstClients/bannir');
+    $routes->post('/admin/Clients/bannir', 'Home::lstClients/bannir');
 
     $routes->get('/vendeur/import/entetes', 'Import::getentetes');
 ##param uri (:any) et dans methode /$1

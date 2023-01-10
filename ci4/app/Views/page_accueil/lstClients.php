@@ -43,11 +43,9 @@
             <div class="alerte-footer">
                 <hr>
                 <div class="espace-interraction">
-                    <div>
-                        <button id="timeout" class="normal-button petit-button rouge">Bannir temporairement</button>
-                        <button id="ban" class="normal-button petit-button rouge">Bannir définitivement</button>
-                        <button id="fermer" class="normal-button petit-button blanc">Fermer</button>
-                    </div>
+                    <button id="timeout" class="normal-button petit-button rouge">Bannir temporairement</button>
+                    <button id="ban" class="normal-button petit-button rouge">Bannir définitivement</button>
+                    <button id="fermer" class="normal-button petit-button blanc">Fermer</button>
                 </div>
             </div>
         </div>
@@ -71,10 +69,8 @@
                 </div>
                 <div class="alerte-footer"><hr>
                     <div class="espace-interraction">
-                        <div>
-                            <button name="timeoutClient" id="Bannir" class="normal-button petit-button rouge">Bannir</button>
-                            <button id="fermerTimeout" class="normal-button petit-button blanc">Fermer</button>
-                        </div>
+                        <button name="timeoutClient" id="Bannir" class="normal-button petit-button rouge">Bannir</button>
+                        <button id="fermerTimeout" class="normal-button petit-button blanc">Fermer</button>
                     </div>
                 </div>
             </form>

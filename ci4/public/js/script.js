@@ -129,20 +129,23 @@ function dragNDrop(){
  */
 function getentete(){
 
-    //dico avec les entêtes du dessus
-    let entete = [];
-    //récupération des entêtes
-    $.ajax({
-        url: "Import.php",
-        type: "POST",
-        data: {action: "getentete"},
-        dataType: "json",
-        async: false,
-        success: function (data) {
-            entete = data;
-        }
-    });
-    return entete;
+    let map = new Map([
+        ["intitule_prod", "varchar(50)"],
+        ["prix_ht","float8"],
+        ["prix_ttc", "float8"],
+        ["description_prod", "varchar"],
+        ["lien_image_prod", "varchar"],
+        ["publication_prod", "boolean"],
+        ["stock_prod", "float8"],//
+        ["moyenne_note_prod", "float8"],
+        ["seuil_alerte_prod", "integer"],
+        ["alerte_prod", "boolean"],
+        ["code_sous_cat", "boolean"]
+    ]);
+
+    
+
+    return map;
 }
 
 
@@ -162,6 +165,9 @@ function previewCSV(){
         //lecture du fichier
         //prend l'en-tête du fichier et l'ajoute au tableau
         let entete = getentete();
+        
+        //print the entete
+
         reader.readAsText(file);
         //ajout d'un event listener sur le chargement du fichier
         reader.addEventListener("load", function () {
@@ -174,13 +180,32 @@ function previewCSV(){
                 let line = lines[i];
                 let cells = line.split(";");
                 let row = table.insertRow(-1);
-                for (let j = 0; j < cells.length; j++) {
-                    if (cells[j].length > 20) {
-                        cells[j] = cells[j].substring(0, 20) + "...";
+                if (i === 0) {
+                    for(let j = 0; j < cells.length; j++){
+                        //si l'entête n'est pas dans les clés de entete
+                        if (!(entete.has(cells[j].trim()))){
+                            console.log("entete");
+                            console.log(entete);
+                            console.log("cell non valide:" + cells[j] + "|");
+                            cells[j] = "<span style='color:red'>" + cells[j] + "</span>";
+                        }
+                        else{
+                            cells[j] = "<span style='color:green'>" + cells[j] + "</span>";
+                        }
+                        let cell = row.insertCell(-1);
+                        cell.innerHTML = cells[j];
                     }
-                    let cell = row.insertCell(-1);
-                    cell.innerHTML = cells[j];
                 }
+                else
+                {
+                    for (let j = 0; j < cells.length; j++) {
+                        if (cells[j].length > 20) {
+                            cells[j] = cells[j].substring(0, 20) + "...";
+                        }
+                        let cell = row.insertCell(-1);
+                        cell.innerHTML = cells[j];
+                    }
+                }   
             }
             preview.appendChild(table);
        });

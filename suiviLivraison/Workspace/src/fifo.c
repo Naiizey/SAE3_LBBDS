@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "file.h"
 
+
+
+void initFile(File* f){
+   (*f) = NULL;
+}
 //getters
 int getIdentifiant(Element *e) {
     return e->identifiant;
@@ -30,7 +36,7 @@ void setTimestamp(Element *e, time_t timestamp) {
 }
 
 void setEtat(Element *e, char *etat) {
-    e->etat = etat;
+    strcpy(e->etat , etat);
 }
 
 Element create_element(int identifiant, time_t timestamp, char *etat, int joursRetard) {
@@ -50,91 +56,105 @@ void enfiler(File *file, Element *nvElement)
     {
         exit(EXIT_FAILURE);
     }
+    printf("oh!\n");
 
     nouveau->identifiant = nvElement->identifiant;
     nouveau->timestamp = nvElement->timestamp;
-    nouveau->etat = nvElement->etat;
+    strcpy(nouveau->etat , nvElement->etat);
     nouveau->joursRetard = nvElement->joursRetard;
     nouveau->suivant = NULL;
     
 
-    if (file->premier != NULL) /* La file n'est pas vide */
+    if ((*file) != NULL) /* La file n'est pas vide */
     {
         /* On se positionne à la fin de la file */
-        Element *elementActuel = file->premier;
+        Element *elementActuel = *file;
         while (elementActuel->suivant != NULL)
         {
+            printf("là!\n");
             elementActuel = elementActuel->suivant;
         }
         elementActuel->suivant = nouveau;
     }
     else /* La file est vide, notre élément est le premier */
     {
-        file->premier = nouveau;
+        *file = nouveau;
     }
 }
 
 void eraseFile(File *file)
 {
     //on détruit la file
-    Element *elementActuel = file->premier;
+    Element *elementActuel = (*file);
     while (elementActuel != NULL)
     {
         Element *temp = elementActuel;
         elementActuel = elementActuel->suivant;
         free(temp);
     }
-    file->premier = NULL;
+    (*file) = NULL;
 }
 
-Element defiler(File *file)
+Element * defiler(File *file)
 {
-    if (file == NULL)
-    {
-        exit(EXIT_FAILURE);
-    }
 
-    Element *temp = malloc(sizeof(*temp));
+
     
     
+  
 
     /* On vérifie s'il y a quelque chose à défiler */
-    if (file->premier != NULL)
+    if ((*file) != NULL && (*file)->suivant!=NULL)
     {
-        Element *elementDefile = file->premier;
-        *temp = *file->premier;
-        file->premier = elementDefile->suivant;
-        afficherFile(file);
-        printf("\n");
+
+        Element *temp =(Element *) malloc(sizeof(Element));
+        Element * elementDefile;
+        elementDefile = (*file);
+        temp = (*file);
+        (*file) = elementDefile->suivant;
         free(elementDefile);
-        afficherFile(file);
-        printf("\n");
+
+        return temp;
+        
+    }
+    else
+    {
+        return NULL;
     }
 
-    return *temp;
+
 }
 
 void afficherElement(Element *e, bool returnLine)
 {
-    printf("%d ,%s ,%d ,%ld -> ", e->identifiant, e->etat, e->joursRetard, e->timestamp);
-    if (returnLine)
+    if(e == NULL)
     {
-        printf(" \n");
+        printf("estVide");
     }
+    else
+    {
+        printf("%d ,%s ,%d ,%ld -> \n", e->identifiant, e->etat, e->joursRetard, e->timestamp);
+        if (returnLine)
+        {
+            printf(" \n");
+        }
+    }
+    
 }
 
-void afficherFile(File *file)
+void afficherFile(File file)
 {
     if (file == NULL)
     {
-        exit(EXIT_FAILURE);
+        printf("non !\n");
     }
 
-    Element *actuel = file->premier;
+    Element *actuel;
+    actuel = file;
 
     while (actuel != NULL)
     {
-        afficherElement(actuel, false);
+        afficherElement(actuel, true);
         actuel = actuel->suivant;
     }
 }
@@ -146,7 +166,8 @@ Element *trouverElement(File *file, int identifiant)
         exit(EXIT_FAILURE);
     }
 
-    Element *actuel = file->premier;
+    Element *actuel;
+    actuel = (*file);
 
     while (actuel != NULL)
     {
@@ -172,7 +193,8 @@ File copier_file(File *file, File *file2)
         exit(EXIT_FAILURE);
     }
 
-    Element *actuel = file->premier;
+    Element *actuel;
+    actuel = (*file);
 
     while (actuel != NULL)
     {
@@ -182,45 +204,3 @@ File copier_file(File *file, File *file2)
     return *file2;
 }
 
-int main(int argc, char *argv[])
-{
-    File file = {NULL};
-
-    //creation d'un element
-    Element *e = malloc(sizeof(*e));
-    *e = create_element(1, time(NULL), "en cours", 0);
-    afficherElement(e, true);
-    enfiler(&file, e);
-    afficherFile(&file);
-    
-
-    //defiler
-    // Element *temp = malloc(sizeof(*temp));
-    // *temp = defiler(&file);
-    // afficherElement(temp,true);
-
-    //copier file
-    File file2 = {NULL};
-    printf("\ncopie de file dans file2 \n");
-    copier_file(&file, &file2);
-    printf("file2 : \n");
-    afficherFile(&file2);
-    //vide file1
-    printf("vider file1 \n");
-    eraseFile(&file);
-    printf("file1 : \n");
-    afficherFile(&file);
-    printf("\n");
-    printf("file2 : \n");
-    afficherFile(&file2);
-    printf("\n");
-
-    Element *e2 = malloc(sizeof(*e2));
-    //on touvre l'element 1
-    *e2 = *trouverElement(&file2, 1);
-    printf("element 1 trouvé: \n");
-    afficherElement(e2, true);
-
-
-    return 0;
-}

@@ -163,11 +163,11 @@ CREATE TABLE _retour(
 
 CREATE TABLE _note
 (
-    id_note SERIAL,
+    id_note SERIAL UNIQUE,
     id_prod INT NOT NULL,--recoit
     num_compte INT NOT NULL,--donne
     note_prod FLOAT NOT NULL,
-    CONSTRAINT _note_pk PRIMARY KEY (id_note)
+    CONSTRAINT _note_pk PRIMARY KEY (id_prod,num_compte)
 
 
 );

@@ -17,7 +17,8 @@ class DetailsCommande extends Model
     
     protected $allowedFields = ['num_commande', 'id_prod','intitule_prod', 'lien_image_prod', 'description_prod','num_compte','date_commande','date_arriv','prix_ttc','prix_ht','qte','etat'];
 
-    public function getArticles($num_commande){
+    public function getArticles($num_commande) : array
+    {
         return $this->where('num_commande',$num_commande)->findAll();
     }
 }

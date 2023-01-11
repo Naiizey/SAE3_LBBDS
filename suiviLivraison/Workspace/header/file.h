@@ -2,6 +2,7 @@
 #include <stdbool.h>
 
 
+#ifndef ELEM_IS_DEF
 typedef char t_etat[20];
 
 typedef struct Elem
@@ -14,6 +15,8 @@ typedef struct Elem
 }Element;
 
 typedef Element* File;
+#endif
+#define ELEM_IS_DEF
 
 //déclaration des fonctions
 void initFile(File* file);

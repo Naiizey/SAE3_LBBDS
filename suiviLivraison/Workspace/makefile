@@ -12,9 +12,14 @@ TEST= $(ROOT)test/
 all: build_json
 
 
-json: $(BIN)fifo.o $(BIN)cJSON.o $(BIN)json_interpret.o 
+json:  $(BIN)json_interpret.o $(BIN)fifo.o $(BIN)cJSON.o 
 	$(CC) -o $@ $^ $(CFLAGS)
 
+test_json: t_json
+	cp $(wildcard $(FILE)*.json) $(DEST)
+
+t_json: $(TEST)testJson.c $(BIN)fifo.o $(BIN)cJSON.o $(BIN)json_interpret.o 
+	$(CC) -I $(HEADER) -o $(DEST)$@ $^ $(CFLAGS)
 
 build_json: json
 	cp $(wildcard $(FILE)*.json) $(DEST)

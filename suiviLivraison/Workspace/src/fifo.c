@@ -97,31 +97,31 @@ void eraseFile(File *file)
 
 Element * defiler(File *file)
 {
-
-
-    
-    
-  
+    Element *temp =(Element *) malloc(sizeof(Element));
 
     /* On vérifie s'il y a quelque chose à défiler */
-    if ((*file) != NULL && (*file)->suivant!=NULL)
+    if((*file) == NULL)
+    {
+        temp=NULL;
+    }
+    else if((*file)->suivant==NULL)
+    {
+        temp = (*file);
+        (*file)=NULL;
+        //free(file);
+    }
+    else 
     {
 
-        Element *temp =(Element *) malloc(sizeof(Element));
-        Element * elementDefile;
-        elementDefile = (*file);
-        temp = (*file);
+        Element * elementDefile=(*file);
+        *temp = *elementDefile;
         (*file) = elementDefile->suivant;
         free(elementDefile);
 
-        return temp;
         
     }
-    else
-    {
-        return NULL;
-    }
-
+  
+    return temp;
 
 }
 

@@ -2782,7 +2782,7 @@ main#Catalogue{
 .liste-produits{
     display: flex;
     flex-wrap: wrap; 
-    justify-content: flex-start;   
+    justify-content: flex-end;   
 }
 
 .liste-filtre{

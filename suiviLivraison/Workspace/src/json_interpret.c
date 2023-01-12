@@ -7,7 +7,7 @@
 #include <string.h>
 
 
-#include "file.h"
+#include "pile.h"
 #include "user.h"
 #include"json.h"
 #define TEST true
@@ -216,7 +216,7 @@ Element * collectLivraison(cJSON * json){
  * @param liste la file
  * @return int 
  */
-int parcours(cJSON *json, File *liste, user * client){
+int parcours(cJSON *json, File *liste, user * client, int *ind){
     #if TEST == true
     printf("Test type...\n");
     #endif
@@ -234,7 +234,7 @@ int parcours(cJSON *json, File *liste, user * client){
             if(result==NULL){
                         return -1;
                 }else{
-                    enfiler(liste,result);
+                    enfiler(liste,result,ind);
 
                 }
         }
@@ -266,7 +266,7 @@ int parcours(cJSON *json, File *liste, user * client){
                     if(result==NULL){
                         return -1;
                     }else{
-                        enfiler(liste,result);
+                        enfiler(liste,result,ind);
 
                     }
  
@@ -286,7 +286,7 @@ int parcours(cJSON *json, File *liste, user * client){
     #endif
     if(json != NULL && json->next!=NULL){
 
-        return parcours(json->next,liste,client);
+        return parcours(json->next,liste,client,ind);
     }else if(result!=NULL){
         
         return 0;
@@ -321,7 +321,7 @@ int convertEnJour(time_t avant, time_t maintenant){
  * @param e 
  * @return cJSON* 
  */
-cJSON * createLivraison(Element e){
+cJSON * createLivraison(Element e, int *ind){
     
     int depuis = convertEnJour(e.timestamp, time(NULL));
     cJSON * livraison = cJSON_CreateObject();
@@ -338,18 +338,18 @@ cJSON * createLivraison(Element e){
  * @param filter 
  * @return cJSON* 
  */
-cJSON * envoiLivraison(File *file, char * filter){
+cJSON * envoiLivraison(File *file, char * filter, int *ind){
     cJSON * retour = cJSON_CreateObject();
     cJSON * array = cJSON_CreateArray();
-    Element * current = defiler(file);
+    Element * current = defiler(file,ind);
     while(current!=NULL){
         #if TEST == true
         printf("Identifiant: %d\n", current->identifiant);
 
         printf("Item.\n");
         #endif
-        cJSON_AddItemToArray(array,createLivraison(*current));
-        current=defiler(file);
+        cJSON_AddItemToArray(array,createLivraison(*current,ind));
+        current=defiler(file,ind);
     }
     cJSON_AddItemToObject(retour,"livraisons",array);
     return retour;

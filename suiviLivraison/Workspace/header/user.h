@@ -1,4 +1,6 @@
 #include<time.h>
+#include <openssl/md5.h>
+
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
@@ -17,4 +19,5 @@ typedef user * arrayUser;
 
 void md5_hasher(char *string, char *hash);
 bool verify_password(char *path, char *id, char *hashedPass);
+bool connection(user * client, struct sockaddr addr, arrayUser arr, int *ind, char * mdpFile);
 

@@ -6,7 +6,6 @@
 #include <stdbool.h>
 #include "user.h"
 
-char * path = "/home/florian/giveSim";
 
 const int EXTENSION = 20;
 
@@ -152,8 +151,8 @@ bool verify_password(char *path, char *id, char *hashedPass){
  * @return true 
  * @return false 
  */
-bool connection(user * client, struct sockaddr addr, arrayUser arr, int *ind){
-    if(verify_password(path,client->id,client->pass)){
+bool connection(user * client, struct sockaddr addr, arrayUser arr, int *ind, char * mdpFile){
+    if(verify_password(mdpFile,client->id,client->pass)){
         client->session=time(NULL);
         client->addr;
         return  addSession(arr,ind,*client)!=NULL;
@@ -162,23 +161,4 @@ bool connection(user * client, struct sockaddr addr, arrayUser arr, int *ind){
     }
 }
 
-int main()
-{
 
-    char password[255] = "mdAdfbnrRtps";
-    char id[55] = "153";
-
-    char md5_hash[2*MD5_DIGEST_LENGTH+1] = "";
-
-    printf("%s\n", path);
-
-    md5_hasher(password, md5_hash);
-    printf("%s\n", md5_hash);
-
-    if(verify_password(path, id, md5_hash)){
-        printf("ID et Password trouvés\n");
-    }
-
-
-    return 0;
-}

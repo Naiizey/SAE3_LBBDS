@@ -136,11 +136,11 @@ function getentete(){
         ["description_prod", "varchar"],
         ["lien_image_prod", "varchar"],
         ["publication_prod", "boolean"],
-        ["stock_prod", "float8"],//
+        ["stock_prod", "integer"],//
         ["moyenne_note_prod", "float8"],
         ["seuil_alerte_prod", "integer"],
         ["alerte_prod", "boolean"],
-        ["code_sous_cat", "boolean"]
+        ["code_sous_cat", "integer"]
     ]);
 
     
@@ -155,6 +155,7 @@ function getentete(){
  */
 function previewCSV(){
     let preview = document.getElementById("preview");
+    
     //ajout d'un event listener sur le changement de fichier
     document.getElementById("file").addEventListener("change", function (e) {
         preview.innerHTML = " chargement du fichier...";
@@ -180,7 +181,7 @@ function previewCSV(){
             for (let i = 0; i < 10 && i < lines.length; i++) {
                 let line = lines[i];
                 let cells = line.split(";");
-                if (entete.size > cells.size)
+                if (entete.size > cells.length)
                 {
                     //on ajoute une ligne en rouge
                     console.log("ligne non valide");
@@ -188,15 +189,22 @@ function previewCSV(){
                     preview.style.color = "red";
                     //on centre le texte
                     preview.style.textAlign = "center";
+                    
                 }
                 else
                 {
-                    //on ajoute une 1ère ligne fusionnée
-                    console.log("ligne valide");
-                    preview.innerHTML = "nombre de colonnes valide";
-                    preview.style.color = "green";
-                    //on centre le texte
-                    preview.style.textAlign = "center";
+                    if (i == 0)
+                    {
+                        //on ajoute une 1ère ligne fusionnée
+                        console.log("ligne valide");
+                        preview.innerHTML = "nombre de colonnes valide :";
+                        console.log(cells);
+                        preview.style.color = "green";
+                        //on centre le texte
+                        preview.style.textAlign = "center";
+                        document.getElementById("submit").disabled = false;
+                    }
+
                 }
                 let row = table.insertRow(-1);
                 if (i === 0) {
@@ -222,6 +230,7 @@ function previewCSV(){
                             cells[j] = cells[j].substring(0, 20) + "...";
                         }
                         let cell = row.insertCell(-1);
+                        cell.style.color = "black";
                         cell.innerHTML = cells[j];
                     }
                 }   

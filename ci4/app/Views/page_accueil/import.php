@@ -8,7 +8,7 @@
                                 <p>Déposer un fichier csv dans cette zone<p>
                                 <?= form_open_multipart('vendeur/import/upload') ?>
                                 <input type="file" name="file" id="file" accept=".csv">
-                                <input type="submit" name="import" value="Importer"/>
+                                <input id="submit" type="submit" name="import" value="Importer" disabled/>
                         </div>
                         <div id="preview"></div>
                 </main>

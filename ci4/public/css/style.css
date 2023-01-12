@@ -3277,7 +3277,7 @@ a.fleche-page{
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃          Page pour lister les commandes (lstCommandesVendeur.php, lstCommandesCli.php & lstClients.php)         ┃
+┃          Page pour lister (lstCommandesVendeur.php, lstCommandesCli.php & lstClients.php)                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
@@ -3312,6 +3312,12 @@ a.fleche-page{
     cursor: pointer;
     outline: none;
     background-color: #f3f3f3;
+}
+
+.tableLst tbody .lignesBannissements:hover{
+    cursor: auto;
+    outline: none;
+    background-color: white
 }
 
 .tableLst tbody tr:last-child{

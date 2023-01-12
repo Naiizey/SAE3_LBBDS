@@ -244,6 +244,18 @@ CREATE TRIGGER insert_sanction_tempo
     EXECUTE PROCEDURE insert_sanction_temporaire();
 
 
+CREATE OR REPLACE FUNCTION delete_sanction_temporaire() RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM sae3._sanction_temporaire WHERE id_sanction = OLD.id_sanction;
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER delete_sanction_tempo
+    INSTEAD OF DELETE ON sae3.sanction_temporaire
+    FOR EACH ROW
+    EXECUTE PROCEDURE delete_sanction_temporaire();
+
 --
 
 CREATE OR REPLACE FUNCTION insert_commentaire() RETURNS TRIGGER AS

@@ -9,7 +9,7 @@
                         <a>Supprimer un compte</a>
                         <h3>Bannissements</h3>
                         <a href="<?= base_url() ?>/admin/Clients/bannir">Bannir un client</a>
-                        <a>Voir les bannissements</a>
+                        <a href="<?= base_url() ?>/admin/bannissements">Voir les bannissements</a>
                         <h3>Commentaires signalés</h3>
                         <a href="<?= base_url() ?>/admin/signalements">Voir les signalements</a>
                         <h3>Avertissements</h3>

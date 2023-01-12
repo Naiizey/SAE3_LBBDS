@@ -545,30 +545,28 @@ function lstClients(){
     var buttons=document.getElementsByClassName("buttonSanction");
 
     for (let numLigne=0; numLigne<lignes.length; numLigne++){
-        let ligneA=lignes.item(numLigne);
         var clientA=numClients.item(numLigne).textContent;
+        lignes.item(numLigne).clientA=clientA;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
-        ligneA.addEventListener("click", liensLstClients);
-        ligneA.clientA=clientA;
+        lignes.item(numLigne).addEventListener("click", liensLstClients);
         let buttonA=buttons.item(numLigne);
         // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
         if(bannir){
             buttonA.addEventListener("click", () => {
-                ligneA.removeEventListener("click", liensLstClients);
+                lignes.item(numLigne).removeEventListener("click", liensLstClients);
     
+                document.getElementsByClassName("titreSanction")[0].innerHTML = `Bannir le client n°${lignes.item(numLigne).clientA} ?`;
                 afficherSanctions();
-    
-                document.getElementsByClassName("titreSanction")[0].innerHTML = `Bannir le client n°${clientA} ?`;
     
                 document.getElementById("timeout").addEventListener("click", () => {
                     cacherSanctions();
-                    afficherTimeout(clientA);
-                    ligneA.addEventListener("click", liensLstClients);
+                    afficherTimeout(lignes.item(numLigne).clientA);
+                    lignes.item(numLigne).addEventListener("click", liensLstClients);
                 })
     
                 document.getElementById("fermer").addEventListener("click", () => {
                     cacherSanctions();
-                    ligneA.addEventListener("click", liensLstClients);
+                    lignes.item(numLigne).addEventListener("click", liensLstClients);
                 })
             })
         }

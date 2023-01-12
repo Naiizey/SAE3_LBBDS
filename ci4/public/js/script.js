@@ -550,7 +550,7 @@ function lstClients(){
     var lignes=document.getElementsByClassName("lignesClients");
     // Récupération de tous les numéros de clients
     var numClients=document.getElementsByClassName("numClients");
-    // Récupération de tous les anchors de la liste des clients
+    // Récupération de tous les boutons de la liste des clients
     var buttons=document.getElementsByClassName("buttonSanction");
 
     for (let numLigne=0; numLigne<lignes.length; numLigne++){
@@ -559,9 +559,10 @@ function lstClients(){
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
         lignes.item(numLigne).addEventListener("click", liensLstClients);
         let buttonA=buttons.item(numLigne);
-        // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
+        // Ajout au bouton actuel du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
         if(bannir){
             buttonA.addEventListener("click", () => {
+                // supprime le lien de la ligne, pour ne pas cliquer dessus à la place du bouton
                 lignes.item(numLigne).removeEventListener("click", liensLstClients);
     
                 document.getElementsByClassName("titreSanction")[0].innerHTML = `Bannir le client n°${lignes.item(numLigne).clientA} ?`;
@@ -581,11 +582,13 @@ function lstClients(){
         }
     }
 
+    // fonction qui met le lien vers l'espace du client de la ligne
     function liensLstClients(event){
         event.cancelBubble = true;
         window.location.assign(`${base_url}/admin/espaceClient/${event.currentTarget.clientA}`);
     }
 
+    // fonction qui affiche la div de choix de sanctions
     function afficherSanctions(){
         let sur_alerte = document.getElementsByClassName("sur-alerteSanctions")[0];
         let page = document.querySelectorAll("main, header, footer");
@@ -596,6 +599,7 @@ function lstClients(){
         }
     }
 
+    // fonction qui cache la div de choix de sanctions
     function cacherSanctions(){
         let sur_alerte = document.getElementsByClassName("sur-alerte")[0];
         let page = document.querySelectorAll("main, header, footer");
@@ -606,6 +610,7 @@ function lstClients(){
         }
     }
 
+    // fonction qui affiche la div pour bannir temporairement un client
     function afficherTimeout(clientA){
         document.getElementById("numClient").value = clientA;
         document.getElementsByClassName("titreSanction")[1].innerHTML = `Bannir temporairement le client n°${clientA} ?`;
@@ -620,6 +625,7 @@ function lstClients(){
         document.getElementById("fermerTimeout").addEventListener("click", cacherTimeout)
     }
 
+    // fonction qui cache la div pour bannir temporairement un client
     function cacherTimeout(){
         let sur_alerteTimeout = document.getElementsByClassName("sur-alerteTimeout")[0];
         let page = document.querySelectorAll("main, header, footer");

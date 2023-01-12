@@ -8,7 +8,7 @@
                             <th>N° compte</th>
                             <th>Identifiant</th>
                             <? if(isset($bannir)) : ?>
-                                <?php if ($bannir) : ?>
+                                <? if ($bannir) : ?>
                                     <th>Bannir</th>
                                 <? endif; ?>
                             <? endif; ?>
@@ -78,10 +78,10 @@
     </div>
 <?php require __DIR__ . "/../footer.php";?>
 <script>
-    <? if(isset($bannir)): ?>
-        var bannir = <?= $bannir ?>;
-    <? else: ?>
+    <?php if(isset($bannir)): ?>
+        var bannir = <?php $bannir ?>;
+    <?php else: ?>
         var bannir = false;
-    <? endif; ?>
+    <?php endif; ?>
     lstClients();
 </script>

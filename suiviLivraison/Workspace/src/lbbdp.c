@@ -22,10 +22,167 @@ struct Option
     char *value;
 };
 
+struct Option options[MAX_OPTIONS];
+
 int trouveIdOption(char name, struct Option options[MAX_OPTIONS]);
+
+
 
 int main(int argc, char *argv[])
 {
+    collectOptions(argc,argv,options);
+    /*
+    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+    ┃                            Création du socket                                   ┃
+    ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+    */
+    //Fonction socket() - Client et Serveur
+    int sock;
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock == -1)
+    {
+        perror("Handler échoué");
+    }
+
+    //Fonction bind() - Serveur seulement
+    int ret;
+    struct sockaddr_in addr;
+    addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    addr.sin_family = AF_INET;
+
+    int temp;
+    printf("Port: \n");   //Temp
+    scanf("%d", &temp);
+
+    addr.sin_port = htons(temp);
+    ret = bind(sock, (struct sockaddr *)&addr, sizeof(addr));
+    if (ret != 0)
+    {
+        perror("Nommage du socket échoué");
+    }
+    
+
+    //Fonction listen() - Serveur seulement
+    ret = listen(sock, 1);
+    if (ret != 0)
+    {
+        perror("Écoute échouée");
+    }
+    else
+    {
+        printf("En attente du client (telnet localhost %d)\n", temp);
+    }
+
+    //Fonction accept() - Serveur seulement
+    int size;
+    int cnx;
+    struct sockaddr_in conn_addr;
+    size = sizeof(conn_addr);
+    cnx = accept(sock, (struct sockaddr *)&conn_addr, (socklen_t *)&size);
+    if (cnx == -1)
+    {
+        perror("Connexion échouée");
+    }
+    else
+    {
+        printf("Connexion établie, en attente d'instructions\n");
+    }
+
+    /*
+    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+    ┃                        Écoute et réponse au client                              ┃
+    ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+    */
+
+    //On initialise les variables
+    char buf[512];
+    char res[10];
+    int N = 0, onContinue = 1;
+
+    //Fonction read() et write() 
+    //Tant que le client ne nous envoie pas "STOP\r"
+    while (onContinue)
+    {
+        size = read(cnx, buf, 512);
+        if (strncmp(buf, "AVANCE\r", strlen("AVANCE\r")) == 0)
+        {
+            N++;
+            
+            //On envoie la réponse
+            write(cnx, "J'ai avancé\n", strlen("J'ai avancé\n"));
+        }
+        else if (strncmp(buf, "ETAT\r", strlen("ETAT\r")) == 0)
+        {
+            //On vide la string res
+            memset(res, 0, sizeof(res));
+
+            //On convertit N en string
+            sprintf(res, "%d", N);
+            strcat(res, "\n");
+
+            //On envoie la réponse
+            write(cnx, res, strlen(res));
+        }
+        else if (strncmp(buf, "LBBDS\r", strlen("LBBDS\r")) == 0)
+        {
+            int i = 0;
+            int ilResteDesOptions = 1;
+            while (ilResteDesOptions)
+            {
+                //Si on est pas encore arrivé à l'option vide qui signe la fin du tableau
+                if (options[i].name != NULL)
+                {
+                    //Si l'option a été donnée
+                    if (options[i].given)
+                    {
+                        //On vide la string res
+                        memset(res, 0, sizeof(res));
+                        strcat(res, "Option ");
+                        strcat(res, options[i].name);
+                        
+                        //Si l'option a un valeur, on l'affiche
+                        if (options[i].value != NULL)
+                        {
+                            strcat(res, ": ");
+                            strcat(res, options[i].value);
+                        }
+                        else
+                        {
+                            strcat(res, " reconnue");
+                        }
+                        strcat(res, "\n");
+
+                        //On envoie la réponse
+                        write(cnx, res, strlen(res));
+                    }
+                }
+                else
+                {
+                    ilResteDesOptions = 0;
+                    if (i == 0)
+                    {
+                        write(cnx, "Aucune option n'a été reconnue\n", strlen("Aucune option n'a été reconnue\n"));
+                    }
+                }
+                i++;
+            }
+        }
+        else if (strncmp(buf, "STOP\r", strlen("STOP\r")) == 0)
+        {
+            onContinue = 0;
+        }
+        else
+        {
+            write(cnx, "Commande inconnue\n", strlen("Commande inconnue\n"));
+        }
+    }
+
+    return EXIT_SUCCESS;
+}
+
+int collectOptions(int argc, char *argv[], struct Option options[MAX_OPTIONS]){
+
+    
     /*
     ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
     ┃                                   Options                                       ┃
@@ -153,154 +310,6 @@ int main(int argc, char *argv[])
     {
         options[0].name = NULL;
     }
-
-    /*
-    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-    ┃                            Création du socket                                   ┃
-    ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-    */
-    //Fonction socket() - Client et Serveur
-    int sock;
-    sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (sock == -1)
-    {
-        perror("Handler échoué");
-    }
-
-    //Fonction bind() - Serveur seulement
-    int ret;
-    struct sockaddr_in addr;
-    addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    addr.sin_family = AF_INET;
-
-    int temp;
-    printf("Port: \n");   //Temp
-    scanf("%d", &temp);
-
-    addr.sin_port = htons(temp);
-    ret = bind(sock, (struct sockaddr *)&addr, sizeof(addr));
-    if (ret != 0)
-    {
-        perror("Nommage du socket échoué");
-    }
-    
-
-    //Fonction listen() - Serveur seulement
-    ret = listen(sock, 1);
-    if (ret != 0)
-    {
-        perror("Écoute échouée");
-    }
-    else
-    {
-        printf("En attente du client (telnet localhost %d)\n", temp);
-    }
-
-    //Fonction accept() - Serveur seulement
-    int size;
-    int cnx;
-    struct sockaddr_in conn_addr;
-    size = sizeof(conn_addr);
-    cnx = accept(sock, (struct sockaddr *)&conn_addr, (socklen_t *)&size);
-    if (cnx == -1)
-    {
-        perror("Connexion échouée");
-    }
-    else
-    {
-        printf("Connexion établie, en attente d'instructions\n");
-    }
-
-    /*
-    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-    ┃                        Écoute et réponse au client                              ┃
-    ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-    */
-
-    //On initialise les variables
-    char buf[512];
-    char res[10];
-    int N = 0, onContinue = 1;
-
-    //Fonction read() et write() 
-    //Tant que le client ne nous envoie pas "STOP\r"
-    while (onContinue)
-    {
-        size = read(cnx, buf, 512);
-        if (strncmp(buf, "AVANCE\r", strlen("AVANCE\r")) == 0)
-        {
-            N++;
-            
-            //On envoie la réponse
-            write(cnx, "J'ai avancé\n", strlen("J'ai avancé\n"));
-        }
-        else if (strncmp(buf, "ETAT\r", strlen("ETAT\r")) == 0)
-        {
-            //On vide la string res
-            memset(res, 0, sizeof(res));
-
-            //On convertit N en string
-            sprintf(res, "%d", N);
-            strcat(res, "\n");
-
-            //On envoie la réponse
-            write(cnx, res, strlen(res));
-        }
-        else if (strncmp(buf, "LBBDS\r", strlen("LBBDS\r")) == 0)
-        {
-            i = 0;
-            int ilResteDesOptions = 1;
-            while (ilResteDesOptions)
-            {
-                //Si on est pas encore arrivé à l'option vide qui signe la fin du tableau
-                if (options[i].name != NULL)
-                {
-                    //Si l'option a été donnée
-                    if (options[i].given)
-                    {
-                        //On vide la string res
-                        memset(res, 0, sizeof(res));
-                        strcat(res, "Option ");
-                        strcat(res, options[i].name);
-                        
-                        //Si l'option a un valeur, on l'affiche
-                        if (options[i].value != NULL)
-                        {
-                            strcat(res, ": ");
-                            strcat(res, options[i].value);
-                        }
-                        else
-                        {
-                            strcat(res, " reconnue");
-                        }
-                        strcat(res, "\n");
-
-                        //On envoie la réponse
-                        write(cnx, res, strlen(res));
-                    }
-                }
-                else
-                {
-                    ilResteDesOptions = 0;
-                    if (i == 0)
-                    {
-                        write(cnx, "Aucune option n'a été reconnue\n", strlen("Aucune option n'a été reconnue\n"));
-                    }
-                }
-                i++;
-            }
-        }
-        else if (strncmp(buf, "STOP\r", strlen("STOP\r")) == 0)
-        {
-            onContinue = 0;
-        }
-        else
-        {
-            write(cnx, "Commande inconnue\n", strlen("Commande inconnue\n"));
-        }
-    }
-
-    return EXIT_SUCCESS;
 }
 
 int trouveIdOption(char name, struct Option options[MAX_OPTIONS])

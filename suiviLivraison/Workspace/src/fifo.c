@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "file.h"
+#include "pile.h"
 
 
 
-void initFile(File* f){
-   (*f) = NULL;
+void initFile(File* f,int * indice){
+    (*indice)=0;
+    (*f) = NULL;
 }
 //getters
 int getIdentifiant(Element *e) {
@@ -49,10 +50,10 @@ Element create_element(int identifiant, time_t timestamp, char *etat, int joursR
     return *e;
 }
 
-void enfiler(File *file, Element *nvElement)
+void enfiler(File *file, Element *nvElement, int *indice)
 {
     Element *nouveau = malloc(sizeof(*nouveau));
-    if (file == NULL || nouveau == NULL)
+    if (file == NULL || nouveau == NULL || limit_ind_pile==0 || limit_ind_pile<(*indice))
     {
         exit(EXIT_FAILURE);
     }
@@ -80,6 +81,7 @@ void enfiler(File *file, Element *nvElement)
     {
         *file = nouveau;
     }
+    (*indice)=(*indice)+1;
 }
 
 void eraseFile(File *file)
@@ -95,33 +97,35 @@ void eraseFile(File *file)
     (*file) = NULL;
 }
 
-Element * defiler(File *file)
+Element * defiler(File *file, int *indice)
 {
-
-
-    
-    
-  
+    Element *temp =(Element *) malloc(sizeof(Element));
 
     /* On vérifie s'il y a quelque chose à défiler */
-    if ((*file) != NULL && (*file)->suivant!=NULL)
+    if((*file) == NULL)
+    {
+        temp=NULL;
+    }
+    else if((*file)->suivant==NULL)
+    {
+        temp = (*file);
+        (*file)=NULL;
+        //free(file);
+        (*indice)=(*indice)-1;
+    }
+    else 
     {
 
-        Element *temp =(Element *) malloc(sizeof(Element));
-        Element * elementDefile;
-        elementDefile = (*file);
-        temp = (*file);
+        Element * elementDefile=(*file);
+        *temp = *elementDefile;
         (*file) = elementDefile->suivant;
         free(elementDefile);
+        (*indice)=(*indice)-1;
 
-        return temp;
         
     }
-    else
-    {
-        return NULL;
-    }
-
+  
+    return temp;
 
 }
 
@@ -188,6 +192,7 @@ Element *trouverElement(File *file, int identifiant)
 */
 File copier_file(File *file, File *file2)
 {
+    int ind=0;
     if (file == NULL)
     {
         exit(EXIT_FAILURE);
@@ -198,7 +203,7 @@ File copier_file(File *file, File *file2)
 
     while (actuel != NULL)
     {
-        enfiler(file2, actuel);
+        enfiler(file2, actuel, &ind);
         actuel = actuel->suivant;
     }
     return *file2;

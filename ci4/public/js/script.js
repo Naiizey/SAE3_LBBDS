@@ -129,20 +129,23 @@ function dragNDrop(){
  */
 function getentete(){
 
-    //dico avec les entêtes du dessus
-    let entete = [];
-    //récupération des entêtes
-    $.ajax({
-        url: "Import.php",
-        type: "POST",
-        data: {action: "getentete"},
-        dataType: "json",
-        async: false,
-        success: function (data) {
-            entete = data;
-        }
-    });
-    return entete;
+    let map = new Map([
+        ["intitule_prod", "varchar(50)"],
+        ["prix_ht","float8"],
+        ["prix_ttc", "float8"],
+        ["description_prod", "varchar"],
+        ["lien_image_prod", "varchar"],
+        ["publication_prod", "boolean"],
+        ["stock_prod", "float8"],//
+        ["moyenne_note_prod", "float8"],
+        ["seuil_alerte_prod", "integer"],
+        ["alerte_prod", "boolean"],
+        ["code_sous_cat", "boolean"]
+    ]);
+
+    
+
+    return map;
 }
 
 
@@ -162,10 +165,14 @@ function previewCSV(){
         //lecture du fichier
         //prend l'en-tête du fichier et l'ajoute au tableau
         let entete = getentete();
+        
+        
+
         reader.readAsText(file);
         //ajout d'un event listener sur le chargement du fichier
         reader.addEventListener("load", function () {
             preview.innerHTML = "<br><h3>Prévisualisation</h3><br>";
+            //si la longueur de entete est > longueur de la première ligne
             var table = document.createElement("table");
             let csv = reader.result;
             //création du tableau
@@ -173,14 +180,51 @@ function previewCSV(){
             for (let i = 0; i < 10 && i < lines.length; i++) {
                 let line = lines[i];
                 let cells = line.split(";");
-                let row = table.insertRow(-1);
-                for (let j = 0; j < cells.length; j++) {
-                    if (cells[j].length > 20) {
-                        cells[j] = cells[j].substring(0, 20) + "...";
-                    }
-                    let cell = row.insertCell(-1);
-                    cell.innerHTML = cells[j];
+                if (entete.size > cells.size)
+                {
+                    //on ajoute une ligne en rouge
+                    console.log("ligne non valide");
+                    preview.innerHTML = "nombre de colonnes invalide";
+                    preview.style.color = "red";
+                    //on centre le texte
+                    preview.style.textAlign = "center";
                 }
+                else
+                {
+                    //on ajoute une 1ère ligne fusionnée
+                    console.log("ligne valide");
+                    preview.innerHTML = "nombre de colonnes valide";
+                    preview.style.color = "green";
+                    //on centre le texte
+                    preview.style.textAlign = "center";
+                }
+                let row = table.insertRow(-1);
+                if (i === 0) {
+                    for(let j = 0; j < cells.length; j++){
+                        //si l'entête n'est pas dans les clés de entete
+                        if (!(entete.has(cells[j].trim()))){
+                            console.log("entete");
+                            console.log(entete);
+                            console.log("cell non valide:" + cells[j] + "|");
+                            cells[j] = "<span style='color:red'>" + cells[j] + "</span>";
+                        }
+                        else{
+                            cells[j] = "<span style='color:green'>" + cells[j] + "</span>";
+                        }
+                        let cell = row.insertCell(-1);
+                        cell.innerHTML = cells[j];
+                    }
+                }
+                else
+                {
+                    for (let j = 0; j < cells.length; j++) {
+                        if (cells[j].length > 20) {
+                            cells[j] = cells[j].substring(0, 20) + "...";
+                        }
+                        let cell = row.insertCell(-1);
+                        cell.innerHTML = cells[j];
+                    }
+                }   
             }
             preview.appendChild(table);
        });

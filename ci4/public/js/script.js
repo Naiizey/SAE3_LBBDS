@@ -129,20 +129,23 @@ function dragNDrop(){
  */
 function getentete(){
 
-    //dico avec les entêtes du dessus
-    let entete = [];
-    //récupération des entêtes
-    $.ajax({
-        url: "Import.php",
-        type: "POST",
-        data: {action: "getentete"},
-        dataType: "json",
-        async: false,
-        success: function (data) {
-            entete = data;
-        }
-    });
-    return entete;
+    let map = new Map([
+        ["intitule_prod", "varchar(50)"],
+        ["prix_ht","float8"],
+        ["prix_ttc", "float8"],
+        ["description_prod", "varchar"],
+        ["lien_image_prod", "varchar"],
+        ["publication_prod", "boolean"],
+        ["stock_prod", "float8"],//
+        ["moyenne_note_prod", "float8"],
+        ["seuil_alerte_prod", "integer"],
+        ["alerte_prod", "boolean"],
+        ["code_sous_cat", "boolean"]
+    ]);
+
+    
+
+    return map;
 }
 
 
@@ -162,6 +165,9 @@ function previewCSV(){
         //lecture du fichier
         //prend l'en-tête du fichier et l'ajoute au tableau
         let entete = getentete();
+        
+        //print the entete
+
         reader.readAsText(file);
         //ajout d'un event listener sur le chargement du fichier
         reader.addEventListener("load", function () {
@@ -174,13 +180,32 @@ function previewCSV(){
                 let line = lines[i];
                 let cells = line.split(";");
                 let row = table.insertRow(-1);
-                for (let j = 0; j < cells.length; j++) {
-                    if (cells[j].length > 20) {
-                        cells[j] = cells[j].substring(0, 20) + "...";
+                if (i === 0) {
+                    for(let j = 0; j < cells.length; j++){
+                        //si l'entête n'est pas dans les clés de entete
+                        if (!(entete.has(cells[j].trim()))){
+                            console.log("entete");
+                            console.log(entete);
+                            console.log("cell non valide:" + cells[j] + "|");
+                            cells[j] = "<span style='color:red'>" + cells[j] + "</span>";
+                        }
+                        else{
+                            cells[j] = "<span style='color:green'>" + cells[j] + "</span>";
+                        }
+                        let cell = row.insertCell(-1);
+                        cell.innerHTML = cells[j];
                     }
-                    let cell = row.insertCell(-1);
-                    cell.innerHTML = cells[j];
                 }
+                else
+                {
+                    for (let j = 0; j < cells.length; j++) {
+                        if (cells[j].length > 20) {
+                            cells[j] = cells[j].substring(0, 20) + "...";
+                        }
+                        let cell = row.insertCell(-1);
+                        cell.innerHTML = cells[j];
+                    }
+                }   
             }
             preview.appendChild(table);
        });
@@ -514,7 +539,7 @@ function lstClients(){
     
                 afficherSanctions();
     
-                document.getElementsByClassName("titreSanction")[0].innerHTML = `Sanctionner le client n°${clientA} ?`;
+                document.getElementsByClassName("titreSanction")[0].innerHTML = `Bannir le client n°${clientA} ?`;
     
                 document.getElementById("timeout").addEventListener("click", () => {
                     cacherSanctions();
@@ -1510,7 +1535,7 @@ function avisProduit()
 
         let lesBarres = document.querySelectorAll(".barreAvis"); // séléctionne les barres de progression 
         // définit le max et la valeur pour chaque barre de progression
-        for (let index = (lesBarres.length-1); index > 0; index--) {
+        for (let index = (lesBarres.length-1); index > -1; index--) {
             lesBarres[lesBarres.length-index-1].max = tabAvis.length; // max pour les barres de progression (nombre total d'avis)
             lesBarres[lesBarres.length-index-1].value = moyennes[index];
         }
@@ -1538,6 +1563,21 @@ function avisProduit()
     etoiles.forEach(etoile => {
         etoile.addEventListener('mouseover', hoveretoile);
         etoile.addEventListener('mouseout', outetoile);
+    });
+
+    document.querySelector(".divProfilText input").addEventListener("input", function() {
+        document.querySelector(".divBoutonsComment").style.display = "flex";
+    });
+
+    document.querySelector(".divBoutonsComment button").addEventListener("click", function(){
+        etoiles.forEach(element => {
+            element.removeAttribute("class");
+            document.querySelector(".divBoutonsComment").style.display = "none";
+            document.querySelector(".divEtoilesComment p").textContent = "_/5";
+            if (document.querySelector(".bloc-erreurs") != null) {
+                document.querySelector(".bloc-erreurs").style.display = "none";
+            }
+        });
     });
 
     // met en jaune l'étoile sur laquelle on est ainsi que les précédentes    
@@ -1571,10 +1611,14 @@ function avisProduit()
              
             if(etoiles[i] === this) {
                 document.querySelector(".divEtoilesComment p").textContent = (i + 1) + "/5"; // écrit le numéro de la note à coté des étoiles
+                document.querySelector(".inputInvisible").value = (i + 1);
 
+                document.querySelector(".divBoutonsComment div").style.cursor = "auto"
+                document.querySelector(".divBoutonsComment").style.display = "flex";
                 btnPoster = document.querySelector(".divBoutonsComment input");
                 btnPoster.style.cursor = "pointer";
-                btnPoster.style.background = "#55C044";
+                btnPoster.style.background = "#24a064";
+                btnPoster.style.color = "white";
                 btnPoster.style.pointerEvents = "auto";
                 
                 // retire le jaune des suivantes au cas ou on clique plusieurs fois

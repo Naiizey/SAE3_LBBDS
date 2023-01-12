@@ -360,7 +360,7 @@ INSERT INTO _code_reduction (code_reduction, montant_reduction, pourcentage_redu
 
 INSERT INTO commentaires(id_prod,num_compte,note_prod,contenu_av) VALUES (18,1,3,'Pas fou');
 INSERT INTO commentaires(id_prod,num_compte,note_prod,contenu_av) VALUES (17,2,1,'Je n''ai pas reçu mon produit...');
-INSERT INTO commentaires(id_prod,num_compte,note_prod) VALUES (17,1,2);
+INSERT INTO commentaires(id_prod,num_compte,note_prod,contenu_av) VALUES (17,1,1,'Nul, ne fonctionne pas !');
 
 INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis n''apporte rien du tout, il ne justifie pas sa note.', 4, 1);
 INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis ne parle pas du produit', 5, 2);

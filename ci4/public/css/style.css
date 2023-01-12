@@ -406,6 +406,18 @@ main {
     main{
         top: 0;
     }
+
+    .bodyAdmin, .bodyVendeur{
+        background-color: #f3f3f3;
+    }
+
+    .footerAdmin .mobile {
+        background-color: black;
+    }
+
+    .footerVendeur .mobile {
+        background-color: #3997a3;
+    }
 }
 
 button.hidden{
@@ -730,7 +742,7 @@ div.bloc-erreur-liste-produit  {
     width: auto;
     
 }
-.alerte form, .espace-interraction div{
+.alerte form, .espace-interraction{
     margin :0;
     width: 100%;
     display: flex;
@@ -761,11 +773,15 @@ div.bloc-erreur-liste-produit  {
 
 @media screen and (max-width: 991px){
 
+    .sur-alerte{
+        z-index: 101;
+    }
+
     .alerte{
         width: 70%;
     }
 
-    .alerte form, .espace-interraction div{
+    .alerte form, .espace-interraction{
         flex-direction: column;
         height: 8em;
     }
@@ -774,7 +790,7 @@ div.bloc-erreur-liste-produit  {
         height: auto;
     }
 
-    .sur-alerte.sur-alerteTimeout .espace-interraction div{
+    .sur-alerte.sur-alerteTimeout .espace-interraction{
         flex-direction: row;
         height: auto;
     }
@@ -2170,9 +2186,14 @@ h3 > .lienPasArticlePanier {
 .divAjoutComment form {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
-.divAjoutComment textarea {
+.divAjoutCommentVide {
+    width: 166.5%;
+}
+
+.divProfilText input {
     resize: none;
     width: 100%;
     height: 1.5em;
@@ -2182,12 +2203,21 @@ h3 > .lienPasArticlePanier {
     outline: none;
     border-bottom: #d9d9d9 solid 2px;
     font-family: "Montserrat-Regular";
+    font-size: medium;
+}
+
+.inputInvisible {
+    display: none;
 }
 
 .divBoutonsComment {
     align-self: flex-end;
-    display: flex;
-    margin: .2em 0 1em 0;
+    display: none;
+    margin: -.8em 0 1em 0;
+}
+
+.divListeAvis .bloc-erreurs {
+    margin: -1em 0 1em 0;
 }
 
 .divBoutonsComment button {
@@ -2245,6 +2275,7 @@ h3 > .lienPasArticlePanier {
 .divProfilText {
     display: flex;
     align-items: center;
+    margin-bottom: 1em;
 }
 
 .divProfilText img {
@@ -2321,7 +2352,7 @@ h3 > .lienPasArticlePanier {
     margin: 1em 0;
 }
 
-#divLesAvis {
+.divLesAvis {
     display: flex;
     justify-content: space-between;
 }
@@ -3291,11 +3322,11 @@ a.fleche-page{
     width: 5em;
 }
 
-.lignesClients .buttonSanction{
-    background-color: #571616;
+.buttonSanction {
     width: 2em;
     height: 2em;
     margin: auto;
+    border: solid red 2px;
 }
 
 /* ━━━ Div des sanctions ━━━ */

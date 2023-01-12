@@ -854,16 +854,33 @@ function boutonCliquable(bouton,action){
     }
     else if(screen.width >= 1200 && bouton.classList.contains("bulle-ouvrir-filtres")){
         bouton.addEventListener("click", () => {
-            document.querySelector(".partie-filtre").style.display = "block";
-            document.querySelector(".bulle-ouvrir-filtres").style.display = "none";
+            document.querySelector(".partie-filtre").style.display = "block"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
+            localStorage.setItem("open", 'opennedFilters');
         })
     }
     else if(screen.width >= 1200 && bouton.classList.contains("fermer-filtre")){
         bouton.addEventListener("click", () => {
-            document.querySelector(".partie-filtre").style.display = "none";
-            document.querySelector(".bulle-ouvrir-filtres").style.display = "block";
+            document.querySelector(".partie-filtre").style.display = "none"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "block"
+            localStorage.setItem("close", 'closedFilters');
         })
     }
+}
+
+function loadFilters(){
+    window.addEventListener("load", () => {
+        if(localStorage.getItem("open") === "opennedFilters"){
+            document.querySelector(".partie-filtre").style.display = "block"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
+            localStorage.removeItem("open");
+        }
+        else if(localStorage.getItem("close") === "closedFilters"){
+            document.querySelector(".partie-filtre").style.display = "none"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "block"
+            localStorage.removeItem("close");
+        }
+    });
 }
 
 //Ajout de la classe "est-filtre-ouvert" au filtre

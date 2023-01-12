@@ -9,56 +9,6 @@
         }   
     }  
 ?>
-    <style>
-        .sectionRecommandationsPanierPC ul li{
-            display: flex;
-            justify-content: center;
-        }
-
-        .sectionRecommandationsPanierPC .card-produit-ext{
-            width: 8rem;
-            height: 11.2rem;
-            padding: 0;
-        }
-
-        .card-produit{
-            width: 8rem;
-            height: 11.2rem;
-        }
-
-        .image-card{
-            height: 5.5rem
-        }
-
-        .contain-libelle{
-            min-height: 2rem;
-            max-height: 2rem;
-            font-size: 1rem;
-        }
-
-        .prix-card{
-            font-size: 1rem;
-        }
-
-        .addPanier{
-            width: 1rem;
-            height: 1rem;
-        }
-
-        .addPanier svg{
-            position: relative;
-            top: -.7rem;
-        }
-
-        .noation-card{
-            height: 1.25rem;
-        }
-
-        .card-produit img{
-            border: none;
-            width: 1rem;
-        }
-    </style>
         <main class="mainProduit">
             <section class="sectionProduit">
                 <article>

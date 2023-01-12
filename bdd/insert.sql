@@ -266,10 +266,10 @@ VALUES (149,'Galets bretons',1000,1200,'Galets de fabrique bretonne, configurati
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'),'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg',0 );
 
-INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (5, 18, 1);
-INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3.75, 17, 1);
-INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (5, 18, 2);
--- INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3, 17, 1);
+-- (note_prod, id_prod, num_compte) VALUES (5, 18, 1);
+INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3.75, 14, 1);
+INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (5, 12, 2);
+INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3, 13, 1);
 
 INSERT INTO _avis (contenu_av,id_note, date_av) VALUES ('Franchement j''en suis très satisfait, rien à redire, ce produit est vraiment très bien, j''adore !',1, current_date);
 INSERT INTO _avis (contenu_av,id_note, date_av) VALUES ('Qualité moyenne, à revoir...',2, current_date);
@@ -360,6 +360,7 @@ INSERT INTO _code_reduction (code_reduction, montant_reduction, pourcentage_redu
 
 INSERT INTO commentaires(id_prod,num_compte,note_prod,contenu_av) VALUES (18,1,3,'Pas fou');
 INSERT INTO commentaires(id_prod,num_compte,note_prod,contenu_av) VALUES (17,2,1,'Je n''ai pas reçu mon produit...');
+INSERT INTO commentaires(id_prod,num_compte,note_prod,contenu_av) VALUES (17,1,1,'Nul, ne fonctionne pas !');
 
 INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis n''apporte rien du tout, il ne justifie pas sa note.', 4, 1);
 INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis ne parle pas du produit', 5, 2);

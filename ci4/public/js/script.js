@@ -129,20 +129,23 @@ function dragNDrop(){
  */
 function getentete(){
 
-    //dico avec les entêtes du dessus
-    let entete = [];
-    //récupération des entêtes
-    $.ajax({
-        url: "Import.php",
-        type: "POST",
-        data: {action: "getentete"},
-        dataType: "json",
-        async: false,
-        success: function (data) {
-            entete = data;
-        }
-    });
-    return entete;
+    let map = new Map([
+        ["intitule_prod", "varchar(50)"],
+        ["prix_ht","float8"],
+        ["prix_ttc", "float8"],
+        ["description_prod", "varchar"],
+        ["lien_image_prod", "varchar"],
+        ["publication_prod", "boolean"],
+        ["stock_prod", "float8"],//
+        ["moyenne_note_prod", "float8"],
+        ["seuil_alerte_prod", "integer"],
+        ["alerte_prod", "boolean"],
+        ["code_sous_cat", "boolean"]
+    ]);
+
+    
+
+    return map;
 }
 
 
@@ -162,10 +165,14 @@ function previewCSV(){
         //lecture du fichier
         //prend l'en-tête du fichier et l'ajoute au tableau
         let entete = getentete();
+        
+        
+
         reader.readAsText(file);
         //ajout d'un event listener sur le chargement du fichier
         reader.addEventListener("load", function () {
             preview.innerHTML = "<br><h3>Prévisualisation</h3><br>";
+            //si la longueur de entete est > longueur de la première ligne
             var table = document.createElement("table");
             let csv = reader.result;
             //création du tableau
@@ -173,14 +180,51 @@ function previewCSV(){
             for (let i = 0; i < 10 && i < lines.length; i++) {
                 let line = lines[i];
                 let cells = line.split(";");
-                let row = table.insertRow(-1);
-                for (let j = 0; j < cells.length; j++) {
-                    if (cells[j].length > 20) {
-                        cells[j] = cells[j].substring(0, 20) + "...";
-                    }
-                    let cell = row.insertCell(-1);
-                    cell.innerHTML = cells[j];
+                if (entete.size > cells.size)
+                {
+                    //on ajoute une ligne en rouge
+                    console.log("ligne non valide");
+                    preview.innerHTML = "nombre de colonnes invalide";
+                    preview.style.color = "red";
+                    //on centre le texte
+                    preview.style.textAlign = "center";
                 }
+                else
+                {
+                    //on ajoute une 1ère ligne fusionnée
+                    console.log("ligne valide");
+                    preview.innerHTML = "nombre de colonnes valide";
+                    preview.style.color = "green";
+                    //on centre le texte
+                    preview.style.textAlign = "center";
+                }
+                let row = table.insertRow(-1);
+                if (i === 0) {
+                    for(let j = 0; j < cells.length; j++){
+                        //si l'entête n'est pas dans les clés de entete
+                        if (!(entete.has(cells[j].trim()))){
+                            console.log("entete");
+                            console.log(entete);
+                            console.log("cell non valide:" + cells[j] + "|");
+                            cells[j] = "<span style='color:red'>" + cells[j] + "</span>";
+                        }
+                        else{
+                            cells[j] = "<span style='color:green'>" + cells[j] + "</span>";
+                        }
+                        let cell = row.insertCell(-1);
+                        cell.innerHTML = cells[j];
+                    }
+                }
+                else
+                {
+                    for (let j = 0; j < cells.length; j++) {
+                        if (cells[j].length > 20) {
+                            cells[j] = cells[j].substring(0, 20) + "...";
+                        }
+                        let cell = row.insertCell(-1);
+                        cell.innerHTML = cells[j];
+                    }
+                }   
             }
             preview.appendChild(table);
        });
@@ -508,24 +552,26 @@ function lstClients(){
         ligneA.clientA=clientA;
         let buttonA=buttons.item(numLigne);
         // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
-        buttonA.addEventListener("click", () => {
-            ligneA.removeEventListener("click", liensLstClients);
-
-            afficherSanctions();
-
-            document.getElementsByClassName("titreSanction")[0].innerHTML = `Sanctionner le client n°${clientA} ?`;
-
-            document.getElementById("timeout").addEventListener("click", () => {
-                cacherSanctions();
-                afficherTimeout(clientA);
-                ligneA.addEventListener("click", liensLstClients);
+        if(bannir){
+            buttonA.addEventListener("click", () => {
+                ligneA.removeEventListener("click", liensLstClients);
+    
+                afficherSanctions();
+    
+                document.getElementsByClassName("titreSanction")[0].innerHTML = `Bannir le client n°${clientA} ?`;
+    
+                document.getElementById("timeout").addEventListener("click", () => {
+                    cacherSanctions();
+                    afficherTimeout(clientA);
+                    ligneA.addEventListener("click", liensLstClients);
+                })
+    
+                document.getElementById("fermer").addEventListener("click", () => {
+                    cacherSanctions();
+                    ligneA.addEventListener("click", liensLstClients);
+                })
             })
-
-            document.getElementById("fermer").addEventListener("click", () => {
-                cacherSanctions();
-                ligneA.addEventListener("click", liensLstClients);
-            })
-        })
+        }
     }
 
     function liensLstClients(event){
@@ -575,21 +621,6 @@ function lstClients(){
         if(sur_alerteTimeout.style.display=="flex"){
             sur_alerteTimeout.style.display="none";
         }
-    }
-
-    function timeoutClient(numClient){
-        var a = new AlerteAlizonSanctionner(`Bannir le client n°${numClient} ?`, numClient);
-        a.ajouterInput("Durée (secondes)<span class='requis'>*</span> : ","duree","duree");
-        a.ajouterTextArea("Raison<span class='requis'>*</span> : ","raison","raison");
-        a.ajouterBouton("Bannir", "normal-button petit-button rouge","timeoutClient");
-        a.ajouterBouton("Fermer", "normal-button petit-button blanc");
-        a.affichage();
-    
-        a.getBouton("Fermer").addEventListener("click", () => {
-            a.fermer();
-            a.unBlur();
-            ligneA.addEventListener("click", liensLstClients);
-        })
     }
 }
 
@@ -1523,7 +1554,7 @@ function avisProduit()
 
         let lesBarres = document.querySelectorAll(".barreAvis"); // séléctionne les barres de progression 
         // définit le max et la valeur pour chaque barre de progression
-        for (let index = (lesBarres.length-1); index > 0; index--) {
+        for (let index = (lesBarres.length-1); index > -1; index--) {
             lesBarres[lesBarres.length-index-1].max = tabAvis.length; // max pour les barres de progression (nombre total d'avis)
             lesBarres[lesBarres.length-index-1].value = moyennes[index];
         }
@@ -1551,6 +1582,21 @@ function avisProduit()
     etoiles.forEach(etoile => {
         etoile.addEventListener('mouseover', hoveretoile);
         etoile.addEventListener('mouseout', outetoile);
+    });
+
+    document.querySelector(".divProfilText input").addEventListener("input", function() {
+        document.querySelector(".divBoutonsComment").style.display = "flex";
+    });
+
+    document.querySelector(".divBoutonsComment button").addEventListener("click", function(){
+        etoiles.forEach(element => {
+            element.removeAttribute("class");
+            document.querySelector(".divBoutonsComment").style.display = "none";
+            document.querySelector(".divEtoilesComment p").textContent = "_/5";
+            if (document.querySelector(".bloc-erreurs") != null) {
+                document.querySelector(".bloc-erreurs").style.display = "none";
+            }
+        });
     });
 
     // met en jaune l'étoile sur laquelle on est ainsi que les précédentes    
@@ -1584,10 +1630,14 @@ function avisProduit()
              
             if(etoiles[i] === this) {
                 document.querySelector(".divEtoilesComment p").textContent = (i + 1) + "/5"; // écrit le numéro de la note à coté des étoiles
+                document.querySelector(".inputInvisible").value = (i + 1);
 
+                document.querySelector(".divBoutonsComment div").style.cursor = "auto"
+                document.querySelector(".divBoutonsComment").style.display = "flex";
                 btnPoster = document.querySelector(".divBoutonsComment input");
                 btnPoster.style.cursor = "pointer";
-                btnPoster.style.background = "#55C044";
+                btnPoster.style.background = "#24a064";
+                btnPoster.style.color = "white";
                 btnPoster.style.pointerEvents = "auto";
                 
                 // retire le jaune des suivantes au cas ou on clique plusieurs fois

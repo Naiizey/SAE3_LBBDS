@@ -9,8 +9,8 @@
                         <a href="<?= base_url() ?>/admin/espaceClient/1">Modifier un compte</a>
                         <a>Supprimer un compte</a>
                         <h3>Bannissements</h3>
-                        <a>Bannir temporairement un utilisateur</a>
-                        <a>Bannir définitivement un utilisateur</a>
+                        <a href="<?= base_url() ?>/admin/Clients/bannir">Bannir un client</a>
+                        <a>Voir tous les bannissements</a>
                         <a>Annuler un bannissement</a>
                         <h3>Commentaires signalés</h3>
                         <a href="<?= base_url() ?>/admin/signalements">Voir les signalements</a>

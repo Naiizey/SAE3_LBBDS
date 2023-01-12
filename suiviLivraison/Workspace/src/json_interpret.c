@@ -2,27 +2,139 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <fcntl.h>
 #include <unistd.h>
 #include <stdbool.h>
 #include <string.h>
-#include "file.h"
 
 
-#define MAX_PA 30
+#include "pile.h"
+#include "user.h"
+#include"json.h"
 #define TEST true
-const int MAX_ETAPE=6;
+
+
+const int TEMPS_MAX_REGIONAL=3;
+const int TEMPS_LOCAL=1;
+#define MAX_ETAPE 4
+const int ETAT_FINAL=-1;
+const int ERR_ETAT=-2;
+
+const int TIME_DAY_SEC=2;
 
 
 
+user * collectInfoUser(cJSON * json){
+    user * new =(user *)malloc(sizeof(user));
+    new->id="";
+   
+    strcpy(new->id,"\0");
+    strcpy(new->pass,"\0");
+    #if TEST == true
+    printf("Commence... \n");
+    #endif
+    
+    while(json!=NULL && json->type==cJSON_String){
+        #if TEST == true
+        printf("Collecte !\n");;
+        #endif
+        
+        if(json->type==cJSON_String){
+            if(strcmp(json->string,"identifiant")==0 && json->type==cJSON_Number){
+                strcpy(new->id,json->valuestring);
+            }
+            else if(strcmp(json->string, "pass")==0){
+                strcpy(new->id,json->valuestring);
+            }
+        }else{
+            #if TEST == true
+            printf("Refus format...\n");
+            #endif
+            return NULL;
+        }
+        
+       json=json->next;
+    }
+    
+    
 
+
+    #if TEST == true
+    printf("Fin collecte !\n");
+    #endif
+    if(strcmp(new->id,"\0")!=0 && strcmp(new->pass,"\0")!=0)
+        return new;
+    else
+    {
+        #if TEST == true
+        printf("Refus résultat...{%s}\n",new->id);
+        #endif
+        return NULL;
+    }
+        
+}
 
 typedef struct {
-    char * id;
-    char * pass;
-} user;
+    char * nom;
+    int apresXjour;
+} etatLivraison;
 
-bool verifEtat(char * etat);
+typedef etatLivraison etats[MAX_ETAPE];
+const etats quelEtape = {
+    {"En charge",0},
+    {"regional",TEMPS_MAX_REGIONAL},
+    {"local",TEMPS_MAX_REGIONAL+TEMPS_LOCAL},
+    {"destinataire",ETAT_FINAL}
+
+};
+
+/**
+ * @brief Retourne le nombre de jour avant la fin d'un état, si celui-ci existe.
+ * 
+ * @param etat 
+ * 
+ * 
+ * @return true 
+ * @return false 
+ */
+int verifEtat(char * etat){
+    bool trouve=false;
+    int i=0;
+    while(i<MAX_ETAPE && !trouve){
+        trouve=(strcmp(quelEtape[i].nom,etat)==0);
+        i++;
+    }
+    if(trouve){
+        i--;
+        return quelEtape[i].apresXjour;
+    }
+    else{
+        return ERR_ETAT;
+    }
+}
+
+/**
+ * @brief Permet de retourner l'état en fonction de l'état d'entré du simulateur et de temps passé.
+ * 
+ * @param etat état à l'entrée du simulateur 
+ * @param jour état passé dans le simulateur
+ * @return const char* 
+ */
+const char * traitementEtat(char * etat, int jour){
+    bool trouve=false;
+    int i=0;
+    while( i<MAX_ETAPE && !trouve){
+        trouve=quelEtape[i].apresXjour==ETAT_FINAL || quelEtape[i].apresXjour >= jour;
+        i++;
+    }
+    if(trouve)
+    {
+        i--;
+        return quelEtape[i].nom;
+    }
+    else
+        return NULL;
+    
+}  
 
 /**
  * @brief A partir d'un objet json, on collecte les information correspondante à une livraison
@@ -35,7 +147,7 @@ Element * collectLivraison(cJSON * json){
     new->identifiant=-1;
     new->timestamp=0;
     new->joursRetard=0;
-    new->etat=NULL;
+    strcpy(new->etat,"En charge");
     #if TEST == true
     printf("Commence... \n");
     #endif
@@ -54,14 +166,19 @@ Element * collectLivraison(cJSON * json){
             }else if(strcmp(json->string,"retard")==0 ){
                 new->joursRetard=json->valueint;
             }
-        }else if(strcmp(json->string, "etat")==0 && json->type==cJSON_String){
-            if( json->type==cJSON_String){
-                new->etat=json->valuestring;
-            /*
-            if (!verifEtat(json->string)){
-                return -1;
+        }else if(strcmp(json->string, "etat\0")==0 && json->type==cJSON_String){
+            int result=verifEtat(json->valuestring);
+            if (result!=ERR_ETAT){
+                strcpy(new->etat,json->valuestring);
+                
+            }else{
+                #if TEST == true
+                printf("Erreur etat !\n");;
+                #endif
+                return NULL;
             }
-            */
+
+            
         }else{
             #if TEST == true
             printf("Refus format...\n");
@@ -69,42 +186,28 @@ Element * collectLivraison(cJSON * json){
             return NULL;
         }
         
-       
+       json=json->next;
     }
     
-    json=json->next;
-}
-
-
-if(new->etat!=NULL && new->identifiant>=0)
-    return new;
-else
-{
-    #if TEST == true
-    printf("Refus résultat...{%d,%s,%d,%d}\n",new->identifiant, new->etat, json->type, 1 << 6);
-    #endif
-    return NULL;
-}
     
+
+
+    #if TEST == true
+    printf("Fin collecte !\n");
+    #endif
+    if(strcmp(new->etat,"\0")!=0 && new->identifiant>=0)
+        return new;
+    else
+    {
+        #if TEST == true
+        printf("Refus résultat...{%d}\n",new->identifiant);
+        #endif
+        return NULL;
+    }
+        
 }
 
-user collectInfoUser(cJSON * json);
 
-/*
-typedef struct cJSON
-{
-    struct cJSON *next;
-    struct cJSON *prev;
-    struct cJSON *child;
-    int type;
-    char *valuestring;
-    // writing to valueint is DEPRECATED, use cJSON_SetNumberValue instead 
-    int valueint;
-    double valuedouble;
-    char *string;
-} cJSON;
-
-*/
 
 /**
  * @brief Parcour une ou des livraisons et remplie la file en conséquence, on va aussi vérifier que le format est standard au Protocole
@@ -113,7 +216,7 @@ typedef struct cJSON
  * @param liste la file
  * @return int 
  */
-int parcoursLivraisons(cJSON *json, FILE *liste){
+int parcours(cJSON *json, File *liste, user * client, int *ind){
     #if TEST == true
     printf("Test type...\n");
     #endif
@@ -127,10 +230,19 @@ int parcoursLivraisons(cJSON *json, FILE *liste){
         #endif
         
         if(strcmp(json->child->string,"livraison")==0){
-            result=collectLivraison(json->child->child);
-  
+            result=collectLivraison(json->child->child);   
+            if(result==NULL){
+                        return -1;
+                }else{
+                    enfiler(liste,result,ind);
 
-            
+                }
+        }
+        else if(strcmp(json->child->string,"auth")==0){
+            client=collectInfoUser(json->child->child);
+            if(client==NULL){
+                return -1;
+            }  
         }
         else{
              printf("Erreur: type non accepté\n");
@@ -148,7 +260,15 @@ int parcoursLivraisons(cJSON *json, FILE *liste){
                 json=json->child->child;
                 while(json!=NULL){
                     result=collectLivraison(json->child);
-                    if(result==NULL) return -1;
+                    #if TEST == true
+                        printf("Fin :\n");
+                     #endif
+                    if(result==NULL){
+                        return -1;
+                    }else{
+                        enfiler(liste,result,ind);
+
+                    }
  
                     json=json->next;
                 }
@@ -166,83 +286,74 @@ int parcoursLivraisons(cJSON *json, FILE *liste){
     #endif
     if(json != NULL && json->next!=NULL){
 
-        return parcoursLivraisons(json->next,liste);
+        return parcours(json->next,liste,client,ind);
     }else if(result!=NULL){
         
-        enfiler(liste,result);
         return 0;
     }else
         return -1;
 }
 
-/*
-int parcoursAuth(cJSON *json, user *theUser){
-    printf("Parcours...\n");
-    user * result;
-    if(json->type == cJSON_Object)
-    {
-        if (strcmp(json->child->string,"auth")==0){
-            *result=collectInfoUser(json->child);
-        }
-        else{
-             printf("Erreur: type non accepté\n");
-            return -1;
-        }
-       
-    }
-    
-    if(json->next!=NULL){
-        return parcoursAuth(json->next,theUser);
-    }else if(result!=NULL){
-        *theUser=*result;
-        return 0;
-    }else
+
+
+
+
+/**
+ * @brief Retourne en seconde la différence entre deux temps
+ * 
+ * @param avant 
+ * @param maintenant 
+ * @return int 
+ */
+int convertEnJour(time_t avant, time_t maintenant){
+    time_t diff = difftime(maintenant, avant);
+    struct tm * diffInfos = localtime(&diff);
+    if(diffInfos!=NULL){
+        return diffInfos->tm_sec/TIME_DAY_SEC;
+    }else{
         return -1;
+    }
 }
-*/
-int main(int argc, char const *argv[])
-{
-    char buff[1024];
- 
-    int fd = open("test.json", O_RDONLY);
-    #if TEST == true
-    printf("Ouverture...\n");
-    #endif
+
+/**
+ * @brief Sérialisation en JSON d'une commande.
+ * 
+ * @param e 
+ * @return cJSON* 
+ */
+cJSON * createLivraison(Element e, int *ind){
     
-    if (fd<0) return -1;
-    #if TEST == true
-    printf("Lecture...\n");
-    #endif
+    int depuis = convertEnJour(e.timestamp, time(NULL));
+    cJSON * livraison = cJSON_CreateObject();
+    cJSON_AddItemToObject(livraison,"identfiant",cJSON_CreateNumber(e.identifiant));
+    cJSON_AddItemToObject(livraison,"time",cJSON_CreateNumber(depuis));
+    cJSON_AddItemToObject(livraison,"etat",cJSON_CreateString(traitementEtat(e.etat,depuis)));
+    return livraison;
     
-  
-    if (read(fd,buff,1024)<0) return -1;
-    
-    #if TEST == true
-    printf("Parsing...\n");
-    #endif
-    cJSON *json = cJSON_Parse(buff);
-   
-    if(json == NULL) 
-    {
-     
-        printf("\n");
-        return -1;
-    }
-    else{
+}
+/**
+ * @brief Construit un JSON qui répertorie plusieurs commandes
+ * 
+ * @param file 
+ * @param filter 
+ * @return cJSON* 
+ */
+cJSON * envoiLivraison(File *file, char * filter, int *ind){
+    cJSON * retour = cJSON_CreateObject();
+    cJSON * array = cJSON_CreateArray();
+    Element * current = defiler(file,ind);
+    while(current!=NULL){
         #if TEST == true
-        printf(cJSON_Print(json));
+        printf("Identifiant: %d\n", current->identifiant);
+
+        printf("Item.\n");
         #endif
-        
-        Element * liste = (Element *)malloc(sizeof(Element));
-
-        
-        int retour = parcoursLivraisons(json,&liste);
-        printf("Result : %d\n {%ld,%s}\n", retour,liste->timestamp,liste->etat);
-       
-
+        cJSON_AddItemToArray(array,createLivraison(*current,ind));
+        current=defiler(file,ind);
     }
+    cJSON_AddItemToObject(retour,"livraisons",array);
+    return retour;
 
-   
-    
-    return 0;
 }
+
+

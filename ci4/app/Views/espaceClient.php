@@ -24,6 +24,7 @@
                         </a>
                     <?php endif; ?>
                 </div>
+                <?= afficheErreurs($erreurs, 8); ?>
                 <label class="labelRecupMail">Votre prénom :</label>
                 <div class="divInputEtLien">
                     <input type="text" name="prenom" required="required" value="<?= $prenom?>" disabled/>
@@ -48,6 +49,7 @@
                         </a>
                     <?php endif; ?>
                 </div>
+                <?= afficheErreurs($erreurs, 7) ?>
                 <label class="labelRecupMail labelAncienMdp"></label>
                 <div class="divInputEtLien">
                     <input type="password" name="motDePasse" required="required" value="<?= $motDePasse?>" <?= $disableInput ?>/>

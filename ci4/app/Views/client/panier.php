@@ -1,4 +1,4 @@
-<?php require("header.php"); 
+<?php require __DIR__ . "/../header.php";
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -6,8 +6,8 @@
             return "<div class='bloc-erreurs'>
                         <p class='paragraphe-erreur'>$e[$codeE]</p>
                     </div>";
-        }   
-    } 
+        }
+    }
     function afficheRetours($r, $codeR)
     {
         if (isset($r[$codeR]))
@@ -15,8 +15,8 @@
             return "<div class='bloc-erreurs'>
                         <p class='paragraphe-valid'>$r[$codeR]</p>
                     </div>";
-        }   
-    }  
+        }
+    }
 ?>
     <main class="mainPanier">
         <div>
@@ -97,7 +97,7 @@
                                     </h3>
                                 </div>
                             </article>
-                        <?php endforeach; ?>                
+                        <?php endforeach; ?>
                         <hr>
                     </div>
                     <div class="sous-totaux">
@@ -176,7 +176,7 @@
             </section>  
         <?php endif; ?>
     </main>
-<?php require("footer.php"); ?>
+<?php require __DIR__ . "/../footer.php"; ?>
 
 <script>
     <?php if (!empty($produits)): ?>
@@ -204,8 +204,8 @@
     updatePricePanier();
     updatePriceTotal();
     <?php endif; ?>
-    <?php if(session()->has("numero") && has_cookie("token_panier") 
-    && !(session()->has("ignorer") && session()->get("ignorer")==true) 
+    <?php if(session()->has("numero") && has_cookie("token_panier")
+    && !(session()->has("ignorer") && session()->get("ignorer")==true)
     && !(isset($ecraserOuFusionner) && $ecraserOuFusionner)): ?>
         var oui = new AlerteAlizon("Récupération panier","<?= current_url() ?>","Il y a déjà un panier associé à votre compte, voulez vous garder le panier que vous venez de faire, garder le panier enregistré sur votre compte ou fusionner les 2 ?");
         oui.ajouterBouton("Garder le nouveau",'normal-button petit-button supprimer-filtre rouge',"SupprAncien");

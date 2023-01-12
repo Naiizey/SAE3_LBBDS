@@ -22,12 +22,13 @@ class LstAvis extends Model
         return $this->where('id_prod',$num_produit)->findAll();
     }
 
-    public function getAvisById($num_avis) : \App\Entities\Avis
+    public function getAvisById($num_avis) : \App\Models\LstAvis
     {
         return $this->where('num_avis',$num_avis)->first();
     }
 
-    public function enregAvis(Avis $avis){
+    public function enregAvis(Avis $avis)
+    {
         $this->save($avis);
     }
 }

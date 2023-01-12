@@ -2140,6 +2140,26 @@ h3 > .lienPasArticlePanier {
     margin-left: .5em;
 }
 
+.divAvisContenuEtSignal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.divAvisContenuEtSignal svg {
+    fill: #164F57;
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.divAvisContenuEtSignal svg path {
+    transition: 0.2s;
+}
+
+.divAvisContenuEtSignal svg path:hover {
+    fill: red;
+}
+
 .divAcheterProduit {
     text-align: right;
 }

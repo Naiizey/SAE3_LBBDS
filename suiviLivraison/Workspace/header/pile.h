@@ -2,6 +2,7 @@
 #include <stdbool.h>
 
 
+#ifndef ELEM_IS_DEF
 typedef char t_etat[20];
 
 typedef struct Elem
@@ -13,13 +14,16 @@ typedef struct Elem
     struct Elem *suivant;
 }Element;
 
+int limit_ind_pile;
 typedef Element* File;
+#endif
+#define ELEM_IS_DEF
 
 //déclaration des fonctions
-void initFile(File* file);
+void initFile(File* file,int * indice);
 Element create_element(int identifiant, time_t timestamp, char *etat, int joursRetard);
-void enfiler(File *file, Element *nvElement);
-Element * defiler(File *file);
+void enfiler(File *file, Element *nvElement, int * indice);
+Element * defiler(File *file, int * indice);
 void afficherElement(Element *e, bool returnLine);
 void afficherFile(File file);
 void eraseFile(File *file);

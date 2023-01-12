@@ -166,12 +166,13 @@ function previewCSV(){
         //prend l'en-tête du fichier et l'ajoute au tableau
         let entete = getentete();
         
-        //print the entete
+        
 
         reader.readAsText(file);
         //ajout d'un event listener sur le chargement du fichier
         reader.addEventListener("load", function () {
             preview.innerHTML = "<br><h3>Prévisualisation</h3><br>";
+            //si la longueur de entete est > longueur de la première ligne
             var table = document.createElement("table");
             let csv = reader.result;
             //création du tableau
@@ -179,6 +180,24 @@ function previewCSV(){
             for (let i = 0; i < 10 && i < lines.length; i++) {
                 let line = lines[i];
                 let cells = line.split(";");
+                if (entete.size > cells.size)
+                {
+                    //on ajoute une ligne en rouge
+                    console.log("ligne non valide");
+                    preview.innerHTML = "nombre de colonnes invalide";
+                    preview.style.color = "red";
+                    //on centre le texte
+                    preview.style.textAlign = "center";
+                }
+                else
+                {
+                    //on ajoute une 1ère ligne fusionnée
+                    console.log("ligne valide");
+                    preview.innerHTML = "nombre de colonnes valide";
+                    preview.style.color = "green";
+                    //on centre le texte
+                    preview.style.textAlign = "center";
+                }
                 let row = table.insertRow(-1);
                 if (i === 0) {
                     for(let j = 0; j < cells.length; j++){

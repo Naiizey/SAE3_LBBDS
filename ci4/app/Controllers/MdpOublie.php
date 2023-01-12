@@ -27,7 +27,7 @@ class MdpOublie extends BaseController
         $this->email->initialize($config);
         if (!isset($_SESSION['code'])) {
             $_SESSION['code'] = $this->genererCode();
-        }   
+        }
         $this->email->setFrom('admin@alizon.net', 'Admin Alizon');
     }
 
@@ -38,7 +38,7 @@ class MdpOublie extends BaseController
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant de potentielles erreurs
         $data['email'] = (isset($post['email'])) ? $post['email'] : "";
         $data['code'] = (isset($post['code'])) ? $post['code'] : "";
-        return view('page_accueil/mdpOublie.php', $data);
+        return view('mdpOublie.php', $data);
     }
 
     public function genererCode() {
@@ -52,7 +52,7 @@ class MdpOublie extends BaseController
         return $code;
     }
 
-    public function obtenirCode() 
+    public function obtenirCode()
     {
         $post=$this->request->getPost();
         $_SESSION["userMail"] = $post['email'];
@@ -67,8 +67,8 @@ class MdpOublie extends BaseController
             $this->email->setMessage($message);
             $this->email->send();
             $data['retour'][0] = "Renseignez le code qui vous a été envoyé par mail.";
-        } 
-        else 
+        }
+        else
         {
             $data['retour'][1] = "L'adresse mail ne correspond à aucun compte.";
         }
@@ -83,7 +83,7 @@ class MdpOublie extends BaseController
     {
         $post=$this->request->getPost();
         echo($_SESSION['code']);
-        if ($post['code'] == $_SESSION['code']) 
+        if ($post['code'] == $_SESSION['code'])
         {
             $model = model("App\Models\Client");
             $nouveauMDP = $this->motDePasseAlea();
@@ -99,8 +99,8 @@ class MdpOublie extends BaseController
             $this->email->send();
             $data['retour'][0] = "Renseignez le code qui vous a été envoyé par mail.";
             $data['retour'][3] = "Un nouveau mot de passe vous a été envoyé par mail.";
-        } 
-        else 
+        }
+        else
         {
             $data['retour'][4] = "Erreur, code invalide.";
         }

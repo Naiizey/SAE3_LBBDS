@@ -711,7 +711,11 @@ class Home extends BaseController
 
             if(!empty($post)){
                 $sanctions = model("\App\Models\SanctionTemp");
-                $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+                if ($sanctions->isTimeout($post["numClient"]))
+                {
+                    $sanctions->delete($post["numClient"]);
+                    $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+                }
             }
         }
 
@@ -728,7 +732,7 @@ class Home extends BaseController
 
         $data["controller"]="Liste des bannissements";
         $data["role"]="admin";
-        $data["bannissements"]=model("\App\Models\SanctionTemp")->findAll();
+        $data["bannissements"]=model("\App\Models\SanctionTemp")->TimeoutsActuels();
 
         return view("admin-vendeur/bannissements.php",$data);
     }

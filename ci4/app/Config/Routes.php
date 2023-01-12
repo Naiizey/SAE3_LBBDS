@@ -112,6 +112,9 @@ $routes->set404Override();
     $routes->get('/admin/Clients', 'Home::lstClients/liste');
     $routes->get('/admin/Clients/bannir', 'Home::lstClients/bannir');
     $routes->post('/admin/Clients/bannir', 'Home::lstClients/bannir');
+    
+    $routes->get('/admin/bannissements', 'Home::bannissements');
+    $routes->post('/admin/bannissements', 'Home::bannissements');
 
     $routes->get('/(admin)/signalements', 'Home::lstSignalements');
     $routes->post('/(admin)/signalements', 'Home::lstSignalements');

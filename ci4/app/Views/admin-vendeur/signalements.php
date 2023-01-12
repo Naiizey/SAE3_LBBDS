@@ -32,7 +32,7 @@
                     </tbody>
                 </table>
             <?php else: ?>
-                <h2>Aucune signalement n'a été réalisé pour le moment.</h2>
+                <h2>Aucun signalement n'a été réalisé pour le moment.</h2>
             <?php endif; ?>
         </div>
     </main>

@@ -2782,7 +2782,7 @@ main#Catalogue{
 .liste-produits{
     display: flex;
     flex-wrap: wrap; 
-    justify-content: space-evenly;   
+    justify-content: flex-end;   
 }
 
 .liste-filtre{
@@ -3353,7 +3353,7 @@ a.fleche-page{
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃          Page pour lister les commandes (lstCommandesVendeur.php, lstCommandesCli.php & lstClients.php)         ┃
+┃          Page pour lister (lstCommandesVendeur.php, lstCommandesCli.php & lstClients.php)                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
@@ -3388,6 +3388,12 @@ a.fleche-page{
     cursor: pointer;
     outline: none;
     background-color: #f3f3f3;
+}
+
+.tableLst tbody .lignesBannissements:hover{
+    cursor: auto;
+    outline: none;
+    background-color: white
 }
 
 .tableLst tbody tr:last-child{
@@ -3992,53 +3998,38 @@ progress::-moz-progress-bar
 /* Gestion de comptes */
 .sectionAdmin a:nth-child(2) {
     grid-column-start: 1;
-    grid-column-end: 2;
+    grid-column-end: 3;
 }
 
 .sectionAdmin a:nth-child(3) {
-    grid-column-start: 2;
-    grid-column-end: 4;
-}
-
-.sectionAdmin a:nth-child(4) {
-    grid-column-start: 4;
+    grid-column-start: 3;
     grid-column-end: 6;
 }
 
 /* Bannissements */
-.sectionAdmin a:nth-child(6) {
+.sectionAdmin a:nth-child(5) {
     grid-column-start: 1;
-    grid-column-end: 2;
+    grid-column-end: 3;
 }
 
-.sectionAdmin a:nth-child(7) {
-    grid-column-start: 2;
-    grid-column-end: 4;
-}
-
-.sectionAdmin a:nth-child(8) {
-    grid-column-start: 4;
+.sectionAdmin a:nth-child(6) {
+    grid-column-start: 3;
     grid-column-end: 6;
 }
 
 /* Commentaires signalés */
+.sectionAdmin a:nth-child(8) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+/* Avertissements */
 .sectionAdmin a:nth-child(10) {
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
 .sectionAdmin a:nth-child(11) {
-    grid-column-start: 3;
-    grid-column-end: 6;
-}
-
-/* Avertissements */
-.sectionAdmin a:nth-child(13) {
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-.sectionAdmin a:nth-child(14) {
     grid-column-start: 3;
     grid-column-end: 6;
 }

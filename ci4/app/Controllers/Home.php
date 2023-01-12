@@ -565,12 +565,10 @@ class Home extends BaseController
 
 
         $this->validator = Services::validation();
-        if (!empty($post))
-        {
+        if (!empty($post)) {
             $paiement = service('authentification');
             $issues=$paiement->paiement($post);
-            if (empty($issues))
-            {
+            if (empty($issues)) {
                 return redirect()->to("/validation");
             }
         }
@@ -725,10 +723,30 @@ class Home extends BaseController
 
             if(!empty($post)){
                 $sanctions = model("\App\Models\SanctionTemp");
-                $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+                if ($sanctions->isTimeout($post["numClient"]))
+                {
+                    $GLOBALS['invalidation'] = $this->feedback->afficheInvalidation("Cet utilisateur est déjà banni !");
+                }else{
+                    $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+                }
             }
         }
 
         return view("admin-vendeur/lstClients.php", $data);
+    }
+
+    public function bannissements(){
+        $post = $this->request->getPost();
+        if (!empty($post))
+        {
+            $modelSanctionTemp = model("\App\Models\SanctionTemp");
+            $modelSanctionTemp->delete($post["id_bannissement"]);
+        }
+
+        $data["controller"]="Liste des bannissements";
+        $data["role"]="admin";
+        $data["bannissements"]=model("\App\Models\SanctionTemp")->TimeoutsActuels();
+
+        return view("admin-vendeur/bannissements.php",$data);
     }
 }

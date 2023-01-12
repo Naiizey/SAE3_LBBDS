@@ -1,4 +1,4 @@
-<?php require("header.php");?>
+<?php require __DIR__ . "/../header.php";?>
     <main>
         <div class="divLst">
             <?php if(!empty($bannissements)): ?>
@@ -36,4 +36,4 @@
             <?php endif; ?>
         </div>
     </main>
-<?php require("footer.php");?>
+<?php require __DIR__ . "/../footer.php";?>

@@ -732,6 +732,6 @@ class Home extends BaseController
         $data["role"]="admin";
         $data["bannissements"]=model("\App\Models\SanctionTemp")->findAll();
 
-        return view("page_accueil/bannissements.php",$data);
+        return view("admin-vendeur/bannissements.php",$data);
     }
 }

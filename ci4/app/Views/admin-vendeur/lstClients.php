@@ -1,4 +1,4 @@
-<?php require("header.php");?>
+<?php require __DIR__ . "/../header.php";?>
     <main>
         <div class="divLst">
             <?php if(!empty($clients)): ?>
@@ -7,7 +7,7 @@
                         <tr>
                             <th>N° client</th>
                             <th>Identifiant</th>
-                            <th>Sanctionner</th>                           
+                            <th>Sanctionner</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,7 +72,7 @@
             </form>
         </div>
     </div>
-<?php require("footer.php");?>
+<?php require __DIR__ . "/../footer.php";?>
 <script>
     lstClients();
 </script>

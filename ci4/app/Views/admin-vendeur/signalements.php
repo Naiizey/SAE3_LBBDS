@@ -1,4 +1,4 @@
-<?php require("header.php");?>
+<?php require __DIR__ . "/../header.php";?>
     <main>
         <div class="divLst">
             <?php if(!empty($signalements)): ?>
@@ -13,13 +13,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php for ($i = 0; $i < count($signalements); $i++): ?>  
+                        <?php for ($i = 0; $i < count($signalements); $i++): ?>
                             <tr class='lignesSignalements'>
                                 <td><?= $signalements[$i]->id_signal ?></td>
                                 <td><?= $signalements[$i]->raison ?></td>
                                 <td class='numAvis'><?= $signalements[$i]->num_avis ?></td>
                                 <td><?= $signalements[$i]->num_compte ?></td>
-                                <td class='numProduit'><?= $produitSignalements[$i] ?></td> 
+                                <td class='numProduit'><?= $produitSignalements[$i] ?></td>
                             </tr>
                         <?php endfor; ?>
                     </tbody>
@@ -29,7 +29,7 @@
             <?php endif; ?>
         </div>
     </main>
-<?php require("footer.php");?>
+<?php require __DIR__ . "/../footer.php";?>
 <script>
     lstSignalements();
 </script>

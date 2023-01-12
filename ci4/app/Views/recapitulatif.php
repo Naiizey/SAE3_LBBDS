@@ -1,4 +1,4 @@
-<?php require("page_accueil/header.php"); ?>
+<?php require("header.php"); ?>
 <main>
     <div class="sectionCredit divCredit divEspaceCli recap">
         <h2>Récapitulatif</h2>
@@ -20,8 +20,7 @@
                         <div><?= $totalTtc-$reducMont ?>€</div> 
                         
                     <?php elseif (isset($reducPourc)): ?>
-                        <div><?= $totalTtc*(100-$reducPourc)/100  ?>€ TTC</div> 
-                     
+                        <div><?= $totalTtc*(100-$reducPourc)/100  ?>€ TTC</div>
                     <?php else: ?>
                         <div><?= $totalTtc?>€ TTC</div> 
                         
@@ -53,7 +52,6 @@
                                 <?=$champs?>
                             </li>
                         <?php endforeach; ?>
-                   
                 </ul>    
             </div>
         </div> 
@@ -62,4 +60,4 @@
         </form>
     </div>
 </main>
-<?php require("page_accueil/footer.php"); ?>
+<?php require("footer.php"); ?>

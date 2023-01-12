@@ -108,10 +108,9 @@
                                     <?php if($prod->stock > 10): ?>
                                         <option class="option-plus-10"> 10+ </option>
                                     <?php endif; ?>
-                                       
                                     </select>
-                                    <input class="input-option-plus-10" type="number" name="quantitePlus" min=0 max=<?= $prod -> stock - ((isset($quantitePanier))?$quantitePanier:0) ?> 
-                                    value="<?php 
+                                    <input class="input-option-plus-10" type="number" name="quantitePlus" min=0 max=<?= $prod -> stock - ((isset($quantitePanier))?$quantitePanier:0) ?>
+                                    value="<?php
                                     $max=($prod -> stock - ((isset($quantitePanier))?$quantitePanier:0));
                                     if(10 > $max){
                                         echo $max;
@@ -174,7 +173,7 @@
                                 <form action="" method="POST">
                                     <div class="divEtoilesComment">
                                         <?php for ($i=0; $i < 5 ; $i++) : ?>
-                                        <?= file_get_contents(dirname(__DIR__,3)."/public/images/Star-empty.svg")?>
+                                        <?= file_get_contents(dirname(__DIR__,2)."/public/images/Star-empty.svg")?>
                                         <?php endfor; ?>
                                         <p>_/5</p>
                                     </div>
@@ -190,7 +189,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <?php 
+                            <?php
                                 end($avis);
                                 $fin = key($avis);
                                 foreach ($avis as $cle => $unAvis): ?>

@@ -1,4 +1,4 @@
-<?php require("header.php"); 
+<?php require __DIR__ . "/../header.php";
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -6,8 +6,8 @@
             return "<div class='bloc-erreurs'>
                         <p class='paragraphe-erreur'>$e[$codeE]</p>
                     </div>";
-        }   
-    } 
+        }
+    }
     function afficheRetours($r, $codeR)
     {
         if (isset($r[$codeR]))
@@ -15,8 +15,8 @@
             return "<div class='bloc-erreurs'>
                         <p class='paragraphe-valid'>$r[$codeR]</p>
                     </div>";
-        }   
-    }  
+        }
+    }
 ?>
 
         <style>
@@ -142,19 +142,19 @@
                                                 <input class="" type="number" name="quantite" min=1 max=<?= $produit->stock ?> value=<?=$produit->quantite ?>>
                                             <a href="<?= base_url() ?>/panier/supprimer/<?= $produit->idProd ?>">Supprimer</a>
                                         </div>
-                                        <h3> 
+                                        <h3>
                                             <span class="prixHt" prix="<?= $produit -> prixHt ?>">
                                                 <?= $produit -> prixHt ?>€
                                             </span> HT
                                         </h3>
-                                        <h3> 
+                                        <h3>
                                             <span class="prixTtc" prix="<?= $produit -> prixTtc ?>">
                                                 <?= $produit -> prixTtc ?>€
                                             </span> TTC
                                         </h3>
                                     </div>
                                 </article>
-                            <?php endforeach; ?>                
+                            <?php endforeach; ?>
                             <hr>
                         </div>
                         <div class="sous-totaux">
@@ -178,8 +178,8 @@
                             <h2>Code de réduction</h2>
                             <form action="<?= current_url() ?>" method="post" name="codeReduc">
                                 <input type="text" name="code" value="<?= $code ?>" required="required"/>
-                                <?= 
-                                    afficheErreurs($erreurs, 0) . 
+                                <?=
+                                    afficheErreurs($erreurs, 0) .
                                     afficheErreurs($erreurs, 1) .
                                     afficheRetours($retours, 0) .
                                     afficheRetours($retours, 1) .
@@ -192,9 +192,9 @@
                             <h2>Total
                                 (<span class="nbArt">
                                     <?= $sommeNbArticle ?>
-                                </span> article.s) : 
+                                </span> article.s) :
                                 <span class="totalTtc <?= $classCacheDiv ?>">
-                                    <?= $sommePrix ?> 
+                                    <?= $sommePrix ?>
                                 </span>
                                 <span class="totalTtc">
                                     <?= $sommePrix ?>
@@ -230,10 +230,10 @@
                             </li>
                         <?php endforeach; ?>
                     </ul>
-                </section>  
+                </section>
             <?php endif; ?>
         </main>
-<?php require("footer.php"); ?>
+<?php require __DIR__ . "/../footer.php"; ?>
 
 <script>
     <?php if (!empty($produits)): ?>
@@ -261,8 +261,8 @@
     updatePricePanier();
     updatePriceTotal();
     <?php endif; ?>
-    <?php if(session()->has("numero") && has_cookie("token_panier") 
-    && !(session()->has("ignorer") && session()->get("ignorer")==true) 
+    <?php if(session()->has("numero") && has_cookie("token_panier")
+    && !(session()->has("ignorer") && session()->get("ignorer")==true)
     && !(isset($ecraserOuFusionner) && $ecraserOuFusionner)): ?>
         var oui = new AlerteAlizon("Récupération panier","<?= current_url() ?>","Il y a déjà un panier associé à votre compte, voulez vous garder le panier que vous venez de faire, garder le panier enregistré sur votre compte ou fusionner les 2 ?");
         oui.ajouterBouton("Garder le nouveau",'normal-button petit-button supprimer-filtre rouge',"SupprAncien");

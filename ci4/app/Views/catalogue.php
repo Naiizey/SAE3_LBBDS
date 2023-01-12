@@ -1,4 +1,4 @@
-<?php require("page_accueil/header.php"); ?>
+<?php require("header.php"); ?>
 
 <?php model("\App\Models\ProduitCatalogue")->selectMax('prixttc')?>
 <main id=Catalogue>
@@ -72,7 +72,7 @@
         <div class="liste-produits">
         <?php if(isset($prods) && !empty($prods)): ?>
             <?php foreach($prods as $prod): ?>
-                <?= $cardProduit->display($prod)?>  
+                <?= $cardProduit->display($prod)?>
             <?php endforeach; ?>
             
                 
@@ -86,12 +86,11 @@
                         <?= (isset($message))?$message:"" ?>
                     </p>
         <div class="erreur-liste-produit">
-       
     </section>
 </main>
-<?php require("page_accueil/footer.php"); ?>
+<?php require("footer.php"); ?>
 <script>
-    cataloguePrice();   
+    cataloguePrice();
     boutonCliquable(
         document.querySelector(".mobile-ouvrir-filtres"),
         () => {
@@ -107,7 +106,7 @@
 
     selectAll();
         var upFilter = new filterUpdate(document.forms["filters"],
-        document.querySelector(".champsRecherche"), 
+        document.querySelector(".champsRecherche"),
         document.querySelector(".liste-produits"),
         document.querySelector(".supprimer-filtre"),
         document.querySelector(".voir-plus")

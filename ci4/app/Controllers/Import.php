@@ -5,6 +5,7 @@ use CodeIgniter\Files\File;
 
 class Import extends BaseController
 {
+    private $feedback;
     protected $helpers = ['form', 'filesystem'];
     
     public function __construct()
@@ -23,11 +24,11 @@ class Import extends BaseController
     {
         $data["estVendeur"] = $estVendeur;
         $data["controller"]= "import";
-        return view('page_accueil/import.php', $data);
+        return view('admin-vendeur/import.php', $data);
     }
 
-    public function upload() {       
-        if(session()->has("just_importe") && session()->get("just_importe") == true) {
+    public function upload() {
+        if (session()->has("just_importe") && session()->get("just_importe")) {
             $this->feedback=service("feedback");
             session()->set("just_importe", false);
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Catalogue importé");
@@ -37,7 +38,7 @@ class Import extends BaseController
         $filepath = WRITEPATH . 'uploads/' . $csv->store();
         $data = ['uploaded_fileinfo' => new File($filepath)];
         $this->importCSV($filepath);
-        return view('page_accueil/import.php', $data);
+        return view('admin-vendeur/import.php', $data);
     }
 
     public function importCSV($filepath) {
@@ -46,7 +47,7 @@ class Import extends BaseController
         $fichier = fopen($filepath, "r");
         $size = fstat($fichier)["size"];
 
-        while (($dataCSV = fgetcsv($fichier, $size, ';')) !== FALSE) {
+        while (($dataCSV = fgetcsv($fichier, $size, ';')) !== false) {
             $num = count($dataCSV);
             for ($c=0; $c < $num; $c++) {
                 $retour[$row][$c] = $dataCSV[$c];
@@ -55,7 +56,7 @@ class Import extends BaseController
         }
         fclose($fichier);
         $new_table = array();
-        for ($i=0; $i < count($retour); $i++) { 
+        for ($i=0; $i < count($retour); $i++) {
             //on itère sur chaque ligne
             if (count($retour[0]) == count($retour[$i]))
             {
@@ -71,13 +72,13 @@ class Import extends BaseController
         $importModel->CSVimport($result);
         delete_files(WRITEPATH.'uploads/', true);
         session()->set("just_importe", true);
-        return view('page_accueil/import.php', $data);
+        return view('admin-vendeur/import.php', $data);
     }
 
     /**
         * cette fonction prend les entêtes de la table produit et les retourne au format json /!\ Non finit !!!
         * @param none
-        * @return json 
+        * @return json
      */
     public function getentetes()
     {

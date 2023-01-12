@@ -1,4 +1,4 @@
-<?php require("header.php");
+<?php require __DIR__ . "/../header.php";
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -6,8 +6,8 @@
             return "<div class='bloc-erreurs'>
                                 <p class='paragraphe-erreur'>$e[$codeE]</p>
                     </div>";
-        }   
-    }  
+        }
+    }
 ?>
         </header>
         <main>
@@ -35,4 +35,4 @@
                 <a href="<?= base_url() ?>/mdpOublie">Mot de passe oublié ?</a>
             </div>
         </main>
-<?php require("footer.php"); ?>
+<?php require __DIR__ . "/../footer.php"; ?>

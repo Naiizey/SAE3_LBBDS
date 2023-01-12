@@ -10,7 +10,6 @@
                         <a class="onglet <?= ($controller==="Livraisons")?"onglet-selectionnee":"" ?>"  href="<?= base_url()."/livraison" ?>"> 
                             <h3>Livraison</h3>
                         </a>
-                       
                     
                     
                 </div>
@@ -25,7 +24,6 @@
                     <?php endif ?>
 
                     <h2><?= (isset($controller) && $controller === "Livraisons")?"Adresse livraison":"Adresse facture" ?></h2>
-                  
                     <form action='<?= current_url() ?>' method="post" name="form_adresse">
                         <div class="surNomPrenom">
                             <div>

@@ -1,7 +1,7 @@
 <!-- faire liens -->
 <!--dans le imput de recherche : onkeyup="fonction de recherche en php"-->
 <!-- ajuster les logos -->
-<?php require("header.php"); ?>
+<?php require __DIR__ . "/../header.php"; ?>
 <script></script>
                 <main>
                         <div id="dropzone">
@@ -12,7 +12,7 @@
                         </div>
                         <div id="preview"></div>
                 </main>
-<?php require("footer.php"); ?>
+<?php require __DIR__ . "/../footer.php"; ?>
 <script>
         dragNDrop();
         previewCSV();

@@ -14,12 +14,12 @@ class Home extends BaseController
 {
     public function index()
     {
-        return view('page_accueil/index.php');
+        return view('index.php');
     }
 
     public function connexion()
     {
-        return view('page_accueil/connexion.php');
+        return view('connexion.php');
     }
 }
 ```
@@ -53,7 +53,7 @@ $routes->get('/', 'Home');
 ```php
 public function connexion($id=null)
     {
-        return view('page_accueil/connexion.php');
+        return view('connexion.php');
     }
 ```
 

@@ -849,7 +849,21 @@ function cataloguePrice(){
 
 //Click bouton filtre media query
 function boutonCliquable(bouton,action){
-    bouton.addEventListener("click",action);
+    if(screen.width < 1200){
+        bouton.addEventListener("click",action);
+    }
+    else if(screen.width >= 1200 && bouton.classList.contains("bulle-ouvrir-filtres")){
+        bouton.addEventListener("click", () => {
+            document.querySelector(".partie-filtre").style.display = "block";
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "none";
+        })
+    }
+    else if(screen.width >= 1200 && bouton.classList.contains("fermer-filtre")){
+        bouton.addEventListener("click", () => {
+            document.querySelector(".partie-filtre").style.display = "none";
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "block";
+        })
+    }
 }
 
 //Ajout de la classe "est-filtre-ouvert" au filtre

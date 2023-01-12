@@ -2189,6 +2189,51 @@ h3 > .lienPasArticlePanier {
     position: relative;
 }
 
+.divAjoutCommentConnect {
+    z-index: 1000;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 5%;
+}
+
+.divConnectPetit {
+    width: 35%;
+}
+
+.divConnectGrand {
+    width: 58%;
+}
+
+.divAjoutCommentConnect p {
+    margin: 0;
+    font-size: large;
+    align-self: center;
+    background-color: white;
+    width: fit-content;
+    padding: .2em 1em;
+    border-radius: 30px;
+}
+
+.divAjoutCommentConnect a {
+    background-color: #24a064;
+    width: fit-content;
+    align-self: center;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 30px;
+    padding: .2em 1em;
+}
+
+.divAjoutCommentBlur {
+    filter: blur(1.5px);
+    opacity: .7;
+    pointer-events: none;
+    margin-bottom: 1em;
+}
+
 .divAjoutCommentVide {
     width: 166.5%;
 }

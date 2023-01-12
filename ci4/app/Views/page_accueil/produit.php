@@ -187,11 +187,23 @@
                         <div class="divListeAvis">
 
                             
-                            <?php if (!empty($avis)): ?>
+                            <?php if (!empty($avis) && (session()->has("numero"))): ?>
                             <div class="divAjoutComment">
-                            <?php else: ?>
+                            <?php elseif ((!empty($avis)) && (!session()->has("numero"))): ?>
+                            <div class="divAjoutCommentConnect divConnectPetit">
+                                <p>Vous devez vous connecter pour commenter</p>
+                                <a href="">Se connecter</a>
+                            </div>
+                            <div class="divAjoutComment divAjoutCommentBlur">
+                            <?php elseif ((empty($avis)) && (!session()->has("numero"))): ?>
+                            <div class="divAjoutCommentConnect divConnectGrand">
+                                <p>Vous devez vous connecter pour commenter</p>
+                                <a href="">Se connecter</a>
+                            </div>
+                            <div class="divAjoutComment divAjoutCommentBlur divAjoutCommentVide">
+                            <?php elseif ((empty($avis)) && (session()->has("numero"))): ?>
                             <div class="divAjoutComment divAjoutCommentVide">
-                            <?php endif ?>
+                            <?php endif ?>                                
                                 <form action="<?= current_url()."#avis" ?>" method="post">
                                     <div class="divEtoilesComment">
                                         <?php for ($i=0; $i < 5 ; $i++) : ?>

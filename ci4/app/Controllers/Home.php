@@ -713,7 +713,11 @@ class Home extends BaseController
 
             if(!empty($post)){
                 $sanctions = model("\App\Models\SanctionTemp");
-                $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+                if ($sanctions->isTimeout($post["numClient"]))
+                {
+                    $sanctions->delete($post["numClient"]);
+                    $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+                }
             }
         }
 

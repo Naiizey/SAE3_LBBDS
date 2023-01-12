@@ -730,7 +730,7 @@ class Home extends BaseController
 
         $data["controller"]="Liste des bannissements";
         $data["role"]="admin";
-        $data["bannissements"]=model("\App\Models\SanctionTemp")->findAll();
+        $data["bannissements"]=model("\App\Models\SanctionTemp")->TimeoutsActuels();
 
         return view("admin-vendeur/bannissements.php",$data);
     }

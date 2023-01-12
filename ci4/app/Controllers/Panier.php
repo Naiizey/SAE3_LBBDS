@@ -87,19 +87,19 @@ class Panier extends BaseController
         $get=$this->request->getGet();
 
         //Choix alerte fusion
-        if(!empty($get)){
-            if(isset($get["SupprActuel"]) && $get["SupprActuel"]==1 ){
+        if (!empty($get)){
+            if (isset($get["SupprActuel"]) && $get["SupprActuel"]==1 ) {
                 model("\App\Models\ProduitPanierVisiteurModel")->viderPanier(get_cookie("token_panier"));
                 delete_cookie("token_panier");
                 $data["ecraserOuFusionner"]=true;
-            } else if(isset($get["SupprAncien"]) && $get["SupprAncien"]==1 ){
+            } elseif (isset($get["SupprAncien"]) && $get["SupprAncien"]==1 ) {
                 model("\App\Models\ProduitPanierCompteModel")->viderPanier(session()->get("numero"));
                 model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
                 delete_cookie("token_panier");
                 $data["ecraserOuFusionner"]=true;
-            } else if(isset($get["Ignorer"]) && $get["Ignorer"]==1 ){
+            } elseif (isset($get["Ignorer"]) && $get["Ignorer"]==1 ) {
                 session()->set("ignorer",true);
-            } else if(isset($get["Confirmer"]) && $get["Confirmer"]==1 ){
+            } elseif (isset($get["Confirmer"]) && $get["Confirmer"]==1 ) {
                 model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
                 delete_cookie("token_panier");
                 $data["ecraserOuFusionner"]=true;
@@ -159,15 +159,11 @@ class Panier extends BaseController
 
                 $codeReduc = $modelCodeReduc->getCodeReducByCode($post['code']);
 
-                if (empty($codeReduc))
-                {
+                if (empty($codeReduc)) {
                     $issues[0] = "Ce code n'existe pas";
-                }
-                else
-                {
+                } else {
                     //Le code étant unique dans la base on choisi le premier et seul résultat du findAll
                     $codeReduc = $codeReduc[0];
-
                     $date_ajd = date("Y-m-d H:i:s");
                     $date_debut = $codeReduc->date_debut . " " . $codeReduc->heure_debut;
                     $date_fin = $codeReduc->date_fin . " " . $codeReduc->heure_fin;
@@ -208,7 +204,7 @@ class Panier extends BaseController
             }
         }
         //Fusion automatique du panier
-        else if(has_cookie("token_panier") && session()->has("numero"))
+        elseif (has_cookie("token_panier") && session()->has("numero"))
         {
             
             model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));

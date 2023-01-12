@@ -70,9 +70,9 @@
                                     <input class="input-option-plus-10" type="number" name="quantitePlus" min=0 max=<?= $prod -> stock - ((isset($quantitePanier))?$quantitePanier:0) ?>
                                     value="<?php
                                     $max=($prod -> stock - ((isset($quantitePanier))?$quantitePanier:0));
-                                    if(10 > $max){
+                                    if (10 > $max) {
                                         echo $max;
-                                    }else{
+                                    } else {
                                         echo 10;
                                     }
                                     ?>">
@@ -150,20 +150,20 @@
                             <div class="divAjoutComment divAjoutCommentBlur divAjoutCommentVide">
                             <?php elseif ((empty($avis)) && (session()->has("numero"))): ?>
                             <div class="divAjoutComment divAjoutCommentVide">
-                            <?php endif ?>                                
+                            <?php endif ?>
                                 <form action="<?= current_url()."#avis" ?>" method="post">
                                     <div class="divEtoilesComment">
                                         <?php for ($i=0; $i < 5 ; $i++) : ?>
-                                        <?= file_get_contents(dirname(__DIR__,2)."/public/images/Star-empty.svg")?>
+                                        <?= file_get_contents(dirname(__DIR__, 2)."/public/images/Star-empty.svg")?>
                                         <?php endfor; ?>
                                         <p>_/5</p>
                                         <input type="text" class="inputInvisible" name="noteAvis">
                                     </div>
                                     <div class="divProfilText">
-                                        <img src="<?=base_url() ?>/images/header/profil.svg">
+                                        <img src="<?=base_url()?>/images/header/profil.svg">
                                         <input type="textarea" name="contenuAvis" placeholder="Ajouter un commentaire... (optionnel)" autocomplete="off"></textarea>
                                     </div>
-                                    <?= afficheErreurs($erreurs,0) . afficheErreurs($erreurs,1) ?>
+                                    <?= afficheErreurs($erreurs, 0) . afficheErreurs($erreurs,1) ?>
                                     <div class="divBoutonsComment">
                                         <button type="reset" value="Reset">Annuler</button>
                                         <div>

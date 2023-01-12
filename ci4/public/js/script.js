@@ -854,29 +854,33 @@ function boutonCliquable(bouton,action){
         bouton.addEventListener("click", () => {
             document.querySelector(".partie-filtre").style.display = "block"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
-            localStorage.setItem("open", 'opennedFilters');
+            localStorage.setItem("open", true);
         })
     }
     else if(screen.width >= 1200 && bouton.classList.contains("fermer-filtre")){
         bouton.addEventListener("click", () => {
             document.querySelector(".partie-filtre").style.display = "none"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "block"
-            localStorage.setItem("close", 'closedFilters');
+            localStorage.setItem("open", false);
         })
     }
 }
 
 function loadFilters(){
     window.addEventListener("load", () => {
-        if(localStorage.getItem("open") === "opennedFilters"){
+        if(localStorage.getItem("open")){
             document.querySelector(".partie-filtre").style.display = "block"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
             localStorage.removeItem("open");
         }
-        else if(localStorage.getItem("close") === "closedFilters"){
+        else if(!localStorage.getItem("open")){
             document.querySelector(".partie-filtre").style.display = "none"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "block"
-            localStorage.removeItem("close");
+            localStorage.removeItem("open");
+        }
+        else{
+            document.querySelector(".partie-filtre").style.display = "none"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "block"	
         }
     });
 }

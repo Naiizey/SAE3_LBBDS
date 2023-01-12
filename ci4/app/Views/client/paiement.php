@@ -20,7 +20,7 @@
                         <input type="text" name="nomCB" required="required" value="<?= $nomCB?>"/>
                         <label class="labelCB">Numéro de votre carte bancaire<span class="requis">*</span> :</label>
                         <div class="conteneurCB">
-                            <?php include(dirname(__DIR__,2)."/public/images/header/paiement.svg")?>
+                            <?php include(dirname(__DIR__,3)."/public/images/header/paiement.svg")?>
                             <input type="text" name="numCB" required="required" value="<?= $numCB?>"/>
                         </div>
                         <?=

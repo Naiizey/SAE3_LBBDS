@@ -21,7 +21,7 @@
     <main class="mainPanier">
         <div>
             <a class="lienAlizonPanier" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
-                <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
+                <?php include(dirname(__DIR__, 3)."/public/images/header/logo.svg")?>
                 <h1>Alizon</h1>
             </a>
         </div>
@@ -85,12 +85,12 @@
                                             <input class="" type="number" name="quantite" min=1 max=<?= $produit->stock ?> value=<?=$produit->quantite ?>>
                                         <a href="<?= base_url() ?>/panier/supprimer/<?= $produit->idProd ?>">Supprimer</a>
                                     </div>
-                                    <h3> 
+                                    <h3>
                                         <span class="prixHt" prix="<?= $produit -> prixHt ?>">
                                             <?= $produit -> prixHt ?>€
                                         </span> HT
                                     </h3>
-                                    <h3> 
+                                    <h3>
                                         <span class="prixTtc" prix="<?= $produit -> prixTtc ?>">
                                             <?= $produit -> prixTtc ?>€
                                         </span> TTC
@@ -121,8 +121,8 @@
                         <h2>Code de réduction</h2>
                         <form action="<?= current_url() ?>" method="post" name="codeReduc">
                             <input type="text" name="code" value="<?= $code ?>" required="required"/>
-                            <?= 
-                                afficheErreurs($erreurs, 0) . 
+                            <?=
+                                afficheErreurs($erreurs, 0) .
                                 afficheErreurs($erreurs, 1) .
                                 afficheRetours($retours, 0) .
                                 afficheRetours($retours, 1) .
@@ -135,9 +135,9 @@
                         <h2>Total
                             (<span class="nbArt">
                                 <?= $sommeNbArticle ?>
-                            </span> article.s) : 
+                            </span> article.s) :
                             <span class="totalTtc <?= $classCacheDiv ?>">
-                                <?= $sommePrix ?> 
+                                <?= $sommePrix ?>
                             </span>
                             <span class="totalTtc">
                                 <?= $sommePrix ?>
@@ -173,7 +173,7 @@
                         </li>
                     <?php endforeach; ?>
                 </ul>
-            </section>  
+            </section>
         <?php endif; ?>
     </main>
 <?php require __DIR__ . "/../footer.php"; ?>
@@ -205,7 +205,7 @@
     updatePriceTotal();
     <?php endif; ?>
     <?php if(session()->has("numero") && has_cookie("token_panier")
-    && !(session()->has("ignorer") && session()->get("ignorer")==true)
+    && !(session()->has("ignorer") && session()->get("ignorer"))
     && !(isset($ecraserOuFusionner) && $ecraserOuFusionner)): ?>
         var oui = new AlerteAlizon("Récupération panier","<?= current_url() ?>","Il y a déjà un panier associé à votre compte, voulez vous garder le panier que vous venez de faire, garder le panier enregistré sur votre compte ou fusionner les 2 ?");
         oui.ajouterBouton("Garder le nouveau",'normal-button petit-button supprimer-filtre rouge',"SupprAncien");

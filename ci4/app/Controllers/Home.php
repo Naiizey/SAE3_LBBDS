@@ -553,12 +553,10 @@ class Home extends BaseController
 
 
         $this->validator = Services::validation();
-        if (!empty($post))
-        {
+        if (!empty($post)) {
             $paiement = service('authentification');
             $issues=$paiement->paiement($post);
-            if (empty($issues))
-            {
+            if (empty($issues)) {
                 return redirect()->to("/validation");
             }
         }

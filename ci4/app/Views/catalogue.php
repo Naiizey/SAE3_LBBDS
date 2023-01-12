@@ -1,8 +1,8 @@
-<?php require("page_accueil/header.php"); ?>
+<?php require("header.php"); ?>
 
 <?php model("\App\Models\ProduitCatalogue")->selectMax('prixttc')?>
 <main id=Catalogue>
-    <button class="mobile-ouvrir-filtres">
+    <button class="bulle-ouvrir-filtres">
             <h2>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
                     <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"/>
@@ -16,9 +16,9 @@
             <div class="titre-filtre">
                 <h1>Filtres</h1>
                 <button class="fermer-filtre">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
                 </button>
             </div>
             <div class="onglets">
@@ -57,9 +57,9 @@
                         <div class="slider">
                             <div class="progress"></div>
                             <div class="range-input">
-                            <input type="range" class="range-min" min="<?= $min_price ?>" max="<?= $max_price - 1 ?>"  value="<?php if(isset($_GET["prix_min"])):echo $_GET["prix_min"]; else: echo $min_price;endif?>" step="1">
-                            <input type="range" class="range-max" min="<?= $min_price + 1 ?>" max="<?= $max_price ?>"  value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" step="1">
-                        </div>
+                                <input type="range" class="range-min" min="<?= $min_price ?>" max="<?= $max_price - 1 ?>"  value="<?php if(isset($_GET["prix_min"])):echo $_GET["prix_min"]; else: echo $min_price;endif?>" step="1">
+                                <input type="range" class="range-max" min="<?= $min_price + 1 ?>" max="<?= $max_price ?>"  value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" step="1">
+                            </div>
                         </div>
                         <input type="number" name="prix_max" id="prix_max" value="<?php if(isset($_GET["prix_max"])):echo $_GET["prix_max"]; else: echo $max_price; endif?>" min="<?= $min_price + 1 ?>" max="<?= $max_price ?>">
                     </section>
@@ -72,10 +72,8 @@
         <div class="liste-produits">
         <?php if(isset($prods) && !empty($prods)): ?>
             <?php foreach($prods as $prod): ?>
-                <?= $cardProduit->display($prod)?>  
+                <?= $cardProduit->display($prod)?>
             <?php endforeach; ?>
-            
-                
         <?php endif; ?>
         </div>
         <div class="nav-page">
@@ -86,28 +84,27 @@
                         <?= (isset($message))?$message:"" ?>
                     </p>
         <div class="erreur-liste-produit">
-       
     </section>
 </main>
-<?php require("page_accueil/footer.php"); ?>
+<?php require("footer.php"); ?>
 <script>
-    cataloguePrice();   
+    cataloguePrice();
     boutonCliquable(
-        document.querySelector(".mobile-ouvrir-filtres"),
+        document.querySelector(".bulle-ouvrir-filtres"),
         () => {
-            switchEtatFiltre(document.querySelectorAll(".mobile-ouvrir-filtres, .partie-filtre"));
+            switchEtatFiltre(document.querySelectorAll(".bulle-ouvrir-filtres, .partie-filtre"));
             window.scrollTo(0,0);
             }
         );
 
     boutonCliquable(
         document.querySelector(".fermer-filtre"),
-        () => switchEtatFiltre(document.querySelectorAll(".mobile-ouvrir-filtres, .partie-filtre"))
+        () => switchEtatFiltre(document.querySelectorAll(".bulle-ouvrir-filtres, .partie-filtre"))
         );
 
     selectAll();
         var upFilter = new filterUpdate(document.forms["filters"],
-        document.querySelector(".champsRecherche"), 
+        document.querySelector(".champsRecherche"),
         document.querySelector(".liste-produits"),
         document.querySelector(".supprimer-filtre"),
         document.querySelector(".voir-plus")

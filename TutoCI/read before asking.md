@@ -7,7 +7,7 @@ solution: Restart ci4
 ## require d'un fichier dans un autre directory
 
 ```php
-require(__DIR__."/../page_accueil/footer.php");
+require(__DIR__."/../footer.php");
 ```
 
 ## erreur 

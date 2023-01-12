@@ -715,7 +715,8 @@ class Home extends BaseController
                 $sanctions = model("\App\Models\SanctionTemp");
                 if ($sanctions->isTimeout($post["numClient"]))
                 {
-                    $sanctions->delete($post["numClient"]);
+                    $GLOBALS['invalidation'] = $this->feedback->afficheInvalidation("Cet utilisateur est déjà banni !");
+                }else{
                     $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
                 }
             }

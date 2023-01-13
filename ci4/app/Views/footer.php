@@ -125,7 +125,7 @@
                 </div>
             </div>
             <div>
-                <a href="commmandes" class="lienCGU"> <!-- Lien mentions légales -->
+                <a href=<?= base_url() . "/commandes"?>>
                     <p>Mes Commandes</p>
                 </a>
                 <a href="" class="lienCGU"> <!-- Lien mentions légales -->

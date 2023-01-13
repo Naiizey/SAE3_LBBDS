@@ -87,6 +87,35 @@ int enfiler(File *file, Element *nvElement, int *indice, int maxCapacitee)
     return 0;
 }
 
+
+int soft_enfiler(File *file, Element *nvElement)
+{
+    Element *nouveau = malloc(sizeof(*nouveau));
+    if (file == NULL || nouveau == NULL)
+    {
+        return -1;
+    }
+
+    
+
+    if ((*file) != NULL) /* La file n'est pas vide */
+    {
+        /* On se positionne à la fin de la file */
+        Element *elementActuel = *file;
+        while (elementActuel->suivant != NULL)
+        {
+            elementActuel = elementActuel->suivant;
+        }
+        elementActuel->suivant = nvElement;
+    }
+    else /* La file est vide, notre élément est le premier */
+    {
+        *file = nvElement;
+    }
+  
+    return 0;
+}
+
 void eraseFile(File *file)
 {
     //on détruit la file
@@ -209,6 +238,34 @@ int copier_file(File *file, File *file2, int maxCapacitee)
     {
         printf("enfilage élement\n");
         enfiler(file2, actuel, &ind, maxCapacitee);
+        actuel = actuel->suivant;
+    
+    }
+    return ind;
+}
+
+
+
+
+int copier_file_tr(File *file, File *file2,File * tri, int maxCapacitee)
+{
+    int ind;
+    initFile(file2,&ind);
+    if (file == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    Element *actuel;
+    actuel = (*file);
+
+    while (actuel != NULL)
+    {
+        printf("enfilage élement\n");
+        enfiler(file2, actuel, &ind, maxCapacitee);
+        if(strcmp(actuel->etat,"destinataire")){
+            soft_enfiler(tri, actuel);  
+        }
         actuel = actuel->suivant;
     
     }

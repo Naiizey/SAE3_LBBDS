@@ -30,6 +30,7 @@ struct Option
 };
 
 int indice_array_user;
+int max_array_user;
 arrayUser array_user=NULL;
 
 typedef struct Option lst_option[MAX_OPTIONS];
@@ -446,7 +447,7 @@ cJSON * getJson(char * buf, int cnx){
             if(maxLongStr<actualLongStr){
                 maxLongStr=maxLongStr+1024;
                 str_json=realloc(str_json,(maxLongStr) * sizeof(char));
-                
+                 
             }
             printf("JSON %ld:%s\n",strlen(str_json),str_json);
             
@@ -473,11 +474,13 @@ cJSON * getJson(char * buf, int cnx){
 
 int hereConnection(user * client, struct sockaddr addr, char * pathToMdpFile){
     if(array_user==NULL){
-        indice_array_user=20;
-        array_user=init_array_session(indice_array_user);
+        indice_array_user=0;
+        max_array_user=20;
+        array_user=init_array_session(max_array_user);
+
     }
     printf("Poursuite connection...\n");
-    return connection(client, addr, array_user, &indice_array_user, pathToMdpFile);
+    return connection(client, addr, array_user, &indice_array_user, &max_array_user , pathToMdpFile);
 }
 
 int handleNEW(cJSON * new,File * liste,user * cli,int * capaLivraison,int maxCapaLivraison, struct sockaddr addr,char * pathToFile ){
@@ -498,6 +501,8 @@ int handleNEW(cJSON * new,File * liste,user * cli,int * capaLivraison,int maxCap
 int handleAUT(cJSON * js, struct sockaddr addr, char * pathToFile){
     if(js == NULL) return -40;
     user cli;
+    cli.id=NULL;
+    cli.pass=NULL;
     printf("???: %s\n",cJSON_Print(js));
     int result=parcoursPourAuth(js->child,&cli);
    
@@ -505,7 +510,8 @@ int handleAUT(cJSON * js, struct sockaddr addr, char * pathToFile){
     {
         printf("Connection...\n");
         result=hereConnection(&cli,addr,pathToFile);
-        printf("%s\n",getIp(cli.addr));
+        if (result==0)
+            printf("%s\n",getIp(cli.addr));
     }
 
     return result;

@@ -159,8 +159,9 @@ function has_empty_cell(row) {
  **/
 function checkCSV()
 {
+    console.log("checkCSV");
     let preview = document.getElementById("preview");
-
+    let correct = 0;
     //ajout d'un event listener sur le changement de fichier
     document.getElementById("file").addEventListener("change", function (e) {
         preview.innerHTML = " chargement du fichier...";
@@ -221,7 +222,7 @@ function checkCSV()
                 }
                 else {
                     let row = table.insertRow(-1);
-                    let is_empty = false
+                    let is_empty = false;
                     //si la ligne contient des cellules vides
                     if (has_empty_cell(cells) > 0) {
                         for (let j = 0; j < cells.length; j++) {
@@ -231,6 +232,8 @@ function checkCSV()
                                 preview.innerHTML = "le fichier contient des cellules vides";
                                 preview.style.color = "red";
                                 is_empty = true;
+                                correct = -1;
+                                console.log("erreur cellule vide");
                             }
                             else {
                                 cells[j] = "<span style='color:black'>" + cells[j] + "</span>";
@@ -244,12 +247,22 @@ function checkCSV()
                         table.deleteRow(-1);
                     }
                 }
-            }
+            }   
             preview.appendChild(table);
+            if (correct == 0) {
+                console.log("on delete la table");
+                console.log(correct);
+                //on delete la table
+                preview.innerHTML = "";
+                previewCSV();
+            }
+
             //ajout d'un br
             // preview.innerHTML += "<br><br><br><br>";
         });
     });
+
+
 }
 
 /**
@@ -257,96 +270,67 @@ function checkCSV()
  * @returns {void}
  */
 function previewCSV(){
+    console.log("PreviewCSV");
     let preview = document.getElementById("preview");
+    preview.innerHTML = "PreviewCSV";
     
-    //ajout d'un event listener sur le changement de fichier
-    document.getElementById("file").addEventListener("change", function (e) {
-        preview.innerHTML = " chargement du fichier...";
-        //récupération du fichier
-        let file = e.target.files[0];
-        //création d'un objet FileReader
-        let reader = new FileReader();
-        //lecture du fichier
-        //prend l'en-tête du fichier et l'ajoute au tableau
-        let entete = getentete();
-        
-        
+    preview.innerHTML = " chargement du fichier...";
+    //récupération du fichier de l'élément qui à l'id file
+    let file = document.getElementById("file").files[0];
+    //création d'un objet FileReader
+    let reader = new FileReader();
+    //lecture du fichier
+    //prend l'en-tête du fichier et l'ajoute au tableau
+    let entete = getentete();
+    
+    
 
-        reader.readAsText(file);
-        //ajout d'un event listener sur le chargement du fichier
-        reader.addEventListener("load", function () {
-            preview.innerHTML = "<br><h3>Prévisualisation</h3><br>";
-            //si la longueur de entete est > longueur de la première ligne
-            var table = document.createElement("table");
-            let csv = reader.result;
-            //création du tableau
-            let lines = csv.split("\n");
-            for (let i = 0; i < 10 && i < lines.length; i++) {
-                let line = lines[i];
-                let cells = line.split(";");
-                if (entete.size > cells.length)
-                {
-                    //on ajoute une ligne en rouge
-                    console.log("ligne non valide");
-                    preview.innerHTML = "nombre de colonnes invalide";
-                    preview.style.color = "red";
-                    //on centre le texte
-                    preview.style.textAlign = "center";
-                    
-                }
-                else
-                {
-                    if (i == 0)
-                    {
-                        //on ajoute une 1ère ligne fusionnée
-                        console.log("ligne valide");
-                        preview.innerHTML = "nombre de colonnes valide :";
-                        console.log(cells);
-                        preview.style.color = "green";
-                        //on centre le texte
-                        preview.style.textAlign = "center";
-                        document.getElementById("submit").disabled = false;
-                    }
-
-                }
-                let row = table.insertRow(-1);
-                if (i === 0) {
-                    for(let j = 0; j < cells.length; j++){
-                        //si l'entête n'est pas dans les clés de entete
-                        if (!(entete.has(cells[j].trim()))){
-                            console.log("entete");
-                            console.log(entete);
-                            console.log("cell non valide:" + cells[j] + "|");
-                            cells[j] = "<span style='color:red'>" + cells[j] + "</span>";
-                        }
-                        else{
-                            cells[j] = "<span style='color:green'>" + cells[j] + "</span>";
-                        }
-                        let cell = row.insertCell(-1);
-                        cell.innerHTML = cells[j];
-                    }
-                }
-                else
-                {
-                    for (let j = 0; j < cells.length; j++) {
-                        if (cells[j].length > 20) {
-                            cells[j] = cells[j].substring(0, 20) + "...";
-                        }
-                        if (cells[j].trim() === "") {
-                            cells[j] = "<span style='color:red'>vide</span>";
-                        }
-                        else
-                        {
-                            console.log("cell valide:" + cells[j] + "|");
-                        }
-                        let cell = row.insertCell(-1);
-                        cell.style.color = "black";
-                        cell.innerHTML = cells[j];
-                    }
-                }   
+    reader.readAsText(file);
+    //ajout d'un event listener sur le chargement du fichier
+    reader.addEventListener("load", function () {
+        preview.innerHTML = "<br><h3>Prévisualisation</h3><br>";
+        //si la longueur de entete est > longueur de la première ligne
+        var table = document.createElement("table");
+        let csv = reader.result;
+        //création du tableau
+        let lines = csv.split("\n");
+        for (let i = 0; i < 10 && i < lines.length; i++) {
+            let line = lines[i];
+            let cells = line.split(";");
+            
+            if (i == 0)
+            {
+                //on ajoute une 1ère ligne fusionnée
+                console.log("ligne valide");
+                preview.innerHTML = "nombre de colonnes valide :";
+                console.log(cells);
+                preview.style.color = "green";
+                //on centre le texte
+                preview.style.textAlign = "center";
+                document.getElementById("submit").disabled = false;
             }
-            preview.appendChild(table);
-       });
+            let row = table.insertRow(-1);
+            if (i === 0) {
+                for(let j = 0; j < cells.length; j++){
+                        cells[j] = "<span style='color:black'>" + cells[j] + "</span>";
+                    let cell = row.insertCell(-1);
+                    cell.innerHTML = cells[j];
+                    }
+                    
+            }
+            else
+            {
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].length > 20) {
+                        cells[j] = cells[j].substring(0, 20) + "...";
+                    }
+                    let cell = row.insertCell(-1);
+                    cell.style.color = "black";
+                    cell.innerHTML = cells[j];
+                }
+            }   
+        }
+        preview.appendChild(table);
     });
 }
 

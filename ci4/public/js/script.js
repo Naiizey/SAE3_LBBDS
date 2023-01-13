@@ -1426,7 +1426,7 @@ function setUpPaiment(){
     document.querySelector("[type='submit']").addEventListener("click", (e) => {
         e.preventDefault(); 
         let forms= [
-            document.forms["form_adresse"],
+           
             document.forms["form_paiement"]
         ]
         var theForm= document.createElement("form");    

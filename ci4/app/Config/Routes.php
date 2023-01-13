@@ -109,17 +109,28 @@ $routes->set404Override();
 
     $routes->get('/admin', 'Home::admin');
     
-    $routes->get('/admin/Clients', 'Home::lstClients/liste');
-    $routes->get('/admin/Clients/bannir', 'Home::lstClients/bannir');
-    $routes->post('/admin/Clients/bannir', 'Home::lstClients/bannir');
+    $routes->get('/admin/clients', 'Home::lstClients/liste');
+    $routes->get('/admin/clients/bannir', 'Home::lstClients/bannir');
+    $routes->post('/admin/clients/bannir', 'Home::lstClients/bannir');
+    $routes->get('/admin/clients/(:num)', 'Home::lstClients/bannir');
+    $routes->post('/admin/clients/(:num)', 'Home::lstClients/bannir');
+    
+    $routes->get('/admin/bannissements', 'Home::bannissements');
+    $routes->post('/admin/bannissements', 'Home::bannissements');
 
-    $routes->get('/(admin)/signalements', 'Home::lstSignalements');
-    $routes->post('/(admin)/signalements', 'Home::lstSignalements');
+    $routes->get('/admin/signalements', 'Home::lstSignalements');
+    $routes->post('/admin/signalements', 'Home::lstSignalements');
+
+    $routes->get('/admin/signalements/(:num)', 'Home::lstSignalements/$1');
+    $routes->post('/admin/signalements/(:num)', 'Home::lstSignalements/$1');
 
     $routes->get('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');
     $routes->post('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');
 
     $routes->get('/vendeur/import/entetes', 'Import::getentetes');
+
+    $routes->get('/connexion/retourProduit/(:num)', 'Home::produit/$1' ,['filter' => 'connexion']);
+    $routes->get('/connexion/retourPanier', 'Panier::getProduitPanierClient' ,['filter' => 'connexion']);
 ##param uri (:any) et dans methode /$1
 
 /*

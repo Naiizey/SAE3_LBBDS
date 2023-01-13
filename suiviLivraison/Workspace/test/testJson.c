@@ -16,6 +16,7 @@
 
 int main(int argc, char const *argv[])
 {
+    int indice;
     char buff[1024];
  
     int fd = open("test.json", O_RDONLY);
@@ -48,10 +49,10 @@ int main(int argc, char const *argv[])
         #endif
         
         File liste;
-        initFile(&liste);
+        initFile(&liste,&indice);
 
         
-        int retour = parcours(json,&liste);
+        int retour = parcours(json,&liste,NULL);
         if(retour != -1){
             //sleep(2);
             cJSON * oui = envoiLivraison(&liste,"");

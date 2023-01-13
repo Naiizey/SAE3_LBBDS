@@ -33,7 +33,17 @@ class SanctionTemp extends Model
         $this->save($sanction);
     }
 
+    public function TimeoutsActuels(){
+        // supprime les sanctions qui sont déjà expirées
+        $this->where('date_fin <',Time::now("Europe/Paris",'fr-FR')->toDateString())->orWhere('date_fin',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin <',Time::now("Europe/Paris",'fr-FR')->toTimeString())->delete();
+        
+        return $this->where('date_fin',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin >',Time::now("Europe/Paris",'fr-FR')->toTimeString())->findAll();
+    }
+
     public function isTimeout($numCompte){
+        // supprime les sanctions qui sont déjà expirées
+        $this->where('date_fin <',Time::now("Europe/Paris",'fr-FR')->toDateString())->orWhere('date_fin',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin <',Time::now("Europe/Paris",'fr-FR')->toTimeString())->delete();
+        
         return ($this->where('num_compte',strval($numCompte))->where('date_fin',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin >',Time::now("Europe/Paris",'fr-FR')->toTimeString())->countAllResults()) > 0;
     }
     

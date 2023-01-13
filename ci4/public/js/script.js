@@ -550,44 +550,45 @@ function lstClients(){
     var lignes=document.getElementsByClassName("lignesClients");
     // Récupération de tous les numéros de clients
     var numClients=document.getElementsByClassName("numClients");
-    // Récupération de tous les anchors de la liste des clients
+    // Récupération de tous les boutons de la liste des clients
     var buttons=document.getElementsByClassName("buttonSanction");
 
     for (let numLigne=0; numLigne<lignes.length; numLigne++){
-        let ligneA=lignes.item(numLigne);
         var clientA=numClients.item(numLigne).textContent;
+        lignes.item(numLigne).clientA=clientA;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
-        ligneA.addEventListener("click", liensLstClients);
-        ligneA.clientA=clientA;
+        lignes.item(numLigne).addEventListener("click", liensLstClients);
         let buttonA=buttons.item(numLigne);
-        // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
+        // Ajout au bouton actuel du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
         if(bannir){
             buttonA.addEventListener("click", () => {
-                ligneA.removeEventListener("click", liensLstClients);
+                // supprime le lien de la ligne, pour ne pas cliquer dessus à la place du bouton
+                lignes.item(numLigne).removeEventListener("click", liensLstClients);
     
+                document.getElementsByClassName("titreSanction")[0].innerHTML = `Bannir le client n°${lignes.item(numLigne).clientA} ?`;
                 afficherSanctions();
-    
-                document.getElementsByClassName("titreSanction")[0].innerHTML = `Bannir le client n°${clientA} ?`;
     
                 document.getElementById("timeout").addEventListener("click", () => {
                     cacherSanctions();
-                    afficherTimeout(clientA);
-                    ligneA.addEventListener("click", liensLstClients);
+                    afficherTimeout(lignes.item(numLigne).clientA);
+                    lignes.item(numLigne).addEventListener("click", liensLstClients);
                 })
     
                 document.getElementById("fermer").addEventListener("click", () => {
                     cacherSanctions();
-                    ligneA.addEventListener("click", liensLstClients);
+                    lignes.item(numLigne).addEventListener("click", liensLstClients);
                 })
             })
         }
     }
 
+    // fonction qui met le lien vers l'espace du client de la ligne
     function liensLstClients(event){
         event.cancelBubble = true;
         window.location.assign(`${base_url}/admin/espaceClient/${event.currentTarget.clientA}`);
     }
 
+    // fonction qui affiche la div de choix de sanctions
     function afficherSanctions(){
         let sur_alerte = document.getElementsByClassName("sur-alerteSanctions")[0];
         let page = document.querySelectorAll("main, header, footer");
@@ -598,6 +599,7 @@ function lstClients(){
         }
     }
 
+    // fonction qui cache la div de choix de sanctions
     function cacherSanctions(){
         let sur_alerte = document.getElementsByClassName("sur-alerte")[0];
         let page = document.querySelectorAll("main, header, footer");
@@ -608,6 +610,7 @@ function lstClients(){
         }
     }
 
+    // fonction qui affiche la div pour bannir temporairement un client
     function afficherTimeout(clientA){
         document.getElementById("numClient").value = clientA;
         document.getElementsByClassName("titreSanction")[1].innerHTML = `Bannir temporairement le client n°${clientA} ?`;
@@ -622,6 +625,7 @@ function lstClients(){
         document.getElementById("fermerTimeout").addEventListener("click", cacherTimeout)
     }
 
+    // fonction qui cache la div pour bannir temporairement un client
     function cacherTimeout(){
         let sur_alerteTimeout = document.getElementsByClassName("sur-alerteTimeout")[0];
         let page = document.querySelectorAll("main, header, footer");
@@ -854,31 +858,33 @@ function boutonCliquable(bouton,action){
     }
     else if(screen.width >= 1200 && bouton.classList.contains("bulle-ouvrir-filtres")){
         bouton.addEventListener("click", () => {
-            document.querySelector(".partie-filtre").style.display = "block"
+            document.querySelector(".partie-filtre").style.display = "flex"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
-            localStorage.setItem("open", 'opennedFilters');
+            document.querySelector(".bulle-ouvrir-tris").style.display = "none"
+            localStorage.setItem("open", true);
         })
     }
     else if(screen.width >= 1200 && bouton.classList.contains("fermer-filtre")){
         bouton.addEventListener("click", () => {
             document.querySelector(".partie-filtre").style.display = "none"
-            document.querySelector(".bulle-ouvrir-filtres").style.display = "block"
-            localStorage.setItem("close", 'closedFilters');
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "flex"
+            document.querySelector(".bulle-ouvrir-tris").style.display = "flex"
+            localStorage.setItem("open", false);
         })
     }
 }
 
 function loadFilters(){
     window.addEventListener("load", () => {
-        if(localStorage.getItem("open") === "opennedFilters"){
+        if(localStorage.getItem("open") === "true"){
             document.querySelector(".partie-filtre").style.display = "block"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
-            localStorage.removeItem("open");
+            document.querySelector(".bulle-ouvrir-tris").style.display = "none"
         }
-        else if(localStorage.getItem("close") === "closedFilters"){
+        else if(localStorage.getItem("open") === "false"){
             document.querySelector(".partie-filtre").style.display = "none"
-            document.querySelector(".bulle-ouvrir-filtres").style.display = "block"
-            localStorage.removeItem("close");
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "flex"
+            document.querySelector(".bulle-ouvrir-tris").style.display = "flex"
         }
     });
 }

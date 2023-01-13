@@ -7,7 +7,7 @@
 #include <string.h>
 
 
-#include "pile.h"
+#include "file.h"
 #include "user.h"
 #include"json.h"
 #define TEST true
@@ -23,14 +23,16 @@ const int TIME_DAY_SEC=2;
 
 
 
-user * collectInfoUser(cJSON * json){
-    user * new =(user *)malloc(sizeof(user));
-    new->id="";
-   
+user * collectInfoUser(cJSON * json,user * new){
+    
+    new->id=(char *)malloc(255 * sizeof(char));
+    new->pass=(char *)malloc(255 * sizeof(char));
     strcpy(new->id,"\0");
     strcpy(new->pass,"\0");
+  
     #if TEST == true
-    printf("Commence... \n");
+        printf("Commence... \n");
+        printf("%s\n",cJSON_Print(json));
     #endif
     
     while(json!=NULL && json->type==cJSON_String){
@@ -39,11 +41,15 @@ user * collectInfoUser(cJSON * json){
         #endif
         
         if(json->type==cJSON_String){
-            if(strcmp(json->string,"identifiant")==0 && json->type==cJSON_Number){
+            if(strcmp(json->string,"id")==0){
                 strcpy(new->id,json->valuestring);
+                printf("là id: %s\n",new->id);
             }
             else if(strcmp(json->string, "pass")==0){
-                strcpy(new->id,json->valuestring);
+                strcpy(new->pass,json->valuestring);
+                printf("là id: %s\n",new->pass);
+            }else{
+                printf("champs de \"auth\" inconnu\n");
             }
         }else{
             #if TEST == true
@@ -66,7 +72,7 @@ user * collectInfoUser(cJSON * json){
     else
     {
         #if TEST == true
-        printf("Refus résultat...{%s}\n",new->id);
+        printf("Refus résultat...{%s,%s}\n",new->id,new->pass);
         #endif
         return NULL;
     }
@@ -210,74 +216,120 @@ Element * collectLivraison(cJSON * json){
 
 
 /**
- * @brief Parcour une ou des livraisons et remplie la file en conséquence, on va aussi vérifier que le format est standard au Protocole
+ * @brief Parcours une ou des livraisons et remplie la file en conséquence, on va aussi vérifier que le format est standard au protocole LBBDP. On peut aussi collecter des identifiants
  * 
- * @param json le root du json
- * @param liste la file
+ * @param json 
+ * @param liste 
+ * @param client 
+ * @param ind 
+ * @param max 
+ * @param chercheLivr 1: chercher livraison, 0: ne pas les chercher, -1: envoyer erreur si champs "livraison" ou "livraisons" trouvé
+ * @param chercheAuth  1: chercher identifiants, 0: ne pas les chercher, -1: envoyer erreur si champs "auth" trouvé
  * @return int 
  */
-int parcours(cJSON *json, File *liste, user * client, int *ind){
+int parcours(cJSON *json, File *liste, user * client, int *ind, int max,int chercheLivr, int chercheAuth){
+   
+    
+    if (json==NULL || json->string==NULL) {
+        printf("Erreur json null");
+        return -41;
+    }
+        
+    
     #if TEST == true
     printf("Test type...\n");
     #endif
+     
+    #if TEST == true
+    printf("Test type 2...\n");
+    #endif
 
     Element * result;
-    if (json->child==NULL || json->child->string==NULL) return -1;
-    if(json->child->type == cJSON_Object)
+    
+    if(json->type == cJSON_Object)
     {
         #if TEST == true
         printf("Objets...\n");
         #endif
         
-        if(strcmp(json->child->string,"livraison")==0){
-            result=collectLivraison(json->child->child);   
-            if(result==NULL){
-                        return -1;
-                }else{
-                    enfiler(liste,result,ind);
+        if(strcmp(json->string,"livraison")==0){
 
-                }
-        }
-        else if(strcmp(json->child->string,"auth")==0){
-            client=collectInfoUser(json->child->child);
-            if(client==NULL){
+            if(chercheLivr){
+                #if TEST == true
+                printf("livraison...\n");
+                #endif
+                result=collectLivraison(json->child);   
+                if(result==NULL){
+                            return -1;
+                    }else{
+                        enfiler(liste,result,ind, max);
+
+                    }
+            }else if(chercheLivr>0){
+                printf("Erreur: champs \"livraison\" non accepté ici\n");
                 return -1;
-            }  
+            }
+
+        }
+        else if(strcmp(json->string,"auth")==0 && json->child != NULL){
+
+            if(chercheAuth){
+                 #if TEST == true
+                printf("User...\n");
+                #endif
+                
+                collectInfoUser(json->child,client);
+                
+                if(client==NULL){
+                    return -1;
+                }  
+            }else if(chercheAuth>0){
+                printf("Erreur: champs \"auth\" non accepté ici\n");
+                return -1;
+            }
         }
         else{
-             printf("Erreur: type non accepté\n");
+            
+            printf("Erreur: champs non accepté\n");
             return -1;
         }
        
     }
-    else if(json->child->type == cJSON_Array)
+    else if(json->type == cJSON_Array)
     {
-        #if TEST == true
-        printf("Array...\n");
-        #endif
-        //if (verif(json,context->string) < 0) return -1;
-        if(strcmp(json->child->string,"livraisons")==0){
-                json=json->child->child;
-                while(json!=NULL){
-                    result=collectLivraison(json->child);
-                    #if TEST == true
-                        printf("Fin :\n");
-                     #endif
-                    if(result==NULL){
-                        return -1;
-                    }else{
-                        enfiler(liste,result,ind);
+        if(chercheLivr){
+            #if TEST == true
+            printf("Array...\n");
+            #endif
+            //if (verif(json,context->string) < 0) return -1;
+            if(strcmp(json->string,"livraisons")==0){
+                    cJSON * children;
+                    children=json->child;
+                    while(children!=NULL){
+                        result=collectLivraison(children->child);
+                        #if TEST == true
+                            printf("Fin :\n");
+                        #endif
+                        if(result==NULL){
+                            return -1;
+                        }else{
+                            enfiler(liste,result,ind,max);
 
+                        }
+    
+                        children=children->next;
                     }
- 
-                    json=json->next;
-                }
 
+            }
+        }else if(chercheLivr>0){
+            printf("Erreur: champs \"livraisons\" non accepté ici\n");
+            return -1;
         }
+        
     }
     else
     {
-        printf("Erreur: type non accepté\n");
+        printf("Erreur: type non accepté, %d\n",json->type);
         return -1;
     }
 
@@ -286,12 +338,39 @@ int parcours(cJSON *json, File *liste, user * client, int *ind){
     #endif
     if(json != NULL && json->next!=NULL){
 
-        return parcours(json->next,liste,client,ind);
-    }else if(result!=NULL){
-        
-        return 0;
+        return parcours(json->next,liste,client,ind, max, chercheLivr, chercheAuth);
     }else
-        return -1;
+        return 0;
+}
+
+/**
+ * @brief parcours() tout en bannissant les champs "livraison" et "livraisons"
+ * @see parcours()
+ * 
+ * @param json 
+ * @param liste 
+ * @param client 
+ * @param ind 
+ * @param max 
+ * @return int 
+ */
+int parcoursPourAuth(cJSON *json, user * client){
+    return parcours(json,NULL,client, NULL, 0, 0, 1);
+}
+
+/**
+ * @brief parcours() tout en ignorant le champs "auth"
+ * @see parcours()
+ * 
+ * @param json 
+ * @param liste 
+ * @param client 
+ * @param ind 
+ * @param max 
+ * @return int 
+ */
+int parcoursPourLivraison(cJSON *json, File *liste, int *ind, int max){
+    return parcours(json,liste,NULL,ind, max, 1, 0);
 }
 
 

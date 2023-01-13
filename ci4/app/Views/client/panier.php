@@ -40,7 +40,7 @@
                             </div>
                             <?php if (!session()->has("numero")): ?>
                                 <h3 class="h3PasArticlePanier">Connectez-vous pour récupérer votre panier.</h3>
-                                <a href="<?= base_url() ?>/connexion" class="lienPanier">Se connecter</a>
+                                <a href="<?= base_url() ?>/connexion/retourPanier" class="lienPanier">Se connecter</a>
                             <?php endif; ?>
                         </div>
                     </div>

@@ -146,6 +146,7 @@ class Home extends BaseController
 
     public function produit($idProduit = null, $numAvisEnValeur = null)
     {
+        $data["idProduit"] = $idProduit;
         $data["signalements"] = model("\App\Models\LstSignalements")->findAll();
         $data['model'] = model("\App\Models\ProduitCatalogue");
         $data['cardProduit']=service("cardProduit");
@@ -240,13 +241,24 @@ class Home extends BaseController
         }
 
         //Affichage selon si produit trouvé ou non
-        if ($result == null) {
+        if ($result == null) 
+        {
             return view('errors/html/error_404.php', array('message' => "Ce produit n'existe pas"));
-        } else {
+        } 
+        else 
+        {
             $data["controller"] = "Produit";
 
             $data['prod'] = $result;
-            return view('produit.php', $data);
+
+            if (strstr(current_url(), "retourProduit"))
+            {
+                return redirect()->to("/produit/$idProduit#avis");
+            }
+            else
+            {
+                return view('produit.php', $data);
+            }
         }
     }
 
@@ -553,12 +565,10 @@ class Home extends BaseController
 
 
         $this->validator = Services::validation();
-        if (!empty($post))
-        {
+        if (!empty($post)) {
             $paiement = service('authentification');
             $issues=$paiement->paiement($post);
-            if (empty($issues))
-            {
+            if (empty($issues)) {
                 return redirect()->to("/validation");
             }
         }
@@ -641,13 +651,12 @@ class Home extends BaseController
         return view("admin-vendeur/admin.php", $data);
     }
 
-    public function lstSignalements()
+    public function lstSignalements($id_signal = null)
     {
-        $post = $this->request->getPost();
-        if (!empty($post))
+        if ($id_signal != null)
         {
             $modelSignalements = model("\App\Models\LstSignalements");
-            $modelSignalements->delete($post["id_signal"]);
+            $modelSignalements->delete($id_signal);
         }
         
         $data["role"] = "admin";
@@ -681,13 +690,10 @@ class Home extends BaseController
         return redirect()->to("/");
     }
 
-    public function sessionIsTimeout(){
-       return model("\App\Models\SanctionTemp")->isTimeout(session()->get("numero"));
-    }
-
+    //fonction qui vérifie si le compte est banni
     public function verifTimeout(){
         if (session()->get("numero")!=NULL) {
-            if($this->sessionIsTimeout()){
+            if(model("\App\Models\SanctionTemp")->isTimeout(session()->get("numero"))){
                 $session=session();
                 $session->remove("numero");
                 $session->remove("nom");
@@ -713,10 +719,32 @@ class Home extends BaseController
 
             if(!empty($post)){
                 $sanctions = model("\App\Models\SanctionTemp");
-                $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+                if ($sanctions->isTimeout($post["numClient"]))
+                {
+                    $GLOBALS['invalidation'] = $this->feedback->afficheInvalidation("Cet utilisateur est déjà banni !");
+                }else{
+                    $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+                    $GLOBALS['validation'] = $this->feedback->afficheValidation("L'utilisateur a été banni !");
+                }
             }
         }
 
         return view("admin-vendeur/lstClients.php", $data);
+    }
+
+    public function bannissements(){
+        $post = $this->request->getPost();
+        if (!empty($post))
+        {
+            $modelSanctionTemp = model("\App\Models\SanctionTemp");
+            $modelSanctionTemp->delete($post["id_bannissement"]);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Cet utilisateur n'est plus banni !");
+        }
+
+        $data["controller"]="Liste des bannissements";
+        $data["role"]="admin";
+        $data["bannissements"]=model("\App\Models\SanctionTemp")->TimeoutsActuels();
+
+        return view("admin-vendeur/bannissements.php",$data);
     }
 }

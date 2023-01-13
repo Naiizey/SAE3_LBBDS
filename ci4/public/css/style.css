@@ -3411,6 +3411,19 @@ a.fleche-page{
     border: solid red 2px;
 }
 
+.lignesSignalements svg {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.lignesSignalements svg path {
+    transition: 0.2s;
+}
+
+.lignesSignalements:hover svg path {
+    fill: red;
+}
+
 /* ━━━ Div des sanctions ━━━ */
 
 .divSanctions{

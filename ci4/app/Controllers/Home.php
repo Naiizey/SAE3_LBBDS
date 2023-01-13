@@ -651,13 +651,12 @@ class Home extends BaseController
         return view("admin-vendeur/admin.php", $data);
     }
 
-    public function lstSignalements()
+    public function lstSignalements($id_signal = null)
     {
-        $post = $this->request->getPost();
-        if (!empty($post))
+        if ($id_signal != null)
         {
             $modelSignalements = model("\App\Models\LstSignalements");
-            $modelSignalements->delete($post["id_signal"]);
+            $modelSignalements->delete($id_signal);
         }
         
         $data["role"] = "admin";

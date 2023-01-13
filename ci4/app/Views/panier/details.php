@@ -29,6 +29,28 @@
                             </div>
                         </div>
                     </div>
+                    <p>
+                        <?php
+                            if($infosCommande[0]->etat < 20){
+                                echo "Commandée";
+                            }
+                            else if($infosCommande[0] >= 20 && $infosCommande[0] < 40){
+                                echo "Expédiée";
+                            }
+                            else if($infosCommande[0] >= 40 && $infosCommande[0] < 60){
+                                echo "Plateforme régionale";
+                            }
+                            else if($infosCommande[0] >= 60 && $infosCommande[0] < 80){
+                                echo "Plateforme Locale";
+                            }
+                            else if($infosCommande[0] >= 80 && $infosCommande[0] < 100){
+                                echo "Livrée";
+                            }
+                            else{
+                                echo "Commande terminée";
+                            }
+                        ?>
+                    </p>
                 </div>
                 <div class="divBasPageDetail">
                     <section class="sectionPanier mainPanier divDetail">

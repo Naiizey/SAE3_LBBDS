@@ -651,13 +651,12 @@ class Home extends BaseController
         return view("admin-vendeur/admin.php", $data);
     }
 
-    public function lstSignalements()
+    public function lstSignalements($id_signal = null)
     {
-        $post = $this->request->getPost();
-        if (!empty($post))
+        if ($id_signal != null)
         {
             $modelSignalements = model("\App\Models\LstSignalements");
-            $modelSignalements->delete($post["id_signal"]);
+            $modelSignalements->delete($id_signal);
         }
         
         $data["role"] = "admin";
@@ -694,7 +693,7 @@ class Home extends BaseController
     //fonction qui vérifie si le compte est banni
     public function verifTimeout(){
         if (session()->get("numero")!=NULL) {
-            if($this->model("\App\Models\SanctionTemp")->isTimeout(session()->get("numero"))){
+            if(model("\App\Models\SanctionTemp")->isTimeout(session()->get("numero"))){
                 $session=session();
                 $session->remove("numero");
                 $session->remove("nom");

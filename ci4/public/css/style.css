@@ -468,6 +468,10 @@ footer a{
     display: none;
 }
 
+.burger{
+    cursor: pointer;
+}
+
 /* Media query téléphone footer */
 @media screen and (max-width:960px){
     footer .pc{
@@ -3442,6 +3446,19 @@ a.fleche-page{
     border: solid red 2px;
 }
 
+.svgSupr {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.svgSupr path {
+    transition: 0.2s;
+}
+
+.svgSupr:hover path {
+    fill: red;
+}
+
 /* ━━━ Div des sanctions ━━━ */
 
 .divSanctions{
@@ -3449,8 +3466,12 @@ a.fleche-page{
 }
 
 @media screen and (max-width: 480px){
-    #tableLstCommandes{
-        font-size: 0.75em;
+    .divLst{
+        overflow-x: scroll;
+    }
+
+    .tableLst{
+        width: 150vw;
     }
 }
 
@@ -3588,7 +3609,11 @@ progress::-moz-progress-bar
 }
 
 .divSousTotauxDetailCommande {
-    justify-content: end;
+    justify-content: flex-end;
+}
+
+.divProgress > p{
+    display: none;
 }
 
 @media screen and (max-width: 960px){
@@ -3651,18 +3676,13 @@ progress::-moz-progress-bar
         width: 80%;
     }
 
-    .progressMobile{
-        display: block;
-    }
-
     .bar{
         display: none;
     }
 
-    .progressMobile p{
+    .divProgress > p{
         display: inline-block;
-        font-size: 1em;
-        word-wrap: break-word;
+        font-size: 1.5em;
     }
 }
 
@@ -4002,13 +4022,12 @@ progress::-moz-progress-bar
 */
 
 .sectionAdmin div {
-    display: grid;
-    column-gap: 1em;
+    display: flex;
+    justify-content: space-between;
+    gap:1em;
 }
 
 .sectionAdmin h3 {
-    grid-column-start: 1;
-    grid-column-end: 6;
     text-align: left;
     margin: 0.5em 0;
     font-family: 'Montserrat-Medium';
@@ -4019,45 +4038,12 @@ progress::-moz-progress-bar
     border-radius: 7px;
     color: white;
     padding: 0.5em 1em;
+    flex-grow: 1;
 }
 
 .sectionAdmin a:hover {
     background-color: #164F57;
     color: white;
-}
-
-/* Gestion de comptes */
-.sectionAdmin a:nth-child(2) {
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-/* Bannissements */
-.sectionAdmin a:nth-child(4) {
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-.sectionAdmin a:nth-child(5) {
-    grid-column-start: 3;
-    grid-column-end: 6;
-}
-
-/* Commentaires signalés */
-.sectionAdmin a:nth-child(7) {
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-/* Avertissements */
-.sectionAdmin a:nth-child(9) {
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-.sectionAdmin a:nth-child(10) {
-    grid-column-start: 3;
-    grid-column-end: 6;
 }
 
 /*

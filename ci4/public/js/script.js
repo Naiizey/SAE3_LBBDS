@@ -519,7 +519,7 @@ function lstCommandesVendeur(){
 ┃                        Liens aux lignes de lstSignalements                          ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-function lstSignalements()
+function lstSignalements(nbSignalements)
 {
     //Récupération de toutes les lignes de la liste des signalements
     var lignes = document.getElementsByClassName("lignesSignalements");

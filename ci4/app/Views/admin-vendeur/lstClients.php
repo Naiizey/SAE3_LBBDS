@@ -90,7 +90,7 @@
 <?php require __DIR__ . "/../footer.php";?>
 <script>
     <?php if(isset($bannir)): ?>
-        var bannir = <?php $bannir ?>;
+        var bannir = <?= $bannir ?>;
     <?php else: ?>
         var bannir = false;
     <?php endif; ?>

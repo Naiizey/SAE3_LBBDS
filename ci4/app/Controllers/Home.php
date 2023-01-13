@@ -724,6 +724,7 @@ class Home extends BaseController
                     $GLOBALS['invalidation'] = $this->feedback->afficheInvalidation("Cet utilisateur est déjà banni !");
                 }else{
                     $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+                    $GLOBALS['validation'] = $this->feedback->afficheValidation("L'utilisateur a été banni !");
                 }
             }
         }
@@ -737,6 +738,7 @@ class Home extends BaseController
         {
             $modelSanctionTemp = model("\App\Models\SanctionTemp");
             $modelSanctionTemp->delete($post["id_bannissement"]);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Cet utilisateur n'est plus banni !");
         }
 
         $data["controller"]="Liste des bannissements";

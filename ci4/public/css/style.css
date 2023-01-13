@@ -2676,6 +2676,37 @@ h3 > .lienPasArticlePanier {
     .divProfilText input::placeholder{
         font-size: .75em;
     }
+
+    .divLesAvis{
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .moyennesAvis{
+        width: 100%;
+        padding-bottom: 2em;
+    }
+
+    .moyennesAvis div{
+        justify-content: space-between;
+    }
+
+    .moyennesAvis progress{
+        flex-basis: 75%;
+    }
+
+    .divListeAvis{
+        width: 100%;
+    }
+
+    .sectionUnAvis{
+        flex-direction: column;
+    }
+
+    .divAvisCommentaire{
+        padding-top: 1em;
+        justify-content: center;
+    }
 }
 
 

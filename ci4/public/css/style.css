@@ -3862,6 +3862,12 @@ progress::-moz-progress-bar
     }
 }
 
+@media screen and (max-width:460px){
+    .divCredit{
+        width: 100%;
+    }
+}
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

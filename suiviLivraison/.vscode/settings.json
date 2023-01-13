@@ -3,6 +3,7 @@
         "random": "c",
         "stdio.h": "c",
         "numbers": "c",
-        "exo3.C": "cpp"
+        "exo3.C": "cpp",
+        "file.h": "c"
     }
 }

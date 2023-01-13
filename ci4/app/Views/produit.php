@@ -215,37 +215,7 @@
 
                 </div>
 
-                <div class="divSignalement">
-                    
-                    <?php $avisSignalement = $avis[2] ?>
-                    <h2>Signaler un commentaire</h2>
-                    <div class="divUnAvis">
-                        <section class="sectionUnAvis">
-                            <div class="divNomCommentaire">
-                                <img src="<?=base_url() ?>/images/header/profil.svg">
-                                <div class="divNomDate">    
-                                    <h3><?=  $avisSignalement->pseudo ?> : </h3>
-                                    <p>Publié le <?=  $avisSignalement->date_av ?></p>
-                                </div>
-                            </div>
-                            <div class="divAvisCommentaire">
-                                <div class="noteAvis"><?= $cardProduit->notationEtoile( $avisSignalement->note_prod) ?></div>
-                                <p><?=  $avisSignalement->note_prod ?>/5</p>
-                            </div>
-                        </section>
-                        <div class="divAvisContenuEtSignal">
-                            <p><?=  $avisSignalement->contenu_av ?></p>
-                            <a href="<?= current_url() ?>#avis"></a>
-                        </div>
-                    </div>
-                    <form action="">
-                        <input type="text" name="raison" placeholder="Entrez la raison de ce signalement.">
-                        <div>
-                            <button type="reset" value="Reset">Annuler</button>
-                            <input type="submit" value="Signaler">
-                        </div>
-                    </form>
-                </div>
+                
             </section>
         </main>
 <?php require("footer.php"); ?>

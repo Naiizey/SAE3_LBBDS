@@ -2,6 +2,7 @@
     "files.associations": {
         "random": "c",
         "stdio.h": "c",
-        "numbers": "c"
+        "numbers": "c",
+        "exo3.C": "cpp"
     }
 }

@@ -12,9 +12,12 @@ TEST= $(ROOT)test/
 
 all: build_json
 
+final: $(SRC)lbbdp.c $(BIN)json_interpret.o $(BIN)fifo.o $(BIN)cJSON.o $(BIN)user.o $(BIN)cJSON.o
+	$(CC) -I $(HEADER) -o $(DEST)$@ $^ $(CFLAGS) $(CFLAGS_SSL)
+
 
 json:  $(BIN)json_interpret.o $(BIN)fifo.o $(BIN)cJSON.o 
-	$(CC) -o $@ $^ $(CFLAGS)
+	$(CC) -o $@ $^ $(CFLAGS) 
 	
 test_user: $(TEST)testMd5.c $(BIN)user.o
 	$(CC) -I $(HEADER) -o $(DEST)$@ $^ $(CFLAGS) $(CFLAGS_SSL)

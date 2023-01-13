@@ -50,14 +50,16 @@ Element create_element(int identifiant, time_t timestamp, char *etat, int joursR
     return *e;
 }
 
-void enfiler(File *file, Element *nvElement, int *indice)
+int enfiler(File *file, Element *nvElement, int *indice, int maxCapacitee)
 {
     Element *nouveau = malloc(sizeof(*nouveau));
-    if (file == NULL || nouveau == NULL || limit_ind_pile==0 || limit_ind_pile<(*indice))
+    if (file == NULL || nouveau == NULL)
     {
-        exit(EXIT_FAILURE);
+        return -1;
+    }else if( maxCapacitee<(*indice)){
+        return MAX_CAPACITE_ATTEINT;
     }
-    printf("oh!\n");
+
 
     nouveau->identifiant = nvElement->identifiant;
     nouveau->timestamp = nvElement->timestamp;
@@ -72,7 +74,6 @@ void enfiler(File *file, Element *nvElement, int *indice)
         Element *elementActuel = *file;
         while (elementActuel->suivant != NULL)
         {
-            printf("là!\n");
             elementActuel = elementActuel->suivant;
         }
         elementActuel->suivant = nouveau;
@@ -82,6 +83,8 @@ void enfiler(File *file, Element *nvElement, int *indice)
         *file = nouveau;
     }
     (*indice)=(*indice)+1;
+
+    return 0;
 }
 
 void eraseFile(File *file)
@@ -190,7 +193,7 @@ Element *trouverElement(File *file, int identifiant)
 * @param file2 la file dans laquelle on copie
 * @return la file2
 */
-File copier_file(File *file, File *file2)
+File copier_file(File *file, File *file2, int maxCapacitee)
 {
     int ind=0;
     if (file == NULL)
@@ -203,7 +206,7 @@ File copier_file(File *file, File *file2)
 
     while (actuel != NULL)
     {
-        enfiler(file2, actuel, &ind);
+        enfiler(file2, actuel, &ind, maxCapacitee);
         actuel = actuel->suivant;
     }
     return *file2;

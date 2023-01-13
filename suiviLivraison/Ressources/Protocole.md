@@ -96,7 +96,7 @@ Autrement, La requête n'a pas été prise ne compte pour un certaine raison:
 
 - 20 (Authentification):
     - 21(Authentification manquante) : il faut s'identifié pour avoir la permission d'éxecuté cette opération.
-    - 22(Authentifivation erronée) : L'identification est erronée
+    - 22(Authentification erronée) : L'identification est erronée
 
 - 30(Erreur logique) 
     - 31(File pleine): la prise en charge n'est plus possible, il faut attendre que des places soient libérés.
@@ -104,6 +104,7 @@ Autrement, La requête n'a pas été prise ne compte pour un certaine raison:
 - 40 (Erreur format contenu)
     - 41(Erreur format JSON): le contenu ne correspond pas aux normes JSON.
     - 42(Erreur contenu JSON): les propriétes ne sont pas celles qui ont été demandés.
+- 50 (Erreur interne)
 
 ## 4. Détails des contenus
 ---

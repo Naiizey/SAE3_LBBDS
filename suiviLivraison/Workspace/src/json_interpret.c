@@ -228,7 +228,14 @@ Element * collectLivraison(cJSON * json){
  * @return int 
  */
 int parcours(cJSON *json, File *liste, user * client, int *ind, int max,int chercheLivr, int chercheAuth){
-  
+   
+    
+    if (json==NULL || json->string==NULL) {
+        printf("Erreur json null");
+        return -41;
+    }
+        
+    
     #if TEST == true
     printf("Test type...\n");
     #endif
@@ -238,20 +245,20 @@ int parcours(cJSON *json, File *liste, user * client, int *ind, int max,int cher
     #endif
 
     Element * result;
-    if (json->child==NULL || json->child->string==NULL) return -1;
-    if(json->child->type == cJSON_Object)
+    
+    if(json->type == cJSON_Object)
     {
         #if TEST == true
         printf("Objets...\n");
         #endif
         
-        if(strcmp(json->child->string,"livraison")==0){
+        if(strcmp(json->string,"livraison")==0){
 
             if(chercheLivr){
                 #if TEST == true
                 printf("livraison...\n");
                 #endif
-                result=collectLivraison(json->child->child);   
+                result=collectLivraison(json->child);   
                 if(result==NULL){
                             return -1;
                     }else{
@@ -264,14 +271,14 @@ int parcours(cJSON *json, File *liste, user * client, int *ind, int max,int cher
             }
 
         }
-        else if(strcmp(json->child->string,"auth")==0 && json->child->child != NULL){
+        else if(strcmp(json->string,"auth")==0 && json->child != NULL){
 
             if(chercheAuth){
                  #if TEST == true
                 printf("User...\n");
                 #endif
                 
-                collectInfoUser(json->child->child,client);
+                collectInfoUser(json->child,client);
                 
                 if(client==NULL){
                     return -1;
@@ -288,17 +295,18 @@ int parcours(cJSON *json, File *liste, user * client, int *ind, int max,int cher
         }
        
     }
-    else if(json->child->type == cJSON_Array)
+    else if(json->type == cJSON_Array)
     {
         if(chercheLivr){
             #if TEST == true
             printf("Array...\n");
             #endif
             //if (verif(json,context->string) < 0) return -1;
-            if(strcmp(json->child->string,"livraisons")==0){
-                    json=json->child->child;
-                    while(json!=NULL){
-                        result=collectLivraison(json->child);
+            if(strcmp(json->string,"livraisons")==0){
+                    cJSON * children;
+                    children=json->child;
+                    while(children!=NULL){
+                        result=collectLivraison(children->child);
                         #if TEST == true
                             printf("Fin :\n");
                         #endif
@@ -309,7 +317,7 @@ int parcours(cJSON *json, File *liste, user * client, int *ind, int max,int cher
 
                         }
     
-                        json=json->next;
+                        children=children->next;
                     }
 
             }
@@ -321,7 +329,7 @@ int parcours(cJSON *json, File *liste, user * client, int *ind, int max,int cher
     }
     else
     {
-        printf("Erreur: type non accepté\n");
+        printf("Erreur: type non accepté, %d\n",json->type);
         return -1;
     }
 
@@ -347,7 +355,7 @@ int parcours(cJSON *json, File *liste, user * client, int *ind, int max,int cher
  * @return int 
  */
 int parcoursPourAuth(cJSON *json, user * client){
-    return parcours(json,NULL,client, NULL, 0, -1, 1);
+    return parcours(json,NULL,client, NULL, 0, 0, 1);
 }
 
 /**

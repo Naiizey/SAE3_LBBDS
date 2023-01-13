@@ -193,9 +193,10 @@ Element *trouverElement(File *file, int identifiant)
 * @param file2 la file dans laquelle on copie
 * @return la file2
 */
-File copier_file(File *file, File *file2, int maxCapacitee)
+int copier_file(File *file, File *file2, int maxCapacitee)
 {
-    int ind=0;
+    int ind;
+    initFile(file2,&ind);
     if (file == NULL)
     {
         exit(EXIT_FAILURE);
@@ -206,9 +207,11 @@ File copier_file(File *file, File *file2, int maxCapacitee)
 
     while (actuel != NULL)
     {
+        printf("enfilage élement\n");
         enfiler(file2, actuel, &ind, maxCapacitee);
         actuel = actuel->suivant;
+    
     }
-    return *file2;
+    return ind;
 }
 

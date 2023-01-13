@@ -1,26 +1,26 @@
-{
-    "livraisons" : [
-    {
-        "identifiant" : 4,
-        "nombre" : 5,
+{ 
+    "livraisons" : [ 
+    { 
+        "identifiant" : 4, 
+        "nombre" : 5, 
         "time" : 0,
-        "etat" : "En charge",
+        "etat" : "En charge", 
         "retard": 2
-    },
-    {
-        "identifiant" : 2,
-        "nombre" : 5,
-        "time" : 0,
-        "etat" : "En charge",
-        "retard": 2
-    }
-    ,
-    {
-        "identifiant" : 19,
-        "nombre" : 5,
-        "time" : 0,
-        "retard": 2
-    }
+    }, 
+    { 
+        "identifiant" : 2, 
+        "nombre" : 5, 
+        "time" : 0, 
+        "etat" : "En charge", 
+        "retard": 2 
+    } 
+    , 
+    { 
+        "identifiant" : 19, 
+        "nombre" : 5, 
+        "time" : 0, 
+        "retard": 2 
+    } 
     
-    ]
-}
+    ] 
+} 

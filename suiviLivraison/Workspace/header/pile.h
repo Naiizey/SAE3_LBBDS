@@ -32,5 +32,5 @@ Element * defiler(File *file, int * indice);
 void afficherElement(Element *e, bool returnLine);
 void afficherFile(File file);
 void eraseFile(File *file);
-File copier_file(File *file, File *file2, int maxCapacitee);
+int copier_file(File *file, File *file2, int maxCapacitee);
 Element *trouverElement(File *file, int identifiant);

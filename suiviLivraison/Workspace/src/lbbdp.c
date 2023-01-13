@@ -389,7 +389,7 @@ int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, int * 
             retour=handleNEW(getJson(buf+4,cnx), listeCommande, client, capaciteLivraison, maxCapaLivraison, adrClient, pathToFile);
         }else if(strncmp(buf, "ACT ", 4)==0){
             printf("Actualisation commmande...\n");
-             //retour=handleACT(buf+4);
+             retour=handleACT(listeCommande,maxCapaLivraison,cnx);
         }else if(strncmp(buf, "REP ", 4)==0){
             printf("Réponse...\n");
             printf(cJSON_Print(getJson(buf+4,cnx)));
@@ -398,7 +398,16 @@ int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, int * 
         }else{
             printf("Commande non reconnue\n");
         }
-        snprintf(res,10,"%d\r\n",retour);
+        
+        if(retour < 0)//Erreurs
+        {
+            snprintf(res,10,"%d\r\n",-retour);
+        }
+        else//Réussite
+        {
+            snprintf(res,10,"0%d\r\n",retour);
+        }
+        
         write(cnx, res,10);
     }
 
@@ -415,12 +424,13 @@ cJSON * getJson(char * buf, int cnx){
     long unsigned int actualLongStr=0;
     char * str_json=malloc(maxLongStr * sizeof(char));
     buf=strstr(buf,"LBBDP/1.0\r\n");
-    if(strlen(buf)>12){
-        strcpy(buffer,buf+12);
-    }else{
-        strcpy(buffer,"\0");
-    }
+    
     if(buf!=NULL){
+        if(strlen(buf)>12){
+            strcpy(buffer,buf+12);
+        }else{
+            strcpy(buffer,"\0");
+        }
         printf("Json ?\n");
         while(strchr(buffer,'*')==NULL){
             char * n=strchr(buffer,'\n');
@@ -428,7 +438,7 @@ cJSON * getJson(char * buf, int cnx){
             //nettoyage du \r
             if(n!=NULL && *(n-1)=='\r'){
                 (*(n-1))='\n';
-                (*(n))='\0';
+                (*(n))=' ';
             }
             
             strcat(str_json, buffer);
@@ -471,15 +481,12 @@ int hereConnection(user * client, struct sockaddr addr, char * pathToMdpFile){
 }
 
 int handleNEW(cJSON * new,File * liste,user * cli,int * capaLivraison,int maxCapaLivraison, struct sockaddr addr,char * pathToFile ){
-    if(new == NULL) return -1;
+    if(new == NULL) return -40;
     int result=handleAUT(new, addr, pathToFile);
     if (result==0)
     {
-        
-        
-        result=parcoursPourLivraison(new, liste, capaLivraison, maxCapaLivraison);
-        
-        
+        printf("??\n");
+        result=parcoursPourLivraison(new->child, liste, capaLivraison, maxCapaLivraison); 
     }
 
     return result;
@@ -489,10 +496,10 @@ int handleNEW(cJSON * new,File * liste,user * cli,int * capaLivraison,int maxCap
 }
 
 int handleAUT(cJSON * js, struct sockaddr addr, char * pathToFile){
-    if(js == NULL) return -1;
+    if(js == NULL) return -40;
     user cli;
-    printf("???: %s\n",cJSON_Print(js->child));
-    int result=parcoursPourAuth(js,&cli);
+    printf("???: %s\n",cJSON_Print(js));
+    int result=parcoursPourAuth(js->child,&cli);
     printf("%s\n",cli.id);
     if(result==0)
     {
@@ -503,4 +510,32 @@ int handleAUT(cJSON * js, struct sockaddr addr, char * pathToFile){
     return result;
 
 
+}
+
+int handleACT(File * liste, int maxCapacite, int cnx){
+    afficherFile(*liste);
+    int retour;
+    File * pileEnvoi=(File *)malloc(sizeof(File));
+    int indice;
+    char * pourEnvoyer;
+    indice=copier_file(liste,pileEnvoi,maxCapacite);
+    printf("Copie: %d\n",indice);
+    afficherFile(*pileEnvoi);
+    pourEnvoyer=cJSON_Print(envoiLivraison(pileEnvoi,NULL,&indice));
+    retour=(pourEnvoyer!=NULL);
+    if(retour){
+        printf("RESULT:\n%s\n",pourEnvoyer);
+        retour=write(cnx, pourEnvoyer, strlen(pourEnvoyer));
+        write(cnx, "\r\n", sizeof("\r\n"));
+        if(retour<0){
+            retour=-50;
+        }else{
+            retour=2;
+        }
+    }else{
+        retour=-50;
+    }
+
+
+    return retour;
 }

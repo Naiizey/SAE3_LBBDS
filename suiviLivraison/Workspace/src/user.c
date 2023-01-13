@@ -25,19 +25,22 @@ void * init_array_session(int max_array){
 char * getIp(struct sockaddr adr){
     void *tmp;
     char * retour;
+    int size;
     if(adr.sa_family==AF_INET){
-        retour=(char *)malloc(INET_ADDRSTRLEN * sizeof(char));
+        size=INET_ADDRSTRLEN;
+        retour=(char *)malloc(size * sizeof(char));
         struct sockaddr_in * ipv4 = (struct sockaddr_in *)adr.sa_data;
         tmp = &(ipv4->sin_addr);
     }else if(adr.sa_family==AF_INET6){
-        retour=(char *)malloc(INET6_ADDRSTRLEN * sizeof(char));
+        size=INET6_ADDRSTRLEN;
+        retour=(char *)malloc(size * sizeof(char));
         struct sockaddr_in6 * ipv6 = (struct sockaddr_in6 *)adr.sa_data;
         tmp = &(ipv6->sin6_addr);
     }else{
-        printf("Gros problème...");
+        printf("Gros problème...\n");
         return NULL;
     }
-    inet_ntop(adr.sa_family, tmp, retour, sizeof (*retour));
+    inet_ntop(adr.sa_family, tmp, retour, size);
     return retour;
 
 }

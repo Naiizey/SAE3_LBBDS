@@ -17,6 +17,8 @@ typedef user * arrayUser;
 #endif
 #define USER_IS_DEF
 
+
+char * getIp(struct sockaddr adr);
 void md5_hasher(char *string, char *hash);
 int verify_password(char *path, char *id, char *hashedPass);
 int connection(user * client, struct sockaddr addr, arrayUser arr, int *ind, char * mdpFile);

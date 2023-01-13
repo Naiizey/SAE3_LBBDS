@@ -2985,9 +2985,9 @@ input[type="range"]::-moz-range-thumb {
 
 .bulle-ouvrir-filtres{
     cursor: pointer;
-    display: block;
+    display: flex;
     position: fixed;
-    top: 100px;
+    top: 9.5em;
     right: 20px;
     width: 200px;
     height: 75px;
@@ -2996,11 +2996,32 @@ input[type="range"]::-moz-range-thumb {
     z-index: 5;
     border: none;
     color: #D9D9D9;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
 }
 
-.bulle-ouvrir-filtres svg{
-   position: relative;
-   top: 4px;
+.bulle-ouvrir-tris{
+    cursor: pointer;
+    display: flex;
+    position: fixed;
+    top: 17em;
+    right: 20px;
+    width: 200px;
+    height: 75px;
+    border-radius: 35px;
+    background-color: #164F57;
+    z-index: 5;
+    border: none;
+    color: #D9D9D9;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.bulle-ouvrir-filtres svg, .bulle-ouvrir-tris svg{
+    padding: 2px;
+    width: 20px;
 }
 
 .titre-filtre, .categorie-catalogue summary{
@@ -3202,6 +3223,10 @@ a.fleche-page{
     .bulle-ouvrir-filtres{
         left: 20px;
     }
+    
+    .bulle-ouvrir-tris{
+        left: 20px;
+    }
 
     .partie-filtre{
         display: none;
@@ -3216,7 +3241,11 @@ a.fleche-page{
     }
 
     .bulle-ouvrir-filtres:not(.est-filtre-ouvert){
-        display: block;
+        display: flex;
+    }
+
+    .bulle-ouvrir-tris:not(.est-filtre-ouvert){
+        display: flex;
     }
 
     .liste-produits{
@@ -3830,6 +3859,12 @@ progress::-moz-progress-bar
     .divCredit{
         width: 90%;
         margin: auto;
+    }
+}
+
+@media screen and (max-width:460px){
+    .divCredit{
+        width: 100%;
     }
 }
 

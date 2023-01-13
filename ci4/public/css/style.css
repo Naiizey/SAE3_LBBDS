@@ -468,6 +468,10 @@ footer a{
     display: none;
 }
 
+.burger{
+    cursor: pointer;
+}
+
 /* Media query téléphone footer */
 @media screen and (max-width:960px){
     footer .pc{
@@ -3433,8 +3437,12 @@ a.fleche-page{
 }
 
 @media screen and (max-width: 480px){
-    #tableLstCommandes{
-        font-size: 0.75em;
+    .divLst{
+        overflow-x: scroll;
+    }
+
+    .tableLst{
+        width: 150vw;
     }
 }
 
@@ -3572,7 +3580,11 @@ progress::-moz-progress-bar
 }
 
 .divSousTotauxDetailCommande {
-    justify-content: end;
+    justify-content: flex-end;
+}
+
+.divProgress > p{
+    display: none;
 }
 
 @media screen and (max-width: 960px){
@@ -3635,18 +3647,13 @@ progress::-moz-progress-bar
         width: 80%;
     }
 
-    .progressMobile{
-        display: block;
-    }
-
     .bar{
         display: none;
     }
 
-    .progressMobile p{
+    .divProgress > p{
         display: inline-block;
-        font-size: 1em;
-        word-wrap: break-word;
+        font-size: 1.5em;
     }
 }
 

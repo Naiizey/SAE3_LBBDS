@@ -2209,8 +2209,69 @@ h3 > .lienPasArticlePanier {
     position: relative;
 }
 
+.divSignalement {
+    background-color: white;
+    position: absolute;
+    top: 70%;
+    left: 30%;
+    right: 30%;
+    bottom: 10%;
+    z-index: 100;
+    border: #3997A3 solid 2px;
+    padding: 2em;
+    text-align: justify;
+    color: #164F57;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.divSignalement p {
+    margin: 0;
+}
+
+.divSignalement h2 {
+    font-size: 1.4em;
+}
+
+.divSignalement form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.divSignalement form input {
+    font-size: medium;
+    font-family: 'Montserrat-Regular';
+}
+
+.divSignalement form div {
+    display: flex;
+    justify-content: space-around;
+    align-self: center;
+}
+
+.divSignalement form div * {
+    text-decoration: none;
+    text-align: center;
+    border-radius: 30px;
+    padding: .2em 1em;
+    border: none;
+    margin: .3em;
+    color: white;
+}
+
+.divSignalement form div button {
+    background-color: #a02424;
+}
+
+.divSignalement form div input {
+    background-color: #24a064;
+}
+
 .divAjoutCommentConnect {
-    z-index: 1000;
+    z-index: 99;
     position: absolute;
     display: flex;
     flex-direction: column;

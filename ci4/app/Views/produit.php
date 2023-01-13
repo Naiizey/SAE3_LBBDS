@@ -139,13 +139,13 @@
                             <?php elseif ((!empty($avis)) && (!session()->has("numero"))): ?>
                             <div class="divAjoutCommentConnect divConnectPetit">
                                 <p>Vous devez vous connecter pour commenter</p>
-                                <a href="">Se connecter</a>
+                                <a href="<?= base_url()."/connexion" ?>">Se connecter</a>
                             </div>
                             <div class="divAjoutComment divAjoutCommentBlur">
                             <?php elseif ((empty($avis)) && (!session()->has("numero"))): ?>
                             <div class="divAjoutCommentConnect divConnectGrand">
                                 <p>Vous devez vous connecter pour commenter</p>
-                                <a href="">Se connecter</a>
+                                <a href="<?= base_url()."/connexion" ?>">Se connecter</a>
                             </div>
                             <div class="divAjoutComment divAjoutCommentBlur divAjoutCommentVide">
                             <?php elseif ((empty($avis)) && (session()->has("numero"))): ?>
@@ -195,17 +195,13 @@
                                             </section>
                                             <div class="divAvisContenuEtSignal">
                                                 <p><?= $unAvis->contenu_av ?></p>
-                                                <a href="<?= current_url() ?>#avis">
+                                                <a href="<?= current_url() ?>#avis" onclick="signalement(<?= $unAvis->num_avis ?>)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                                         <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                                                         <path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32V64 368 480c0 17.7 14.3 32 32 32s32-14.3 32-32V352l64.3-16.1c41.1-10.3 84.6-5.5 122.5 13.4c44.2 22.1 95.5 24.8 141.7 7.4l34.7-13c12.5-4.7 20.8-16.6 20.8-30V66.1c0-23-24.2-38-44.8-27.7l-9.6 4.8c-46.3 23.2-100.8 23.2-147.1 0c-35.1-17.6-75.4-22-113.5-12.5L64 48V32z"/>
                                                     </svg>
                                                 </a>
                                             </div>
-                                            <form action="<?= current_url()."#avis" ?>" method="post">
-                                                <input type="text" class="inputInvisible" name="idAvis" value="<?= $unAvis->num_avis ?>">
-                                                <input type="submit" class="inputInvisible" name="signalerAvis" value="Signaler">
-                                            </form>
                                             <?php if ($cle != $fin): ?>
                                             <hr>
                                             <?php endif; ?>
@@ -213,11 +209,42 @@
                                 <?php endforeach; ?>
                             <?php endif ?>
 
-
                         </div>
                     </div>
                     
 
+                </div>
+
+                <div class="divSignalement">
+                    
+                    <?php $avisSignalement = $avis[2] ?>
+                    <h2>Signaler un commentaire</h2>
+                    <div class="divUnAvis">
+                        <section class="sectionUnAvis">
+                            <div class="divNomCommentaire">
+                                <img src="<?=base_url() ?>/images/header/profil.svg">
+                                <div class="divNomDate">    
+                                    <h3><?=  $avisSignalement->pseudo ?> : </h3>
+                                    <p>Publié le <?=  $avisSignalement->date_av ?></p>
+                                </div>
+                            </div>
+                            <div class="divAvisCommentaire">
+                                <div class="noteAvis"><?= $cardProduit->notationEtoile( $avisSignalement->note_prod) ?></div>
+                                <p><?=  $avisSignalement->note_prod ?>/5</p>
+                            </div>
+                        </section>
+                        <div class="divAvisContenuEtSignal">
+                            <p><?=  $avisSignalement->contenu_av ?></p>
+                            <a href="<?= current_url() ?>#avis"></a>
+                        </div>
+                    </div>
+                    <form action="">
+                        <input type="text" name="raison" placeholder="Entrez la raison de ce signalement.">
+                        <div>
+                            <button type="reset" value="Reset">Annuler</button>
+                            <input type="submit" value="Signaler">
+                        </div>
+                    </form>
                 </div>
             </section>
         </main>

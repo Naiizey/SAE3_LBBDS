@@ -1688,5 +1688,9 @@ function avisProduit()
                 return;
             }
         }
-    }
+    } 
+}
+
+function signalement(numAvis) {
+    document.querySelector(".divSignalement").style.display = "flex";
 }

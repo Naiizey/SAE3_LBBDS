@@ -6,7 +6,6 @@
                     <div>
                         <h3>Gestion de comptes</h3>
                         <a href="<?= base_url() ?>/admin/Clients">Voir les comptes clients</a>
-                        <a>Supprimer un compte</a>
                         <h3>Bannissements</h3>
                         <a href="<?= base_url() ?>/admin/Clients/bannir">Bannir un client</a>
                         <a href="<?= base_url() ?>/admin/bannissements">Voir les bannissements</a>

@@ -2501,10 +2501,10 @@ h3 > .lienPasArticlePanier {
 .moyennesAvis {
     width: 35%;
 }
-
 .moyennesAvis div {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .moyennesAvis p {
@@ -2626,8 +2626,15 @@ h3 > .lienPasArticlePanier {
     .sectionRecommandationsPanierMobile .notation-card img{
         width: .75rem;
     }
-}
 
+    .moyennesAvis progress{
+        flex-basis: 70%;
+    }
+
+    .moyennesAvis .pAvis{
+        min-width: 3em;
+    }
+}
 
 @media screen and (max-width: 960px) and (min-width: 481px){
     .mainProduit{
@@ -2642,6 +2649,11 @@ h3 > .lienPasArticlePanier {
     .divGauche ul img{
         width: 12vh;
         height: 12vh;
+    }
+
+    .divNomDate h3{
+        max-width: 11rem;
+        word-wrap: break-word; 
     }
 }
 
@@ -2675,6 +2687,57 @@ h3 > .lienPasArticlePanier {
 
     .divProfilText input::placeholder{
         font-size: .75em;
+    }
+
+    .divLesAvis{
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .moyennesAvis{
+        width: 100%;
+        padding-bottom: 2em;
+    }
+
+    .moyennesAvis div{
+        justify-content: space-between;
+    }
+
+    .moyennesAvis progress{
+        flex-basis: 75%;
+    }
+
+    .divListeAvis{
+        width: 100%;
+    }
+
+    .sectionUnAvis{
+        flex-direction: column;
+    }
+
+    .divAvisCommentaire{
+        padding-top: 1em;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 961px){
+    .divGauche{
+        width: 60%;
+    }
+
+    .divGauche ul{
+        width: 20%;
+    }
+
+    .divGauche ul img{
+        width: 10vh;
+        height: 10vh;
+    }
+
+    .divGauche .zoom{
+        width: 40vh;
+        height: 40vh;
     }
 }
 

@@ -5,11 +5,11 @@
                     <h2>Administration</h2>
                     <h3>Gestion de comptes</h3>
                     <div>
-                        <a href="<?= base_url() ?>/admin/Clients">Voir les comptes clients</a>
+                        <a href="<?= base_url() ?>/admin/clients">Voir les comptes clients</a>
                     </div>
                     <h3>Bannissements</h3>
                     <div>
-                        <a href="<?= base_url() ?>/admin/Clients/bannir">Bannir un client</a>
+                        <a href="<?= base_url() ?>/admin/clients/bannir">Bannir un client</a>
                         <a href="<?= base_url() ?>/admin/bannissements">Voir les bannissements</a>
                     </div>
                     <h3>Commentaires signalés</h3>

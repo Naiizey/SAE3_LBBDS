@@ -3413,16 +3413,16 @@ a.fleche-page{
     border: solid red 2px;
 }
 
-.lignesSignalements svg {
+.svgSupr {
     width: 1.5em;
     height: 1.5em;
 }
 
-.lignesSignalements svg path {
+.svgSupr path {
     transition: 0.2s;
 }
 
-.lignesSignalements:hover svg path {
+.svgSupr:hover path {
     fill: red;
 }
 

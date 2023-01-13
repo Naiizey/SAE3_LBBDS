@@ -3567,7 +3567,7 @@ progress::-moz-progress-bar
 }
 
 .divSousTotauxDetailCommande {
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .divProgress > p{

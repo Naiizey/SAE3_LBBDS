@@ -693,7 +693,7 @@ class Home extends BaseController
     //fonction qui vérifie si le compte est banni
     public function verifTimeout(){
         if (session()->get("numero")!=NULL) {
-            if($this->model("\App\Models\SanctionTemp")->isTimeout(session()->get("numero"))){
+            if(model("\App\Models\SanctionTemp")->isTimeout(session()->get("numero"))){
                 $session=session();
                 $session->remove("numero");
                 $session->remove("nom");

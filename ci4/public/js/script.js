@@ -148,6 +148,109 @@ function getentete(){
     return map;
 }
 
+function has_empty_cell(row) {
+    //return les index des cellules vides ou retourn 0 si aucune cellule vide
+    return row.filter(cell => cell === "").length;
+}
+
+/**
+ * Fonction qui va vérifier l'intégralité du csv et afficher les lignes qui ne sont pas correctes
+ * @returns {void}
+ **/
+function checkCSV()
+{
+    let preview = document.getElementById("preview");
+
+    //ajout d'un event listener sur le changement de fichier
+    document.getElementById("file").addEventListener("change", function (e) {
+        preview.innerHTML = " chargement du fichier...";
+        //récupération du fichier
+        let file = e.target.files[0];
+        //création d'un objet FileReader
+        let reader = new FileReader();
+        //lecture du fichier
+        //prend l'en-tête du fichier et l'ajoute au tableau
+        let entete = getentete();
+        reader.readAsText(file);
+        //ajout d'un event listener sur le chargement du fichier
+        reader.addEventListener("load", function () {
+            preview.innerHTML = "<br><h3>Prévisualisation</h3><br>";
+            //si la longueur de entete est > longueur de la première ligne
+            var table = document.createElement("table");
+            let csv = reader.result;
+            //création du tableau
+            let lines = csv.split("\n");
+            for (let i = 0; i < lines.length-1 ; i++) {
+                let line = lines[i];
+                let cells = line.split(";");
+                if (entete.size > cells.length) {
+                    //on ajoute une ligne en rouge
+                    console.log("ligne non valide");
+                    preview.innerHTML = "nombre de colonnes invalide";
+                    preview.style.color = "red";
+                    //on centre le texte
+                    preview.style.textAlign = "center";
+
+                }
+                else {
+                    if (i == 0) {
+                        //on ajoute une 1ère ligne fusionnée
+                        console.log("ligne valide");
+                        preview.innerHTML = "nombre de colonnes valide :";
+                        console.log(cells);
+                        preview.style.color = "green";
+                        //on centre le texte
+                        preview.style.textAlign = "center";
+                        document.getElementById("submit").disabled = false;
+                    }
+
+                }
+                if (i === 0) {
+                    let row = table.insertRow(-1);
+                    for (let j = 0; j < cells.length; j++) {
+                        //si l'entête n'est pas dans les clés de entete
+                        if (!(entete.has(cells[j].trim()))) {
+                            cells[j] = "<span style='color:red'>" + cells[j] + "</span>";
+                        }
+                        else {
+                            cells[j] = "<span style='color:black'>" + cells[j] + "</span>";
+                        }
+                        let cell = row.insertCell(-1);
+                        cell.innerHTML = cells[j];
+                    }
+                }
+                else {
+                    let row = table.insertRow(-1);
+                    let is_empty = false
+                    //si la ligne contient des cellules vides
+                    if (has_empty_cell(cells) > 0) {
+                        for (let j = 0; j < cells.length; j++) {
+                            
+                            if (cells[j] === "") {
+                                cells[j] = "<span style='color:red'>" + "vide" + "</span>";
+                                preview.innerHTML = "le fichier contient des cellules vides";
+                                preview.style.color = "red";
+                                is_empty = true;
+                            }
+                            else {
+                                cells[j] = "<span style='color:black'>" + cells[j] + "</span>";
+                            }
+                            let cell = row.insertCell(-1);
+                            cell.innerHTML = cells[j];
+                        }
+                    }
+                    else {
+                        //on retire la row
+                        table.deleteRow(-1);
+                    }
+                }
+            }
+            preview.appendChild(table);
+            //ajout d'un br
+            // preview.innerHTML += "<br><br><br><br>";
+        });
+    });
+}
 
 /**
  * Fonction qui permet de prévisualiser un fichier CSV
@@ -228,6 +331,13 @@ function previewCSV(){
                     for (let j = 0; j < cells.length; j++) {
                         if (cells[j].length > 20) {
                             cells[j] = cells[j].substring(0, 20) + "...";
+                        }
+                        if (cells[j].trim() === "") {
+                            cells[j] = "<span style='color:red'>vide</span>";
+                        }
+                        else
+                        {
+                            console.log("cell valide:" + cells[j] + "|");
                         }
                         let cell = row.insertCell(-1);
                         cell.style.color = "black";

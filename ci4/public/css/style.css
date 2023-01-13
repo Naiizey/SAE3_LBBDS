@@ -468,6 +468,10 @@ footer a{
     display: none;
 }
 
+.burger{
+    cursor: pointer;
+}
+
 /* Media query téléphone footer */
 @media screen and (max-width:960px){
     footer .pc{
@@ -3413,19 +3417,6 @@ a.fleche-page{
     border: solid red 2px;
 }
 
-.lignesSignalements svg {
-    width: 1.5em;
-    height: 1.5em;
-}
-
-.lignesSignalements svg path {
-    transition: 0.2s;
-}
-
-.lignesSignalements:hover svg path {
-    fill: red;
-}
-
 /* ━━━ Div des sanctions ━━━ */
 
 .divSanctions{
@@ -3433,8 +3424,12 @@ a.fleche-page{
 }
 
 @media screen and (max-width: 480px){
-    #tableLstCommandes{
-        font-size: 0.75em;
+    .divLst{
+        overflow-x: scroll;
+    }
+
+    .tableLst{
+        width: 150vw;
     }
 }
 
@@ -3575,6 +3570,10 @@ progress::-moz-progress-bar
     justify-content: end;
 }
 
+.divProgress > p{
+    display: none;
+}
+
 @media screen and (max-width: 960px){
     .progress-bar-ok{
         width: 80%;
@@ -3635,18 +3634,13 @@ progress::-moz-progress-bar
         width: 80%;
     }
 
-    .progressMobile{
-        display: block;
-    }
-
     .bar{
         display: none;
     }
 
-    .progressMobile p{
+    .divProgress > p{
         display: inline-block;
-        font-size: 1em;
-        word-wrap: break-word;
+        font-size: 1.5em;
     }
 }
 

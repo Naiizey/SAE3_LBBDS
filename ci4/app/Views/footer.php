@@ -1,4 +1,4 @@
-            <div class="mentionsLegales" style="display: none;">
+<div class="mentionsLegales" style="display: none;">
                 <div class="divFermerCGU">
                     <a href="" class="fermerCGU">
                         <?= file_get_contents(dirname(__DIR__,2)."/public/images/cross.svg") ?>
@@ -125,11 +125,14 @@
                 </div>
             </div>
             <div>
+                <a href="commmandes" class="lienCGU"> <!-- Lien mentions légales -->
+                    <p>Mes Commandes</p>
+                </a>
                 <a href="" class="lienCGU"> <!-- Lien mentions légales -->
                     <p>Mentions légales</p>
                 </a>
-                <a href="./"> <!-- Lien réseaux sociaux -->
-                    <p>Réseaux sociaux</p>
+                <a href="mailto:admin@alizon.net"> <!-- Lien réseaux sociaux -->
+                    <p>Nous contacter</p>
                 </a>
                 <a href="./"> <!-- Lien aide -->
                     <p>Besoin d'aide ?</p>
@@ -163,27 +166,27 @@
             <div class="mobile">
                 <ul>
                     <li>
-                    <a class="lienConnexion" href="
-                            <?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>
-                        ">
-                        <?php include(dirname(__DIR__,2)."/public/images/header/profil.svg")?>
-                    </a>
-                    <?php if (session()->has("numero")): ?>
-                        <div class="divHoverConnexion divConnected">
-                            <p class="pNom">Bonjour <?= (session()->get("nom")) ?></p>
-                            <a href="<?= base_url()."/espaceClient"?>"><p>Mon profil</p></a>
-                            <a href="<?= base_url()."/destroy"?>"><p>Se déconnecter</p></a>
-                        </div>
-                    <?php else: ?>
-                        <div class="divHoverConnexion divNotConnected">
-                            <a href="<?= base_url()."/connexion"?>"><p>Se connecter</p></a>
-                            <a href="<?= base_url()."/inscription"?>"><p>S'inscrire</p></a>
-                        </div>
-                    <?php endif; ?>
+                        <a class="lienConnexion" href="
+                                <?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>
+                            ">
+                            <?php include(dirname(__DIR__,2)."/public/images/header/profil.svg")?>
+                        </a>
+                        <?php if (session()->has("numero")): ?>
+                            <div class="divHoverConnexion divConnected">
+                                <p class="pNom">Bonjour <?= (session()->get("nom")) ?></p>
+                                <a href="<?= base_url()."/espaceClient"?>"><p>Mon profil</p></a>
+                                <a href="<?= base_url()."/destroy"?>"><p>Se déconnecter</p></a>
+                            </div>
+                        <?php else: ?>
+                            <div class="divHoverConnexion divNotConnected">
+                                <a href="<?= base_url()."/connexion"?>"><p>Se connecter</p></a>
+                                <a href="<?= base_url()."/inscription"?>"><p>S'inscrire</p></a>
+                            </div>
+                        <?php endif; ?>
                     </li>
                     <li>
-                        <a href="./"> <!-- contact -->
-                            <?php include("./images/header/contact.svg")?>
+                        <a href="catalogue"> <!-- catalogue -->
+                            <?php include("./images/header/catalogue.svg")?>
                         </a>
                     </li>
                     <li>
@@ -192,9 +195,7 @@
                         </a>
                     </li>
                     <li>
-                        <div></div>
-                        <div></div>
-                        <div></div>
+                        <?php include("./images/header/burger.svg")?>
                     </li>
                 </ul>
             </div>

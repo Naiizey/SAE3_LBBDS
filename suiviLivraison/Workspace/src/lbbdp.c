@@ -373,7 +373,7 @@ int testConnect(lst_option options, int cnx){
 
 int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, int * capaciteLivraison, int maxCapaLivraison, char * pathToFile){
     char buf[512];
-    char res[10];
+    char res[20];
     int size, onContinue=1;
     int retour=0;
     while(onContinue){
@@ -401,14 +401,14 @@ int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, int * 
         
         if(retour < 0)//Erreurs
         {
-            snprintf(res,10,"%d\r\n",-retour);
+            snprintf(res,20,"%d\r\n",-retour);
         }
         else//Réussite
         {
-            snprintf(res,10,"0%d\r\n",retour);
+            snprintf(res,20,"0%d\r\n",retour);
         }
         
-        write(cnx, res,10);
+        write(cnx, res,20);
     }
 
     return retour;
@@ -500,11 +500,12 @@ int handleAUT(cJSON * js, struct sockaddr addr, char * pathToFile){
     user cli;
     printf("???: %s\n",cJSON_Print(js));
     int result=parcoursPourAuth(js->child,&cli);
-    printf("%s\n",cli.id);
+   
     if(result==0)
     {
         printf("Connection...\n");
         result=hereConnection(&cli,addr,pathToFile);
+        printf("%s\n",getIp(cli.addr));
     }
 
     return result;

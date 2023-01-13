@@ -11,6 +11,8 @@
                                 <? if ($bannir) : ?>
                                     <th>Bannir</th>
                                 <? endif; ?>
+                            <? else: ?>
+                                <th>Supprimer</th>
                             <? endif; ?>
                         </tr>
                     </thead>
@@ -25,6 +27,10 @@
                                             <button class="buttonSanction"></button>
                                         </td>
                                     <?php endif; ?>
+                                <? else : ?>
+                                    <td>
+                                        <a class="lienSupprimer"></a>
+                                    </td>
                                 <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>

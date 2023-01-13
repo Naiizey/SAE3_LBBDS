@@ -9,8 +9,8 @@
 
 const int EXTENSION = 20;
 
-int max_array=20;
-void * init_array_session(){
+
+void * init_array_session(int max_array){
     return calloc(max_array,sizeof(user));
 }
 
@@ -70,7 +70,7 @@ user * IPdejaConnecte(arrayUser arr,int ind,struct sockaddr adr){
  * @param new 
  * @return char* 
  */
-char * addSession(arrayUser arr,int * ind,user new){
+char * addSession(arrayUser arr,int * ind,user new, int max_array){
     if(arr != NULL){
         bool trouve=false;
         for(int i=0;i<(*ind) && !trouve;i++){
@@ -124,24 +124,40 @@ void md5_hasher(char *string, char *hash)
 }
 
 //Vérification du mot de passe contenu dans un fichier
-bool verify_password(char *path, char *id, char *hashedPass){
+int verify_password(char *path, char *id, char *hashedPass){
+    printf("Vérification mot de passe..\n");
     FILE *fp;
     
     //Création du buffer qui recevra les caractères lus
     char buffer[size];
 
     //Ouverture du fichier en read
-    fp = fopen(path, "r+");
-
-    //Lecture du fichier avec les caractères mis dans le buffer
-    fread(buffer, size, 1, fp);
-
-    //Si le buffer contient le mot de pass hashé ainsi que l'id, return vrai
-    if(strstr(buffer, hashedPass) != NULL && strstr(buffer, id) != NULL){
-        return true;
+    fp=fopen(path, "r+");
+    if(fp != NULL){
+        //Lecture du fichier avec les caractères mis dans le buffer
+        if(fread(buffer, size, 1, fp) >=0){
+            //Si le buffer contient le mot de pass hashé ainsi que l'id, return vrai
+            //TODO: strstr pas adapté
+            if(strstr(buffer, hashedPass) != NULL && strstr(buffer, id) != NULL){
+                return 0;
+            }else{
+                return -22;
+            }
+        }else{
+            printf("Problème lecture fichier\n");
+            return -50;
+        }   
+            
+    }else{
+        printf("Problème ouverture fichier\n");
+        return -50;
     }
+        
+    
 
-    return false;
+   
+
+    
 }
 /**
  * @brief Connecte le client en ajoutant sa session à l'array
@@ -151,13 +167,15 @@ bool verify_password(char *path, char *id, char *hashedPass){
  * @return true 
  * @return false 
  */
-bool connection(user * client, struct sockaddr addr, arrayUser arr, int *ind, char * mdpFile){
-    if(verify_password(mdpFile,client->id,client->pass)){
+int connection(user * client, struct sockaddr addr, arrayUser arr, int *ind, char * mdpFile){
+    printf("Connection en cours...\n");
+    int retour=verify_password(mdpFile,client->id,client->pass);
+    if(retour==0){
         client->session=time(NULL);
-        client->addr;
-        return  addSession(arr,ind,*client)!=NULL;
+        client->addr=addr;
+        return  (addSession(arr,ind,*client,20)!=NULL)?0:-50;
     }else{
-        return false;
+        return retour;
     }
 }
 

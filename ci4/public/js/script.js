@@ -874,19 +874,13 @@ function boutonCliquable(bouton,action){
 
 function loadFilters(){
     window.addEventListener("load", () => {
-        if(localStorage.getItem("open")){
+        if(localStorage.getItem("open") === "true"){
             document.querySelector(".partie-filtre").style.display = "block"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
-            localStorage.removeItem("open");
         }
-        else if(!localStorage.getItem("open")){
+        else if(localStorage.getItem("open") === "false"){
             document.querySelector(".partie-filtre").style.display = "none"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "block"
-            localStorage.removeItem("open");
-        }
-        else{
-            document.querySelector(".partie-filtre").style.display = "none"
-            document.querySelector(".bulle-ouvrir-filtres").style.display = "block"	
         }
     });
 }

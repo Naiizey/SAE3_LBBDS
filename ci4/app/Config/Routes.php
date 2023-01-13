@@ -123,6 +123,9 @@ $routes->set404Override();
     $routes->post('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');
 
     $routes->get('/vendeur/import/entetes', 'Import::getentetes');
+
+    $routes->get('/connexion/retourProduit/(:num)', 'Home::produit/$1' ,['filter' => 'connexion']);
+    $routes->get('/connexion/retourPanier', 'Panier::getProduitPanierClient' ,['filter' => 'connexion']);
 ##param uri (:any) et dans methode /$1
 
 /*

@@ -146,6 +146,7 @@ class Home extends BaseController
 
     public function produit($idProduit = null, $numAvisEnValeur = null)
     {
+        $data["idProduit"] = $idProduit;
         $data["signalements"] = model("\App\Models\LstSignalements")->findAll();
         $data['model'] = model("\App\Models\ProduitCatalogue");
         $data['cardProduit']=service("cardProduit");
@@ -240,13 +241,24 @@ class Home extends BaseController
         }
 
         //Affichage selon si produit trouvé ou non
-        if ($result == null) {
+        if ($result == null) 
+        {
             return view('errors/html/error_404.php', array('message' => "Ce produit n'existe pas"));
-        } else {
+        } 
+        else 
+        {
             $data["controller"] = "Produit";
 
             $data['prod'] = $result;
-            return view('produit.php', $data);
+
+            if (strstr(current_url(), "retourProduit"))
+            {
+                return redirect()->to("/produit/$idProduit#avis");
+            }
+            else
+            {
+                return view('produit.php', $data);
+            }
         }
     }
 

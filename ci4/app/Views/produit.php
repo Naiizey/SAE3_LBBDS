@@ -130,22 +130,22 @@
                         </div>
                         <?php endif ?>
 
-
+                        
                         <div class="divListeAvis">
-
+                             
                             
                             <?php if (!empty($avis) && (session()->has("numero"))): ?>
                             <div class="divAjoutComment">
                             <?php elseif ((!empty($avis)) && (!session()->has("numero"))): ?>
                             <div class="divAjoutCommentConnect divConnectPetit">
                                 <p>Vous devez vous connecter pour commenter</p>
-                                <a href="">Se connecter</a>
+                                <a href="<?= base_url() ?>/connexion/retourProduit/<?= $idProduit ?>">Se connecter</a>
                             </div>
                             <div class="divAjoutComment divAjoutCommentBlur">
                             <?php elseif ((empty($avis)) && (!session()->has("numero"))): ?>
                             <div class="divAjoutCommentConnect divConnectGrand">
                                 <p>Vous devez vous connecter pour commenter</p>
-                                <a href="">Se connecter</a>
+                                <a href="<?= base_url() ?>/connexion/retourProduit/<?= $idProduit ?>">Se connecter</a>
                             </div>
                             <div class="divAjoutComment divAjoutCommentBlur divAjoutCommentVide">
                             <?php elseif ((empty($avis)) && (session()->has("numero"))): ?>

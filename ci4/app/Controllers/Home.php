@@ -657,6 +657,12 @@ class Home extends BaseController
         {
             $modelSignalements = model("\App\Models\LstSignalements");
             $modelSignalements->delete($id_signal);
+
+            /*$signal = new \App\Entities\Signalement();
+            $signal->raison = "test";
+            $signal->num_avis = 1;
+            $signal->num_compte = 1;
+            $modelSignalements->save($signal);*/
         }
         
         $data["role"] = "admin";

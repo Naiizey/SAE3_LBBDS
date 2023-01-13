@@ -2567,6 +2567,57 @@ h3 > .lienPasArticlePanier {
     }
 }
 
+
+@media screen and (max-width: 960px) and (min-width: 481px){
+    .mainProduit{
+        padding-bottom: 7.5em;
+    }
+    
+    .divGauche .zoom{
+        width: 45vh;
+        height: 45vh;
+    }
+
+    .divGauche ul img{
+        width: 12vh;
+        height: 12vh;
+    }
+}
+
+@media screen and (max-width: 480px){
+    .divGauche{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0;
+        height: 25rem;
+    }
+
+    .divGauche ul{
+        order: 2;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0;
+    }
+
+    .divGauche .zoom{
+        width: 33vh;
+        height: 33vh;
+    }
+
+    .divGauche ul img{
+        width: 10vh;
+        height: 10vh;
+    }
+
+    .divProfilText input::placeholder{
+        font-size: .75em;
+    }
+}
+
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃               Carte produit (CardProduit.php)                     ┃

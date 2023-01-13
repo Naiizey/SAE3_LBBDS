@@ -30,20 +30,20 @@
                         </div>
                     </div>
                     <p>
-                        <?php
-                            if($infosCommande[0]->etat < 20){
+                    <?php
+                            if($infosCommande[0]->etat == 1){
                                 echo "Commandée";
                             }
-                            else if($infosCommande[0] >= 20 && $infosCommande[0] < 40){
+                            else if($infosCommande[0]->etat == 2){
                                 echo "Expédiée";
                             }
-                            else if($infosCommande[0] >= 40 && $infosCommande[0] < 60){
+                            else if($infosCommande[0]->etat == 3){
                                 echo "Plateforme régionale";
                             }
-                            else if($infosCommande[0] >= 60 && $infosCommande[0] < 80){
+                            else if($infosCommande[0]->etat == 4){
                                 echo "Plateforme Locale";
                             }
-                            else if($infosCommande[0] >= 80 && $infosCommande[0] < 100){
+                            else if($infosCommande[0]->etat == 5){
                                 echo "Livrée";
                             }
                             else{

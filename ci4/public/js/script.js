@@ -184,6 +184,12 @@ function checkCSV()
             for (let i = 0; i < lines.length-1 ; i++) {
                 let line = lines[i];
                 let cells = line.split(";");
+                if (i>0) {
+                    //on ajoute à cells i au début pour avoir l'index de la ligne
+                    let index = i+1;
+                    cells.unshift(""+index+"");
+                    console.log(cells);
+                }
                 if (entete.size > cells.length) {
                     //on ajoute une ligne en rouge
                     console.log("ligne non valide");
@@ -208,6 +214,9 @@ function checkCSV()
                 }
                 if (i === 0) {
                     let row = table.insertRow(-1);
+                    //insertion d'une cell en 1er nommée "ligne"
+                    let cell = row.insertCell(-1);
+                    cell.innerHTML = "ligne";
                     for (let j = 0; j < cells.length; j++) {
                         //si l'entête n'est pas dans les clés de entete
                         if (!(entete.has(cells[j].trim()))) {
@@ -225,15 +234,15 @@ function checkCSV()
                     let is_empty = false;
                     //si la ligne contient des cellules vides
                     if (has_empty_cell(cells) > 0) {
+                        console.log("erreur cellule vide");
                         for (let j = 0; j < cells.length; j++) {
-                            
                             if (cells[j] === "") {
                                 cells[j] = "<span style='color:red'>" + "vide" + "</span>";
                                 preview.innerHTML = "le fichier contient des cellules vides";
                                 preview.style.color = "red";
                                 is_empty = true;
                                 correct = -1;
-                                console.log("erreur cellule vide");
+                                
                             }
                             else {
                                 cells[j] = "<span style='color:black'>" + cells[j] + "</span>";
@@ -300,11 +309,6 @@ function previewCSV(){
             
             if (i == 0)
             {
-                //on ajoute une 1ère ligne fusionnée
-                console.log("ligne valide");
-                preview.innerHTML = "nombre de colonnes valide :";
-                console.log(cells);
-                preview.style.color = "green";
                 //on centre le texte
                 preview.style.textAlign = "center";
                 document.getElementById("submit").disabled = false;

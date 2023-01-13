@@ -4232,6 +4232,7 @@ progress::-moz-progress-bar
 ┃                                  Zoom produit                                   ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+
 div.zoom {
     cursor: zoom-in;
     object-fit: cover;
@@ -4242,13 +4243,24 @@ div.zoom {
     border-radius: 3px;
   }
   
-  div.zoom img:hover {
+div.zoom img:hover {
     opacity: 0;
-  }
+}
   
-  div.zoom img {
+div.zoom img {
     transition: opacity 0.5s;
     display: block;
     width: 100%;
     height: 100%;
-  }
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                   Import CSV                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+#preview {
+    display: flex;
+    flex-direction: column;
+}

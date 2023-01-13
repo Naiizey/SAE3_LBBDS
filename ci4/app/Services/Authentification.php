@@ -58,7 +58,7 @@ class Authentification
             {
                 $errors[1]= "Remplissez le(s) champs vide(s)";
             }
-            if(strlen($entree->nom) > 50 && strlen($entree->prenom) > 50)
+            if(strlen($entree->nom) > 50 || strlen($entree->prenom) > 50)
             {
                 $errors[2]= "50 caractères maximum pour le nom (" . strlen($entree->prenom) . " actuellement) et/ou prénom (" . strlen($entree->nom) . " actuellement)";
             } 
@@ -123,6 +123,14 @@ class Authentification
             if(strlen($entree->nom) > 50 || strlen($entree->prenom) > 50)
             {
                 $errors[2]= "50 caractères maximum pour le nom (" . strlen($entree->prenom) . " actuellement) et/ou prénom (" . strlen($entree->nom) . " actuellement)";
+            }
+            if(strlen($entree->pseudo) > 30)
+            {
+                $errors[8]="30 caractères maximum pour le pseudo (" .strlen($entree->pseudo) . " actuellement)";
+            }
+            if(!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) || strlen($entree->email) > 255) 
+            {
+                $errors[7]="255 caractères maximum pour l'email et caractère spéciaux interdits";
             }
             if ($entree->motDePasse != "motDePassemotDePasse") 
             {

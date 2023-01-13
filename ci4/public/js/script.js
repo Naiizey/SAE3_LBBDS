@@ -136,11 +136,11 @@ function getentete(){
         ["description_prod", "varchar"],
         ["lien_image_prod", "varchar"],
         ["publication_prod", "boolean"],
-        ["stock_prod", "float8"],//
+        ["stock_prod", "integer"],//
         ["moyenne_note_prod", "float8"],
         ["seuil_alerte_prod", "integer"],
         ["alerte_prod", "boolean"],
-        ["code_sous_cat", "boolean"]
+        ["code_sous_cat", "integer"]
     ]);
 
     
@@ -155,6 +155,7 @@ function getentete(){
  */
 function previewCSV(){
     let preview = document.getElementById("preview");
+    
     //ajout d'un event listener sur le changement de fichier
     document.getElementById("file").addEventListener("change", function (e) {
         preview.innerHTML = " chargement du fichier...";
@@ -166,12 +167,13 @@ function previewCSV(){
         //prend l'en-tête du fichier et l'ajoute au tableau
         let entete = getentete();
         
-        //print the entete
+        
 
         reader.readAsText(file);
         //ajout d'un event listener sur le chargement du fichier
         reader.addEventListener("load", function () {
             preview.innerHTML = "<br><h3>Prévisualisation</h3><br>";
+            //si la longueur de entete est > longueur de la première ligne
             var table = document.createElement("table");
             let csv = reader.result;
             //création du tableau
@@ -179,6 +181,31 @@ function previewCSV(){
             for (let i = 0; i < 10 && i < lines.length; i++) {
                 let line = lines[i];
                 let cells = line.split(";");
+                if (entete.size > cells.length)
+                {
+                    //on ajoute une ligne en rouge
+                    console.log("ligne non valide");
+                    preview.innerHTML = "nombre de colonnes invalide";
+                    preview.style.color = "red";
+                    //on centre le texte
+                    preview.style.textAlign = "center";
+                    
+                }
+                else
+                {
+                    if (i == 0)
+                    {
+                        //on ajoute une 1ère ligne fusionnée
+                        console.log("ligne valide");
+                        preview.innerHTML = "nombre de colonnes valide :";
+                        console.log(cells);
+                        preview.style.color = "green";
+                        //on centre le texte
+                        preview.style.textAlign = "center";
+                        document.getElementById("submit").disabled = false;
+                    }
+
+                }
                 let row = table.insertRow(-1);
                 if (i === 0) {
                     for(let j = 0; j < cells.length; j++){
@@ -203,6 +230,7 @@ function previewCSV(){
                             cells[j] = cells[j].substring(0, 20) + "...";
                         }
                         let cell = row.insertCell(-1);
+                        cell.style.color = "black";
                         cell.innerHTML = cells[j];
                     }
                 }   
@@ -526,30 +554,28 @@ function lstClients(){
     var buttons=document.getElementsByClassName("buttonSanction");
 
     for (let numLigne=0; numLigne<lignes.length; numLigne++){
-        let ligneA=lignes.item(numLigne);
         var clientA=numClients.item(numLigne).textContent;
+        lignes.item(numLigne).clientA=clientA;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
-        ligneA.addEventListener("click", liensLstClients);
-        ligneA.clientA=clientA;
+        lignes.item(numLigne).addEventListener("click", liensLstClients);
         let buttonA=buttons.item(numLigne);
         // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
         if(bannir){
             buttonA.addEventListener("click", () => {
-                ligneA.removeEventListener("click", liensLstClients);
+                lignes.item(numLigne).removeEventListener("click", liensLstClients);
     
+                document.getElementsByClassName("titreSanction")[0].innerHTML = `Bannir le client n°${lignes.item(numLigne).clientA} ?`;
                 afficherSanctions();
-    
-                document.getElementsByClassName("titreSanction")[0].innerHTML = `Bannir le client n°${clientA} ?`;
     
                 document.getElementById("timeout").addEventListener("click", () => {
                     cacherSanctions();
-                    afficherTimeout(clientA);
-                    ligneA.addEventListener("click", liensLstClients);
+                    afficherTimeout(lignes.item(numLigne).clientA);
+                    lignes.item(numLigne).addEventListener("click", liensLstClients);
                 })
     
                 document.getElementById("fermer").addEventListener("click", () => {
                     cacherSanctions();
-                    ligneA.addEventListener("click", liensLstClients);
+                    lignes.item(numLigne).addEventListener("click", liensLstClients);
                 })
             })
         }
@@ -821,7 +847,36 @@ function cataloguePrice(){
 
 //Click bouton filtre media query
 function boutonCliquable(bouton,action){
-    bouton.addEventListener("click",action);
+    if(screen.width < 1200){
+        bouton.addEventListener("click",action);
+    }
+    else if(screen.width >= 1200 && bouton.classList.contains("bulle-ouvrir-filtres")){
+        bouton.addEventListener("click", () => {
+            document.querySelector(".partie-filtre").style.display = "block"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
+            localStorage.setItem("open", true);
+        })
+    }
+    else if(screen.width >= 1200 && bouton.classList.contains("fermer-filtre")){
+        bouton.addEventListener("click", () => {
+            document.querySelector(".partie-filtre").style.display = "none"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "block"
+            localStorage.setItem("open", false);
+        })
+    }
+}
+
+function loadFilters(){
+    window.addEventListener("load", () => {
+        if(localStorage.getItem("open") === "true"){
+            document.querySelector(".partie-filtre").style.display = "block"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
+        }
+        else if(localStorage.getItem("open") === "false"){
+            document.querySelector(".partie-filtre").style.display = "none"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "block"
+        }
+    });
 }
 
 //Ajout de la classe "est-filtre-ouvert" au filtre

@@ -1,11 +1,11 @@
-<?php require("header.php");?>
+<?php require __DIR__ . "/../header.php";?>
     <main>
         <div class="divLst">
             <?php if(!empty($clients)): ?>
                 <table class="tableLst">
                     <thead>
                         <tr>
-                            <th>N° client</th>
+                            <th>N° compte</th>
                             <th>Identifiant</th>
                             <? if(isset($bannir)) : ?>
                                 <?php if ($bannir) : ?>
@@ -64,7 +64,7 @@
                     </div>
                         <div class="raison">
                             <label>Raison<span class="requis">*</span> : </label>
-                            <textarea rows="3" name="raison" required></textarea>
+                            <textarea rows="3" name="raison" maxlength="50" required></textarea>
                         </div>
                 </div>
                 <div class="alerte-footer"><hr>
@@ -76,7 +76,7 @@
             </form>
         </div>
     </div>
-<?php require("footer.php");?>
+<?php require __DIR__ . "/../footer.php";?>
 <script>
     <? if(isset($bannir)): ?>
         var bannir = <?= $bannir ?>;

@@ -64,7 +64,7 @@ $routes->set404Override();
 
     $routes->get('/panier', 'Panier::getProduitPanierClient');
     $routes->post('/panier', 'Panier::getProduitPanierClient');
-    $routes->get('/panier/vider', 'Panier::viderPanier'); 
+    $routes->get('/panier/vider', 'Panier::viderPanier');
     $routes->get('/panier/supprimer/(:num)', 'Panier::supprimerProduitPanier/$1');
     $routes->post('/panier/ajouter/(:num)', 'Panier::ajouterPanier/$1/');
     $routes->get('/panier/ajouter/(:num)/(:num)', 'Panier::ajouterPanier/$1/$2');
@@ -80,7 +80,6 @@ $routes->set404Override();
     $routes->get('/catalogue/(:num)', 'Home::catalogue/$1');
 
     $routes->get('/test', 'Test::test2');
-  
 
     $routes->get('vendeur/import', 'Import::index/true');
     $routes->post('vendeur/import/upload', 'Import::upload');
@@ -113,6 +112,9 @@ $routes->set404Override();
     $routes->get('/admin/Clients', 'Home::lstClients/liste');
     $routes->get('/admin/Clients/bannir', 'Home::lstClients/bannir');
     $routes->post('/admin/Clients/bannir', 'Home::lstClients/bannir');
+    
+    $routes->get('/admin/bannissements', 'Home::bannissements');
+    $routes->post('/admin/bannissements', 'Home::bannissements');
 
     $routes->get('/(admin)/signalements', 'Home::lstSignalements');
     $routes->post('/(admin)/signalements', 'Home::lstSignalements');
@@ -121,6 +123,9 @@ $routes->set404Override();
     $routes->post('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');
 
     $routes->get('/vendeur/import/entetes', 'Import::getentetes');
+
+    $routes->get('/connexion/retourProduit/(:num)', 'Home::produit/$1' ,['filter' => 'connexion']);
+    $routes->get('/connexion/retourPanier', 'Panier::getProduitPanierClient' ,['filter' => 'connexion']);
 ##param uri (:any) et dans methode /$1
 
 /*

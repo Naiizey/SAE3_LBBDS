@@ -38,7 +38,7 @@ class Panier extends BaseController
 
     public function verification(){
         $auth = service('authentification');
-        $verif=$auth->connexion($this->request->getPost()); 
+        $verif=$auth->connexion($this->request->getPost());
         if($verif){
             return redirect()->to("/");
         }
@@ -60,10 +60,9 @@ class Panier extends BaseController
             $produits[] = $produit;
         }
         return $produits;
-    } 
+    }
     */
 
-         
     /**
      * @method getProduitPanierClient
      * Récupére tout les produits du panier:
@@ -88,23 +87,23 @@ class Panier extends BaseController
         $get=$this->request->getGet();
 
         //Choix alerte fusion
-        if(!empty($get)){
-            if(isset($get["SupprActuel"]) && $get["SupprActuel"]==1 ){
+        if (!empty($get)){
+            if (isset($get["SupprActuel"]) && $get["SupprActuel"]==1 ) {
                 model("\App\Models\ProduitPanierVisiteurModel")->viderPanier(get_cookie("token_panier"));
                 delete_cookie("token_panier");
                 $data["ecraserOuFusionner"]=true;
-            } else if(isset($get["SupprAncien"]) && $get["SupprAncien"]==1 ){
+            } elseif (isset($get["SupprAncien"]) && $get["SupprAncien"]==1 ) {
                 model("\App\Models\ProduitPanierCompteModel")->viderPanier(session()->get("numero"));
                 model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
                 delete_cookie("token_panier");
                 $data["ecraserOuFusionner"]=true;
-            } else if(isset($get["Ignorer"]) && $get["Ignorer"]==1 ){
+            } elseif (isset($get["Ignorer"]) && $get["Ignorer"]==1 ) {
                 session()->set("ignorer",true);
-            } else if(isset($get["Confirmer"]) && $get["Confirmer"]==1 ){
+            } elseif (isset($get["Confirmer"]) && $get["Confirmer"]==1 ) {
                 model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
                 delete_cookie("token_panier");
                 $data["ecraserOuFusionner"]=true;
-            }  
+            }
         }
         $data["controller"] = "Panier";
         $data['code'] = "";
@@ -115,17 +114,17 @@ class Panier extends BaseController
         $modelReducPanier = model("\App\Models\ReducPanier");
 
         //Récupération des produits du panier
-        if(session()->has("numero")) 
+        if(session()->has("numero"))
         {
             $modelProduitPanier = model("\App\Models\ProduitPanierCompteModel");
             $data['produits'] = $modelProduitPanier->getPanier(session()->get("numero"));
         }
-        else if(has_cookie("token_panier")) 
+        else if(has_cookie("token_panier"))
         {
             $modelProduitPanier = model("\App\Models\ProduitPanierVisiteurModel");
             $data['produits'] = $modelProduitPanier->getPanier(get_cookie("token_panier"));
         }
-        else 
+        else
         {
             $data['produits'] = array();
         }
@@ -143,7 +142,7 @@ class Panier extends BaseController
             //S'il y a déjà un code associé à ce panier
             if (!empty($panier))
             {
-                //Alors on le récupère 
+                //Alors on le récupère
                 $codeReduc = $modelCodeReduc->getCodeReducById($panier[0]->id_reduction)[0];
 
                 //On informe la vue qu'il faut afficher le code
@@ -160,16 +159,12 @@ class Panier extends BaseController
 
                 $codeReduc = $modelCodeReduc->getCodeReducByCode($post['code']);
 
-                if (empty($codeReduc))
-                {
+                if (empty($codeReduc)) {
                     $issues[0] = "Ce code n'existe pas";
-                }
-                else
-                {
+                } else {
                     //Le code étant unique dans la base on choisi le premier et seul résultat du findAll
                     $codeReduc = $codeReduc[0];
-
-                    $date_ajd = date("Y-m-d H:i:s"); 
+                    $date_ajd = date("Y-m-d H:i:s");
                     $date_debut = $codeReduc->date_debut . " " . $codeReduc->heure_debut;
                     $date_fin = $codeReduc->date_fin . " " . $codeReduc->heure_fin;
 
@@ -204,25 +199,23 @@ class Panier extends BaseController
                     $retours[1] = "Vous économisez <span>" . $codeReduc->pourcentage_reduction . "%</span>";
                 }
                 
-                //On affiche le nouveau prix 
+                //On affiche le nouveau prix
                 $data['classCacheDiv'] = "decouvreNouveauPrix";
             }
         }
         //Fusion automatique du panier
-        else if(has_cookie("token_panier") && session()->has("numero"))
-        {   
+        elseif (has_cookie("token_panier") && session()->has("numero"))
+        {
             
             model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
             delete_cookie("token_panier");
             $data["ecraserOuFusionner"]=true;
             $data["produits"]=$modelProduitPanier->getPanier(session()->get("numero"));
         }
-           
-
         $data['erreurs'] = $issues;
         $data['retours'] = $retours;
 
-        return view('page_accueil/panier.php', $data);
+        return view('client/panier.php', $data);
     }
 
     public function viderPanier() {
@@ -252,7 +245,7 @@ class Panier extends BaseController
             {
                 $quantite=$this->request->getPost("quantitePlus");
             }
-            else 
+            else
             {
                 $quantite=$this->request->getPost("quantite");
             }
@@ -278,7 +271,7 @@ class Panier extends BaseController
                 
                 
             }
-            else 
+            else
             {
                 
                 $token=$this->creerPanier();
@@ -328,39 +321,32 @@ class Panier extends BaseController
         
             if (session()->has('numero'))
             {
-            try{
-                model("\App\Models\ProduitPanierCompteModel")->changerQuantite($id,session()->get('numero'),$newQuantite);
-                $result = array("prodChanged" => $id,"forClientId" => session()->get('numero'));
-                $code=200;
-            }catch(\Exception $e){
-                $result = array("error" => $e);
-                $code=500;
-            }
-            } 
-            else if(has_cookie("token_panier"))
-            {   
-                try{
+                try {
+                    model("\App\Models\ProduitPanierCompteModel")->changerQuantite($id,session()->get('numero'),$newQuantite);
+                    $result = array("prodChanged" => $id,"forClientId" => session()->get('numero'));
+                    $code=200;
+                } catch (\Exception $e){
+                    $result = array("error" => $e);
+                    $code=500;
+                }
+            } elseif (has_cookie("token_panier"))
+            {
+                try {
                     model("\App\Models\ProduitPanierVisiteurModel")->changerQuantite($id, get_cookie("token_panier"),$newQuantite);
                     $result = array("prodChanged" => $id,"forClientId" =>  get_cookie("token_panier"));
                     $code=200;
                     $this->updatePanier(get_cookie("token_panier"));
                 
-                }catch(\ErrorException $e){
+                } catch (\ErrorException $e) {
                     //echo $e;
                     $result = array("error" => $e->getMessage());
                     $code=500;
                 }
-                
-               
-            }
-            else throw new \Exception("Le panier n'existe pas !");
-
-        
+            } else throw new \Exception("Le panier n'existe pas !");
             
-            if(!isset($this->request)) return $result;
-
-            else if($this->request->getMethod()==="put")
-            {
+            if(!isset($this->request)) {
+                return $result;
+            } elseif($this->request->getMethod()==="put") {
                 return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
                 ->setStatusCode($code)->setJSON($result);
             }

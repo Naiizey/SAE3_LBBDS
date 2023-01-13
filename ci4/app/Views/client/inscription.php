@@ -1,4 +1,4 @@
-<?php require("header.php");
+<?php require __DIR__ . "/../header.php";
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -6,8 +6,8 @@
             return "<div class='bloc-erreurs'>
                                 <p class='paragraphe-erreur'>$e[$codeE]</p>
                     </div>";
-        }   
-    }  
+        }
+    }
 ?>
         </header>
         <main>
@@ -18,9 +18,9 @@
                     <form action='<?= current_url() ?>' method="post">
                         <label>Pseudo<span class="requis">*</span> :</label>
                         <input type="text" name="pseudo" required="required" value="<?= $pseudo?>"/>
-                        <?= 
+                        <?=
                             afficheErreurs($erreurs, 3) .
-                            afficheErreurs($erreurs, 8) 
+                            afficheErreurs($erreurs, 8)
                         ?>
                         <div class="nomPrenom">
                             <div>
@@ -35,13 +35,13 @@
                         <?= afficheErreurs($erreurs, 2); ?>
                         <label>Adresse mail<span class="requis">*</span> :</label>
                         <input type="email" name="email" required="required" value="<?= $email?>"/>
-                        <?= 
+                        <?=
                             afficheErreurs($erreurs, 4) .
                             afficheErreurs($erreurs, 7)
                         ?>
                         <label>Mot de passe<span class="requis">*</span> :</label>
                         <input type="password" name="motDePasse" required="required" value="<?= $motDePasse?>"/>
-                        <?= 
+                        <?=
                             afficheErreurs($erreurs, 5) .
                             afficheErreurs($erreurs, 6)
                         ?>
@@ -54,4 +54,4 @@
                 </div>
             </div>
         </main>
-<?php require("footer.php"); ?>
+<?php require __DIR__ . "/../footer.php"; ?>

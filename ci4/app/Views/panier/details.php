@@ -1,10 +1,10 @@
-<?php require(__DIR__."/../page_accueil/header.php"); ?>
+<?php require __DIR__."/../header.php"; ?>
         </header>
         <main>
             <div class="divPrincipaleDetail">
                 <div class="divProgress">
                     <?= "<h2>Commande n°".$numCommande."</h2>"?>
-                    <div class="bar">  
+                    <div class="bar">
                         <?= '<progress class="progress-bar-ok" value="'.$infosCommande[0]->etat.'" max="100"></progress>'?> 
                         <div class="buttonProgress">
                             <div>
@@ -57,12 +57,12 @@
                                         <div class="divQuantite">
                                             <p>Quantité : <?= $article->qte?></p>
                                         </div>
-                                        <h3> 
+                                        <h3>
                                             <span class="prixHt" prix="<?= $article -> prix_ht ?>">
                                                 <?= $article -> prix_ht ?>€
                                             </span> HT
                                         </h3>
-                                        <h3> 
+                                        <h3>
                                             <span class="prixTtc" prix="<?= $article -> prix_ttc ?>">
                                                 <?= $article -> prix_ttc ?>€
                                             </span> TTC
@@ -98,9 +98,9 @@
                             </div>
                         </div>
                         <div>
-                           <h2>Livraison</h2>
+                            <h2>Livraison</h2>
                             <hr>
-                            <div class="divDetailLivraison">  
+                            <div class="divDetailLivraison">
                                 <p>Rue : <?= $adresse->numero_rue.' '.$adresse->nom_rue ?></p>
                                 <p>Ville : <?= $adresse->code_postal.' '.$adresse->ville ?></p>
                                 <p>N° de suivi : </p>
@@ -111,7 +111,7 @@
                 </div>
             </div>
         </main>
-<?php require(__DIR__."/../page_accueil/footer.php"); ?>
+<?php require __DIR__."/../footer.php"; ?>
 <script>
     barreProgression();
 </script>

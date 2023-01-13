@@ -7,13 +7,13 @@
                         <tr>
                             <th>N° compte</th>
                             <th>Identifiant</th>
-                            <? if(isset($bannir)) : ?>
-                                <? if ($bannir) : ?>
+                            <?php if(isset($bannir)) : ?>
+                                <?php if ($bannir) : ?>
                                     <th>Bannir</th>
-                                <? endif; ?>
-                            <? else: ?>
+                                <?php endif; ?>
+                            <?php else: ?>
                                 <th>Supprimer</th>
-                            <? endif; ?>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,7 +27,7 @@
                                             <button class="buttonSanction"></button>
                                         </td>
                                     <?php endif; ?>
-                                <? else : ?>
+                                <?php else : ?>
                                     <td>
                                         <a class="lienSupprimer"></a>
                                     </td>

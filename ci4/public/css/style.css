@@ -2721,6 +2721,26 @@ h3 > .lienPasArticlePanier {
     }
 }
 
+@media screen and (max-width: 1440px) and (min-width: 961px){
+    .divGauche{
+        width: 60%;
+    }
+
+    .divGauche ul{
+        width: 20%;
+    }
+
+    .divGauche ul img{
+        width: 10vh;
+        height: 10vh;
+    }
+
+    .divGauche .zoom{
+        width: 40vh;
+        height: 40vh;
+    }
+}
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

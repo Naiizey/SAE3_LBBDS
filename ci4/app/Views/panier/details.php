@@ -29,6 +29,28 @@
                             </div>
                         </div>
                     </div>
+                    <p>
+                    <?php
+                            if($infosCommande[0]->etat == 1){
+                                echo "Commandée";
+                            }
+                            else if($infosCommande[0]->etat == 2){
+                                echo "Expédiée";
+                            }
+                            else if($infosCommande[0]->etat == 3){
+                                echo "Plateforme régionale";
+                            }
+                            else if($infosCommande[0]->etat == 4){
+                                echo "Plateforme Locale";
+                            }
+                            else if($infosCommande[0]->etat == 5){
+                                echo "Livrée";
+                            }
+                            else{
+                                echo "Commande terminée";
+                            }
+                        ?>
+                    </p>
                 </div>
                 <div class="divBasPageDetail">
                     <section class="sectionPanier mainPanier divDetail">
@@ -43,7 +65,7 @@
                                 <hr>
                                 <article id="<?= $article->id_prod ?>" class="articlePanier">
                                     <a href="<?= base_url() ?>/produit/<?= $article->id_prod ?>">
-                                        <img src="<?= $article -> lien_image ?>" alt="article 1" title="Article 1">
+                                        <img src="<?= $article -> lienimage ?>">
                                         <div>
                                             <h2>
                                                 <?= $article -> intitule_prod ?>

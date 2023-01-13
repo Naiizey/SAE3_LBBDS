@@ -651,13 +651,18 @@ class Home extends BaseController
         return view("admin-vendeur/admin.php", $data);
     }
 
-    public function lstSignalements()
+    public function lstSignalements($id_signal = null)
     {
-        $post = $this->request->getPost();
-        if (!empty($post))
+        if ($id_signal != null)
         {
             $modelSignalements = model("\App\Models\LstSignalements");
-            $modelSignalements->delete($post["id_signal"]);
+            $modelSignalements->delete($id_signal);
+
+            /*$signal = new \App\Entities\Signalement();
+            $signal->raison = "test";
+            $signal->num_avis = 1;
+            $signal->num_compte = 1;
+            $modelSignalements->save($signal);*/
         }
         
         $data["role"] = "admin";
@@ -694,7 +699,7 @@ class Home extends BaseController
     //fonction qui vérifie si le compte est banni
     public function verifTimeout(){
         if (session()->get("numero")!=NULL) {
-            if($this->model("\App\Models\SanctionTemp")->isTimeout(session()->get("numero"))){
+            if(model("\App\Models\SanctionTemp")->isTimeout(session()->get("numero"))){
                 $session=session();
                 $session->remove("numero");
                 $session->remove("nom");
@@ -725,6 +730,7 @@ class Home extends BaseController
                     $GLOBALS['invalidation'] = $this->feedback->afficheInvalidation("Cet utilisateur est déjà banni !");
                 }else{
                     $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+                    $GLOBALS['validation'] = $this->feedback->afficheValidation("L'utilisateur a été banni !");
                 }
             }
         }
@@ -738,6 +744,7 @@ class Home extends BaseController
         {
             $modelSanctionTemp = model("\App\Models\SanctionTemp");
             $modelSanctionTemp->delete($post["id_bannissement"]);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Cet utilisateur n'est plus banni !");
         }
 
         $data["controller"]="Liste des bannissements";

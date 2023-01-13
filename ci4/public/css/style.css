@@ -468,6 +468,10 @@ footer a{
     display: none;
 }
 
+.burger{
+    cursor: pointer;
+}
+
 /* Media query téléphone footer */
 @media screen and (max-width:960px){
     footer .pc{
@@ -487,6 +491,7 @@ footer a{
 
     footer .mobile ul{
         display: flex;
+        align-items: center;
         justify-content: space-evenly;
         list-style: none;
         padding: 0;
@@ -509,11 +514,8 @@ footer a{
         height: auto;
     }
 
-    footer .mobile li:last-of-type{
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: space-evenly;
+    footer .mobile .catalogue{
+        min-width: 3rem;
     }
 
     footer .mobile li div{
@@ -521,10 +523,6 @@ footer a{
         width: 75%;
         height: .1rem;
         border-radius: 15ex;
-    }
-
-    footer .mobile li:last-child:hover div{
-        background-color: #6F98C7;
     }
 
     footer .mobile ul > div{
@@ -579,6 +577,14 @@ footer a{
 @media screen and (max-width:960px) and (min-width: 481px){
     footer .mobile{
         height: 6rem;
+    }
+
+    footer .mobile .catalogue{
+        min-width: 5rem
+    }
+
+    footer .mobile .burger{
+        width: 2.5rem;
     }
 }
 
@@ -1740,7 +1746,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 }
 
 .lienPanier {
-    color: white;
+    color: white !important;
     border-radius: 10px;
     background-color: #24a064;
     padding: 0.5em 1em 0.5em 1em;
@@ -2209,8 +2215,69 @@ h3 > .lienPasArticlePanier {
     position: relative;
 }
 
+.divSignalement {
+    background-color: white;
+    position: absolute;
+    top: 70%;
+    left: 30%;
+    right: 30%;
+    bottom: 10%;
+    z-index: 100;
+    border: #3997A3 solid 2px;
+    padding: 2em;
+    text-align: justify;
+    color: #164F57;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.divSignalement p {
+    margin: 0;
+}
+
+.divSignalement h2 {
+    font-size: 1.4em;
+}
+
+.divSignalement form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.divSignalement form input {
+    font-size: medium;
+    font-family: 'Montserrat-Regular';
+}
+
+.divSignalement form div {
+    display: flex;
+    justify-content: space-around;
+    align-self: center;
+}
+
+.divSignalement form div * {
+    text-decoration: none;
+    text-align: center;
+    border-radius: 30px;
+    padding: .2em 1em;
+    border: none;
+    margin: .3em;
+    color: white;
+}
+
+.divSignalement form div button {
+    background-color: #a02424;
+}
+
+.divSignalement form div input {
+    background-color: #24a064;
+}
+
 .divAjoutCommentConnect {
-    z-index: 1000;
+    z-index: 99;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -2243,7 +2310,7 @@ h3 > .lienPasArticlePanier {
     color: white;
     text-decoration: none;
     text-align: center;
-    border-radius: 30px;
+    border-radius: 10px;
     padding: .2em 1em;
 }
 
@@ -2434,10 +2501,10 @@ h3 > .lienPasArticlePanier {
 .moyennesAvis {
     width: 35%;
 }
-
 .moyennesAvis div {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .moyennesAvis p {
@@ -2559,7 +2626,121 @@ h3 > .lienPasArticlePanier {
     .sectionRecommandationsPanierMobile .notation-card img{
         width: .75rem;
     }
+
+    .moyennesAvis progress{
+        flex-basis: 70%;
+    }
+
+    .moyennesAvis .pAvis{
+        min-width: 3em;
+    }
 }
+
+@media screen and (max-width: 960px) and (min-width: 481px){
+    .mainProduit{
+        padding-bottom: 7.5em;
+    }
+    
+    .divGauche .zoom{
+        width: 45vh;
+        height: 45vh;
+    }
+
+    .divGauche ul img{
+        width: 12vh;
+        height: 12vh;
+    }
+
+    .divNomDate h3{
+        max-width: 11rem;
+        word-wrap: break-word; 
+    }
+}
+
+@media screen and (max-width: 480px){
+    .divGauche{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0;
+        height: 25rem;
+    }
+
+    .divGauche ul{
+        order: 2;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0;
+    }
+
+    .divGauche .zoom{
+        width: 33vh;
+        height: 33vh;
+    }
+
+    .divGauche ul img{
+        width: 10vh;
+        height: 10vh;
+    }
+
+    .divProfilText input::placeholder{
+        font-size: .75em;
+    }
+
+    .divLesAvis{
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .moyennesAvis{
+        width: 100%;
+        padding-bottom: 2em;
+    }
+
+    .moyennesAvis div{
+        justify-content: space-between;
+    }
+
+    .moyennesAvis progress{
+        flex-basis: 75%;
+    }
+
+    .divListeAvis{
+        width: 100%;
+    }
+
+    .sectionUnAvis{
+        flex-direction: column;
+    }
+
+    .divAvisCommentaire{
+        padding-top: 1em;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 961px){
+    .divGauche{
+        width: 60%;
+    }
+
+    .divGauche ul{
+        width: 20%;
+    }
+
+    .divGauche ul img{
+        width: 10vh;
+        height: 10vh;
+    }
+
+    .divGauche .zoom{
+        width: 40vh;
+        height: 40vh;
+    }
+}
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -2979,9 +3160,9 @@ input[type="range"]::-moz-range-thumb {
 
 .bulle-ouvrir-filtres{
     cursor: pointer;
-    display: block;
+    display: flex;
     position: fixed;
-    top: 100px;
+    top: 9.5em;
     right: 20px;
     width: 200px;
     height: 75px;
@@ -2990,11 +3171,32 @@ input[type="range"]::-moz-range-thumb {
     z-index: 5;
     border: none;
     color: #D9D9D9;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
 }
 
-.bulle-ouvrir-filtres svg{
-   position: relative;
-   top: 4px;
+.bulle-ouvrir-tris{
+    cursor: pointer;
+    display: flex;
+    position: fixed;
+    top: 17em;
+    right: 20px;
+    width: 200px;
+    height: 75px;
+    border-radius: 35px;
+    background-color: #164F57;
+    z-index: 5;
+    border: none;
+    color: #D9D9D9;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.bulle-ouvrir-filtres svg, .bulle-ouvrir-tris svg{
+    padding: 2px;
+    width: 20px;
 }
 
 .titre-filtre, .categorie-catalogue summary{
@@ -3196,6 +3398,10 @@ a.fleche-page{
     .bulle-ouvrir-filtres{
         left: 20px;
     }
+    
+    .bulle-ouvrir-tris{
+        left: 20px;
+    }
 
     .partie-filtre{
         display: none;
@@ -3210,7 +3416,11 @@ a.fleche-page{
     }
 
     .bulle-ouvrir-filtres:not(.est-filtre-ouvert){
-        display: block;
+        display: flex;
+    }
+
+    .bulle-ouvrir-tris:not(.est-filtre-ouvert){
+        display: flex;
     }
 
     .liste-produits{
@@ -3411,6 +3621,19 @@ a.fleche-page{
     border: solid red 2px;
 }
 
+.svgSupr {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.svgSupr path {
+    transition: 0.2s;
+}
+
+.svgSupr:hover path {
+    fill: red;
+}
+
 /* ━━━ Div des sanctions ━━━ */
 
 .divSanctions{
@@ -3418,8 +3641,12 @@ a.fleche-page{
 }
 
 @media screen and (max-width: 480px){
-    #tableLstCommandes{
-        font-size: 0.75em;
+    .divLst{
+        overflow-x: scroll;
+    }
+
+    .tableLst{
+        width: 150vw;
     }
 }
 
@@ -3557,7 +3784,11 @@ progress::-moz-progress-bar
 }
 
 .divSousTotauxDetailCommande {
-    justify-content: end;
+    justify-content: flex-end;
+}
+
+.divProgress > p{
+    display: none;
 }
 
 @media screen and (max-width: 960px){
@@ -3620,18 +3851,13 @@ progress::-moz-progress-bar
         width: 80%;
     }
 
-    .progressMobile{
-        display: block;
-    }
-
     .bar{
         display: none;
     }
 
-    .progressMobile p{
+    .divProgress > p{
         display: inline-block;
-        font-size: 1em;
-        word-wrap: break-word;
+        font-size: 1.5em;
     }
 }
 
@@ -3811,6 +4037,12 @@ progress::-moz-progress-bar
     }
 }
 
+@media screen and (max-width:460px){
+    .divCredit{
+        width: 100%;
+    }
+}
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -3971,13 +4203,12 @@ progress::-moz-progress-bar
 */
 
 .sectionAdmin div {
-    display: grid;
-    column-gap: 1em;
+    display: flex;
+    justify-content: space-between;
+    gap:1em;
 }
 
 .sectionAdmin h3 {
-    grid-column-start: 1;
-    grid-column-end: 6;
     text-align: left;
     margin: 0.5em 0;
     font-family: 'Montserrat-Medium';
@@ -3988,45 +4219,12 @@ progress::-moz-progress-bar
     border-radius: 7px;
     color: white;
     padding: 0.5em 1em;
+    flex-grow: 1;
 }
 
 .sectionAdmin a:hover {
     background-color: #164F57;
     color: white;
-}
-
-/* Gestion de comptes */
-.sectionAdmin a:nth-child(2) {
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-/* Bannissements */
-.sectionAdmin a:nth-child(4) {
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-.sectionAdmin a:nth-child(5) {
-    grid-column-start: 3;
-    grid-column-end: 6;
-}
-
-/* Commentaires signalés */
-.sectionAdmin a:nth-child(7) {
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-/* Avertissements */
-.sectionAdmin a:nth-child(9) {
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-.sectionAdmin a:nth-child(10) {
-    grid-column-start: 3;
-    grid-column-end: 6;
 }
 
 /*

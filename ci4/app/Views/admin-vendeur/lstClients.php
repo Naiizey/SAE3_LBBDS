@@ -8,9 +8,11 @@
                             <th>N° compte</th>
                             <th>Identifiant</th>
                             <? if(isset($bannir)) : ?>
-                                <?php if ($bannir) : ?>
+                                <? if ($bannir) : ?>
                                     <th>Bannir</th>
                                 <? endif; ?>
+                            <? else: ?>
+                                <th>Supprimer</th>
                             <? endif; ?>
                         </tr>
                     </thead>
@@ -25,6 +27,10 @@
                                             <button class="buttonSanction"></button>
                                         </td>
                                     <?php endif; ?>
+                                <? else : ?>
+                                    <td>
+                                        <a class="lienSupprimer"></a>
+                                    </td>
                                 <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
@@ -78,10 +84,10 @@
     </div>
 <?php require __DIR__ . "/../footer.php";?>
 <script>
-    <? if(isset($bannir)): ?>
-        var bannir = <?= $bannir ?>;
-    <? else: ?>
+    <?php if(isset($bannir)): ?>
+        var bannir = <?php $bannir ?>;
+    <?php else: ?>
         var bannir = false;
-    <? endif; ?>
+    <?php endif; ?>
     lstClients();
 </script>

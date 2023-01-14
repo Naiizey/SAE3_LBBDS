@@ -148,8 +148,9 @@ function getentete(){
     return map;
 }
 
+//return les index des cellules vides ou retourn 0 si aucune cellule vide
 function has_empty_cell(row) {
-    //return les index des cellules vides ou retourn 0 si aucune cellule vide
+    
     return row.filter(cell => cell === "").length;
 }
 

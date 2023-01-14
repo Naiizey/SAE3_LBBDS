@@ -26,7 +26,6 @@
                         
                     <?php endif; ?>
                     <div></div>
-                    
                 </div>
             </div>
         </div>
@@ -34,24 +33,21 @@
             <div>
                 <h3>Votre adresse de facturation :</h3>
                 <ul>
-                    
-                        <?php foreach ($adresseFact->getAll() as $champs): ?>
-                            <li>
-                                <?=$champs?>
-                            </li>
-                        <?php endforeach; ?>
-                    
+                    <?php foreach ($adresseFact->getAll() as $champs): ?>
+                        <li>
+                            <?=$champs?>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
             <div>
                 <h3>Votre adresse de livraison :</h3>
                 <ul>
-                    
-                        <?php foreach ($adresseLivr->getAll() as $champs): ?>
-                            <li>
-                                <?=$champs?>
-                            </li>
-                        <?php endforeach; ?>
+                    <?php foreach ($adresseLivr->getAll() as $champs): ?>
+                        <li>
+                            <?=$champs?>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>    
             </div>
         </div> 

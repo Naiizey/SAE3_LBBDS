@@ -117,7 +117,6 @@
                     <p>Soyez le premier à commenter ce produit.</p>
                     <?php endif ?>
                     <div class="divLesAvis">
-
                         <?php if (!empty($avis)): ?>
                         <div class="moyennesAvis">
                             <?php for ($i=5; $i > 0 ; $i--) : ?>
@@ -129,11 +128,7 @@
                             <?php endfor; ?>
                         </div>
                         <?php endif ?>
-
-                        
                         <div class="divListeAvis">
-                             
-                            
                             <?php if (!empty($avis) && (session()->has("numero"))): ?>
                             <div class="divAjoutComment">
                             <?php elseif ((!empty($avis)) && (!session()->has("numero"))): ?>
@@ -172,8 +167,6 @@
                                     </div>
                                 </form>
                             </div>
-
-                            
                             <?php if (!empty($avis)): ?>
                                 <?php
                                     end($avis);
@@ -210,14 +203,9 @@
                                         </div>
                                 <?php endforeach; ?>
                             <?php endif ?>
-
                         </div>
                     </div>
-                    
-
                 </div>
-
-                
             </section>
         </main>
 <?php require("footer.php"); ?>

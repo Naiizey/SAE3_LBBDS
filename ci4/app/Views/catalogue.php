@@ -1,5 +1,4 @@
 <?php require("header.php"); ?>
-
 <?php model("\App\Models\ProduitCatalogue")->selectMax('prixttc')?>
 <main id=Catalogue>
     <button class="bulle-ouvrir-filtres">
@@ -14,7 +13,6 @@
             Tris
         </h2>
     </button>
-    
     <section class="partie-filtre">
         <div class="liste-filtre">
             <div class="titre-filtre">
@@ -42,7 +40,6 @@
                             </div>
                             <hr>
                         </div>
-
                         <!-- Liste des sous-catégories -->
                         <?php foreach ($categorie->getAllSousCat() as $key => $sousCat): ?>
                         <div class="sous-categorie" for="<?= $sousCat->libelle ?>">
@@ -72,8 +69,7 @@
             </form>
         </div>
     </section>
-    <section class="partie-filtre>
-
+    <section class="partie-filtre">
     </section>
     <section class="partie-produits">
         <div class="liste-produits">
@@ -103,12 +99,10 @@
             window.scrollTo(0,0);
             }
         );
-
     boutonCliquable(
         document.querySelector(".fermer-filtre"),
         () => switchEtatFiltre(document.querySelectorAll(".bulle-ouvrir-filtres, .partie-filtre"))
         );
-
     selectAll();
         var upFilter = new filterUpdate(document.forms["filters"],
         document.querySelector(".champsRecherche"),
@@ -116,6 +110,5 @@
         document.querySelector(".supprimer-filtre"),
         document.querySelector(".voir-plus")
     );
-
     loadFilters();
 </script>

@@ -153,7 +153,7 @@ function getentete(){
  **/
 function has_empty_cell(row) {
     
-    return row.filter(cell => cell === "").length;
+    return row.filter(cell => cell.trim() === "").length;
 }
 
 /**
@@ -249,6 +249,30 @@ function checkCSV()
                     console.log("trop d'items")
                 }
             }
+            else if (csv.split("\n")[0].split(";").length < entete.size)
+            {
+                console.log("manquants")
+                //on compare les deux et on trouve les manquants
+                let manquant = [];
+                let lines = csv.split("\n");
+                let cells = lines[0].split(";");
+                lst_entete = Array.from(entete.keys());
+                for (let i = 0; i < cells.length; i++) {
+                    //si cells[i] est dans lst_entête alors on le retire de lst_entête
+                    if (lst_entete.includes(cells[i].trim())) {
+                        lst_entete.splice(lst_entete.indexOf(cells[i].trim()), 1);
+                    }
+                }
+                //on copie lst_entête dans manquants
+                manquant = lst_entete;
+                if (manquant.length > 0) {
+                    console.log(manquant)
+                    preview.innerHTML = "entête(s) manquante(s) : " + manquant;
+                    preview.style.color = "red";
+                    //on centre le texte
+                    preview.style.textAlign = "center";
+                }
+            }
             else
             {
                 //création du tableau
@@ -308,7 +332,7 @@ function checkCSV()
                         if (has_empty_cell(cells) > 0) {
                             console.log("erreur cellule vide");
                             for (let j = 0; j < cells.length; j++) {
-                                if (cells[j] === "") {
+                                if (cells[j].trim() === "") {
                                     cells[j] = "<span style='color:red'>" + "vide" + "</span>";
                                     preview.innerHTML = "le fichier contient des cellules vides";
                                     preview.style.color = "red";

@@ -680,7 +680,22 @@ class Home extends BaseController
             $data["produitSignalements"][$i] = $data["produitSignalements"][$i]->id_prod;
         }
 
-        return view("admin-vendeur/signalements.php", $data);
+        return view("admin-vendeur/lstSignalements.php", $data);
+    }
+
+    public function lstAvis($id_avis = null)
+    {
+        if ($id_avis != null)
+        {
+            $modelAvis = model("\App\Models\LstAvis");
+            $modelAvis->delete($id_avis);
+        }
+        
+        $data["role"] = "admin";
+        $data["controller"] = "Administration - Avis";
+        $data["avis"] = model("\App\Models\LstAvis")->findAll();
+
+        return view("admin-vendeur/lstAvis.php", $data);
     }
 
     public function destroySession()

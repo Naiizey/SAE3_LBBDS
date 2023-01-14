@@ -12,9 +12,10 @@
                         <a href="<?= base_url() ?>/admin/clients/bannir">Bannir un client</a>
                         <a href="<?= base_url() ?>/admin/bannissements">Voir les bannissements</a>
                     </div>
-                    <h3>Commentaires signalés</h3>
+                    <h3>Avis signalés</h3>
                     <div>
                         <a href="<?= base_url() ?>/admin/signalements">Voir les signalements</a>
+                        <a href="<?= base_url() ?>/admin/avis">Voir les avis</a>
                     </div>
                     <h3>Avertissements</h3>
                     <div>

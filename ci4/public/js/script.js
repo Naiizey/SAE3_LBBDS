@@ -614,13 +614,13 @@ function lstCommandesVendeur(){
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                        Liens aux lignes de lstSignalements                          ┃
+┃                Liens aux lignes de lstSignalements et lstAvis                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-function lstSignalements()
+function lstAvisSignalements()
 {
     //Récupération de toutes les lignes de la liste des signalements
-    var lignes = document.getElementsByClassName("lignesSignalements");
+    var lignes = document.getElementsByClassName("lignesAvisSignalements");
 
     //Récupération de tous les numéros de produit associés au signalement et donc à l'avis
     var numProduit = document.getElementsByClassName("numProduit");

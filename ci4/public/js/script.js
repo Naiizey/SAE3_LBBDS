@@ -134,7 +134,6 @@ function getentete(){
         ["prix_ht","float8"],
         ["prix_ttc", "float8"],
         ["description_prod", "varchar"],
-        ["lien_image_prod", "varchar"],
         ["publication_prod", "boolean"],
         ["stock_prod", "integer"],//
         ["moyenne_note_prod", "float8"],
@@ -148,10 +147,47 @@ function getentete(){
     return map;
 }
 
-//return les index des cellules vides ou retourn 0 si aucune cellule vide
+/**
+ * Fonction qui returne les index des cellules vides ou retourn 0 si aucune cellule vide
+ * @returns {list}
+ **/
 function has_empty_cell(row) {
     
     return row.filter(cell => cell === "").length;
+}
+
+/**
+ * Fonction qui returne les index des lignes qui comportent trop d'éléments
+ * @returns {list}
+ **/
+function too_much_items(csv)
+{
+    //console.log("too_much_items");
+    line = []
+    entete = getentete();
+    //console.log(entete);
+    //on prend la taille de la map entête
+    let entete_lenght = entete.size;
+    lines = csv.split("\n");
+    for (let i = 0; i < lines.length-1; i++) {
+        actual_line = lines[i].split(";");
+        for (let j =0; j < actual_line.length; j++){
+            actual_line[j] = actual_line[j].trim();
+            //on enlève les cellules vides
+            if (actual_line[j] == ''){
+                actual_line.splice(j, 1);
+            }
+            //si la ligne est un \r
+            if (actual_line[j] == '\r'){
+                actual_line.splice(j, 1);
+            }
+        }
+        if (actual_line.length > entete_lenght){
+            //console.log("ligne " + i + " : trop d'éléments");
+            line.push(i+1);
+        }
+    }
+    return line;
 }
 
 /**
@@ -180,70 +216,83 @@ function checkCSV()
             //si la longueur de entete est > longueur de la première ligne
             var table = document.createElement("table");
             let csv = reader.result;
-            //création du tableau
-            let lines = csv.split("\n");
-            for (let i = 0; i < lines.length-1 ; i++) {
-                let line = lines[i];
-                let cells = line.split(";");
-                if (i>0) {
-                    //on ajoute à cells i au début pour avoir l'index de la ligne
-                    let index = i+1;
-                    cells.unshift(""+index+"");
-                    console.log(cells);
+            let check_item_nbr = too_much_items(csv);
+            //si dans le csv il y a plus de lignes que dans l'entete
+            if (csv.split("\n")[0].split(";").length > entete.size) {
+                console.log(csv.split("\n")[0].split(";").length)
+                console.log(entete.size)
+                //on compare les deux et on trouve le ou les entête de trop
+                let en_trop = [];
+                let lines = csv.split("\n");
+                let cells = lines[0].split(";");
+                for (let i = 0; i < cells.length; i++) {
+                    
+                    if (!entete.has(cells[i].trim()) && cells[i].trim() != "") {
+                        console.log(i + " " + cells[i].trim())
+                        en_trop.push(cells[i].trim());
+                    }
                 }
-                if (entete.size > cells.length) {
-                    //on ajoute une ligne en rouge
-                    console.log("ligne non valide");
-                    preview.innerHTML = "nombre de colonnes invalide";
+                if (en_trop.length > 0)
+                {
+                    console.log(en_trop)
+                    preview.innerHTML = "entête(s) en trop : " + en_trop;
                     preview.style.color = "red";
                     //on centre le texte
                     preview.style.textAlign = "center";
-
                 }
-                else {
-                    if (i == 0) {
-                        //on ajoute une 1ère ligne fusionnée
-                        console.log("ligne valide");
-                        preview.innerHTML = "nombre de colonnes valide :";
+                else if (check_item_nbr.length > 0) {
+                    // on affiche une liste des lignes qui comportent trop d'items (check_item_nbr)
+                    preview.innerHTML = "ligne(s) avec trop d'éléments : " + check_item_nbr;
+                    preview.style.color = "red";
+                    //on centre le texte
+                    preview.style.textAlign = "center";
+                    console.log("trop d'items")
+                }
+            }
+            else
+            {
+                //création du tableau
+                let lines = csv.split("\n");
+                for (let i = 0; i < lines.length - 1; i++) {
+                    let line = lines[i];
+                    let cells = line.split(";");
+                    if (i > 0) {
+                        //on ajoute à cells i au début pour avoir l'index de la ligne
+                        let index = i + 1;
+                        cells.unshift("" + index + "");
                         console.log(cells);
-                        preview.style.color = "green";
+                    }
+                    if (entete.size > cells.length) {
+                        //on ajoute une ligne en rouge
+                        console.log("ligne non valide");
+                        preview.innerHTML = "nombre de colonnes invalide";
+                        preview.style.color = "red";
                         //on centre le texte
                         preview.style.textAlign = "center";
-                        document.getElementById("submit").disabled = false;
-                    }
 
-                }
-                if (i === 0) {
-                    let row = table.insertRow(-1);
-                    //insertion d'une cell en 1er nommée "ligne"
-                    let cell = row.insertCell(-1);
-                    cell.innerHTML = "ligne";
-                    for (let j = 0; j < cells.length; j++) {
-                        //si l'entête n'est pas dans les clés de entete
-                        if (!(entete.has(cells[j].trim()))) {
-                            cells[j] = "<span style='color:red'>" + cells[j] + "</span>";
-                        }
-                        else {
-                            cells[j] = "<span style='color:black'>" + cells[j] + "</span>";
-                        }
-                        let cell = row.insertCell(-1);
-                        cell.innerHTML = cells[j];
                     }
-                }
-                else {
-                    let row = table.insertRow(-1);
-                    let is_empty = false;
-                    //si la ligne contient des cellules vides
-                    if (has_empty_cell(cells) > 0) {
-                        console.log("erreur cellule vide");
+                    else {
+                        if (i == 0) {
+                            //on ajoute une 1ère ligne fusionnée
+                            console.log("ligne valide");
+                            preview.innerHTML = "nombre de colonnes valide :";
+                            console.log(cells);
+                            preview.style.color = "green";
+                            //on centre le texte
+                            preview.style.textAlign = "center";
+                            document.getElementById("submit").disabled = false;
+                        }
+
+                    }
+                    if (i === 0) {
+                        let row = table.insertRow(-1);
+                        //insertion d'une cell en 1er nommée "ligne"
+                        let cell = row.insertCell(-1);
+                        cell.innerHTML = "ligne";
                         for (let j = 0; j < cells.length; j++) {
-                            if (cells[j] === "") {
-                                cells[j] = "<span style='color:red'>" + "vide" + "</span>";
-                                preview.innerHTML = "le fichier contient des cellules vides";
-                                preview.style.color = "red";
-                                is_empty = true;
-                                correct = -1;
-                                
+                            //si l'entête n'est pas dans les clés de entete
+                            if (!(entete.has(cells[j].trim()))) {
+                                cells[j] = "<span style='color:red'>" + cells[j] + "</span>";
                             }
                             else {
                                 cells[j] = "<span style='color:black'>" + cells[j] + "</span>";
@@ -253,22 +302,46 @@ function checkCSV()
                         }
                     }
                     else {
-                        //on retire la row
-                        table.deleteRow(-1);
+                        let row = table.insertRow(-1);
+                        let is_empty = false;
+                        //si la ligne contient des cellules vides
+                        if (has_empty_cell(cells) > 0) {
+                            console.log("erreur cellule vide");
+                            for (let j = 0; j < cells.length; j++) {
+                                if (cells[j] === "") {
+                                    cells[j] = "<span style='color:red'>" + "vide" + "</span>";
+                                    preview.innerHTML = "le fichier contient des cellules vides";
+                                    preview.style.color = "red";
+                                    is_empty = true;
+                                    correct = -1;
+
+                                }
+                                else {
+                                    cells[j] = "<span style='color:black'>" + cells[j] + "</span>";
+                                }
+                                let cell = row.insertCell(-1);
+                                cell.innerHTML = cells[j];
+                            }
+                        }
+                        else {
+                            //on retire la row
+                            table.deleteRow(-1);
+                        }
                     }
                 }
-            }   
-            preview.appendChild(table);
-            if (correct == 0) {
-                console.log("on delete la table");
-                console.log(correct);
-                //on delete la table
-                preview.innerHTML = "";
-                previewCSV();
-            }
+                preview.appendChild(table);
+                if (correct == 0) {
+                    console.log("on delete la table");
+                    console.log(correct);
+                    //on delete la table
+                    preview.innerHTML = "";
+                    previewCSV();
+                }
 
             //ajout d'un br
             // preview.innerHTML += "<br><br><br><br>";
+            }
+            
         });
     });
 

@@ -658,7 +658,8 @@ class Home extends BaseController
             $modelSignalements = model("\App\Models\LstSignalements");
             $modelSignalements->delete($id_signal);
 
-            /*$signal = new \App\Entities\Signalement();
+            /* test de création d'un signalement
+            $signal = new \App\Entities\Signalement();
             $signal->raison = "test";
             $signal->num_avis = 1;
             $signal->num_compte = 1;

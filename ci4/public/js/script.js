@@ -209,6 +209,10 @@ function checkCSV()
         //lecture du fichier
         //prend l'en-tête du fichier et l'ajoute au tableau
         let entete = getentete();
+        let entet_tab = [];
+        entete.forEach((value, key) => {
+            entet_tab.push(key);
+        });
         reader.readAsText(file);
         //ajout d'un event listener sur le chargement du fichier
         reader.addEventListener("load", function () {
@@ -217,6 +221,7 @@ function checkCSV()
             var table = document.createElement("table");
             let csv = reader.result;
             let check_item_nbr = too_much_items(csv);
+            let entete_missing = [];
             //si dans le csv il y a plus de lignes que dans l'entete
             if (csv.split("\n")[0].split(";").length > entete.size) {
                 console.log(csv.split("\n")[0].split(";").length)
@@ -332,12 +337,28 @@ function checkCSV()
                         if (has_empty_cell(cells) > 0) {
                             console.log("erreur cellule vide");
                             for (let j = 0; j < cells.length; j++) {
-                                if (cells[j].trim() === "") {
-                                    cells[j] = "<span style='color:red'>" + "vide" + "</span>";
-                                    preview.innerHTML = "le fichier contient des cellules vides";
-                                    preview.style.color = "red";
+                                //si la cells[j] est vide et que l'entête correspondant n'est pas vide
+                                if (cells[j].trim() === "" ) {
+                                    // console.log(lines[0].split(";")[j - 1].trim());
+                                    if (lines[0].split(";")[j - 1].trim() == "")
+                                    {
+                                        //si entete_missing n'a pas déja entet_tab[j-1] on l'ajoute
+                                        if (!entete_missing.includes(entet_tab[j-1]))
+                                        {
+                                            entete_missing.push(entet_tab[j-1]);
+                                        }
+                                        
+                                    }
+                                    else
+                                    {
+                                        cells[j] = "<span style='color:red'>" + "vide" + "</span>";
+                                        preview.innerHTML = "le fichier contient des cellules vides";
+                                        preview.style.color = "red";
+
+                                    }
                                     is_empty = true;
                                     correct = -1;
+
 
                                 }
                                 else {
@@ -345,6 +366,15 @@ function checkCSV()
                                 }
                                 let cell = row.insertCell(-1);
                                 cell.innerHTML = cells[j];
+                            }
+                            if (entete_missing.length > 0)
+                            {
+                                preview.innerHTML = "entêtes manquantes : " + entete_missing;
+                                preview.style.color = "red";
+                                //on supprime la totalité de la table
+                                table.innerHTML = "";
+
+
                             }
                         }
                         else {

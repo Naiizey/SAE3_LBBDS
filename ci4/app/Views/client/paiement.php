@@ -25,8 +25,7 @@
                         </div>
                         <?=
                             afficheErreurs($erreurs, 2) .
-                            afficheErreurs($erreurs, 5) 
-                            
+                            afficheErreurs($erreurs, 5)
                         ?>
                         <div class="nomPrenom">
                             <div>
@@ -45,7 +44,6 @@
                             afficheErreurs($erreurs, 0) .
                             afficheErreurs($erreurs, 1) .
                             afficheErreurs($erreurs, 3) 
-                            
                         ?>
                         <input type="submit" value="Continuer"/>
                     </form>
@@ -54,6 +52,5 @@
         </main>
 <?php require __DIR__ . "/../footer.php"; ?>
 <script>
-   
     setUpPaiment();
 </script>

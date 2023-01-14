@@ -61,7 +61,6 @@
             </div>
         </div>
     </div>
-
     <div class="sur-alerte sur-alerteTimeout">
         <div class="alerte">
             <h2 class="titreSanction"></h2>
@@ -73,10 +72,10 @@
                         <label>Durée (secondes)<span class="requis">*</span> : </label>
                         <input name="duree" type="number" pattern="/^\d*[1-9]\d*$/" min="1" required>
                     </div>
-                        <div class="raison">
-                            <label>Raison<span class="requis">*</span> : </label>
-                            <textarea rows="3" name="raison" maxlength="50" required></textarea>
-                        </div>
+                    <div class="raison">
+                        <label>Raison<span class="requis">*</span> : </label>
+                        <textarea rows="3" name="raison" maxlength="50" required></textarea>
+                    </div>
                 </div>
                 <div class="alerte-footer"><hr>
                     <div class="espace-interraction">

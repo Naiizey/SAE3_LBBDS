@@ -138,6 +138,6 @@
         document.querySelector(".supprimer-filtre"),
         document.querySelector(".voir-plus")
     );
-    loadFilters();
+    loadFiltersTris();
     changeOnglet();
 </script>

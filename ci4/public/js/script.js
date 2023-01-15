@@ -1077,7 +1077,7 @@ function boutonCliquable(bouton,action){
             document.querySelector(".partie-filtre").style.display = "flex"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
             document.querySelector(".bulle-ouvrir-tris").style.display = "none"
-            localStorage.setItem("open", true);
+            localStorage.setItem("openF", true);
         })
     }
     else if(screen.width >= 1200 && bouton.classList.contains("fermer-filtre")){
@@ -1085,7 +1085,7 @@ function boutonCliquable(bouton,action){
             document.querySelector(".partie-filtre").style.display = "none"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "flex"
             document.querySelector(".bulle-ouvrir-tris").style.display = "flex"
-            localStorage.setItem("open", false);
+            localStorage.setItem("openF", false);
         })
     }
 }
@@ -1100,7 +1100,7 @@ function boutonCliquableTris(bouton,action){
             document.querySelector(".partie-tris").style.display = "flex"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
             document.querySelector(".bulle-ouvrir-tris").style.display = "none"
-            localStorage.setItem("open", true);
+            localStorage.setItem("openT", true);
         })
     }
     else if(screen.width >= 1200 && bouton.classList.contains("fermer-tris")){
@@ -1108,23 +1108,22 @@ function boutonCliquableTris(bouton,action){
             document.querySelector(".partie-tris").style.display = "none"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "flex"
             document.querySelector(".bulle-ouvrir-tris").style.display = "flex"
-            localStorage.setItem("open", false);
+            localStorage.setItem("openT", false);
         })
     }
 }
 
-function loadFilters(){
+function loadFiltersTris(){
     window.addEventListener("load", () => {
-        if(localStorage.getItem("open") === "true"){
-            document.querySelector(".partie-filtre").style.display = "block"
+        if(localStorage.getItem("openF") === "true") {
+            document.querySelector(".partie-filtre").style.display = "flex"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
             document.querySelector(".bulle-ouvrir-tris").style.display = "none"
-        }
-        else if(localStorage.getItem("open") === "false"){
-            document.querySelector(".partie-filtre").style.display = "none"
-            document.querySelector(".bulle-ouvrir-filtres").style.display = "flex"
-            document.querySelector(".bulle-ouvrir-tris").style.display = "flex"
-        }
+        } else if (localStorage.getItem("openT") === "true") {
+            document.querySelector(".partie-tris").style.display = "flex"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
+            document.querySelector(".bulle-ouvrir-tris").style.display = "none"
+        } 
     });
 }
 

@@ -13,7 +13,7 @@ class Import extends BaseController
         helper('cookie');
         if (session()->has("numero")) {
             $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
-        } else if (has_cookie("token_panier")) {
+        } elseif (has_cookie("token_panier")) {
             $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
         } else {
             $GLOBALS["quant"] = 0;

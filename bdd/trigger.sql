@@ -14,7 +14,7 @@ BEGIN
     
 
     --vérifie dans la table _sous_categorie si le code_sous_cat qui provient de l'appelant existe et on range le résultat dans une variable
-    SELECT * INTO sous_categorie FROM _sous_categorie WHERE code_sous_cat = NEW.code_sous_cat;
+    PERFORM * FROM _sous_categorie WHERE code_sous_cat = NEW.code_sous_cat;
     -- si le code_sous_cat n'existe pas dans la table _sous_categorie
     IF NOT FOUND THEN
         -- si la catégorie 190 n'existe pas
@@ -44,6 +44,7 @@ language plpgsql;
 -- INSERT INTO _produit SELECT * FROM old;
 --DROP TRIGGER csvImport ON produitCSV;
 CREATE tRIGGER csvImport INSTEAD OF INSERT ON produitcsv FOR EACH ROW EXECUTE PROCEDURE csvImport();
+INSERT INTO _produit(code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod) VALUES (NEW.code_sous_cat, NEW.intitule_prod, NEW.prix_ht, NEW.prix_ttc, NEW.description_prod, NEW.publication_prod, NEW.stock_prod,NEW.moyenne_note_prod,NEW.seuil_alerte_prod,NEW.alerte_prod);
 
 CREATE OR REPLACE FUNCTION deleteProduitPanier() RETURNS TRIGGER AS
     $$

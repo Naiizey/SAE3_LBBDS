@@ -9,7 +9,7 @@ use Exception;
 class LstAvis extends Model
 {
     protected $table      = 'sae3.commentaires';
-
+    protected $primaryKey = 'num_avis';
     protected $useAutoIncrement = true;
 
     protected $returnType     = LstAvis::class;

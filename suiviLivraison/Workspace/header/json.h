@@ -2,7 +2,10 @@
 #include "file.h"
 #include "user.h"
 
-
+#define JSON_IS_DEFINE
+#ifndef JSON_IS_DEFINE
+int time_day_sec;
+#endif
 
 
 Element * collectLivraison(cJSON * json);

@@ -134,7 +134,6 @@ function getentete(){
         ["prix_ht","float8"],
         ["prix_ttc", "float8"],
         ["description_prod", "varchar"],
-        ["lien_image_prod", "varchar"],
         ["publication_prod", "boolean"],
         ["stock_prod", "integer"],//
         ["moyenne_note_prod", "float8"],
@@ -148,14 +147,58 @@ function getentete(){
     return map;
 }
 
+/**
+ * Fonction qui returne les index des cellules vides ou retourn 0 si aucune cellule vide
+ * @returns {list}
+ **/
+function has_empty_cell(row) {
+    
+    return row.filter(cell => cell.trim() === "").length;
+}
 
 /**
- * Fonction qui permet de prévisualiser un fichier CSV
+ * Fonction qui returne les index des lignes qui comportent trop d'éléments
+ * @returns {list}
+ **/
+function too_much_items(csv)
+{
+    //console.log("too_much_items");
+    line = []
+    entete = getentete();
+    //console.log(entete);
+    //on prend la taille de la map entête
+    let entete_lenght = entete.size;
+    lines = csv.split("\n");
+    for (let i = 0; i < lines.length-1; i++) {
+        actual_line = lines[i].split(";");
+        for (let j =0; j < actual_line.length; j++){
+            actual_line[j] = actual_line[j].trim();
+            //on enlève les cellules vides
+            if (actual_line[j] == ''){
+                actual_line.splice(j, 1);
+            }
+            //si la ligne est un \r
+            if (actual_line[j] == '\r'){
+                actual_line.splice(j, 1);
+            }
+        }
+        if (actual_line.length > entete_lenght){
+            //console.log("ligne " + i + " : trop d'éléments");
+            line.push(i+1);
+        }
+    }
+    return line;
+}
+
+/**
+ * Fonction qui va vérifier l'intégralité du csv et afficher les lignes qui ne sont pas correctes
  * @returns {void}
- */
-function previewCSV(){
+ **/
+function checkCSV()
+{
+    console.log("checkCSV");
     let preview = document.getElementById("preview");
-    
+    let correct = 0;
     //ajout d'un event listener sur le changement de fichier
     document.getElementById("file").addEventListener("change", function (e) {
         preview.innerHTML = " chargement du fichier...";
@@ -166,9 +209,10 @@ function previewCSV(){
         //lecture du fichier
         //prend l'en-tête du fichier et l'ajoute au tableau
         let entete = getentete();
-        
-        
-
+        let entet_tab = [];
+        entete.forEach((value, key) => {
+            entet_tab.push(key);
+        });
         reader.readAsText(file);
         //ajout d'un event listener sur le chargement du fichier
         reader.addEventListener("load", function () {
@@ -176,67 +220,239 @@ function previewCSV(){
             //si la longueur de entete est > longueur de la première ligne
             var table = document.createElement("table");
             let csv = reader.result;
-            //création du tableau
-            let lines = csv.split("\n");
-            for (let i = 0; i < 10 && i < lines.length; i++) {
-                let line = lines[i];
-                let cells = line.split(";");
-                if (entete.size > cells.length)
+            let check_item_nbr = too_much_items(csv);
+            let entete_missing = [];
+            //si dans le csv il y a plus de lignes que dans l'entete
+            if (csv.split("\n")[0].split(";").length > entete.size) {
+                console.log(csv.split("\n")[0].split(";").length)
+                console.log(entete.size)
+                //on compare les deux et on trouve le ou les entête de trop
+                let en_trop = [];
+                let lines = csv.split("\n");
+                let cells = lines[0].split(";");
+                for (let i = 0; i < cells.length; i++) {
+                    
+                    if (!entete.has(cells[i].trim()) && cells[i].trim() != "") {
+                        console.log(i + " " + cells[i].trim())
+                        en_trop.push(cells[i].trim());
+                    }
+                }
+                if (en_trop.length > 0)
                 {
-                    //on ajoute une ligne en rouge
-                    console.log("ligne non valide");
-                    preview.innerHTML = "nombre de colonnes invalide";
+                    console.log(en_trop)
+                    preview.innerHTML = "entête(s) en trop : " + en_trop;
                     preview.style.color = "red";
                     //on centre le texte
                     preview.style.textAlign = "center";
-                    
                 }
-                else
-                {
-                    if (i == 0)
-                    {
-                        //on ajoute une 1ère ligne fusionnée
-                        console.log("ligne valide");
-                        preview.innerHTML = "nombre de colonnes valide :";
+                else if (check_item_nbr.length > 0) {
+                    // on affiche une liste des lignes qui comportent trop d'items (check_item_nbr)
+                    preview.innerHTML = "ligne(s) avec trop d'éléments : " + check_item_nbr;
+                    preview.style.color = "red";
+                    //on centre le texte
+                    preview.style.textAlign = "center";
+                    console.log("trop d'items")
+                }
+            }
+            else if (csv.split("\n")[0].split(";").length < entete.size)
+            {
+                console.log("manquants")
+                //on compare les deux et on trouve les manquants
+                let manquant = [];
+                let lines = csv.split("\n");
+                let cells = lines[0].split(";");
+                lst_entete = Array.from(entete.keys());
+                for (let i = 0; i < cells.length; i++) {
+                    //si cells[i] est dans lst_entête alors on le retire de lst_entête
+                    if (lst_entete.includes(cells[i].trim())) {
+                        lst_entete.splice(lst_entete.indexOf(cells[i].trim()), 1);
+                    }
+                }
+                //on copie lst_entête dans manquants
+                manquant = lst_entete;
+                if (manquant.length > 0) {
+                    console.log(manquant)
+                    preview.innerHTML = "entête(s) manquante(s) : " + manquant;
+                    preview.style.color = "red";
+                    //on centre le texte
+                    preview.style.textAlign = "center";
+                }
+            }
+            else
+            {
+                //création du tableau
+                let lines = csv.split("\n");
+                for (let i = 0; i < lines.length - 1; i++) {
+                    let line = lines[i];
+                    let cells = line.split(";");
+                    if (i > 0) {
+                        //on ajoute à cells i au début pour avoir l'index de la ligne
+                        let index = i + 1;
+                        cells.unshift("" + index + "");
                         console.log(cells);
-                        preview.style.color = "green";
+                    }
+                    if (entete.size > cells.length) {
+                        //on ajoute une ligne en rouge
+                        console.log("ligne non valide");
+                        preview.innerHTML = "nombre de colonnes invalide";
+                        preview.style.color = "red";
                         //on centre le texte
                         preview.style.textAlign = "center";
-                        document.getElementById("submit").disabled = false;
-                    }
 
-                }
-                let row = table.insertRow(-1);
-                if (i === 0) {
-                    for(let j = 0; j < cells.length; j++){
-                        //si l'entête n'est pas dans les clés de entete
-                        if (!(entete.has(cells[j].trim()))){
-                            console.log("entete");
-                            console.log(entete);
-                            console.log("cell non valide:" + cells[j] + "|");
-                            cells[j] = "<span style='color:red'>" + cells[j] + "</span>";
+                    }
+                    else {
+                        if (i == 0) {
+                            //on ajoute une 1ère ligne fusionnée
+                            console.log("ligne valide");
+                            preview.innerHTML = "nombre de colonnes valide :";
+                            console.log(cells);
+                            preview.style.color = "green";
+                            //on centre le texte
+                            preview.style.textAlign = "center";
+                            document.getElementById("submit").disabled = false;
                         }
-                        else{
-                            cells[j] = "<span style='color:green'>" + cells[j] + "</span>";
-                        }
+
+                    }
+                    if (i === 0) {
+                        let row = table.insertRow(-1);
+                        //insertion d'une cell en 1er nommée "ligne"
                         let cell = row.insertCell(-1);
-                        cell.innerHTML = cells[j];
+                        cell.innerHTML = "ligne";
+                        for (let j = 0; j < cells.length; j++) {
+                            //si l'entête n'est pas dans les clés de entete
+                            if (!(entete.has(cells[j].trim()))) {
+                                cells[j] = "<span style='color:red'>" + cells[j] + "</span>";
+                            }
+                            else {
+                                cells[j] = "<span style='color:black'>" + cells[j] + "</span>";
+                            }
+                            let cell = row.insertCell(-1);
+                            cell.innerHTML = cells[j];
+                        }
+                    }
+                    else {
+                        let row = table.insertRow(-1);
+                        let is_empty = false;
+                        //si la ligne contient des cellules vides
+                        if (has_empty_cell(cells) > 0) {
+                            console.log("erreur cellule vide");
+                            for (let j = 0; j < cells.length; j++) {
+                                //si la cells[j] est vide et que l'entête correspondant n'est pas vide
+                                if (cells[j].trim() === "" ) {
+                                    // console.log(lines[0].split(";")[j - 1].trim());
+                                    if (lines[0].split(";")[j - 1].trim() == "")
+                                    {
+                                        //si entete_missing n'a pas déja entet_tab[j-1] on l'ajoute
+                                        if (!entete_missing.includes(entet_tab[j-1]))
+                                        {
+                                            entete_missing.push(entet_tab[j-1]);
+                                        }
+                                        
+                                    }
+                                    else
+                                    {
+                                        cells[j] = "<span style='color:red'>" + "vide" + "</span>";
+                                        preview.innerHTML = "le fichier contient des cellules vides";
+                                        preview.style.color = "red";
+
+                                    }
+                                    is_empty = true;
+                                    correct = -1;
+
+
+                                }
+                                else {
+                                    cells[j] = "<span style='color:black'>" + cells[j] + "</span>";
+                                }
+                                let cell = row.insertCell(-1);
+                                cell.innerHTML = cells[j];
+                            }
+                            if (entete_missing.length > 0)
+                            {
+                                preview.innerHTML = "entêtes manquantes : " + entete_missing;
+                                preview.style.color = "red";
+                                //on supprime la totalité de la table
+                                table.innerHTML = "";
+                            }
+                        }
+                        else {
+                            //on retire la row
+                            table.deleteRow(-1);
+                        }
                     }
                 }
-                else
-                {
-                    for (let j = 0; j < cells.length; j++) {
-                        if (cells[j].length > 20) {
-                            cells[j] = cells[j].substring(0, 20) + "...";
-                        }
-                        let cell = row.insertCell(-1);
-                        cell.style.color = "black";
-                        cell.innerHTML = cells[j];
-                    }
-                }   
+                preview.appendChild(table);
+                if (correct == 0) {
+                    console.log("on delete la table");
+                    console.log(correct);
+                    //on delete la table
+                    preview.innerHTML = "";
+                    previewCSV();
+                }
             }
-            preview.appendChild(table);
-       });
+            
+        });
+    });
+
+
+}
+
+/**
+ * Fonction qui permet de prévisualiser un fichier CSV
+ * @returns {void}
+ */
+function previewCSV(){
+    console.log("PreviewCSV");
+    let preview = document.getElementById("preview");
+    preview.innerHTML = "PreviewCSV";
+    
+    preview.innerHTML = " chargement du fichier...";
+    //récupération du fichier de l'élément qui à l'id file
+    let file = document.getElementById("file").files[0];
+    //création d'un objet FileReader
+    let reader = new FileReader();
+    //lecture du fichier
+    reader.readAsText(file);
+    //ajout d'un event listener sur le chargement du fichier
+    reader.addEventListener("load", function () {
+        preview.innerHTML = "<br><h3>Prévisualisation</h3><br>";
+        //si la longueur de entete est > longueur de la première ligne
+        var table = document.createElement("table");
+        let csv = reader.result;
+        //création du tableau
+        let lines = csv.split("\n");
+        for (let i = 0; i < 10 && i < lines.length; i++) {
+            let line = lines[i];
+            let cells = line.split(";");
+            
+            if (i == 0)
+            {
+                //on centre le texte
+                preview.style.textAlign = "center";
+                document.getElementById("submit").disabled = false;
+            }
+            let row = table.insertRow(-1);
+            if (i === 0) {
+                for(let j = 0; j < cells.length; j++){
+                        cells[j] = "<span style='color:black'>" + cells[j] + "</span>";
+                    let cell = row.insertCell(-1);
+                    cell.innerHTML = cells[j];
+                    }
+                    
+            }
+            else
+            {
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].length > 20) {
+                        cells[j] = cells[j].substring(0, 20) + "...";
+                    }
+                    let cell = row.insertCell(-1);
+                    cell.style.color = "black";
+                    cell.innerHTML = cells[j];
+                }
+            }   
+        }
+        preview.appendChild(table);
     });
 }
 
@@ -516,13 +732,13 @@ function lstCommandesVendeur(){
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                        Liens aux lignes de lstSignalements                          ┃
+┃                Liens aux lignes de lstSignalements et lstAvis                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-function lstSignalements()
+function lstAvisSignalements()
 {
     //Récupération de toutes les lignes de la liste des signalements
-    var lignes = document.getElementsByClassName("lignesSignalements");
+    var lignes = document.getElementsByClassName("lignesAvisSignalements");
 
     //Récupération de tous les numéros de produit associés au signalement et donc à l'avis
     var numProduit = document.getElementsByClassName("numProduit");
@@ -550,7 +766,7 @@ function lstClients(){
     var lignes=document.getElementsByClassName("lignesClients");
     // Récupération de tous les numéros de clients
     var numClients=document.getElementsByClassName("numClients");
-    // Récupération de tous les anchors de la liste des clients
+    // Récupération de tous les boutons de la liste des clients
     var buttons=document.getElementsByClassName("buttonSanction");
 
     for (let numLigne=0; numLigne<lignes.length; numLigne++){
@@ -559,9 +775,10 @@ function lstClients(){
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
         lignes.item(numLigne).addEventListener("click", liensLstClients);
         let buttonA=buttons.item(numLigne);
-        // Ajout à l'anchor actuelle du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
+        // Ajout au bouton actuel du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
         if(bannir){
             buttonA.addEventListener("click", () => {
+                // supprime le lien de la ligne, pour ne pas cliquer dessus à la place du bouton
                 lignes.item(numLigne).removeEventListener("click", liensLstClients);
     
                 document.getElementsByClassName("titreSanction")[0].innerHTML = `Bannir le client n°${lignes.item(numLigne).clientA} ?`;
@@ -581,11 +798,13 @@ function lstClients(){
         }
     }
 
+    // fonction qui met le lien vers l'espace du client de la ligne
     function liensLstClients(event){
         event.cancelBubble = true;
         window.location.assign(`${base_url}/admin/espaceClient/${event.currentTarget.clientA}`);
     }
 
+    // fonction qui affiche la div de choix de sanctions
     function afficherSanctions(){
         let sur_alerte = document.getElementsByClassName("sur-alerteSanctions")[0];
         let page = document.querySelectorAll("main, header, footer");
@@ -596,6 +815,7 @@ function lstClients(){
         }
     }
 
+    // fonction qui cache la div de choix de sanctions
     function cacherSanctions(){
         let sur_alerte = document.getElementsByClassName("sur-alerte")[0];
         let page = document.querySelectorAll("main, header, footer");
@@ -606,6 +826,7 @@ function lstClients(){
         }
     }
 
+    // fonction qui affiche la div pour bannir temporairement un client
     function afficherTimeout(clientA){
         document.getElementById("numClient").value = clientA;
         document.getElementsByClassName("titreSanction")[1].innerHTML = `Bannir temporairement le client n°${clientA} ?`;
@@ -620,6 +841,7 @@ function lstClients(){
         document.getElementById("fermerTimeout").addEventListener("click", cacherTimeout)
     }
 
+    // fonction qui cache la div pour bannir temporairement un client
     function cacherTimeout(){
         let sur_alerteTimeout = document.getElementsByClassName("sur-alerteTimeout")[0];
         let page = document.querySelectorAll("main, header, footer");
@@ -852,15 +1074,17 @@ function boutonCliquable(bouton,action){
     }
     else if(screen.width >= 1200 && bouton.classList.contains("bulle-ouvrir-filtres")){
         bouton.addEventListener("click", () => {
-            document.querySelector(".partie-filtre").style.display = "block"
+            document.querySelector(".partie-filtre").style.display = "flex"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
+            document.querySelector(".bulle-ouvrir-tris").style.display = "none"
             localStorage.setItem("open", true);
         })
     }
     else if(screen.width >= 1200 && bouton.classList.contains("fermer-filtre")){
         bouton.addEventListener("click", () => {
             document.querySelector(".partie-filtre").style.display = "none"
-            document.querySelector(".bulle-ouvrir-filtres").style.display = "block"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "flex"
+            document.querySelector(".bulle-ouvrir-tris").style.display = "flex"
             localStorage.setItem("open", false);
         })
     }
@@ -871,10 +1095,12 @@ function loadFilters(){
         if(localStorage.getItem("open") === "true"){
             document.querySelector(".partie-filtre").style.display = "block"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
+            document.querySelector(".bulle-ouvrir-tris").style.display = "none"
         }
         else if(localStorage.getItem("open") === "false"){
             document.querySelector(".partie-filtre").style.display = "none"
-            document.querySelector(".bulle-ouvrir-filtres").style.display = "block"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "flex"
+            document.querySelector(".bulle-ouvrir-tris").style.display = "flex"
         }
     });
 }
@@ -1416,7 +1642,7 @@ function setUpPaiment(){
     document.querySelector("[type='submit']").addEventListener("click", (e) => {
         e.preventDefault(); 
         let forms= [
-            document.forms["form_adresse"],
+           
             document.forms["form_paiement"]
         ]
         var theForm= document.createElement("form");    
@@ -1684,5 +1910,31 @@ function avisProduit()
                 return;
             }
         }
+    } 
+
+    //Signalement d'un avis
+    //Binding des boutons annuler pour faire disparaitre toutes les div de signalement
+    boutonAnnuler = document.getElementsByClassName("annulerSignal");
+
+    for (let i = 0; i < boutonAnnuler.length; i++)
+    {
+        boutonAnnuler[i].addEventListener("click", function() 
+        {
+            divSignalements = document.getElementsByClassName("divSignalement");
+
+            for (let j = 0; j < divSignalements.length; j++) 
+            {
+                divSignalements[j].style.display = "none";
+            }
+        });
     }
+}
+
+function drapeauSignal(numAvis) 
+{
+    //Binding de tous les drapeaux à leurs div de signalement respectives (avec le bon avis)
+    document.getElementsByClassName("drapeau" + numAvis)[0].addEventListener("click", function()
+    {
+        document.getElementById("divSignalement" + numAvis).style.display = "flex";
+    });
 }

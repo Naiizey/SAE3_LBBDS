@@ -2,9 +2,7 @@
 <!--dans le imput de recherche : onkeyup="fonction de recherche en php"-->
 <!-- ajuster les logos -->
 <?php require __DIR__ . "/../header.php"; ?>
-        
         <main class="mainAccueil">
-
             <div id="carousel-container">
                 <div id="carousel">
                     <ul id="carousel-elem"> <!-- Menu ./images -->
@@ -22,7 +20,6 @@
                 <img src="<?= base_url() ?>/images/fleche_gauche.png" alt="flèche gauche" class="btn btn-prev">
                 <img src="<?= base_url() ?>/images/fleche_droite.png" alt="flèche droite" class="btn btn-suiv">
             </div>
-
             <div>
                 <section class="produitsPhare">
                     <div class="titreAccueil">

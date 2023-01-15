@@ -213,7 +213,7 @@ class Home extends BaseController
             }
 
             # si il n'a jamais acheté : erreur
-            if ($dejaAchete == false) {
+            if (!$dejaAchete) {
                 $data["erreurs"][1] = "Vous ne pouvez pas commenter un produit que vous n'avez jamais acheté.";
             }
 
@@ -231,32 +231,23 @@ class Home extends BaseController
         $data['avis']=model("\App\Models\LstAvis")->getAvisByProduit($idProduit);
 
         //Passage de l'id de l'avis en valeur si il y en a un à la vue
-        if ($numAvisEnValeur != null)
-        {
+        if ($numAvisEnValeur != null) {
             $data['avisEnValeur'] = $numAvisEnValeur;
-        }
-        else
-        {
+        } else {
             $data["avisEnValeur"] = -1;
         }
 
         //Affichage selon si produit trouvé ou non
-        if ($result == null) 
-        {
+        if ($result == null) {
             return view('errors/html/error_404.php', array('message' => "Ce produit n'existe pas"));
-        } 
-        else 
-        {
+        } else {
             $data["controller"] = "Produit";
 
             $data['prod'] = $result;
 
-            if (strstr(current_url(), "retourProduit"))
-            {
+            if (strstr(current_url(), "retourProduit")) {
                 return redirect()->to("/produit/$idProduit#avis");
-            }
-            else
-            {
+            } else {
                 return view('produit.php', $data);
             }
         }
@@ -267,9 +258,8 @@ class Home extends BaseController
     private const NBPRODSPAGECATALOGUE = 20;
     #FIXME: comportement href différent entre $page=null oe $page !=null
     
-    public function catalogue($page=1)
-    {
-        if(session()->has("just_ajoute") && session()->get("just_ajoute") == true) {
+    public function catalogue($page=1) {
+        if (session()->has("just_ajoute") && session()->get("just_ajoute")) {
             $this->feedback=service("feedback");
             session()->set("just_ajoute", false);
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Article ajouté");
@@ -298,7 +288,7 @@ class Home extends BaseController
         $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
         
         //Chargement des produits selon les filtres
-        $result=(new \App\Controllers\Produits())->getAllProduitSelonPage($page,self::NBPRODSPAGECATALOGUE,$filters);
+        $result=(new \App\Controllers\Produits())->getAllProduitSelonPage($page, self::NBPRODSPAGECATALOGUE, $filters);
         $data['prods']=$result["resultat"];
         $data['estDernier']=$result["estDernier"];
         

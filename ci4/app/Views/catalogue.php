@@ -118,4 +118,5 @@
     );
 
     loadFilters();
+    changeOnglet();
 </script>

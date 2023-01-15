@@ -65,12 +65,40 @@ class Import extends BaseController
                 }
             }
         }
+       
         $result = array_slice($new_table,1);
         $importModel = model("\App\Models\ImportCSV");
         
-        
+        try{
         $importModel->CSVimport($result);
-        delete_files(WRITEPATH.'uploads/', true);
+
+        }catch(\ErrorException $e){
+            $errorDetail=$e->getMessage();
+            if(str_contains($errorDetail,"constraint"))
+            {
+                $foundError="";
+                $errorDetail=explode("\n",$errorDetail);
+                foreach ($errorDetail as $detail){
+                    if(str_contains($detail,"DETAIL:") && str_contains($detail,"already exists")){
+                        $foundError=$detail;
+                        break;
+                    }
+                    
+                }
+                if(!empty($foundError)){
+                    throw new Exception($detail,404);
+                }else{
+                    throw new Exception("Erreur insertions: inconnue",500);
+                }
+            }
+            else{
+                throw $e;
+            }
+            
+            
+        }finally{
+            delete_files(WRITEPATH.'uploads/', true);
+        }
         session()->set("just_importe", true);
         return view('admin-vendeur/import.php', $data);
     }

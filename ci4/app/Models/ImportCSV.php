@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 Class ImportCSV extends Model{
     protected $table = "sae3.produitcsv";
     protected $primaryKey = "id_prod";
+    protected $useAutoIncrement = true;
 
 
 

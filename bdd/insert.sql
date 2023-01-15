@@ -93,6 +93,7 @@ INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (130,'Autres',3);
 INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (149,'Artisanat',130);
 
 --à partir de là, SANS PRODUIT
+
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (133,'Cola x6',5,6,'Nouvelle boisson bretonne au cola, issue de d''une agrigulture bio éthique, bio responsable, bio consciente.', true, 15, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
@@ -363,5 +364,5 @@ INSERT INTO commentaires(id_prod,num_compte,note_prod,contenu_av) VALUES (17,1,1
 
 INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis n''apporte rien du tout, il ne justifie pas sa note.', 4, 1);
 INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis ne parle pas du produit', 5, 2);
-
+    
  -- jusqu'ici

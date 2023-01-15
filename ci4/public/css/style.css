@@ -3502,6 +3502,10 @@ a.fleche-page{
     .partie-filtre, .partie-tris{
         min-width: 27.5%;
     }
+
+    .partie-tris {
+        height: 50vh;
+    }
     
     .titre-filtre h1, .titre-tris h1{
         left: 12rem;

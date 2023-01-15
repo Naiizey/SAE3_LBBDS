@@ -1921,18 +1921,30 @@ function avisProduit()
             }
         }
     } 
+
+    //Signalement d'un avis
+    //Binding des boutons annuler pour faire disparaitre toutes les div de signalement
+    boutonAnnuler = document.getElementsByClassName("annulerSignal");
+
+    for (let i = 0; i < boutonAnnuler.length; i++)
+    {
+        boutonAnnuler[i].addEventListener("click", function() 
+        {
+            divSignalements = document.getElementsByClassName("divSignalement");
+
+            for (let j = 0; j < divSignalements.length; j++) 
+            {
+                divSignalements[j].style.display = "none";
+            }
+        });
+    }
 }
 
-function signalement(numAvis) {
-    document.querySelector(".divAvisContenuEtSignal").addEventListener("click", function(event) {
-        event.preventDefault;
-        document.getElementById("flag"+numAvis).style.display = "flex";
-    
-        document.querySelector(".divSignalement form div p").addEventListener("click", function() {
-            document.querySelector("#flag"+numAvis).style.display = "none";
-            document.querySelector(".divSignalement").style.display = "none";
-        });
-
+function drapeauSignal(numAvis) 
+{
+    //Binding de tous les drapeaux à leurs div de signalement respectives (avec le bon avis)
+    document.getElementsByClassName("drapeau" + numAvis)[0].addEventListener("click", function()
+    {
+        document.getElementById("divSignalement" + numAvis).style.display = "flex";
     });
-    return false;
 }

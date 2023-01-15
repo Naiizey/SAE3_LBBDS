@@ -1100,6 +1100,29 @@ function boutonCliquable(bouton,action){
     }
 }
 
+//Click bouton tris media query
+function boutonCliquableTris(bouton,action){
+    if(screen.width < 1200){
+        bouton.addEventListener("click",action);
+    }
+    else if(screen.width >= 1200 && bouton.classList.contains("bulle-ouvrir-tris")){
+        bouton.addEventListener("click", () => {
+            document.querySelector(".partie-tris").style.display = "flex"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
+            document.querySelector(".bulle-ouvrir-tris").style.display = "none"
+            localStorage.setItem("open", true);
+        })
+    }
+    else if(screen.width >= 1200 && bouton.classList.contains("fermer-tris")){
+        bouton.addEventListener("click", () => {
+            document.querySelector(".partie-tris").style.display = "none"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "flex"
+            document.querySelector(".bulle-ouvrir-tris").style.display = "flex"
+            localStorage.setItem("open", false);
+        })
+    }
+}
+
 function loadFilters(){
     window.addEventListener("load", () => {
         if(localStorage.getItem("open") === "true"){
@@ -1119,6 +1142,13 @@ function loadFilters(){
 function switchEtatFiltre(list){
     for (n of list){
         n.classList.toggle("est-filtre-ouvert");
+    }
+}
+
+//Ajout de la classe "est-tris-ouvert" au tris
+function switchEtatTris(list){
+    for (n of list){
+        n.classList.toggle("est-tris-ouvert");
     }
 }
 

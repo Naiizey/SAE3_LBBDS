@@ -1914,5 +1914,15 @@ function avisProduit()
 }
 
 function signalement(numAvis) {
-    document.querySelector(".divSignalement").style.display = "flex";
+    document.querySelector(".divAvisContenuEtSignal").addEventListener("click", function(event) {
+        event.preventDefault;
+        document.getElementById("flag"+numAvis).style.display = "flex";
+    
+        document.querySelector(".divSignalement form div p").addEventListener("click", function() {
+            document.querySelector("#flag"+numAvis).style.display = "none";
+            document.querySelector(".divSignalement").style.display = "none";
+        });
+
+    });
+    return false;
 }

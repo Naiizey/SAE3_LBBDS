@@ -373,8 +373,6 @@ function checkCSV()
                                 preview.style.color = "red";
                                 //on supprime la totalité de la table
                                 table.innerHTML = "";
-
-
                             }
                         }
                         else {
@@ -391,9 +389,6 @@ function checkCSV()
                     preview.innerHTML = "";
                     previewCSV();
                 }
-
-            //ajout d'un br
-            // preview.innerHTML += "<br><br><br><br>";
             }
             
         });
@@ -417,11 +412,6 @@ function previewCSV(){
     //création d'un objet FileReader
     let reader = new FileReader();
     //lecture du fichier
-    //prend l'en-tête du fichier et l'ajoute au tableau
-    let entete = getentete();
-    
-    
-
     reader.readAsText(file);
     //ajout d'un event listener sur le chargement du fichier
     reader.addEventListener("load", function () {

@@ -2221,10 +2221,9 @@ h3 > .lienPasArticlePanier {
     top: 70%;
     left: 30%;
     right: 30%;
-    bottom: 10%;
-    z-index: 100;
+    z-index: 99;
     border: #3997A3 solid 2px;
-    padding: 2em;
+    padding: 1em;
     text-align: justify;
     color: #164F57;
     flex-direction: column;
@@ -2252,28 +2251,34 @@ h3 > .lienPasArticlePanier {
     font-family: 'Montserrat-Regular';
 }
 
+.divSignalement form input[type="text"] {
+    margin: 1em 0;
+    height: 2em;
+    outline: none;
+    padding-left: 1%;
+}
+
 .divSignalement form div {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-self: center;
+    width: 100%;
 }
 
-.divSignalement form div * {
-    text-decoration: none;
-    text-align: center;
-    border-radius: 30px;
-    padding: .2em 1em;
+.annulerSignal, .divSignalement input[type="submit"] {
+    padding: 0.5em 1em 0.5em 1em;
+    border-radius: 10px;
+    color: white !important;
     border: none;
-    margin: .3em;
-    color: white;
-}
-
-.divSignalement form div p {
-    background-color: #a02424;
+    font-size: 1em;
     cursor: pointer;
 }
 
-.divSignalement form div input {
+.annulerSignal  {
+    background-color: #a02424;
+}
+
+.divSignalement input[type="submit"] {
     background-color: #24a064;
 }
 
@@ -2471,9 +2476,35 @@ h3 > .lienPasArticlePanier {
     width: 60%;
 }
 
+.divSignalUnAvis {
+    width: 100%;
+}
+
+.divSignalUnAvis p {
+    margin: 0;
+}
+
+.divSignalUnAvis > div > p {
+    margin-top: 1em;
+}
+
+.divSignalUnAvis svg {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.divSignalUnAvis svg path {
+    fill: red;
+}
+
 .divUnAvis p {
     text-align: justify;
     margin-bottom: 0;
+}
+
+.divUnAvis hr {
+    background-color: #164F57;
+    margin: 1em 0;
 }
 
 .sectionUnAvis + p {
@@ -2488,11 +2519,6 @@ h3 > .lienPasArticlePanier {
 .divLesAvis {
     display: flex;
     justify-content: space-between;
-}
-
-.divUnAvis hr {
-    background-color: #164F57;
-    margin: 1em 0;
 }
 
 .notation-card {
@@ -2906,7 +2932,7 @@ main#Catalogue{
     padding-left: 0%;
 }
 
-.partie-filtre{
+.partie-filtre, .partie-tris{
     min-width: 20%;
     min-height: 100%;  
     /* collé à gauche */
@@ -2967,7 +2993,7 @@ main#Catalogue{
     justify-content: flex-end;   
 }
 
-.liste-filtre{
+.liste-filtre, .liste-tris{
     /* bordure à droite, en haut, à gauche */
     border: 2px solid #C6C6C6;
     border-left: none;
@@ -3024,7 +3050,14 @@ main#Catalogue{
     margin-right: auto;
 }
 
-.titre-filtre
+.titre-filtre, .titre-tris
+{
+    border-top-right-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.titre-tris
 {
     border-top-right-radius: 15px;
     display: flex;
@@ -3159,7 +3192,7 @@ input[type="range"]::-moz-range-thumb {
     width: 35%;
 }
 
-.bulle-ouvrir-filtres{
+.bulle-ouvrir-filtres, .bulle-ouvrir-tris {
     cursor: pointer;
     display: flex;
     position: fixed;
@@ -3177,22 +3210,8 @@ input[type="range"]::-moz-range-thumb {
     gap: 5px;
 }
 
-.bulle-ouvrir-tris{
-    cursor: pointer;
-    display: flex;
-    position: fixed;
-    top: 17em;
-    right: 20px;
-    width: 200px;
-    height: 75px;
-    border-radius: 35px;
-    background-color: #164F57;
-    z-index: 5;
-    border: none;
-    color: #D9D9D9;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
+.bulle-ouvrir-tris {
+    top: 18em;
 }
 
 .bulle-ouvrir-filtres svg, .bulle-ouvrir-tris svg{
@@ -3200,7 +3219,7 @@ input[type="range"]::-moz-range-thumb {
     width: 20px;
 }
 
-.titre-filtre, .categorie-catalogue summary{
+.titre-filtre, .titre-tris, .categorie-catalogue summary{
     padding: 15px 0 ;
     min-width: 100%;
     background-color: #164F57
@@ -3377,12 +3396,12 @@ a.fleche-page{
     font-size: 1.5em;
 }
 
-.titre-filtre h1{
+.titre-filtre h1, .titre-tris h1{
     position: relative;
     left: 10rem;
 }
 
-.fermer-filtre{
+.fermer-filtre, .fermer-tris{
     cursor: pointer;
     display: inline-block;
     position: relative;
@@ -3396,15 +3415,11 @@ a.fleche-page{
 }
 
 @media screen and (min-width: 961px){
-    .bulle-ouvrir-filtres{
-        left: 20px;
-    }
-    
-    .bulle-ouvrir-tris{
+    .bulle-ouvrir-filtres, .bulle-ouvrir-tris{
         left: 20px;
     }
 
-    .partie-filtre{
+    .partie-filtre, .partie-tris{
         display: none;
     }
 }
@@ -3420,7 +3435,7 @@ a.fleche-page{
         display: flex;
     }
 
-    .bulle-ouvrir-tris:not(.est-filtre-ouvert){
+    .bulle-ouvrir-tris:not(.est-tris-ouvert){
         display: flex;
     }
 
@@ -3428,33 +3443,33 @@ a.fleche-page{
         justify-content: space-evenly;
     }
 
-    .titre-filtre h1{
+    .titre-filtre h1, .titre-tris h1{
         left: 6.75em;
     }
 
-    .fermer-filtre{
+    .fermer-filtre, .fermer-tris{
         right: 20px;
     }
     
-    .partie-filtre{
+    .partie-filtre, .partie-tris{
         position: fixed;
         width: 100%;
         height: 100%;
         min-height: 100%;
     }
 
-    .partie-filtre.est-filtre-ouvert{
+    .partie-filtre.est-filtre-ouvert, .partie-tris.est-tris-ouvert{
         z-index: 100;
         overflow-x: hidden;
         top: 5em;
     }
 
-    .partie-filtre:not(.est-filtre-ouvert){
+    .partie-filtre:not(.est-filtre-ouvert), .partie-tris:not(.est-tris-ouvert){
         position: fixed;
         bottom: -100vh;
     }
 
-    .liste-filtre{
+    .liste-filtre, .liste-tris{
         height: 100%;
         border: none;
     }
@@ -3474,7 +3489,7 @@ a.fleche-page{
 }
 
 @media screen and (min-width:961px) and (max-width: 1280px){
-    .partie-filtre{
+    .partie-filtre, .partie-tris{
         min-width: 30%;
     }
 
@@ -3484,17 +3499,17 @@ a.fleche-page{
 }
 
 @media screen and (min-width: 1281px){
-    .partie-filtre{
+    .partie-filtre, .partie-tris{
         min-width: 27.5%;
     }
     
-    .titre-filtre h1{
+    .titre-filtre h1, .titre-tris h1{
         left: 12rem;
     }
 }
 
 @media screen and (min-width: 1541px){
-    .titre-filtre h1{
+    .titre-filtre h1, .titre-tris h1{
         left: 14.5rem;
     }
 }
@@ -3613,6 +3628,7 @@ a.fleche-page{
 
 .tableLst th, .tableLst td{
     width: 5em;
+    cursor: pointer;
 }
 
 .buttonSanction {

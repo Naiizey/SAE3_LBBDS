@@ -19,10 +19,35 @@ const int TEMPS_LOCAL=1;
 const int ETAT_FINAL=-1;
 const int ERR_ETAT=-2;
 
-const int TIME_DAY_SEC=2;
+
+/**
+ * @brief Fait las liaison entre un état et un nombre de jour
+ * 
+ */
+typedef struct {
+    char * nom;
+    int apresXjour;
+} etatLivraison;
+
+
+typedef etatLivraison etats[MAX_ETAPE];
+const etats quelEtape = {
+    {"En charge",0},
+    {"regional",TEMPS_MAX_REGIONAL},
+    {"local",TEMPS_MAX_REGIONAL+TEMPS_LOCAL},
+    {"destinataire",ETAT_FINAL}
+
+};
 
 
 
+/**
+ * @brief Collectes les infomations permettant l'authentification
+ * 
+ * @param json 
+ * @param new 
+ * @return user* 
+ */
 user * collectInfoUser(cJSON * json,user * new){
     
     new->id=(char *)malloc(255 * sizeof(char));
@@ -35,11 +60,12 @@ user * collectInfoUser(cJSON * json,user * new){
         printf("%s\n",cJSON_Print(json));
     #endif
     
+    //Parcours du JSON
     while(json!=NULL && json->type==cJSON_String){
         #if TEST == true
         printf("Collecte !\n");;
         #endif
-        
+        //Récupération des champs nécessaires
         if(json->type==cJSON_String){
             if(strcmp(json->string,"id")==0){
                 strcpy(new->id,json->valuestring);
@@ -78,20 +104,6 @@ user * collectInfoUser(cJSON * json,user * new){
     }
         
 }
-
-typedef struct {
-    char * nom;
-    int apresXjour;
-} etatLivraison;
-
-typedef etatLivraison etats[MAX_ETAPE];
-const etats quelEtape = {
-    {"En charge",0},
-    {"regional",TEMPS_MAX_REGIONAL},
-    {"local",TEMPS_MAX_REGIONAL+TEMPS_LOCAL},
-    {"destinataire",ETAT_FINAL}
-
-};
 
 /**
  * @brief Retourne le nombre de jour avant la fin d'un état, si celui-ci existe.
@@ -388,7 +400,7 @@ int convertEnJour(time_t avant, time_t maintenant){
     time_t diff = difftime(maintenant, avant);
     struct tm * diffInfos = localtime(&diff);
     if(diffInfos!=NULL){
-        return diffInfos->tm_sec/TIME_DAY_SEC;
+        return diffInfos->tm_sec/time_day_sec;
     }else{
         return -1;
     }

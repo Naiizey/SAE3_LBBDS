@@ -211,71 +211,77 @@ class Home extends BaseController
 
         if (!empty($post)) 
         {
-            //Vérifie que la session (donc l'utilisateur) n'a pas déjà commenté cet article.
-            foreach ($data['avis'] as $unAvis) {
-                if (session()->get("numero") == $unAvis->num_compte) {
-                    $data["erreurs"][0] = "Vous avez déjà commenté ce produit.";
-                }
+            //Si la raison du reload avec post est due à un signalement
+            if (isset($post['raison']))
+            {
+                //Création du signalement
+                $signal = new \App\Entities\Signalement();
+                $signal->raison = $post['raison'];
+                $signal->num_avis = $post['num_avis'];
+                $signal->num_compte = session()->get("numero");
+                model("\App\Models\LstSignalements")->save($signal);
             }
-
-            //Vérifie que l'utilisateur a déjà acheté ce produit
-            $dejaAchete = false;
-            foreach ($commandesCli as $commande) {
-                foreach ($articles as $article) {
-                    if ($article->id_prod == $idProduit) {
-                        $dejaAchete = true;
+            //Sinon elle est due à un avis
+            else
+            {
+                //Vérifie que la session (donc l'utilisateur) n'a pas déjà commenté cet article.
+                foreach ($data['avis'] as $unAvis) {
+                    if (session()->get("numero") == $unAvis->num_compte) {
+                        $data["erreurs"][0] = "Vous avez déjà commenté ce produit.";
                     }
                 }
-            }
 
-            //S'il n'a jamais acheté : erreur
-            if ($dejaAchete == false) {
-                $data["erreurs"][1] = "Vous ne pouvez pas commenter un produit que vous n'avez jamais acheté.";
-            }
+                //Vérifie que l'utilisateur a déjà acheté ce produit
+                $dejaAchete = false;
+                foreach ($commandesCli as $commande) {
+                    foreach ($articles as $article) {
+                        if ($article->id_prod == $idProduit) {
+                            $dejaAchete = true;
+                        }
+                    }
+                }
 
-            //S'il n'y a pas d'erreurs, on enregistre l'avis
-            if (empty($data["erreurs"])) 
-            {
-                $avis = new \App\Entities\Avis();
-                $avis->contenu_av = $post['contenuAvis'];
-                $avis->id_prod = $idProduit;
-                $avis->num_compte = session()->get("numero");
-                $avis->note_prod = $post['noteAvis'];
-                $avis->pseudo = $client->identifiant;
-                model("\App\Models\LstAvis")->enregAvis($avis);
+                //S'il n'a jamais acheté : erreur
+                if ($dejaAchete == false) {
+                    $data["erreurs"][1] = "Vous ne pouvez pas commenter un produit que vous n'avez jamais acheté.";
+                }
+
+                //S'il n'y a pas d'erreurs, on enregistre l'avis
+                if (empty($data["erreurs"])) 
+                {
+                    $avis = new \App\Entities\Avis();
+                    $avis->contenu_av = $post['contenuAvis'];
+                    $avis->id_prod = $idProduit;
+                    $avis->num_compte = session()->get("numero");
+                    $avis->note_prod = $post['noteAvis'];
+                    $avis->pseudo = $client->identifiant;
+                    model("\App\Models\LstAvis")->enregAvis($avis);
+                }
             }
         }
 
         //Update des avis après un potentiel ajout
         $data['avis'] = model("\App\Models\LstAvis")->getAvisByProduit($idProduit);
 
-        //Passage de l'id de l'avis en valeur, s'il y en a un, à la vue
-        if ($numAvisEnValeur != null)
-        {
+        //Passage de l'id de l'avis en valeur si il y en a un à la vue
+        if ($numAvisEnValeur != null) {
             $data['avisEnValeur'] = $numAvisEnValeur;
-        }
-        else
-        {
+        } else {
             $data["avisEnValeur"] = -1;
         }
 
         //Affichage selon si produit trouvé ou non
-        if ($result == null) 
-        {
+        if ($result == null) {
             return view('errors/html/error_404.php', array('message' => "Ce produit n'existe pas"));
-        } 
-        else 
-        {
+        } else {
             $data["controller"] = "Produit";
 
             $data['prod'] = $result;
 
-            if (strstr(current_url(), "retourProduit"))
+            if (strstr(current_url(), "retourProduit") || isset($post['raison']))
             {
                 return redirect()->to("/produit/$idProduit#avis");
-            }
-            else
-            {
+            } else {
                 return view('produit.php', $data);
             }
         }
@@ -285,10 +291,8 @@ class Home extends BaseController
     private const NBPRODSPAGECATALOGUE = 20;
     #FIXME: comportement href différent entre $page=null oe $page !=null
     
-    public function catalogue($page=1)
-    {
-        //Feedback pour l'ajout d'un produit
-        if(session()->has("just_ajoute") && session()->get("just_ajoute") == true) {
+    public function catalogue($page=1) {
+        if (session()->has("just_ajoute") && session()->get("just_ajoute")) {
             $this->feedback=service("feedback");
             session()->set("just_ajoute", false);
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Article ajouté");
@@ -325,7 +329,7 @@ class Home extends BaseController
         $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
         
         //Chargement des produits selon les filtres
-        $result=(new \App\Controllers\Produits())->getAllProduitSelonPage($page,self::NBPRODSPAGECATALOGUE,$filters);
+        $result=(new \App\Controllers\Produits())->getAllProduitSelonPage($page, self::NBPRODSPAGECATALOGUE, $filters);
         $data['prods']=$result["resultat"];
         $data['estDernier']=$result["estDernier"];
         
@@ -682,13 +686,6 @@ class Home extends BaseController
         {
             $modelSignalements = model("\App\Models\LstSignalements");
             $modelSignalements->delete($id_signal);
-
-            /* test de création d'un signalement
-            $signal = new \App\Entities\Signalement();
-            $signal->raison = "test";
-            $signal->num_avis = 1;
-            $signal->num_compte = 1;
-            $modelSignalements->save($signal);*/
         }
         
         $data["role"] = "admin";

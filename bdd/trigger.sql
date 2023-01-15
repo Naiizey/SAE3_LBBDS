@@ -14,7 +14,7 @@ BEGIN
     
 
     --vérifie dans la table _sous_categorie si le code_sous_cat qui provient de l'appelant existe et on range le résultat dans une variable
-    SELECT * INTO sous_categorie FROM _sous_categorie WHERE code_sous_cat = NEW.code_sous_cat;
+    PERFORM * FROM _sous_categorie WHERE code_sous_cat = NEW.code_sous_cat;
     -- si le code_sous_cat n'existe pas dans la table _sous_categorie
     IF NOT FOUND THEN
         -- si la catégorie 190 n'existe pas

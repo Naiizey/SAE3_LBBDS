@@ -51,9 +51,9 @@ int main(int argc, char *argv[])
     collectOptions(argc,argv,options);
     int maxCapaciteLivraison;
     int capaciteLivraison;
-    int dureeJour;
+   
     char path[255];
-    config(&maxCapaciteLivraison, &dureeJour, path, options);
+    config(&maxCapaciteLivraison, &time_day_sec, path, options);
     File listeCommande;
     initFile(&listeCommande, &capaciteLivraison);
     

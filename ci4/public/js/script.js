@@ -17,7 +17,7 @@ function footer(){
 }
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                           Carrousel                                ┃
+┃                                   Carrousel                                     ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 function carrousel(){
@@ -1090,6 +1090,29 @@ function boutonCliquable(bouton,action){
     }
 }
 
+//Click bouton tris media query
+function boutonCliquableTris(bouton,action){
+    if(screen.width < 1200){
+        bouton.addEventListener("click",action);
+    }
+    else if(screen.width >= 1200 && bouton.classList.contains("bulle-ouvrir-tris")){
+        bouton.addEventListener("click", () => {
+            document.querySelector(".partie-tris").style.display = "flex"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
+            document.querySelector(".bulle-ouvrir-tris").style.display = "none"
+            localStorage.setItem("open", true);
+        })
+    }
+    else if(screen.width >= 1200 && bouton.classList.contains("fermer-tris")){
+        bouton.addEventListener("click", () => {
+            document.querySelector(".partie-tris").style.display = "none"
+            document.querySelector(".bulle-ouvrir-filtres").style.display = "flex"
+            document.querySelector(".bulle-ouvrir-tris").style.display = "flex"
+            localStorage.setItem("open", false);
+        })
+    }
+}
+
 function loadFilters(){
     window.addEventListener("load", () => {
         if(localStorage.getItem("open") === "true"){
@@ -1109,6 +1132,13 @@ function loadFilters(){
 function switchEtatFiltre(list){
     for (n of list){
         n.classList.toggle("est-filtre-ouvert");
+    }
+}
+
+//Ajout de la classe "est-tris-ouvert" au tris
+function switchEtatTris(list){
+    for (n of list){
+        n.classList.toggle("est-tris-ouvert");
     }
 }
 
@@ -1151,7 +1181,7 @@ function getParentNodeTilClass(element){
     return parent;
 }
 
-var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFiltre,voirPlus) {
+const filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFiltre,voirPlus) {
     this.form = formFilter;
     this.erroBloc=document.querySelector("div.bloc-erreur-liste-produit");
     this.champRecherche = champRecherche;
@@ -1160,73 +1190,62 @@ var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFi
     this.voirPlus=voirPlus;
     this.currPage = 1//parseInt(document.querySelector("#catalogue-current-page").textContent);
     //Permet d'éviter les problèmes de scope
-    var self = this;
- 
+    const self = this;
         this.send = async (replace=true) => {
         //Récupère les valeurs des filtres et transformation en string de type url à laquelle ajoute la recherche
-        var champsGet= new URLSearchParams(new FormData(self.form));
+        let champsGet = new URLSearchParams(new FormData(self.form));
         console.log(champsGet.toString());
         if(!self.champRecherche.value==""){
             champsGet.append("search",self.champRecherche.value);
         }
         //FIXME: problème de précison avec min et max. arrondir pour éviter les problèmes ?
         if(self.form.elements["prix_min"].value===self.form.elements["prix_min"].min && self.form.elements["prix_max"].value===self.form.elements["prix_max"].max){
-           
             champsGet.delete("prix_min");
             champsGet.delete("prix_max");
         }
         
-        champsGet=champsGet.toString();
+        champsGet = champsGet.toString();
         if(champsGet.length!=0){
-            champsGet="?"+champsGet;
-            //champsGet="";
+            champsGet ="?"+champsGet;
         }
-        console.log("http://localhost/Alizon/ci4/public/produits/page/"+((replace)?1:self.currPage)+champsGet);
-         
+
        //fetch avec un await pour récuperer la réponse asynchrones (de manière procédurale)
         try{
-            const md= await fetch(base_url + "/produits/page/"+((replace)?1:self.currPage)+champsGet);
-            var result= await md.json();
+            const md = await fetch(base_url + "/produits/page/"+((replace)?1:self.currPage)+champsGet);
+            const result= await md.json();
             
             //vérifie si la réponse n'est pas une erreur
-            if (md.ok){
-                if(replace){
+            if (md.ok) {
+                if(replace) {
                     self.currPage=1;
                     self.listeProduit.innerHTML="";    
                 }
-                if(result["estDernier"]){
+                if (result["estDernier"]) {
                     self.voirPlus.classList.add("hidden");
-                }else{
+                } else {
                     self.voirPlus.classList.remove("hidden");
                 }
                 result["resultat"].forEach(produit => self.listeProduit.innerHTML += produit);
                 self.erroBloc.classList.add("hidden");
                 //reexe, afin que le listener revienne sur les cartes
                 clickProduit();
-            }else{
-             
+            } else {
                 self.erroBloc.classList.remove("hidden");
                 self.voirPlus.classList.add("hidden");
                 self.listeProduit.innerHTML="";
                 self.erroBloc.children[0].innerHTML=result["message"];
-               
-                
             }
             window.history.pushState({page:1},"Filtres",champsGet);
     
-        }catch(e){
+        } catch(e) {
             //Les erreurs 404 ne passent pas ici, ce sont les erreurs lié à la fonction et au réseau qui sont catch ici
             console.log("Oups !, quelque chose s'est mal passé...");
         }
-        
-        
     }
 
     
     Array.from(this.form.elements).forEach((el) => {
-        //if(el.nodeName!=="BUTTON"){
-            el.addEventListener("change", () => this.send());
-        //}
+        el.addEventListener("change", () => this.send());
     });
 
     this.suppressionFiltre.addEventListener('click', (event) => {
@@ -1244,21 +1263,21 @@ var filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFi
         this.currPage++;
         this.send(false);
     });
+}
 
-    /*
-    Array.from(document.querySelectorAll(".fleche-page")).forEach((el) => {
-        if(el.classList.contains("disponible"))
-        {
-            el.addEventListener("click", (event) => {
-
-                event.preventDefault()
-                this.send(self.currPage + (event.target.classList.contains("fleche-page-gauche") ? -1 : 1))
-            });
-        }
-    });
-    */
-
-
+function changeOnglet() {
+    var onglets = document.getElementsByClassName("onglet");
+    console.log(onglets);
+    for (let id = 0; id < onglets.length; id++) {
+        console.log(onglets[id]);
+        onglets[id].addEventListener('click', (event) => {
+            if (!(onglets[id].classList.contains("onglet-selectionnee"))) {
+                onglets[id].classList.add("onglet-selectionnee");
+                onglets[(id+1)%2].classList.remove("onglet-selectionnee");      
+            }
+            }
+        );
+    }
 }
 
 /*  
@@ -1318,7 +1337,6 @@ var formAdresseConstructor = function(){
     //Suggestions dés le clique
     this.form.elements["ville"].addEventListener("mousedown",function(event){
         if( document.activeElement == this )return;
-      
         event.target.focus();
     });
     
@@ -1366,7 +1384,6 @@ var formAdresseConstructor = function(){
             p.classList.add("paragraphe-erreur");
             p.innerText=message
             destination.appendChild(p)
-          
         }
         
     }
@@ -1392,7 +1409,7 @@ var formAdresseConstructor = function(){
             this.supprimerErreur(selfTarget.parentNode.parentNode.parentNode);
         }
     };
-    this.nomEtPrenom.map(elem => 
+    this.nomEtPrenom.forEach(elem => 
         elem.addEventListener("blur", this.verifierNomEtPrenom));
 
     
@@ -1411,7 +1428,6 @@ var formAdresseConstructor = function(){
         else{
             this.estRempli[selfTarget.name]=true;
             this.supprimerErreur(seekPositionErreur(selfTarget.name));
-           
         }
         })
     })
@@ -1420,26 +1436,22 @@ var formAdresseConstructor = function(){
     
         this.codePostal.value = response.features[0].properties.postcode;
         this.supprimerErreur(seekPositionErreur(selfTarget.name));
-         
-     }
- 
-     this.afterCodePostal = function(response){
-         let datalist= document.getElementById("ville_trouvee");
-         datalist.innerHTML="";
-         response.features.forEach(feature => {
-             console.log(feature.properties.city)
-             let option = document.createElement("option");
-             option.value=feature.properties.city;
-             datalist.appendChild(option);
-         });   
-     }
- 
+    }
+    
+    this.afterCodePostal = function(response){
+        let datalist= document.getElementById("ville_trouvee");
+        datalist.innerHTML="";
+        response.features.forEach(feature => {
+            console.log(feature.properties.city)
+            let option = document.createElement("option");
+            option.value=feature.properties.city;
+            datalist.appendChild(option);
+        });
+    }
 
     this.chercheCodePostalVille =  (event) => {
         selfTarget=event.target;
-      
         if(selfTarget.value.length > 3){
-            
             fetch("https://api-adresse.data.gouv.fr/search/?q="+selfTarget.value+"&type=municipality")
             .then(response => response.json())
             .then(response => self.afterVille(response))
@@ -1453,33 +1465,20 @@ var formAdresseConstructor = function(){
         selfTarget=event.target;
         if(this.codePostal.validity.patternMismatch){
             this.creerErreur(document.querySelector(`.position-erreur[for=${selfTarget.name}]`),"Ne correspond à aucun code postal");
-           
         }
         else if(!this.codePostal.validity.valueMissing){
-           
             this.supprimerErreur(seekPositionErreur(selfTarget.name));
-        
-            
-            
-            
             fetch("https://api-adresse.data.gouv.fr/search/?q="+selfTarget.value+"&postcode="+selfTarget.value+"&type=municipality")
             .then(response => response.json())
             .then(response => self.afterCodePostal(response))
-            .catch(error => {console.error('Error:', error)});   
-                
-            
-           
+            .catch(error => {console.error('Error:', error)});
         }
         else{
             this.supprimerErreur(seekPositionErreur(selfTarget.name));
-            
-           
         }    
     };
     this.codePostal.addEventListener("blur", this.chercherVilleParCodePostal);
- 
 }
- 
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -1490,65 +1489,52 @@ function errors(){
     const Shuffle = function ($el) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=+<>,./?[{()}]!@#$%^&*~`\|'.split(''),
             $source = $el.querySelector('.source'), $target = $el.querySelector('.target');
-    
         let cursor = 0, scrambleInterval = undefined, cursorDelayInterval = undefined, cursorInterval = undefined;
-    
         const getRandomizedString = function (len) {
             let s = '';
-    
             for (let i = 0; i < len; i++) {
                 s += chars[Math.floor(Math.random() * chars.length)];
             }
-    
             return s;
         };
-    
         this.etoilet = function () {
             $source.style.display = 'none';
             $target.style.display = 'block';
-    
             scrambleInterval = window.setInterval(() => {
                 if (cursor <= $source.innerText.length) {
                     $target.innerText = $source.innerText.substring(0, cursor) + getRandomizedString($source.innerText.length - cursor);
                 }
             }, 450 / 30);
-    
             cursorDelayInterval = window.setTimeout(() => {
                 cursorInterval = window.setInterval(() => {
                     if (cursor > $source.innerText.length - 1) {
                         this.stop();
                     }
-    
                     cursor++;
                 }, 70);
             }, 350);
         };
-    
         this.stop = function () {
             $source.style.display = 'block';
             $target.style.display = 'none';
             $target.innerText = '';
             cursor = 0;
-    
             if (scrambleInterval !== undefined) {
                 window.clearInterval(scrambleInterval);
                 scrambleInterval = undefined;
             }
-    
             if (cursorInterval !== undefined) {
                 window.clearInterval(cursorInterval);
                 cursorInterval = undefined;
             }
-    
             if (cursorDelayInterval !== undefined) {
                 window.clearInterval(cursorDelayInterval);
                 cursorDelayInterval = undefined;
             }
         };
     };
-    
+
     (new Shuffle(document.getElementById('error_text'))).etoilet();
-    
     window.setTimeout(function () {
         document.getElementById('details').classList.remove('hidden');
     }, 550);
@@ -1584,9 +1570,9 @@ function parentTilCard(element){
 function clickProduit(){
     //Select all cards
     let cards = document.querySelectorAll(".card-produit");
-    for(card of cards){
+    for(let card of cards){
         //Redirection while clicking on products
-        card.addEventListener("click", (e) =>{window.location.href=  base_url +  "/produit/" + parentTilCard(e.target).getAttribute('value');});
+        card.addEventListener("click", (e) => {window.location.href=  base_url +  "/produit/" + parentTilCard(e.target).getAttribute('value');});
     }
 }
 //Only if at least one card in the page
@@ -1613,7 +1599,7 @@ function menuCredit() {
     // Si la souris quitte de l'icône de profil
     lienConnexion.addEventListener("mouseout", () => { 
         setTimeout(function(){ // Attente d'une seconde
-            if (hover == false) { // verifie si le booléen est faux (ce qui veut dire que la souris n'est ni sur l'icône du profil ni sur le menu contextuel)
+            if (!hover) { // verifie si le booléen est faux (ce qui veut dire que la souris n'est ni sur l'icône du profil ni sur le menu contextuel)
                 divHoverConnexion.style.display = "none"; // Dans ce cas, le menu contextuel est masqué
             }
         }, 1400);
@@ -1645,15 +1631,15 @@ function setUpPaiment(){
            
             document.forms["form_paiement"]
         ]
-        var theForm= document.createElement("form");    
+        const theForm = document.createElement("form");    
     
         let isValid=Array.from(forms).every(form => {
             
             if(form.reportValidity ()){
-                for (var elem of form.elements) {
+                for (let elem of form.elements) {
                     theForm.appendChild(elem.cloneNode(true));
                 }
-               return true;
+                return true;
             }
             else{
                 return false;
@@ -1667,9 +1653,6 @@ function setUpPaiment(){
             console.log(theForm);
             theForm.submit();
         }
-        
-    
-        
     })
 }
 
@@ -1681,7 +1664,6 @@ function setUpPaiment(){
 */
 
 class AlerteAlizon{
-    
     constructor(titre,destination,message="Une alerte survient",method="GET"){
         this.titre=titre;
         this.display=null;
@@ -1691,7 +1673,6 @@ class AlerteAlizon{
         this.form.action=destination;
         this.form.method=method;
     }
-    
 
     ajouterBouton(intitule,classe,nomForm=intitule){
         let bouton=document.createElement("button");
@@ -1707,7 +1688,6 @@ class AlerteAlizon{
         this.display = document.createElement("div");
         this.display.classList.add("sur-alerte");
         this.display.innerHTML= `
-      
             <div class="alerte">
                 <h2>${this.titre}</h2>
                 <hr>
@@ -1719,12 +1699,9 @@ class AlerteAlizon{
                     </div>
                 </div>
             </div>
-   
         `;
         document.body.appendChild(this.display);
     }
-
-    
 }
 
 /*
@@ -1736,7 +1713,6 @@ class AlerteAlizon{
 function changeImageProduit(e) 
 {
     e.preventDefault();
-
     let image = e.currentTarget.getElementsByTagName("img")[0];
     let divImagePrincipale = document.getElementsByClassName("zoom")[0];
     let imagePrincipale = divImagePrincipale.getElementsByTagName("img")[0];
@@ -1753,11 +1729,12 @@ function changeImageProduit(e)
 */
 
 function zoomProduit(e) {
-    var zoomer = e.currentTarget;
+    let offsetX, offsetY;
+    let zoomer = e.currentTarget;
     e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
     e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
-    x = offsetX/zoomer.offsetWidth*100
-    y = offsetY/zoomer.offsetHeight*100
+    let x = offsetX/zoomer.offsetWidth*100;
+    let y = offsetY/zoomer.offsetHeight*100;
     zoomer.style.backgroundPosition = x + '% ' + y + '%';
 }
 
@@ -1864,9 +1841,8 @@ function avisProduit()
     // met en jaune l'étoile sur laquelle on est ainsi que les précédentes    
     function hoveretoile() {
         // pour toutes les etoiles
-        for(let i=0; i< etoiles.length; ++i) {
+        for(let i=0; i < etoiles.length; ++i) {
             etoiles[i].classList.add('etoileActive'); // ajoute une classe qui met en jaune
-
             // jusqu'à ce quon arrive à l'étoile sur laquelle on est 
             if(etoiles[i] === this) {
                 return;
@@ -1887,13 +1863,12 @@ function avisProduit()
     });
 
     function validerEtoile() {
+        let btnPoster;
         for(let i=0; i< etoiles.length; ++i) {
             etoiles[i].classList.add('etoilesValide'); 
-             
             if(etoiles[i] === this) {
                 document.querySelector(".divEtoilesComment p").textContent = (i + 1) + "/5"; // écrit le numéro de la note à coté des étoiles
                 document.querySelector(".inputInvisible").value = (i + 1);
-
                 document.querySelector(".divBoutonsComment div").style.cursor = "auto"
                 document.querySelector(".divBoutonsComment").style.display = "flex";
                 btnPoster = document.querySelector(".divBoutonsComment input");
@@ -1911,18 +1886,30 @@ function avisProduit()
             }
         }
     } 
+
+    //Signalement d'un avis
+    //Binding des boutons annuler pour faire disparaitre toutes les div de signalement
+    boutonAnnuler = document.getElementsByClassName("annulerSignal");
+
+    for (let i = 0; i < boutonAnnuler.length; i++)
+    {
+        boutonAnnuler[i].addEventListener("click", function() 
+        {
+            divSignalements = document.getElementsByClassName("divSignalement");
+
+            for (let j = 0; j < divSignalements.length; j++) 
+            {
+                divSignalements[j].style.display = "none";
+            }
+        });
+    }
 }
 
-function signalement(numAvis) {
-    document.querySelector(".divAvisContenuEtSignal").addEventListener("click", function(event) {
-        event.preventDefault;
-        document.getElementById("flag"+numAvis).style.display = "flex";
-    
-        document.querySelector(".divSignalement form div p").addEventListener("click", function() {
-            document.querySelector("#flag"+numAvis).style.display = "none";
-            document.querySelector(".divSignalement").style.display = "none";
-        });
-
+function drapeauSignal(numAvis) 
+{
+    //Binding de tous les drapeaux à leurs div de signalement respectives (avec le bon avis)
+    document.getElementsByClassName("drapeau" + numAvis)[0].addEventListener("click", function()
+    {
+        document.getElementById("divSignalement" + numAvis).style.display = "flex";
     });
-    return false;
 }

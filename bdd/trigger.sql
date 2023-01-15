@@ -7,34 +7,34 @@ SET SCHEMA 'sae3';
 
 CREATE OR REPLACE FUNCTION csvImport() RETURNS TRIGGER AS
 $$
--- création d'une variable qui va contenir le résultat de la requête
-DECLARE
-    sous_categorie _sous_categorie%ROWTYPE;
+
+
 BEGIN
     
 
     --vérifie dans la table _sous_categorie si le code_sous_cat qui provient de l'appelant existe et on range le résultat dans une variable
-    PERFORM * FROM _sous_categorie WHERE code_sous_cat = NEW.code_sous_cat;
+    PERFORM * FROM sae3._sous_categorie WHERE code_sous_cat = NEW.code_sous_cat;
     -- si le code_sous_cat n'existe pas dans la table _sous_categorie
     IF NOT FOUND THEN
+
         -- si la catégorie 190 n'existe pas
-        IF NOT EXISTS (SELECT * FROM _categorie WHERE code_cat = 190) THEN
+        IF NOT EXISTS (SELECT * FROM sae3._categorie WHERE code_cat = 190) THEN
             --on créer une nouvelle catégorie
-            INSERT INTO _categorie(code_cat,libelle_cat, cat_tva) VALUES (190,'Inconnue',1);
+            INSERT INTO sae3._categorie(code_cat,libelle_cat, cat_tva) VALUES (190,'Inconnue',1);
         END IF;
         -- si la sous catégorie NEW.code_sous_cat n'existe pas
-        IF NOT EXISTS (SELECT * FROM _sous_categorie WHERE code_sous_cat = NEW.code_sous_cat) THEN
+        IF NOT EXISTS (SELECT * FROM sae3._sous_categorie WHERE code_sous_cat = NEW.code_sous_cat) THEN
             --on créer une nouvelle sous catégorie
-            INSERT INTO _sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (NEW.code_sous_cat,'Inconnue sous cat',190);
+            INSERT INTO sae3._sous_categorie(code_sous_cat,libelle_cat, code_cat) VALUES (NEW.code_sous_cat,'Inconnue sous cat',190);
         END IF;
         --on créer un nouveau produit
-        INSERT INTO _produit(code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod) VALUES (NEW.code_sous_cat, NEW.intitule_prod, NEW.prix_ht, NEW.prix_ttc, NEW.description_prod, NEW.publication_prod, NEW.stock_prod,NEW.moyenne_note_prod,NEW.seuil_alerte_prod,NEW.alerte_prod);
-    --sinon
-    ELSE
+
+
         --on créer un nouveau produit
-        INSERT INTO _produit(code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod) VALUES (NEW.code_sous_cat, NEW.intitule_prod, NEW.prix_ht, NEW.prix_ttc, NEW.description_prod, NEW.publication_prod, NEW.stock_prod,NEW.moyenne_note_prod,NEW.seuil_alerte_prod,NEW.alerte_prod);
+        INSERT INTO sae3._produit(code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod) VALUES (NEW.code_sous_cat, NEW.intitule_prod, NEW.prix_ht, NEW.prix_ttc, NEW.description_prod, NEW.publication_prod, NEW.stock_prod,NEW.moyenne_note_prod,NEW.seuil_alerte_prod,NEW.alerte_prod);
         
     END IF;
+
     -- on retourne le résultat
     RETURN NEW;
 

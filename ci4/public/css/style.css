@@ -2227,10 +2227,10 @@ h3 > .lienPasArticlePanier {
     padding: 2em;
     text-align: justify;
     color: #164F57;
-    display: none;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    display: none;
 }
 
 .divSignalement p {
@@ -2268,8 +2268,9 @@ h3 > .lienPasArticlePanier {
     color: white;
 }
 
-.divSignalement form div button {
+.divSignalement form div p {
     background-color: #a02424;
+    cursor: pointer;
 }
 
 .divSignalement form div input {

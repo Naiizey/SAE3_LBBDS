@@ -286,6 +286,8 @@ $$ language plpgsql;
 CREATE OR REPLACE FUNCTION delete_commentaire() RETURNS TRIGGER AS
 $$
     BEGIN
+        delete from sae3._signalement where num_avis=old.num_avis;
+        delete from sae3._image_avis where num_avis=old.num_avis;
         delete from sae3._avis where num_avis=old.num_avis;
         delete from sae3._note where id_note=old.id_note;
 

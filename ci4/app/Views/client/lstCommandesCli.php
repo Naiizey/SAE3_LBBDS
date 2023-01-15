@@ -33,6 +33,5 @@
     </main>
 <?php require __DIR__ . "/../footer.php"; ?>
 <script>
-
     lstCommandes();
 </script>

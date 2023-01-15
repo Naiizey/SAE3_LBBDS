@@ -15,7 +15,7 @@
                     </thead>
                     <tbody>
                         <?php for ($i = 0; $i < count($signalements); $i++): ?>
-                            <tr class='lignesSignalements'>
+                            <tr class='lignesAvisSignalements'>
                                 <td><?= $signalements[$i]->id_signal ?></td>
                                 <td><?= $signalements[$i]->raison ?></td>
                                 <td class='numAvis'><?= $signalements[$i]->num_avis ?></td>
@@ -40,5 +40,5 @@
     </main>
 <?php require __DIR__ . "/../footer.php";?>
 <script>
-    lstSignalements(<?= count($signalements) ?>);
+    lstAvisSignalements();
 </script>

@@ -119,10 +119,10 @@ $routes->set404Override();
     $routes->post('/admin/bannissements', 'Home::bannissements');
 
     $routes->get('/admin/signalements', 'Home::lstSignalements');
-    $routes->post('/admin/signalements', 'Home::lstSignalements');
-
     $routes->get('/admin/signalements/(:num)', 'Home::lstSignalements/$1');
-    $routes->post('/admin/signalements/(:num)', 'Home::lstSignalements/$1');
+
+    $routes->get('/admin/avis', 'Home::lstAvis');
+    $routes->get('/admin/avis/(:num)', 'Home::lstAvis/$1');
 
     $routes->get('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');
     $routes->post('/(admin)/espaceClient/(:num)', 'Home::espaceClient/$1/$2');

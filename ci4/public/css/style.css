@@ -2215,8 +2215,69 @@ h3 > .lienPasArticlePanier {
     position: relative;
 }
 
+.divSignalement {
+    background-color: white;
+    position: absolute;
+    top: 70%;
+    left: 30%;
+    right: 30%;
+    bottom: 10%;
+    z-index: 100;
+    border: #3997A3 solid 2px;
+    padding: 2em;
+    text-align: justify;
+    color: #164F57;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.divSignalement p {
+    margin: 0;
+}
+
+.divSignalement h2 {
+    font-size: 1.4em;
+}
+
+.divSignalement form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.divSignalement form input {
+    font-size: medium;
+    font-family: 'Montserrat-Regular';
+}
+
+.divSignalement form div {
+    display: flex;
+    justify-content: space-around;
+    align-self: center;
+}
+
+.divSignalement form div * {
+    text-decoration: none;
+    text-align: center;
+    border-radius: 30px;
+    padding: .2em 1em;
+    border: none;
+    margin: .3em;
+    color: white;
+}
+
+.divSignalement form div button {
+    background-color: #a02424;
+}
+
+.divSignalement form div input {
+    background-color: #24a064;
+}
+
 .divAjoutCommentConnect {
-    z-index: 1000;
+    z-index: 99;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -2440,10 +2501,10 @@ h3 > .lienPasArticlePanier {
 .moyennesAvis {
     width: 35%;
 }
-
 .moyennesAvis div {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .moyennesAvis p {
@@ -2565,7 +2626,121 @@ h3 > .lienPasArticlePanier {
     .sectionRecommandationsPanierMobile .notation-card img{
         width: .75rem;
     }
+
+    .moyennesAvis progress{
+        flex-basis: 70%;
+    }
+
+    .moyennesAvis .pAvis{
+        min-width: 3em;
+    }
 }
+
+@media screen and (max-width: 960px) and (min-width: 481px){
+    .mainProduit{
+        padding-bottom: 7.5em;
+    }
+    
+    .divGauche .zoom{
+        width: 45vh;
+        height: 45vh;
+    }
+
+    .divGauche ul img{
+        width: 12vh;
+        height: 12vh;
+    }
+
+    .divNomDate h3{
+        max-width: 11rem;
+        word-wrap: break-word; 
+    }
+}
+
+@media screen and (max-width: 480px){
+    .divGauche{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0;
+        height: 25rem;
+    }
+
+    .divGauche ul{
+        order: 2;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0;
+    }
+
+    .divGauche .zoom{
+        width: 33vh;
+        height: 33vh;
+    }
+
+    .divGauche ul img{
+        width: 10vh;
+        height: 10vh;
+    }
+
+    .divProfilText input::placeholder{
+        font-size: .75em;
+    }
+
+    .divLesAvis{
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .moyennesAvis{
+        width: 100%;
+        padding-bottom: 2em;
+    }
+
+    .moyennesAvis div{
+        justify-content: space-between;
+    }
+
+    .moyennesAvis progress{
+        flex-basis: 75%;
+    }
+
+    .divListeAvis{
+        width: 100%;
+    }
+
+    .sectionUnAvis{
+        flex-direction: column;
+    }
+
+    .divAvisCommentaire{
+        padding-top: 1em;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 961px){
+    .divGauche{
+        width: 60%;
+    }
+
+    .divGauche ul{
+        width: 20%;
+    }
+
+    .divGauche ul img{
+        width: 10vh;
+        height: 10vh;
+    }
+
+    .divGauche .zoom{
+        width: 40vh;
+        height: 40vh;
+    }
+}
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -4057,6 +4232,7 @@ progress::-moz-progress-bar
 ┃                                  Zoom produit                                   ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+
 div.zoom {
     cursor: zoom-in;
     object-fit: cover;
@@ -4067,13 +4243,24 @@ div.zoom {
     border-radius: 3px;
   }
   
-  div.zoom img:hover {
+div.zoom img:hover {
     opacity: 0;
-  }
+}
   
-  div.zoom img {
+div.zoom img {
     transition: opacity 0.5s;
     display: block;
     width: 100%;
     height: 100%;
-  }
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                   Import CSV                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+#preview {
+    display: flex;
+    flex-direction: column;
+}

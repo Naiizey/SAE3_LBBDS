@@ -15,5 +15,5 @@
 <?php require __DIR__ . "/../footer.php"; ?>
 <script>
         dragNDrop();
-        previewCSV();
+        checkCSV();
 </script>

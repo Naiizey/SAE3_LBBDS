@@ -1926,7 +1926,6 @@ function avisProduit()
 function signalement(numAvis) {
     document.querySelector(".divAvisContenuEtSignal").addEventListener("click", function(event) {
         event.preventDefault;
-        alert(numAvis);
         document.getElementById("flag"+numAvis).style.display = "flex";
     
         document.querySelector(".divSignalement form div p").addEventListener("click", function() {

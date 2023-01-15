@@ -2221,16 +2221,15 @@ h3 > .lienPasArticlePanier {
     top: 70%;
     left: 30%;
     right: 30%;
-    bottom: 10%;
-    z-index: 100;
+    z-index: 99;
     border: #3997A3 solid 2px;
-    padding: 2em;
+    padding: 1em;
     text-align: justify;
     color: #164F57;
-    display: none;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    display: none;
 }
 
 .divSignalement p {
@@ -2252,27 +2251,34 @@ h3 > .lienPasArticlePanier {
     font-family: 'Montserrat-Regular';
 }
 
+.divSignalement form input[type="text"] {
+    margin: 1em 0;
+    height: 2em;
+    outline: none;
+    padding-left: 1%;
+}
+
 .divSignalement form div {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-self: center;
+    width: 100%;
 }
 
-.divSignalement form div * {
-    text-decoration: none;
-    text-align: center;
-    border-radius: 30px;
-    padding: .2em 1em;
+.annulerSignal, .divSignalement input[type="submit"] {
+    padding: 0.5em 1em 0.5em 1em;
+    border-radius: 10px;
+    color: white !important;
     border: none;
-    margin: .3em;
-    color: white;
+    font-size: 1em;
+    cursor: pointer;
 }
 
-.divSignalement form div button {
+.annulerSignal  {
     background-color: #a02424;
 }
 
-.divSignalement form div input {
+.divSignalement input[type="submit"] {
     background-color: #24a064;
 }
 
@@ -2470,9 +2476,35 @@ h3 > .lienPasArticlePanier {
     width: 60%;
 }
 
+.divSignalUnAvis {
+    width: 100%;
+}
+
+.divSignalUnAvis p {
+    margin: 0;
+}
+
+.divSignalUnAvis > div > p {
+    margin-top: 1em;
+}
+
+.divSignalUnAvis svg {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.divSignalUnAvis svg path {
+    fill: red;
+}
+
 .divUnAvis p {
     text-align: justify;
     margin-bottom: 0;
+}
+
+.divUnAvis hr {
+    background-color: #164F57;
+    margin: 1em 0;
 }
 
 .sectionUnAvis + p {
@@ -2487,11 +2519,6 @@ h3 > .lienPasArticlePanier {
 .divLesAvis {
     display: flex;
     justify-content: space-between;
-}
-
-.divUnAvis hr {
-    background-color: #164F57;
-    margin: 1em 0;
 }
 
 .notation-card {
@@ -3601,6 +3628,7 @@ a.fleche-page{
 
 .tableLst th, .tableLst td{
     width: 5em;
+    cursor: pointer;
 }
 
 .buttonSanction {

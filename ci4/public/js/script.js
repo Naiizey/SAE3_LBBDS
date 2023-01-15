@@ -373,8 +373,6 @@ function checkCSV()
                                 preview.style.color = "red";
                                 //on supprime la totalité de la table
                                 table.innerHTML = "";
-
-
                             }
                         }
                         else {
@@ -391,9 +389,6 @@ function checkCSV()
                     preview.innerHTML = "";
                     previewCSV();
                 }
-
-            //ajout d'un br
-            // preview.innerHTML += "<br><br><br><br>";
             }
             
         });
@@ -417,11 +412,6 @@ function previewCSV(){
     //création d'un objet FileReader
     let reader = new FileReader();
     //lecture du fichier
-    //prend l'en-tête du fichier et l'ajoute au tableau
-    let entete = getentete();
-    
-    
-
     reader.readAsText(file);
     //ajout d'un event listener sur le chargement du fichier
     reader.addEventListener("load", function () {
@@ -1896,8 +1886,30 @@ function avisProduit()
             }
         }
     } 
+
+    //Signalement d'un avis
+    //Binding des boutons annuler pour faire disparaitre toutes les div de signalement
+    boutonAnnuler = document.getElementsByClassName("annulerSignal");
+
+    for (let i = 0; i < boutonAnnuler.length; i++)
+    {
+        boutonAnnuler[i].addEventListener("click", function() 
+        {
+            divSignalements = document.getElementsByClassName("divSignalement");
+
+            for (let j = 0; j < divSignalements.length; j++) 
+            {
+                divSignalements[j].style.display = "none";
+            }
+        });
+    }
 }
 
-function signalement(numAvis) {
-    document.querySelector(".divSignalement").style.display = "flex";
+function drapeauSignal(numAvis) 
+{
+    //Binding de tous les drapeaux à leurs div de signalement respectives (avec le bon avis)
+    document.getElementsByClassName("drapeau" + numAvis)[0].addEventListener("click", function()
+    {
+        document.getElementById("divSignalement" + numAvis).style.display = "flex";
+    });
 }

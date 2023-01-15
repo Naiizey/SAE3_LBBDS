@@ -3639,6 +3639,7 @@ a.fleche-page{
 
 .tableLst th, .tableLst td{
     width: 5em;
+    cursor: pointer;
 }
 
 .buttonSanction {

@@ -2968,6 +2968,14 @@ main#Catalogue{
     left: 0;
 }
 
+.partie-tris {
+    max-height: 15vh;
+}
+
+.partie-tris form {
+    padding-block: 2.5em;
+}
+
 .onglets + form{
     background-color: #EFECEC;
     display: flex;

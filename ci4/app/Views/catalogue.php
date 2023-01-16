@@ -80,9 +80,9 @@
                 </button>
             </div>
             <form name="tris" method="get">
-                <input type="radio" name="trisB" id="nom" value="intitule" checked><label for="nom"> Nom </label>
-                <input type="radio" name="trisB" id="prix" value="prixttc"><label for="prix"> Prix </label>
-                <input type="radio" name="trisB" id="avis" value="moyennenote"><label for="avis"> Avis </label>
+                <input type="radio" name="trisB" id="nom" value="intitule" <?= ((isset($filters["trisB"]) && $filters["trisB"]=="intitule")?"checked":"") ?> ><label for="nom"> Nom </label>
+                <input type="radio" name="trisB" id="prix" value="prixttc" <?= ((isset($filters["trisB"]) && $filters["trisB"]=="prixttc")?"checked":"") ?> ><label for="prix"> Prix </label>
+                <input type="radio" name="trisB" id="avis" value="moyennenote"  <?= ((isset($filters["trisB"]) && $filters["trisB"]=="moyennenote")?"checked":"") ?> ><label for="avis"> Avis </label>
                 <hr>
                 <select name="Ordre" id="ordre">
                     <option value="ASC"> ↓ Croissant </option>

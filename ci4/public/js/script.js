@@ -1236,11 +1236,12 @@ const filterUpdate = function(formFilter,champRecherche,listeProduit,suppression
                 self.listeProduit.innerHTML="";
                 self.erroBloc.children[0].innerHTML=result["message"];
             }
-            window.history.pushState({page:1},"Filtres",champsGetF);
+            window.history.pushState({page:1},"Filtres", champsGetF+"&"+champsGetT);
     
         } catch(e) {
             //Les erreurs 404 ne passent pas ici, ce sont les erreurs lié à la fonction et au réseau qui sont catch ici
             console.log("Oups !, quelque chose s'est mal passé...");
+            console.log(e);
         }
     }
 

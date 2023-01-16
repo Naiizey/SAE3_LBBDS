@@ -31,30 +31,32 @@ class Produits extends BaseController {
         if ($filters==null && isset($this->request) && !empty($this->request->getVar())) {
             $filters=$this->request->getVar();
         }
+
         if (isset($filters["trisB"]) && isset($filters["Ordre"])) {
             $sorts[0] = $filters["trisB"];
             $sorts[1] = $filters["Ordre"];
+            unset($filters["trisB"]);
+            unset($filters["Ordre"]);
         } else {
             $sorts = null;
         }
-        $data=array();
+        
+        if ($filters==null && isset($this->request) && !empty($this->request->getVar())) {
+            $filters=$this->request->getVar();
+        }
 
         try {
-            $query = model("\App\Models\ProduitCatalogue", false);
-
-            if (is_null($filters) || empty($filters)) {
-                if ($sorts == null) {
-                    $result = $query->orderBy("id", "ASC");
-                } else {
-                    $result = $query->orderBy($sorts[0], $sorts[1]);
-                }
-                $result = $result->findAll(($nombreProd*$page)+1, $nombreProd*($page-1));
+            $query = model("\App\Models\ProduitCatalogue");
+            if ($sorts == null) {
+                $query->orderBy("intitule", "ASC");
             } else {
-                $result=$this->casFilter($filters, $data);
-                if ($sorts != null) {
-                    $result = $query->orderBy($sorts[0], $sorts[1]);
-                }
-                $result = $result->findAll(($nombreProd*$page)+1, $nombreProd*($page-1));
+                $query->orderBy($sorts[0], $sorts[1]);
+            }
+            if (is_null($filters) || empty($filters)) {
+                $result = $query->findAll(($nombreProd*$page)+1, $nombreProd*($page-1));
+            } else {
+                $query = $this->casFilter($filters, $sorts);
+                $result = $query->findAll(($nombreProd*$page)+1, $nombreProd*($page-1));
                 if (empty($result)) {
                     return $this->throwError(new Exception("Aucun produit disponible avec les critères sélectionnés", 404));
                 }
@@ -91,7 +93,7 @@ class Produits extends BaseController {
      *
      * @return \App\Models\ProduitCatalogue
      */
-    private function casFilter($filters, $data) : object{
+    private function casFilter($filters, $sorts) : object{
         
         
         if (isset($filters["search"])) {
@@ -127,7 +129,13 @@ class Produits extends BaseController {
             $subQuery->like('LOWER(intitule)', strToLower($search))->orLike('LOWER(description_prod)', strToLower($search))/*->orderby('intitule, description_prod', 'ASC')*/;
             $query->whereIn('id',$subQuery);
         }
-        $query->orderBy("id");
+
+        if ($sorts == null) {
+            $query->orderBy("intitule", "ASC");
+        } else {
+            $query->orderBy($sorts[0], $sorts[1]);
+        }
+
         return $query;
     }
 

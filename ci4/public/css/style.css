@@ -2973,7 +2973,7 @@ main#Catalogue{
 }
 
 .partie-tris form {
-    padding-block: 2.5em;
+    padding-block: 5%;
 }
 
 .onglets + form{
@@ -3036,6 +3036,10 @@ main#Catalogue{
     width: 100%;
     border-top-right-radius: 18px;
     border-bottom-right-radius: 18px;
+}
+
+.liste-tris {
+    background-color : white;
 }
 
 .categorie-catalogue summary ~ div{

@@ -176,27 +176,28 @@ Element * collectLivraison(cJSON * json){
         #endif
         
         if(json->type==cJSON_Number){
-            if(strcmp(json->string,"identifiant")==0 && json->type==cJSON_Number){
-                new->identifiant=json->valueint;
-            }
-            else if(strcmp(json->string, "time")==0){
+            
+            if(strcmp(json->string, "time")==0){
                 new->timestamp=time(NULL);
             }else if(strcmp(json->string,"retard")==0 ){
                 new->joursRetard=json->valueint;
             }
-        }else if(strcmp(json->string, "etat\0")==0 && json->type==cJSON_String){
-            int result=verifEtat(json->valuestring);
-            if (result!=ERR_ETAT){
-                strcpy(new->etat,json->valuestring);
-                
-            }else{
-                #if TEST == true
-                printf("Erreur etat !\n");;
-                #endif
-                return NULL;
-            }
+        }else if(json->type==cJSON_String){
+            if(strcmp(json->string,"identifiant")==0){
+                strcpy(new->identifiant,json->valuestring);
+            }else if(strcmp(json->string, "etat\0")==0){
+                int result=verifEtat(json->valuestring);
+                if (result!=ERR_ETAT){
+                    strcpy(new->etat,json->valuestring);
+                    
+                }else{
+                    #if TEST == true
+                    printf("Erreur etat !\n");;
+                    #endif
+                    return NULL;
+                }
 
-            
+            }
         }else{
             #if TEST == true
             printf("Refus format...\n");
@@ -218,7 +219,7 @@ Element * collectLivraison(cJSON * json){
     else
     {
         #if TEST == true
-        printf("Refus résultat...{%d}\n",new->identifiant);
+        printf("Refus résultat...{%s}\n",new->identifiant);
         #endif
         return NULL;
     }
@@ -406,6 +407,13 @@ int convertEnJour(time_t avant, time_t maintenant, int time_day_sec){
     }
 }
 
+bool checkDestinataire(Element e, void * time_day_sec){
+   
+    int * integer=(int *)time_day_sec;
+    return convertEnJour(e.timestamp,time(NULL), *integer)>TEMPS_MAX_REGIONAL+TEMPS_LOCAL;
+}
+
+
 /**
  * @brief Sérialisation en JSON d'une commande.
  * 
@@ -416,7 +424,7 @@ cJSON * createLivraison(Element e, int *ind,int time_day_sec){
     
     int depuis = convertEnJour(e.timestamp, time(NULL),time_day_sec);
     cJSON * livraison = cJSON_CreateObject();
-    cJSON_AddItemToObject(livraison,"identfiant",cJSON_CreateNumber(e.identifiant));
+    cJSON_AddItemToObject(livraison,"identfiant",cJSON_CreateString(e.identifiant));
     cJSON_AddItemToObject(livraison,"time",cJSON_CreateNumber(depuis));
     cJSON_AddItemToObject(livraison,"etat",cJSON_CreateString(traitementEtat(e.etat,depuis)));
     return livraison;
@@ -435,7 +443,7 @@ cJSON * envoiLivraison(File *file, char * filter, int *ind,int time_day_sec){
     Element * current = defiler(file,ind);
     while(current!=NULL){
         #if TEST == true
-        printf("Identifiant: %d\n", current->identifiant);
+        printf("Identifiant: %s\n", current->identifiant);
 
         printf("Item.\n");
         #endif

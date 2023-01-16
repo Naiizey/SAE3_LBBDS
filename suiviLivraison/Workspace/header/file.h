@@ -7,7 +7,7 @@ typedef char t_etat[20];
 
 typedef struct Elem
 {
-    int identifiant;
+    char * identifiant;
     time_t timestamp;
     t_etat etat;
     int joursRetard;
@@ -33,4 +33,6 @@ void afficherElement(Element *e, bool returnLine);
 void afficherFile(File file);
 void eraseFile(File *file);
 int copier_file(File *file, File *file2, int maxCapacitee);
+int copier_file_tr(File *file, File *file2,File * tri, int maxCapacitee,int time_day_sec, bool (*critereTri)(Element, void *));
+int trie_file(File *file, File * tri,int * capaLivraison, void * arg, bool (*critereTri)(Element, void *));
 Element *trouverElement(File *file, int identifiant);

@@ -10,5 +10,5 @@
 
 int handleAUT(cJSON * js, struct sockaddr addr, char * pathToFile);
 int handleNEW(cJSON * new,File * liste,user * cli,int * capaLivraison,int maxCapaLivraison, struct sockaddr addr,char * pathToFile );
-int handleACT(File * liste, int maxCapacite, int cnx,int time_day_sec);
-int handleREP(cJSON * buf);
+int handleACT(File * liste,File * fileAttente, int maxCapacite, int cnx,int time_day_sec);
+int handleREP(cJSON * rep,File * fileAttente, int *capaLivraison);

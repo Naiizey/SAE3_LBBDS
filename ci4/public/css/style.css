@@ -1834,7 +1834,6 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 
 .sectionRecommandationsPanierPC .addPanier svg{
     position: relative;
-    top: -.7rem;
 }
 
 .sectionRecommandationsPanierPC .notation-card{
@@ -2932,6 +2931,13 @@ div.image-card{
     }
 }
 
+@media screen and (max-width: 960px){
+    .addPanier svg{
+        position: relative;
+        top: -.5em;
+    }
+}
+
 @media screen and (max-width: 1280px) and (min-width: 961px){
     .card-produit{
         width: 8em;
@@ -2945,6 +2951,16 @@ div.image-card{
     .contain-libelle{
         min-height: 2.5em;
         max-height: 2.5em;
+    }
+
+    .addPanier svg{
+        top: 0;
+    }
+}
+
+@media screen and (min-width: 1281px){
+    .addPanier svg{
+        top: -.7em;
     }
 }
 
@@ -4339,15 +4355,15 @@ div.zoom img {
     flex-direction: column;
 }
 
-.bodyVendeur .divHeaderAlizon .formRecherche {
+.divHeaderAlizon .formRecherche {
     display: none;
 }
 
-.bodyVendeur .divHeaderAlizon .divPanierProfil
+.divHeaderAlizon .divPanierProfil
 {
     display: none;
 }
 
-.bodyVendeur .footerVendeur {
+.footerVendeur {
     display: none;
 }

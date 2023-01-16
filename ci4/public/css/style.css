@@ -3473,14 +3473,20 @@ a.fleche-page{
 
     .bulle-ouvrir-filtres:not(.est-filtre-ouvert){
         display: flex;
+        scale: 0.8;
         top: 8em;
-        left: 8%;
+        left: 3vw;
     }
 
     .bulle-ouvrir-tris:not(.est-tris-ouvert){
+        scale: 0.8;
         display: flex;
         top: 8em;
-        right: 8%;
+        right: 3vw;
+    }
+
+    .partie-produits {
+        margin-top: 20vh;
     }
 
     .liste-produits{

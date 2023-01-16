@@ -1180,8 +1180,9 @@ function getParentNodeTilClass(element){
     return parent;
 }
 
-const filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFiltre,voirPlus) {
-    this.form = formFilter;
+const filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFiltre,voirPlus,formTris) {
+    this.formF = formFilter;
+    this.formT = formTris;
     this.erroBloc=document.querySelector("div.bloc-erreur-liste-produit");
     this.champRecherche = champRecherche;
     this.listeProduit=listeProduit
@@ -1192,27 +1193,28 @@ const filterUpdate = function(formFilter,champRecherche,listeProduit,suppression
     const self = this;
         this.send = async (replace=true) => {
         //Récupère les valeurs des filtres et transformation en string de type url à laquelle ajoute la recherche
-        let champsGet = new URLSearchParams(new FormData(self.form));
-        console.log(champsGet.toString());
+        let champsGetF = new URLSearchParams(new FormData(self.formF));
+        let champsGetT = new URLSearchParams(new FormData(self.formT));
+
         if(!self.champRecherche.value==""){
-            champsGet.append("search",self.champRecherche.value);
+            champsGetF.append("search",self.champRecherche.value);
         }
         //FIXME: problème de précison avec min et max. arrondir pour éviter les problèmes ?
-        if(self.form.elements["prix_min"].value===self.form.elements["prix_min"].min && self.form.elements["prix_max"].value===self.form.elements["prix_max"].max){
-            champsGet.delete("prix_min");
-            champsGet.delete("prix_max");
-        }
+        if(self.formF.elements["prix_min"].value===self.formF.elements["prix_min"].min && self.formF.elements["prix_max"].value===self.formF.elements["prix_max"].max) {
+            champsGetF.delete("prix_min");
+            champsGetF.delete("prix_max");
+        }     
         
-        champsGet = champsGet.toString();
-        if(champsGet.length!=0){
-            champsGet ="?"+champsGet;
+        champsGetF = champsGetF.toString();
+        if(champsGetF.length!=0){
+            champsGetF ="?"+champsGetF;
         }
 
        //fetch avec un await pour récuperer la réponse asynchrones (de manière procédurale)
         try{
-            const md = await fetch(base_url + "/produits/page/"+((replace)?1:self.currPage)+champsGet);
+            const md = await fetch(base_url + "/produits/page/"+((replace)?1:self.currPage)+champsGetF+"&"+champsGetT);
             const result= await md.json();
-            
+            console.log(md);
             //vérifie si la réponse n'est pas une erreur
             if (md.ok) {
                 if(replace) {
@@ -1234,7 +1236,7 @@ const filterUpdate = function(formFilter,champRecherche,listeProduit,suppression
                 self.listeProduit.innerHTML="";
                 self.erroBloc.children[0].innerHTML=result["message"];
             }
-            window.history.pushState({page:1},"Filtres",champsGet);
+            window.history.pushState({page:1},"Filtres",champsGetF);
     
         } catch(e) {
             //Les erreurs 404 ne passent pas ici, ce sont les erreurs lié à la fonction et au réseau qui sont catch ici
@@ -1243,17 +1245,21 @@ const filterUpdate = function(formFilter,champRecherche,listeProduit,suppression
     }
 
     
-    Array.from(this.form.elements).forEach((el) => {
+    Array.from(this.formF.elements).forEach((el) => {
+        el.addEventListener("change", () => this.send());
+    });
+
+    Array.from(this.formT.elements).forEach((el) => {
         el.addEventListener("change", () => this.send());
     });
 
     this.suppressionFiltre.addEventListener('click', (event) => {
         event.preventDefault();
-        this.form.reset();
-        this.form.elements["prix_min"].value=this.form.elements["prix_min"].min;
-        this.form.elements["prix_max"].value=this.form.elements["prix_max"].max;
-        document.querySelector(".range-min").value=this.form.elements["prix_min"].min;
-        document.querySelector(".range-max").value=this.form.elements["prix_max"].max;
+        this.formF.reset();
+        this.formF.elements["prix_min"].value=this.formF.elements["prix_min"].min;
+        this.formF.elements["prix_max"].value=this.formF.elements["prix_max"].max;
+        document.querySelector(".range-min").value=this.formF.elements["prix_min"].min;
+        document.querySelector(".range-max").value=this.formF.elements["prix_max"].max;
         this.send();
         
     });
@@ -1266,9 +1272,9 @@ const filterUpdate = function(formFilter,champRecherche,listeProduit,suppression
 
 function changeOnglet() {
     var onglets = document.getElementsByClassName("onglet");
-    console.log(onglets);
+    //console.log(onglets);
     for (let id = 0; id < onglets.length; id++) {
-        console.log(onglets[id]);
+        //console.log(onglets[id]);
         onglets[id].addEventListener('click', (event) => {
             if (!(onglets[id].classList.contains("onglet-selectionnee"))) {
                 onglets[id].classList.add("onglet-selectionnee");

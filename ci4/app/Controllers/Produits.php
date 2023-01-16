@@ -26,13 +26,17 @@ class Produits extends BaseController {
      * Pour return:
      * @see giveResult();
      */
-    public function getAllProduitSelonPage($page=1, $nombreProd=self::NBPRODSPAGEDEFAULT, $filters=null, $sorts=null)
+    public function getAllProduitSelonPage($page=1, $nombreProd=self::NBPRODSPAGEDEFAULT, $filters=null)
     {
-        if($filters==null && isset($this->request) && !empty($this->request->getVar()))
-        {
+        if ($filters==null && isset($this->request) && !empty($this->request->getVar())) {
             $filters=$this->request->getVar();
         }
-
+        if (isset($filters["trisB"]) && isset($filters["Ordre"])) {
+            $sorts[0] = $filters["trisB"];
+            $sorts[1] = $filters["Ordre"];
+        } else {
+            $sorts = null;
+        }
         $data=array();
 
         try {
@@ -42,17 +46,13 @@ class Produits extends BaseController {
                 if ($sorts == null) {
                     $result = $query->orderBy("id", "ASC");
                 } else {
-                    foreach ($sorts as $sort) {
-                        $result = $query->orderBy($sort[0], $sort[1]);
-                    }
+                    $result = $query->orderBy($sorts[0], $sorts[1]);
                 }
                 $result = $result->findAll(($nombreProd*$page)+1, $nombreProd*($page-1));
             } else {
                 $result=$this->casFilter($filters, $data);
                 if ($sorts != null) {
-                    foreach ($sorts as $sort) {
-                        $result = $query->orderBy($sort[0], $sort[1]);
-                    }
+                    $result = $query->orderBy($sorts[0], $sorts[1]);
                 }
                 $result = $result->findAll(($nombreProd*$page)+1, $nombreProd*($page-1));
                 if (empty($result)) {

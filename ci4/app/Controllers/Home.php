@@ -300,7 +300,7 @@ class Home extends BaseController
 
         //Récupération des filtres présents dans le get
         $filters=$this->request->getGet();
-
+        //dd($filters);
         //Ajout des filtres dans le tableau data pour les utiliser dans la vue
         $data["filters"]=$filters;
 
@@ -757,17 +757,16 @@ class Home extends BaseController
         $data["role"]="admin";
         $data["clients"]=model("\App\Models\Client")->findAll();
 
-        if($which=="bannir"){
+        if ($which=="bannir") {
             $data["bannir"]=true;
 
             $post=$this->request->getPost();
 
-            if(!empty($post)){
+            if (!empty($post)){
                 $sanctions = model("\App\Models\SanctionTemp");
-                if ($sanctions->isTimeout($post["numClient"]))
-                {
+                if ($sanctions->isTimeout($post["numClient"])) {
                     $GLOBALS['invalidation'] = $this->feedback->afficheInvalidation("Cet utilisateur est déjà banni !");
-                }else{
+                } else {
                     $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
                     $GLOBALS['validation'] = $this->feedback->afficheValidation("L'utilisateur a été banni !");
                 }

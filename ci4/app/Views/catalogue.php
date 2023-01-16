@@ -78,12 +78,17 @@
                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                     </svg>
                 </button>
-                </div>
-                <ul>
-                    <li><a href="">Nom</a></li>
-                    <li><a href="">Prix</a></li>
-                    <li><a href="">Note</a></li>
-                </ul>
+            </div>
+            <form name="tris" method="get">
+                <input type="radio" name="trisB" id="nom" value="intitule" checked><label for="nom"> Nom </label>
+                <input type="radio" name="trisB" id="prix" value="prixttc"><label for="prix"> Prix </label>
+                <input type="radio" name="trisB" id="avis" value="moyennenote"><label for="avis"> Avis </label>
+                <hr>
+                <select name="Ordre" id="ordre">
+                    <option value="ASC"> ↓ Croissant </option>
+                    <option value="DESC"> ↑ Décroissant </option>
+                </select>
+            </form>
             </div>
     </section>
     <section class="partie-produits">
@@ -132,11 +137,12 @@
         () => switchEtatFiltre(document.querySelectorAll(".bulle-ouvrir-filtres, .partie-filtre"))
         );
     selectAll();
-        var upFilter = new filterUpdate(document.forms["filters"],
+    var upFilter = new filterUpdate(document.forms["filters"],
         document.querySelector(".champsRecherche"),
         document.querySelector(".liste-produits"),
         document.querySelector(".supprimer-filtre"),
-        document.querySelector(".voir-plus")
+        document.querySelector(".voir-plus"),
+        document.forms["tris"]
     );
     loadFiltersTris();
     changeOnglet();

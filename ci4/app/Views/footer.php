@@ -185,7 +185,7 @@
                         <?php endif; ?>
                     </li>
                     <li>
-                        <a href=<?= base_url() . "catalogue"?>> <!-- catalogue -->
+                        <a href=<?= base_url() . "/catalogue"?>> <!-- catalogue -->
                             <?php include("./images/header/catalogue.svg")?>
                         </a>
                     </li>

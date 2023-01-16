@@ -3473,10 +3473,14 @@ a.fleche-page{
 
     .bulle-ouvrir-filtres:not(.est-filtre-ouvert){
         display: flex;
+        top: 8em;
+        left: 8%;
     }
 
     .bulle-ouvrir-tris:not(.est-tris-ouvert){
         display: flex;
+        top: 8em;
+        right: 8%;
     }
 
     .liste-produits{

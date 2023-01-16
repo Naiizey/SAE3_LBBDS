@@ -1913,9 +1913,12 @@ function avisProduit()
 
 function drapeauSignal(numAvis) 
 {
-    //Binding de tous les drapeaux à leurs div de signalement respectives (avec le bon avis)
-    document.getElementsByClassName("drapeau" + numAvis)[0].addEventListener("click", function()
-    {
-        document.getElementById("divSignalement" + numAvis).style.display = "flex";
-    });
+    // si non connecté, aucun drapeauSignal sur la page
+    if ((document.querySelectorAll(".drapeauSignal")).length != null ) {
+        //Binding de tous les drapeaux à leurs div de signalement respectives (avec le bon avis)
+        document.getElementsByClassName("drapeau" + numAvis)[0].addEventListener("click", function()
+        {
+            document.getElementById("divSignalement" + numAvis).style.display = "flex";
+        });
+    }
 }

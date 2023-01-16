@@ -34,6 +34,9 @@ class Home extends BaseController
         } else if (session()->has("just_deconnectee") && session()->get("just_deconnectee")==true) {
             session()->set("just_deconnectee", false);
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Vous êtes déconnecté !");
+        } else if (session()->has("just_signal") && session()->get("just_signal")==true) {
+            session()->set("just_signal", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Avis signalé !");
         }
         
         $this->verifTimeout();
@@ -220,6 +223,8 @@ class Home extends BaseController
                 $signal->num_avis = $post['num_avis'];
                 $signal->num_compte = session()->get("numero");
                 model("\App\Models\LstSignalements")->save($signal);
+
+                session()->set("just_signal", true);
             }
             //Sinon elle est due à un avis
             else

@@ -15,6 +15,8 @@
 #include "json.h"
 
 
+
+
 #define MAX_OPTIONS 10
 #define OPTIONS "hc:j:f:"
 #define OPTION_DEFAUT_1 NULL                        //Option aide (help) -h 
@@ -43,7 +45,7 @@ typedef struct Option lst_option[MAX_OPTIONS];
 int trouveIdOption(char name, lst_option options);
 int collectOptions(int argc, char *argv[], lst_option options);
 void config(int *  capaLivraison,int *dureeJour,char * fichier,lst_option options);
-int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, int * capaciteLivraison, int maxCapaLivraison, char * pathToFile);
+int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, int * capaciteLivraison, int maxCapaLivraison, char * pathToFile,int time_day_sec);
 cJSON * getJson(char * buf,int cnx);
 
 int main(int argc, char *argv[])
@@ -52,7 +54,7 @@ int main(int argc, char *argv[])
     collectOptions(argc,argv,options);
     int maxCapaciteLivraison;
     int capaciteLivraison;
-   
+    int time_day_sec;
     char path[255];
     config(&maxCapaciteLivraison, &time_day_sec, path, options);
     File listeCommande;
@@ -121,7 +123,7 @@ int main(int argc, char *argv[])
     ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
     */
 
-    gestConnect(cnx, conn_addr,&listeCommande, &capaciteLivraison, maxCapaciteLivraison, path);
+    gestConnect(cnx, conn_addr,&listeCommande, &capaciteLivraison, maxCapaciteLivraison, path, time_day_sec);
 
     return EXIT_SUCCESS;
 }
@@ -372,14 +374,15 @@ int testConnect(lst_option options, int cnx){
     
 }
 
-int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, int * capaciteLivraison, int maxCapaLivraison, char * pathToFile){
+int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, int * capaciteLivraison, int maxCapaLivraison, char * pathToFile,int time_day_sec){
     char buf[512];
     char res[20];
     int size, onContinue=1;
     int retour=0;
     while(onContinue){
-        
+        printf("buf:\n%s\n",buf);
         memset(buf,0,512);
+        printf(buf);
         size=read(cnx, buf, 512);
         if(strncmp(buf, "AUT ", 4)==0){
             printf("Authentification...\n");
@@ -390,13 +393,14 @@ int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, int * 
             retour=handleNEW(getJson(buf+4,cnx), listeCommande, client, capaciteLivraison, maxCapaLivraison, adrClient, pathToFile);
         }else if(strncmp(buf, "ACT ", 4)==0){
             printf("Actualisation commmande...\n");
-             retour=handleACT(listeCommande,maxCapaLivraison,cnx);
+             retour=handleACT(listeCommande,maxCapaLivraison,cnx,time_day_sec);
         }else if(strncmp(buf, "REP ", 4)==0){
             printf("Réponse...\n");
             printf(cJSON_Print(getJson(buf+4,cnx)));
             printf("\n");
              //retour=handleREP(buf+4);
         }else{
+            retour=-11;
             printf("Commande non reconnue\n");
         }
         
@@ -420,10 +424,11 @@ int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, int * 
 cJSON * getJson(char * buf, int cnx){
    
     char buffer[1024];
-    
+    cJSON * retour=NULL;
     long unsigned int maxLongStr=1024;
     long unsigned int actualLongStr=0;
     char * str_json=malloc(maxLongStr * sizeof(char));
+    strcpy(str_json,"");
     buf=strstr(buf,"LBBDP/1.0\r\n");
     
     if(buf!=NULL){
@@ -435,7 +440,7 @@ cJSON * getJson(char * buf, int cnx){
         printf("Json ?\n");
         while(strchr(buffer,'*')==NULL){
             char * n=strchr(buffer,'\n');
-            
+         
             //nettoyage du \r
             if(n!=NULL && *(n-1)=='\r'){
                 (*(n-1))='\n';
@@ -461,14 +466,20 @@ cJSON * getJson(char * buf, int cnx){
         
         strcat(str_json, buffer);
         printf("fin\n");
-        cJSON * retour=  cJSON_Parse(str_json);
+        cJSON_Parse(str_json);
         printf("JSON:\n%s\n",cJSON_Print(retour));
-        return retour;
+        retour=cJSON_Parse(str_json);
     }
     else{
         printf("Erreur format...LBBDP/1.0\n");
-        return NULL;
+       
+    
     }
+
+    memset(str_json,0,maxLongStr);
+    printf("Enfoiré: %s\n",str_json);
+    return retour;
+
 
 }
 
@@ -519,7 +530,7 @@ int handleAUT(cJSON * js, struct sockaddr addr, char * pathToFile){
 
 }
 
-int handleACT(File * liste, int maxCapacite, int cnx){
+int handleACT(File * liste, int maxCapacite, int cnx,int time_day_sec){
     afficherFile(*liste);
     int retour;
     File * pileEnvoi=(File *)malloc(sizeof(File));
@@ -528,7 +539,7 @@ int handleACT(File * liste, int maxCapacite, int cnx){
     indice=copier_file(liste,pileEnvoi,maxCapacite);
     printf("Copie: %d\n",indice);
     afficherFile(*pileEnvoi);
-    pourEnvoyer=cJSON_Print(envoiLivraison(pileEnvoi,NULL,&indice));
+    pourEnvoyer=cJSON_Print(envoiLivraison(pileEnvoi,NULL,&indice,time_day_sec));
     retour=(pourEnvoyer!=NULL);
     if(retour){
         printf("RESULT:\n%s\n",pourEnvoyer);

@@ -396,7 +396,7 @@ int parcoursPourLivraison(cJSON *json, File *liste, int *ind, int max){
  * @param maintenant 
  * @return int 
  */
-int convertEnJour(time_t avant, time_t maintenant){
+int convertEnJour(time_t avant, time_t maintenant, int time_day_sec){
     time_t diff = difftime(maintenant, avant);
     struct tm * diffInfos = localtime(&diff);
     if(diffInfos!=NULL){
@@ -412,9 +412,9 @@ int convertEnJour(time_t avant, time_t maintenant){
  * @param e 
  * @return cJSON* 
  */
-cJSON * createLivraison(Element e, int *ind){
+cJSON * createLivraison(Element e, int *ind,int time_day_sec){
     
-    int depuis = convertEnJour(e.timestamp, time(NULL));
+    int depuis = convertEnJour(e.timestamp, time(NULL),time_day_sec);
     cJSON * livraison = cJSON_CreateObject();
     cJSON_AddItemToObject(livraison,"identfiant",cJSON_CreateNumber(e.identifiant));
     cJSON_AddItemToObject(livraison,"time",cJSON_CreateNumber(depuis));
@@ -429,7 +429,7 @@ cJSON * createLivraison(Element e, int *ind){
  * @param filter 
  * @return cJSON* 
  */
-cJSON * envoiLivraison(File *file, char * filter, int *ind){
+cJSON * envoiLivraison(File *file, char * filter, int *ind,int time_day_sec){
     cJSON * retour = cJSON_CreateObject();
     cJSON * array = cJSON_CreateArray();
     Element * current = defiler(file,ind);
@@ -439,7 +439,7 @@ cJSON * envoiLivraison(File *file, char * filter, int *ind){
 
         printf("Item.\n");
         #endif
-        cJSON_AddItemToArray(array,createLivraison(*current,ind));
+        cJSON_AddItemToArray(array,createLivraison(*current,ind,time_day_sec));
         current=defiler(file,ind);
     }
     cJSON_AddItemToObject(retour,"livraisons",array);

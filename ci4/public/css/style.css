@@ -4335,15 +4335,15 @@ div.zoom img {
     flex-direction: column;
 }
 
-.divHeaderAlizon .formRecherche {
+.bodyVendeur .divHeaderAlizon .formRecherche {
     display: none;
 }
 
-.divHeaderAlizon .divPanierProfil
+.bodyVendeur .divHeaderAlizon .divPanierProfil
 {
     display: none;
 }
 
-.footerVendeur {
+.bodyVendeur .footerVendeur {
     display: none;
 }

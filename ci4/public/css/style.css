@@ -4279,6 +4279,20 @@ progress::-moz-progress-bar
     color: white;
 }
 
+.bodyAdmin .formRecherche {
+    display: none;
+}
+
+.bodyAdmin .divPanierProfil
+{
+    display: none;
+}
+
+.bodyAdmin .footerAdmin
+{
+    display: none;
+}
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                  Zoom produit                                   ┃
@@ -4315,4 +4329,17 @@ div.zoom img {
 #preview {
     display: flex;
     flex-direction: column;
+}
+
+.divHeaderAlizon .formRecherche {
+    display: none;
+}
+
+.divHeaderAlizon .divPanierProfil
+{
+    display: none;
+}
+
+.footerVendeur {
+    display: none;
 }

@@ -1,0 +1,26 @@
+intitule_prod;prix_ht;prix_ttc;description_prod;publication_prod;stock_prod;moyenne_note_prod;seuil_alerte_prod;alerte_prod
+APC lamer;1000;1200;Arev ejvekm;True;20;4.5;3;False
+Asomier;150;180;Asomier;True;15;5;2;False
+Afeeef;300;360;Amatelas;True;10;4;4;False
+Aee;200;240;Atable;True;5;3.5;7;False
+Achaise;100;120;Achaise;True;8;4.5;8;False
+Acanapé;750;900;Acanapé;True;2;3;9;False
+Afauteuil;500;600;Afauteuil;True;3;4.5;1;False
+Aarmoire;800;960;Aarmoire;True;4;5;4;False
+Acommode;250;300;Acommode;True;6;4.5;5;False
+Alit;450;540;Alit;True;1;5;9;False
+Achevet;350;420;Achevet;True;2;4;2;False
+Atéléviseur;700;840;ATV;True;3;3;3;False
+Ahome cinéma;950;1140;Ahome cinéma;True;1;5;8;False
+Achaine hifi;450;540;Achaine hifi;True;2;4;3;False
+Aordinateur portable;2000;2400;Aordinateur portable;True;3;4.5;4;False
+Aimprimante;350;420;Aimprimante;True;4;3;5;False
+Ascanner;250;300;Ascanner;True;5;2.5;6;False
+Aphotocopieur;950;1140;Aphotocopieur;True;1;3;7;False
+Ameuble de salon;2000;2400;Ameuble de salon;True;1;6;8;False
+Acanapé d'angle;3000;3600;Acanapé d'angle;True;2;5;9;False
+Afauteuil relax;2500;3000;Afauteuil relax;True;3;3.5;1;False
+Atable basse;1500;1800;Atable basse;True;4;4.5;4;False
+Aensemble TV;4000;4800;Aensemble TV;True;1;5;8;False
+Ameuble de chambre;1000;1200;Ameuble de chambre;True;1;4;8;False
+Amf de chambre;1001;1201;Ae chambre;True;2;5;9;False

@@ -1884,10 +1884,14 @@ h3 > .lienPasArticlePanier {
         min-height: auto;
     }
 
+    .mainPanier{
+        padding-bottom: 7.5rem;
+    }
+
     .mainPanier > div{
         display: flex;
         flex-direction: column;
-        align-items: flex-end;
+        align-items: center;
         margin-bottom: 0.5em;
     }
 
@@ -1924,6 +1928,7 @@ h3 > .lienPasArticlePanier {
 
     .sectionPanier{
         width: 90%;
+        padding: 5%;
     }
 
     .sectionPanier h2 {
@@ -1949,7 +1954,7 @@ h3 > .lienPasArticlePanier {
 
     .mainPanier aside{
         position: static;
-        width: 95%;
+        width: 100%;
     }
 
     .articlePanier{
@@ -2217,8 +2222,8 @@ h3 > .lienPasArticlePanier {
 
 .divSignalement {
     background-color: white;
-    position: absolute;
-    top: 70%;
+    position: fixed;
+    top: 30%;
     left: 30%;
     right: 30%;
     z-index: 99;
@@ -2498,8 +2503,9 @@ h3 > .lienPasArticlePanier {
 }
 
 .divUnAvis p {
-    text-align: justify;
+    text-align: left;
     margin-bottom: 0;
+    width: 90%
 }
 
 .divUnAvis hr {
@@ -2661,6 +2667,11 @@ h3 > .lienPasArticlePanier {
     .moyennesAvis .pAvis{
         min-width: 3em;
     }
+
+    .divSignalement{
+        width: 80%;
+        left: 5%;
+    }
 }
 
 @media screen and (max-width: 960px) and (min-width: 481px){
@@ -2681,6 +2692,14 @@ h3 > .lienPasArticlePanier {
     .divNomDate h3{
         max-width: 11rem;
         word-wrap: break-word; 
+    }
+
+    .divSignalement{
+        width: 85%;
+    }
+
+    .sectionProduit{
+        width: 95%;
     }
 }
 
@@ -2746,6 +2765,10 @@ h3 > .lienPasArticlePanier {
         padding-top: 1em;
         justify-content: center;
     }
+
+    .divConnectPetit{
+        width: 80%;
+    }
 }
 
 @media screen and (max-width: 1440px) and (min-width: 961px){
@@ -2765,6 +2788,11 @@ h3 > .lienPasArticlePanier {
     .divGauche .zoom{
         width: 40vh;
         height: 40vh;
+    }
+
+    .divNomDate h3{
+        max-width: 12rem;
+        word-wrap: break-word; 
     }
 }
 
@@ -3513,6 +3541,10 @@ a.fleche-page{
     .partie-filtre{
         min-width: 27.5%;
     }
+
+    .partie-tris {
+        height: 50vh;
+    }
     
     .titre-filtre h1{
         left: 12rem;
@@ -3639,7 +3671,6 @@ a.fleche-page{
 
 .tableLst th, .tableLst td{
     width: 5em;
-    cursor: pointer;
 }
 
 .buttonSanction {

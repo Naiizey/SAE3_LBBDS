@@ -69,7 +69,22 @@
             </form>
         </div>
     </section>
-    <section class="partie-filtre">
+    <section class="partie-tris">
+        <div class="liste-tris">
+            <div class="titre-tris">
+                <h1>Tris</h1>
+                <button class="fermer-tris">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                </button>
+                </div>
+                <ul>
+                    <li><a href="">Nom</a></li>
+                    <li><a href="">Prix</a></li>
+                    <li><a href="">Note</a></li>
+                </ul>
+            </div>
     </section>
     <section class="partie-produits">
         <div class="liste-produits">
@@ -99,6 +114,19 @@
             window.scrollTo(0,0);
             }
         );
+    boutonCliquableTris(
+        document.querySelector(".bulle-ouvrir-tris"),
+        () => {
+            switchEtatTris(document.querySelectorAll(".bulle-ouvrir-tris, .partie-tris"));
+            window.scrollTo(0,0);
+            }
+        );
+
+    boutonCliquableTris(
+        document.querySelector(".fermer-tris"),
+        () => switchEtatTris(document.querySelectorAll(".bulle-ouvrir-tris, .partie-tris"))
+        );
+
     boutonCliquable(
         document.querySelector(".fermer-filtre"),
         () => switchEtatFiltre(document.querySelectorAll(".bulle-ouvrir-filtres, .partie-filtre"))
@@ -110,5 +138,6 @@
         document.querySelector(".supprimer-filtre"),
         document.querySelector(".voir-plus")
     );
-    loadFilters();
+    loadFiltersTris();
+    changeOnglet();
 </script>

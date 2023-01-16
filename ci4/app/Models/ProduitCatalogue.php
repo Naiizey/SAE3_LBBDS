@@ -5,10 +5,10 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 
-/** 
+/**
  * Model de classe produit
  * En Read-Only
- * 
+ *
  * @see TutoCI/CI5_BDD
  * @return \App\Entities\Client
  */

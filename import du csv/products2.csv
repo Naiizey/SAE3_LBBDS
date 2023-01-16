@@ -1,0 +1,25 @@
+intitule_prod;prix_ht;prix_ttc;description_prod;publication_prod;stock_prod;moyenne_note_prod;seuil_alerte_prod;alerte_prod;code_sous_cat
+PC gamer;1000;1200;PC gamer;True;20;4.5;3;False;123
+Somier;150;180;Somier;True;15;5;2;False;124
+Matelas;300;360;Matelas;True;10;4;4;False;125
+Table;200;240;Table;True;5;3.5;7;False;126
+Chaise;100;120;Chaise;True;8;4.5;8;False;127
+Canapé;750;900;Canapé;True;2;3;9;False;128
+Fauteuil;500;600;Fauteuil;True;3;4.5;1;False;129
+Armoire;800;960;Armoire;True;4;5;4;False;130
+Commode;250;300;Commode;True;6;4.5;5;False;131
+Lit;450;540;Lit;True;1;5;9;False;132
+Chevet;350;420;Chevet;True;2;4;2;False;133
+Téléviseur;700;840;TV;True;3;3;3;False;134
+Home cinéma;950;1140;Home cinéma;True;1;5;8;False;135
+Chaine hifi;450;540;Chaine hifi;True;2;4;3;False;136
+Ordinateur portable;2000;2400;Ordinateur portable;True;3;4.5;4;False;137
+Imprimante;350;420;Imprimante;True;4;3;5;False;138
+Scanner;250;300;Scanner;True;5;2.5;6;False;139
+Photocopieur;950;1140;Photocopieur;True;1;3;7;False;140
+Meuble de salon;2000;2400;Meuble de salon;True;1;6;8;False;141
+Canapé d'angle;3000;3600;Canapé d'angle;True;2;5;9;False;192
+Fauteuil relax;2500;3000;Fauteuil relax;True;3;3.5;1;False;143
+Table basse;1500;1800;Table basse;True;4;4.5;4;False;144
+Ensemble TV;4000;4800;Ensemble TV;True;1;5;8;False;145
+Meuble de chambre;1000;1200;Meuble de chambre;True;1;4;8;False;123

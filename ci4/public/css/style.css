@@ -4361,14 +4361,14 @@ div.zoom img {
     flex-direction: column;
 }
 
-.divHeaderAlizon .formRecherche {
+/* .divHeaderAlizon .formRecherche {
     display: none;
 }
 
 .divHeaderAlizon .divPanierProfil
 {
     display: none;
-}
+} */
 
 .footerVendeur {
     display: none;

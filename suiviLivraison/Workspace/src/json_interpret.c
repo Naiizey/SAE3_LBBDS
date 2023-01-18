@@ -162,7 +162,7 @@ const char * traitementEtat(char * etat, int jour){
  */
 Element * collectLivraison(cJSON * json){
     Element * new =(Element *)malloc(sizeof(Element));
-    new->identifiant=-1;
+    strcpy(new->identifiant,"\0");
     new->timestamp=0;
     new->joursRetard=0;
     strcpy(new->etat,"En charge");
@@ -172,7 +172,7 @@ Element * collectLivraison(cJSON * json){
     
     while(json!=NULL && (json->type==cJSON_Number || json->type==cJSON_String)){
         #if TEST == true
-        printf("Collecte !\n");;
+        printf("Collecte champs ! ");;
         #endif
         
         if(json->type==cJSON_Number){
@@ -185,6 +185,7 @@ Element * collectLivraison(cJSON * json){
         }else if(json->type==cJSON_String){
             if(strcmp(json->string,"identifiant")==0){
                 strcpy(new->identifiant,json->valuestring);
+                printf("Id!");
             }else if(strcmp(json->string, "etat\0")==0){
                 int result=verifEtat(json->valuestring);
                 if (result!=ERR_ETAT){
@@ -212,14 +213,14 @@ Element * collectLivraison(cJSON * json){
 
 
     #if TEST == true
-    printf("Fin collecte !\n");
+    printf("\nFin collecte !\n");
     #endif
-    if(strcmp(new->etat,"\0")!=0 && new->identifiant>=0)
+    if(strcmp(new->etat,"\0")!=0 && strcmp(new->identifiant,"\0")!=0)
         return new;
     else
     {
         #if TEST == true
-        printf("Refus résultat...{%s}\n",new->identifiant);
+        printf("\nRefus résultat...{%s}\n",new->identifiant);
         #endif
         return NULL;
     }
@@ -252,10 +253,6 @@ int parcours(cJSON *json, File *liste, user * client, int *ind, int max,int cher
     #if TEST == true
     printf("Test type...\n");
     #endif
-     
-    #if TEST == true
-    printf("Test type 2...\n");
-    #endif
 
     Element * result;
     
@@ -269,7 +266,7 @@ int parcours(cJSON *json, File *liste, user * client, int *ind, int max,int cher
 
             if(chercheLivr){
                 #if TEST == true
-                printf("livraison...\n");
+                printf("Livraison...\n");
                 #endif
                 result=collectLivraison(json->child);   
                 if(result==NULL){
@@ -318,10 +315,14 @@ int parcours(cJSON *json, File *liste, user * client, int *ind, int max,int cher
             if(strcmp(json->string,"livraisons")==0){
                     cJSON * children;
                     children=json->child;
+                    #if TEST == true
+                        printf("LivraisonS...\n");
+                    #endif
                     while(children!=NULL){
+                        
                         result=collectLivraison(children->child);
                         #if TEST == true
-                            printf("Fin :\n");
+                            printf("Fin.\n");
                         #endif
                         if(result==NULL){
                             return -1;
@@ -397,14 +398,10 @@ int parcoursPourLivraison(cJSON *json, File *liste, int *ind, int max){
  * @param maintenant 
  * @return int 
  */
-int convertEnJour(time_t avant, time_t maintenant, int time_day_sec){
+long int convertEnJour(time_t avant, time_t maintenant, int time_day_sec){
     time_t diff = difftime(maintenant, avant);
-    struct tm * diffInfos = localtime(&diff);
-    if(diffInfos!=NULL){
-        return diffInfos->tm_sec/time_day_sec;
-    }else{
-        return -1;
-    }
+    return diff/time_day_sec;
+ 
 }
 
 bool checkDestinataire(Element e, void * time_day_sec){

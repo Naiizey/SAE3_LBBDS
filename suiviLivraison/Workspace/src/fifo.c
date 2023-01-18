@@ -12,7 +12,7 @@ void initFile(File* f,int * indice){
     (*f) = NULL;
 }
 //getters
-int getIdentifiant(Element *e) {
+char * getIdentifiant(Element *e) {
     return e->identifiant;
 }
 
@@ -29,8 +29,9 @@ int getJoursRetard(Element *e) {
 }
 
 //setters
-void setIdentifiant(Element *e, int identifiant) {
-    e->identifiant = identifiant;
+
+void setIdentifiant(Element *e, char * identifiant) {
+    strcpy(e->identifiant, identifiant);
 }
 
 void setTimestamp(Element *e, time_t timestamp) {
@@ -41,7 +42,7 @@ void setEtat(Element *e, char *etat) {
     strcpy(e->etat , etat);
 }
 
-Element create_element(int identifiant, time_t timestamp, char *etat, int joursRetard) {
+Element create_element(char * identifiant, time_t timestamp, char *etat, int joursRetard) {
     Element *e = malloc(sizeof(*e));
     setIdentifiant(e, identifiant);
     setTimestamp(e, timestamp);
@@ -49,6 +50,14 @@ Element create_element(int identifiant, time_t timestamp, char *etat, int joursR
     e->joursRetard = joursRetard;
     e->suivant = NULL;
     return *e;
+}
+
+void copie_element( Element * copie, Element sujet){
+    strcpy(copie->identifiant , sujet.identifiant);
+    copie->timestamp = sujet.timestamp;
+    strcpy(copie->etat , sujet.etat);
+    copie->joursRetard = sujet.joursRetard;
+    copie->suivant = NULL;
 }
 
 int enfiler(File *file, Element *nvElement, int *indice, int maxCapacitee)
@@ -62,7 +71,7 @@ int enfiler(File *file, Element *nvElement, int *indice, int maxCapacitee)
     }
 
 
-    nouveau->identifiant = nvElement->identifiant;
+    strcpy(nouveau->identifiant,nvElement->identifiant);
     nouveau->timestamp = nvElement->timestamp;
     strcpy(nouveau->etat , nvElement->etat);
     nouveau->joursRetard = nvElement->joursRetard;
@@ -85,6 +94,48 @@ int enfiler(File *file, Element *nvElement, int *indice, int maxCapacitee)
     }
     if (indice != NULL)
         (*indice)=(*indice)+1;
+
+    return 0;
+}
+ /**
+  * @brief Enfile sans contrainte de capacité
+  * @ref enfiler
+  * 
+  * @param file 
+  * @param nvElement 
+  * @return int 
+  */
+int enfilerSimple(File *file, Element *nvElement)
+{
+    Element *nouveau = malloc(sizeof(*nouveau));
+    if (file == NULL || nouveau == NULL)
+    {
+        return -1;
+    }
+
+
+    strcpy(nouveau->identifiant , nvElement->identifiant);
+    nouveau->timestamp = nvElement->timestamp;
+    strcpy(nouveau->etat , nvElement->etat);
+    nouveau->joursRetard = nvElement->joursRetard;
+    nouveau->suivant = NULL;
+    
+
+    if ((*file) != NULL) /* La file n'est pas vide */
+    {
+        /* On se positionne à la fin de la file */
+        Element *elementActuel = *file;
+        while (elementActuel->suivant != NULL)
+        {
+            elementActuel = elementActuel->suivant;
+        }
+        elementActuel->suivant = nouveau;
+    }
+    else /* La file est vide, notre élément est le premier */
+    {
+        *file = nouveau;
+    }
+   
 
     return 0;
 }
@@ -143,8 +194,8 @@ Element * defiler(File *file, int *indice)
     else if((*file)->suivant==NULL)
     {
         temp = (*file);
+        copie_element(temp,**file);
         (*file)=NULL;
-        //free(file);
         if(indice != NULL)
             (*indice)=(*indice)-1;
     }
@@ -152,14 +203,15 @@ Element * defiler(File *file, int *indice)
     {
 
         Element * elementDefile=(*file);
-        *temp = *elementDefile;
+        copie_element(temp,*elementDefile);
         (*file) = elementDefile->suivant;
-        free(elementDefile);
+        //free(elementDefile);
         if(indice != NULL)
             (*indice)=(*indice)-1;
 
         
     }
+    afficherElement(temp,true);
   
     return temp;
 
@@ -173,7 +225,7 @@ void afficherElement(Element *e, bool returnLine)
     }
     else
     {
-        printf("%d ,%s ,%d ,%ld -> \n", e->identifiant, e->etat, e->joursRetard, e->timestamp);
+        printf("%s ,%s ,%d ,%ld -> \n", e->identifiant, e->etat, e->joursRetard, e->timestamp);
         if (returnLine)
         {
             printf(" \n");
@@ -199,7 +251,7 @@ void afficherFile(File file)
     }
 }
 
-Element *trouverElement(File *file, int identifiant)
+Element *trouverElement(File *file, char * identifiant)
 {
     if (file == NULL)
     {
@@ -211,7 +263,7 @@ Element *trouverElement(File *file, int identifiant)
 
     while (actuel != NULL)
     {
-        if (actuel->identifiant == identifiant)
+        if (strcmp(actuel->identifiant , identifiant)==0)
         {
             return actuel;
         }
@@ -229,8 +281,8 @@ Element *trouverElement(File *file, int identifiant)
 int copier_file(File *file, File *file2, int maxCapacitee)
 {
     int ind;
-    initFile(file2,&ind);
-    if (file == NULL)
+   
+    if (file == NULL || file2 == NULL)
     {
         exit(EXIT_FAILURE);
     }
@@ -249,47 +301,39 @@ int copier_file(File *file, File *file2, int maxCapacitee)
 }
 
 
-int enfilerSimple(File *file, Element *nvElement)
+/**
+* @brief copier_file copie une file dans une autre
+* @param file la file à copier
+* @param file2 la file dans laquelle on copie
+* @return la file2
+*/
+void copier_file_simple(File *file, File *file2)
 {
-    Element *nouveau = malloc(sizeof(*nouveau));
-    if (file == NULL || nouveau == NULL)
+   
+    if (file == NULL || file2 == NULL)
     {
-        return -1;
+        exit(EXIT_FAILURE);
     }
 
+    Element *actuel;
+    actuel = (*file);
 
-    nouveau->identifiant = nvElement->identifiant;
-    nouveau->timestamp = nvElement->timestamp;
-    strcpy(nouveau->etat , nvElement->etat);
-    nouveau->joursRetard = nvElement->joursRetard;
-    nouveau->suivant = NULL;
+    while (actuel != NULL)
+    {
+        printf("enfilage élement\n");
+        enfilerSimple(file2, actuel);
+        actuel = actuel->suivant;
     
-
-    if ((*file) != NULL) /* La file n'est pas vide */
-    {
-        /* On se positionne à la fin de la file */
-        Element *elementActuel = *file;
-        while (elementActuel->suivant != NULL)
-        {
-            elementActuel = elementActuel->suivant;
-        }
-        elementActuel->suivant = nouveau;
-    }
-    else /* La file est vide, notre élément est le premier */
-    {
-        *file = nouveau;
     }
    
-
-    return 0;
 }
+
 
 
 int copier_file_tr(File *file, File *file2,File * tri ,int maxCapacitee,int time_day_sec, bool (*critereTri)(Element, void *))
 {
-    int ind;
-    initFile(file2,&ind);
-    if (file == NULL)
+    int ind=0;
+    if (file == NULL || file2 == NULL || tri == NULL)
     {
         exit(EXIT_FAILURE);
     }
@@ -300,25 +344,28 @@ int copier_file_tr(File *file, File *file2,File * tri ,int maxCapacitee,int time
 
     while (actuel != NULL)
     {
-        printf("enfilage élement\n");
-        enfiler(file2, actuel, &ind, maxCapacitee);
+        printf("enfilage élement -> ");
         if((*critereTri)(*actuel, &time_day_sec)){
-            printf("trié\n");
-            //ATTENTION: on part du principe qu'aucune livraison n'as de "reatrd"
-            defiler(file,NULL);//On n'enlève pas dans indice, car pour l'instant la place n'est pas libéré
-            enfilerSimple(tri, actuel);  
+            printf("trié");
+            //ATTENTION: on part du principe qu'aucune livraison n'as de "retard"
+            removed=defiler(file,NULL);//On n'enlève pas dans indice, car pour l'instant la place n'est pas libéré
+            enfilerSimple(tri, removed);  
+        }else{
+            printf("non trié");
+            enfiler(file2, actuel, &ind, maxCapacitee);
         }
+        printf("\n");
         actuel = actuel->suivant;
-    
+        
     }
     return ind;
 }
 
 int trie_file(File *file, File * tri,int * capaLivraison, void * arg, bool (*critereTri)(Element, void *))
 {
-    int ind;
-    initFile(tri,&ind);
-    if (file == NULL)
+    int ind=0;
+    
+    if (file == NULL || tri == NULL)
     {
         exit(EXIT_FAILURE);
     }
@@ -338,8 +385,19 @@ int trie_file(File *file, File * tri,int * capaLivraison, void * arg, bool (*cri
         }
 
         actuel = actuel->suivant;
-    
+        ind++;
     }
     return ind;
+}
+
+void fusion(File * file1, File * file2,File * retour){
+  
+    if(retour==NULL){
+        exit(EXIT_FAILURE);
+    }
+    copier_file_simple(file1, retour);
+    copier_file_simple(file2, retour);
+
+ 
 }
 

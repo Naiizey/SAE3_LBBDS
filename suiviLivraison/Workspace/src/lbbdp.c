@@ -281,6 +281,7 @@ int trouveIdOption(char name, lst_option options)
 void config(int * capaLivraison,int * dureeJour,char * fichier,lst_option options){
     (*capaLivraison)=atoi(options[1].value);
     (*dureeJour)=atoi(options[2].value);
+    printf("%d",*dureeJour);
     strcpy(fichier,options[3].value);
 }
 
@@ -395,7 +396,7 @@ int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande,File * 
             retour=handleNEW(getJson(buf+4,cnx), listeCommande, client, capaciteLivraison, maxCapaLivraison, adrClient, pathToFile);
         }else if(strncmp(buf, "ACT ", 4)==0){
             printf("Actualisation commmande...\n");
-             retour=handleACT(listeCommande,enAttente, maxCapaLivraison,cnx,time_day_sec);
+             retour=handleACT(listeCommande,enAttente,capaciteLivraison, maxCapaLivraison,cnx,time_day_sec);
         }else if(strncmp(buf, "REP ", 4)==0){
             printf("Réponse...\n");
             printf(cJSON_Print(getJson(buf+4,cnx)));
@@ -497,7 +498,7 @@ int hereConnection(user * client, struct sockaddr addr, char * pathToMdpFile){
 }
 
 int handleNEW(cJSON * new,File * liste,user * cli,int * capaLivraison,int maxCapaLivraison, struct sockaddr addr,char * pathToFile ){
-    if(new == NULL) return -40;
+    if(new == NULL) return ERR_JSON_NORME;
     int result=handleAUT(new, addr, pathToFile);
     if (result==0)
     {
@@ -512,7 +513,7 @@ int handleNEW(cJSON * new,File * liste,user * cli,int * capaLivraison,int maxCap
 }
 
 int handleAUT(cJSON * js, struct sockaddr addr, char * pathToFile){
-    if(js == NULL) return -40;
+    if(js == NULL) return ERR_JSON_NORME;
     user cli;
     cli.id=NULL;
     cli.pass=NULL;
@@ -532,30 +533,41 @@ int handleAUT(cJSON * js, struct sockaddr addr, char * pathToFile){
 
 }
 
-int handleACT(File * liste,File * fileAttente,  int maxCapacite, int cnx,int time_day_sec){
+int handleACT(File * liste,File * fileAttente,int * capaciteLivr,  int maxCapacite, int cnx,int time_day_sec){
+    
+    printf("Copie avant: %d\n",*capaciteLivr);
     afficherFile(*liste);
     int retour;
-    File * pileEnvoi=(File *)malloc(sizeof(File));
-    int indice;
+    File pileEnvoi;
+    initFile(&pileEnvoi, NULL);
+    File  display;
+    initFile(&display, NULL);
     char * pourEnvoyer;
-    indice=copier_file_tr(liste,pileEnvoi,fileAttente,maxCapacite,time_day_sec,checkDestinataire);
+    printf("Copie avant: %d\n",*capaciteLivr);
+    (*capaciteLivr)=copier_file_tr(liste,&pileEnvoi,fileAttente,maxCapacite,time_day_sec,checkDestinataire);
+    //(*liste)=pileEnvoi;
+
     printf("Tri:\n");
     afficherFile(*fileAttente);
-    printf("Copie: %d\n",indice);
-    afficherFile(*pileEnvoi);
-    pourEnvoyer=cJSON_Print(envoiLivraison(pileEnvoi,NULL,&indice,time_day_sec));
+    printf("Copie: %d\n",*capaciteLivr);
+    afficherFile(pileEnvoi);
+    
+    fusion(&pileEnvoi,fileAttente, &display );
+    printf("Display: \n");
+    afficherFile(display);
+    pourEnvoyer=cJSON_Print(envoiLivraison(&display,NULL,capaciteLivr,time_day_sec));
     retour=(pourEnvoyer!=NULL);
     if(retour){
         printf("RESULT:\n%s\n",pourEnvoyer);
         retour=write(cnx, pourEnvoyer, strlen(pourEnvoyer));
         write(cnx, "\r\n", sizeof("\r\n"));
         if(retour<0){
-            retour=-50;
+            retour=ERR_INTERNE;
         }else{
-            retour=2;
+            retour=REUSSITE_ENATT;
         }
     }else{
-        retour=-50;
+        retour=ERR_INTERNE;
     }
 
 
@@ -570,14 +582,14 @@ bool equalId(Element e, void * id){
 }
 
 int handleREP(cJSON * rep,File * fileAttente, int *capaLivraison){
-    if (rep==NULL) return -40;
+    if (rep==NULL) return ERR_JSON_NORME;
     File contenuRep;
     File recup;
     initFile(&contenuRep,NULL);
     int result=parcoursPourLivraison(rep->child, &contenuRep, NULL, 0);
     for (Element * curr=contenuRep; curr!=NULL; curr=curr->suivant){
-            trie_file(fileAttente, &recup, capaLivraison, curr->identifiant, equalId);
+        trie_file(fileAttente, &recup, capaLivraison, curr->identifiant, equalId);
     }
     afficherFile(recup);
-    return 1;
+    return REUSSITE_RET;
 }   

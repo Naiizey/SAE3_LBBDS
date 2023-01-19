@@ -20,31 +20,75 @@ class SanctionTemp extends Model
     
     protected $allowedFields = ['id_sanction','raison','num_compte','date_debut','heure_debut','date_fin','heure_fin'];
 
-    public function ajouterSanction($raison, $numCompte, $dureeSecondes)
+    public function ajouterSanction($raison, $numCompte, $dureeJours)
     {
         $sanction=new SanctionTempo();
         $sanction->raison=$raison;
         $sanction->num_compte=$numCompte;
         $sanction->date_debut=Time::now("Europe/Paris",'fr-FR')->toDateString();
         $sanction->heure_debut=Time::now("Europe/Paris",'fr-FR')->toTimeString();
-        $fin=Time::now("Europe/Paris",'fr-FR')->addSeconds($dureeSecondes);
+        $fin=Time::now("Europe/Paris",'fr-FR')->addDays($dureeJours);
         $sanction->date_fin=$fin->toDateString();
         $sanction->heure_fin=$fin->toTimeString();
         $this->save($sanction);
     }
 
-    public function TimeoutsActuels(){
-        // supprime les sanctions qui sont déjà expirées
+    public function supprimerSanctionsExpirées(){
         $this->where('date_fin <',Time::now("Europe/Paris",'fr-FR')->toDateString())->orWhere('date_fin',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin <',Time::now("Europe/Paris",'fr-FR')->toTimeString())->delete();
+    }
+
+    public function TimeoutsActuels(){
+        $this->supprimerSanctionsExpirées();
         
-        return $this->where('date_fin',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin >',Time::now("Europe/Paris",'fr-FR')->toTimeString())->findAll();
+        // return every sanctions that are not expired today or in the future
+        return $this->where('date_fin',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin >',Time::now("Europe/Paris",'fr-FR')->toTimeString())->orWhere('date_fin >',Time::now("Europe/Paris",'fr-FR')->toDateString())->findAll();
     }
 
     public function isTimeout($numCompte){
-        // supprime les sanctions qui sont déjà expirées
-        $this->where('date_fin <',Time::now("Europe/Paris",'fr-FR')->toDateString())->orWhere('date_fin',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin <',Time::now("Europe/Paris",'fr-FR')->toTimeString())->delete();
+        $this->supprimerSanctionsExpirées();
         
-        return ($this->where('num_compte',strval($numCompte))->where('date_fin',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin >',Time::now("Europe/Paris",'fr-FR')->toTimeString())->countAllResults()) > 0;
+        return ($this->where('num_compte',strval($numCompte))->where('date_fin >=',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin >',Time::now("Europe/Paris",'fr-FR')->toTimeString())->orWhere('date_fin >',Time::now("Europe/Paris",'fr-FR')->toDateString())->countAllResults()) > 0;
     }
+
+    // fonction qui renvoie le temps restant avant la fin du timeout, soit en secondes, soit en minutes, soit en heures, soit en jours, soit en années
+    public function getTimeLeft($numCompte){
+        $this->supprimerSanctionsExpirées();
+        $sanction=$this->where('num_compte',strval($numCompte))->where('date_fin >=',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin >',Time::now("Europe/Paris",'fr-FR')->toTimeString())->orWhere('date_fin >',Time::now("Europe/Paris",'fr-FR')->toDateString())->first();
+        if($sanction==null){
+            return 0;
+        }
+        $fin=Time::createFromFormat('Y-m-d H:i:s',$sanction->date_fin.' '.$sanction->heure_fin,"Europe/Paris");
+        $tempsRestant=$fin->getTimestamp()-Time::now("Europe/Paris",'fr-FR')->getTimestamp();
+        if($tempsRestant<60){
+            return $tempsRestant.' seconde.s';
+        }
+        if($tempsRestant<3600){
+            return floor($tempsRestant/60).' minute.s';
+        }
+        if($tempsRestant<86400){
+            return floor($tempsRestant/3600).' heure.s';
+        }
+        if($tempsRestant<31536000){
+            return floor($tempsRestant/86400).' jour.s';
+        }
+        return floor($tempsRestant/31536000).' an.s';
+    }
+
+    /*
+    public function getTimeLeft($numCompte){
+        $this->supprimerSanctionsExpirées();
+        
+        $sanction=$this->where('num_compte',strval($numCompte))->where('date_fin >=',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin >',Time::now("Europe/Paris",'fr-FR')->toTimeString())->orWhere('date_fin >',Time::now("Europe/Paris",'fr-FR')->toDateString())->first();
+        if($sanction==null){
+            return null;
+        }
+        $fin=Time::createFromFormat('Y-m-d H:i:s',$sanction->date_fin.' '.$sanction->heure_fin,"Europe/Paris");
+        $now=Time::now("Europe/Paris",'fr-FR');
+        $tempsRestant=$fin->diff($now);
+        if ($tempsRestant->invert==1) {
+            
+        }
+        return $fin->diff($now);
+    }*/
     
 }

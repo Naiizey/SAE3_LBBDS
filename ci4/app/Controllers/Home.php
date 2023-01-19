@@ -743,6 +743,7 @@ class Home extends BaseController
     public function verifTimeout(){
         if (session()->get("numero")!=NULL) {
             if(model("\App\Models\SanctionTemp")->isTimeout(session()->get("numero"))){
+                $num=session()->get("numero");
                 $session=session();
                 $session->remove("numero");
                 $session->remove("nom");
@@ -750,7 +751,7 @@ class Home extends BaseController
                 $session->remove("adresse_facturation");
                 $session->remove("adresse_livraison");
                 $session->set("just_deconnectee",False);
-                $GLOBALS['invalidation'] = $this->feedback->afficheInvalidation("Vous avez été banni temporairement !");
+                $GLOBALS['invalidation'] = $this->feedback->afficheInvalidation("Vous avez été banni, il reste ".model("\App\Models\SanctionTemp")->getTimeLeft($num)." !");
                 return redirect()->to("/");
             }
         }

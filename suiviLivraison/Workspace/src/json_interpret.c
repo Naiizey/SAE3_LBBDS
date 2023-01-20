@@ -7,37 +7,13 @@
 #include <string.h>
 
 
-#include "file.h"
+#include "fifo.h"
 #include "user.h"
 #include"json.h"
 #define TEST true
 
-
-const int TEMPS_MAX_REGIONAL=3;
-const int TEMPS_LOCAL=1;
-#define MAX_ETAPE 4
 const int ETAT_FINAL=-1;
 const int ERR_ETAT=-2;
-
-
-/**
- * @brief Fait las liaison entre un état et un nombre de jour
- * 
- */
-typedef struct {
-    char * nom;
-    int apresXjour;
-} etatLivraison;
-
-
-typedef etatLivraison etats[MAX_ETAPE];
-const etats quelEtape = {
-    {"En charge",0},
-    {"regional",TEMPS_MAX_REGIONAL},
-    {"local",TEMPS_MAX_REGIONAL+TEMPS_LOCAL},
-    {"destinataire",ETAT_FINAL}
-
-};
 
 
 
@@ -106,66 +82,15 @@ user * collectInfoUser(cJSON * json,user * new){
 }
 
 /**
- * @brief Retourne le nombre de jour avant la fin d'un état, si celui-ci existe.
- * 
- * @param etat 
- * 
- * 
- * @return true 
- * @return false 
- */
-int verifEtat(char * etat){
-    bool trouve=false;
-    int i=0;
-    while(i<MAX_ETAPE && !trouve){
-        trouve=(strcmp(quelEtape[i].nom,etat)==0);
-        i++;
-    }
-    if(trouve){
-        i--;
-        return quelEtape[i].apresXjour;
-    }
-    else{
-        return ERR_ETAT;
-    }
-}
-
-/**
- * @brief Permet de retourner l'état en fonction de l'état d'entré du simulateur et de temps passé.
- * 
- * @param etat état à l'entrée du simulateur 
- * @param jour état passé dans le simulateur
- * @return const char* 
- */
-const char * traitementEtat(char * etat, int jour){
-    bool trouve=false;
-    int i=0;
-    while( i<MAX_ETAPE && !trouve){
-        trouve=quelEtape[i].apresXjour==ETAT_FINAL || quelEtape[i].apresXjour >= jour;
-        i++;
-    }
-    if(trouve)
-    {
-        i--;
-        return quelEtape[i].nom;
-    }
-    else
-        return NULL;
-    
-}  
-
-/**
  * @brief A partir d'un objet json, on collecte les information correspondante à une livraison
  * 
  * @param json un Objet json
  * @return Element* 
  */
-Element * collectLivraison(cJSON * json){
-    Element * new =(Element *)malloc(sizeof(Element));
-    strcpy(new->identifiant,"\0");
-    new->timestamp=0;
-    new->joursRetard=0;
-    strcpy(new->etat,"En charge");
+Livraison * collectLivraison(cJSON * json){
+    Livraison *new;
+    createLivraison("\0",0,"En charge");
+
     #if TEST == true
     printf("Commence... \n");
     #endif
@@ -179,8 +104,6 @@ Element * collectLivraison(cJSON * json){
             
             if(strcmp(json->string, "time")==0){
                 new->timestamp=time(NULL);
-            }else if(strcmp(json->string,"retard")==0 ){
-                new->joursRetard=json->valueint;
             }
         }else if(json->type==cJSON_String){
             if(strcmp(json->string,"identifiant")==0){
@@ -391,25 +314,6 @@ int parcoursPourLivraison(cJSON *json, File *liste, int *ind, int max){
 
 
 
-/**
- * @brief Retourne en seconde la différence entre deux temps
- * 
- * @param avant 
- * @param maintenant 
- * @return int 
- */
-long int convertEnJour(time_t avant, time_t maintenant, int time_day_sec){
-    time_t diff = difftime(maintenant, avant);
-    return diff/time_day_sec;
- 
-}
-
-bool checkDestinataire(Element e, void * time_day_sec){
-   
-    int * integer=(int *)time_day_sec;
-    return convertEnJour(e.timestamp,time(NULL), *integer)>TEMPS_MAX_REGIONAL+TEMPS_LOCAL;
-}
-
 
 /**
  * @brief Sérialisation en JSON d'une commande.
@@ -417,13 +321,13 @@ bool checkDestinataire(Element e, void * time_day_sec){
  * @param e 
  * @return cJSON* 
  */
-cJSON * createLivraison(Element e, int *ind,int time_day_sec){
+cJSON * prepLivraison(Livraison e, int *ind,int time_day_sec){
     
-    int depuis = convertEnJour(e.timestamp, time(NULL),time_day_sec);
+
     cJSON * livraison = cJSON_CreateObject();
     cJSON_AddItemToObject(livraison,"identfiant",cJSON_CreateString(e.identifiant));
-    cJSON_AddItemToObject(livraison,"time",cJSON_CreateNumber(depuis));
-    cJSON_AddItemToObject(livraison,"etat",cJSON_CreateString(traitementEtat(e.etat,depuis)));
+    cJSON_AddItemToObject(livraison,"jour",cJSON_CreateNumber(e.jours));
+    cJSON_AddItemToObject(livraison,"etat",cJSON_CreateString(e.etat));
     return livraison;
     
 }
@@ -440,11 +344,11 @@ cJSON * envoiLivraison(File *file, char * filter, int *ind,int time_day_sec){
     Element * current = defiler(file,ind);
     while(current!=NULL){
         #if TEST == true
-        printf("Identifiant: %s\n", current->identifiant);
+        printf("Identifiant: %s\n", current->livraison.identifiant);
 
         printf("Item.\n");
         #endif
-        cJSON_AddItemToArray(array,createLivraison(*current,ind,time_day_sec));
+        cJSON_AddItemToArray(array,prepLivraison(current->livraison,ind,time_day_sec));
         current=defiler(file,ind);
     }
     cJSON_AddItemToObject(retour,"livraisons",array);

@@ -10,7 +10,7 @@
 #include <getopt.h>
 
 #include "lbbdp.h"
-#include "file.h"
+#include "fifo.h"
 #include "user.h"
 #include "json.h"
 
@@ -545,7 +545,11 @@ int handleACT(File * liste,File * fileAttente,int * capaciteLivr,  int maxCapaci
     char * pourEnvoyer;
     printf("Copie avant: %d\n",*capaciteLivr);
     (*capaciteLivr)=copier_file_tr(liste,&pileEnvoi,fileAttente,maxCapacite,time_day_sec,checkDestinataire);
-    //(*liste)=pileEnvoi;
+    if(pileEnvoi!=NULL){
+        **liste=*pileEnvoi;
+    }else{
+        (*liste)=NULL;
+    }
 
     printf("Tri:\n");
     afficherFile(*fileAttente);

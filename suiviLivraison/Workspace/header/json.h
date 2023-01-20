@@ -1,10 +1,10 @@
 #include <cjson/cJSON.h>
-#include "file.h"
+#include "fifo.h"
 #include "user.h"
 
 
 
-Element * collectLivraison(cJSON * json);
+Livraison * collectLivraison(cJSON * json);
 int parcoursPourLivraison(cJSON *json, File *liste, int *ind, int max);
 bool checkDestinataire(Element e, void * time_day_sec);
 int parcoursPourAuth(cJSON *json, user * client);

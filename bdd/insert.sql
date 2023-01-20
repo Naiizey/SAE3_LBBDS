@@ -274,6 +274,7 @@ INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3, 13, 1);
 
 INSERT INTO _avis (contenu_av,id_note, date_av) VALUES ('Qualité moyenne, à revoir...',2, current_date);
 INSERT INTO _avis (contenu_av,id_note,date_av) VALUES ('Performant mais a parfois des difficultés.',1, current_date);
+INSERT INTO _reponse(contenu_rep,num_avis, date_rep) VALUES ('Qualité moyenne, à revoir...',1, current_date);
 
 
 INSERT INTO _image_avis (num_avis, lien_image_avis) VALUES (1, 'https://floriangll.fr/Humour/Dark/Masterclass/Masterclass.gif');

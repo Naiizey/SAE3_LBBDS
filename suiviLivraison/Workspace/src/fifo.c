@@ -1,14 +1,20 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "fifo.h"
 
 
 const int TEMPS_MAX_REGIONAL=3;
 const int TEMPS_LOCAL=1;
 #define MAX_ETAPE 4
-const int ETAT_FINAL=-1;
-const int ERR_ETAT=-2;
+
+
+char EN_CHARGE[10]= "en charge";
+char REGIONAL[9] = "regional";
+char LOCAL[6] = "local";
+char DESTINATAIRE[13] = "destinataire";
+int MAX_LONG_NOM_ETAT=15;
 
 
 /**
@@ -23,10 +29,10 @@ typedef struct {
 
 typedef etatLivraison etats[MAX_ETAPE];
 const etats quelEtape = {
-    {"En charge",0},
-    {"regional",TEMPS_MAX_REGIONAL},
-    {"local",TEMPS_MAX_REGIONAL+TEMPS_LOCAL},
-    {"destinataire",ETAT_FINAL}
+    {EN_CHARGE,0},
+    {REGIONAL,TEMPS_MAX_REGIONAL},
+    {LOCAL,TEMPS_MAX_REGIONAL+TEMPS_LOCAL},
+    {DESTINATAIRE,ETAT_FINAL}
 
 };
 
@@ -58,7 +64,7 @@ Livraison createLivraison(char * identifiant, time_t timestamp, char *etat) {
 
 void afficherLivraison(Livraison livr)
 {
-    printf("%s ,%s ,%d ,%ld ->\n", livr.identifiant, livr.etat, livr.jours, livr.timestamp);
+    printf("%s : (en \"jours\": %d , en secondes: %ld) -> %s \n", livr.identifiant,  livr.jours, livr.timestamp, livr.etat);
         
 }
 
@@ -74,7 +80,14 @@ void afficherLivraison(Livraison livr)
  * @return true 
  * @return false 
  */
-int verifEtat(char * etat){
+int verifEtat(char * in){
+    char etat[MAX_LONG_NOM_ETAT];
+    strcpy(etat, in);
+    for(int i=0;i<strlen(etat) && i<MAX_LONG_NOM_ETAT;i++){
+        etat[i]=(char)tolower((int)etat[i]);
+    }
+  
+    
     bool trouve=false;
     int i=0;
     while(i<MAX_ETAPE && !trouve){
@@ -128,11 +141,9 @@ void maJourEtat(Livraison * livr, time_t maintenant, int time_day_sec){
  
 }
 
-bool checkDestinataire(Livraison * livr, void * time_day_sec){
-   
-    int * integer=(int *)time_day_sec;
-    maJourEtat(livr,time(NULL), *integer);
-    return livr->jours >TEMPS_MAX_REGIONAL+TEMPS_LOCAL;
+bool checkDestinataire(Livraison livr, int time_day_sec){
+    maJourEtat( &livr,time(NULL), time_day_sec);
+    return livr.jours >TEMPS_MAX_REGIONAL+TEMPS_LOCAL;
 }
 
 
@@ -142,9 +153,11 @@ bool checkDestinataire(Livraison * livr, void * time_day_sec){
     ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
     */
 
-void initialisationFile(File * f,int * maxCapacite){
+void initialisationFile(File * f,int timeDaySec,int * maxCapacite){
     f->queue=NULL;
     f->tete=NULL;
+    f->timeDaySec=timeDaySec;
+    f->indice=0;
     f->maxCapacite=maxCapacite;
 }
 
@@ -154,24 +167,49 @@ int estFileVide(File f){
     return (f.queue==NULL && f.tete==NULL);
 }
 
-int estMaxAtteint(File f){
-    return (f.maxCapacite!=NULL && *(f.maxCapacite)<=f.indice+1);
+int estMaxAtteint(File *f, int ajout){
+    int retour=(f->maxCapacite!=NULL && *(f->maxCapacite)<=(f->indice+ajout));
+    if(!retour){
+        f->indice=f->indice+ajout;
+    }
+    return retour;
 }
 
-Livraison observerTete(File f){
+Livraison checkTete(File f){
+    Livraison retour;
+    if(estFileVide(f))
+    {
+        printf("Erreur file vide\n");
+        retour=createLivraison("@", -time(NULL), "corrompu");
+    }
+    else
+    {
+        retour=f.tete->livraison;
+    }
+    return retour;
+}
 
-    return f.tete->livraison;
+void observerTete(File f){
+    if(estFileVide(f))
+    {
+        printf("vide ->\n");
+    }
+    else
+    {
+        afficherLivraison(checkTete(f));
+    }
+    
 }
 
 int ajoutFile(File *f, Livraison livr){
     Element * nouveau = (Element *)malloc(sizeof(Element));
     nouveau->livraison=livr;
     nouveau->suivant=NULL;
-    int retour = 0;
+    int retour;
 
-    retour= estMaxAtteint(*f);
+    retour= estMaxAtteint(f,1);
 
-    if(retour == 0)
+    if(!retour)
     {
         if(estFileVide(*f))
         {
@@ -191,28 +229,34 @@ int ajoutFile(File *f, Livraison livr){
 
 
 
-Livraison retraitFile(File *f, int time_day_sec){
+Livraison * retraitFile(File *f){
     Element * curr;
-    Livraison retour;
-    if(f->queue==f->tete)
+    Livraison * retour;
+    if(estFileVide(*f))
     {
-
-        curr=f->tete;
-        retour=curr->livraison;
-        f->queue=NULL;
-        f->tete=NULL;
-        free(curr);
+        retour=NULL;
     }
     else
     {
-        curr=f->tete;
-        retour=curr->livraison;
-        f->tete=f->tete->suivant;
-        free(curr);
+        retour=(Livraison *)malloc(sizeof(Livraison));
+        if(f->queue==f->tete){
+            curr=f->tete;
+            *retour=curr->livraison;
+            f->queue=NULL;
+            f->tete=NULL;
+            free(curr);
+        }
+        else{
+            curr=f->tete;
+            *retour=curr->livraison;
+            f->tete=f->tete->suivant;
+            free(curr);
 
+        }
+        maJourEtat(retour,time(NULL),f->timeDaySec);
+        f->indice=f->indice-1;
     }
-    maJourEtat(&retour,time(NULL),time_day_sec);
-    f->indice=f->indice-1;
+    
 
     return retour;
 }

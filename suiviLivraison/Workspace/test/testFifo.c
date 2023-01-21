@@ -56,27 +56,45 @@ int main(int argc, char *argv[])
 
 int main(int argc, char const *argv[])
 {
-    int time_day_sec=3;
+   
+   
     File maFile;
-    initialisationFile(&maFile,NULL);
+    initialisationFile(&maFile,1,NULL);
+    printf("Indice +1: %d\n",maFile.indice);
     ajoutFile(&maFile,createLivraison("1",time(NULL),"en charge"));
+    printf("Indice +1: %d\n",maFile.indice);
     ajoutFile(&maFile,createLivraison("5",time(NULL),"en charge"));
+    printf("Indice +1: %d\n",maFile.indice);
     ajoutFile(&maFile,createLivraison("9",time(NULL),"en charge"));
+    printf("Indice +1: %d\n",maFile.indice);
   
     printf("Vide ? :  %s\n",(estFileVide(maFile)) ? "Vrai":"Faux");
-    afficherLivraison(observerTete(maFile));
-    Livraison coucou=observerTete(maFile);
-     printf("Observer:\n");
-    afficherLivraison(coucou);
-    sleep(5);
-    afficherLivraison(observerTete(maFile));
-    retraitFile(&maFile,time_day_sec);
-    afficherLivraison(retraitFile(&maFile,time_day_sec));
-    retraitFile(&maFile,time_day_sec);
+ 
+ 
+
+    printf("Observer:\n");
+    observerTete(maFile);
+    printf("Indice -1: %d\n",maFile.indice);
+    Livraison * coucou = retraitFile(&maFile);
+    retraitFile(&maFile);
+    sleep(3);
+    
+    printf("Observe: \t");
+    observerTete(maFile);
+    printf("Tete est destinataire ?: %s\n",checkDestinataire(maFile.tete->livraison,maFile.timeDaySec) ? "Oui" : "Non");
+    
+    
+    printf("Indice -1: %d\nRetrait actualisé:\t",maFile.indice);
+    afficherLivraison(*retraitFile(&maFile));
+    printf("Indice -1: %d\n",maFile.indice);
+    retraitFile(&maFile);
     printf("Vide ? :  %s\n",(estFileVide(maFile)) ? "Vrai":"Faux");
 
-     printf("Retrait:\n");
-    afficherLivraison(coucou);
+     printf("Retrait non actualisé:\n");
+    afficherLivraison(*coucou);
+
+    printf("Verif etat bon: %d\n", verifEtat("ReGioNal"));
+    printf("Verif etat mauvais: %d\n", verifEtat("EnzCHaorge"));
     return 0;
 
     

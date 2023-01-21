@@ -27,6 +27,7 @@ typedef struct o_elem
 typedef struct o_file{
     struct o_elem *tete;
     struct o_elem *queue;
+    int timeDaySec;
     int * maxCapacite;
     int indice;
 }File;
@@ -37,6 +38,10 @@ typedef struct o_file{
 #ifndef MAX_CAPACITE_ATTEINT
 #define MAX_CAPACITE_ATTEINT -2
 #endif
+
+#define ETAT_FINAL -1
+#define ERR_ETAT -2
+
 
 
 //déclaration des fonctions
@@ -57,12 +62,15 @@ void fusion(File * file1, File * file2,File * retour);
 
 Livraison createLivraison(char * identifiant, time_t timestamp, char *etat);
 void afficherLivraison(Livraison livr);
+bool checkDestinataire(Livraison livr, int time_day_sec);
 
-void initialisationFile(File * f,int * maxCapacite);
+void initialisationFile(File * f,int timeDaySec,int * maxCapacite);
 int estFileVide(File f);
 void afficherFile(File file);
 
-Livraison observerTete(File f);
-Livraison retraitFile(File *f, int time_day_sec);
+void observerTete(File f);
+Livraison * retraitFile(File *f);
 int ajoutFile(File *f, Livraison livr);
 int fileVide(File f);
+
+int verifEtat(char * etat);

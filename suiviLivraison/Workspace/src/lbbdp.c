@@ -53,14 +53,12 @@ int main(int argc, char *argv[])
     lst_option options;
     collectOptions(argc,argv,options);
     int maxCapaciteLivraison;
-    int capaciteLivraison;
     int time_day_sec;
     char path[255];
     config(&maxCapaciteLivraison, &time_day_sec, path, options);
     File listeCommande;
     File enAttente;
-    initFile(&listeCommande, &capaciteLivraison);
-    initFile(&enAttente,NULL);
+    initialisationFile(&listeCommande, time_day_sec, &maxCapaciteLivraison);
     
     /*
     ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -503,7 +501,7 @@ int handleNEW(cJSON * new,File * liste,user * cli,int * capaLivraison,int maxCap
     if (result==0)
     {
         printf("??\n");
-        result=parcoursPourLivraison(new->child, liste, capaLivraison, maxCapaLivraison); 
+        result=parcoursPourLivraison(new->child, liste); 
     }
 
     return result;
@@ -545,11 +543,6 @@ int handleACT(File * liste,File * fileAttente,int * capaciteLivr,  int maxCapaci
     char * pourEnvoyer;
     printf("Copie avant: %d\n",*capaciteLivr);
     (*capaciteLivr)=copier_file_tr(liste,&pileEnvoi,fileAttente,maxCapacite,time_day_sec,checkDestinataire);
-    if(pileEnvoi!=NULL){
-        **liste=*pileEnvoi;
-    }else{
-        (*liste)=NULL;
-    }
 
     printf("Tri:\n");
     afficherFile(*fileAttente);
@@ -559,7 +552,7 @@ int handleACT(File * liste,File * fileAttente,int * capaciteLivr,  int maxCapaci
     fusion(&pileEnvoi,fileAttente, &display );
     printf("Display: \n");
     afficherFile(display);
-    pourEnvoyer=cJSON_Print(envoiLivraison(&display,NULL,capaciteLivr,time_day_sec));
+    pourEnvoyer=cJSON_Print(envoiLivraison(&display,NULL));
     retour=(pourEnvoyer!=NULL);
     if(retour){
         printf("RESULT:\n%s\n",pourEnvoyer);
@@ -578,7 +571,7 @@ int handleACT(File * liste,File * fileAttente,int * capaciteLivr,  int maxCapaci
     return retour;
 }
 
-bool equalId(Element e, void * id){
+bool equalId(Livraison e, void * id){
    
     return strcmp(e.identifiant,(char *)id)==0;
 

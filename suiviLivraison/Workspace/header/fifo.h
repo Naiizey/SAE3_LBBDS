@@ -72,5 +72,9 @@ void observerTete(File f);
 Livraison * retraitFile(File *f);
 int ajoutFile(File *f, Livraison livr);
 int fileVide(File f);
+int copieFile(File origin, File * dest);
 
 int verifEtat(char * etat);
+
+
+bool trouverId(File liste,char * identifiant);

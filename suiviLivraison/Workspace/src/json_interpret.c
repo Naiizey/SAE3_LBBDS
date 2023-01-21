@@ -166,7 +166,7 @@ int parcours(cJSON *json, File *liste, user * client,int chercheLivr, int cherch
    
     
     if (json==NULL || json->string==NULL) {
-        printf("Erreur json null");
+        printf("Erreur json null ou root séléctionné\n");
         return -41;
     }
         

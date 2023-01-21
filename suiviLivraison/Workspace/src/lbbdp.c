@@ -45,7 +45,7 @@ typedef struct Option lst_option[MAX_OPTIONS];
 int trouveIdOption(char name, lst_option options);
 int collectOptions(int argc, char *argv[], lst_option options);
 void config(int *  capaLivraison,int *dureeJour,char * fichier,lst_option options);
-int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande,File * enAttente, int * capaciteLivraison, int maxCapaLivraison, char * pathToFile,int time_day_sec);
+int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande,char * pathToFilec);
 cJSON * getJson(char * buf,int cnx);
 
 int main(int argc, char *argv[])
@@ -57,7 +57,6 @@ int main(int argc, char *argv[])
     char path[255];
     config(&maxCapaciteLivraison, &time_day_sec, path, options);
     File listeCommande;
-    File enAttente;
     initialisationFile(&listeCommande, time_day_sec, &maxCapaciteLivraison);
     
     /*
@@ -123,7 +122,7 @@ int main(int argc, char *argv[])
     ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
     */
 
-    gestConnect(cnx, conn_addr,&listeCommande,&enAttente ,&capaciteLivraison, maxCapaciteLivraison, path, time_day_sec);
+    gestConnect(cnx, conn_addr,&listeCommande,path );
 
     return EXIT_SUCCESS;
 }
@@ -375,12 +374,13 @@ int testConnect(lst_option options, int cnx){
     
 }
 
-int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande,File * enAttente, int * capaciteLivraison, int maxCapaLivraison, char * pathToFile,int time_day_sec){
+int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, char * pathToFile){
     char buf[512];
     char res[20];
     int size, onContinue=1;
-    int retour=0;
+    int retour;
     while(onContinue){
+        retour= ERR_PROTOC;
         printf("buf:\n%s\n",buf);
         memset(buf,0,512);
         printf(buf);
@@ -391,15 +391,13 @@ int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande,File * 
         }else if(strncmp(buf, "NEW ", 4)==0){
             user * client=NULL;          
             printf("Prise en charge de commande...\n");
-            retour=handleNEW(getJson(buf+4,cnx), listeCommande, client, capaciteLivraison, maxCapaLivraison, adrClient, pathToFile);
+            retour=handleNEW(getJson(buf+4,cnx), listeCommande, client, adrClient, pathToFile);
         }else if(strncmp(buf, "ACT ", 4)==0){
             printf("Actualisation commmande...\n");
-             retour=handleACT(listeCommande,enAttente,capaciteLivraison, maxCapaLivraison,cnx,time_day_sec);
+             retour=handleACT(listeCommande,cnx);
         }else if(strncmp(buf, "REP ", 4)==0){
-            printf("Réponse...\n");
-            printf(cJSON_Print(getJson(buf+4,cnx)));
-            printf("\n");
-             //retour=handleREP(buf+4);
+            printf("Accusé de réception...\n");
+            retour=handleREP(getJson(buf+4,cnx), listeCommande);
         }else{
             retour=-11;
             printf("Commande non reconnue\n");
@@ -473,12 +471,11 @@ cJSON * getJson(char * buf, int cnx){
     }
     else{
         printf("Erreur format...LBBDP/1.0\n");
-       
+     
     
     }
 
-    memset(str_json,0,maxLongStr);
-    printf("Enfoiré: %s\n",str_json);
+    
     return retour;
 
 
@@ -495,7 +492,7 @@ int hereConnection(user * client, struct sockaddr addr, char * pathToMdpFile){
     return connection(client, addr, array_user, &indice_array_user, &max_array_user , pathToMdpFile);
 }
 
-int handleNEW(cJSON * new,File * liste,user * cli,int * capaLivraison,int maxCapaLivraison, struct sockaddr addr,char * pathToFile ){
+int handleNEW(cJSON * new,File * liste,user * cli, struct sockaddr addr,char * pathToFile ){
     if(new == NULL) return ERR_JSON_NORME;
     int result=handleAUT(new, addr, pathToFile);
     if (result==0)
@@ -531,16 +528,16 @@ int handleAUT(cJSON * js, struct sockaddr addr, char * pathToFile){
 
 }
 
-int handleACT(File * liste,File * fileAttente,int * capaciteLivr,  int maxCapacite, int cnx,int time_day_sec){
-    
+int handleACT(File * liste, int cnx){
+    /*
     printf("Copie avant: %d\n",*capaciteLivr);
     afficherFile(*liste);
-    int retour;
+    
     File pileEnvoi;
-    initFile(&pileEnvoi, NULL);
+    initialisationFile(&pileEnvoi, NULL);
     File  display;
-    initFile(&display, NULL);
-    char * pourEnvoyer;
+    initialisationFile(&display, NULL);
+    
     printf("Copie avant: %d\n",*capaciteLivr);
     (*capaciteLivr)=copier_file_tr(liste,&pileEnvoi,fileAttente,maxCapacite,time_day_sec,checkDestinataire);
 
@@ -548,45 +545,66 @@ int handleACT(File * liste,File * fileAttente,int * capaciteLivr,  int maxCapaci
     afficherFile(*fileAttente);
     printf("Copie: %d\n",*capaciteLivr);
     afficherFile(pileEnvoi);
-    
     fusion(&pileEnvoi,fileAttente, &display );
     printf("Display: \n");
     afficherFile(display);
-    pourEnvoyer=cJSON_Print(envoiLivraison(&display,NULL));
-    retour=(pourEnvoyer!=NULL);
-    if(retour){
-        printf("RESULT:\n%s\n",pourEnvoyer);
-        retour=write(cnx, pourEnvoyer, strlen(pourEnvoyer));
-        write(cnx, "\r\n", sizeof("\r\n"));
-        if(retour<0){
-            retour=ERR_INTERNE;
+    */
+    File aEnvoyer;
+    initialisationFile(&aEnvoyer, liste->timeDaySec, NULL);
+    copieFile(*liste, &aEnvoyer);
+
+
+    int retour;
+    char * pourEnvoyer;
+
+        pourEnvoyer=cJSON_Print(envoiLivraison(&aEnvoyer,NULL));
+        retour=(pourEnvoyer!=NULL);
+        if(retour){
+            printf("RESULT:\n%s\n",pourEnvoyer);
+            retour=write(cnx, pourEnvoyer, strlen(pourEnvoyer));
+            write(cnx, "\r\n", sizeof("\r\n"));
+            if(retour<0){
+                retour=ERR_INTERNE;
+            }else{
+                retour=REUSSITE_ENATT;
+            }
         }else{
-            retour=REUSSITE_ENATT;
+            retour=ERR_INTERNE;
         }
-    }else{
-        retour=ERR_INTERNE;
+
+
+        return retour;
+}
+
+
+int supprimeRecu(File * liste, File recu){
+    bool bonnEtat = true;
+    for(Element * curr=liste->tete; curr!=NULL && bonnEtat; curr=curr->suivant){
+        bonnEtat=checkDestinataire(curr->livraison,liste->timeDaySec);
+        if(bonnEtat && trouverId(recu,curr->livraison.identifiant)){
+            printf("Element retiré: %d",recu.indice);
+            afficherLivraison(*retraitFile(liste));
+            (recu.indice)--;
+        }
     }
 
+    return REUSSITE_RET;
+
+}
+
+int handleREP(cJSON * rep, File * liste){
+    printf("Début REP\n");
+    if (rep==NULL) 
+        return ERR_JSON_NORME;
+    File contenueRep;
+    initialisationFile(&contenueRep, liste->timeDaySec, NULL);
+    printf("Parcours\n");
+    int retour=parcoursPourLivraison(rep->child, &contenueRep);
+    if(retour>=0){
+        retour=supprimeRecu(liste, contenueRep);
+    }
 
     return retour;
-}
-
-bool equalId(Livraison e, void * id){
-   
-    return strcmp(e.identifiant,(char *)id)==0;
-
-
-}
-
-int handleREP(cJSON * rep,File * fileAttente, int *capaLivraison){
-    if (rep==NULL) return ERR_JSON_NORME;
-    File contenuRep;
-    File recup;
-    initFile(&contenuRep,NULL);
-    int result=parcoursPourLivraison(rep->child, &contenuRep, NULL, 0);
-    for (Element * curr=contenuRep; curr!=NULL; curr=curr->suivant){
-        trie_file(fileAttente, &recup, capaLivraison, curr->identifiant, equalId);
-    }
-    afficherFile(recup);
-    return REUSSITE_RET;
+    
 }   
+

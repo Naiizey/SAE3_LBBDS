@@ -143,6 +143,8 @@ void maJourEtat(Livraison * livr, time_t maintenant, int time_day_sec){
 
 bool checkDestinataire(Livraison livr, int time_day_sec){
     maJourEtat( &livr,time(NULL), time_day_sec);
+    printf("check ? %d ?> %d : %d ",TEMPS_MAX_REGIONAL+TEMPS_LOCAL,livr.jours,livr.jours >TEMPS_MAX_REGIONAL+TEMPS_LOCAL);
+
     return livr.jours >TEMPS_MAX_REGIONAL+TEMPS_LOCAL;
 }
 
@@ -168,7 +170,7 @@ int estFileVide(File f){
 }
 
 int estMaxAtteint(File *f, int ajout){
-    int retour=(f->maxCapacite!=NULL && *(f->maxCapacite)<=(f->indice+ajout));
+    int retour=(f->maxCapacite!=NULL && *(f->maxCapacite)<(f->indice+ajout));
     if(!retour){
         f->indice=f->indice+ajout;
     }
@@ -305,3 +307,24 @@ Element *trouverElement(File file, char * identifiant)
 }
 
 
+int copieFile(File origin, File * dest){
+    
+    for(Element * curr = origin.tete;curr!=NULL;curr=curr->suivant){
+        printf("Début itération\n");
+
+        Livraison new=curr->livraison;
+        ajoutFile(dest, new);
+    }
+
+    return 0;
+
+}
+
+bool trouverId(File liste,char * identifiant){
+    bool trouve=false;
+    for(Element * curr = liste.tete;curr!=NULL && !trouve;curr=curr->suivant){
+        trouve=(strcmp(identifiant, curr->livraison.identifiant)==0);
+        printf("trouve ? %s ?= %s : %d \n",identifiant,curr->livraison.identifiant,trouve);
+    }
+    return trouve;
+}

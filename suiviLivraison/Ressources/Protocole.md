@@ -13,7 +13,7 @@ Le protocole prend son inpiration d'une communication avec une API Rest avec l'u
 > ### 1.1 Le but 
 
 Ce protocole de niveau application nécessite une communication internet.
-L'objectif de ce protocole est de pouvoir faire communiquer le livreur et son client(Un site marchand, e-commerce, etc...). Au vu de la précision de notre besoin et le fait que l'ambtion n'est pas de créer un protocole qui serait vraiment utilisé, le protocole sera décris est précis et laisse peut de marge de main d'oeuvre pour pouvoir s'adapter à d'autre besoin.
+L'objectif de ce protocole est de pouvoir faire communiquer le livreur et son client(Un site marchand, e-commerce, etc...). Au vu de la précision de notre besoin et le fait que l'ambtion n'est pas de créer un protocole qui serait vraiment utilisé dans d'autres contextes, le protocole qui sera décris est précis et laisse peu de marge de main d'oeuvre pour pouvoir s'adapter à d'autres besoins.
 
 
 > ### 1.2 Terminologie

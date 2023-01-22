@@ -9,10 +9,6 @@ https://www.rfc-editor.org/rfc/rfc1945.html
  
 
 # But de protocole 
-
-
-
-
 * Prise en charge : récupération du colis et commencer livraison 
 Échec [File pleine]: indique que la prise en charge n’est plus possible  
 Échec [Authentification]: indique que les identifiants ne sont pas valables  
@@ -40,3 +36,8 @@ Parsing into JSON
 - Timestamp de la rentré dans le fifo
 - État de la livraison
 - Jours de retards
+
+# Utilisation
+* Éxécution du makeFile
+* Éffectuer la commande "lbbdp" ainsi qu'un telnet en 8080
+* Obtenir des informations sur la commande : lbbdp -h (dans le telnet) ou man lbbdp 

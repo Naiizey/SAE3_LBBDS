@@ -164,12 +164,25 @@ void initialisationFile(File * f,int timeDaySec,int * maxCapacite){
 }
 
 
-
+/**
+ * @brief Vérifie si un file est vide
+ * 
+ * @param f 
+ * @return int 
+ */
 int estFileVide(File f){
     return (f.queue==NULL && f.tete==NULL);
 }
 
+/**
+ * @brief Vérifie si le maximum (s'il a été spécifié sur la file cible) pourrait être dépassé.
+ * 
+ * @param f 
+ * @param ajout
+ * @return int 
+ */
 int estMaxAtteint(File *f, int ajout){
+
     int retour=(f->maxCapacite!=NULL && *(f->maxCapacite)<(f->indice+ajout));
     if(!retour){
         f->indice=f->indice+ajout;
@@ -177,6 +190,12 @@ int estMaxAtteint(File *f, int ajout){
     return retour;
 }
 
+/**
+ * @brief Permet de retourner la tête de la file sans défiler, Attention: à éviter quand la file est vide
+ * 
+ * @param f 
+ * @return Livraison -> la livraison en tête de file, dans le cas où la file est vide cela retounera une livraison inexistante avec des valeurs incohérentes, identifié par "@". 
+ */
 Livraison checkTete(File f){
     Livraison retour;
     if(estFileVide(f))
@@ -191,6 +210,11 @@ Livraison checkTete(File f){
     return retour;
 }
 
+/**
+ * @brief Affiche la livraison en tête de file
+ * 
+ * @param f 
+ */
 void observerTete(File f){
     if(estFileVide(f))
     {
@@ -203,6 +227,13 @@ void observerTete(File f){
     
 }
 
+/**
+ * @brief Ajout d'une livraison en queue de file
+ * 
+ * @param f 
+ * @param livr 
+ * @return int 
+ */
 int ajoutFile(File *f, Livraison livr){
     Element * nouveau = (Element *)malloc(sizeof(Element));
     nouveau->livraison=livr;
@@ -230,7 +261,12 @@ int ajoutFile(File *f, Livraison livr){
 }
 
 
-
+/**
+ * @brief Défile et retourne la livraison en tête de file
+ * 
+ * @param f 
+ * @return Livraison* 
+ */
 Livraison * retraitFile(File *f){
     Element * curr;
     Livraison * retour;
@@ -267,7 +303,11 @@ Livraison * retraitFile(File *f){
 
 
 
-
+/**
+ * @brief Parcours et affiche le contenu de la file
+ * 
+ * @param file 
+ */
 void afficherFile(File file)
 {
     if (estFileVide(file))
@@ -285,6 +325,13 @@ void afficherFile(File file)
     }
 }
 
+/**
+ * @brief Trouve un élément qui correspond à l'identifiant
+ * 
+ * @param file 
+ * @param identifiant 
+ * @return Element* 
+ */
 Element *trouverElement(File file, char * identifiant)
 {
     if (estFileVide(file))
@@ -306,7 +353,13 @@ Element *trouverElement(File file, char * identifiant)
     return NULL;
 }
 
-
+/**
+ * @brief Copie la file origin dans la file dest
+ * 
+ * @param origin 
+ * @param dest 
+ * @return int 
+ */
 int copieFile(File origin, File * dest){
     
     for(Element * curr = origin.tete;curr!=NULL;curr=curr->suivant){
@@ -320,6 +373,14 @@ int copieFile(File origin, File * dest){
 
 }
 
+/**
+ * @brief Test si l'id existe dans la liste
+ * 
+ * @param liste 
+ * @param identifiant 
+ * @return true 
+ * @return false 
+ */
 bool trouverId(File liste,char * identifiant){
     bool trouve=false;
     for(Element * curr = liste.tete;curr!=NULL && !trouve;curr=curr->suivant){

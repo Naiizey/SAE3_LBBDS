@@ -88,44 +88,47 @@ int main(int argc, char *argv[])
     if (ret != 0)
     {
         perror("Nommage du socket échoué");
-    }
-    
-
-    //Fonction listen() - Serveur seulement
-    ret = listen(sock, 1);
-    if (ret != 0)
-    {
-        perror("Écoute échouée");
+        return EXIT_FAILURE;
     }
     else
     {
-        printf("En attente du client (telnet localhost %d)\n", temp);
+
+        //Fonction listen() - Serveur seulement
+        ret = listen(sock, 1);
+        if (ret != 0)
+        {
+            perror("Écoute échouée");
+        }
+        else
+        {
+            printf("En attente du client (telnet localhost %d)\n", temp);
+        }
+
+        //Fonction accept() - Serveur seulement
+        int size;
+        int cnx;
+        struct sockaddr conn_addr;
+        size = sizeof(conn_addr);
+        cnx = accept(sock, (struct sockaddr *)&conn_addr, (socklen_t *)&size);
+        if (cnx == -1)
+        {
+            perror("Connexion échouée");
+        }
+        else
+        {
+            printf("Connexion établie, en attente d'instructions\n");
+        }
+
+        /*
+        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+        ┃                        Écoute et réponse au client                              ┃
+        ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+        */
+
+        gestConnect(cnx, conn_addr,&listeCommande,path );
+
+        return EXIT_SUCCESS;
     }
-
-    //Fonction accept() - Serveur seulement
-    int size;
-    int cnx;
-    struct sockaddr conn_addr;
-    size = sizeof(conn_addr);
-    cnx = accept(sock, (struct sockaddr *)&conn_addr, (socklen_t *)&size);
-    if (cnx == -1)
-    {
-        perror("Connexion échouée");
-    }
-    else
-    {
-        printf("Connexion établie, en attente d'instructions\n");
-    }
-
-    /*
-    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-    ┃                        Écoute et réponse au client                              ┃
-    ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-    */
-
-    gestConnect(cnx, conn_addr,&listeCommande,path );
-
-    return EXIT_SUCCESS;
 }
 
 int collectOptions(int argc, char *argv[], lst_option options){
@@ -440,11 +443,11 @@ int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, char *
 
         if(retour < 0)//Erreurs
         {
-            snprintf(res,20,"%d\r\n",-retour);
+            snprintf(res,25,"%d LBBDP/1.0\r\n",-retour);
         }
         else//Réussite
         {
-            snprintf(res,20,"0%d\r\n",retour);
+            snprintf(res,25,"0%d LBBDP/1.0\r\n",retour);
         }
 
         write(cnx, res,20);

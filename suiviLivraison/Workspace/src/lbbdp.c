@@ -47,6 +47,7 @@ int collectOptions(int argc, char *argv[], lst_option options);
 void config(int *  capaLivraison,int *dureeJour,char * fichier,lst_option options);
 int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande,char * pathToFilec);
 cJSON * getJson(char * buf,int cnx);
+int verifConnect(cJSON * js, struct sockaddr addr, char * pathToFile, user * client);
 
 int main(int argc, char *argv[])
 {
@@ -374,35 +375,60 @@ int testConnect(lst_option options, int cnx){
     
 }
 
+/**
+ * @brief Gestion de la connexion avec un client, qui permet de récupérer les commndes et de les honorer ou non
+ * 
+ * @param cnx socket, ici il permet de lire le contenu de la demande du client  
+ * @param adrClient permet d'accéder à l'ip du client
+ * @param listeCommande liste des commandes
+ * @param pathToFile chemin vers le fichier des authentifiants
+ * @return int 
+ */
 int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, char * pathToFile){
     char buf[512];
+    char * entreeBuf;
     char res[20];
     int size, onContinue=1;
     int retour;
     while(onContinue){
-        retour= ERR_PROTOC;
+        retour=ERR_PROTOC;
         printf("buf:\n%s\n",buf);
         memset(buf,0,512);
         printf(buf);
         size=read(cnx, buf, 512);
-        if(strncmp(buf, "AUT ", 4)==0){
-            printf("Authentification...\n");
-            retour=handleAUT(getJson(buf+4,cnx), adrClient, pathToFile);
-        }else if(strncmp(buf, "NEW ", 4)==0){
-            user * client=NULL;          
-            printf("Prise en charge de commande...\n");
-            retour=handleNEW(getJson(buf+4,cnx), listeCommande, client, adrClient, pathToFile);
-        }else if(strncmp(buf, "ACT ", 4)==0){
-            printf("Actualisation commmande...\n");
-             retour=handleACT(listeCommande,cnx);
-        }else if(strncmp(buf, "REP ", 4)==0){
-            printf("Accusé de réception...\n");
-            retour=handleREP(getJson(buf+4,cnx), listeCommande);
-        }else{
-            retour=-11;
-            printf("Commande non reconnue\n");
+        entreeBuf=strstr(buf,"LBBDP/1.0\r\n");
+        if(entreeBuf!=NULL)
+        {
+            
+            if(strncmp(buf, "AUT ", 4)==0){
+                printf("Authentification...\n");
+                retour=handleAUT(getJson(entreeBuf,cnx), adrClient, pathToFile);
+            }else if(strncmp(buf, "NEW ", 4)==0){
+                user * client=NULL;          
+                printf("Prise en charge de commande...\n");
+                retour=handleNEW(getJson(entreeBuf,cnx), listeCommande, client, adrClient, pathToFile);
+            }else if(strncmp(buf, "ACT ", 4)==0){
+                printf("Actualisation commmande...\n");
+                user * client=NULL;
+                retour=verifConnect(getJson(entreeBuf,cnx), adrClient, pathToFile, client);
+                if(retour>=0)
+                    retour=handleACT(listeCommande,cnx);
+            }else if(strncmp(buf, "REP ", 4)==0){
+                user * client=NULL;
+                printf("Accusé de réception...\n");
+                retour=handleREP(getJson(entreeBuf,cnx), listeCommande,adrClient, pathToFile, client);
+            }else{
+                retour=-11;
+                printf("Commande non reconnue\n");
+            }
+            
         }
-        
+        else
+        {
+            retour=ERR_PROTOC_OPERINCONUE;
+        }
+
+
         if(retour < 0)//Erreurs
         {
             snprintf(res,20,"%d\r\n",-retour);
@@ -411,15 +437,23 @@ int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, char *
         {
             snprintf(res,20,"0%d\r\n",retour);
         }
-        
+
         write(cnx, res,20);
+        
     }
+       
 
     return retour;
 
 }
 
-
+/**
+ * @brief Get the Json object
+ * 
+ * @param buf le buffer récupérer de la lecture précédente
+ * @param cnx socket, ici il permet de lire le contenu de la demande du client  
+ * @return cJSON* 
+ */
 cJSON * getJson(char * buf, int cnx){
    
     char buffer[1024];
@@ -428,7 +462,7 @@ cJSON * getJson(char * buf, int cnx){
     long unsigned int actualLongStr=0;
     char * str_json=malloc(maxLongStr * sizeof(char));
     strcpy(str_json,"");
-    buf=strstr(buf,"LBBDP/1.0\r\n");
+    
     
     if(buf!=NULL){
         if(strlen(buf)>12){
@@ -492,9 +526,19 @@ int hereConnection(user * client, struct sockaddr addr, char * pathToMdpFile){
     return connection(client, addr, array_user, &indice_array_user, &max_array_user , pathToMdpFile);
 }
 
+/**
+ * @brief Après avoir récupérer les ou la livraison(s), on tente de se connecter et si c'est une réussite on ajoute les commandes 
+ * 
+ * @param new un json parser via cJSON
+ * @param liste liste des commandes
+ * @param cli session du client
+ * @param addr permet d'accéder à l'ip du client
+ * @param pathToFile chemin vers le fichier des authentifiants
+ * @return int 
+ */
 int handleNEW(cJSON * new,File * liste,user * cli, struct sockaddr addr,char * pathToFile ){
     if(new == NULL) return ERR_JSON_NORME;
-    int result=handleAUT(new, addr, pathToFile);
+    int result=verifConnect(new, addr, pathToFile,cli);
     if (result==0)
     {
         printf("??\n");
@@ -506,7 +550,14 @@ int handleNEW(cJSON * new,File * liste,user * cli, struct sockaddr addr,char * p
 
 
 }
-
+/**
+ * @brief Après avoir récupérer les authentifiants, on les utilises pour tenter la connexion ainsi que la création de session.
+ * 
+ * @param js un json parser via cJSON
+ * @param addr information permettant d'accéder à l'ip du client
+ * @param pathToFile chemin vers le fichier des authentifiants
+ * @return int Code réponse
+ */
 int handleAUT(cJSON * js, struct sockaddr addr, char * pathToFile){
     if(js == NULL) return ERR_JSON_NORME;
     user cli;
@@ -527,28 +578,15 @@ int handleAUT(cJSON * js, struct sockaddr addr, char * pathToFile){
 
 
 }
-
+/**
+ * @brief Permet de récupérer la liste des commandes tout en leur mettant à jour leurs états.
+ * 
+ * @param liste liste des commandes
+ * @param cnx chemin vers le fichier pour authentification
+ * @return int Code réponse
+ */
 int handleACT(File * liste, int cnx){
-    /*
-    printf("Copie avant: %d\n",*capaciteLivr);
-    afficherFile(*liste);
     
-    File pileEnvoi;
-    initialisationFile(&pileEnvoi, NULL);
-    File  display;
-    initialisationFile(&display, NULL);
-    
-    printf("Copie avant: %d\n",*capaciteLivr);
-    (*capaciteLivr)=copier_file_tr(liste,&pileEnvoi,fileAttente,maxCapacite,time_day_sec,checkDestinataire);
-
-    printf("Tri:\n");
-    afficherFile(*fileAttente);
-    printf("Copie: %d\n",*capaciteLivr);
-    afficherFile(pileEnvoi);
-    fusion(&pileEnvoi,fileAttente, &display );
-    printf("Display: \n");
-    afficherFile(display);
-    */
     File aEnvoyer;
     initialisationFile(&aEnvoyer, liste->timeDaySec, NULL);
     copieFile(*liste, &aEnvoyer);
@@ -576,7 +614,13 @@ int handleACT(File * liste, int cnx){
         return retour;
 }
 
-
+/**
+ * @brief Suppression des livraison présentes dans cette accusé et qui sont arrivées à destination 
+ * 
+ * @param liste 
+ * @param recu 
+ * @return int Code réponse
+ */
 int supprimeRecu(File * liste, File recu){
     bool bonnEtat = true;
     for(Element * curr=liste->tete; curr!=NULL && bonnEtat; curr=curr->suivant){
@@ -592,19 +636,44 @@ int supprimeRecu(File * liste, File recu){
 
 }
 
-int handleREP(cJSON * rep, File * liste){
-    printf("Début REP\n");
-    if (rep==NULL) 
-        return ERR_JSON_NORME;
-    File contenueRep;
-    initialisationFile(&contenueRep, liste->timeDaySec, NULL);
-    printf("Parcours\n");
-    int retour=parcoursPourLivraison(rep->child, &contenueRep);
-    if(retour>=0){
-        retour=supprimeRecu(liste, contenueRep);
+/**
+ * @brief Permet de récupérer un accusé de réception et de supprimer les livraison présentes dans cette accusé et qui sont arrivées à destination 
+ * 
+ * @param rep  un json parser via cJSON
+ * @param liste la file de commande
+ * @return int Code réponse
+ */
+int handleREP(cJSON * rep, File * liste, struct sockaddr addr, char * pathToFile, user * client){
+    int retour = verifConnect(rep, addr, pathToFile, client);
+    if(retour==0)
+    {
+        printf("Début REP\n");
+        if (rep==NULL) 
+            return ERR_JSON_NORME;
+        File contenueRep;
+        initialisationFile(&contenueRep, liste->timeDaySec, NULL);
+        printf("Parcours\n");
+            retour=parcoursPourLivraison(rep->child, &contenueRep);
+        if(retour>=0){
+            retour=supprimeRecu(liste, contenueRep);
+        }
     }
-
+    
     return retour;
     
 }   
 
+int verifConnect(cJSON * js, struct sockaddr addr, char * pathToFile, user * client){
+    user * newSession=IPdejaConnecte(array_user, indice_array_user, addr);
+    int result;
+    if(newSession==NULL)
+    {
+        result=handleAUT(js, addr, pathToFile);
+    }
+    else
+    {
+        result=0;
+    }
+
+    return result;
+}

@@ -7,7 +7,8 @@
 #define REUSSITE_ENATT 02
 
 #define ERR_PROTOC -10
-#define ERR_PROTOC_OPINCONUE -11
+#define ERR_PROTOC_OPERINCONUE -11
+#define ERR_PROTOC_OPTINCONUE -12
 
 #define ERR_AUTH -20
 #define ERR_AUTH_MANQUANTE -21
@@ -28,4 +29,4 @@
 int handleAUT(cJSON * js, struct sockaddr addr, char * pathToFile);
 int handleNEW(cJSON * new,File * liste,user * cli, struct sockaddr addr,char * pathToFile );
 int handleACT(File  * liste, int cnx);
-int handleREP(cJSON * rep,File * liste);
+int handleREP(cJSON * rep, File * liste, struct sockaddr addr, char * pathToFile, user * client);

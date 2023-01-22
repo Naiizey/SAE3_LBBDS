@@ -29,3 +29,6 @@ $(BIN)user.o :  $(SRC)user.c
 $(BIN)%.o : $(SRC)%.c
 	$(CC) -I $(HEADER) -o $@ -c $< $(CFLAGS)
 
+install: simulateur
+	sudo ./install/lbbdp.sh
+

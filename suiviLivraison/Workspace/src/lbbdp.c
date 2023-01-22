@@ -94,40 +94,41 @@ int main(int argc, char *argv[])
     {
 
         //Fonction listen() - Serveur seulement
-        ret = listen(sock, 1);
-        if (ret != 0)
-        {
-            perror("Écoute échouée");
-        }
-        else
-        {
-            printf("En attente du client (telnet localhost %d)\n", temp);
-        }
+        for(;;){
+            ret = listen(sock, 20);
+            if (ret != 0)
+            {
+                perror("Écoute échouée");
+            }
+            else
+            {
+                printf("En attente du client (telnet localhost %d)\n", temp);
+            }
 
-        //Fonction accept() - Serveur seulement
-        int size;
-        int cnx;
-        struct sockaddr conn_addr;
-        size = sizeof(conn_addr);
-        cnx = accept(sock, (struct sockaddr *)&conn_addr, (socklen_t *)&size);
-        if (cnx == -1)
-        {
-            perror("Connexion échouée");
+            //Fonction accept() - Serveur seulement
+            int size;
+            int cnx;
+            struct sockaddr conn_addr;
+            size = sizeof(conn_addr);
+            cnx = accept(sock, (struct sockaddr *)&conn_addr, (socklen_t *)&size);
+            if (cnx == -1)
+            {
+                perror("Connexion échouée");
+            }
+            else
+            {
+                printf("Connexion établie, en attente d'instructions\n");
+            }
+
+            /*
+            ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+            ┃                        Écoute et réponse au client                              ┃
+            ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+            */
+
+            gestConnect(cnx, conn_addr,&listeCommande,path );
         }
-        else
-        {
-            printf("Connexion établie, en attente d'instructions\n");
-        }
-
-        /*
-        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-        ┃                        Écoute et réponse au client                              ┃
-        ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-        */
-
-        gestConnect(cnx, conn_addr,&listeCommande,path );
-
-        return EXIT_SUCCESS;
+            return EXIT_SUCCESS;
     }
 }
 
@@ -401,7 +402,7 @@ int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, char *
     char buf[512];
     char * entreeBuf;
     char res[20];
-    int onContinue=1;
+    int onContinue=true;
     int retour;
     while(onContinue){
         retour=ERR_PROTOC;
@@ -429,6 +430,10 @@ int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, char *
                 user * client=NULL;
                 printf("Accusé de réception...\n");
                 retour=handleREP(getJson(entreeBuf,cnx), listeCommande,adrClient, pathToFile, client);
+            }else if(strncmp(buf, "STP ", 4)==0){
+                printf("Fermeture de connexion...\n");
+                onContinue=false;
+                close(cnx);
             }else{
                 retour=-11;
                 printf("Commande non reconnue\n");

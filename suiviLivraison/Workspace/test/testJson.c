@@ -16,7 +16,7 @@
 
 int main(int argc, char const *argv[])
 {
-    int indice;
+ 
     char buff[1024];
  
     int fd = open("test.json", O_RDONLY);
@@ -49,10 +49,14 @@ int main(int argc, char const *argv[])
         #endif
         
         File liste;
-        initFile(&liste,&indice);
+        int maxCap=15;
+        printf("initialison file..\n");
+        initialisationFile(&liste,3,&maxCap);
 
-        
-        int retour = parcours(json,&liste,NULL);
+        printf("parcours..\n");
+        int retour = parcoursPourLivraison(json->child,&liste);
+        observerTete(liste);
+        printf("Combien ?: %d\n", liste.indice);
         if(retour != -1){
             //sleep(2);
             cJSON * oui = envoiLivraison(&liste,"");

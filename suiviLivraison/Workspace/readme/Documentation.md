@@ -59,6 +59,22 @@ AUT LBBDP/1.0
 
 À noter si une erreue `50` et renvoyé par le simulateur c'est sûrement dû au fait que le fichier contenant les authentification est introuvable. Voir l'utilisation du `-f`.
 
+L'authentification peut se faire en même temps que n'importe quelle autre opération, tant que l'objet "auth" est complet et présent._Mais n'oubliez pas de séparez les objet entre eux par une `,` conformément au format json exemple_: 
+{ 
+    "livraison" : 
+    { 
+        "identifiant" : "4", 
+        "time" : 0,
+        "etat" : "En charge"
+    }, 
+    "auth": { "id" : "153", 
+    "pass" : "39715c8f486b05c362dd45fd2872dc03" } 
+
+    
+}
+
+Une fois authentifié, votre ip est enregistré et vous n'avez plus besoin de vous re-authentifier. Evidemment la fonctionnalité est surtout utiles pour les appareil qui ne change pas d'IP.
+
 _Exemple d'envoi livraison_:
 ```
 NEW LBBDP/1.0

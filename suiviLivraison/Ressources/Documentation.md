@@ -2,13 +2,13 @@
 
 ## I. Installation
 
-Pour obtenir l'éxecutable du simulateur il vous suffit d'éxécuter la commande `make` dans le repertoire Simulateur_LBBDP
+Pour obtenir l'exécutable du simulateur il vous suffit d'exécuter la commande `make` dans le répertoire Simulateur_LBBDP
 
-Pour qu'il soit éxecutable depuis n'importe quel répertoire et ajouté la documentation man, il faut exécuté la commande `make install`
+Pour qu'il soit exécutable depuis n'importe quel répertoire et ajouté la documentation man, il faut exécuter la commande `make install`
 
 ## II. Exécution
 
-`lbbdp -h` vous décris les différentes options pouvant être spécifié.
+`lbbdp -h` vous décrit les différentes options pouvant être spécifiées.
 
 ### Fichier authentification
 

@@ -394,7 +394,6 @@ int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, char *
         retour=ERR_PROTOC;
         printf("buf:\n%s\n",buf);
         memset(buf,0,512);
-        printf(buf);
         read(cnx, buf, 512);
         entreeBuf=strstr(buf,"LBBDP/1.0\r\n");
         if(entreeBuf!=NULL)

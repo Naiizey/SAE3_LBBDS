@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     addr.sin_family = AF_INET;
 
     int temp;
-    printf("Port: \n");   //Temp
+    printf("Quel port voulez-vous utiliser (ex: 8081) ? \n");   //Temp
     scanf("%d", &temp);
 
     addr.sin_port = htons(temp);
@@ -258,6 +258,16 @@ int collectOptions(int argc, char *argv[], lst_option options){
         options[0].name = NULL;
     }
 
+    //Si l'option aide est renseignée, on affiche l'aide (man lbbdp) et on quitte le programme
+    if (options[0].given == 1)
+    {
+        //On affiche l'aide
+        system("man lbbdp");
+
+        //On quitte le programme
+        exit(EXIT_SUCCESS);
+    }
+
     return EXIT_SUCCESS;
 }
 
@@ -279,7 +289,7 @@ int trouveIdOption(char name, lst_option options)
 void config(int * capaLivraison,int * dureeJour,char * fichier,lst_option options){
     (*capaLivraison)=atoi(options[1].value);
     (*dureeJour)=atoi(options[2].value);
-    printf("%d",*dureeJour);
+    //printf("%d",*dureeJour);
     strcpy(fichier,options[3].value);
 }
 

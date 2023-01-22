@@ -42,8 +42,7 @@ Les opérations contiennes chacunes une demande,la version LBBDP et un contenu e
 Chaque réquête est formulé de cette façon:
 `OPT LBBDP/1.0\r\n`
 
-où OPT est le nom de l'opérations,  
-compléments les informations supplémentaires à formulé selon les opérations.
+où OPT est le nom de l'opérations.
 
 Les différentes opérations sont définis dans (2: opérations)
 

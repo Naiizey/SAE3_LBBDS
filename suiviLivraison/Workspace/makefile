@@ -10,9 +10,9 @@ EXT= $(ROOT)ext/
 HEADER= $(ROOT)header/
 TEST= $(ROOT)test/
 
-all: simulateur
+all: lbbdp
 
-simulateur : $(SRC)lbbdp.c $(BIN)json_interpret.o $(BIN)fifo.o $(BIN)cJSON.o $(BIN)user.o $(BIN)cJSON.o
+lbbdp : $(SRC)lbbdp.c $(BIN)json_interpret.o $(BIN)fifo.o $(BIN)cJSON.o $(BIN)user.o $(BIN)cJSON.o
 	$(CC) -I $(HEADER) -o $(DEST)$@ $^ $(CFLAGS) $(CFLAGS_SSL)
 
 
@@ -29,6 +29,6 @@ $(BIN)user.o :  $(SRC)user.c
 $(BIN)%.o : $(SRC)%.c
 	$(CC) -I $(HEADER) -o $@ -c $< $(CFLAGS)
 
-install: simulateur
+install: lbbdp
 	sudo ./install/lbbdp.sh
 

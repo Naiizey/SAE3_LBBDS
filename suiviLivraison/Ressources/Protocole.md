@@ -37,31 +37,37 @@ Les requêtes contiennes chacunes une demande, des options et la version LBBDP t
 ### 1.4 En-tête des requêtes
 
 Chaque réquête est formulé de cette façon:
-`OPT compléments LBBDP/1.0`
+`OPT LBBDP/1.0\r\n`
 
 où OPT est le nom de l'opérations,  
 compléments les informations supplémentaires à formulé selon les opérations.
 
 ### 1.5 En tête des répones
-`OPT code LBBDP/1.0`
+`OPT LBBDP/1.0\r\n`
 
 où OPT est le nom de l'opérations, 
 et le CODE correspond au code réponse.
 
 ### 1.6 Le contenu
 
-Le format du contenu est en JSON, ainsi le contenu débute après l'introduction d'un premier caractère du type '{' ou '[' juste après l'en-tête.
+Le format du contenu est en JSON, ainsi le contenu débute après l'introduction d'un premier caractère du type '{' juste après le retour à la ligne de l'en-tête.Il est bien entendu refermer par un '}'.
 
 
-Permet au client de s'authentifier, lui permettant d'avoir accés aux autres requêtes.
-
+Pour ce qui est du format présenté entre ces accolades ('{' et '}'): il faut se conformer à l'habituel format json:
 https://www.json.org/json-fr.html 
+
+**;** pour la fin d'un contenu séparé d'un retour CRLF entre lui et le **json**.
+
+
 
 ## 2. Requêtes
 ---
+### 2.1 AUT : Authentification
 
+Cette opération permet de s'authentifier auprès du serveur, nous serons à partir de là reconnu à partir de notre addresse IP.
+Les opération déclencherons celle-ci dans le cas où ne sommes pas encore authentifié. Si le contenu ne poosède pas les champs nécessaires à l'authentification,nous somme refusés.
 
-### 2.1 NEW : Prise en charge d'une commande
+### 2.2 NEW : Prise en charge d'une commande
 
 Cette opération permet de faire prendre en charge une commande. 
 Pour cela il faut indiquer dans le contenu et dans une clé d'array ou attribut d'objet "numéro commande" avec comme valeur le numéro de la commande.
@@ -70,7 +76,7 @@ Ainsi, dans le contenu il demandandé de renseigné 2 propriété:
 - id
 - pass
 
-### 2.2 ACT : Actualisation des commandes 
+### 2.3 ACT : Actualisation des commandes 
 
 Cette opération permet de récupérer les états de toutes les commandes qui sont prises en charges. On peut filtrer en indiquent les états que l'ont veut récupérer.
 Pour cela il faut indiquer une des compléments ci-dessous:  
@@ -80,6 +86,9 @@ Pour cela il faut indiquer une des compléments ci-dessous:
 - locale : Les commmandes en plateforme locale
 - destinataire : Les commandes arrivées au client
 - perdu : La commande a été perdue
+
+### 2.4 REP: Accusé de réception
+Pour que le serveur puisse se débarrasser des commandes arriver à destination, le client doit renvoyer un accusé contenant ces commandes. Ainsi les places dans la liste pourront être libérés.
 
 ## 3. Réponses
 
@@ -109,33 +118,34 @@ Autrement, La requête n'a pas été prise ne compte pour un certaine raison:
 ## 4. Détails des contenus
 ---
 
-### 4.1 L'objet commande
-```json
-{  
-        "identifiant" : <"nombre">,  
-        "nombre" : <"nombre">,  
-        "time" : <"nombre">,
-        "etat" : <"enum">,   
-        "retard": <"nombre">  
-}  
-```
-`<"enum">` :"tout", "regional", "nouvelle", "local", "perdu" ou "destinataire"
 
-### 4.2 Une commande unique
+
+
+### 4.1 Une commande unique
 ```json
 {  
-    "livraison" : <"commande">
+    "livraison" : {
+        "identifiant" : <"nombre">,   
+        "time" : <"nombre">,
+        "etat" : <"enum">
+    }
 }  
 ```
-`<"commande">`: voir 4.1: objet commande
+identifiant est obligatoire.
+L'etat et time sont optionnels
+`<"commande">`: voir 4.1: objet commande 
+`<"enum">` :"regional", "en charge", "local", "destinataire"
 
 ### 4.3 liste de commandes
 ```json
-[  
-    <"commande">,  
-    <"commande">,  
-    <"commande">  
-]  
+{
+    "livraisons" : [
+        <"commande">,  
+        <"commande">,  
+        <"commande"> 
+    ]
+     
+}  
 ```
 `<"commande">`: voir 4.1: objet commande
 

@@ -388,14 +388,14 @@ int gestConnect(int cnx, struct sockaddr adrClient, File * listeCommande, char *
     char buf[512];
     char * entreeBuf;
     char res[20];
-    int size, onContinue=1;
+    int onContinue=1;
     int retour;
     while(onContinue){
         retour=ERR_PROTOC;
         printf("buf:\n%s\n",buf);
         memset(buf,0,512);
         printf(buf);
-        size=read(cnx, buf, 512);
+        read(cnx, buf, 512);
         entreeBuf=strstr(buf,"LBBDP/1.0\r\n");
         if(entreeBuf!=NULL)
         {
@@ -471,7 +471,7 @@ cJSON * getJson(char * buf, int cnx){
             strcpy(buffer,"\0");
         }
         printf("Json ?\n");
-        while(strchr(buffer,'*')==NULL){
+        while(strchr(buffer,';')==NULL){
             char * n=strchr(buffer,'\n');
          
             //nettoyage du \r

@@ -28,7 +28,7 @@ CREATE TABLE _categorie
 );
 
 CREATE TABLE _sous_categorie(
-    code_sous_cat INT,
+    code_sous_cat INT UNIQUE,
     libelle_cat VARCHAR(50) NOT NULL,
 
     code_cat INT,--sous

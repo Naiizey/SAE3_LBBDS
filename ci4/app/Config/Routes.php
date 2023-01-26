@@ -38,8 +38,6 @@ $routes->set404Override();
     $routes->get('/', 'Home');
     $routes->get('/index', 'Home::index');
 
-    
-
     $routes->get('/connexion', 'Home::connexion');
     $routes->post('/connexion', 'Home::connexion');
     $routes->get('/connexion/(401)', 'Home::connexion/$1');
@@ -114,6 +112,8 @@ $routes->set404Override();
     $routes->post('/admin/clients/bannir', 'Home::lstClients/bannir');
     $routes->get('/admin/clients/(:num)', 'Home::lstClients/bannir');
     $routes->post('/admin/clients/(:num)', 'Home::lstClients/bannir');
+
+    $routes->get('/admin/vendeurs', 'Home::lstVendeurs');
     
     $routes->get('/admin/bannissements', 'Home::bannissements');
     $routes->post('/admin/bannissements', 'Home::bannissements');

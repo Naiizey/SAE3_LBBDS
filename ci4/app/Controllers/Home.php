@@ -781,6 +781,15 @@ class Home extends BaseController
         return view("admin-vendeur/lstClients.php", $data);
     }
 
+    public function lstVendeurs()
+    {
+        $data["controller"]="Liste des vendeurs";
+        $data["role"]="admin";
+        $data["vendeurs"]=model("\App\Models\Vendeur")->findAll();
+
+        return view("admin-vendeur/lstVendeurs.php", $data);
+    }
+
     public function bannissements()
     {
         $post = $this->request->getPost();

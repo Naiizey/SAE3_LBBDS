@@ -8,22 +8,25 @@ sudo apt-get update && sudo apt-get install php8.0
 ```
 - mbstring 
 ```bash
-sudo apt-get install php-mbstring
+sudo apt-get install php8.0-mbstring
 ```
 - curl
 ```bash
-sudo apt-get install curl
+sudo apt-get install php8.0-curl
 ```
 - intl
 ```bash
-sudo apt-get install php-intl
+sudo apt-get install php8.0-intl
 ```
 - xml
 ```bash
-sudo apt-get install php-xml
+sudo apt-get install php8.0-xml
 ```
 
-
+- pgsql
+```bash
+sudo apt-get install php8.0-pgsql
+```
 
 ## Démarrage en local avec spark
 

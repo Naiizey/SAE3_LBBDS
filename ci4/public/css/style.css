@@ -4287,7 +4287,11 @@ progress::-moz-progress-bar
 .sectionAdmin div {
     display: flex;
     justify-content: space-between;
-    gap:1em;
+    gap: 1em;
+}
+
+.sectionAdmin div + div {
+    margin-top: 1em;
 }
 
 .sectionAdmin h3 {

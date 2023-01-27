@@ -2548,7 +2548,7 @@ h3 > .lienPasArticlePanier {
 }
 
 .pAvis {
-    flex-basis: 13%;
+    flex-basis: 17%;
 }
 
 .moyennesAvis progress {
@@ -2558,7 +2558,7 @@ h3 > .lienPasArticlePanier {
     border: none;
     border-radius: 4px;
     margin: .5em 0;
-    flex-basis : 80%
+    flex-basis : 76%
 }
 
 .moyennesAvis progress::-moz-progress-bar 

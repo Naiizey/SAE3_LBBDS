@@ -97,12 +97,16 @@ class Panier extends BaseController
                 model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
                 delete_cookie("token_panier");
                 $data["ecraserOuFusionner"]=true;
+                // mettre à jour la quantité dans le panier
+                $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
             } elseif (isset($get["Ignorer"]) && $get["Ignorer"]==1 ) {
                 session()->set("ignorer",true);
             } elseif (isset($get["Confirmer"]) && $get["Confirmer"]==1 ) {
                 model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
                 delete_cookie("token_panier");
                 $data["ecraserOuFusionner"]=true;
+                // mettre à jour la quantité dans le panier
+                $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
             }
         }
         $data["controller"] = "Panier";

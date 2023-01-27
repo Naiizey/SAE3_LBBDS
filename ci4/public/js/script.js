@@ -1194,7 +1194,9 @@ const filterUpdate = function(formFilter,champRecherche,listeProduit,suppression
     this.send = async (replace=true) => {
         //Récupère les valeurs des filtres et transformation en string de type url à laquelle ajoute la recherche
         let champsGetF = new URLSearchParams(new FormData(self.formF));
-        let champsGetT = new URLSearchParams(new FormData(self.formT));
+        let formChampsGetT = new FormData(self.formT);
+        formChampsGetT.append("Ordre", document.querySelector("#ordre").value);
+        let champsGetT = new URLSearchParams(formChampsGetT);
 
         if(!self.champRecherche.value==""){
             champsGetF.append("search",self.champRecherche.value);

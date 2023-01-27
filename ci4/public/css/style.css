@@ -2984,8 +2984,8 @@ main#Catalogue{
     left: 0;
 }
 
-.partie-tris {
-    max-height: 15vh;
+.partie-tris, .liste-tris{
+    height: fit-content;
 }
 
 .partie-tris form {

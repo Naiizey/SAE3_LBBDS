@@ -1191,10 +1191,12 @@ const filterUpdate = function(formFilter,champRecherche,listeProduit,suppression
     this.currPage = 1//parseInt(document.querySelector("#catalogue-current-page").textContent);
     //Permet d'éviter les problèmes de scope
     const self = this;
-        this.send = async (replace=true) => {
+    this.send = async (replace=true) => {
         //Récupère les valeurs des filtres et transformation en string de type url à laquelle ajoute la recherche
         let champsGetF = new URLSearchParams(new FormData(self.formF));
-        let champsGetT = new URLSearchParams(new FormData(self.formT));
+        let formChampsGetT = new FormData(self.formT);
+        formChampsGetT.append("Ordre", document.querySelector("#ordre").value);
+        let champsGetT = new URLSearchParams(formChampsGetT);
 
         if(!self.champRecherche.value==""){
             champsGetF.append("search",self.champRecherche.value);
@@ -1251,7 +1253,10 @@ const filterUpdate = function(formFilter,champRecherche,listeProduit,suppression
     });
 
     Array.from(this.formT.elements).forEach((el) => {
-        el.addEventListener("change", () => this.send());
+        if(el.type == "radio")
+            el.addEventListener("change", () => this.send());
+        else if(el.type == "button")
+            el.addEventListener("click", () => this.send());
     });
 
     this.suppressionFiltre.addEventListener('click', (event) => {
@@ -1283,6 +1288,22 @@ function changeOnglet() {
             }
             }
         );
+    }
+}
+
+function switchOrder(){
+    let switchButt = document.querySelector(".partie-tris form #ordre");
+    switchButt.addEventListener("click", (e) => switchContent(switchButt));
+}
+
+function switchContent(button){
+    if(button.textContent == "↓ Croissant"){
+        button.textContent = "↑ Décroissant";
+        button.value = "DESC";
+    }
+    else if(button.textContent == "↑ Décroissant"){
+        button.textContent = "↓ Croissant";
+        button.value = "ASC";
     }
 }
 

@@ -21,7 +21,7 @@ typedef user * arrayUser;
 char * getIp(struct sockaddr adr);
 void md5_hasher(char *string, char *hash);
 int verify_password(char *path, char *id, char *hashedPass);
-int connection(user * client, struct sockaddr addr, arrayUser arr, int *ind, char * mdpFile);
+int connection(user * client, struct sockaddr addr, arrayUser arr, int *ind,int * max, char * mdpFile);
 void * init_array_session(int max_array);
 user * IPdejaConnecte(arrayUser arr,int ind,struct sockaddr adr);
 

@@ -1,14 +1,14 @@
 { 
     "livraisons" : [ 
     { 
-        "identifiant" : 4, 
+        "identifiant" : "4", 
         "nombre" : 5, 
         "time" : 0,
         "etat" : "En charge", 
         "retard": 2
     }, 
     { 
-        "identifiant" : 2, 
+        "identifiant" : "2", 
         "nombre" : 5, 
         "time" : 0, 
         "etat" : "En charge", 
@@ -16,7 +16,7 @@
     } 
     , 
     { 
-        "identifiant" : 19, 
+        "identifiant" : "19", 
         "nombre" : 5, 
         "time" : 0, 
         "retard": 2 

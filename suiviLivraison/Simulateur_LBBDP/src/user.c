@@ -73,25 +73,32 @@ user * IPdejaConnecte(arrayUser arr,int ind,struct sockaddr adr){
  * @param new 
  * @return char* 
  */
-char * addSession(arrayUser arr,int * ind,user new, int max_array){
+char * addSession(arrayUser arr,int * ind,user new, int * max_array){
     if(arr != NULL){
+        printf("Poursuite connection...1\n");
         bool trouve=false;
         for(int i=0;i<(*ind) && !trouve;i++){
             trouve=(arr[*ind].id==new.id);
         }
+        printf("Poursuite connection...2, %d, %d, %d\n", (*ind), trouve, *max_array);
         if(trouve){
             return NULL;
         }else {
-            if((*ind)>=max_array){
-                max_array=max_array+EXTENSION;
-                arr = realloc(arr, max_array * sizeof(user));
+            printf("Poursuite connection...3\n");
+            if((*ind)>=(*max_array)){
+                (*max_array)=(*max_array)+EXTENSION;
+                printf("Poursuite connection...33\n");
+                arr =(user *)realloc(arr, (*max_array) * sizeof(user));
+                printf("Poursuite connection...37\n");
 
             }
+            printf("Poursuite connection...4\n");
+            
             arr[(*ind)]=new;
             (*ind)=(*ind)+1;
             return new.id;
         }
-            
+         printf("Poursuite connection...5\n");
         
     }else
         return NULL;
@@ -130,33 +137,36 @@ void md5_hasher(char *string, char *hash)
 int verify_password(char *path, char *id, char *hashedPass){
     printf("Vérification mot de passe..\n");
     FILE *fp;
-    
+    int retour;
     //Création du buffer qui recevra les caractères lus
     char buffer[size];
 
     //Ouverture du fichier en read
-    fp=fopen(path, "r+");
+    fp=fopen(path, "r");
+     
     if(fp != NULL){
         //Lecture du fichier avec les caractères mis dans le buffer
+        
         if(fread(buffer, size, 1, fp) >=0){
             //Si le buffer contient le mot de pass hashé ainsi que l'id, return vrai
             //TODO: strstr pas adapté
+            
             if(strstr(buffer, hashedPass) != NULL && strstr(buffer, id) != NULL){
-                return 0;
+                retour= 0;
             }else{
-                return -22;
+                retour= -22;
             }
         }else{
             printf("Problème lecture fichier\n");
-            return -50;
+            retour= -50;
         }   
-            
+        fclose(fp);
     }else{
         printf("Problème ouverture fichier\n");
-        return -50;
+        retour= -50;
     }
-        
     
+    return retour;
 
    
 
@@ -170,16 +180,25 @@ int verify_password(char *path, char *id, char *hashedPass){
  * @return true 
  * @return false 
  */
-int connection(user * client, struct sockaddr addr, arrayUser arr, int *ind, char * mdpFile){
+int connection(user * client, struct sockaddr addr, arrayUser arr, int *ind,int *max, char * mdpFile){
+    
+    printf("%s %s\n",client->id, client->pass);
+    int retour=(client->id == NULL || client->pass == NULL)?-21:0;
+    printf("%d",retour);
     printf("Connection en cours...\n");
-    int retour=verify_password(mdpFile,client->id,client->pass);
     if(retour==0){
-        client->session=time(NULL);
-        client->addr=addr;
-        return  (addSession(arr,ind,*client,20)!=NULL)?0:-50;
-    }else{
-        return retour;
+        retour=verify_password(mdpFile,client->id,client->pass);
+        if(retour==0){
+            client->session=time(NULL);
+            client->addr=addr;
+            printf("Connection en cours...7\n");
+            retour = (addSession(arr,ind,*client,max)!=NULL)?0:-50;
+            printf("Connection en cours...8\n");
+        }
     }
+     
+    
+    return retour;
 }
 
 

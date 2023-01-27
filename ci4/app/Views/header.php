@@ -85,35 +85,33 @@
                     <?php if ($estVendeur): ?> <?= "divHeaderVendeur" ?>
                     <?php endif; ?>
                 <?php endif; ?> ">
-            <?php if ($controller != "Panier" && $controller != "Panier (Vide)" && $controller != "Compte Redirection" && $controller != "Livraisons" && $controller != "Paiement" && $controller != "Validation"): ?>
-                    <?php //TODO:Si admin ou vendeur, changer lien logo menu ?>
+                <?php if ($controller != "Panier" && $controller != "Panier (Vide)" && $controller != "Compte Redirection" && $controller != "Livraisons" && $controller != "Paiement" && $controller != "Validation"): ?>
                     <?php if (isset($role)) : ?>
                         <?php if ($role == "admin") : ?>
                             <a class="lienAlizon" href="<?= base_url() ?>/admin"> <!-- Lien accueil -->
-                            <?php include(dirname(__DIR__,2)."/public/images/header/logo.svg")?>
-                            <h1>Alizon</h1>
+                                <?php include(dirname(__DIR__,2)."/public/images/header/logo.svg")?>
+                                <h1>Alizon</h1>
                             </a>
                         <?php endif; ?>
-                    <?php elseif(isset($estVendeur)):?>
+                    <?php elseif(isset($estVendeur)): ?>
                         <?php if($estVendeur):?>
                             <a class="lienAlizon" href="<?= base_url() ?>/vendeur/import"> <!-- Lien accueil -->
-                            <?php include(dirname(__DIR__,2)."/public/images/header/logo.svg")?>
-                            <h1>Alizon</h1>
+                                <?php include(dirname(__DIR__,2)."/public/images/header/logo.svg")?>
+                                <h1>Alizon</h1>
                             </a>
                         <?php endif; ?>
-                    <?php else : ?>
+                    <?php else: ?>
                         <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
                             <?php include(dirname(__DIR__,2)."/public/images/header/logo.svg")?>
                             <h1>Alizon</h1>
                         </a>
                     <?php endif; ?>
-
-            <?php else : ?>
-                <a class="lienAlizonSuivi" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
+                <?php else: ?>
+                    <a class="lienAlizonSuivi" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
                         <?php include(dirname(__DIR__,2)."/public/images/header/logo.svg")?>
                         <h1>Alizon</h1>
                     </a>
-            <?php endif; ?>
+                <?php endif; ?>
                 <?php if ($controller == "Panier" || $controller == "Panier (Vide)" || $controller == "Compte Redirection" || $controller == "Livraisons" || $controller == "Facture" || $controller == "Paiement" || $controller == "Validation"): ?>
                     <div class="divSuivi">
                         <div class="<?= (($controller == "Panier" )?"etat-courant-commande":"") ?>">

@@ -42,11 +42,19 @@ CREATE TABLE _compte
 (
     num_compte SERIAL PRIMARY KEY,
     --code_tarif_liv INTEGER NOT NULL,
-    nom_compte VARCHAR(50) NOT NULL,
-    prenom_compte VARCHAR(50) NOT NULL,
     pseudo VARCHAR(30) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     mot_de_passe VARCHAR(60) NOT NULL
+);
+
+CREATE TABLE _client
+(
+    num_compte INTEGER PRIMARY KEY,
+    nom_compte VARCHAR(50) NOT NULL,
+    prenom_compte VARCHAR(50) NOT NULL,
+
+    CONSTRAINT _compte_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte)
+
 );
 
 CREATE TABLE _adresse
@@ -257,7 +265,7 @@ CREATE TABLE _pouce
     CONSTRAINT _pouce_pk PRIMARY KEY (num_avis, num_compte),
 
     CONSTRAINT _pouce_produit_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis),
-    CONSTRAINT _pouce_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte)
+    CONSTRAINT _pouce_client_fk FOREIGN KEY (num_compte) REFERENCES _client(num_compte)
 );
 
 
@@ -349,15 +357,8 @@ ALTER TABLE _produit ADD CONSTRAINT _produit_sous_categorie_fk FOREIGN KEY (code
 ALTER TABLE _categorie ADD CONSTRAINT _categorie_tva_fk FOREIGN KEY (cat_tva) REFERENCES _tva(cat_tva);
 
 
-/*--Association 1..* entre _panier et _compte (possede) ✅
-ALTER TABLE _compte ADD COLUMN num_panier INT;
-ALTER TABLE _compte ADD CONSTRAINT _compte_panier_fk FOREIGN KEY (num_panier) REFERENCES _panier(num_panier);
-*/
-
---Association 0.1..1.0 entre _panier et _compte (utilise) ✅
-
 --ALTER TABLE _panier ADD CONSTRAINT _panier_pk PRIMARY KEY (num_compte);
-ALTER TABLE _panier_client ADD CONSTRAINT _panier_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+ALTER TABLE _panier_client ADD CONSTRAINT _panier_compte_fk FOREIGN KEY (num_compte) REFERENCES _client(num_compte);
 
 -- PRIMARY KEY _panier_visiteur
 --ALTER TABLE _panier_visiteur ADD CONSTRAINT _panier_visiteur_pk PRIMARY KEY (num_compte);
@@ -371,7 +372,7 @@ ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_fk FOREIGN KEY (id_a) REF
 ALTER TABLE _retour ADD CONSTRAINT _retour_commande_fk FOREIGN KEY (num_commande) REFERENCES _commande(num_commande);
 
 --Association 1..* entre _compte et _avoirs () ✅
-ALTER TABLE _avoirs ADD CONSTRAINT _avoirs_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+ALTER TABLE _avoirs ADD CONSTRAINT _avoirs_compte_fk FOREIGN KEY (num_compte) REFERENCES _client(num_compte);
 
 
 
@@ -395,7 +396,7 @@ ALTER TABLE _sous_categorie ADD CONSTRAINT _sous_categorie_categorie_code_cat_fk
 ALTER TABLE _commande ADD CONSTRAINT _commande_adresse_livraison_fk FOREIGN KEY (id_a) REFERENCES _adresse_livraison(id_adresse_livr);
 
 --Association * -- 1 entre _commande et _compte
-ALTER TABLE _commande ADD CONSTRAINT fk_commande_compte FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+ALTER TABLE _commande ADD CONSTRAINT fk_commande_compte FOREIGN KEY (num_compte) REFERENCES _client(num_compte);
 
 -- Association 1..0.3 entre avis et image_avis
 ALTER TABLE _image_avis ADD CONSTRAINT _image_avis_avis_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
@@ -412,7 +413,7 @@ ALTER TABLE _note
     --containte avec _produit (recoit)
     ADD CONSTRAINT _note_produit_fk FOREIGN KEY (id_prod) REFERENCES _produit(id_prod),
     --contrainte avec _compte (donne)
-    ADD CONSTRAINT _note_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+    ADD CONSTRAINT _note_client_fk FOREIGN KEY (num_compte) REFERENCES _client(num_compte);
 
 
 
@@ -435,8 +436,8 @@ ALTER TABLE _code_reduction ADD CONSTRAINT _code_reduction_duree_fk FOREIGN KEY 
 -- association entre _sanction_temporaire et _duree
 ALTER TABLE _sanction_temporaire ADD CONSTRAINT _sanction_temporaire_duree_fk FOREIGN KEY (id_duree) REFERENCES _duree(id_duree);
 
--- asociation entre _sanction_temporaire et _compte
-ALTER TABLE _sanction_temporaire ADD CONSTRAINT _sanction_temporaire_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+-- asociation entre _sanction_temporaire et _client
+ALTER TABLE _sanction_temporaire ADD CONSTRAINT _sanction_temporaire_client_fk FOREIGN KEY (num_compte) REFERENCES _client(num_compte);
 
 -- Association *..1 entre avis et signalement 
 ALTER TABLE _signalement ADD COLUMN num_avis INT NOT NULL;
@@ -444,7 +445,7 @@ ALTER TABLE _signalement ADD CONSTRAINT _signalement_avis_fk FOREIGN KEY (num_av
 
 -- Association *..1 entre _signalement et _compte
 ALTER TABLE _signalement ADD COLUMN num_compte INT NOT NULL;
-ALTER TABLE _signalement ADD CONSTRAINT _signalement_compte_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte);
+ALTER TABLE _signalement ADD CONSTRAINT _signalement_client_fk FOREIGN KEY (num_compte) REFERENCES _client(num_compte);
 
 /* -----------------------------------------------------------
 -                  TRIGGER DE CONTRAINTES:                   -
@@ -480,7 +481,7 @@ CREATE OR REPLACE FUNCTION creerPremierPanier() RETURNS TRIGGER AS
         return new;
     end;
     $$ language plpgsql;
-CREATE tRIGGER afterInsertClient AFTER INSERT ON _compte FOR EACH ROW EXECUTE PROCEDURE creerPremierPanier ();
+CREATE tRIGGER afterInsertClient AFTER INSERT ON _client FOR EACH ROW EXECUTE PROCEDURE creerPremierPanier ();
 
 
 CREATE OR REPLACE FUNCTION creerPanier() RETURNS TRIGGER AS

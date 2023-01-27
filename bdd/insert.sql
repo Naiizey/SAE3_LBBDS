@@ -1,11 +1,17 @@
 SET SCHEMA 'sae3';
 
-insert into sae3._compte ( nom_compte, prenom_compte, pseudo, email, mot_de_passe) values ('MonMDPcest', 'NEk5aHqcPYz3Ff5', 'testMotDePasseVisible', 'test@tst.de', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
+insert into sae3._compte ( pseudo, email, mot_de_passe) values ( 'testMotDePasseVisible', 'test@tst.de', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
 
 
-INSERT INTO _compte (nom_compte, prenom_compte, pseudo, email, mot_de_passe) VALUES ('toast', 'deburn', 'test', 'test@gmail.com', 'test152687');
-INSERT INTO _compte (nom_compte, prenom_compte, pseudo, email, mot_de_passe) VALUES ('illoutchine','nassima','nassima_illoutchine', 'nassima@gmail.com', 'test152687');
-INSERT INTO _compte (nom_compte, prenom_compte, pseudo, email, mot_de_passe) VALUES ('moigne','tania','taniamoigne666999', 'temoigne@gmail.com', 'test152687');
+INSERT INTO _compte (pseudo, email, mot_de_passe) VALUES ( 'test', 'test@gmail.com', 'test152687');
+INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('nassima_illoutchine', 'nassima@gmail.com', 'test152687');
+INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('taniamoigne666999', 'temoigne@gmail.com', 'test152687');
+
+INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (1,'MonMDPcest', 'NEk5aHqcPYz3Ff5');
+INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (2,'toast', 'deburn');
+INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (3,'illoutchine', 'nassima');
+INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (4,'moigne', 'tania');
+
 
 INSERT INTO _tva VALUES (1,0.20);
 INSERT INTO _tva VALUES (2,0.50);

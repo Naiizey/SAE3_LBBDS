@@ -189,7 +189,7 @@ DECLARE
 
     BEGIN
 
-        INSERT INTO sae3._commande(num_commande, date_commande, id_a,num_compte) VALUES (new.num_commande, current_date,new.id_a,new.num_compte);
+        INSERT INTO sae3._commande(num_commande, date_commande, id_a,num_compte,id_reduction) VALUES (new.num_commande, current_date,new.id_a,new.num_compte,new.id_reduction);
 
 
         PERFORM num_panier FROM sae3._panier_client natural join sae3._refere where num_compte=new.num_compte;

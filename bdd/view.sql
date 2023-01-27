@@ -87,11 +87,11 @@ CREATE OR REPLACE VIEW commande_list_client AS
 
 CREATE OR REPLACE VIEW commande_list_produits_client AS
     WITH min_image AS (SELECT min(num_image) num_image, id_prod FROM _image_prod  group by id_prod )
-    SELECT num_commande,id_prod, intitule_prod, lien_image lienImage,description_prod,num_compte,date_commande,date_arriv,round(prix_fixeettc::numeric,2) prix_ttc,round((prix_fixeettc/(1+_tva.taux_tva))::numeric,2) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande NATURAL JOIN _image_prod NATURAL JOIN _refere_commande NATURAL JOIN _produit natural join _code_reduction natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva
+    SELECT num_commande,id_prod, intitule_prod, lien_image lienImage,description_prod,num_compte,date_commande,date_arriv,round(prix_fixeettc::numeric,2) prix_ttc,round((prix_fixeettc/(1+_tva.taux_tva))::numeric,2) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande), montant_reduction, pourcentage_reduction FROM _commande LEFT JOIN _code_reduction ON _commande.id_reduction = _code_reduction.id_reduction  NATURAL JOIN _image_prod NATURAL JOIN _refere_commande NATURAL JOIN _produit   natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva --,, etat
     WHERE num_image IN (SELECT num_image FROM min_image);
 
 CREATE OR REPLACE VIEW insert_commande AS
-    SELECT num_commande,num_compte,id_a FROM _commande NATURAL JOIN _panier_client;
+    SELECT num_commande,num_compte,id_a,id_reduction FROM _commande NATURAL JOIN _panier_client;
 
 
 

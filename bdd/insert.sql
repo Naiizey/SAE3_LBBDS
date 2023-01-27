@@ -333,7 +333,7 @@ INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (2, 32, CURRVAL('sa
 INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a) VALUES (1,'1', '2018-01-01', null, null, null, null, 1);
 INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a) VALUES (1,'2', '2018-01-01', '2018-01-01', '2018-01-01', null, null, 2);
 INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a) VALUES (1,'3', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 3);
-INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a) VALUES (1,'4', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 1);
+INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a,id_reduction) VALUES (1,'4', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 1,1);
 
 
 INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (5, 18, '1',5);

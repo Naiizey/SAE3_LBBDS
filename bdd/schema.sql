@@ -122,7 +122,8 @@ CREATE TABLE _commande
     date_plateformeLoc DATE,
     date_arriv DATE,
     id_a INT NOT NULL, --attendu_a
-    num_compte INT NOT NULL --fait_par
+    num_compte INT NOT NULL, --fait_par
+    id_reduction INT --reduction
 
 ) ;
 

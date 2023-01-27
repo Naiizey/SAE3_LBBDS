@@ -192,7 +192,7 @@ class Home extends BaseController
         $data['erreurs'] = $issues;
 
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
-        $data['identifiant'] = (isset($_POST['prenom'])) ? $_POST['prenom'] : "";
+        $data['identifiant'] = (isset($_POST['identifiant'])) ? $_POST['identifiant'] : "";
         $data['email'] = (isset($_POST['email'])) ? $_POST['email'] : "";
         $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
         $data['confirmezMotDePasse'] = (isset($_POST['confirmezMotDePasse'])) ? $_POST['confirmezMotDePasse'] : "";

@@ -17,7 +17,7 @@
                     <?= afficheErreurs($erreurs, 'redirection'); ?>
                     <form action='<?= current_url() ?>' method="post">
                         <label>Identifiant<span class="requis">*</span> :</label>
-                        <input type="text" name="pseudo" required="required" value="<?= $identifiant?>"/>
+                        <input type="text" name="identifiant" required="required" value="<?= $identifiant?>"/>
                         <?=
                             afficheErreurs($erreurs, 3) .
                             afficheErreurs($erreurs, 8)

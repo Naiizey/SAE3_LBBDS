@@ -107,7 +107,7 @@ class Home extends BaseController
         return view('client/connexion.php', $data);
     }
 
-    public function inscription()
+    public function inscriptionClient()
     {
         $post=$this->request->getPost();
         $issues=[];
@@ -118,7 +118,7 @@ class Home extends BaseController
             $auth = service('authentification');
             $user= new \App\Entities\Client();
             $user->fill($post);
-            $issues=$auth->inscription($user, $post['confirmezMotDePasse']);
+            $issues=$auth->inscriptionClient($user, $post['confirmezMotDePasse']);
 
             if(empty($issues))
             {
@@ -141,12 +141,12 @@ class Home extends BaseController
                 $data["controller"]= "Compte Redirection";
             } else {
                 $issues['redirection']="Vous devez vous connectez pour accéder à cette espace";
-                $data["controller"]= "Inscription";
+                $data["controller"]= "Inscription Client";
             }
         } 
         else 
         {
-            $data["controller"]= "Inscription";
+            $data["controller"]= "Inscription Client";
         }
 
         $data['erreurs'] = $issues;
@@ -160,6 +160,44 @@ class Home extends BaseController
         $data['confirmezMotDePasse'] = (isset($_POST['confirmezMotDePasse'])) ? $_POST['confirmezMotDePasse'] : "";
 
         return view('client/inscription.php', $data);
+    }
+
+    public function inscriptionVendeur()
+    {
+        $post=$this->request->getPost();
+        $issues=[];
+
+        if (!empty($post)) 
+        {
+            //Vérification des champs du post (attributs de l'entité Client) + confirmation mot de passe
+            $auth = service('authentification');
+            $user= new \App\Entities\Vendeur();
+            $user->fill($post);
+            $issues=$auth->inscriptionVendeur($user, $post['confirmezMotDePasse']);
+
+            if(empty($issues))
+            {
+                if (!session()->has("referer_redirection")) {
+                    return redirect()->to("/");
+                } else {
+                    $redirection=session()->get("referer_redirection");
+                    session()->remove("referer_redirection");
+                    return redirect()->to($redirection);
+                }
+            }
+        }
+        
+        $data['role'] = "admin";
+        $data["controller"]= "Inscription Vendeur";
+        $data['erreurs'] = $issues;
+
+        //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
+        $data['identifiant'] = (isset($_POST['prenom'])) ? $_POST['prenom'] : "";
+        $data['email'] = (isset($_POST['email'])) ? $_POST['email'] : "";
+        $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
+        $data['confirmezMotDePasse'] = (isset($_POST['confirmezMotDePasse'])) ? $_POST['confirmezMotDePasse'] : "";
+
+        return view('vendeur/inscription.php', $data);
     }
 
     public function produit($idProduit = null, $numAvisEnValeur = null)
@@ -579,7 +617,7 @@ class Home extends BaseController
         $data["controller"]= "Commandes Vendeur";
         $data['commandesVend']=model("\App\Models\LstCommandesVendeur")->findAll();
         $data['estVendeur']=$estVendeur;
-        return view('admin-vendeur/lstCommandesVendeur.php', $data);
+        return view('admin/lstCommandesVendeur.php', $data);
     }
 
     public function paiement()
@@ -682,7 +720,7 @@ class Home extends BaseController
     {
         $data["role"] = "admin";
         $data["controller"] = "Administration";
-        return view("admin-vendeur/admin.php", $data);
+        return view("admin/admin.php", $data);
     }
 
     public function lstSignalements($id_signal = null)
@@ -708,7 +746,7 @@ class Home extends BaseController
             $data["produitSignalements"][$i] = $data["produitSignalements"][$i]->id_prod;
         }
 
-        return view("admin-vendeur/lstSignalements.php", $data);
+        return view("admin/lstSignalements.php", $data);
     }
 
     public function lstAvis($id_avis = null)
@@ -723,7 +761,7 @@ class Home extends BaseController
         $data["controller"] = "Administration - Avis";
         $data["avis"] = model("\App\Models\LstAvis")->findAll();
 
-        return view("admin-vendeur/lstAvis.php", $data);
+        return view("admin/lstAvis.php", $data);
     }
 
     public function destroySession()
@@ -778,16 +816,16 @@ class Home extends BaseController
                 }
             }
         }
-        return view("admin-vendeur/lstClients.php", $data);
+        return view("admin/lstClients.php", $data);
     }
 
     public function lstVendeurs()
     {
         $data["controller"]="Liste des vendeurs";
         $data["role"]="admin";
-        $data["vendeurs"]=model("\App\Models\Vendeur")->findAll();
+        $data["vendeurs"]= array(); //model("\App\Models\Vendeur")->findAll();
 
-        return view("admin-vendeur/lstVendeurs.php", $data);
+        return view("admin/lstVendeurs.php", $data);
     }
 
     public function bannissements()
@@ -804,6 +842,6 @@ class Home extends BaseController
         $data["role"]="admin";
         $data["bannissements"]=model("\App\Models\SanctionTemp")->TimeoutsActuels();
 
-        return view("admin-vendeur/bannissements.php",$data);
+        return view("admin/bannissements.php",$data);
     }
 }

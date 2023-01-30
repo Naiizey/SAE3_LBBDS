@@ -854,6 +854,29 @@ function lstClients(){
 }
 
 /*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                         Liens aux lignes de lstVendeurs                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+function lstVendeurs()
+{
+    //Récupération de toutes les lignes de la liste des signalements
+    var lignes = document.getElementsByClassName("lignesVendeurs");
+
+    //Récupération de tous les numéros de produit associés au signalement et donc à l'avis
+    var numVendeur = document.getElementsByClassName("numVendeur");
+
+    for (let numLigne = 0; numLigne < lignes.length; numLigne++)
+    {
+        let ligneA = lignes.item(numLigne);
+        let idVendeur = numProduit.item(numLigne).textContent;
+
+        //Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du produit associé au signalement (ancre avis pour accéder à l'avis directement)
+        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/admin/vendeurs/${idVendeur}`;});
+    }
+}
+
+/*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                      CGU                                        ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛

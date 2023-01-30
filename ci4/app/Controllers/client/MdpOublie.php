@@ -1,7 +1,8 @@
-<?php namespace App\Controllers;
+<?php namespace App\Controllers\client;
 
 use CodeIgniter\CodeIgniter;
 use Config\Services;
+use App\Controllers\BaseController;
 use Exception;
 
 class MdpOublie extends BaseController

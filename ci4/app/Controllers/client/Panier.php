@@ -1,8 +1,9 @@
-<?php namespace App\Controllers;
+<?php namespace App\Controllers\client;
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Cookie\Cookie;
 use Config\Services;
+use App\Controllers\BaseController;
 use Exception;
 
 class Panier extends BaseController

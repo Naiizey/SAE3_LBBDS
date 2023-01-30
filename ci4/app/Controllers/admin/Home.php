@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\admin;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Validation\Validation;
+use App\Controllers\BaseController;
 use Exception;
 
-class Admin extends BaseController
+class Home extends BaseController
 {
     public $feedback;
-
 
     public function index()
     {

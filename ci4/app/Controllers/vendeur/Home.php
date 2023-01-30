@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\vendeur;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Validation\Validation;
+use App\Controllers\BaseController;
 use Exception;
 
 class Vendeur extends BaseController

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\client;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Validation\Validation;
+use App\Controllers\BaseController;
 use Exception;
 
-class Client extends BaseController
+class Home extends BaseController
 {
     public $feedback;
 

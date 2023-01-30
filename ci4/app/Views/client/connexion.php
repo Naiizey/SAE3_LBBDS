@@ -1,4 +1,4 @@
-<?php require __DIR__ . "/../header.php";
+<?php require __DIR__ . "/header.php"; 
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -35,4 +35,4 @@
                 <a href="<?= base_url() ?>/mdpOublie">Mot de passe oublié ?</a>
             </div>
         </main>
-<?php require __DIR__ . "/../footer.php"; ?>
+<?php require __DIR__ . "/footer.php"; ?>

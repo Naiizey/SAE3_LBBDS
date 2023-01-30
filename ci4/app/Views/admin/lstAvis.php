@@ -40,7 +40,7 @@
             <?php endif; ?>
         </div>
     </main>
-<?php require __DIR__ . "/../footer.php";?>
+<?php require __DIR__ . "/footer.php";?>
 <script>
     lstAvisSignalements();
 </script>

@@ -51,10 +51,10 @@ $routes->post('/connexion/(401)', 'client\Home::connexion/$1');
 $routes->get('/connexion/retourProduit/(:num)', 'client\Home::produit/$1' ,['filter' => 'connexion']);
 $routes->get('/connexion/retourPanier', 'client\Panier::getProduitclient\Panierclient\Home' ,['filter' => 'connexion']);
 
-$routes->get('/inscription', 'client\Home::inscriptionClient');
-$routes->post('/inscription', 'client\Home::inscriptionClient');
-$routes->get('/inscription/(401)', 'client\Home::inscriptionClient/$1');
-$routes->post('/inscription/(401)', 'client\Home::inscriptionClient/$1');
+$routes->get('/inscription', 'client\Home::inscription');
+$routes->post('/inscription', 'client\Home::inscription');
+$routes->get('/inscription/(401)', 'client\Home::inscription/$1');
+$routes->post('/inscription/(401)', 'client\Home::inscription/$1');
 
 $routes->get('/mdpOublie', 'client\MdpOublie::mdpOublie');
 $routes->post('/mdpOublie', 'client\MdpOublie::mdpOublie');

@@ -1,4 +1,4 @@
-<?php require("header.php");
+<?php __DIR__ . "/../header.php";
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -11,7 +11,7 @@
 ?>
         </header>
             <?php require("formAdresse.php"); ?>
-<?php require("footer.php"); ?>
+<?php __DIR__ . "/../footer.php" ?>
 <script>
     var js = new formAdresseConstructor();
 </script>

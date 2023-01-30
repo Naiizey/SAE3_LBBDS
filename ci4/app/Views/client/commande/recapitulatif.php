@@ -1,4 +1,4 @@
-<?php require("header.php"); ?>
+<?php require __DIR__ . "/../header.php"; ?>
 <main>
     <div class="sectionCredit divCredit divEspaceCli recap">
         <h2>Récapitulatif</h2>

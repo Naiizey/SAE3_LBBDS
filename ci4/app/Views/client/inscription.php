@@ -1,4 +1,4 @@
-<?php require __DIR__ . "/../header.php";
+<?php require __DIR__ . "/header.php"; 
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -54,4 +54,4 @@
                 </div>
             </div>
         </main>
-<?php require __DIR__ . "/../footer.php"; ?>
+<?php require __DIR__ . "/footer.php"; ?>

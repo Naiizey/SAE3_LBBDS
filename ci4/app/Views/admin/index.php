@@ -29,4 +29,4 @@
                 </section>
             </div>
         </main>
-<?php  require __DIR__ . "/../footer.php"; ?>
+<?php  require __DIR__ . "/footer.php"; ?>

@@ -86,7 +86,7 @@
             </form>
         </div>
     </div>
-<?php require __DIR__ . "/../footer.php";?>
+<?php require __DIR__ . "/footer.php";?>
 <script>
     <?php if(isset($bannir)): ?>
         var bannir = <?= $bannir ?>;

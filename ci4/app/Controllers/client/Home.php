@@ -287,7 +287,7 @@ class Home extends BaseController
             {
                 return redirect()->to("/produit/$idProduit#avis");
             } else {
-                return view('produit.php', $data);
+                return view('client/produit.php', $data);
             }
         }
     }
@@ -334,7 +334,7 @@ class Home extends BaseController
         $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
         
         //Chargement des produits selon les filtres
-        $result=(new \App\Controllers\Produits())->getAllProduitSelonPage($page, self::NBPRODSPAGECATALOGUE, $filters);
+        $result=(new \App\Controllers\client\Produits())->getAllProduitSelonPage($page, self::NBPRODSPAGECATALOGUE, $filters);
         $data['prods']=$result["resultat"];
         $data['estDernier']=$result["estDernier"];
         
@@ -342,7 +342,7 @@ class Home extends BaseController
         if (!isset($data['prods']) || empty($data['prods'])) {
             $data['message'] = $result["message"];
         }
-        return view("catalogue.php", $data);
+        return view("client/catalogue.php", $data);
     }
     
     public function espaceClient($role = null, $numClient = null)
@@ -446,7 +446,7 @@ class Home extends BaseController
         $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
         $data['erreurs'] = $issues;
 
-        return view('espaceClient.php', $data);
+        return view('client/espaceClient.php', $data);
     }
 
     public function facture()
@@ -510,7 +510,7 @@ class Home extends BaseController
         $data['client']=$client;
         $data['errors']=$this->validator;
     
-        return view("templLivraison.php",$data);
+        return view("client/commande/templLivraison.php",$data);
     }
 
     public function infoLivraison()
@@ -564,14 +564,14 @@ class Home extends BaseController
         $data['client']=$client;
         $data['errors']=$this->validator;
         
-        return view('templLivraison.php', $data);
+        return view('client/commande/templLivraison.php', $data);
     }
 
     public function lstCommandesClient()
     {
         $data["controller"]= "Commandes Client";
         $data['commandesCli']=model("\App\Models\LstCommandesCli")->getCompteCommandes();
-        return view('client/lstCommandesCli.php', $data);
+        return view('client/commande/lstCommandesCli.php', $data);
     }
 
     public function paiement()
@@ -624,7 +624,7 @@ class Home extends BaseController
         }
         $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
       
-        return view('panier/details.php', $data);
+        return view('client/commande/details.php', $data);
     }
 
     public function validation()
@@ -664,7 +664,7 @@ class Home extends BaseController
                 }
                 $data['totalTtc']= array_sum(array_map(fn($produit) => $produit->prixTtc,$data['produits']));
                 $data['totalHt']= array_sum(array_map(fn($produit) => $produit->prixHt,$data['produits']));
-                return view("recapitulatif.php",$data);
+                return view("client/commande/recapitulatif.php", $data);
             }
         }
         else throw new Exception("Vous n'avez pas validé votre panier, vos adresses de facturation et de livraison",401);

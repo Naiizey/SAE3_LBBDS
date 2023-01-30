@@ -155,6 +155,10 @@ header h2, header nav {
     width: 9.5rem;
 }
 
+.divPanierProfilVendeur {
+    justify-content: end;
+}
+
 .formRecherche > a{
     display: flex;
     align-items: center;

@@ -47,7 +47,7 @@ class Authentification
         return $errors;
     }
 
-    public function inscription(\App\Entities\Client $entree, $verifMdp) : array
+    public function inscriptionClient(\App\Entities\Client $entree, $verifMdp) : array
     {   
         $compteModel=model("\App\Models\Client");
         $errors=[];
@@ -105,6 +105,57 @@ class Authentification
             
 
             $session->set("just_connectee",True);
+        }
+
+        return $errors;
+    }
+
+    public function inscriptionVendeur(\App\Entities\Vendeur $entree, $verifMdp) : array
+    {   
+        $compteModel=model("\App\Models\Vendeur");
+        $errors=[];
+        
+        if(!empty($entree))
+        {
+            if($entree->motDePasse == "" || $entree->identifiant == "" || $entree->email == "") 
+            {
+                $errors[1]= "Remplissez le(s) champs vide(s)";
+            }
+            if(strlen($entree->identifiant) > 30 )
+            {
+                $errors[3]="30 caractères maximum pour le pseudo (" .strlen($entree->pseudo) . " actuellement)";
+            } 
+            if(!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) || strlen($entree->email) > 255) 
+            {
+                $errors[4]="255 caractères maximum pour l'email et caractère spéciaux interdits";
+            }
+            if (preg_match_all("/[a-z]/",$entree->motDePasse) < 1 ||  preg_match_all("/[A-Z]/",$entree->motDePasse) < 1 ||  preg_match_all("/[0-9]/",$entree->motDePasse) < 1 ||  strlen($entree->motDePasse) < 12)
+            {
+                $errors[5]="Le mot de passe doit faire plus de 12 caractère et doit contenir au moins une majuscule, une minuscule et un chiffre";
+            }
+            if($entree->motDePasse != $verifMdp) 
+            {
+                $errors[6]="Les mots de passes ne correspondent pas";
+            }
+            if ($compteModel->doesEmailExists($entree->email))
+            {
+                $errors[7]="Un utilisateur existe déjà avec cette adresse mail";
+            }
+            //TODO: vérifier si le pseudo existe déjà coté vendeur c'est sans doute différent
+            if ($compteModel->doesPseudoExists($entree->identifiant))
+            {
+                $errors[8]="Un utilisateur existe déjà avec ce pseudo";
+            }
+        }
+        else 
+        {
+            $errors[0] ="Pas d'entrée";
+        }
+        
+        if(empty($errors))
+        {
+            $entree->cryptMotDePasse();
+            $compteModel->save($entree);
         }
 
         return $errors;

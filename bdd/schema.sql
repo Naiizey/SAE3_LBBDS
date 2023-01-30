@@ -325,6 +325,17 @@ CREATE TABLE _signalement
     raison VARCHAR NOT NULL
 );
 
+CREATE TABLE _reponse
+(
+
+    num_avis INT NOT NULL PRIMARY KEY ,
+    contenu_rep VARCHAR NOT NULL,
+    date_rep DATE NOT NULL,
+
+    CONSTRAINT _est_reponse_de foreign key (num_avis) references _avis(num_avis)
+
+);
+
 
 /* -----------------------------------------------------------
 -                        Associations                        -

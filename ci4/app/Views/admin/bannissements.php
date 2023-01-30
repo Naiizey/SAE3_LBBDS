@@ -9,7 +9,7 @@
                             <th>N° compte</th>
                             <th>Raison</th>
                             <th>Date de début</th>
-                            <th>Date de Fin</th>
+                            <th>Date de fin</th>
                             <th>Annuler le bannissement</th>
                         </tr>
                     </thead>

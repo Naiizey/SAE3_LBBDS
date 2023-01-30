@@ -42,10 +42,10 @@ $routes->set404Override();
     $routes->post('/connexion', 'Home::connexion');
     $routes->get('/connexion/(401)', 'Home::connexion/$1');
     $routes->post('/connexion/(401)', 'Home::connexion/$1');
-    $routes->get('/inscription', 'Home::inscription');
-    $routes->post('/inscription', 'Home::inscription');
-    $routes->get('/inscription/(401)', 'Home::inscription/$1');
-    $routes->post('/inscription/(401)', 'Home::inscription/$1');
+    $routes->get('/inscription', 'Home::inscriptionClient');
+    $routes->post('/inscription', 'Home::inscriptionClient');
+    $routes->get('/inscription/(401)', 'Home::inscriptionClient/$1');
+    $routes->post('/inscription/(401)', 'Home::inscriptionClient/$1');
 
     $routes->get('/mdpOublie', 'MdpOublie::mdpOublie');
     $routes->post('/mdpOublie', 'MdpOublie::mdpOublie');
@@ -114,6 +114,8 @@ $routes->set404Override();
     $routes->post('/admin/clients/(:num)', 'Home::lstClients/bannir');
 
     $routes->get('/admin/vendeurs', 'Home::lstVendeurs');
+    $routes->get('/admin/vendeurs/inscription', 'Home::inscriptionVendeur');
+    $routes->post('/admin/vendeurs/inscription', 'Home::inscriptionVendeur');
     
     $routes->get('/admin/bannissements', 'Home::bannissements');
     $routes->post('/admin/bannissements', 'Home::bannissements');

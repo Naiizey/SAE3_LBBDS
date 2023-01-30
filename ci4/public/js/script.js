@@ -1203,6 +1203,17 @@ function getParentNodeTilClass(element){
     return parent;
 }
 
+function switchContent(button){
+    if(button.textContent == "↓ Croissant"){
+        button.textContent = "↑ Décroissant";
+        button.value = "DESC";
+    }
+    else if(button.textContent == "↑ Décroissant"){
+        button.textContent = "↓ Croissant";
+        button.value = "ASC";
+    }
+}
+
 const filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFiltre,voirPlus,formTris) {
     this.formF = formFilter;
     this.formT = formTris;
@@ -1270,6 +1281,13 @@ const filterUpdate = function(formFilter,champRecherche,listeProduit,suppression
         }
     }
 
+
+
+    let switchButt = document.querySelector(".partie-tris form #ordre");
+    function switchButtonListener(button){
+        switchContent(button);
+        self.send();
+    }
     
     Array.from(this.formF.elements).forEach((el) => {
         el.addEventListener("change", () => this.send());
@@ -1279,7 +1297,7 @@ const filterUpdate = function(formFilter,champRecherche,listeProduit,suppression
         if(el.type == "radio")
             el.addEventListener("change", () => this.send());
         else if(el.type == "button")
-            el.addEventListener("click", () => this.send());
+            el.addEventListener("click", () => (switchButtonListener(switchButt)));
     });
 
     this.suppressionFiltre.addEventListener('click', (event) => {

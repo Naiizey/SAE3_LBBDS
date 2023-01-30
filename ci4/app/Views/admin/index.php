@@ -1,4 +1,4 @@
-<?php require __DIR__ . "/../header.php"; ?>
+<?php require __DIR__ . "/header.php"; ?>
         <main>
             <div class="divCredit">
                 <section class="sectionCredit sectionAdmin">

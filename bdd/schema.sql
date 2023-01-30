@@ -57,6 +57,13 @@ CREATE TABLE _client
 
 );
 
+CREATE TABLE _vendeur
+(
+    num_compte INTEGER PRIMARY KEY,
+    CONSTRAINT _compte_vendeur_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte)
+
+);
+
 CREATE TABLE _adresse
 (
     id_a SERIAL PRIMARY KEY,
@@ -149,7 +156,10 @@ CREATE TABLE _produit
     seuil_alerte_prod INT,
     alerte_prod BOOLEAN NOT NULL,
 
-    code_sous_cat INT NOT NULL--contenu_dans
+    code_sous_cat INT NOT NULL,--contenu_dans
+
+    num_compte INTEGER NOT NULL,
+    CONSTRAINT produit_vendeur_fk FOREIGN KEY (num_compte) REFERENCES _vendeur(num_compte)
 );
 
 

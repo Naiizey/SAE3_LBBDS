@@ -20,6 +20,9 @@ CREATE OR REPLACE VIEW autre_image AS
 CREATE OR REPLACE VIEW compte_client AS
     SELECT * FROM _client NATURAL JOIN _compte;
 
+CREATE OR REPLACE VIEW compte_vendeur AS
+    SELECT * FROM _vendeur NATURAL JOIN _compte;
+
 --FONCTIONS
 CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_commande varchar) RETURNS INT AS
     $$

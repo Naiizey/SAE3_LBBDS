@@ -151,5 +151,4 @@
     );
     loadFiltersTris();
     changeOnglet();
-    switchOrder();
 </script>

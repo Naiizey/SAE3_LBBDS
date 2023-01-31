@@ -7,7 +7,7 @@ use CodeIgniter\Validation\Validation;
 use App\Controllers\BaseController;
 use Exception;
 
-class Vendeur extends BaseController
+class Home extends BaseController
 {
     public $feedback;
 

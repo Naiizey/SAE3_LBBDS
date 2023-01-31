@@ -72,36 +72,12 @@
                     <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
                     <h1>Alizon</h1>
                 </a>
-                <?php if ($controller == "Panier" || $controller == "Panier (Vide)" || $controller == "Compte Redirection" || $controller == "Livraisons" || $controller == "Facture" || $controller == "Paiement" || $controller == "Validation"): ?>
-                    <div class="divSuivi">
-                        <div class="<?= (($controller == "Panier" )?"etat-courant-commande":"") ?>">
-                            <?= file_get_contents(dirname(__DIR__, 3)."/public/images/header/panier.svg") ?>
-                            <h3>Panier</h3>
-                        </div>
-                        <hr>
-                        <div class="<?= (($controller == "Compte Redirection" )?"etat-courant-commande":"") ?>">
-                            <?= file_get_contents(dirname(__DIR__, 3)."/public/images/header/profil.svg") ?>
-                            <h3>Identification</h3>
-                        </div>
-                        <hr>
-                        <div class="<?= (($controller == "Livraisons" || $controller == "Facture")?"etat-courant-commande":"") ?>">
-                            <?= file_get_contents(dirname(__DIR__, 3)."/public/images/header/carton.svg") ?>
-                            <h3>Adresses</h3>
-                        </div>
-                        <hr>
-                        <div class="<?= (($controller == "Paiement" || $controller == "Validation")?"etat-courant-commande":"") ?>">
-                            <?= file_get_contents(dirname(__DIR__, 3)."/public/images/header/paiement.svg") ?>
-                            <h3>Paiement</h3>
-                        </div>
-                    </div>
-                <?php else: ?>
-                    <form class="formRecherche" action="<?= base_url() ?>/catalogue/">
-                        <input class="champsRecherche" type="search" name="search" placeholder="Recherche.." value="<?= ((isset($_GET["search"])) ? $_GET["search"] : '') ?>"/>
-                        <label>
-                            <input type="submit"><?= file_get_contents(dirname(__DIR__, 3) ."/public/images/header/loupe.svg") ?>
-                        </label>
-                    </form>
-                <?php endif; ?>
+                <form class="formRecherche" action="<?= base_url() ?>/catalogue/">
+                    <input class="champsRecherche" type="search" name="search" placeholder="Recherche.." value="<?= ((isset($_GET["search"])) ? $_GET["search"] : '') ?>"/>
+                    <label>
+                        <input type="submit"><?= file_get_contents(dirname(__DIR__, 3) ."/public/images/header/loupe.svg") ?>
+                    </label>
+                </form>
                 <div class="divPanierProfil divPanierProfilVendeur">
                     <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>">
                     <?php if (session()->has("numero")) {
@@ -125,28 +101,6 @@
                     <?php endif; ?>
                 </div>
             </div>
-            <?php if ($controller == "Accueil" || $controller == "Produit"): ?>
-                <nav>
-                    <hr>
-                    <ul>
-                        <li class="liCategorie">
-                            <a class="categorie" href="<?= base_url() ?>/">Accueil</a>
-                        </li>
-                        <li class="liCategorie">
-                            <a class="categorie" href="<?= base_url() ?>/catalogue">Catalogue</a>
-                        </li>
-                        <li class="liCategorie">
-                            <a class="categorie" href="<?= base_url() ?>/">Promotions</a>
-                        </li>
-                        <li class="liCategorie">
-                            <a class="categorie" href="<?= base_url() ?>/">Catégories</a>
-                        </li>
-                        <li class="liCategorie">
-                            <a class="categorie" href="<?= base_url() ?>/commandes">Mes commandes</a>
-                        </li>
-                    </ul>
-                </nav>
-            <?php endif; ?>
             <?php if (isset($GLOBALS['validation'])): ?>
                 <?= $GLOBALS['validation']; ?>
             <?php endif; ?>

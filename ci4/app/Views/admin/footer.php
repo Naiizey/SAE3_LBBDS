@@ -138,16 +138,7 @@
                     <p>Besoin d'aide ?</p>
                 </a>
             </div>
-        <footer <?php if(isset($role)):?>
-                <?php if($role == "admin"):?>
-                    <?= "class=footerAdmin" ?>
-                <?php endif;?>
-            <?php endif; ?>
-            <?php if(isset($estVendeur)):?>
-                <?php if($estVendeur):?>
-                    <?= "class=footerVendeur" ?>
-                <?php endif;?>
-            <?php endif; ?>>
+        <footer class="footerAdmin">
             <div class="pc">
                 <a href="" class="lienCGU"> <!-- Lien mentions légales -->
                     <p>Mentions légales</p>
@@ -166,9 +157,7 @@
             <div class="mobile">
                 <ul>
                     <li>
-                        <a class="lienConnexion" href="
-                                <?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>
-                            ">
+                        <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>">
                             <?php include(dirname(__DIR__,3)."/public/images/header/profil.svg")?>
                         </a>
                         <?php if (session()->has("numero")): ?>

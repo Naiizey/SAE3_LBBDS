@@ -4247,55 +4247,39 @@ progress::-moz-progress-bar
 */
 .full-height {
     height: 100vh;
+    width: 100vw;
 }
 
 .flex-center {
     align-items: center;
     display: flex;
     justify-content: center;
+    color: #d9d9d9;
+    text-align: center;
+    font-size: 1.5em;
 }
 
 #error_text {
-    font-size: 2em;
-    color: #d9d9d9;
+    font-size: 1.5em;
 }
 
-#details table {
-    width: 100%;
-    border-collapse: collapse;
-    box-sizing: border-box;
-    margin-top: 20px;
+#details > p {
+    margin-top: 1em;
+    margin-bottom: 0.25em;
 }
 
-#details.hidden td {
-    opacity: 0;
-    font-size: 0;
+#details > p + p {
+    margin-top: 0.25em;
+    margin-bottom: 1em;
 }
 
-#details td {
-    font-size: 1em;
-    color: #d9d9d9;
-    padding-top: .5em;
-    transition: opacity 1.4s, font-size .3s, color 1.2s;
-    opacity: 1;
+#details p span, #details p span a {
+    font-size: large;
 }
 
-#details td a{
-    font-size: 1em;
-    color: blueviolet;
+#details p span a {
+    color: #3997A3;
 }
-
-#details td.name {
-    text-align: right;
-    padding-right: .3em;
-    width: 50%;
-}
-
-#details td.value {
-    text-align: left;
-    padding-left: .3em;
-}
-
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

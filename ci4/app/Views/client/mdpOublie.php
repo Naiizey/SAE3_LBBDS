@@ -1,5 +1,4 @@
 <?php require("header.php");?>
-        </header>
         <main>
             <div class="divAlizon">
                 <img src="<?= base_url() ?>/images/logo_noir.png" alt="logoAlizon" title="Accueil">

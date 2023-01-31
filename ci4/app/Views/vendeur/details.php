@@ -1,4 +1,4 @@
-<?php require(dirname(__DIR__) . "/header.php"); ?>
+<?php require("header.php"); ?>
         <main>
             <div class="divPrincipaleDetail">
                 <div class="divProgress">
@@ -132,7 +132,7 @@
                 </div>
             </div>
         </main>
-<?php require(dirname(__DIR__) . "/footer.php"); ?>
+<?php require("footer.php"); ?>
 <script>
     barreProgression();
 </script>

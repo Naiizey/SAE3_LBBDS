@@ -1,7 +1,7 @@
 <!-- faire liens -->
 <!--dans le imput de recherche : onkeyup="fonction de recherche en php"-->
 <!-- ajuster les logos -->
-<?php require __DIR__ . "/header.php";  ?>
+<?php require("header.php");  ?>
         <main class="mainAccueil">
             <div id="carousel-container">
                 <div id="carousel">
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </main>
-<?php require __DIR__ . "/footer.php"; ?>
+<?php require("footer.php"); ?>
 <script>
     carrousel();
 </script>

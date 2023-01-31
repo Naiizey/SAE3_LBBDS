@@ -1,4 +1,4 @@
-<?php require __DIR__ . "/../header.php"; ?>
+<?php require(dirname(__DIR__) . "/header.php"); ?>
 <main>
     <div class="sectionCredit divCredit divEspaceCli recap">
         <h2>Récapitulatif</h2>
@@ -56,4 +56,4 @@
         </form>
     </div>
 </main>
-<?php require("footer.php"); ?>
+<?php require(dirname(__DIR__) . "/footer.php"); ?>

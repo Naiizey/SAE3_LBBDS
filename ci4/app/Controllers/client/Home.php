@@ -604,7 +604,7 @@ class Home extends BaseController
         $data['CVC'] = (isset($_POST['CVC'])) ? $_POST['CVC'] : "";
         $data['client']=$client;
         $data['errors']=$this->validator;
-        return view('client/paiement.php', $data);
+        return view('client/commande/paiement.php', $data);
     }
 
     public function detail($num_commande, $estVendeur=false)

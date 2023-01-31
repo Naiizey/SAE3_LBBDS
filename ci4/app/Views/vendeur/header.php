@@ -61,57 +61,17 @@
     <script>
         const base_url = "<?= base_url() ?>";
     </script>
-    <body <?php if(isset($role)):?>
-                <?php if($role == "admin"):?>
-                    <?= "class=bodyAdmin" ?>
-                <?php endif;?>
-            <?php endif; ?>
-            <?php if(isset($estVendeur)):?>
-                <?php if($estVendeur):?>
-                    <?= "class=bodyVendeur" ?>
-                <?php endif;?>
-            <?php endif; ?> >
+    <body class="bodyVendeur">
         <!-- Google Tag Manager (noscript) -->
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PCVRSM3"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->
         <header>
-            <div class="divHeaderAlizon
-                <?php if (isset($role)): ?>
-                    <?php if ($role == "admin"): ?> <?= "divHeaderAdmin" ?>
-                    <?php endif; ?>
-                <?php endif; ?>
-                <?php if (isset($estVendeur)): ?>
-                    <?php if ($estVendeur): ?> <?= "divHeaderVendeur" ?>
-                    <?php endif; ?>
-                <?php endif; ?> ">
-                <?php if ($controller != "Panier" && $controller != "Panier (Vide)" && $controller != "Compte Redirection" && $controller != "Livraisons" && $controller != "Paiement" && $controller != "Validation"): ?>
-                    <?php if (isset($role)) : ?>
-                        <?php if ($role == "admin") : ?>
-                            <a class="lienAlizon" href="<?= base_url() ?>/admin"> <!-- Lien accueil -->
-                                <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
-                                <h1>Alizon</h1>
-                            </a>
-                        <?php endif; ?>
-                    <?php elseif(isset($estVendeur)): ?>
-                        <?php if($estVendeur):?>
-                            <a class="lienAlizon" href="<?= base_url() ?>/vendeur/import"> <!-- Lien accueil -->
-                                <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
-                                <h1>Alizon</h1>
-                            </a>
-                        <?php endif; ?>
-                    <?php else: ?>
-                        <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
-                            <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
-                            <h1>Alizon</h1>
-                        </a>
-                    <?php endif; ?>
-                <?php else: ?>
-                    <a class="lienAlizonSuivi" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
-                        <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
-                        <h1>Alizon</h1>
-                    </a>
-                <?php endif; ?>
+            <div class="divHeaderAlizon divHeaderVendeur">
+                <a class="lienAlizon" href="<?= base_url() ?>/vendeur/import"> <!-- Lien accueil -->
+                    <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
+                    <h1>Alizon</h1>
+                </a>
                 <?php if ($controller == "Panier" || $controller == "Panier (Vide)" || $controller == "Compte Redirection" || $controller == "Livraisons" || $controller == "Facture" || $controller == "Paiement" || $controller == "Validation"): ?>
                     <div class="divSuivi">
                         <div class="<?= (($controller == "Panier" )?"etat-courant-commande":"") ?>">

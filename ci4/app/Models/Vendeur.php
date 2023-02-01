@@ -26,18 +26,18 @@ class Vendeur extends Compte
     protected $allowedFields = ['nom','identifiant','motdepasse'];
 
 
-    public function getVendeurByCredentials($comptes, $motDePasse) : \App\Entities\Client | null
+    public function getVendeurByCredentials($comptes, $motDePasse) : \App\Entities\Vendeur | null
     {
         return parent::getCompteByCredentials($comptes, $motDePasse);
     }
 
-    public function getVendeurByPseudo($pseudo, $motDePasse) : \App\Entities\Client | null
+    public function getVendeurByPseudo($pseudo, $motDePasse) : \App\Entities\Vendeur | null
     {
         
         return parent::getCompteByPseudo($pseudo, $motDePasse);
     }
 
-    public function getVendeurByEmail($email, $motDePasse) : \App\Entities\Client | null
+    public function getVendeurByEmail($email, $motDePasse) : \App\Entities\Vendeur | null
     {
         
         return parent::getCompteByEmail($email, $motDePasse);
@@ -49,7 +49,7 @@ class Vendeur extends Compte
         return parent::getCompteById($id);
     }
 
-    public function saveVendeur(\App\Entities\Client $client)
+    public function saveVendeur(\App\Entities\Vendeur $client)
     {
         parent::saveCompte($client);
     }

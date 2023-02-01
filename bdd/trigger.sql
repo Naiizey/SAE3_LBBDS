@@ -287,7 +287,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER update_vendeur
-    INSTEAD OF UPDATE ON sae3.vendeur
+    INSTEAD OF UPDATE ON vendeur
     FOR EACH ROW
     EXECUTE PROCEDURE update_vendeur();
 

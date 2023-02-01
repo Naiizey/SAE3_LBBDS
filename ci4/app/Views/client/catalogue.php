@@ -23,10 +23,6 @@
                     </svg>
                 </button>
             </div>
-            <div class="onglets">
-                <div class="onglet onglet-selectionnee"><h3>Catégorie</h3></div>
-                <div class="onglet"><h3>Détail</h3></div>
-            </div>
             <form name="filters" method="get">
                 <div class="categorie-catalogue">
                 <?php foreach ($categories as $categorie):?>

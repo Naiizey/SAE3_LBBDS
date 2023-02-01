@@ -4,7 +4,8 @@
 
 class Feedback{
 
-    public function afficheValidation(string $message){
+    public function afficheValidation(string $message)
+    {
         ob_start() ?>
         <div class="alerte-validation valide">
             <p>

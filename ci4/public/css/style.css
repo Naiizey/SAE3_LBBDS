@@ -3090,10 +3090,16 @@ main#Catalogue{
     width: auto;
 }
 
+.liste-produits-closedFilters{
+    position: relative;
+    width: 80%;
+}
+
 .liste-produits{
     display: flex;
     flex-wrap: wrap; 
-    justify-content: flex-end;   
+    justify-content: flex-start;  
+    margin-left: auto; 
 }
 
 .liste-filtre, .liste-tris{
@@ -3554,6 +3560,10 @@ a.fleche-page{
 
     .partie-produits {
         margin-top: 10vh;
+    }
+
+    .liste-produits-closedFilters{
+        width: 100%;
     }
 
     .liste-produits{

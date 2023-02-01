@@ -97,7 +97,7 @@
             </div>
     </section>
     <section class="partie-produits">
-        <div class="liste-produits">
+        <div class="liste-produits liste-produits-closedFilters">
         <?php if(isset($prods) && !empty($prods)): ?>
             <?php foreach($prods as $prod): ?>
                 <?= $cardProduit->display($prod)?>

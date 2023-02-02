@@ -1,7 +1,33 @@
 <?php require("header.php"); ?>
 <main>
     <div class="sectionCredit divCredit divEspaceCli recap">
-        <h2>Récapitulatif</h2>
+        <div class="sectionTitle">
+            <h2>Récapitulatif</h2>
+            <!-- on tire un trait -->
+            <hr>
+        </div>
+        <div class="divAdressesCli adresseRecap">
+            <div>
+                <h3>Votre adresse de facturation :</h3>
+                <ul>
+                    <?php foreach ($adresseFact->getAll() as $champs): ?>
+                        <li>
+                            <?=$champs?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div>
+                <h3>Votre adresse de livraison :</h3>
+                <ul>
+                    <?php foreach ($adresseLivr->getAll() as $champs): ?>
+                        <li>
+                            <?=$champs?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>    
+            </div>
+        </div> 
         <div class="divRecapPanier">
             <div>
                 <h3>Produits à l'achat</h3>
@@ -29,31 +55,12 @@
                 </div>
             </div>
         </div>
-        <div class="divAdressesCli adresseRecap">
-            <div>
-                <h3>Votre adresse de facturation :</h3>
-                <ul>
-                    <?php foreach ($adresseFact->getAll() as $champs): ?>
-                        <li>
-                            <?=$champs?>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-            <div>
-                <h3>Votre adresse de livraison :</h3>
-                <ul>
-                    <?php foreach ($adresseLivr->getAll() as $champs): ?>
-                        <li>
-                            <?=$champs?>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>    
-            </div>
-        </div> 
-        <form action="<?=current_url() ?>" method="get">
-            <button class= "gros-bouton" name="Confirmation" value="1">Confirmer</button>
-        </form>
+        <div>
+            <form action="<?=current_url() ?>" method="get">
+                <button class= "gros-bouton" name="Confirmation" value="1">Confirmer</button>
+            </form>
+        </div>
     </div>
+
 </main>
 <?php require("footer.php"); ?>

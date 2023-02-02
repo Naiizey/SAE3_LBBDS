@@ -4247,6 +4247,16 @@ progress::-moz-progress-bar
 ┃                                    Récap                                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+.sectionTitle hr{
+    color: #164F57;
+    width: auto;
+    height: 2px;
+}
+
+.sectionTitle h2{
+    margin: 1%;
+}
+
 .divRecapPanier {
     display: flex;
     flex-direction: column;

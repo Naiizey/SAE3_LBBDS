@@ -186,10 +186,12 @@ CREATE OR REPLACE FUNCTION insertInsertCommande() RETURNS TRIGGER AS
 DECLARE
 
         row sae3._refere_commande%ROWTYPE;
-
+        id_reduction_temp int;
     BEGIN
-
-        INSERT INTO sae3._commande(num_commande, date_commande, id_a,num_compte,id_reduction) VALUES (new.num_commande, current_date,new.id_a,new.num_compte,new.id_reduction);
+        SELECT id_reduction fROM sae3._reduire WHERE num_panier = (SELECT num_panier FROM sae3._panier_client WHERE  num_compte = new.num_compte) into id_reduction_temp;
+        
+    
+        INSERT INTO sae3._commande(num_commande, date_commande, id_a,num_compte,id_reduction) VALUES (new.num_commande, current_date,new.id_a,new.num_compte,id_reduction_temp); -- changer new.id_reduction (trouver le client puis l'id de réduction qui est associé au panier)
 
 
         PERFORM num_panier FROM sae3._panier_client natural join sae3._refere where num_compte=new.num_compte;
@@ -204,7 +206,8 @@ DECLARE
                     delete from sae3._refere where num_panier in (select num_panier from sae3._panier_client where num_compte=new.num_compte) and id_prod=row.id_prod;
 
             end loop;
-
+            
+            -- insertion du code de réduction dans _commande et supression de _refere 
 
         else
             raise exception 'il n''y  pas de produits dans ce panier';

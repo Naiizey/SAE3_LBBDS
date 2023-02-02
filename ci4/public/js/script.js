@@ -843,7 +843,13 @@ function lstClients() {
             sur_alerteTimeout.style.display = "none";
         }
     }
-}
+
+    // fonction qui remplace les retours chariot par des espaces dans le textarea
+    const textarea = document.getElementById("raisonBan");
+
+    textarea.addEventListener("input", (e) => {
+        textarea.value = textarea.value.replace(/\r?\n/g, " ");
+    });
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

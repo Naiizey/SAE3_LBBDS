@@ -25,6 +25,8 @@ final class ExampleDatabaseTest extends CIUnitTestCase
         $model = new Client();
 
         // Get every row created by ExampleSeeder
+
+        Fabricator::setCount($model->table, sizeof($model->findAll()));
         
         $fabricator = new Fabricator(Client::class,array(
             "nom" => 'firstName',
@@ -41,7 +43,7 @@ final class ExampleDatabaseTest extends CIUnitTestCase
       
 
         // Make sure the count is as expected
-        $this->assertCount(3, $objects);
+        $this->assertCount(Fabricator::getCount($model->table), $objects);
     }
     
     /*
@@ -73,7 +75,7 @@ final class ExampleDatabaseTest extends CIUnitTestCase
         $fabricator = new Fabricator(AdresseLivraisonTest::class,null,'fr_FR');
         $ok = $fabricator->make();
         
-        d($ok);
+        //d($ok);
         Fabricator::upCount($model->table);
         model("\App\Models\AdresseLivraison")->save($ok);
         

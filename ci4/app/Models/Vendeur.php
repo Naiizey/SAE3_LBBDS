@@ -23,7 +23,7 @@ class Vendeur extends Compte
     protected $returnType     = \App\Entities\Vendeur::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['nom','identifiant','motdepasse'];
+    protected $allowedFields = ['identifiant','motdepasse','email'];
 
 
     public function getVendeurByCredentials($comptes, $motDePasse) : \App\Entities\Vendeur | null
@@ -49,9 +49,9 @@ class Vendeur extends Compte
         return parent::getCompteById($id);
     }
 
-    public function saveVendeur(\App\Entities\Vendeur $client)
+    public function saveVendeur(\App\Entities\Vendeur $vendeur)
     {
-        parent::saveCompte($client);
+        parent::saveCompte($vendeur);
     }
 
     

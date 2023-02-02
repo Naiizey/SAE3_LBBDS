@@ -159,7 +159,8 @@ CREATE OR REPLACE VIEW reduc_panier AS SELECT * FROM _reduire;
 
 CREATE OR REPLACE VIEW signalement AS SELECT * FROM _signalement;
 
+
  --VENDEUR
 CREATE OR REPLACE VIEW vendeur AS
     WITH trouve_current_panier AS (select max(num_panier) current_panier,num_compte from sae3._panier_client group by num_compte)
-    SELECT num_compte numero,, email, pseudo identifiant, mot_de_passe motDePasse, current_panier FROM compte_vendeur NATURAL JOIN trouve_current_panier;
+    SELECT num_compte numero, email, pseudo identifiant, mot_de_passe motDePasse FROM compte_vendeur;

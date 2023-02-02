@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\client;
 
 use Exception;
-
+use App\Controllers\BaseController;
 use function PHPUnit\Framework\isNull;
 use function PHPUnit\Framework\throwException;
 

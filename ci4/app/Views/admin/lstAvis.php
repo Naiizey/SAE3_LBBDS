@@ -1,4 +1,4 @@
-<?php require __DIR__ . "/../header.php";?>
+<?php require("header.php"); ?>
     <main>
         <div class="divLst">
             <?php if(!empty($avis)): ?>
@@ -40,7 +40,7 @@
             <?php endif; ?>
         </div>
     </main>
-<?php require __DIR__ . "/../footer.php";?>
+<?php require("footer.php");?>
 <script>
     lstAvisSignalements();
 </script>

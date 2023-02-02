@@ -1,4 +1,4 @@
-<?php require __DIR__ . "/../header.php";
+<?php require("header.php"); 
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -9,7 +9,6 @@
         }
     }
 ?>
-        </header>
         <main>
             <div class="divCredit">
                 <div class="sectionCredit">
@@ -42,4 +41,4 @@
                 </div>
             </div>
         </main>
-<?php require __DIR__ . "/../footer.php"; ?>
+<?php require("footer.php"); ?>

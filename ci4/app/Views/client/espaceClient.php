@@ -10,7 +10,7 @@
     }
 ?>
 <main class="mainEspaceCli">
-    <?php echo file_get_contents(dirname(__DIR__,2)."/public/images/header/profil.svg");?>
+    <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/header/profil.svg");?>
     <h2>Bonjour <?= $prenomBase ?>!</h2>
     <div class="divCredit divEspaceCli">
         <section class="sectionCredit">

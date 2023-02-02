@@ -1,5 +1,4 @@
-<?php require __DIR__."/../header.php"; ?>
-        </header>
+<?php require("header.php"); ?>
         <main>
             <div class="divPrincipaleDetail">
                 <div class="divProgress">
@@ -133,7 +132,7 @@
                 </div>
             </div>
         </main>
-<?php require __DIR__."/../footer.php"; ?>
+<?php require("footer.php"); ?>
 <script>
     barreProgression();
 </script>

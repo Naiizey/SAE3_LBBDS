@@ -1,7 +1,8 @@
-<?php namespace App\Controllers;
+<?php namespace App\Controllers\client;
 
 use CodeIgniter\CodeIgniter;
 use Config\Services;
+use App\Controllers\BaseController;
 use Exception;
 
 class MdpOublie extends BaseController
@@ -38,7 +39,7 @@ class MdpOublie extends BaseController
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant de potentielles erreurs
         $data['email'] = (isset($post['email'])) ? $post['email'] : "";
         $data['code'] = (isset($post['code'])) ? $post['code'] : "";
-        return view('mdpOublie.php', $data);
+        return view('client/mdpOublie.php', $data);
     }
 
     public function genererCode() {

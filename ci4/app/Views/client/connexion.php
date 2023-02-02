@@ -1,4 +1,4 @@
-<?php require __DIR__ . "/../header.php";
+<?php require("header.php"); 
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -9,7 +9,6 @@
         }
     }
 ?>
-        </header>
         <main>
             <div class="divAlizon">
                 <img src="<?= base_url() ?>/images/logo_noir.png" alt="logoAlizon" title="Accueil">
@@ -35,4 +34,4 @@
                 <a href="<?= base_url() ?>/mdpOublie">Mot de passe oublié ?</a>
             </div>
         </main>
-<?php require __DIR__ . "/../footer.php"; ?>
+<?php require("footer.php"); ?>

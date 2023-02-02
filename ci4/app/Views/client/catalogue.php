@@ -80,14 +80,19 @@
                 </button>
             </div>
             <form name="tris" method="get">
-                <input type="radio" name="trisB" id="nom" value="intitule" <?= ((isset($filters["trisB"])) && $filters["trisB"] || (!isset($filters["trisB"]) =="intitule")?"checked":"") ?> ><label for="nom"> Nom </label>
-                <input type="radio" name="trisB" id="prix" value="prixttc" <?= ((isset($filters["trisB"]) && $filters["trisB"]=="prixttc")?"checked":"") ?> ><label for="prix"> Prix </label>
-                <input type="radio" name="trisB" id="avis" value="moyennenote"  <?= ((isset($filters["trisB"]) && $filters["trisB"]=="moyennenote")?"checked":"") ?> ><label for="avis"> Avis </label>
-                <br>
-                <select name="Ordre" id="ordre">
-                    <option value="ASC"> ↓ Croissant </option>
-                    <option value="DESC"> ↑ Décroissant </option>
-                </select>
+                <div class="nom">
+                    <input type="radio" name="trisB" id="nom" value="intitule" <?= ((isset($filters["trisB"])) && $filters["trisB"] || (!isset($filters["trisB"]) =="intitule")?"checked":"") ?> >
+                    <label for="nom"> Nom </label>
+                </div>
+                <div class="prixttc">
+                    <input type="radio" name="trisB" id="prix" value="prixttc" <?= ((isset($filters["trisB"]) && $filters["trisB"]=="prixttc")?"checked":"") ?> >
+                    <label for="prix"> Prix </label>
+                </div>
+                <div class="avis">
+                    <input type="radio" name="trisB" id="avis" value="moyennenote"  <?= ((isset($filters["trisB"]) && $filters["trisB"]=="moyennenote")?"checked":"") ?> >
+                    <label for="avis"> Avis </label>
+                </div>
+                <button type="button" value="ASC" name="Ordre" id="ordre">↓ Croissant</button>
             </form>
             </div>
     </section>

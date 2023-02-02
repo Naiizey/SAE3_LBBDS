@@ -1,4 +1,4 @@
-<?php require __DIR__ . "/../header.php"; ?>
+<?php require("header.php"); ?>
         <main>
             <div class="divCredit">
                 <section class="sectionCredit sectionAdmin">
@@ -29,4 +29,4 @@
                 </section>
             </div>
         </main>
-<?php  require __DIR__ . "/../footer.php"; ?>
+<?php  require("footer.php"); ?>

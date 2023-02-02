@@ -1,4 +1,4 @@
-<?php require __DIR__ . "/../header.php";?>
+<?php require("header.php"); ?>
     <main>
         <div class="divLst">
             <?php if(!empty($clients)): ?>
@@ -86,7 +86,7 @@
             </form>
         </div>
     </div>
-<?php require __DIR__ . "/../footer.php";?>
+<?php require("footer.php");?>
 <script>
     <?php if(isset($bannir)): ?>
         var bannir = <?= $bannir ?>;

@@ -90,13 +90,12 @@
                         <div class="divHoverConnexion divConnected">
                             <p class="pNom">Bonjour <?= (session()->get("nom")) ?></p>
                             <a href="<?= base_url()."/espaceClient"?>"><p>Mon profil</p></a>
-                            <a href="<?= base_url()."/commandes"?>"><p>Mes commandes</p></a>
+                            <a href="<?= base_url()."/vendeur/commandesCli"?>"><p>Mes commandes</p></a>
                             <a href="<?= base_url()."/admin/destroy"?>"><p>Se déconnecter</p></a>
                         </div>
                     <?php else: ?>
                         <div class="divHoverConnexion divNotConnected">
-                            <a href="<?= base_url()."/connexion"?>"><p>Se connecter</p></a>
-                            <a href="<?= base_url()."/inscription"?>"><p>S'inscrire</p></a>
+                            <a href="<?= base_url()."/vendeur/connexion"?>"><p>Se connecter</p></a>
                         </div>
                     <?php endif; ?>
                 </div>

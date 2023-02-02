@@ -1102,6 +1102,7 @@ function boutonCliquable(bouton,action){
             document.querySelector(".bulle-ouvrir-tris").style.display = "none"
             localStorage.setItem("openF", true);
             document.querySelector(".liste-produits").classList.remove("liste-produits-closedFilters");
+            document.querySelector(".liste-produits").classList.remove("liste-produits-notEnoughProducts");
         })
     }
     else if(screen.width >= 1200 && bouton.classList.contains("fermer-filtre")){
@@ -1111,6 +1112,12 @@ function boutonCliquable(bouton,action){
             document.querySelector(".bulle-ouvrir-tris").style.display = "flex"
             localStorage.setItem("openF", false);
             document.querySelector(".liste-produits").classList.add("liste-produits-closedFilters");
+            let countProducts = document.querySelectorAll(".card-produit-ext").length;
+            if (countProducts < 5) {
+                document.querySelector(".liste-produits").classList.add("liste-produits-notEnoughProducts");
+            }else{
+                document.querySelector(".liste-produits").classList.remove("liste-produits-notEnoughProducts");
+            }
         })
     }
 }
@@ -1127,6 +1134,7 @@ function boutonCliquableTris(bouton,action){
             document.querySelector(".bulle-ouvrir-tris").style.display = "none"
             localStorage.setItem("openT", true);
             document.querySelector(".liste-produits").classList.remove("liste-produits-closedFilters");
+            document.querySelector(".liste-produits").classList.remove("liste-produits-notEnoughProducts");
         })
     }
     else if(screen.width >= 1200 && bouton.classList.contains("fermer-tris")){
@@ -1136,6 +1144,12 @@ function boutonCliquableTris(bouton,action){
             document.querySelector(".bulle-ouvrir-tris").style.display = "flex"
             localStorage.setItem("openT", false);
             document.querySelector(".liste-produits").classList.add("liste-produits-closedFilters");
+            let countProducts = document.querySelectorAll(".card-produit-ext").length;
+            if (countProducts < 5) {
+                document.querySelector(".liste-produits").classList.add("liste-produits-notEnoughProducts");
+            }else{
+                document.querySelector(".liste-produits").classList.remove("liste-produits-notEnoughProducts");
+            }
         })
     }
 }
@@ -1147,12 +1161,21 @@ function loadFiltersTris(){
             document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
             document.querySelector(".bulle-ouvrir-tris").style.display = "none"
             document.querySelector(".liste-produits").classList.remove("liste-produits-closedFilters");
+            document.querySelector(".liste-produits").classList.remove("liste-produits-notEnoughProducts");
         } else if (localStorage.getItem("openT") === "true") {
             document.querySelector(".partie-tris").style.display = "flex"
             document.querySelector(".bulle-ouvrir-filtres").style.display = "none"
             document.querySelector(".bulle-ouvrir-tris").style.display = "none"
             document.querySelector(".liste-produits").classList.remove("liste-produits-closedFilters");
-        } 
+            document.querySelector(".liste-produits").classList.remove("liste-produits-notEnoughProducts");
+        } else {
+            let countProducts = document.querySelectorAll(".card-produit-ext").length;
+            if (countProducts < 5) {
+                document.querySelector(".liste-produits").classList.add("liste-produits-notEnoughProducts");
+            }else{
+                document.querySelector(".liste-produits").classList.remove("liste-produits-notEnoughProducts");
+            }
+        }
     });
 }
 

@@ -3095,6 +3095,12 @@ main#Catalogue{
     width: 80%;
 }
 
+.liste-produits-notEnoughProducts{
+    position: absolute;
+    left: 20%;
+    width: 80%;
+}
+
 .liste-produits{
     display: flex;
     flex-wrap: wrap; 
@@ -3564,6 +3570,12 @@ a.fleche-page{
 
     .liste-produits-closedFilters{
         width: 100%;
+    }
+
+    .liste-produits-notEnoughProducts{
+        width: 100%;
+        position: relative;
+        left: 0;
     }
 
     .liste-produits{

@@ -11,7 +11,7 @@
 
 class Authentification
 {
-    public function connexion($entree) : array
+    public function connexionClient($entree) : array
     {   
         $errors=[];
         if(!empty($entree))
@@ -22,6 +22,42 @@ class Authentification
             if($user == null) 
             {
                 $user = $clientModel->getClientByEmail($entree -> identifiant,$entree -> motDePasse);
+            }
+            if($user == null)
+            {
+                //Impossible de trouver un utilisateur avec son identifiant (pseudo) ou son email
+                $errors[1] = "Connexion refusée, identifiant et/ou mot de passe incorrect(s)";
+            }
+        }
+        else
+        {
+            $errors[0] = "Pas d'entrée";
+        }
+
+        if (empty($errors))
+        {
+            $session = session();
+            $session->set('numero',$user->numero);
+            $session->set('nom',$user->nom);
+            $session->set('identifiant',$user->identifiant);
+            $session->set('motDePasse',$user->motDePasse);
+            $session->set("just_connectee",True);
+        }
+
+        return $errors;
+    }
+
+    public function connexionVendeur($entree) : array
+    {   
+        $errors=[];
+        if(!empty($entree))
+        {
+            $vendeurModel = model("\App\Models\Vendeur");
+            $user = $vendeurModel->getVendeurByIdentifiant($entree -> identifiant,$entree -> motDePasse);
+            
+            if($user == null) 
+            {
+                $user = $vendeurModel->getVendeurByEmail($entree -> identifiant,$entree -> motDePasse);
             }
             if($user == null)
             {

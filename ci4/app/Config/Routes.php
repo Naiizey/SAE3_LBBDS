@@ -144,13 +144,15 @@ $routes->post('/(admin)/espaceClient/(:num)', 'client\Home::espaceClient/$1/$2')
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-$routes->get('/vendeur/import/entetes', 'vendeur\Import::getentetes');
+$routes->get('/vendeur/import/entetes','vendeur\Import::getentetes');
 
 $routes->get('vendeur/import', 'vendeur\Import::index/true');
-$routes->post('vendeur/import/upload', 'vendeur\Import::upload');
+$routes->post('vendeur/import/upload','vendeur\Import::upload');
 
-$routes->get('vendeur/commandesCli', 'vendeur\Home::lstCommandesVendeur/true');
+$routes->get('vendeur/commandesCli','vendeur\Home::lstCommandesVendeur/true');
 $routes->get('vendeur/commandesCli/detail/(:alphanum)','vendeur\Home::detail/$1/true');
+
+$routes->get('vendeur/connexion','vendeur\Home::connexion');
 
 ##param uri (:any) et dans methode /$1
 

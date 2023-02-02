@@ -74,7 +74,7 @@
                     </div>
                     <div class="raison">
                         <label>Raison<span class="requis">*</span> : </label>
-                        <textarea rows="3" name="raison" maxlength="50" required></textarea>
+                        <textarea id="raisonBan" rows="3" name="raison" maxlength="50" required></textarea>
                     </div>
                 </div>
                 <div class="alerte-footer"><hr>

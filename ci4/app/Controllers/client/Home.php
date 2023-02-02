@@ -79,7 +79,7 @@ class Home extends BaseController
             $auth = service('authentification');
             $user= new \App\Entities\Client();
             $user->fill($post);
-            $issues=$auth->connexion($user);
+            $issues=$auth->connexionClient($user);
 
             if(empty($issues))
             {

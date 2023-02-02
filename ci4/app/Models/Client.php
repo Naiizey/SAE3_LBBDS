@@ -53,5 +53,8 @@ class Client extends Compte
         parent::saveCompte($client);
     }
 
-    
+    public function doesEmailExists($email) : bool
+    {
+        return parent::doesEmailExists($email);
+    }
 }

@@ -83,7 +83,7 @@ CREATE OR REPLACE VIEW commande_list_vendeur AS
     SELECT num_commande,num_compte,date_commande,date_arriv, sum(prix_ht*qte_panier) ht, sum(prix_ttc*qte_panier) ttc, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _refere_commande NATURAL JOIN _produit group by num_commande, num_compte,date_commande,date_arriv,etat;
 
 CREATE OR REPLACE VIEW commande_list_client AS
-    SELECT num_commande,num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat FROM _commande  NATURAL JOIN _refere_commande NATURAL JOIN _produit group by num_commande, num_compte,date_commande,date_arriv,etat;
+    SELECT num_commande,num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande LEFT JOIN _code_reduction ON _commande.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande NATURAL JOIN _produit group by num_commande, num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
 
 CREATE OR REPLACE VIEW commande_list_produits_client AS
     WITH min_image AS (SELECT min(num_image) num_image, id_prod FROM _image_prod  group by id_prod )

@@ -61,6 +61,8 @@
                             </div>
                             <?php
                                 foreach ($articles as $article):
+                                    echo("montant".$infosCommande[0]->montant_reduction);
+                                    echo("pourcentage".$infosCommande[0]->pourcentage_reduction);
                             ?>
                                 <hr>
                                 <article id="<?= $article->id_prod ?>" class="articlePanier">
@@ -125,8 +127,6 @@
                             <div class="divDetailLivraison">
                                 <p>Rue : <?= $adresse->numero_rue.' '.$adresse->nom_rue ?></p>
                                 <p>Ville : <?= $adresse->code_postal.' '.$adresse->ville ?></p>
-                                <p>N° de suivi : </p>
-                                <p>Lien du suivi : </p>
                             </div>
                         </div>
                     </div>

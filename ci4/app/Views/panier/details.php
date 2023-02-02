@@ -61,8 +61,6 @@
                             </div>
                             <?php
                                 foreach ($articles as $article):
-                                    echo("montant".$infosCommande[0]->montant_reduction);
-                                    echo("pourcentage".$infosCommande[0]->pourcentage_reduction);
                             ?>
                                 <hr>
                                 <article id="<?= $article->id_prod ?>" class="articlePanier">
@@ -107,6 +105,12 @@
                                     <span class="totalTtc">
                                         <?= $infosCommande[0]->prix_ttc ?>
                                     </span>€ TTC
+                                </h2>
+                                <h2>
+                                    <?="Montant réduction : ".$infosCommande[0]->montant_reduction."€"?>
+                                </h2>
+                                <h2>
+                                    <?="Pourcentage réduction : ".$infosCommande[0]->pourcentage_reduction."%"?>
                                 </h2>
                             </div>
                         </div>

@@ -2055,6 +2055,10 @@ h3 > .lienPasArticlePanier {
     color: #164F57;
 }
 
+.divGauche a {
+    color: #C6C6C6;
+}
+
 .mainProduit img {
     width: 100%;
     height: auto;
@@ -4339,7 +4343,7 @@ div.zoom {
     width: 50vh;
     height: 50vh;
     border: solid 2px;
-    border-color: #164F57;
+    border-color: #C6C6C6;
     border-radius: 3px;
   }
   

@@ -47,7 +47,7 @@ class SanctionTemp extends Model
     public function isTimeout($numCompte){
         $this->supprimerSanctionsExpirées();
         
-        return ($this->where('num_compte',strval($numCompte))->where('date_fin >=',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin >',Time::now("Europe/Paris",'fr-FR')->toTimeString())->orWhere('date_fin >',Time::now("Europe/Paris",'fr-FR')->toDateString())->countAllResults()) > 0;
+        return ($this->where('num_compte',strval($numCompte))->countAllResults()) > 0;
     }
 
     // fonction qui renvoie le temps restant avant la fin du timeout, soit en secondes, soit en minutes, soit en heures, soit en jours, soit en années
@@ -73,22 +73,5 @@ class SanctionTemp extends Model
         }
         return floor($tempsRestant/31536000).' an.s';
     }
-
-    /*
-    public function getTimeLeft($numCompte){
-        $this->supprimerSanctionsExpirées();
-        
-        $sanction=$this->where('num_compte',strval($numCompte))->where('date_fin >=',Time::now("Europe/Paris",'fr-FR')->toDateString())->where('heure_fin >',Time::now("Europe/Paris",'fr-FR')->toTimeString())->orWhere('date_fin >',Time::now("Europe/Paris",'fr-FR')->toDateString())->first();
-        if($sanction==null){
-            return null;
-        }
-        $fin=Time::createFromFormat('Y-m-d H:i:s',$sanction->date_fin.' '.$sanction->heure_fin,"Europe/Paris");
-        $now=Time::now("Europe/Paris",'fr-FR');
-        $tempsRestant=$fin->diff($now);
-        if ($tempsRestant->invert==1) {
-            
-        }
-        return $fin->diff($now);
-    }*/
     
 }

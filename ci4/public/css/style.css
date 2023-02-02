@@ -100,7 +100,7 @@ header h2, header nav {
 .lienAlizon {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     height: 100%;
     width: 12.5rem;
 }
@@ -4189,7 +4189,7 @@ progress::-moz-progress-bar
         font-size: x-large;
     }
 
-    h1, h2 {
+    h1:not(.lienAlizon>h1), h2 {
         font-size: larger;
     }
 

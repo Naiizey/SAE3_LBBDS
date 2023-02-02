@@ -850,6 +850,7 @@ function lstClients() {
     textarea.addEventListener("input", (e) => {
         textarea.value = textarea.value.replace(/\r?\n/g, " ");
     });
+}
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

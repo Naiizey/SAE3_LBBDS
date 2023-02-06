@@ -100,7 +100,7 @@ header h2, header nav {
 .lienAlizon {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     height: 100%;
     width: 12.5rem;
 }
@@ -153,6 +153,10 @@ header h2, header nav {
     justify-content: space-between;
     height: 100%;
     width: 9.5rem;
+}
+
+.divPanierProfilVendeur {
+    justify-content: end;
 }
 
 .formRecherche > a{
@@ -2988,15 +2992,66 @@ main#Catalogue{
     left: 0;
 }
 
-.partie-tris {
-    max-height: 15vh;
+.partie-tris, .liste-tris{
+    height: fit-content;
 }
 
 .partie-tris form {
-    padding-block: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 1rem;
 }
 
-.onglets + form{
+.partie-tris form div{
+    width: 25%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.partie-tris form div label, .partie-tris form div input[type="radio"]{
+    cursor: pointer;
+}
+
+.partie-tris form div input[type="radio"]{
+    appearance: none;
+    -webkit-appearance: none;
+    display: grid;
+    place-content: center;
+    font: inherit;
+    width: 1rem;
+    height: 1rem;
+    border: 0.15rem solid grey;
+    border-radius: 50%;
+}
+
+.partie-tris form div input[type="radio"]::before{
+    content: "";
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 120ms ease-in-out;
+    box-shadow: inset .75rem .75rem #164F57;
+    background-color: #164f57;
+}
+
+.partie-tris form div input[type="radio"]:checked::before{
+    transform: scale(1);
+}
+
+#ordre {
+    cursor: pointer;
+    width: 75%; 
+    background-color: #3997a3;
+    color: white;
+    height: 3rem;
+    border: transparent;
+    border-radius: .5rem;
+}
+
+.liste-filtre form {
     background-color: #EFECEC;
     display: flex;
     flex-direction: column;
@@ -3317,38 +3372,8 @@ input[type="range"]::-moz-range-thumb {
     content: '\0025B2';
     position: relative;
 }
-.onglets{
-    display: flex;
-    flex-wrap: nowrap;
-    height: 53px;
-}
-.onglet{
-    background-color: #e9e3e3;
-    width: 45%;
-    padding-top: 15px;
-    padding-bottom: 7px;
-    border-top: solid #20535a 8px ;
-    z-index: 1;
-}
 
-#Catalogue .onglet{
-    height: fit-content;
-}
-
-.onglet-selectionnee{
-    border: none;
-    border-top: solid #3997A3 8px ;
-    background-color: #EFECEC;
-    width: 55%;
-}
-
-.onglet h3{
-    font-family: 'Montserrat-Bold', sans-serif;
-    font-weight: lighter;
-    margin: 0;
-}
-
-.categorie-catalogue summary, .onglet{
+.categorie-catalogue summary {
     cursor: pointer;
     box-sizing: border-box;
     color: #164F57;
@@ -3544,7 +3569,7 @@ a.fleche-page{
         border: none;
     }
 
-    .onglets + form{
+    .liste-filtre form{
         gap: 1.5em;
         padding-bottom: 10%;
     }
@@ -4168,7 +4193,7 @@ progress::-moz-progress-bar
         font-size: x-large;
     }
 
-    h1, h2 {
+    h1:not(.lienAlizon>h1), h2 {
         font-size: larger;
     }
 
@@ -4196,55 +4221,39 @@ progress::-moz-progress-bar
 */
 .full-height {
     height: 100vh;
+    width: 100vw;
 }
 
 .flex-center {
     align-items: center;
     display: flex;
     justify-content: center;
+    color: #d9d9d9;
+    text-align: center;
+    font-size: 1.5em;
 }
 
 #error_text {
-    font-size: 2em;
-    color: #d9d9d9;
+    font-size: 1.5em;
 }
 
-#details table {
-    width: 100%;
-    border-collapse: collapse;
-    box-sizing: border-box;
-    margin-top: 20px;
+#details > p {
+    margin-top: 1em;
+    margin-bottom: 0.25em;
 }
 
-#details.hidden td {
-    opacity: 0;
-    font-size: 0;
+#details > p + p {
+    margin-top: 0.25em;
+    margin-bottom: 1em;
 }
 
-#details td {
-    font-size: 1em;
-    color: #d9d9d9;
-    padding-top: .5em;
-    transition: opacity 1.4s, font-size .3s, color 1.2s;
-    opacity: 1;
+#details p span, #details p span a {
+    font-size: large;
 }
 
-#details td a{
-    font-size: 1em;
-    color: blueviolet;
+#details p span a {
+    color: #3997A3;
 }
-
-#details td.name {
-    text-align: right;
-    padding-right: .3em;
-    width: 50%;
-}
-
-#details td.value {
-    text-align: left;
-    padding-left: .3em;
-}
-
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

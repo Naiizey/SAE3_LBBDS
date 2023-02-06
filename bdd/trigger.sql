@@ -234,9 +234,11 @@ CREATE TRIGGER insteadOfInsert_insertCommande INSTEAD OF INSERT ON sae3.insert_c
 -- CREATE TRIGGER verif_reduc_panier INSTEAD OF INSERT ON sae3.reduc_panier FOR EACH ROW EXECUTE PROCEDURE verif_reduc_panier();
 
 -- trigger insertion dans _compte instead of insert à partir de la vue client
+
 CREATE OR REPLACE FUNCTION insert_client() RETURNS trigger AS $$
 BEGIN
-    INSERT INTO sae3._compte (nom_compte, prenom_compte, email, pseudo, mot_de_passe) VALUES (NEW.nom, NEW.prenom, NEW.email, NEW.identifiant, NEW.motDePasse);
+    INSERT INTO sae3._compte (email, pseudo, mot_de_passe) VALUES (NEW.email, NEW.identifiant, NEW.motDePasse);
+    Insert Into sae3._client(num_compte, nom_compte, prenom_compte)  VALUES (currval('sae3._compte_num_compte_seq'),NEW.nom, NEW.prenom);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -251,7 +253,8 @@ CREATE TRIGGER insert_client
 CREATE OR REPLACE FUNCTION update_client() RETURNS trigger AS $$
 BEGIN
     --on récupère tous les champs qui sont contenus dans l'update
-    UPDATE sae3._compte SET nom_compte = NEW.nom, prenom_compte = NEW.prenom, email = NEW.email, pseudo = NEW.identifiant, mot_de_passe = NEW.motDePasse WHERE num_compte = OLD.numero;
+    UPDATE sae3._compte SET email = NEW.email, pseudo = NEW.identifiant, mot_de_passe = NEW.motDePasse WHERE num_compte = OLD.numero;
+    UPDATE sae3._client SET nom_compte = NEW.nom, prenom_compte = NEW.prenom  WHERE num_compte = OLD.numero;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -260,6 +263,37 @@ CREATE TRIGGER update_client
     INSTEAD OF UPDATE ON sae3.client
     FOR EACH ROW
     EXECUTE PROCEDURE update_client();
+
+
+CREATE OR REPLACE FUNCTION insert_vendeur() RETURNS trigger AS $$
+BEGIN
+    INSERT INTO sae3._compte (email, pseudo, mot_de_passe) VALUES (NEW.email, NEW.identifiant, NEW.motDePasse);
+    Insert Into sae3._vendeur(num_compte)  VALUES (currval('sae3._compte_num_compte_seq'));
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_vendeur
+    INSTEAD OF INSERT ON sae3.vendeur
+    FOR EACH ROW
+    EXECUTE PROCEDURE insert_vendeur();
+
+-- trigger insertion dans _compte instead of update à partir de la vue client
+
+CREATE OR REPLACE FUNCTION update_vendeur() RETURNS trigger AS $$
+BEGIN
+    --on récupère tous les champs qui sont contenus dans l'update
+    UPDATE sae3._compte SET email = NEW.email, pseudo = NEW.identifiant, mot_de_passe = NEW.motDePasse WHERE num_compte = OLD.numero;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_vendeur
+    INSTEAD OF UPDATE ON sae3.vendeur
+    FOR EACH ROW
+    EXECUTE PROCEDURE update_vendeur();
+
 
 
 
@@ -319,6 +353,7 @@ $$ language plpgsql;
 CREATE OR REPLACE FUNCTION delete_commentaire() RETURNS TRIGGER AS
 $$
     BEGIN
+        delete from sae3._reponse where num_avis=old.num_avis;
         delete from sae3._signalement where num_avis=old.num_avis;
         delete from sae3._image_avis where num_avis=old.num_avis;
         delete from sae3._avis where num_avis=old.num_avis;

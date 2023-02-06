@@ -1,4 +1,4 @@
-<?php require __DIR__ . "/../header.php";
+<?php require("header.php"); 
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -176,7 +176,7 @@
             </section>
         <?php endif; ?>
     </main>
-<?php require __DIR__ . "/../footer.php"; ?>
+<?php require("footer.php"); ?>
 
 <script>
     <?php if (!empty($produits)): ?>

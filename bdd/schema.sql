@@ -49,6 +49,29 @@ CREATE TABLE _compte
     mot_de_passe VARCHAR(60) NOT NULL
 );
 
+CREATE TABLE _client
+(
+    num_compte INTEGER PRIMARY KEY,
+    nom_compte VARCHAR(50) NOT NULL,
+    prenom_compte VARCHAR(50) NOT NULL,
+
+    CONSTRAINT _compte_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte)
+
+);
+
+CREATE TABLE _vendeur
+(
+    num_compte INTEGER PRIMARY KEY,
+    numeroSIRET VARCHAR(14) UNIQUE NOT NULL,
+    TVA_intercommunautaire VARCHAR(15) NOT NULL,
+    Texte_presentation VARCHAR(255) NOT NULL,
+    note_vendeur INTEGER,
+    logo VARCHAR,
+    id_adresse INTEGER NOT NULL,
+    CONSTRAINT _compte_vendeur_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte),
+    CONSTRAINT _adresse_vendeur_fk FOREIGN KEY (id_adresse) REFERENCES _adresse(id)
+);
+
 CREATE TABLE _adresse
 (
     id_a SERIAL PRIMARY KEY,

@@ -1112,6 +1112,7 @@ function boutonCliquable(bouton, action) {
     ) {
         bouton.addEventListener("click", () => {
             document.querySelector(".partie-filtre").style.display = "block";
+            document.querySelector(".partie-produits").style.gridColumn = "4";
             document.querySelector(".bulle-ouvrir-filtres").style.display =
                 "none";
             document.querySelector(".bulle-ouvrir-tris").style.display = "none";
@@ -1123,6 +1124,7 @@ function boutonCliquable(bouton, action) {
     ) {
         bouton.addEventListener("click", () => {
             document.querySelector(".partie-filtre").style.display = "none";
+            document.querySelector(".partie-produits").style.gridColumn = "2 / span 3";
             document.querySelector(".bulle-ouvrir-filtres").style.display =
                 "flex";
             document.querySelector(".bulle-ouvrir-tris").style.display = "flex";
@@ -1141,6 +1143,7 @@ function boutonCliquableTris(bouton, action) {
     ) {
         bouton.addEventListener("click", () => {
             document.querySelector(".partie-tris").style.display = "block";
+            document.querySelector(".partie-produits").style.gridColumn = "4";
             document.querySelector(".bulle-ouvrir-filtres").style.display =
                 "none";
             document.querySelector(".bulle-ouvrir-tris").style.display = "none";
@@ -1152,6 +1155,7 @@ function boutonCliquableTris(bouton, action) {
     ) {
         bouton.addEventListener("click", () => {
             document.querySelector(".partie-tris").style.display = "none";
+            document.querySelector(".partie-produits").style.gridColumn = "2 / span 3";
             document.querySelector(".bulle-ouvrir-filtres").style.display =
                 "flex";
             document.querySelector(".bulle-ouvrir-tris").style.display = "flex";
@@ -1164,11 +1168,13 @@ function loadFiltersTris() {
     window.addEventListener("load", () => {
         if (localStorage.getItem("openF") === "true") {
             document.querySelector(".partie-filtre").style.display = "block";
+            document.querySelector(".partie-produits").style.gridColumn = "4";
             document.querySelector(".bulle-ouvrir-filtres").style.display =
                 "none";
             document.querySelector(".bulle-ouvrir-tris").style.display = "none";
         } else if (localStorage.getItem("openT") === "true") {
             document.querySelector(".partie-tris").style.display = "flex";
+            document.querySelector(".partie-produits").style.gridColumn = "4";
             document.querySelector(".bulle-ouvrir-filtres").style.display =
                 "none";
             document.querySelector(".bulle-ouvrir-tris").style.display = "none";

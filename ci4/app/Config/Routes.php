@@ -144,16 +144,18 @@ $routes->post('/admin/profil/(:num)', 'admin\Home::profil/$1');
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-$routes->get('/vendeur/import/entetes', 'vendeur\Import::getentetes');
+$routes->get('/vendeur/import/entetes','vendeur\Import::getentetes');
 
 $routes->get('vendeur/import', 'vendeur\Import::index/true');
-$routes->post('vendeur/import/upload', 'vendeur\Import::upload');
+$routes->post('vendeur/import/upload','vendeur\Import::upload');
 
-$routes->get('vendeur/commandesCli', 'vendeur\Home::lstCommandesVendeur/true');
+$routes->get('vendeur/commandesCli','vendeur\Home::lstCommandesVendeur/true');
 $routes->get('vendeur/commandesCli/detail/(:alphanum)','vendeur\Home::detail/$1/true');
 
 $routes->get('/vendeur/profil', 'vendeur\Home::profil');
 $routes->post('/vendeur/profil', 'vendeur\Home::profil');
+
+$routes->get('vendeur/connexion','vendeur\Home::connexion');
 
 ##param uri (:any) et dans methode /$1
 

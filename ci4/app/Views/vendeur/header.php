@@ -95,8 +95,7 @@
                         </div>
                     <?php else: ?>
                         <div class="divHoverConnexion divNotConnected">
-                            <a href="<?= base_url()."/connexion"?>"><p>Se connecter</p></a>
-                            <a href="<?= base_url()."/inscription"?>"><p>S'inscrire</p></a>
+                            <a href="<?= base_url()."/vendeur/connexion"?>"><p>Se connecter</p></a>
                         </div>
                     <?php endif; ?>
                 </div>

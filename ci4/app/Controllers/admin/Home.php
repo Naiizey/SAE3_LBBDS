@@ -11,6 +11,36 @@ class Home extends BaseController
 {
     public $feedback;
 
+    public function __construct()
+    {
+        //Permets d'éviter le bug de redirection.
+        session();
+
+        //Affichage de la quantité panier
+        helper('cookie');
+
+        if (session()->has("numero")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+        } elseif (has_cookie("token_panier")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
+        } else {
+            $GLOBALS["quant"] = 0;
+        }
+
+        //Au cas où __ci_previous_url ne marcherait plus...: session()->set("previous_url",current_url());
+        $this->feedback=service("feedback");
+        if (session()->has("just_connectee") && session()->get("just_connectee")==true) {
+            session()->set("just_connectee", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Vous êtes connecté !");
+        } else if (session()->has("just_deconnectee") && session()->get("just_deconnectee")==true) {
+            session()->set("just_deconnectee", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Vous êtes déconnecté !");
+        } else if (session()->has("just_signal") && session()->get("just_signal")==true) {
+            session()->set("just_signal", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Avis signalé !");
+        }
+    }
+
     public function index()
     {
         $data["role"] = "admin";
@@ -155,6 +185,8 @@ class Home extends BaseController
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
         $data['identifiant'] = (isset($_POST['identifiant'])) ? $_POST['identifiant'] : "";
         $data['email'] = (isset($_POST['email'])) ? $_POST['email'] : "";
+        $data[' '] = (isset($_POST['siret'])) ? $_POST['siret'] : "";
+        $data['tvaIntraCom'] = (isset($_POST['tvaIntraCom'])) ? $_POST['tvaIntraCom'] : "";
         $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
         $data['confirmezMotDePasse'] = (isset($_POST['confirmezMotDePasse'])) ? $_POST['confirmezMotDePasse'] : "";
 

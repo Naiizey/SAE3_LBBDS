@@ -1104,7 +1104,7 @@ function boutonCliquable(bouton, action) {
         bouton.classList.contains("bulle-ouvrir-filtres")
     ) {
         bouton.addEventListener("click", () => {
-            document.querySelector(".partie-filtre").style.display = "flex";
+            document.querySelector(".partie-filtre").style.display = "block";
             document.querySelector(".bulle-ouvrir-filtres").style.display =
                 "none";
             document.querySelector(".bulle-ouvrir-tris").style.display = "none";
@@ -1133,7 +1133,7 @@ function boutonCliquableTris(bouton, action) {
         bouton.classList.contains("bulle-ouvrir-tris")
     ) {
         bouton.addEventListener("click", () => {
-            document.querySelector(".partie-tris").style.display = "flex";
+            document.querySelector(".partie-tris").style.display = "block";
             document.querySelector(".bulle-ouvrir-filtres").style.display =
                 "none";
             document.querySelector(".bulle-ouvrir-tris").style.display = "none";
@@ -1156,7 +1156,7 @@ function boutonCliquableTris(bouton, action) {
 function loadFiltersTris() {
     window.addEventListener("load", () => {
         if (localStorage.getItem("openF") === "true") {
-            document.querySelector(".partie-filtre").style.display = "flex";
+            document.querySelector(".partie-filtre").style.display = "block";
             document.querySelector(".bulle-ouvrir-filtres").style.display =
                 "none";
             document.querySelector(".bulle-ouvrir-tris").style.display = "none";

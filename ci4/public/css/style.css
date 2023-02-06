@@ -4072,36 +4072,36 @@ progress::-moz-progress-bar
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                    Page d'espace client (espaceClient.php)                      ┃
+┃                           Page de profil (profil.php)                           ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-.mainEspaceCli {
+.mainProfil {
     background-color: #f3f3f3;
 }
 
-.mainEspaceCli > svg {
+.mainProfil > svg {
     height: 10em;
 }
 
-.mainEspaceCli > svg path {
+.mainProfil > svg path {
     fill: black;
 }
 
-.mainEspaceCli > svg:hover path {
+.mainProfil > svg:hover path {
     fill: black;
 }
 
-.mainEspaceCli h2 {
+.mainProfil h2 {
     color: #164F57;
     margin: 1em 0;
 }
 
-.mainEspaceCli h3 {
+.mainProfil h3 {
     color: #164F57;
     font-family: "Montserrat-Medium";
 }
 
-.divEspaceCli {
+.divProfil {
     margin: 0 20%;
 }
 
@@ -4162,7 +4162,7 @@ progress::-moz-progress-bar
 }
 
 @media screen and (max-width: 991px) {
-    .mainEspaceCli{
+    .mainProfil{
         display: flex;
         flex-direction: column;
         align-items: center;

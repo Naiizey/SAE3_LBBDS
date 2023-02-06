@@ -73,7 +73,7 @@ class Home extends BaseController
         $post=$this->request->getPost();
         $issues=[];
 
-        if (!empty($post)) 
+        if (!empty($post))
         {
             //Vérification des champs du post (attributs de l'entité Client)
             $auth = service('authentification');
@@ -105,6 +105,13 @@ class Home extends BaseController
         $data['identifiant'] = (isset($_POST['identifiant'])) ? $_POST['identifiant'] : "";
         $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
 
+        // Se souvenir de moi
+        if (isset($_POST['rememberMe'])) {
+            dd($_POST["rememberMe"]);
+        }
+
+        
+        //set_cookie($cookie);
         return view('client/connexion.php', $data);
     }
 

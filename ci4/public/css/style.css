@@ -4304,32 +4304,68 @@ progress::-moz-progress-bar
 
 .divRecapPanier div{
 
-    width: 90%;
+    width: 95%;
     
 }
 
 
 .divRecapPanier .recap-prod-container {
-    display: grid;
-    margin: 20px 0;
-    font-family: 'Montserrat-Regular';
-    grid-template-columns: 80% 20%;
     width: 100%;
 }
 
 .recap-prod-container-price
 {
-    display: flex;
-    align-items: flex-start;
+    display: grid;
+    align-items: center;
     margin: 20px 0;
     font-family: 'Montserrat-Regular';
-    grid-template-columns: 50% 25% 25%;
+    grid-template-columns: 60% 40%;
     width: 100%;
+
+}
+
+.recap-prod-container .produit
+{
+    width: 100%;
+}
+
+.recap-prod-container .produit div
+{
+    width: 98%;
+    display: grid;
+    font-family: 'Montserrat-Regular';
+    grid-template-columns: 80% 20%;
+    
+}
+
+.recap-prod-container .produit .price div
+{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.recap-prod-container .produit hr {
+    background-color: #E7E8E6;
+    width: 95%;
+    border-radius: 10px;
+    margin-left: 1%;
+
+}
+
+.recap-prod-container 
+{
+    /*making the div scrollable */
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 50%;
+    width: 100%;
+    margin: 1%;
 }
 
 .recap-prod-container div{
     width: fit-content;
-    
+
 }
 
 .recap-prod-container .intitule

@@ -30,15 +30,18 @@
         </div> 
         <div class="divRecapPanier">
             <div>
-                <h3>Produits à l'achat</h3>
-                <div class="recap-prod-container">
-                <?php foreach($produits as $produit): ?>
-                    <div><?= $produit->intitule ?> </div> <div><?= $produit->prixTtc ?>€ TTC</div> <div><?= $produit->prixHt ?>€ HT</div>
-                <?php endforeach ?>
+                <div class="recap-prod-titre">
+                    <h3>Produits à l'achat</h3>
+                    <hr>
                 </div>
                 <div class="recap-prod-container">
+                <?php foreach($produits as $produit): ?>
+                    <div class="intitule"><?= $produit->intitule ?> </div> <div class="price"><div>TTC:</div><div><?= $produit->prixTtc ?>€</div> <div>HT:</div><div><?= $produit->prixHt ?>€</div></div>
+                <?php endforeach ?>
+                </div>
+                <div class="recap-prod-container-price">
                     <?php if (isset($reducMont) || isset($reducPourc)): ?>
-                    <div>Sous-totaux </div> <div><?= $totalTtc?>€ TTC</div> <div><?= $totalHt ?>€ HT</div>
+                    <div>Sous-totaux </div> <div><?= $totalTtc?>€ TTC</div> <div><?= $totalHt ?>€ HT</div></section>
                     <div>Code de réduction</div> <div><?= "-".((isset($reducMont))?$reducMont."€":$reducPourc."%") ?></div> <div></div>
                     <?php endif; ?>
                     <div>Total </div> 

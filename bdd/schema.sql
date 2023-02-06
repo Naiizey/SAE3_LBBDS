@@ -57,19 +57,6 @@ CREATE TABLE _client
 
 );
 
-CREATE TABLE _vendeur
-(
-    num_compte INTEGER PRIMARY KEY,
-    numeroSIRET VARCHAR(14) UNIQUE NOT NULL,
-    TVA_intercommunautaire VARCHAR(15) NOT NULL,
-    Texte_presentation VARCHAR(255) NOT NULL,
-    note_vendeur INTEGER,
-    logo VARCHAR,
-    id_adresse INTEGER NOT NULL,
-    CONSTRAINT _compte_vendeur_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte),
-    CONSTRAINT _adresse_vendeur_fk FOREIGN KEY (id_adresse) REFERENCES _adresse(id)
-);
-
 CREATE TABLE _adresse
 (
     id_a SERIAL PRIMARY KEY,
@@ -83,6 +70,18 @@ CREATE TABLE _adresse
     comp_a2 VARCHAR(150) NULL
 );
 
+CREATE TABLE _vendeur
+(
+    num_compte INTEGER PRIMARY KEY,
+    numeroSIRET VARCHAR(14) UNIQUE NOT NULL,
+    TVA_intercommunautaire VARCHAR(15) NOT NULL,
+    Texte_presentation VARCHAR(255) NOT NULL,
+    note_vendeur INTEGER,
+    logo VARCHAR,
+    id_adresse INTEGER NOT NULL,
+    CONSTRAINT _compte_vendeur_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte),
+    CONSTRAINT _adresse_vendeur_fk FOREIGN KEY (id_adresse) REFERENCES _adresse(id)
+);
 
 CREATE TABLE _adresse_livraison(
     id_adresse_livr SERIAL PRIMARY KEY,

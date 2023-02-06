@@ -80,7 +80,7 @@ CREATE TABLE _vendeur
     logo VARCHAR,
     id_adresse INTEGER NOT NULL,
     CONSTRAINT _compte_vendeur_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte),
-    CONSTRAINT _adresse_vendeur_fk FOREIGN KEY (id_adresse) REFERENCES _adresse(id)
+    CONSTRAINT _adresse_vendeur_fk FOREIGN KEY (id_adresse) REFERENCES _adresse(id_a)
 );
 
 CREATE TABLE _adresse_livraison(

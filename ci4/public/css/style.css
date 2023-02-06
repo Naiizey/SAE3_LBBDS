@@ -3536,6 +3536,12 @@ a.fleche-page{
     }
 }
 
+@media screen and (max-width: 1440px) and (min-width: 961px){
+    .bubbles{
+        width: 10em;
+    }
+}
+
 @media screen and (max-width: 960px) {
     main#Catalogue{
         grid-template-columns: repeat(auto-fit, minmax(20%, 100%));

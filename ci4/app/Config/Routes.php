@@ -49,7 +49,7 @@ $routes->post('/connexion', 'client\Home::connexion');
 $routes->get('/connexion/(401)', 'client\Home::connexion/$1');
 $routes->post('/connexion/(401)', 'client\Home::connexion/$1');
 $routes->get('/connexion/retourProduit/(:num)', 'client\Home::produit/$1' ,['filter' => 'connexion']);
-$routes->get('/connexion/retourPanier', 'client\Panier::getProduitclient\Panierclient\Home' ,['filter' => 'connexion']);
+$routes->get('/connexion/retourPanier', 'client\Panier::getProduitPanierClient' ,['filter' => 'connexion']);
 
 $routes->get('/inscription', 'client\Home::inscription');
 $routes->post('/inscription', 'client\Home::inscription');

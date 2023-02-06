@@ -150,7 +150,7 @@ CREATE TABLE _produit
     intitule_prod VARCHAR(50) UNIQUE NOT NULL,
     prix_ht FLOAT NOT NULL,
     prix_ttc FLOAT NOT NULL,
-    description_prod VARCHAR UNIQUE NOT NULL,
+    description_prod VARCHAR NOT NULL,
     publication_prod BOOLEAN NOT NULL,
     stock_prod INT NOT NULL,
     moyenne_note_prod FLOAT NOT NULL,
@@ -450,7 +450,7 @@ ALTER TABLE _sanction_temporaire ADD CONSTRAINT _sanction_temporaire_duree_fk FO
 -- asociation entre _sanction_temporaire et _client
 ALTER TABLE _sanction_temporaire ADD CONSTRAINT _sanction_temporaire_client_fk FOREIGN KEY (num_compte) REFERENCES _client(num_compte);
 
--- Association *..1 entre avis et signalement 
+-- Association *..1 entre avis et signalement
 ALTER TABLE _signalement ADD COLUMN num_avis INT NOT NULL;
 ALTER TABLE _signalement ADD CONSTRAINT _signalement_avis_fk FOREIGN KEY (num_avis) REFERENCES _avis(num_avis);
 

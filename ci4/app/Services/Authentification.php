@@ -161,7 +161,7 @@ class Authentification
         return $errors;
     }
 
-    public function modifEspaceClient(\App\Entities\Client $entree, $verifMdp, $nouveauMdp) : array
+    public function modifProfilClient(\App\Entities\Client $entree, $verifMdp, $nouveauMdp) : array
     {   
         $compteModel=model("\App\Models\Client");
         $errors=[];

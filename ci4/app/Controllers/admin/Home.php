@@ -160,4 +160,41 @@ class Home extends BaseController
 
         return view('vendeur/inscription.php', $data);
     }
+
+    public function profil($numClient)
+    {
+        $data["controller"] = "Profil Client";
+        $modelFact = model("\App\Models\ClientAdresseFacturation");
+        $modelLivr = model("\App\Models\ClientAdresseLivraison");
+        $modelClient = model("\App\Models\Client");
+        $post=$this->request->getPost();
+
+        $data['numClient'] = $numClient;
+
+        $issues = [];
+        $client = $modelClient->getClientById($numClient);
+        $clientBase = $modelClient->getClientById($numClient);
+        $data['prenomBase'] = $clientBase->prenom;
+
+        //Valeurs par défaut
+        $data['motDePasse'] = "motDePassemotDePasse";
+        $data['confirmezMotDePasse'] = "";
+        $data['nouveauMotDePasse'] = "";
+
+        //On cache par défaut les champs supplémentaires pour modifier le mdp
+        $data['classCacheDiv'] = "cacheModifMdp";
+        $data['disableInput'] = "disabled";
+        $data['requireInput'] = "";
+
+        //Pré-remplissage des champs avec les données de la base
+        $data['pseudo'] = $client->identifiant;
+        $data['prenom'] = $client->prenom;
+        $data['nom'] = $client->nom;
+        $data['email'] = $client->email;
+        $data['adresseFact'] = $modelFact->getAdresse(session()->get("numero"));
+        $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
+        $data['erreurs'] = $issues;
+
+        return view('admin/profil.php', $data);
+    }
 }

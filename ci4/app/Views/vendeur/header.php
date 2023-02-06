@@ -79,7 +79,7 @@
                     </label>
                 </form>
                 <div class="divPanierProfil divPanierProfilVendeur">
-                    <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>">
+                    <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/profil" : base_url()."/connexion") ?>">
                     <?php if (session()->has("numero")) {
                         include(dirname(__DIR__,3)."/public/images/header/profilCon.svg");
                     } else {
@@ -89,7 +89,7 @@
                     <?php if (session()->has("numero")): ?>
                         <div class="divHoverConnexion divConnected">
                             <p class="pNom">Bonjour <?= (session()->get("nom")) ?></p>
-                            <a href="<?= base_url()."/espaceClient"?>"><p>Mon profil</p></a>
+                            <a href="<?= base_url()."/profil"?>"><p>Mon profil</p></a>
                             <a href="<?= base_url()."/commandes"?>"><p>Mes commandes</p></a>
                             <a href="<?= base_url()."/admin/destroy"?>"><p>Se déconnecter</p></a>
                         </div>

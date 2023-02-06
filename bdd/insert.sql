@@ -109,6 +109,8 @@ INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://images.pexels.com/photos/5086617/pexels-photo-5086617.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',0);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://cdn.pixabay.com/photo/2016/07/26/16/16/wine-1543170_960_720.jpg',1);
+INSERT INTO _image_prod(id_prod, lien_image,num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://fotomelia.com/wp-content/uploads/edd/2016/02/banque-d-images-gratuites-libre-de-droits-du-domaine-public-haute-d%C3%A9finition-164-1560x2224.jpg',2);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (133,'Vin blanc',10,15,'Elaboré à partir de nos raisons blancs bretons, ce vin blanc est idéal pour vos dîner.', true, 10, 4.5, 5, true);
@@ -124,11 +126,19 @@ VALUES (134,'Fines herbes',5,6,'Herbes pour aggrémenter les plats comestibles. 
 VALUES (133,'Vin blanc',10,15,'Elaboré à partir de nos raisons blancs bretons, ce vin blanc est idéal pour vos dîner.', true, 10, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image, num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://images.pexels.com/photos/105863/pexels-photo-105863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',0);
+INSERT INTO _image_prod(id_prod, lien_image, num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://fotomelia.com/wp-content/uploads/edd/2015/08/banque-d-images-et-photos-gratuites-libres-de-droits19-1560x1040.jpg',1);
+INSERT INTO _image_prod(id_prod, lien_image, num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://fotomelia.com/wp-content/uploads/edd/2015/08/photo-libre-de-droit33-1560x1050.jpg',2);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (134,'Herbe à chat',10,12,'Issue de nos cultures locales, ce produit rendra fou votre chat. Chat non fourni.', true, 10, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image, num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://static.vecteezy.com/system/resources/previews/008/118/057/non_2x/beautiful-adorable-leopard-color-cat-sleeping-on-the-grass-free-photo.jpg',0);
+INSERT INTO _image_prod(id_prod, lien_image, num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://fotomelia.com/wp-content/uploads/2016/05/photos-gratuites-libres-de-droits-92-1560x975.jpg',1);
+INSERT INTO _image_prod(id_prod, lien_image, num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://fotomelia.com/wp-content/uploads/edd/2016/02/banque-d-images-et-photos-gratuites-libres-de-droits-t%C3%A9l%C3%A9chargement-gratuits-85-1560x1040.jpg',2);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (135,'Néo balances',60,72,'Chaussures de sport et de villes parfaites pour toutes les situations. Imppecable pour se balader.', true, 10, 4.5, 5, true);
@@ -144,16 +154,26 @@ INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, descripti
 VALUES (140,'Breizhphone 1',200,240,'Tout premier téléphone breton tactile, attention produit assez fragile et disposant d''une batterie limitée', true, 10, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image, num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://static.vecteezy.com/system/resources/previews/002/078/414/non_2x/blank-phone-on-orange-free-photo.jpg',0);
+INSERT INTO _image_prod(id_prod, lien_image, num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://fotomelia.com/wp-content/uploads/2017/11/images-gratuites-libres-de-droits-sur-le-site-fotomelia-16-1560x878.jpg',1);
+INSERT INTO _image_prod(id_prod, lien_image, num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://fotomelia.com/wp-content/uploads/2019/05/smartphone-1560x1040.jpg',2);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (134,'Crêpes froment artisanales x12',3,3.6,'Lot de 12 crêpes froment artisanales, sans conservateurs. Provenance : Douarnenez', true, 15, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://images.pexels.com/photos/10248807/pexels-photo-10248807.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',0);
+INSERT INTO _image_prod(id_prod, lien_image,num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://fotomelia.com/wp-content/uploads/2022/06/20220604_180020-1560x878.jpg',1);
+INSERT INTO _image_prod(id_prod, lien_image,num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://fotomelia.com/wp-content/uploads/edd/2016/01/banque-d-images-et-photos-gratuites-libres-de-droits-t%C3%A9l%C3%A9chargement-gratuits-144-336-1560x1261.jpg',2);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (134,'Kouign-amann',5,6,'Plât emblématique de la bretagne, Kouign-amann 100% beurre idéal pour toute la famille. Provenance : Douarnenez', true, 10, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
-VALUES (currval('sae3._produit_id_prod_seq'),'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg',0 );
+VALUES (currval('sae3._produit_id_prod_seq'),'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Kouignamann.JPG/1067px-Kouignamann.JPG?20080104141720',0 );
+INSERT INTO _image_prod(id_prod, lien_image,num_image)
+VALUES (currval('sae3._produit_id_prod_seq'),'https://fotomelia.com/wp-content/uploads/edd/2015/08/free-picture-creative-commons-download15-1560x1038.jpg',1);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (136,'T-shirt marinière',10,12,'Classique et intemporel, ce t-shirt toujours à la mode s''accordera avec toutes vos tenues. Provenance : Brest', true, 17, 4.5, 5, true);
@@ -171,7 +191,7 @@ INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg',0);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (136,'Ciret jaune',100,120,'Parfait pour vous protéger du vent et de la pluie en bretagne, ce ciret sera votre meilleur compagnon pour vos jours en Bretagne. Provenance : Trégunc', true, 10, 4.5, 5, true);
+VALUES (136,'Ciré jaune',100,120,'Parfait pour vous protéger du vent et de la pluie en bretagne, ce ciret sera votre meilleur compagnon pour vos jours en Bretagne. Provenance : Trégunc', true, 10, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'),  'https://images.pexels.com/photos/11421665/pexels-photo-11421665.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',0);
 
@@ -206,7 +226,7 @@ INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'),  'https://static.vecteezy.com/system/resources/previews/007/789/648/non_2x/white-sport-tape-isolated-on-white-background-athletic-taping-porous-adhesive-tape-medical-tape-multipurpose-porous-tape-for-wound-care-and-sprain-first-aid-medical-supplies-sport-bandage-free-photo.jpg',0);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (142,'Plante carnivore attrape mouches',2,2.4,'Vous êtes ennuyé par les mouches, cet plante est faite pour vous !', true, 10, 4.5, 5, true);
+VALUES (142,'Plantes carnivores attrape mouches',2,2.4,'Vous êtes ennuyé par les mouches, cet lot de plantes carnivores est fait pour vous !', true, 10, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://images.pexels.com/photos/2483389/pexels-photo-2483389.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 0);
 
@@ -253,9 +273,7 @@ VALUES (currval('sae3._produit_id_prod_seq'), 'https://www.cdiscount.com/pdt2/3/
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (148,'Piquets de jardin',100,120, 'Très bon piquet pour arrêter des lapins, attention à usage unique, provenance : Bretagne.', true, 10, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image, estinterne,num_image)
-VALUES (currval('sae3._produit_id_prod_seq'), '../ci4/public/images/produit/missile_javelin.jpg', true,0);
-INSERT INTO _image_prod(id_prod, lien_image, estinterne,num_image)
-VALUES (currval('sae3._produit_id_prod_seq'), '../ci4/public/images/produit/missile_javelin.jpg', true,1);
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true,0);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
 VALUES (148,'Tarte campagnarde',8,9.6,'Carrotes, fromage, jambon, champigons. Produit incroyablement bon qui fond très bien en bouche.',  true, 10, 4.5, 5, true);
@@ -268,7 +286,7 @@ INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'),'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg',0 );
 
 -- (note_prod, id_prod, num_compte) VALUES (5, 18, 1);
-INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3.75, 14, 1);
+INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3, 14, 1);
 INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (5, 12, 2);
 INSERT INTO _note (note_prod, id_prod, num_compte) VALUES (3, 13, 1);
 
@@ -330,16 +348,16 @@ INSERT INTO  _recevoir_facture VALUES (3, 2);
 INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (2, 32, CURRVAL('sae3._panier_num_panier_seq'));
 
 --10 insertions dans _commande (num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a, id_adresse)
-INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a) VALUES (1,'1', '2018-01-01', null, null, null, null, 1);
-INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a) VALUES (1,'2', '2018-01-01', '2018-01-01', '2018-01-01', null, null, 2);
-INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a) VALUES (1,'3', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 3);
-INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a,id_reduction) VALUES (1,'4', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', 1,1);
+INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a) VALUES (1,'1', '2023-02-01', null, null, null, null, 1);
+INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a,id_reduction) VALUES (1,'2', '2022-12-01', '2022-12-02', '2022-12-05', null, null, 2, 2);
+INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a, id_reduction) VALUES (1,'3', '2022-07-22', '2022-07-23', '2022-07-27', '2022-07-29', '2022-07-30', 3, 3);
+INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a,id_reduction) VALUES (1,'4', '2022-05-01', '2022-05-02', '2022-05-04', '2022-05-06', '2022-05-07', 1, 1);
 
 
-INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (5, 18, '1',5);
-INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (1, 17, '3',7);
-INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (5, 18, '2',98);
-INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (3, 17, '4',8);
+INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (5, 18, '1',1500);
+INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (5, 18, '2',1500);
+INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (1, 17, '3',12);
+INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (3, 17, '4',12);
 
 -- 2 insertions dans _duree (date_debut, heure_debut, date_fin, heure_fin)
 INSERT INTO _duree (date_debut, heure_debut, date_fin, heure_fin)

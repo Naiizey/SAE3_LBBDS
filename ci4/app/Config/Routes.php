@@ -135,6 +135,7 @@ $routes->get('/admin/signalements/(:num)', 'admin\Home::lstSignalements/$1');
 $routes->get('/admin/avis', 'admin\Home::lstAvis');
 $routes->get('/admin/avis/(:num)', 'admin\Home::lstAvis/$1');
 
+$routes->get('/admin/profil', 'admin\Home::profil');
 $routes->get('/admin/profil/(:num)', 'admin\Home::profil/$1');
 $routes->post('/admin/profil/(:num)', 'admin\Home::profil/$1');
 

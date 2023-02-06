@@ -173,11 +173,9 @@ class Home extends BaseController
 
         //Pré-remplissage des champs avec les données de la base
         $data['identifiant'] = $client->identifiant;
-        $data['siret'] = $client->prenom;
-        $data['nom'] = $client->nom;
         $data['email'] = $client->email;
-        $data['adresseFact'] = $modelFact->getAdresse(session()->get("numero"));
-        $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
+        $data['siret'] = $client->prenom;
+        $data['tvaIntraCom'] = $client->nom;
         $data['erreurs'] = $issues;
 
         return view('vendeur/profil.php', $data);

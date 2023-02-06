@@ -185,7 +185,7 @@ class Home extends BaseController
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
         $data['identifiant'] = (isset($_POST['identifiant'])) ? $_POST['identifiant'] : "";
         $data['email'] = (isset($_POST['email'])) ? $_POST['email'] : "";
-        $data[' '] = (isset($_POST['siret'])) ? $_POST['siret'] : "";
+        $data['siret'] = (isset($_POST['siret'])) ? $_POST['siret'] : "";
         $data['tvaIntraCom'] = (isset($_POST['tvaIntraCom'])) ? $_POST['tvaIntraCom'] : "";
         $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
         $data['confirmezMotDePasse'] = (isset($_POST['confirmezMotDePasse'])) ? $_POST['confirmezMotDePasse'] : "";
@@ -193,40 +193,47 @@ class Home extends BaseController
         return view('vendeur/inscription.php', $data);
     }
 
-    public function profil($numClient)
+    public function profil($numClient = null)
     {
-        $data["controller"] = "Profil Client";
-        $modelFact = model("\App\Models\ClientAdresseFacturation");
-        $modelLivr = model("\App\Models\ClientAdresseLivraison");
-        $modelClient = model("\App\Models\Client");
-        $post=$this->request->getPost();
+        if ($numClient == null) 
+        {
+            throw new \Exception("Vous devez spécifier un numéro de compte", 404);
+        }
+        else
+        {
+            $data["controller"] = "Profil Client";
+            $modelFact = model("\App\Models\ClientAdresseFacturation");
+            $modelLivr = model("\App\Models\ClientAdresseLivraison");
+            $modelClient = model("\App\Models\Client");
+            $post=$this->request->getPost();
 
-        $data['numClient'] = $numClient;
+            $data['numClient'] = $numClient;
 
-        $issues = [];
-        $client = $modelClient->getClientById($numClient);
-        $clientBase = $modelClient->getClientById($numClient);
-        $data['prenomBase'] = $clientBase->prenom;
+            $issues = [];
+            $client = $modelClient->getClientById($numClient);
+            $clientBase = $modelClient->getClientById($numClient);
+            $data['prenomBase'] = $clientBase->prenom;
 
-        //Valeurs par défaut
-        $data['motDePasse'] = "motDePassemotDePasse";
-        $data['confirmezMotDePasse'] = "";
-        $data['nouveauMotDePasse'] = "";
+            //Valeurs par défaut
+            $data['motDePasse'] = "motDePassemotDePasse";
+            $data['confirmezMotDePasse'] = "";
+            $data['nouveauMotDePasse'] = "";
 
-        //On cache par défaut les champs supplémentaires pour modifier le mdp
-        $data['classCacheDiv'] = "cacheModifMdp";
-        $data['disableInput'] = "disabled";
-        $data['requireInput'] = "";
+            //On cache par défaut les champs supplémentaires pour modifier le mdp
+            $data['classCacheDiv'] = "cacheModifMdp";
+            $data['disableInput'] = "disabled";
+            $data['requireInput'] = "";
 
-        //Pré-remplissage des champs avec les données de la base
-        $data['pseudo'] = $client->identifiant;
-        $data['prenom'] = $client->prenom;
-        $data['nom'] = $client->nom;
-        $data['email'] = $client->email;
-        $data['adresseFact'] = $modelFact->getAdresse(session()->get("numero"));
-        $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
-        $data['erreurs'] = $issues;
+            //Pré-remplissage des champs avec les données de la base
+            $data['pseudo'] = $client->identifiant;
+            $data['prenom'] = $client->prenom;
+            $data['nom'] = $client->nom;
+            $data['email'] = $client->email;
+            $data['adresseFact'] = $modelFact->getAdresse(session()->get("numero"));
+            $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
+            $data['erreurs'] = $issues;
 
-        return view('admin/profil.php', $data);
+            return view('admin/profil.php', $data);
+        }
     }
 }

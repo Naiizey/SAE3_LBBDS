@@ -1,8 +1,6 @@
 SET SCHEMA 'sae3';
 
 insert into sae3._compte ( pseudo, email, mot_de_passe) values ( 'testMotDePasseVisible', 'test@tst.de', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
-
-
 INSERT INTO _compte (pseudo, email, mot_de_passe) VALUES ( 'test', 'test@gmail.com', 'test152687');
 INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('nassima_illoutchine', 'nassima@gmail.com', 'test152687');
 INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('taniamoigne666999', 'temoigne@gmail.com', 'test152687');
@@ -202,8 +200,6 @@ VALUES (currval('sae3._produit_id_prod_seq'), 'https://www.cdiscount.com/pdt2/3/
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
 VALUES (136,'Ciret jaune',100,120,'Parfait pour vous protéger du vent et de la pluie en bretagne, ce ciret sera votre meilleur compagnon pour vos jours en Bretagne. Provenance : Trégunc', true, 10, 4.5, 5, true, 5);
-INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (136,'Ciré jaune',100,120,'Parfait pour vous protéger du vent et de la pluie en bretagne, ce ciret sera votre meilleur compagnon pour vos jours en Bretagne. Provenance : Trégunc', true, 10, 4.5, 5, true);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'),  'https://images.pexels.com/photos/11421665/pexels-photo-11421665.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',0);
 
@@ -237,8 +233,8 @@ VALUES (142,'Strap',5,6,'Petit scotch pour tenir n''importe quel objet sur toute
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'),  'https://static.vecteezy.com/system/resources/previews/007/789/648/non_2x/white-sport-tape-isolated-on-white-background-athletic-taping-porous-adhesive-tape-medical-tape-multipurpose-porous-tape-for-wound-care-and-sprain-first-aid-medical-supplies-sport-bandage-free-photo.jpg',0);
 
-INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod)
-VALUES (142,'Plantes carnivores attrape mouches',2,2.4,'Vous êtes ennuyé par les mouches, cet lot de plantes carnivores est fait pour vous !', true, 10, 4.5, 5, true);
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
+VALUES (142,'Plantes carnivores attrape mouches',2,2.4,'Vous êtes ennuyé par les mouches, cet lot de plantes carnivores est fait pour vous !', true, 10, 4.5, 5, true, 5);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
 VALUES (142,'Plante carnivore attrape mouches',2,2.4,'Vous êtes ennuyé par les mouches, cet plante est faite pour vous !', true, 10, 4.5, 5, true, 5);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)

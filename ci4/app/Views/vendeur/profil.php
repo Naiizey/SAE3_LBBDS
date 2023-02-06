@@ -15,9 +15,9 @@
     <div class="divCredit divProfil">
         <section class="sectionCredit">
             <form name="formClient" action="<?= current_url() ?>" method="post">
-                <label class="labelRecupMail">Votre pseudo :</label>
+                <label class="labelRecupMail">Votre identifiant :</label>
                 <div class="divInputEtLien">
-                    <input type="text" name="pseudo" required="required" value="<?= $pseudo?>" disabled/>
+                    <input type="text" name="pseudo" required="required" value="<?= $identifiant?>" disabled/>
                 </div>
                 <?= afficheErreurs($erreurs, 8); ?>
                 <label class="labelRecupMail">Votre prénom :</label>

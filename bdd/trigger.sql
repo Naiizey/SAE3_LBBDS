@@ -186,10 +186,12 @@ CREATE OR REPLACE FUNCTION insertInsertCommande() RETURNS TRIGGER AS
 DECLARE
 
         row sae3._refere_commande%ROWTYPE;
-
+        id_reduction_temp int;
     BEGIN
-
-        INSERT INTO sae3._commande(num_commande, date_commande, id_a,num_compte) VALUES (new.num_commande, current_date,new.id_a,new.num_compte);
+        SELECT id_reduction fROM sae3._reduire WHERE num_panier = (SELECT num_panier FROM sae3._panier_client WHERE  num_compte = new.num_compte) into id_reduction_temp;
+        
+    
+        INSERT INTO sae3._commande(num_commande, date_commande, id_a,num_compte,id_reduction) VALUES (new.num_commande, current_date,new.id_a,new.num_compte,id_reduction_temp); -- changer new.id_reduction (trouver le client puis l'id de réduction qui est associé au panier)
 
 
         PERFORM num_panier FROM sae3._panier_client natural join sae3._refere where num_compte=new.num_compte;
@@ -204,7 +206,8 @@ DECLARE
                     delete from sae3._refere where num_panier in (select num_panier from sae3._panier_client where num_compte=new.num_compte) and id_prod=row.id_prod;
 
             end loop;
-
+            
+            -- insertion du code de réduction dans _commande et supression de _refere 
 
         else
             raise exception 'il n''y  pas de produits dans ce panier';
@@ -231,9 +234,11 @@ CREATE TRIGGER insteadOfInsert_insertCommande INSTEAD OF INSERT ON sae3.insert_c
 -- CREATE TRIGGER verif_reduc_panier INSTEAD OF INSERT ON sae3.reduc_panier FOR EACH ROW EXECUTE PROCEDURE verif_reduc_panier();
 
 -- trigger insertion dans _compte instead of insert à partir de la vue client
+
 CREATE OR REPLACE FUNCTION insert_client() RETURNS trigger AS $$
 BEGIN
-    INSERT INTO sae3._compte (nom_compte, prenom_compte, email, pseudo, mot_de_passe) VALUES (NEW.nom, NEW.prenom, NEW.email, NEW.identifiant, NEW.motDePasse);
+    INSERT INTO sae3._compte (email, pseudo, mot_de_passe) VALUES (NEW.email, NEW.identifiant, NEW.motDePasse);
+    Insert Into sae3._client(num_compte, nom_compte, prenom_compte)  VALUES (currval('sae3._compte_num_compte_seq'),NEW.nom, NEW.prenom);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -248,7 +253,8 @@ CREATE TRIGGER insert_client
 CREATE OR REPLACE FUNCTION update_client() RETURNS trigger AS $$
 BEGIN
     --on récupère tous les champs qui sont contenus dans l'update
-    UPDATE sae3._compte SET nom_compte = NEW.nom, prenom_compte = NEW.prenom, email = NEW.email, pseudo = NEW.identifiant, mot_de_passe = NEW.motDePasse WHERE num_compte = OLD.numero;
+    UPDATE sae3._compte SET email = NEW.email, pseudo = NEW.identifiant, mot_de_passe = NEW.motDePasse WHERE num_compte = OLD.numero;
+    UPDATE sae3._client SET nom_compte = NEW.nom, prenom_compte = NEW.prenom  WHERE num_compte = OLD.numero;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -257,6 +263,37 @@ CREATE TRIGGER update_client
     INSTEAD OF UPDATE ON sae3.client
     FOR EACH ROW
     EXECUTE PROCEDURE update_client();
+
+
+CREATE OR REPLACE FUNCTION insert_vendeur() RETURNS trigger AS $$
+BEGIN
+    INSERT INTO sae3._compte (email, pseudo, mot_de_passe) VALUES (NEW.email, NEW.identifiant, NEW.motDePasse);
+    Insert Into sae3._vendeur(num_compte)  VALUES (currval('sae3._compte_num_compte_seq'));
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_vendeur
+    INSTEAD OF INSERT ON sae3.vendeur
+    FOR EACH ROW
+    EXECUTE PROCEDURE insert_vendeur();
+
+-- trigger insertion dans _compte instead of update à partir de la vue client
+
+CREATE OR REPLACE FUNCTION update_vendeur() RETURNS trigger AS $$
+BEGIN
+    --on récupère tous les champs qui sont contenus dans l'update
+    UPDATE sae3._compte SET email = NEW.email, pseudo = NEW.identifiant, mot_de_passe = NEW.motDePasse WHERE num_compte = OLD.numero;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_vendeur
+    INSTEAD OF UPDATE ON sae3.vendeur
+    FOR EACH ROW
+    EXECUTE PROCEDURE update_vendeur();
+
 
 
 

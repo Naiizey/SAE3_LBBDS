@@ -2059,6 +2059,10 @@ h3 > .lienPasArticlePanier {
     color: #164F57;
 }
 
+.divGauche a {
+    color: #C6C6C6;
+}
+
 .mainProduit img {
     width: 100%;
     height: auto;
@@ -2552,7 +2556,7 @@ h3 > .lienPasArticlePanier {
 }
 
 .pAvis {
-    flex-basis: 13%;
+    flex-basis: 17%;
 }
 
 .moyennesAvis progress {
@@ -2562,7 +2566,7 @@ h3 > .lienPasArticlePanier {
     border: none;
     border-radius: 4px;
     margin: .5em 0;
-    flex-basis : 80%
+    flex-basis : 76%
 }
 
 .moyennesAvis progress::-moz-progress-bar 
@@ -4389,7 +4393,7 @@ div.zoom {
     width: 50vh;
     height: 50vh;
     border: solid 2px;
-    border-color: #164F57;
+    border-color: #C6C6C6;
     border-radius: 3px;
   }
   

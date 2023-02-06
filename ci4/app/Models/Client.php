@@ -12,7 +12,7 @@ use CodeIgniter\Model;
  * @see TutoCI/CI5_BDD
  * @return \App\Entities\Client
  */
-class Client extends Model
+class Client extends Compte
 {
     protected $table      = 'sae3.client';
     protected $primaryKey = 'numero';
@@ -24,67 +24,37 @@ class Client extends Model
 
     protected $allowedFields = ['nom','prenom','email','identifiant','motdepasse'];
 
-    protected $useTimestamps = false;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
 
-    protected $validationRules    = [];
-    protected $validationMessages = [];
-    protected $skipValidation     = false;
-
-    private function getClientByCredentials($comptes, $motDePasse) : \App\Entities\Client | null
+    public function getClientByCredentials($comptes, $motDePasse) : \App\Entities\Client | null
     {
-        $comptes=$comptes->findAll();
-        if(sizeof($comptes) != 0)
-        {
-            $retour=null;
-            foreach($comptes as $trouve){
-            
-                if($trouve->verifCrypt($motDePasse)){
-                    $retour=$trouve;
-                }
-            }
-            return $retour;
-        }
-        else return null;
+        return parent::getCompteByCredentials($comptes, $motDePasse);
     }
 
     public function getClientByPseudo($pseudo, $motDePasse) : \App\Entities\Client | null
     {
         
-        $comptes = $this->where('identifiant',$pseudo);
-        
-        return $this->getClientByCredentials($comptes, $motDePasse);
+        return parent::getCompteByPseudo($pseudo, $motDePasse);
     }
 
     public function getClientByEmail($email, $motDePasse) : \App\Entities\Client | null
     {
         
-        $comptes = $this->where('email',$email);
-        
-        return $this->getClientByCredentials($comptes, $motDePasse);
+        return parent::getCompteByEmail($email, $motDePasse);
     }
 
-    public function doesPseudoExists($pseudo) : bool
-    {
-        return !empty($this->where('identifiant',$pseudo)->findAll());
-    }
-
-    public function doesEmailExists($email) : bool
-    {
-        return !empty($this->where('email',$email)->findAll());
-    }
 
     public function getClientById($id)
     {
-        return $this->find($id);
+        return parent::getCompteById($id);
     }
 
     public function saveClient(\App\Entities\Client $client)
     {
-        $this->save($client);
+        parent::saveCompte($client);
     }
 
-    
+    public function doesEmailExists($email) : bool
+    {
+        return parent::doesEmailExists($email);
+    }
 }

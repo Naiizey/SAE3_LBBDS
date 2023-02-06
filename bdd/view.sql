@@ -17,6 +17,12 @@ CREATE OR REPLACE VIEW autre_image AS
     WITH min_image AS (SELECT min(num_image) num_image, id_prod FROM _image_prod  group by id_prod )
     SELECT num_image,lien_image,id_prod FROM sae3._image_prod WHERE num_image NOT IN (SELECT num_image FROM min_image);
 
+CREATE OR REPLACE VIEW compte_client AS
+    SELECT * FROM _client NATURAL JOIN _compte;
+
+CREATE OR REPLACE VIEW compte_vendeur AS
+    SELECT * FROM _vendeur NATURAL JOIN _compte;
+
 --FONCTIONS
 CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_commande varchar) RETURNS INT AS
     $$
@@ -72,10 +78,10 @@ CREATE OR REPLACE VIEW adresse_facturation AS
  --CLIENT
 CREATE OR REPLACE VIEW client AS
     WITH trouve_current_panier AS (select max(num_panier) current_panier,num_compte from sae3._panier_client group by num_compte)
-    SELECT num_compte numero, nom_compte nom, prenom_compte prenom, email, pseudo identifiant, mot_de_passe motDePasse, current_panier FROM _compte NATURAL JOIN trouve_current_panier;
+    SELECT num_compte numero, nom_compte nom, prenom_compte prenom, email, pseudo identifiant, mot_de_passe motDePasse, current_panier FROM compte_client NATURAL JOIN trouve_current_panier;
 
 CREATE OR REPLACE VIEW client_mail AS
-    SELECT num_compte, email from _compte;
+    SELECT num_compte, email from compte_client;
 
 
 --COMMANDE
@@ -83,26 +89,28 @@ CREATE OR REPLACE VIEW commande_list_vendeur AS
     SELECT num_commande,num_compte,date_commande,date_arriv, sum(prix_ht*qte_panier) ht, sum(prix_ttc*qte_panier) ttc, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _refere_commande NATURAL JOIN _produit group by num_commande, num_compte,date_commande,date_arriv,etat;
 
 CREATE OR REPLACE VIEW commande_list_client AS
-    SELECT num_commande,num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat FROM _commande  NATURAL JOIN _refere_commande NATURAL JOIN _produit group by num_commande, num_compte,date_commande,date_arriv,etat;
+    SELECT num_commande,num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande LEFT JOIN _code_reduction ON _commande.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande NATURAL JOIN _produit group by num_commande, num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
 
 CREATE OR REPLACE VIEW commande_list_produits_client AS
     WITH min_image AS (SELECT min(num_image) num_image, id_prod FROM _image_prod  group by id_prod )
-    SELECT num_commande,id_prod, intitule_prod, lien_image lienImage,description_prod,num_compte,date_commande,date_arriv,round(prix_fixeettc::numeric,2) prix_ttc,round((prix_fixeettc/(1+_tva.taux_tva))::numeric,2) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _image_prod NATURAL JOIN _refere_commande NATURAL JOIN _produit natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva
+    SELECT num_commande,id_prod, intitule_prod, lien_image lienImage,description_prod,num_compte,date_commande,date_arriv,round(prix_fixeettc::numeric,2) prix_ttc,round((prix_fixeettc/(1+_tva.taux_tva))::numeric,2) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande), montant_reduction, pourcentage_reduction FROM _commande LEFT JOIN _code_reduction ON _commande.id_reduction = _code_reduction.id_reduction  NATURAL JOIN _image_prod NATURAL JOIN _refere_commande NATURAL JOIN _produit   natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva --,, etat
     WHERE num_image IN (SELECT num_image FROM min_image);
 
 CREATE OR REPLACE VIEW insert_commande AS
-    SELECT num_commande,num_compte,id_a FROM _commande NATURAL JOIN _panier_client;
+    SELECT num_commande,num_compte,id_a,id_reduction FROM _commande NATURAL JOIN _panier_client;
 
 
 
 
 --PRODUIT & CATEGORIE
 CREATE OR REPLACE VIEW produit_catalogue AS
-    SELECT id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*_tva.taux_tva) prixTTC,lien_image lienImage,publication_prod, description_prod, _sous_categorie.libelle_cat categorie, moyenneNote  FROM _produit NATURAL JOIN _image_prod  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
+    SELECT id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*_tva.taux_tva) prixTTC,lien_image lienImage,publication_prod, description_prod, _sous_categorie.libelle_cat categorie, moyenneNote
+    FROM _produit NATURAL JOIN _image_prod  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
     LEFT JOIN moyenneProduit on _produit.id_prod = moyenneProduit.id NATURAL JOIN soloimageproduit;
 
 CREATE OR REPLACE VIEW produit_detail AS
-    SELECT id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*taux_tva) prixTTC, prix_ht prixHT, lien_image lienImage,publication_prod  isAffiche, _sous_categorie.libelle_cat categorie, _sous_categorie.code_sous_cat codeCategorie,description_prod description, stock_prod stock,moyenneNote moyenne FROM _produit NATURAL JOIN _image_prod  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
+    SELECT id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*taux_tva) prixTTC, prix_ht prixHT, lien_image lienImage,publication_prod  isAffiche, _sous_categorie.libelle_cat categorie, _sous_categorie.code_sous_cat codeCategorie,description_prod description, stock_prod stock,moyenneNote moyenne
+    FROM _produit NATURAL JOIN _image_prod  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
     LEFT JOIN moyenneProduit on _produit.id_prod = moyenneProduit.id NATURAL JOIN soloimageproduit;
 
 CREATE OR REPLACE VIEW categorie AS
@@ -134,7 +142,7 @@ CREATE OR REPLACE VIEW produitCSV AS
 --MODÉRATION & COMMENTAIRES
 CREATE OR REPLACE VIEW commentaires AS
     WITH moyenne AS (SELECT id_prod id,avg(note_prod) as moyenneNote FROM _produit natural join _note  group by id_prod)
-    SELECT num_avis, contenu_av, date_av, n.id_note, id_prod, num_compte, note_prod,c.pseudo, moyenneNote moyenne FROM _avis a  natural join _note n natural join _compte c left join moyenne on n.id_prod = moyenne.id;
+    SELECT num_avis, contenu_av, date_av, n.id_note, id_prod, num_compte, note_prod,c.pseudo, moyenneNote moyenne FROM _avis a  natural join _note n natural join compte_client c left join moyenne on n.id_prod = moyenne.id;
 
 CREATE OR REPLACE VIEW sanction_temporaire AS
     SELECT id_sanction, raison, num_compte, date_debut, heure_debut, date_fin, heure_fin FROM _sanction_temporaire NATURAL JOIN _duree;

@@ -195,10 +195,6 @@ class Home extends BaseController
             $data["quantitePanier"]=model("\App\Models\ProduitPanierVisiteurModel")->getQuantiteProduitByIdProd($idProduit, get_cookie('token_panier'));
         }
 
-        //Get produituk
-        $prodModel = model("\App\Models\ProduitDetail");
-        $result = $prodModel->find($idProduit);
-
         //Autres images du produit
         $prodModelAutre = model("\App\Models\ProduitDetailAutre");
         $autresImages = $prodModelAutre->getAutresImages($idProduit);
@@ -281,6 +277,9 @@ class Home extends BaseController
         } else {
             $data["avisEnValeur"] = -1;
         }
+        
+        //Synchronisation des produits avec la base
+        $result = model("\App\Models\ProduitDetail")->find($idProduit);
 
         //Affichage selon si produit trouvé ou non
         if ($result == null) {

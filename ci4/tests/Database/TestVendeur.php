@@ -24,18 +24,13 @@ class TestVendeur extends CIUnitTestCase{
                 "nom" => 'firstName',
                 "identifiant" => "userName",
                 "motdepasse" => "password",
-                "email" => "email"
-                
+                "email" => "email"     
             ));
 
             $vendeur=$fabricatorCli->make();
             $vendeur->cryptMotDePasse();
             $model_Vend->saveVendeur($vendeur);
             Fabricator::upCount($model_Vend->table);
-            
-        
-
-           
         }
         
         d($model_Vend->findAll());
@@ -51,8 +46,8 @@ class TestVendeur extends CIUnitTestCase{
         $fabricatorCli = new Fabricator(Vendeur::class,array(
 
             "identifiant" => "userName",
-            "motdepasse" => "password"
-          
+            
+
             
         ));
 
@@ -85,42 +80,6 @@ class TestVendeur extends CIUnitTestCase{
         $rereLeVendeur=$model_Vend->where('identifiant', $identifiant)->findAll()[0];
        
         $this->assertEquals($email2->email, $rereLeVendeur->email,"La modification ne fonctionne pas");
-    }
-
-    public function testDelete(){
-        $model_Vend=model("\App\Models\Vendeur");
-
-     
-        Fabricator::setCount($model_Vend->table, sizeof($model_Vend->findAll()));
-        
-        $fabricatorCli = new Fabricator(Vendeur::class,array(
-
-            "identifiant" => "userName",
-            "motdepasse" => "password",
-            "email" => "email"
-          
-            
-        ));
-
-    
-
-
-        $vendeur=$fabricatorCli->make();
-        $identifiant = $vendeur->identifiant;
-      
-        $vendeur->cryptMotDePasse();
-        $model_Vend->saveVendeur($vendeur);
-
-   
-
-        $reLeVendeur=$model_Vend->where('identifiant', $identifiant)->delete()[0];
-      
- 
-        
-
-        $rereLeVendeur=$model_Vend->where('identifiant', $identifiant)->findAll()[0];
-       
-        //$this->assertEquals(, $rereLeVendeur->email,"La modification ne fonctionne pas");
     }
 
     

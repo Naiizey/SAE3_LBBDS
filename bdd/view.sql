@@ -12,7 +12,7 @@ CREATE OR REPLACE VIEW soloImageProduit AS
     SELECT id_prod, lien_image, estinterne FROM _image_prod WHERE _image_prod.num_image IN (SELECT num_image FROM min_image);
 
 CREATE OR REPLACE VIEW moyenneProduit AS
-       SELECT p.id_prod id,avg(note_prod)::numeric(4,2) as moyenneNote FROM _produit p inner join _note on p.id_prod = _note.id_prod  group by p.id_prod;
+        SELECT id_prod id,avg(note_prod)::numeric(4,2) as moyenneNote FROM _produit natural join _note  group by id_prod;
 
 CREATE OR REPLACE VIEW autre_image AS
     WITH min_image AS (SELECT min(num_image) num_image, id_prod FROM _image_prod  group by id_prod )
@@ -73,6 +73,7 @@ CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_commande varchar) RE
     -PANIER
     -MODÉRATION & COMMENTAIRE
     -RÉDUCTION
+    -VENDEUR
 
 
  */
@@ -97,6 +98,9 @@ CREATE OR REPLACE VIEW client AS
 
 CREATE OR REPLACE VIEW client_mail AS
     SELECT num_compte, email from compte_client;
+
+
+
 
 
 --COMMANDE
@@ -171,3 +175,9 @@ CREATE OR REPLACE VIEW code_reduction AS
 CREATE OR REPLACE VIEW reduc_panier AS SELECT * FROM _reduire;
 
 CREATE OR REPLACE VIEW signalement AS SELECT * FROM _signalement;
+
+
+ --VENDEUR
+CREATE OR REPLACE VIEW vendeur AS
+SELECT num_compte numero, email, pseudo identifiant, mot_de_passe motDePasse, numero_siret, tva_intercommunautaire, texte_presentation, note_vendeur, logo, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, id_adresse
+FROM compte_vendeur NATURAL JOIN _adresse;

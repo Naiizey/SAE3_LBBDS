@@ -1,6 +1,6 @@
 <?php require(dirname(__DIR__) . "/header.php"); ?>
 <main>
-    <div class="sectionCredit divCredit divEspaceCli recap">
+    <div class="sectionCredit divCredit divProfil recap">
         <h2>Récapitulatif</h2>
         <div class="divRecapPanier">
             <div>

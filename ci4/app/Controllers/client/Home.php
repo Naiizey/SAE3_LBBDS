@@ -351,24 +351,16 @@ class Home extends BaseController
         return view("client/catalogue.php", $data);
     }
     
-    public function espaceClient($role = null, $numClient = null)
+    public function profil()
     {
-        $data["controller"] = "Espace Client";
+        $data["controller"] = "Profil Client";
         $modelFact = model("\App\Models\ClientAdresseFacturation");
         $modelLivr = model("\App\Models\ClientAdresseLivraison");
         $modelClient = model("\App\Models\Client");
         $post=$this->request->getPost();
 
+        $numClient = session()->get("numero");
         $data['numClient'] = $numClient;
-        $data['role'] = "";
-
-        //On vérifie si l'utilisateur est un admin ou un client
-        if ($role == "admin" && $numClient != null) {
-            $data['role'] = "admin";
-        } else {
-            $data['role'] = "client";
-            $numClient = session()->get("numero");
-        }
 
         $issues = [];
         $client = $modelClient->getClientById($numClient);
@@ -421,7 +413,7 @@ class Home extends BaseController
             $auth = service('authentification');
             $user=$client;
             $user->fill($post);
-            $issues=$auth->modifEspaceClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
+            $issues=$auth->modifProfilClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
 
             if (!empty($issues))
             {
@@ -434,11 +426,11 @@ class Home extends BaseController
             {
                 if ($role == "admin")
                 {
-                    return redirect()->to("/admin/espaceClient/" . $numClient);
+                    return redirect()->to("/admin/profil/" . $numClient);
                 }
                 else
                 {
-                    return redirect()->to("/espaceClient");
+                    return redirect()->to("/profil");
                 }
             }
         }
@@ -452,7 +444,7 @@ class Home extends BaseController
         $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
         $data['erreurs'] = $issues;
 
-        return view('client/espaceClient.php', $data);
+        return view('client/profil.php', $data);
     }
 
     public function facture()

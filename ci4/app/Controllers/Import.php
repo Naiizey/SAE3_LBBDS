@@ -24,7 +24,7 @@ class Import extends BaseController
     {
         $data["estVendeur"] = $estVendeur;
         $data["controller"]= "import";
-        return view('admin-vendeur/import.php', $data);
+        return view('vendeur/import.php', $data);
     }
 
     public function upload() {
@@ -38,7 +38,7 @@ class Import extends BaseController
         $filepath = WRITEPATH . 'uploads/' . $csv->store();
         $data = ['uploaded_fileinfo' => new File($filepath)];
         $this->importCSV($filepath);
-        return view('admin-vendeur/import.php', $data);
+        return view('vendeur/import.php', $data);
     }
 
     public function importCSV($filepath) {
@@ -100,7 +100,7 @@ class Import extends BaseController
             delete_files(WRITEPATH.'uploads/', true);
         }
         session()->set("just_importe", true);
-        return view('admin-vendeur/import.php', $data);
+        return view('vendeur/import.php', $data);
     }
 
     /**

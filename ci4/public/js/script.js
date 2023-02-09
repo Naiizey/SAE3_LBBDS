@@ -854,6 +854,29 @@ function lstClients(){
 }
 
 /*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                         Liens aux lignes de lstVendeurs                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+function lstVendeurs()
+{
+    //Récupération de toutes les lignes de la liste des signalements
+    var lignes = document.getElementsByClassName("lignesVendeurs");
+
+    //Récupération de tous les numéros de produit associés au signalement et donc à l'avis
+    var numVendeur = document.getElementsByClassName("numVendeur");
+
+    for (let numLigne = 0; numLigne < lignes.length; numLigne++)
+    {
+        let ligneA = lignes.item(numLigne);
+        let idVendeur = numProduit.item(numLigne).textContent;
+
+        //Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du produit associé au signalement (ancre avis pour accéder à l'avis directement)
+        ligneA.addEventListener("click", () => {window.location.href = `${base_url}/admin/vendeurs/${idVendeur}`;});
+    }
+}
+
+/*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                      CGU                                        ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
@@ -1180,6 +1203,17 @@ function getParentNodeTilClass(element){
     return parent;
 }
 
+function switchContent(button){
+    if(button.textContent == "↓ Croissant"){
+        button.textContent = "↑ Décroissant";
+        button.value = "DESC";
+    }
+    else if(button.textContent == "↑ Décroissant"){
+        button.textContent = "↓ Croissant";
+        button.value = "ASC";
+    }
+}
+
 const filterUpdate = function(formFilter,champRecherche,listeProduit,suppressionFiltre,voirPlus,formTris) {
     this.formF = formFilter;
     this.formT = formTris;
@@ -1191,10 +1225,12 @@ const filterUpdate = function(formFilter,champRecherche,listeProduit,suppression
     this.currPage = 1//parseInt(document.querySelector("#catalogue-current-page").textContent);
     //Permet d'éviter les problèmes de scope
     const self = this;
-        this.send = async (replace=true) => {
+    this.send = async (replace=true) => {
         //Récupère les valeurs des filtres et transformation en string de type url à laquelle ajoute la recherche
         let champsGetF = new URLSearchParams(new FormData(self.formF));
-        let champsGetT = new URLSearchParams(new FormData(self.formT));
+        let formChampsGetT = new FormData(self.formT);
+        formChampsGetT.append("Ordre", document.querySelector("#ordre").value);
+        let champsGetT = new URLSearchParams(formChampsGetT);
 
         if(!self.champRecherche.value==""){
             champsGetF.append("search",self.champRecherche.value);
@@ -1245,13 +1281,23 @@ const filterUpdate = function(formFilter,champRecherche,listeProduit,suppression
         }
     }
 
+
+
+    let switchButt = document.querySelector(".partie-tris form #ordre");
+    function switchButtonListener(button){
+        switchContent(button);
+        self.send();
+    }
     
     Array.from(this.formF.elements).forEach((el) => {
         el.addEventListener("change", () => this.send());
     });
 
     Array.from(this.formT.elements).forEach((el) => {
-        el.addEventListener("change", () => this.send());
+        if(el.type == "radio")
+            el.addEventListener("change", () => this.send());
+        else if(el.type == "button")
+            el.addEventListener("click", () => (switchButtonListener(switchButt)));
     });
 
     this.suppressionFiltre.addEventListener('click', (event) => {
@@ -1283,6 +1329,22 @@ function changeOnglet() {
             }
             }
         );
+    }
+}
+
+function switchOrder(){
+    let switchButt = document.querySelector(".partie-tris form #ordre");
+    switchButt.addEventListener("click", (e) => switchContent(switchButt));
+}
+
+function switchContent(button){
+    if(button.textContent == "↓ Croissant"){
+        button.textContent = "↑ Décroissant";
+        button.value = "DESC";
+    }
+    else if(button.textContent == "↑ Décroissant"){
+        button.textContent = "↓ Croissant";
+        button.value = "ASC";
     }
 }
 

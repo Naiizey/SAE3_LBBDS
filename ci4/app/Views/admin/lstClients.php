@@ -69,8 +69,8 @@
                 <input id="numClient" type="hidden" name="numClient">
                 <div class="div-inputs">
                     <div class="duree">
-                        <label>Durée (secondes)<span class="requis">*</span> : </label>
-                        <input name="duree" type="number" pattern="/^\d*[1-9]\d*$/" min="1" required>
+                        <label>Durée (jour)<span class="requis">*</span> : </label>
+                        <input name="duree" type="number" min="1" max="2910000" required>
                     </div>
                     <div class="raison">
                         <label>Raison<span class="requis">*</span> : </label>

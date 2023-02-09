@@ -7,6 +7,10 @@
                     <div>
                         <a href="<?= base_url() ?>/admin/clients">Voir les comptes clients</a>
                     </div>
+                    <div>
+                        <a href="<?= base_url() ?>/admin/vendeurs/inscription">Créer un compte vendeur</a>
+                        <a href="<?= base_url() ?>/admin/vendeurs">Voir les comptes vendeurs</a>
+                    </div>
                     <h3>Bannissements</h3>
                     <div>
                         <a href="<?= base_url() ?>/admin/clients/bannir">Bannir un client</a>

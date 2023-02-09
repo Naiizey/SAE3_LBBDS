@@ -24,6 +24,20 @@ CREATE OR REPLACE VIEW compte_client AS
 CREATE OR REPLACE VIEW compte_vendeur AS
     SELECT * FROM _vendeur NATURAL JOIN _compte;
 
+CREATE OR REPLACE VIEW produit_global AS
+    SELECT id_prod,
+    intitule_prod,
+    prix_ht,
+    prix_ttc,
+    description_prod,
+    publication_prod,
+    stock_prod,
+    moyenne_note_prod,
+    seuil_alerte_prod,
+    alerte_prod,
+    code_sous_cat
+    FROM _produit;
+
 --FONCTIONS
 CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_commande varchar) RETURNS INT AS
     $$
@@ -127,13 +141,13 @@ CREATE OR REPLACE VIEW sous_categorie AS
 --PANIER
 CREATE OR REPLACE VIEW produit_panier_compte AS
     SELECT concat(id_prod,'£',num_panier) id,id_prod, intitule_prod intitule,stock_prod stock, prix_ht+(prix_ht*taux_tva) prixTTC,prix_ht, lien_image lienImage, description_prod description, qte_panier quantite,num_compte num_client,num_panier current_panier
-    FROM _produit NATURAL JOIN _refere NATURAL JOIN _panier_client  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
+    FROM produit_global NATURAL JOIN _refere NATURAL JOIN _panier_client  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
     NATURAL JOIN soloimageproduit
     where num_panier IN (SELECT max(num_panier) FROM _panier_client group by num_compte)
     ORDER BY id;
 
 CREATE OR REPLACE VIEW produit_panier_visiteur AS
-    SELECT concat(id_prod,'£',num_panier) id,id_prod, intitule_prod intitule,stock_prod stock, prix_ht+(prix_ht*taux_tva) prixTTC,prix_ht, lien_image lienImage, description_prod description, qte_panier quantite,token_cookie,num_panier current_panier FROM _produit NATURAL JOIN _image_prod NATURAL JOIN _refere NATURAL JOIN _panier_visiteur  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
+    SELECT concat(id_prod,'£',num_panier) id,id_prod, intitule_prod intitule,stock_prod stock, prix_ht+(prix_ht*taux_tva) prixTTC,prix_ht, lien_image lienImage, description_prod description, qte_panier quantite,token_cookie,num_panier current_panier FROM produit_global NATURAL JOIN _image_prod NATURAL JOIN _refere NATURAL JOIN _panier_visiteur  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
     NATURAL JOIN soloimageproduit
     ORDER BY id;
 

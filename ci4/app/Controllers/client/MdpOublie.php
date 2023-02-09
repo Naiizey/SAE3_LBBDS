@@ -64,15 +64,12 @@ class MdpOublie extends BaseController
             $_SESSION['code'] = $this->genererCode();
             $contenu = 'Voici le code de récupération pour votre compte :<br><span style="display: block;text-align: center;font-size:x-large">' . $_SESSION['code'] . '</span><br>Si vous n\'êtes pas l\'auteur de cette demande, ignorez ce mail ou contactez le support : support@alizon.net';
             $message = $this->genererMail("Réinitialiser votre mot de passe", $contenu);
-            $this->email->setFrom('admin@alizon.net', 'Administrateur - Alizon.net');
             $this->email->setTo($_SESSION["userMail"]);
             $this->email->setSubject('Récupération de mot de passe');
             $this->email->setMessage($message);
             $this->email->send();
-            $data['retour'][0] = "Renseignez le code qui vous a été envoyé par mail.";
-        } else {
-            $data['retour'][1] = "L'adresse mail ne correspond à aucun compte.";
         }
+        $data['retour'][0] = "Si votre adresse est bien liée à un compte, renseignez le code qui vous a été envoyé par mail.";
         return $this->mdpOublie($post, $data);
     }
 

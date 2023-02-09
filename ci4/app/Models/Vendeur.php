@@ -23,21 +23,21 @@ class Vendeur extends Compte
     protected $returnType     = \App\Entities\Vendeur::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['nom','identifiant','motdepasse'];
+    protected $allowedFields = ['identifiant','motdepasse','email', 'numero_siret', 'tva_intercommunautaire', 'note_vendeur', 'logo', 'numero_rue', 'nom_rue', 'code_postal', 'ville', 'comp_a1', 'comp_a2'];
 
 
-    public function getVendeurByCredentials($comptes, $motDePasse) : \App\Entities\Client | null
+    public function getVendeurByCredentials($comptes, $motDePasse) : \App\Entities\Vendeur | null
     {
         return parent::getCompteByCredentials($comptes, $motDePasse);
     }
 
-    public function getVendeurByPseudo($pseudo, $motDePasse) : \App\Entities\Client | null
+    public function getVendeurByPseudo($pseudo, $motDePasse) : \App\Entities\Vendeur | null
     {
         
         return parent::getCompteByPseudo($pseudo, $motDePasse);
     }
 
-    public function getVendeurByEmail($email, $motDePasse) : \App\Entities\Client | null
+    public function getVendeurByEmail($email, $motDePasse) : \App\Entities\Vendeur | null
     {
         
         return parent::getCompteByEmail($email, $motDePasse);
@@ -49,9 +49,9 @@ class Vendeur extends Compte
         return parent::getCompteById($id);
     }
 
-    public function saveVendeur(\App\Entities\Client $client)
+    public function saveVendeur(\App\Entities\Vendeur $vendeur)
     {
-        parent::saveCompte($client);
+        parent::saveCompte($vendeur);
     }
 
     

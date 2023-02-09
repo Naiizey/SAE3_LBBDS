@@ -1,6 +1,12 @@
 SET SCHEMA 'sae3';
 
-insert into sae3._compte ( pseudo, email, mot_de_passe) values ( 'testMotDePasseVisible', 'test@tst.de', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
+insert into sae3._compte ( pseudo,email, mot_de_passe) values ( 'testMotDePasseVisible', 'test@tst.de', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
+
+-- trois insertions d'adresses
+INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('Doe', 'John', 1, 'rue de la paix', 75000, 'Paris', 'Batiment A', 'Etage 1');
+INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('Doe', 'Jane', 2, 'rue de la paix', 75000, 'Paris', 'Batiment B', 'Etage 2');
+INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('hiller', 'adolphe', 3, 'rue de la guerre', 70000, 'lille', 'Batiment C', 'Etage 3');
+
 INSERT INTO _compte (pseudo, email, mot_de_passe) VALUES ( 'test', 'test@gmail.com', 'test152687');
 INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('nassima_illoutchine', 'nassima@gmail.com', 'test152687');
 INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('taniamoigne666999', 'temoigne@gmail.com', 'test152687');
@@ -12,7 +18,7 @@ INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (2,'toast', 'de
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (3,'illoutchine', 'nassima');
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (4,'moigne', 'tania');
 
-INSERT INTO _vendeur(num_compte) VALUES (5);
+INSERT INTO _vendeur  VALUES (5, '123456789', 'FR50123456789"', 'Bonjour, nous sommes la COBREC', 3, 'https://logo-marque.com/wp-content/uploads/2021/09/Hot-Wheels-Logo.png', currval('sae3._adresse_id_a_seq'));
 
 
 INSERT INTO _tva VALUES (1,0.20);
@@ -332,11 +338,6 @@ INSERT INTO _liste_souhait ( id_prod, num_compte) VALUES (17, 1);
 INSERT INTO _liste_souhait ( id_prod, num_compte) VALUES (18, 2);
 INSERT INTO _liste_souhait (id_prod, num_compte) VALUES (17, 2);
 -- INSERT INTO _liste_souhait (etat_stock, id_prod, num_compte) VALUES (false, 18, 1);
-
--- trois insertions d'adresses
-INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('Doe', 'John', 1, 'rue de la paix', 75000, 'Paris', 'Batiment A', 'Etage 1');
-INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('Doe', 'Jane', 2, 'rue de la paix', 75000, 'Paris', 'Batiment B', 'Etage 2');
-INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('hiller', 'adolphe', 3, 'rue de la guerre', 70000, 'lille', 'Batiment C', 'Etage 3');
 
 -- 3 insertions d'adresses de livraison
 INSERT INTO _adresse_livraison (infos_comp, id_a) VALUES ('infos complémentaires', 1);

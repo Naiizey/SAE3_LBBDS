@@ -95,6 +95,93 @@ class Home extends BaseController
         }
     }
 
+    public function profil()
+    {
+        $data["controller"] = "Profil Vendeur";
+        $modelFact = model("\App\Models\ClientAdresseFacturation");
+        $modelLivr = model("\App\Models\ClientAdresseLivraison");
+        $modelClient = model("\App\Models\Client");
+        $post=$this->request->getPost();
+        
+        $numClient = session()->get("numero");
+        $data['numClient'] = $numClient;
+
+        $issues = [];
+        $client = $modelClient->getClientById($numClient);
+        $clientBase = $modelClient->getClientById($numClient);
+        $data['prenomBase'] = $clientBase->prenom;
+
+        //Valeurs par défaut
+        $data['motDePasse'] = "motDePassemotDePasse";
+        $data['confirmezMotDePasse'] = "";
+        $data['nouveauMotDePasse'] = "";
+
+        //On cache par défaut les champs supplémentaires pour modifier le mdp
+        $data['classCacheDiv'] = "cacheModifMdp";
+        $data['disableInput'] = "disabled";
+        $data['requireInput'] = "";
+
+        //Si l'utilisateur a cherché à modifier des informations
+        if (!empty($post)) 
+        {
+            helper('cookie');
+            if (session()->has("numero")) {
+                $data['quant'] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+            } elseif (has_cookie("token_panier")) {
+                $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
+            } else {
+                $data['quant'] = 0;
+            }
+
+            //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
+            if (!isset($post['motDePasse'])) 
+            {
+                $post['motDePasse'] = "motDePassemotDePasse";
+            }
+
+            //Si ces deux champs ne sont pas remplis, cela veut dire que l'utilisateur n'a pas cherché à modifier le mdp
+            if (empty($post['confirmezMotDePasse']) && empty($post['nouveauMotDePasse'])) 
+            {
+                //On remplit ces variables pour informer le service que nous n'avons pas besoin d'erreurs sur ces champs
+                $post['confirmezMotDePasse'] = "";
+                $post['nouveauMotDePasse'] = "";
+            } 
+            else 
+            {
+                //Si l'utilisateur a cherché à modifier le mdp, alors on révèle les champs
+                $data['classCacheDiv'] = "";
+                $data['disableInput'] = "";
+                $data['requireInput'] = "required";
+            }
+
+            $auth = service('authentification');
+            $user=$client;
+            $user->fill($post);
+            $issues=$auth->modifProfilClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
+
+            if (!empty($issues))
+            {
+                //En cas d'erreur(s), on pré-remplit les champs avec les données déjà renseignées
+                $data['motDePasse'] = $post['motDePasse'];
+                $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
+                $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
+            }
+            else
+            {
+                return redirect()->to("/vendeur/profil/" . $numClient);
+            }
+        }
+
+        //Pré-remplissage des champs avec les données de la base
+        $data['identifiant'] = $client->identifiant;
+        $data['email'] = $client->email;
+        $data['siret'] = $client->prenom;
+        $data['tvaIntraCom'] = $client->nom;
+        $data['erreurs'] = $issues;
+
+        return view('vendeur/profil.php', $data);
+    }
+
     public function connexion()
     {
         $post=$this->request->getPost();

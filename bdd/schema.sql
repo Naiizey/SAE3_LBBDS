@@ -77,7 +77,7 @@ CREATE TABLE _vendeur
     TVA_intercommunautaire VARCHAR(15) NOT NULL,
     Texte_presentation VARCHAR(255) NOT NULL,
     note_vendeur INTEGER,
-    logo VARCHAR,
+    logo VARCHAR(150),
     id_adresse INTEGER NOT NULL,
     CONSTRAINT _compte_vendeur_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte),
     CONSTRAINT _adresse_vendeur_fk FOREIGN KEY (id_adresse) REFERENCES _adresse(id_a)

@@ -30,37 +30,40 @@
         </div> 
         <div class="divRecapPanier">
             <div>
-                <div class="recap-prod-titre">
-                    <h3>Produits à l'achat</h3>
-                    <hr>
-                </div>
-                <div class="recap-prod-container">
-                <?php foreach($produits as $produit): ?>
-                    <div class="produit">
-                        <div>
-                            <div class="intitule"><?= $produit->intitule ?> </div> 
-                            <div class="price"><div>TTC:</div><div><?= $produit->prixTtc ?>€</div> <div>HT:</div><div><?= $produit->prixHt ?>€</div></div>
-                        </div>
+                <div>
+                    <div class="recap-prod-titre">
+                        <h3>Produits à l'achat</h3>
                         <hr>
                     </div>
-                    <?php endforeach ?>
+                    <div class="recap-prod-container">
+                    <?php foreach($produits as $produit): ?>
+                        <div class="produit">
+                            <div>
+                                <div class="intitule"><?= $produit->intitule ?> </div> 
+                                <div class="price"><div>TTC:</div><div><?= $produit->prixTtc ?>€</div> <div>HT:</div><div><?= $produit->prixHt ?>€</div></div>
+                            </div>
+                            <hr>
+                        </div>
+                        <?php endforeach ?>
+                    </div>
                 </div>
                 <div class="recap-prod-container-price">
-                    <?php if (isset($reducMont) || isset($reducPourc)): ?>
-                    <div>Sous-totaux </div> <div><?= $totalTtc?>€ TTC</div><div></div> <div><?= $totalHt ?>€ HT</div></section>
-                    <div>Code de réduction</div> <div><?= "-".((isset($reducMont))?$reducMont."€":$reducPourc."%") ?></div>
-                    <?php endif; ?>
-                    <div>Total </div> 
-                    <?php if (isset($reducMont)): ?>
-                        <div><?= $totalTtc-$reducMont ?>€</div> 
-                        
-                    <?php elseif (isset($reducPourc)): ?>
-                        <div><?= $totalTtc*(100-$reducPourc)/100  ?>€ TTC</div>
-                    <?php else: ?>
-                        <div><?= $totalTtc?>€ TTC</div> 
-                        
-                    <?php endif; ?>
-                    
+                    <div>
+                        <?php if (isset($reducMont) || isset($reducPourc)): ?>
+                        <div>Sous-totaux </div> <div><?= $totalTtc?>€ TTC</div><div></div> <div><?= $totalHt ?>€ HT</div></section>
+                        <div>Code de réduction</div> <div><?= "-".((isset($reducMont))?$reducMont."€":$reducPourc."%") ?></div>
+                        <?php endif; ?>
+                        <div>Total </div> 
+                        <?php if (isset($reducMont)): ?>
+                            <div><?= $totalTtc-$reducMont ?>€</div> 
+                            
+                        <?php elseif (isset($reducPourc)): ?>
+                            <div><?= $totalTtc*(100-$reducPourc)/100  ?>€ TTC</div>
+                        <?php else: ?>
+                            <div><?= $totalTtc?>€ TTC</div> 
+                            
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>

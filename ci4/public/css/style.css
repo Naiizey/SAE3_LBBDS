@@ -4259,7 +4259,7 @@ progress::-moz-progress-bar
 .recap-prod-titre hr
 {
     background-color: #404E58;
-    width: 75%;
+    width: 30%;
     height: 4px;
     border-radius: 5px;
     margin-left: auto;
@@ -4302,9 +4302,13 @@ progress::-moz-progress-bar
 }
 
 
-.divRecapPanier div{
+.divRecapPanier > div{
 
-    width: 95%;
+    display:  grid;
+    width: 100%;
+    grid-template-rows: 70% 30%;
+    
+
     
 }
 
@@ -4313,15 +4317,23 @@ progress::-moz-progress-bar
     width: 100%;
 }
 
-.recap-prod-container-price
+.recap-prod-container-price > div
 {
     display: grid;
     align-items: center;
     margin: 20px 0;
     font-family: 'Montserrat-Regular';
-    grid-template-columns: 60% 40%;
-    width: 100%;
+    grid-template-columns: 70% 30%;
+    width: 50%;
+   
+}
 
+.recap-prod-container-price 
+{
+    
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .recap-prod-container .produit
@@ -4329,7 +4341,7 @@ progress::-moz-progress-bar
     width: 100%;
 }
 
-.recap-prod-container .produit div
+.recap-prod-container .produit > div
 {
     width: 98%;
     display: grid;
@@ -4358,7 +4370,7 @@ progress::-moz-progress-bar
     /*making the div scrollable */
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 50%;
+    height: 80%;
     width: 100%;
     margin: 1%;
 }
@@ -4377,8 +4389,62 @@ progress::-moz-progress-bar
 
 .recap-prod-container .price 
 {
-    display: flex;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 60% 40%;
     
+}
+
+@media screen and (max-width: 460px)  {
+    .recap
+    {
+        width: auto;
+    }
+    
+    .divAdressesCli
+    {
+        /*affichage en colonne*/
+        flex-direction: column;
+        margin-top: 1em;
+    }
+
+    .adresseRecap
+    {
+        padding-left: 10%;
+        width: max-content;
+    }
+
+    .recap-prod-container-price > div 
+    {
+        width: 70%;
+    }
+
+    .recap-prod-container .produit > div
+    {
+            grid-template-columns: 70% 30%;
+    }   
+
+    .divRecapPanier{
+       /* centrage par rapport au bloc parent */
+       
+        margin: 0 auto;
+        margin-top: 1em;
+    }
+}
+@media screen and (max-width: 280px) {
+    .produit > div
+    {
+        grid-template-columns: 50% 50%;
+    }
+
+    .recap-prod-container-price>div {
+        width: 100%;
+    }
+
+    .recap
+    {
+        padding: 1em;
+    }
 }
 
 

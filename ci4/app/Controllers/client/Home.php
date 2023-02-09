@@ -574,13 +574,6 @@ class Home extends BaseController
         return view('client/commande/templLivraison.php', $data);
     }
 
-    public function lstCommandesClient()
-    {
-        $data["controller"]= "Commandes Client";
-        $data['commandesCli']=model("\App\Models\LstCommandesCli")->getCompteCommandes();
-        return view('client/commande/lstCommandesCli.php', $data);
-    }
-
     public function paiement()
     {
         $post=$this->request->getPost();
@@ -614,24 +607,33 @@ class Home extends BaseController
         return view('client/commande/paiement.php', $data);
     }
 
-    public function detail($num_commande, $estVendeur=false)
+    public function lstCommandes($num_commande = null)
     {
-        $data["controller"]= "Détail Commande";
-        $data['numCommande'] = $num_commande;
-        $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
-        $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
-        $data['estVendeur']=$estVendeur;
-
-        if (!isset($data['infosCommande'][0]->num_commande)) {
-            throw new Exception("Le numéro de commande renseigné n'existe pas.", 404);
-        } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
-            throw new Exception("Cette commande n'est pas associée à votre compte.", 404);
-        } else {
-            $data['num_compte'] = $data['infosCommande'][0]->num_compte;
+        $data["controller"]= "Commandes Client";
+        $estVendeur = false;
+        if ($num_commande == null)
+        {
+            $data['commandesCli']=model("\App\Models\LstCommandesCli")->getCompteCommandes();
+            return view('client/commande/lstCommandes.php', $data);
         }
-        $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
-      
-        return view('client/commande/details.php', $data);
+        else
+        {
+            $data['numCommande'] = $num_commande;
+            $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
+            $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
+            $data['estVendeur']=$estVendeur;
+
+            if (!isset($data['infosCommande'][0]->num_commande)) {
+                throw new Exception("Le numéro de commande renseigné n'existe pas.", 404);
+            } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
+                throw new Exception("Cette commande n'est pas associée à votre compte.", 404);
+            } else {
+                $data['num_compte'] = $data['infosCommande'][0]->num_compte;
+            }
+            $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
+        
+            return view('client/commande/details.php', $data);
+        }
     }
 
     public function validation()

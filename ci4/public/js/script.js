@@ -677,7 +677,7 @@ function lstCommandes() {
         let commandeA = numCommandes.item(numLigne).textContent;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail de la commande récupérée juste avant
         ligneA.addEventListener("click", () => {
-            window.location.href = `${base_url}/commandes/detail/${commandeA}`;
+            window.location.href = `${base_url}/commandes/${commandeA}`;
         });
     }
 }
@@ -693,7 +693,7 @@ function lstCommandesVendeur() {
         let commandeA = numCommandes.item(numLigne).textContent;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail de la commande récupérée juste avant, en tant que vendeur
         ligneA.addEventListener("click", () => {
-            window.location.href = `${base_url}/vendeur/commandesCli/detail/${commandeA}`;
+            window.location.href = `${base_url}/vendeur/commandes/${commandeA}`;
         });
     }
 }

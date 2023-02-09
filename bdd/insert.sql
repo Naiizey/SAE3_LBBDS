@@ -235,8 +235,8 @@ VALUES (142,'Strap',5,6,'Petit scotch pour tenir n''importe quel objet sur toute
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'),  'https://static.vecteezy.com/system/resources/previews/007/789/648/non_2x/white-sport-tape-isolated-on-white-background-athletic-taping-porous-adhesive-tape-medical-tape-multipurpose-porous-tape-for-wound-care-and-sprain-first-aid-medical-supplies-sport-bandage-free-photo.jpg',0);
 
-INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte, num_compte)
-VALUES (142,'Plantes carnivores attrape mouches',2,2.4,'Vous êtes ennuyé par les mouches, cet lot de plantes carnivores est fait pour vous !', true, 10, 4.5, 5, true, 5, 5);
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
+VALUES (142,'Plantes carnivores attrape mouches',2,2.4,'Vous êtes ennuyé par les mouches, cet lot de plantes carnivores est fait pour vous !', true, 10, 4.5, 5, true, 5);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
 VALUES (142,'Plante carnivore attrape mouches',2,2.4,'Vous êtes ennuyé par les mouches, cet plante est faite pour vous !', true, 10, 4.5, 5, true, 5);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)

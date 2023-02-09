@@ -3037,7 +3037,7 @@ main#Catalogue{
     transform: scale(1);
 }
 
-#ordre{
+#ordre {
     cursor: pointer;
     width: 75%; 
     background-color: #3997a3;
@@ -3047,7 +3047,7 @@ main#Catalogue{
     border-radius: .5rem;
 }
 
-.onglets + form{
+.liste-filtre form {
     background-color: #EFECEC;
     display: flex;
     flex-direction: column;
@@ -3368,38 +3368,8 @@ input[type="range"]::-moz-range-thumb {
     content: '\0025B2';
     position: relative;
 }
-.onglets{
-    display: flex;
-    flex-wrap: nowrap;
-    height: 53px;
-}
-.onglet{
-    background-color: #e9e3e3;
-    width: 45%;
-    padding-top: 15px;
-    padding-bottom: 7px;
-    border-top: solid #20535a 8px ;
-    z-index: 1;
-}
 
-#Catalogue .onglet{
-    height: fit-content;
-}
-
-.onglet-selectionnee{
-    border: none;
-    border-top: solid #3997A3 8px ;
-    background-color: #EFECEC;
-    width: 55%;
-}
-
-.onglet h3{
-    font-family: 'Montserrat-Bold', sans-serif;
-    font-weight: lighter;
-    margin: 0;
-}
-
-.categorie-catalogue summary, .onglet{
+.categorie-catalogue summary {
     cursor: pointer;
     box-sizing: border-box;
     color: #164F57;
@@ -3595,7 +3565,7 @@ a.fleche-page{
         border: none;
     }
 
-    .onglets + form{
+    .liste-filtre form{
         gap: 1.5em;
         padding-bottom: 10%;
     }

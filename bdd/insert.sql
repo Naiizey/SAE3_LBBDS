@@ -1,6 +1,6 @@
 SET SCHEMA 'sae3';
 
-insert into sae3._compte ( pseudo, email, mot_de_passe) values ( 'testMotDePasseVisible', 'test@tst.de', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
+insert into sae3._compte ( pseudo,email, mot_de_passe) values ( 'testMotDePasseVisible', 'test@tst.de', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
 
 -- trois insertions d'adresses
 INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('Doe', 'John', 1, 'rue de la paix', 75000, 'Paris', 'Batiment A', 'Etage 1');

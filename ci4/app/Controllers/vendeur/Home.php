@@ -71,7 +71,7 @@ class Home extends BaseController
         $data["controller"]= "Commandes Vendeur";
         $data['commandesVend']=model("\App\Models\LstCommandesVendeur")->findAll();
         $data['estVendeur']=$estVendeur;
-        return view('admin/lstCommandesVendeur.php', $data);
+        return view('vendeur/lstCommandesVendeur.php', $data);
     }
 
     public function detail($num_commande, $estVendeur=false)
@@ -172,14 +172,52 @@ class Home extends BaseController
         }
 
         //Pré-remplissage des champs avec les données de la base
-        $data['pseudo'] = $client->identifiant;
-        $data['prenom'] = $client->prenom;
-        $data['nom'] = $client->nom;
+        $data['identifiant'] = $client->identifiant;
         $data['email'] = $client->email;
-        $data['adresseFact'] = $modelFact->getAdresse(session()->get("numero"));
-        $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
+        $data['siret'] = $client->prenom;
+        $data['tvaIntraCom'] = $client->nom;
         $data['erreurs'] = $issues;
 
         return view('vendeur/profil.php', $data);
+    }
+
+    public function connexion()
+    {
+        $post=$this->request->getPost();
+        $issues=[];
+
+        if (!empty($post)) 
+        {
+            //Vérification des champs du post (attributs de l'entité Client)
+            $auth = service('authentification');
+            $user= new \App\Entities\Client();
+            $user->fill($post);
+            $issues=$auth->connexionVendeur($user);
+
+            if(empty($issues))
+            {
+                if (!session()->has("referer_redirection")) {
+                    return redirect()->to("/");
+                } else {
+                    $redirection=session()->get("referer_redirection");
+                    session()->remove("referer_redirection");
+                    return redirect()->to($redirection);
+                }
+            }
+        }
+
+        if (session()->has("referer_redirection")) {
+            $data['linkRedirection']=session()->get("referer_redirection");
+            $issues['redirection']="Vous devez vous connectez pour y accéder";
+        }
+
+        $data["controller"]= "Connexion";
+        $data['erreurs'] = $issues;
+
+        //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
+        $data['identifiant'] = (isset($_POST['identifiant'])) ? $_POST['identifiant'] : "";
+        $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
+
+        return view('vendeur/connexion.php', $data);
     }
 }

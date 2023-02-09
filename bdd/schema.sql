@@ -73,7 +73,7 @@ CREATE TABLE _adresse
 CREATE TABLE _vendeur
 (
     num_compte INTEGER PRIMARY KEY,
-    numeroSIRET VARCHAR(14) UNIQUE NOT NULL,
+    numero_siret VARCHAR(14) UNIQUE NOT NULL,
     TVA_intercommunautaire VARCHAR(15) NOT NULL,
     Texte_presentation VARCHAR(255) NOT NULL,
     note_vendeur INTEGER,

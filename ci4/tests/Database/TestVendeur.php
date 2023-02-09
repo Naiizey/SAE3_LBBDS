@@ -25,6 +25,7 @@ class TestVendeur extends CIUnitTestCase{
                 "identifiant" => "userName",
                 "motdepasse" => "password",
                 "email" => "email"
+
                 
             ));
 
@@ -51,7 +52,8 @@ class TestVendeur extends CIUnitTestCase{
         $fabricatorCli = new Fabricator(Vendeur::class,array(
 
             "identifiant" => "userName",
-            "motdepasse" => "password"
+            
+
           
             
         ));

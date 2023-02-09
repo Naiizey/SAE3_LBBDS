@@ -162,5 +162,5 @@ CREATE OR REPLACE VIEW signalement AS SELECT * FROM _signalement;
 
  --VENDEUR
 CREATE OR REPLACE VIEW vendeur AS
-    WITH trouve_current_panier AS (select max(num_panier) current_panier,num_compte from sae3._panier_client group by num_compte)
-    SELECT num_compte numero, email, pseudo identifiant, mot_de_passe motDePasse FROM compte_vendeur;
+SELECT num_compte numero, email, pseudo identifiant, mot_de_passe motDePasse, numero_siret, tva_intercommunautaire, texte_presentation, note_vendeur, logo, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, id_adresse
+FROM compte_vendeur NATURAL JOIN _adresse;

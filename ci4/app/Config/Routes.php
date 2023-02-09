@@ -145,16 +145,16 @@ $routes->post('/admin/profil/(:num)', 'admin\Home::profil/$1');
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-$routes->get('/vendeur/import/entetes','vendeur\Import::getentetes');
+$routes->get('/vendeur/import/entetes','vendeur\Import::getentetes',['filter' => 'vendeur']);
 
-$routes->get('vendeur/import', 'vendeur\Import::index/true');
-$routes->post('vendeur/import/upload','vendeur\Import::upload');
+$routes->get('vendeur/import', 'vendeur\Import::index/true',['filter' => 'vendeur']);
+$routes->post('vendeur/import/upload','vendeur\Import::upload',['filter' => 'vendeur']);
 
-$routes->get('vendeur/commandesCli','vendeur\Home::lstCommandesVendeur/true');
-$routes->get('vendeur/commandesCli/detail/(:alphanum)','vendeur\Home::detail/$1/true');
+$routes->get('vendeur/commandesCli','vendeur\Home::lstCommandesVendeur/true',['filter' => 'vendeur']);
+$routes->get('vendeur/commandesCli/detail/(:alphanum)','vendeur\Home::detail/$1/true',['filter' => 'vendeur']);
 
-$routes->get('/vendeur/profil', 'vendeur\Home::profil');
-$routes->post('/vendeur/profil', 'vendeur\Home::profil');
+$routes->get('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur']);
+$routes->post('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur']);
 
 $routes->get('vendeur/connexion','vendeur\Home::connexion');
 

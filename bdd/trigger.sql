@@ -273,13 +273,13 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-/*
+
 CREATE TRIGGER insert_vendeur
     INSTEAD OF INSERT ON sae3.vendeur
     FOR EACH ROW
     EXECUTE PROCEDURE insert_vendeur();
 
- */
+
 
 -- trigger insertion dans _compte instead of update à partir de la vue client
 
@@ -293,13 +293,13 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-/*
+
 CREATE TRIGGER update_vendeur
     INSTEAD OF UPDATE ON vendeur
     FOR EACH ROW
     EXECUTE PROCEDURE update_vendeur();
 
-*/
+
 
 
 CREATE OR REPLACE FUNCTION insert_sanction_temporaire() RETURNS TRIGGER AS $$

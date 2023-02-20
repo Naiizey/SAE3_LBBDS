@@ -4,6 +4,13 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+/**
+ *  Création de produit vie l'import de csv
+ *  Données:
+ *      * produit: **CR**-- 
+ *      * categorie: -**R**-- 
+ */
+ 
 Class ImportCSV extends Model{
     protected $table = "sae3.produitcsv";
     protected $primaryKey = "id_prod";

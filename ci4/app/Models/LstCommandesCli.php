@@ -6,6 +6,13 @@ use \App\Entities\CommandeCli as CommandeCli;
 use CodeIgniter\Model;
 use Exception;
 
+/**
+ * Acccès aux commandes réliées à leurs clients
+ * 
+ *  Données:
+ *      * commande: **CR**-- 
+ *      * client: -**R**-- 
+ */
 class LstCommandesCli extends Model
 {
     protected $table      = 'sae3.commande_list_client';

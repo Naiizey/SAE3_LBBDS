@@ -6,6 +6,14 @@ use \App\Entities\CommandeVend as CommandeVend;
 use CodeIgniter\Model;
 use Exception;
 
+/**
+ * Accès aux commandes réliès à leurs vendeurs
+ * 
+ *  Données:
+ *      * vendeur: -**R**-- 
+ *      * commentaire: -**R**-- 
+ */
+ 
 class LstCommandesVendeur extends Model
 {
     protected $table      = 'sae3.commande_list_vendeur';

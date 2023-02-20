@@ -6,8 +6,8 @@ use CodeIgniter\Model;
 
 
 /** 
- * Model de classe compte qui permet de récuperer un compte, ainsi qu'insérer et mettre à jour.
- *  @abstract de Client et de Vendeur 
+ * Model de classe compte qui permet de récuperer un compte, ainsi qu'insérer et mettre à jour. 
+ * @abstract App\Models\Client et de App\Models\Vendeur 
  * 
  */
 abstract class Compte extends Model

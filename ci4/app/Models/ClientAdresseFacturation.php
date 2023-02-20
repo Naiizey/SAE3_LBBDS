@@ -4,6 +4,13 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+/**
+ * Accéder aux adresses de facturation reliés à leurs client
+ *  || | | | |
+ *  | - | - | - | - | - |
+ *  | **actions** | **Create** | **Read** | **Update** | **Delete** |
+ *  |**possible**||X|||
+ */
 class ClientAdresseFacturation extends Model{
     protected $table = "sae3.adresse_facturation_client";
     protected $primaryKey = "num_compte";
@@ -18,6 +25,15 @@ class ClientAdresseFacturation extends Model{
 
     protected $returnType = \App\Entities\AdresseFacturation::class;
 
+
+    
+    /**
+     * Method getAdresse
+     *
+     * @param _ $id numero d'un client
+     *
+     * @return void
+     */
     public function getAdresse($id){
         return $this->where('num_compte',$id)->findAll();
     }

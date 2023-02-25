@@ -64,4 +64,8 @@ class Test extends BaseController{
             model("\App\Models\ProduitPanierModel")->delete(1);
             print_r($prods);
         }
+
+        public function test4(){
+            $sC=service('socketConnect');
+        }
 }

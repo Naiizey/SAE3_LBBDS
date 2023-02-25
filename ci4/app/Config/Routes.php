@@ -36,6 +36,8 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
+
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                     Client                                      ┃
@@ -86,7 +88,7 @@ $routes->post('/paiement', 'client\Home::paiement', ['filter' => 'connexion']);
 $routes->get('/catalogue', 'client\Home::catalogue');
 $routes->get('/catalogue/(:num)', 'client\Home::catalogue/$1');
 
-$routes->get('/test', 'Test::test2');
+
 
 $routes->get('/commandes', 'client\Home::lstCommandes',['filter' => 'connexion']);
 $routes->get('/commandes/(:alphanum)','client\Home::lstCommandes/$1',['filter' => 'connexion']);

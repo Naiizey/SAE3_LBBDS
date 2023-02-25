@@ -44,4 +44,12 @@ class Services extends BaseService
     {
       return new \App\Services\Feedback();
     }
+
+    public static function socketConnect($getShared = true)
+     {
+         if ($getShared) {
+             return static::getSharedInstance('socketConnect');
+         }
+              return new \App\Services\SocketConnect();
+     }
 }

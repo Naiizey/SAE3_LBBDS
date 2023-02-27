@@ -1,12 +1,11 @@
-<?php require __DIR__ . "/../header.php";?>
+<?php require(dirname(__DIR__) . "/header.php"); ?>
     <main>
         <div class="divLst">
-            <?php if(!empty($commandesVend)): ?>
-                <table class="tableLst">
+            <?php if(!empty($commandesCli)): ?>
+                <table class='tableLst'>
                     <thead>
                         <tr>
                             <th>N° commande</th>
-                            <th>N° client</th>
                             <th>Date commande</th>
                             <th>Date livraison</th>
                             <th>Total HT</th>
@@ -15,15 +14,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($commandesVend as $commandeVend): ?>
+                        <?php foreach ($commandesCli as $commandeCli): ?>
                             <tr class='lignesCommandes'>
-                            <td class='numCommandes'><?= $commandeVend->num_commande ?></td>
-                            <td><?= $commandeVend->num_compte ?></td>
-                            <td><?= $commandeVend->date_commande ?></td>
-                            <td><?= $commandeVend->date_arriv ?></td>
-                            <td><?= $commandeVend->ht ?></td>
-                            <td><?= $commandeVend->ttc ?></td>
-                            <td><?= $commandeVend->etatString() ?></td>
+                            <td class='numCommandes'><?= $commandeCli->num_commande ?></td>
+                            <td><?= $commandeCli->date_commande ?></td>
+                            <td><?= $commandeCli->date_arriv ?></td>
+                            <td><?= $commandeCli->prix_ht ?></td>
+                            <td><?= $commandeCli->prix_ttc ?></td>
+                            <td><?= $commandeCli->etatString() ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -33,7 +31,7 @@
             <?php endif; ?>
         </div>
     </main>
-<?php require __DIR__ . "/../footer.php";?>
+<?php require(dirname(__DIR__) . "/footer.php"); ?>
 <script>
-    lstCommandesVendeur();
+    lstCommandes();
 </script>

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\client;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Validation\Validation;
+use App\Controllers\BaseController;
 use Exception;
 
 class Home extends BaseController
@@ -72,13 +73,13 @@ class Home extends BaseController
         $post=$this->request->getPost();
         $issues=[];
 
-        if (!empty($post)) 
+        if (!empty($post))
         {
             //Vérification des champs du post (attributs de l'entité Client)
             $auth = service('authentification');
             $user= new \App\Entities\Client();
             $user->fill($post);
-            $issues=$auth->connexion($user);
+            $issues=$auth->connexionClient($user);
 
             if(empty($issues))
             {
@@ -104,10 +105,17 @@ class Home extends BaseController
         $data['identifiant'] = (isset($_POST['identifiant'])) ? $_POST['identifiant'] : "";
         $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
 
+        // Se souvenir de moi
+        if (isset($_POST['rememberMe'])) {
+            dd($_POST["rememberMe"]);
+        }
+
+        
+        //set_cookie($cookie);
         return view('client/connexion.php', $data);
     }
 
-    public function inscriptionClient()
+    public function inscription()
     {
         $post=$this->request->getPost();
         $issues=[];
@@ -120,7 +128,7 @@ class Home extends BaseController
             $user->fill($post);
             $issues=$auth->inscriptionClient($user, $post['confirmezMotDePasse']);
 
-            if(empty($issues))
+            if (empty($issues))
             {
                 if (!session()->has("referer_redirection")) {
                     return redirect()->to("/");
@@ -130,7 +138,6 @@ class Home extends BaseController
                     return redirect()->to($redirection);
                 }
             }
-            
         }
         
         if (session()->has("referer_redirection")) 
@@ -162,44 +169,6 @@ class Home extends BaseController
         return view('client/inscription.php', $data);
     }
 
-    public function inscriptionVendeur()
-    {
-        $post=$this->request->getPost();
-        $issues=[];
-
-        if (!empty($post)) 
-        {
-            //Vérification des champs du post (attributs de l'entité Client) + confirmation mot de passe
-            $auth = service('authentification');
-            $user= new \App\Entities\Vendeur();
-            $user->fill($post);
-            $issues=$auth->inscriptionVendeur($user, $post['confirmezMotDePasse']);
-
-            if(empty($issues))
-            {
-                if (!session()->has("referer_redirection")) {
-                    return redirect()->to("/");
-                } else {
-                    $redirection=session()->get("referer_redirection");
-                    session()->remove("referer_redirection");
-                    return redirect()->to($redirection);
-                }
-            }
-        }
-        
-        $data['role'] = "admin";
-        $data["controller"]= "Inscription Vendeur";
-        $data['erreurs'] = $issues;
-
-        //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
-        $data['identifiant'] = (isset($_POST['identifiant'])) ? $_POST['identifiant'] : "";
-        $data['email'] = (isset($_POST['email'])) ? $_POST['email'] : "";
-        $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
-        $data['confirmezMotDePasse'] = (isset($_POST['confirmezMotDePasse'])) ? $_POST['confirmezMotDePasse'] : "";
-
-        return view('vendeur/inscription.php', $data);
-    }
-
     public function produit($idProduit = null, $numAvisEnValeur = null)
     {
         $data["idProduit"] = $idProduit;
@@ -225,10 +194,6 @@ class Home extends BaseController
         } elseif (has_cookie('token_panier')) {
             $data["quantitePanier"]=model("\App\Models\ProduitPanierVisiteurModel")->getQuantiteProduitByIdProd($idProduit, get_cookie('token_panier'));
         }
-
-        //Get produituk
-        $prodModel = model("\App\Models\ProduitDetail");
-        $result = $prodModel->find($idProduit);
 
         //Autres images du produit
         $prodModelAutre = model("\App\Models\ProduitDetailAutre");
@@ -312,6 +277,9 @@ class Home extends BaseController
         } else {
             $data["avisEnValeur"] = -1;
         }
+        
+        //Synchronisation des produits avec la base
+        $result = model("\App\Models\ProduitDetail")->find($idProduit);
 
         //Affichage selon si produit trouvé ou non
         if ($result == null) {
@@ -325,7 +293,7 @@ class Home extends BaseController
             {
                 return redirect()->to("/produit/$idProduit#avis");
             } else {
-                return view('produit.php', $data);
+                return view('client/produit.php', $data);
             }
         }
     }
@@ -372,7 +340,7 @@ class Home extends BaseController
         $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
         
         //Chargement des produits selon les filtres
-        $result=(new \App\Controllers\Produits())->getAllProduitSelonPage($page, self::NBPRODSPAGECATALOGUE, $filters);
+        $result=(new \App\Controllers\client\Produits())->getAllProduitSelonPage($page, self::NBPRODSPAGECATALOGUE, $filters);
         $data['prods']=$result["resultat"];
         $data['estDernier']=$result["estDernier"];
         
@@ -380,27 +348,19 @@ class Home extends BaseController
         if (!isset($data['prods']) || empty($data['prods'])) {
             $data['message'] = $result["message"];
         }
-        return view("catalogue.php", $data);
+        return view("client/catalogue.php", $data);
     }
     
-    public function espaceClient($role = null, $numClient = null)
+    public function profil()
     {
-        $data["controller"] = "Espace Client";
+        $data["controller"] = "Profil Client";
         $modelFact = model("\App\Models\ClientAdresseFacturation");
         $modelLivr = model("\App\Models\ClientAdresseLivraison");
         $modelClient = model("\App\Models\Client");
         $post=$this->request->getPost();
 
+        $numClient = session()->get("numero");
         $data['numClient'] = $numClient;
-        $data['role'] = "";
-
-        //On vérifie si l'utilisateur est un admin ou un client
-        if ($role == "admin" && $numClient != null) {
-            $data['role'] = "admin";
-        } else {
-            $data['role'] = "client";
-            $numClient = session()->get("numero");
-        }
 
         $issues = [];
         $client = $modelClient->getClientById($numClient);
@@ -453,7 +413,7 @@ class Home extends BaseController
             $auth = service('authentification');
             $user=$client;
             $user->fill($post);
-            $issues=$auth->modifEspaceClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
+            $issues=$auth->modifProfilClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
 
             if (!empty($issues))
             {
@@ -466,11 +426,11 @@ class Home extends BaseController
             {
                 if ($role == "admin")
                 {
-                    return redirect()->to("/admin/espaceClient/" . $numClient);
+                    return redirect()->to("/admin/profil/" . $numClient);
                 }
                 else
                 {
-                    return redirect()->to("/espaceClient");
+                    return redirect()->to("/profil");
                 }
             }
         }
@@ -484,7 +444,7 @@ class Home extends BaseController
         $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
         $data['erreurs'] = $issues;
 
-        return view('espaceClient.php', $data);
+        return view('client/profil.php', $data);
     }
 
     public function facture()
@@ -548,7 +508,7 @@ class Home extends BaseController
         $data['client']=$client;
         $data['errors']=$this->validator;
     
-        return view("templLivraison.php",$data);
+        return view("client/commande/templLivraison.php",$data);
     }
 
     public function infoLivraison()
@@ -602,22 +562,7 @@ class Home extends BaseController
         $data['client']=$client;
         $data['errors']=$this->validator;
         
-        return view('templLivraison.php', $data);
-    }
-
-    public function lstCommandesClient()
-    {
-        $data["controller"]= "Commandes Client";
-        $data['commandesCli']=model("\App\Models\LstCommandesCli")->getCompteCommandes();
-        return view('client/lstCommandesCli.php', $data);
-    }
-
-    public function lstCommandesVendeur( $estVendeur=false)
-    {
-        $data["controller"]= "Commandes Vendeur";
-        $data['commandesVend']=model("\App\Models\LstCommandesVendeur")->findAll();
-        $data['estVendeur']=$estVendeur;
-        return view('admin/lstCommandesVendeur.php', $data);
+        return view('client/commande/templLivraison.php', $data);
     }
 
     public function paiement()
@@ -650,27 +595,36 @@ class Home extends BaseController
         $data['CVC'] = (isset($_POST['CVC'])) ? $_POST['CVC'] : "";
         $data['client']=$client;
         $data['errors']=$this->validator;
-        return view('client/paiement.php', $data);
+        return view('client/commande/paiement.php', $data);
     }
 
-    public function detail($num_commande, $estVendeur=false)
+    public function lstCommandes($num_commande = null)
     {
-        $data["controller"]= "Détail Commande";
-        $data['numCommande'] = $num_commande;
-        $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
-        $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
-        $data['estVendeur']=$estVendeur;
-
-        if (!isset($data['infosCommande'][0]->num_commande)) {
-            throw new Exception("Le numéro de commande renseigné n'existe pas.", 404);
-        } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
-            throw new Exception("Cette commande n'est pas associée à votre compte.", 404);
-        } else {
-            $data['num_compte'] = $data['infosCommande'][0]->num_compte;
+        $data["controller"]= "Commandes Client";
+        $estVendeur = false;
+        if ($num_commande == null)
+        {
+            $data['commandesCli']=model("\App\Models\LstCommandesCli")->getCompteCommandes();
+            return view('client/commande/lstCommandes.php', $data);
         }
-        $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
-      
-        return view('panier/details.php', $data);
+        else
+        {
+            $data['numCommande'] = $num_commande;
+            $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
+            $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
+            $data['estVendeur']=$estVendeur;
+
+            if (!isset($data['infosCommande'][0]->num_commande)) {
+                throw new Exception("Le numéro de commande renseigné n'existe pas.", 404);
+            } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
+                throw new Exception("Cette commande n'est pas associée à votre compte.", 404);
+            } else {
+                $data['num_compte'] = $data['infosCommande'][0]->num_compte;
+            }
+            $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
+        
+            return view('client/commande/details.php', $data);
+        }
     }
 
     public function validation()
@@ -710,71 +664,10 @@ class Home extends BaseController
                 }
                 $data['totalTtc']= array_sum(array_map(fn($produit) => $produit->prixTtc,$data['produits']));
                 $data['totalHt']= array_sum(array_map(fn($produit) => $produit->prixHt,$data['produits']));
-                return view("recapitulatif.php",$data);
+                return view("client/commande/recapitulatif.php", $data);
             }
         }
         else throw new Exception("Vous n'avez pas validé votre panier, vos adresses de facturation et de livraison",401);
-    }
-
-    public function admin()
-    {
-        $data["role"] = "admin";
-        $data["controller"] = "Administration";
-        return view("admin/admin.php", $data);
-    }
-
-    public function lstSignalements($id_signal = null)
-    {
-        if ($id_signal != null)
-        {
-            $modelSignalements = model("\App\Models\LstSignalements");
-            $modelSignalements->delete($id_signal);
-        }
-        
-        $data["role"] = "admin";
-        $data["controller"] = "Administration - Signalements";
-        $data["signalements"] = model("\App\Models\LstSignalements")->findAll();
-        $data["produitSignalements"] = array();
-        $modelCommentaires = model("\App\Models\LstAvis");
-
-        for ($i = 0; $i < count($data["signalements"]); $i++)
-        {
-            //On récupère tous les champs de l'avis signalé
-            $data["produitSignalements"][$i] = $modelCommentaires->getAvisById($data["signalements"][$i]->num_avis);
-            
-            //On s'intéresse particulièrement à l'id produit
-            $data["produitSignalements"][$i] = $data["produitSignalements"][$i]->id_prod;
-        }
-
-        return view("admin/lstSignalements.php", $data);
-    }
-
-    public function lstAvis($id_avis = null)
-    {
-        if ($id_avis != null)
-        {
-            $modelAvis = model("\App\Models\LstAvis");
-            $modelAvis->delete($id_avis);
-        }
-        
-        $data["role"] = "admin";
-        $data["controller"] = "Administration - Avis";
-        $data["avis"] = model("\App\Models\LstAvis")->findAll();
-
-        return view("admin/lstAvis.php", $data);
-    }
-
-    public function destroySession()
-    {
-        $session=session();
-        $session->remove("numero");
-        $session->remove("nom");
-        $session->remove("ignorer");
-        $session->remove("adresse_facturation");
-        $session->remove("adresse_livraison");
-        $session->set("just_deconnectee",True);
-        
-        return redirect()->to("/");
     }
 
     //Fonction qui vérifie si le compte est banni
@@ -793,55 +686,5 @@ class Home extends BaseController
                 return redirect()->to("/");
             }
         }
-    }
-
-    public function lstClients($which)
-    {
-        $data["controller"]="Liste des clients";
-        $data["role"]="admin";
-        $data["clients"]=model("\App\Models\Client")->findAll();
-
-        if ($which=="bannir") {
-            $data["bannir"]=true;
-
-            $post=$this->request->getPost();
-
-            if (!empty($post)){
-                $sanctions = model("\App\Models\SanctionTemp");
-                if ($sanctions->isTimeout($post["numClient"])) {
-                    $GLOBALS['invalidation'] = $this->feedback->afficheInvalidation("Cet utilisateur est déjà banni !");
-                } else {
-                    $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
-                    $GLOBALS['validation'] = $this->feedback->afficheValidation("L'utilisateur a été banni !");
-                }
-            }
-        }
-        return view("admin/lstClients.php", $data);
-    }
-
-    public function lstVendeurs()
-    {
-        $data["controller"]="Liste des vendeurs";
-        $data["role"]="admin";
-        $data["vendeurs"]= array(); //model("\App\Models\Vendeur")->findAll();
-
-        return view("admin/lstVendeurs.php", $data);
-    }
-
-    public function bannissements()
-    {
-        $post = $this->request->getPost();
-        if (!empty($post))
-        {
-            $modelSanctionTemp = model("\App\Models\SanctionTemp");
-            $modelSanctionTemp->delete($post["id_bannissement"]);
-            $GLOBALS['validation'] = $this->feedback->afficheValidation("Cet utilisateur n'est plus banni !");
-        }
-
-        $data["controller"]="Liste des bannissements";
-        $data["role"]="admin";
-        $data["bannissements"]=model("\App\Models\SanctionTemp")->TimeoutsActuels();
-
-        return view("admin/bannissements.php",$data);
     }
 }

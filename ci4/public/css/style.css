@@ -100,7 +100,7 @@ header h2, header nav {
 .lienAlizon {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     height: 100%;
     width: 12.5rem;
 }
@@ -153,6 +153,10 @@ header h2, header nav {
     justify-content: space-between;
     height: 100%;
     width: 9.5rem;
+}
+
+.divPanierProfilVendeur {
+    justify-content: end;
 }
 
 .formRecherche > a{
@@ -2055,6 +2059,10 @@ h3 > .lienPasArticlePanier {
     color: #164F57;
 }
 
+.divGauche a {
+    color: #C6C6C6;
+}
+
 .mainProduit img {
     width: 100%;
     height: auto;
@@ -2548,7 +2556,7 @@ h3 > .lienPasArticlePanier {
 }
 
 .pAvis {
-    flex-basis: 13%;
+    flex-basis: 17%;
 }
 
 .moyennesAvis progress {
@@ -2558,7 +2566,7 @@ h3 > .lienPasArticlePanier {
     border: none;
     border-radius: 4px;
     margin: .5em 0;
-    flex-basis : 80%
+    flex-basis : 76%
 }
 
 .moyennesAvis progress::-moz-progress-bar 
@@ -2808,7 +2816,7 @@ main div.card-produit-ext{
     color: inherit;
     text-decoration: none;
     background-color: transparent;
-    padding: 1em;
+    padding: .5em;
     scale: 1;
     transition: scale .3s ease;
 }
@@ -2958,6 +2966,17 @@ div.image-card{
     }
 }
 
+@media screen and (max-width: 1440px) and (min-width: 1281px){
+    #Catalogue .card-produit{
+        width: 10em;
+        height: 14em;
+    }
+
+    #Catalogue .image-card{
+        height: 7em;
+    }
+}
+
 @media screen and (min-width: 1281px){
     .addPanier svg{
         top: -.7em;
@@ -2971,17 +2990,25 @@ div.image-card{
 */
 
 main#Catalogue{
-    display: flex;
-    min-height: 1000px;
+    display: grid;
+    grid-template-columns: 15% 10% 5% minmax(20%, 70%);
+    min-height: 80vh;
     padding-left: 0%;
+    overflow-x: hidden;
+}
+
+.partie-produits{
+    grid-column-start: 2;
+    grid-column-end: 5;
 }
 
 .partie-filtre, .partie-tris{
     min-width: 20%;
     min-height: 100%;  
     /* collé à gauche */
-    
     left: 0;
+    grid-column-start: 1;
+    grid-column-end: 3;
 }
 
 .partie-tris, .liste-tris{
@@ -3033,7 +3060,7 @@ main#Catalogue{
     transform: scale(1);
 }
 
-#ordre{
+#ordre {
     cursor: pointer;
     width: 75%; 
     background-color: #3997a3;
@@ -3043,7 +3070,7 @@ main#Catalogue{
     border-radius: .5rem;
 }
 
-.onglets + form{
+.liste-filtre form {
     background-color: #EFECEC;
     display: flex;
     flex-direction: column;
@@ -3092,8 +3119,7 @@ main#Catalogue{
 
 .liste-produits{
     display: flex;
-    flex-wrap: wrap; 
-    justify-content: flex-end;   
+    flex-wrap: wrap;    
 }
 
 .liste-filtre, .liste-tris{
@@ -3299,14 +3325,23 @@ input[type="range"]::-moz-range-thumb {
     width: 35%;
 }
 
+.bubbles{
+    position: fixed;
+    left: 1.25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    top: 9.5em;
+    width: 12rem;
+    height: auto;
+}
+
 .bulle-ouvrir-filtres, .bulle-ouvrir-tris {
     cursor: pointer;
     display: flex;
-    position: fixed;
-    top: 9.5em;
-    right: 20px;
-    width: 200px;
-    height: 75px;
+    width: 100%;
+    height: 4.5rem;
     border-radius: 35px;
     background-color: #164F57;
     z-index: 5;
@@ -3364,38 +3399,8 @@ input[type="range"]::-moz-range-thumb {
     content: '\0025B2';
     position: relative;
 }
-.onglets{
-    display: flex;
-    flex-wrap: nowrap;
-    height: 53px;
-}
-.onglet{
-    background-color: #e9e3e3;
-    width: 45%;
-    padding-top: 15px;
-    padding-bottom: 7px;
-    border-top: solid #20535a 8px ;
-    z-index: 1;
-}
 
-#Catalogue .onglet{
-    height: fit-content;
-}
-
-.onglet-selectionnee{
-    border: none;
-    border-top: solid #3997A3 8px ;
-    background-color: #EFECEC;
-    width: 55%;
-}
-
-.onglet h3{
-    font-family: 'Montserrat-Bold', sans-serif;
-    font-weight: lighter;
-    margin: 0;
-}
-
-.categorie-catalogue summary, .onglet{
+.categorie-catalogue summary {
     cursor: pointer;
     box-sizing: border-box;
     color: #164F57;
@@ -3531,25 +3536,43 @@ a.fleche-page{
     }
 }
 
+@media screen and (max-width: 1440px) and (min-width: 961px){
+    .bubbles{
+        width: 10em;
+    }
+}
+
 @media screen and (max-width: 960px) {
     main#Catalogue{
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: repeat(auto-fit, minmax(20%, 100%));
         padding-bottom: 7.5em;
     }
 
-    .bulle-ouvrir-filtres:not(.est-filtre-ouvert){
-        display: flex;
-        scale: 0.8;
+    .partie-produits{
+        grid-column-start: 1;
+    }
+
+    .bubbles{
+        flex-direction: row;
+        justify-content: center;
+        gap: 3rem;
+        width: 100%;
+        left: 0;
         top: 8em;
-        left: 3vw;
+    }
+
+    .bulle-ouvrir-filtres:not(.est-filtre-ouvert), .bulle-ouvrir-tris:not(.est-tris-ouvert){
+        display: flex;
+        width: 45%;
+        transform: scale(0.8);
+    }
+
+    .bulle-ouvrir-filtres:not(.est-filtre-ouvert){
+        left: 1vw;
     }
 
     .bulle-ouvrir-tris:not(.est-tris-ouvert){
-        scale: 0.8;
-        display: flex;
-        top: 8em;
-        right: 3vw;
+        right: 1vw;
     }
 
     .partie-produits {
@@ -3591,7 +3614,7 @@ a.fleche-page{
         border: none;
     }
 
-    .onglets + form{
+    .liste-filtre form{
         gap: 1.5em;
         padding-bottom: 10%;
     }
@@ -3605,13 +3628,15 @@ a.fleche-page{
     }
 }
 
+@media screen and (max-width: 480px){
+    .liste-produits{
+        justify-content: center;
+    }
+}
+
 @media screen and (min-width:961px) and (max-width: 1280px){
     .partie-filtre, .partie-tris{
         min-width: 30%;
-    }
-
-    .liste-produits{
-        justify-content: center;
     }
 }
 
@@ -3696,7 +3721,7 @@ a.fleche-page{
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃          Page pour lister (lstCommandesVendeur.php, lstCommandesCli.php & lstClients.php)                       ┃
+┃             Page pour lister (lstCommandesVendeur.php, lstCommandes.php & lstClients.php)                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
@@ -4068,36 +4093,36 @@ progress::-moz-progress-bar
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                    Page d'espace client (espaceClient.php)                      ┃
+┃                           Page de profil (profil.php)                           ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-.mainEspaceCli {
+.mainProfil {
     background-color: #f3f3f3;
 }
 
-.mainEspaceCli > svg {
+.mainProfil > svg {
     height: 10em;
 }
 
-.mainEspaceCli > svg path {
+.mainProfil > svg path {
     fill: black;
 }
 
-.mainEspaceCli > svg:hover path {
+.mainProfil > svg:hover path {
     fill: black;
 }
 
-.mainEspaceCli h2 {
+.mainProfil h2 {
     color: #164F57;
     margin: 1em 0;
 }
 
-.mainEspaceCli h3 {
+.mainProfil h3 {
     color: #164F57;
     font-family: "Montserrat-Medium";
 }
 
-.divEspaceCli {
+.divProfil {
     margin: 0 20%;
 }
 
@@ -4158,7 +4183,7 @@ progress::-moz-progress-bar
 }
 
 @media screen and (max-width: 991px) {
-    .mainEspaceCli{
+    .mainProfil{
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -4215,7 +4240,7 @@ progress::-moz-progress-bar
         font-size: x-large;
     }
 
-    h1, h2 {
+    h1:not(.lienAlizon>h1), h2 {
         font-size: larger;
     }
 
@@ -4243,55 +4268,39 @@ progress::-moz-progress-bar
 */
 .full-height {
     height: 100vh;
+    width: 100vw;
 }
 
 .flex-center {
     align-items: center;
     display: flex;
     justify-content: center;
+    color: #d9d9d9;
+    text-align: center;
+    font-size: 1.5em;
 }
 
 #error_text {
-    font-size: 2em;
-    color: #d9d9d9;
+    font-size: 1.5em;
 }
 
-#details table {
-    width: 100%;
-    border-collapse: collapse;
-    box-sizing: border-box;
-    margin-top: 20px;
+#details > p {
+    margin-top: 1em;
+    margin-bottom: 0.25em;
 }
 
-#details.hidden td {
-    opacity: 0;
-    font-size: 0;
+#details > p + p {
+    margin-top: 0.25em;
+    margin-bottom: 1em;
 }
 
-#details td {
-    font-size: 1em;
-    color: #d9d9d9;
-    padding-top: .5em;
-    transition: opacity 1.4s, font-size .3s, color 1.2s;
-    opacity: 1;
+#details p span, #details p span a {
+    font-size: large;
 }
 
-#details td a{
-    font-size: 1em;
-    color: blueviolet;
+#details p span a {
+    color: #3997A3;
 }
-
-#details td.name {
-    text-align: right;
-    padding-right: .3em;
-    width: 50%;
-}
-
-#details td.value {
-    text-align: left;
-    padding-left: .3em;
-}
-
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -4390,7 +4399,7 @@ div.zoom {
     width: 50vh;
     height: 50vh;
     border: solid 2px;
-    border-color: #164F57;
+    border-color: #C6C6C6;
     border-radius: 3px;
   }
   

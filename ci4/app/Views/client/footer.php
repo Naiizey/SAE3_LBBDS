@@ -1,7 +1,7 @@
 <div class="mentionsLegales" style="display: none;">
                 <div class="divFermerCGU">
                     <a href="" class="fermerCGU">
-                        <?= file_get_contents(dirname(__DIR__,2)."/public/images/cross.svg") ?>
+                        <?= file_get_contents(dirname(__DIR__,3)."/public/images/cross.svg") ?>
                     </a>
                 </div>
                 <h2>Conditions Générales d'Utilisation (CGU)</h2>
@@ -121,7 +121,7 @@
                     </ul>
                 <br><br>
                 <div class="remonterCGU">
-                    <?= file_get_contents(dirname(__DIR__,2)."/public/images/fleche_haut.svg") ?>
+                    <?= file_get_contents(dirname(__DIR__,3)."/public/images/fleche_haut.svg") ?>
                 </div>
             </div>
             <div>
@@ -138,16 +138,7 @@
                     <p>Besoin d'aide ?</p>
                 </a>
             </div>
-        <footer <?php if(isset($role)):?>
-                <?php if($role == "admin"):?>
-                    <?= "class=footerAdmin" ?>
-                <?php endif;?>
-            <?php endif; ?>
-            <?php if(isset($estVendeur)):?>
-                <?php if($estVendeur):?>
-                    <?= "class=footerVendeur" ?>
-                <?php endif;?>
-            <?php endif; ?>>
+        <footer>
             <div class="pc">
                 <a href="" class="lienCGU"> <!-- Lien mentions légales -->
                     <p>Mentions légales</p>
@@ -166,16 +157,14 @@
             <div class="mobile">
                 <ul>
                     <li>
-                        <a class="lienConnexion" href="
-                                <?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>
-                            ">
-                            <?php include(dirname(__DIR__,2)."/public/images/header/profil.svg")?>
+                        <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/profil" : base_url()."/connexion") ?>">
+                            <?php include(dirname(__DIR__,3)."/public/images/header/profil.svg")?>
                         </a>
                         <?php if (session()->has("numero")): ?>
                             <div class="divHoverConnexion divConnected">
                                 <p class="pNom">Bonjour <?= (session()->get("nom")) ?></p>
-                                <a href="<?= base_url()."/espaceClient"?>"><p>Mon profil</p></a>
-                                <a href="<?= base_url()."/destroy"?>"><p>Se déconnecter</p></a>
+                                <a href="<?= base_url()."/profil"?>"><p>Mon profil</p></a>
+                                <a href="<?= base_url()."/admin/destroy"?>"><p>Se déconnecter</p></a>
                             </div>
                         <?php else: ?>
                             <div class="divHoverConnexion divNotConnected">

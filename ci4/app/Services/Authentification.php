@@ -11,7 +11,7 @@
 
 class Authentification
 {
-    public function connexion($entree) : array
+    public function connexionClient($entree) : array
     {   
         $errors=[];
         if(!empty($entree))
@@ -22,6 +22,42 @@ class Authentification
             if($user == null) 
             {
                 $user = $clientModel->getClientByEmail($entree -> identifiant,$entree -> motDePasse);
+            }
+            if($user == null)
+            {
+                //Impossible de trouver un utilisateur avec son identifiant (pseudo) ou son email
+                $errors[1] = "Connexion refusée, identifiant et/ou mot de passe incorrect(s)";
+            }
+        }
+        else
+        {
+            $errors[0] = "Pas d'entrée";
+        }
+
+        if (empty($errors))
+        {
+            $session = session();
+            $session->set('numero',$user->numero);
+            $session->set('nom',$user->nom);
+            $session->set('identifiant',$user->identifiant);
+            $session->set('motDePasse',$user->motDePasse);
+            $session->set("just_connectee",True);
+        }
+
+        return $errors;
+    }
+
+    public function connexionVendeur($entree) : array
+    {   
+        $errors=[];
+        if(!empty($entree))
+        {
+            $vendeurModel = model("\App\Models\Vendeur");
+            $user = $vendeurModel->getVendeurByIdentifiant($entree -> identifiant,$entree -> motDePasse);
+            
+            if($user == null) 
+            {
+                $user = $vendeurModel->getVendeurByEmail($entree -> identifiant,$entree -> motDePasse);
             }
             if($user == null)
             {
@@ -117,15 +153,19 @@ class Authentification
         
         if(!empty($entree))
         {
-            if($entree->motDePasse == "" || $entree->identifiant == "" || $entree->email == "") 
+            if ($entree->motDePasse == "" || $entree->identifiant == "" || $entree->email == "") 
             {
                 $errors[1]= "Remplissez le(s) champs vide(s)";
             }
-            if(strlen($entree->identifiant) > 30 )
+            if (preg_match_all("/^[0-9]{14}$/",$entree->siret) < 1)
+            {
+                $errors[2]="Format de siret invalide";
+            }
+            if (strlen($entree->identifiant) > 30 )
             {
                 $errors[3]="30 caractères maximum pour le pseudo (" .strlen($entree->pseudo) . " actuellement)";
             } 
-            if(!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) || strlen($entree->email) > 255) 
+            if (!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) || strlen($entree->email) > 255) 
             {
                 $errors[4]="255 caractères maximum pour l'email et caractère spéciaux interdits";
             }
@@ -133,7 +173,7 @@ class Authentification
             {
                 $errors[5]="Le mot de passe doit faire plus de 12 caractère et doit contenir au moins une majuscule, une minuscule et un chiffre";
             }
-            if($entree->motDePasse != $verifMdp) 
+            if ($entree->motDePasse != $verifMdp) 
             {
                 $errors[6]="Les mots de passes ne correspondent pas";
             }
@@ -145,6 +185,10 @@ class Authentification
             if ($compteModel->doesPseudoExists($entree->identifiant))
             {
                 $errors[8]="Un utilisateur existe déjà avec ce pseudo";
+            }
+            if (preg_match_all("/^FR[0-9]{2}[0-9]{9}$/",$entree->tvaIntraCom) < 1)
+            {
+                $errors[9]="Format de TVA intracommunautaire invalide";
             }
         }
         else 
@@ -161,7 +205,7 @@ class Authentification
         return $errors;
     }
 
-    public function modifEspaceClient(\App\Entities\Client $entree, $verifMdp, $nouveauMdp) : array
+    public function modifProfilClient(\App\Entities\Client $entree, $verifMdp, $nouveauMdp) : array
     {   
         $compteModel=model("\App\Models\Client");
         $errors=[];

@@ -16,7 +16,7 @@ class LstCommandesCli extends Model
     protected $returnType     = CommandeCli::class;
     protected $useSoftDeletes = false;
     
-    protected $allowedFields = ['num_commande','num_compte','date_commande','date_arriv','prix_ht','prix_ttc','etat'];
+    protected $allowedFields = ['num_commande','num_compte','date_commande','date_arriv','prix_ht','prix_ttc','etat', 'montant_reduction', 'pourcentage_reduction'];
 
     public function getCompteCommandes() : array
     { 

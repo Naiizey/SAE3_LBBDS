@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/css/style.css" />
-        <link rel="icon" href="<?=base_url()?>/public/images/header/logo.svg" type="image/svg">
+        <?php echo link_tag("images/logo.png", 'shortcut icon', 'image/png'); ?>
         <style>
             @font-face {
                 font-family: "Expletus Sans";
@@ -61,76 +61,36 @@
     <script>
         const base_url = "<?= base_url() ?>";
     </script>
-    <body <?php if(isset($role)):?>
-                <?php if($role == "admin"):?>
-                    <?= "class=bodyAdmin" ?>
-                <?php endif;?>
-            <?php endif; ?>
-            <?php if(isset($estVendeur)):?>
-                <?php if($estVendeur):?>
-                    <?= "class=bodyVendeur" ?>
-                <?php endif;?>
-            <?php endif; ?> >
+    <body>
         <!-- Google Tag Manager (noscript) -->
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PCVRSM3"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->
         <header>
-            <div class="divHeaderAlizon
-                <?php if (isset($role)): ?>
-                    <?php if ($role == "admin"): ?> <?= "divHeaderAdmin" ?>
-                    <?php endif; ?>
-                <?php endif; ?>
-                <?php if (isset($estVendeur)): ?>
-                    <?php if ($estVendeur): ?> <?= "divHeaderVendeur" ?>
-                    <?php endif; ?>
-                <?php endif; ?> ">
-                <?php if ($controller != "Panier" && $controller != "Panier (Vide)" && $controller != "Compte Redirection" && $controller != "Livraisons" && $controller != "Paiement" && $controller != "Validation"): ?>
-                    <?php if (isset($role)) : ?>
-                        <?php if ($role == "admin") : ?>
-                            <a class="lienAlizon" href="<?= base_url() ?>/admin"> <!-- Lien accueil -->
-                                <?php include(dirname(__DIR__,2)."/public/images/header/logo.svg")?>
-                                <h1>Alizon</h1>
-                            </a>
-                        <?php endif; ?>
-                    <?php elseif(isset($estVendeur)): ?>
-                        <?php if($estVendeur):?>
-                            <a class="lienAlizon" href="<?= base_url() ?>/vendeur/import"> <!-- Lien accueil -->
-                                <?php include(dirname(__DIR__,2)."/public/images/header/logo.svg")?>
-                                <h1>Alizon</h1>
-                            </a>
-                        <?php endif; ?>
-                    <?php else: ?>
-                        <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
-                            <?php include(dirname(__DIR__,2)."/public/images/header/logo.svg")?>
-                            <h1>Alizon</h1>
-                        </a>
-                    <?php endif; ?>
-                <?php else: ?>
-                    <a class="lienAlizonSuivi" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
-                        <?php include(dirname(__DIR__,2)."/public/images/header/logo.svg")?>
-                        <h1>Alizon</h1>
-                    </a>
-                <?php endif; ?>
+            <div class="divHeaderAlizon">
+                <a class="lienAlizon" href="<?= base_url() ?>/index"> <!-- Lien accueil -->
+                    <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
+                    <h1>Alizon</h1>
+                </a>
                 <?php if ($controller == "Panier" || $controller == "Panier (Vide)" || $controller == "Compte Redirection" || $controller == "Livraisons" || $controller == "Facture" || $controller == "Paiement" || $controller == "Validation"): ?>
                     <div class="divSuivi">
                         <div class="<?= (($controller == "Panier" )?"etat-courant-commande":"") ?>">
-                            <?= file_get_contents(dirname(__DIR__,2)."/public/images/header/panier.svg") ?>
+                            <?= file_get_contents(dirname(__DIR__,3)."/public/images/header/panier.svg") ?>
                             <h3>Panier</h3>
                         </div>
                         <hr>
                         <div class="<?= (($controller == "Compte Redirection" )?"etat-courant-commande":"") ?>">
-                            <?= file_get_contents(dirname(__DIR__,2)."/public/images/header/profil.svg") ?>
+                            <?= file_get_contents(dirname(__DIR__,3)."/public/images/header/profil.svg") ?>
                             <h3>Identification</h3>
                         </div>
                         <hr>
                         <div class="<?= (($controller == "Livraisons" || $controller == "Facture")?"etat-courant-commande":"") ?>">
-                            <?= file_get_contents(dirname(__DIR__,2)."/public/images/header/carton.svg") ?>
+                            <?= file_get_contents(dirname(__DIR__,3)."/public/images/header/carton.svg") ?>
                             <h3>Adresses</h3>
                         </div>
                         <hr>
                         <div class="<?= (($controller == "Paiement" || $controller == "Validation")?"etat-courant-commande":"") ?>">
-                            <?= file_get_contents(dirname(__DIR__,2)."/public/images/header/paiement.svg") ?>
+                            <?= file_get_contents(dirname(__DIR__,3)."/public/images/header/paiement.svg") ?>
                             <h3>Paiement</h3>
                         </div>
                     </div>
@@ -138,32 +98,32 @@
                     <form class="formRecherche" action="<?= base_url() ?>/catalogue/">
                         <input class="champsRecherche" type="search" name="search" placeholder="Recherche.." value="<?= ((isset($_GET["search"])) ? $_GET["search"] : '') ?>"/>
                         <label>
-                            <input type="submit"><?= file_get_contents(dirname(__DIR__,2) ."/public/images/header/loupe.svg") ?>
+                            <input type="submit"><?= file_get_contents(dirname(__DIR__,3) ."/public/images/header/loupe.svg") ?>
                         </label>
                     </form>
                 <?php endif; ?>
                 <div class="divPanierProfil">
                     <a class="lienHPanier" href="<?= base_url() ?>/panier">
-                        <?php echo file_get_contents(dirname(__DIR__,2)."/public/images/header/panier.svg"); ?>
+                        <?php echo file_get_contents(dirname(__DIR__,3)."/public/images/header/panier.svg"); ?>
                         <?php if ($GLOBALS["quant"] != 0): ?>
                             <span class="quantPanier"><?= $GLOBALS["quant"] ?></span>
                         <?php elseif ($GLOBALS["quant"] > 9): ?>
                             <span class="quantPanier">+9</span>
                         <?php endif; ?>
                     </a>
-                    <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/espaceClient" : base_url()."/connexion") ?>">
+                    <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/profil" : base_url()."/connexion") ?>">
                     <?php if (session()->has("numero")) {
-                        include(dirname(__DIR__,2)."/public/images/header/profilCon.svg");
+                        include(dirname(__DIR__,3)."/public/images/header/profilCon.svg");
                     } else {
-                        include(dirname(__DIR__,2)."/public/images/header/profil.svg");
+                        include(dirname(__DIR__,3)."/public/images/header/profil.svg");
                     } ?>
                     </a>
                     <?php if (session()->has("numero")): ?>
                         <div class="divHoverConnexion divConnected">
                             <p class="pNom">Bonjour <?= (session()->get("nom")) ?></p>
-                            <a href="<?= base_url()."/espaceClient"?>"><p>Mon profil</p></a>
+                            <a href="<?= base_url()."/profil"?>"><p>Mon profil</p></a>
                             <a href="<?= base_url()."/commandes"?>"><p>Mes commandes</p></a>
-                            <a href="<?= base_url()."/destroy"?>"><p>Se déconnecter</p></a>
+                            <a href="<?= base_url()."/admin/destroy"?>"><p>Se déconnecter</p></a>
                         </div>
                     <?php else: ?>
                         <div class="divHoverConnexion divNotConnected">

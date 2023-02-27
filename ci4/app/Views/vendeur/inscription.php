@@ -1,4 +1,4 @@
-<?php require __DIR__ . "/../header.php";
+<?php require("header.php"); 
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -9,7 +9,6 @@
         }
     }
 ?>
-        </header>
         <main>
             <div class="divCredit">
                 <div class="sectionCredit">
@@ -28,6 +27,16 @@
                             afficheErreurs($erreurs, 4) .
                             afficheErreurs($erreurs, 7)
                         ?>
+                        <label>Numéro de SIRET<span class="requis">*</span> :</label>
+                        <input type="text" name="siret" required="required" value="<?= $siret?>"/>
+                        <?=
+                            afficheErreurs($erreurs, 0)
+                        ?>
+                        <label>TVA intracommunautaire<span class="requis">*</span> :</label>
+                        <input type="text" name="tvaIntraCom" required="required" value="<?= $tvaIntraCom?>"/>
+                        <?=
+                            afficheErreurs($erreurs, 0)
+                        ?>
                         <label>Mot de passe<span class="requis">*</span> :</label>
                         <input type="password" name="motDePasse" required="required" value="<?= $motDePasse?>"/>
                         <?=
@@ -42,4 +51,4 @@
                 </div>
             </div>
         </main>
-<?php require __DIR__ . "/../footer.php"; ?>
+<?php require("footer.php"); ?>

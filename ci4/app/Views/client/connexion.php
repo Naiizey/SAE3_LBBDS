@@ -1,4 +1,4 @@
-<?php require __DIR__ . "/../header.php";
+<?php require("header.php");
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -9,7 +9,6 @@
         }
     }
 ?>
-        </header>
         <main>
             <div class="divAlizon">
                 <img src="<?= base_url() ?>/images/logo_noir.png" alt="logoAlizon" title="Accueil">
@@ -24,7 +23,8 @@
                         <label>Mot de passe<span class="requis">*</span> : </label>
                         <input type="password" name="motDePasse" required="required" value="<?= $motDePasse?>"/>
                         <div class="divSouvenir">
-                            <input type="checkbox"/>
+                            <input type="checkbox" name="rememberMe"/>
+                            <!-- TODO : ajouter la features, si case cochée -> créer cookie sur le pc client, dans le header, si cookie, connecter -->
                             <label>Se souvenir de moi</label>
                         </div>
                         <?= afficheErreurs($erreurs, 0) . afficheErreurs($erreurs, 1) ?>
@@ -35,4 +35,4 @@
                 <a href="<?= base_url() ?>/mdpOublie">Mot de passe oublié ?</a>
             </div>
         </main>
-<?php require __DIR__ . "/../footer.php"; ?>
+<?php require("footer.php"); ?>

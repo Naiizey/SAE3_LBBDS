@@ -1,6 +1,7 @@
-<?php namespace App\Controllers;
+<?php namespace App\Controllers\vendeur;
 
 use Exception;
+use App\Controllers\BaseController;
 use CodeIgniter\Files\File;
 
 class Import extends BaseController
@@ -17,7 +18,7 @@ class Import extends BaseController
             $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
         } else {
             $GLOBALS["quant"] = 0;
-        }
+        }   
     }
 
     public function index($estVendeur=false)

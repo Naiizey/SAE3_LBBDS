@@ -14,16 +14,14 @@
                     <span class="target"></span>
                 </div>
                 <div class="hidden" id="details">
-                    <table>
-                        <tr>
-                            <td class="name"><span data-l10n>Hôte</span>:</td>
-                            <td class="value">Alizon.net</td>
-                        </tr>
-                        <tr>
-                            <td class="name"><span data-l10n>URL</span>:</td>
-                            <td class="value"><a href="https://www.alizon.net">Alizon.net</a></td>
-                        </tr>
-                    </table>
+                    <p>
+                        <span class="name"><span data-l10n>Hôte</span>:</span>
+                        <span class="value">Alizon.net</span>
+                    </p>
+                    <p>
+                        <span class="name"><span data-l10n>URL</span>:</span>
+                        <span class="value"><a href="https://www.alizon.net">Alizon.net</a></span>
+                    </p>
                 </div>
             </div>
         </div>

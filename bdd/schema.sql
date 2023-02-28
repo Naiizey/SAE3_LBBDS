@@ -56,7 +56,6 @@ CREATE TABLE _client
     CONSTRAINT _compte_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte)
 
 );
-SELECT * FROM sae3.client;
 
 CREATE TABLE _adresse
 (

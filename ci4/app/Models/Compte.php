@@ -51,7 +51,6 @@ abstract class Compte extends Model
 
     protected function getCompteByPseudo($pseudo, $motDePasse) 
     {
-        
         $comptes = $this->where('identifiant',$pseudo);
         
         return $this->getClientByCredentials($comptes, $motDePasse);
@@ -59,7 +58,6 @@ abstract class Compte extends Model
 
     protected function getCompteByEmail($email, $motDePasse)
     {
-        
         $comptes = $this->where('email',$email);
         
         return $this->getCompteByCredentials($comptes, $motDePasse);
@@ -70,7 +68,7 @@ abstract class Compte extends Model
         return !empty($this->where('identifiant',$pseudo)->findAll());
     }
 
-    protected function doesEmailExists($email) : bool
+    public function doesEmailExists($email) : bool
     {
         return !empty($this->where('email',$email)->findAll());
     }
@@ -84,8 +82,4 @@ abstract class Compte extends Model
     {
         d($this->save($client));
     }
-
- 
-
-    
 }

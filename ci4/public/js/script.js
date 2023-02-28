@@ -784,7 +784,7 @@ function lstClients() {
     function liensLstClients(event) {
         event.cancelBubble = true;
         window.location.assign(
-            `${base_url}/admin/profil/${event.currentTarget.clientA}`
+            `${base_url}/admin/profil/client/${event.currentTarget.clientA}`
         );
     }
 

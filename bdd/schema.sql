@@ -42,7 +42,7 @@ CREATE TABLE _compte
 (
     num_compte SERIAL PRIMARY KEY,
     --code_tarif_liv INTEGER NOT NULL,
-    pseudo VARCHAR(30) NOT NULL,
+    pseudo VARCHAR(30) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     mot_de_passe VARCHAR(60) NOT NULL
 );
@@ -56,6 +56,7 @@ CREATE TABLE _client
     CONSTRAINT _compte_client_fk FOREIGN KEY (num_compte) REFERENCES _compte(num_compte)
 
 );
+SELECT * FROM sae3.client;
 
 CREATE TABLE _adresse
 (

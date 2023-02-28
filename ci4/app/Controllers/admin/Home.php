@@ -193,7 +193,7 @@ class Home extends BaseController
         return view('vendeur/inscription.php', $data);
     }
 
-    public function profil($numClient = null)
+    public function profilClient($numClient = null)
     {
         if ($numClient == null) 
         {
@@ -202,6 +202,77 @@ class Home extends BaseController
         else
         {
             $data["controller"] = "Profil Client";
+            $modelFact = model("\App\Models\ClientAdresseFacturation");
+            $modelLivr = model("\App\Models\ClientAdresseLivraison");
+            $modelClient = model("\App\Models\Client");
+            $post=$this->request->getPost();
+
+            $data['numClient'] = $numClient;
+
+            $issues = [];
+            $client = $modelClient->getClientById($numClient);
+            $clientBase = $modelClient->getClientById($numClient);
+            $data['prenomBase'] = $clientBase->prenom;
+
+            //Valeurs par défaut
+            $data['motDePasse'] = "motDePassemotDePasse";
+            $data['confirmezMotDePasse'] = "";
+            $data['nouveauMotDePasse'] = "";
+
+            //On cache par défaut les champs supplémentaires pour modifier le mdp
+            $data['classCacheDiv'] = "cacheModifMdp";
+            $data['disableInput'] = "disabled";
+            $data['requireInput'] = "";
+
+            //Si l'utilisateur a cherché à modifier des informations
+            if (!empty($post)) 
+            {
+                //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
+                if (!isset($post['motDePasse'])) 
+                {
+                    $post['motDePasse'] = "motDePassemotDePasse";
+                }
+
+                $auth = service('authentification');
+                $user=$client;
+                $user->fill($post);
+                $issues=$auth->modifProfilClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
+
+                if (!empty($issues))
+                {
+                    //En cas d'erreur(s), on pré-remplit les champs avec les données déjà renseignées
+                    $data['motDePasse'] = $post['motDePasse'];
+                    $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
+                    $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
+                }
+                else
+                {
+                    return redirect()->to("/admin/profil/client/" . $numClient);
+                }
+            }
+
+            //Pré-remplissage des champs avec les données de la base
+            $data['pseudo'] = $client->identifiant;
+            $data['prenom'] = $client->prenom;
+            $data['nom'] = $client->nom;
+            $data['email'] = $client->email;
+            $data['adresseFact'] = $modelFact->getAdresse(session()->get("numero"));
+            $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
+            $data['erreurs'] = $issues;
+
+            return view('admin/profil.php', $data);
+        }
+    }
+
+    public function profilVendeur($numVendeur = null)
+    {
+        if ($numClient == null) 
+        {
+            throw new \Exception("Vous devez spécifier un numéro de compte", 404);
+        }
+        else //TODO
+        {
+            $data["controller"] = "Profil Vendeur";
             $modelFact = model("\App\Models\ClientAdresseFacturation");
             $modelLivr = model("\App\Models\ClientAdresseLivraison");
             $modelClient = model("\App\Models\Client");

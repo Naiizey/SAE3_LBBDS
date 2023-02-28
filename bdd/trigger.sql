@@ -265,7 +265,7 @@ CREATE TRIGGER update_client
 CREATE OR REPLACE FUNCTION insert_vendeur() RETURNS trigger AS $$
 BEGIN
     INSERT INTO sae3._compte (email, pseudo, mot_de_passe) VALUES (NEW.email, NEW.identifiant, NEW.motDePasse);
-    INSERT INTO sae3._adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('','', NEW.numero_rue, NEW.code_postal, NEW.ville, NEW.comp_a1, NEW.comp_a2);
+    INSERT INTO sae3._adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('','', NEW.numero_rue,NEW.nom_rue, NEW.code_postal, NEW.ville, NEW.comp_a1, NEW.comp_a2);
     Insert Into sae3._vendeur VALUES (currval('sae3._compte_num_compte_seq'), NEW.numero_siret, NEW.tva_intercommunautaire, NEW.texte_presentation, NEW.note_vendeur, NEW.logo, currval('sae3._adresse_id_a_seq'));
     RETURN NEW;
 END;

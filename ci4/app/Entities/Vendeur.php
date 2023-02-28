@@ -35,22 +35,29 @@ class Vendeur extends Entity
         return $this->isCrypted;
     }
 
+    public function supprimerEspace(){
+        $this->siret=str_replace(' ','',$this->siret);
+        $this->tvaInter=str_replace(' ','',$this->tvaInter);
+    }
+
+ 
+
 
     public $datamap= [
         #numero
         'motDePasse' => 'motdepasse',
-        'v_nom' => 'nom',
-        'v_prenom' => 'prenom',
-        'nom' => 'nom',
-        'prenom' => 'prenom',
+        'siret' => 'numero_siret',
+        'tvaInter' => 'tva_intercommunautaire',
+        
+
         #identifiant
         'identifiant' => 'identifiant',
         'pseudo' => 'identifiant'
     ];
 
     protected $attributes = [
-        'nom' => null,
-        'prenom' => null
+        'comp_a1' => '',
+        'comp_a2' => ''
     ];
     //les variable en commentaires n'ont aucune utilité à part pour simplifier utilisation au dev
 }

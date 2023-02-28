@@ -80,6 +80,6 @@ abstract class Compte extends Model
 
     protected function saveCompte($client)
     {
-        d($this->save($client));
+        $this->save($client);
     }
 }

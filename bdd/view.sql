@@ -163,4 +163,4 @@ CREATE OR REPLACE VIEW signalement AS SELECT * FROM _signalement;
  --VENDEUR
 CREATE OR REPLACE VIEW vendeur AS
 SELECT num_compte numero, email, pseudo identifiant, mot_de_passe motDePasse, numero_siret, tva_intercommunautaire, texte_presentation, note_vendeur, logo, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, id_adresse
-FROM compte_vendeur NATURAL JOIN _adresse;
+FROM compte_vendeur INNER JOIN _adresse ON _adresse.id_a = compte_vendeur.id_adresse;

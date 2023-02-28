@@ -8,17 +8,24 @@ class VendeurTest extends Vendeur
 {
     
     public function fake(\Faker\Generator &$fake){
-        $faker = new \Faker\Generator();
-        //$faker->addProvider(new Faker\Provider\en_US\Address($faker));
-        $faker->addProvider(new Faker\Provider\Lorem($faker));
-        $faker->addProvider(new Faker\Provider\en_US\Company($faker));
+        $fake->addProvider(new \Faker\Provider\Tva_intercomm($fake));
+        
         
         return array(
-           
-            "numero_rue" => $faker->randomNumber(2),
+            "identifiant" => $fake->company(),
+            "email" => $fake->email(),
+            "motdepasse" => $fake->password(),
+            "texte_presentation" => $fake->text(),
+            "numero_rue" => $fake->randomNumber(2),
             "nom_rue" => $fake->streetName,
-            "code_postal" => $faker->randomNumber(5),
-            "ville" => $fake->city
+            "code_postal" => $fake->randomNumber(5),
+            "ville" => $fake->city,
+            "logo" => $fake->url(),
+            "numero_siret" => $fake->siret(),  
+            "tva_intercommunautaire" => $fake->getTva()       
+
+
+
             
             
         );

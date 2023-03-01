@@ -97,18 +97,14 @@ class Home extends BaseController
     public function profil()
     {
         $data["controller"] = "Profil Vendeur";
-        $modelFact = model("\App\Models\ClientAdresseFacturation");
-        $modelLivr = model("\App\Models\ClientAdresseLivraison");
-        $modelClient = model("\App\Models\Client");
+        $modelVendeur = model("\App\Models\Vendeur");
         $post=$this->request->getPost();
         
         $numClient = session()->get("numero");
-        $data['numClient'] = $numClient;
+        $data['numVendeur'] = $numVendeur;
 
         $issues = [];
-        $client = $modelClient->getClientById($numClient);
-        $clientBase = $modelClient->getClientById($numClient);
-        $data['prenomBase'] = $clientBase->prenom;
+        $vendeur = $modelVendeur->getVendeurById($numVendeur);
 
         //Valeurs par défaut
         $data['motDePasse'] = "motDePassemotDePasse";
@@ -123,15 +119,6 @@ class Home extends BaseController
         //Si l'utilisateur a cherché à modifier des informations
         if (!empty($post)) 
         {
-            helper('cookie');
-            if (session()->has("numero")) {
-                $data['quant'] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
-            } elseif (has_cookie("token_panier")) {
-                $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
-            } else {
-                $data['quant'] = 0;
-            }
-
             //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
             if (!isset($post['motDePasse'])) 
             {
@@ -167,15 +154,24 @@ class Home extends BaseController
             }
             else
             {
-                return redirect()->to("/vendeur/profil/" . $numClient);
+                return redirect()->to("/vendeur/profil");
             }
         }
 
         //Pré-remplissage des champs avec les données de la base
-        $data['identifiant'] = $client->identifiant;
-        $data['email'] = $client->email;
-        $data['siret'] = $client->prenom;
-        $data['tvaIntraCom'] = $client->nom;
+        $data['identifiant'] = $vendeur->identifiant;
+        $data['txtPres'] = $vendeur->texte_presentation;
+        $data['logo'] = $vendeur->logo;
+        $data['note'] = $vendeur->note_vendeur;
+        $data['email'] = $vendeur->email;
+        $data['siret'] = $vendeur->numero_siret;
+        $data['tvaIntraCom'] = $vendeur->tva_intercommunautaire;
+        $data['numRue'] = $vendeur->numero_rue;
+        $data['nomRue'] = $vendeur->nom_rue;
+        $data['ville'] = $vendeur->ville;
+        $data['codePostal'] = $vendeur->code_postal;
+        $data['compA1'] = $vendeur->comp_a1;
+        $data['compA2'] = $vendeur->comp_a2;
         $data['erreurs'] = $issues;
 
         return view('vendeur/profil.php', $data);
@@ -190,15 +186,18 @@ class Home extends BaseController
         {
             //Vérification des champs du post (attributs de l'entité Client)
             $auth = service('authentification');
-            $user= new \App\Entities\Client();
+            $user= new \App\Entities\Vendeur();
             $user->fill($post);
             $issues=$auth->connexionVendeur($user);
 
             if(empty($issues))
             {
-                if (!session()->has("referer_redirection")) {
+                if (!session()->has("referer_redirection")) 
+                {
                     return redirect()->to("/");
-                } else {
+                } 
+                else 
+                {
                     $redirection=session()->get("referer_redirection");
                     session()->remove("referer_redirection");
                     return redirect()->to($redirection);

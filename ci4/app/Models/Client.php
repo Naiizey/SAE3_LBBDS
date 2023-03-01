@@ -24,24 +24,19 @@ class Client extends Compte
 
     protected $allowedFields = ['numero','nom','prenom','email','identifiant','motdepasse'];
 
-
-    public function getClientByCredentials($comptes, $motDePasse) : \App\Entities\Client | null
-    {
-        return parent::getCompteByCredentials($comptes, $motDePasse);
-    }
-
     public function getClientByPseudo($pseudo, $motDePasse) : \App\Entities\Client | null
     {
-        
-        return parent::getCompteByPseudo($pseudo, $motDePasse);
+        $comptes = $this->where('identifiant',$pseudo);
+
+        return parent::getCompteByCredentials($comptes, $motDePasse);
     }
 
     public function getClientByEmail($email, $motDePasse) : \App\Entities\Client | null
     {
-        
+        $comptes = $this->where('email',$email);
+
         return parent::getCompteByEmail($email, $motDePasse);
     }
-
 
     public function getClientById($id)
     {

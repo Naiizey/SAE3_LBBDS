@@ -161,6 +161,7 @@ $routes->get('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur']);
 $routes->post('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur']);
 
 $routes->get('vendeur/connexion','vendeur\Home::connexion');
+$routes->post('vendeur/connexion','vendeur\Home::connexion');
 
 ##param uri (:any) et dans methode /$1
 

@@ -53,11 +53,11 @@ class Authentification
         if(!empty($entree))
         {
             $vendeurModel = model("\App\Models\Vendeur");
-            $user = $vendeurModel->getVendeurByIdentifiant($entree -> identifiant,$entree -> motDePasse);
+            $user = $vendeurModel->getVendeurByPseudo($entree -> identifiant, $entree -> motDePasse);
             
             if($user == null) 
             {
-                $user = $vendeurModel->getVendeurByEmail($entree -> identifiant,$entree -> motDePasse);
+                $user = $vendeurModel->getVendeurByEmail($entree -> identifiant, $entree -> motDePasse);
             }
             if($user == null)
             {

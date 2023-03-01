@@ -7,6 +7,7 @@
                         <tr>
                             <th>N° compte</th>
                             <th>Identifiant</th>
+                            <th>Email</th>
                             <?php if(isset($bannir)) : ?>
                                 <?php if ($bannir) : ?>
                                     <th>Bannir</th>
@@ -21,6 +22,7 @@
                             <tr class='lignesClients'>
                                 <td class='numClients'><?= $client->numero ?></td>
                                 <td><?= $client->identifiant ?></td>
+                                <td><?= $client->email ?></td>
                                 <?php if(isset($bannir)) : ?>
                                     <?php if ($bannir) : ?>
                                         <td>

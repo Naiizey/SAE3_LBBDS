@@ -25,24 +25,19 @@ class Vendeur extends Compte
 
     protected $allowedFields = ['identifiant','motdepasse','email', 'texte_presentation', 'numero_siret', 'tva_intercommunautaire', 'note_vendeur', 'logo', 'numero_rue', 'nom_rue', 'code_postal', 'ville', 'comp_a1', 'comp_a2'];
 
-
-    public function getVendeurByCredentials($comptes, $motDePasse) : \App\Entities\Vendeur | null
-    {
-        return parent::getCompteByCredentials($comptes, $motDePasse);
-    }
-
     public function getVendeurByPseudo($pseudo, $motDePasse) : \App\Entities\Vendeur | null
     {
-        
-        return parent::getCompteByPseudo($pseudo, $motDePasse);
+        $comptes = $this->where('identifiant',$pseudo);
+
+        return parent::getCompteByCredentials($comptes, $motDePasse);
     }
 
     public function getVendeurByEmail($email, $motDePasse) : \App\Entities\Vendeur | null
     {
-        
-        return parent::getCompteByEmail($email, $motDePasse);
-    }
+        $comptes = $this->where('email',$email);
 
+        return parent::getCompteByCredentials($comptes, $motDePasse);
+    }
 
     public function getVendeurById($id)
     {
@@ -53,6 +48,4 @@ class Vendeur extends Compte
     {
         parent::saveCompte($vendeur);
     }
-
-    
 }

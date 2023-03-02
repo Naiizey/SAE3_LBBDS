@@ -56,7 +56,12 @@ class CardProduit
                     <p class="prix-card"><?= $prod->prixttc?>€</p>
                     <a href="<?= base_url().'/panier/ajouter/'.$prod->id.'/1' ?>" class="addPanier">
                         <?php
-                            echo file_get_contents(dirname(__DIR__, 2)."/public/images/header/addPanier.svg");
+                            if(!isset($_SESSION['numero_vendeur'])){
+                                echo file_get_contents(dirname(__DIR__, 2)."/public/images/header/addPanier.svg");
+                            }
+                            else{
+                                echo file_get_contents(dirname(__DIR__, 2)."/public/images/vendeur/checkmark.svg");
+                            }
                         ?>
                     </a>
                 </div>

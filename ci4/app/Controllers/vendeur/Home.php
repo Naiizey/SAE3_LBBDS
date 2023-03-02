@@ -182,6 +182,18 @@ class Home extends BaseController
         return view('vendeur/profil.php', $data);
     }
 
+    public function catalogue($num_catalogue = null)
+    {
+        $data["controller"] = "Catalogue Vendeur";
+        if ($num_commande == null) {
+            throw new Exception("Le numéro de catalogue renseigné n'existe pas.", 404);
+        }
+        else
+        {
+            $data['numCatalogue'] = $num_catalogue;
+        }
+    }
+
     public function connexion()
     {
         $post=$this->request->getPost();

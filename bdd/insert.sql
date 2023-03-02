@@ -400,3 +400,5 @@ INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis n''app
 INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis ne parle pas du produit', 5, 2);
     
  -- jusqu'ici
+
+INSERT INTO _quidi VALUES (DEFAULT,1,5);

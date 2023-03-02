@@ -52,6 +52,7 @@ class Home extends BaseController
     public function destroySession()
     {
         $session=session();
+        $session->remove("numero_vendeur");
         $session->remove("numero");
         $session->remove("nom");
         $session->remove("ignorer");

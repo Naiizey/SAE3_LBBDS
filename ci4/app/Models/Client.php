@@ -35,7 +35,7 @@ class Client extends Compte
     {
         $comptes = $this->where('email',$email);
 
-        return parent::getCompteByEmail($email, $motDePasse);
+        return parent::getCompteByCredentials($comptes, $motDePasse);
     }
 
     public function getClientById($id)

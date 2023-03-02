@@ -199,7 +199,7 @@ DECLARE
 
 
             for row in (SELECT id_prod, num_panier, qte_panier,  prix_ht+(prix_ht*taux_tva) prix_fixeeTTC FROM sae3._refere
-            natural join sae3._panier_client natural join sae3._produit natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva
+            natural join sae3._panier_client natural join sae3.produit_global natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva
             where num_compte=new.num_compte) loop
 
                     INSERT INTO sae3._refere_commande(id_prod, num_commande, qte_panier, prix_fixeettc) VALUES (row.id_prod,new.num_commande,row.qte_panier, row.prix_fixeeTTC);
@@ -268,17 +268,18 @@ CREATE TRIGGER update_client
 CREATE OR REPLACE FUNCTION insert_vendeur() RETURNS trigger AS $$
 BEGIN
     INSERT INTO sae3._compte (email, pseudo, mot_de_passe) VALUES (NEW.email, NEW.identifiant, NEW.motDePasse);
-    Insert Into sae3._vendeur(num_compte)  VALUES (currval('sae3._compte_num_compte_seq'));
+    INSERT INTO sae3._adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('','', NEW.numero_rue,NEW.nom_rue, NEW.code_postal, NEW.ville, NEW.comp_a1, NEW.comp_a2);
+    Insert Into sae3._vendeur VALUES (currval('sae3._compte_num_compte_seq'), NEW.numero_siret, NEW.tva_intercommunautaire, NEW.texte_presentation, NEW.note_vendeur, NEW.logo, currval('sae3._adresse_id_a_seq'));
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-/*
+
 CREATE TRIGGER insert_vendeur
     INSTEAD OF INSERT ON sae3.vendeur
     FOR EACH ROW
     EXECUTE PROCEDURE insert_vendeur();
 
- */
+
 
 -- trigger insertion dans _compte instead of update à partir de la vue client
 
@@ -286,17 +287,19 @@ CREATE OR REPLACE FUNCTION update_vendeur() RETURNS trigger AS $$
 BEGIN
     --on récupère tous les champs qui sont contenus dans l'update
     UPDATE sae3._compte SET email = NEW.email, pseudo = NEW.identifiant, mot_de_passe = NEW.motDePasse WHERE num_compte = OLD.numero;
+    UPDATE sae3._vendeur SET numero_siret= NEW.numero_siret,tva_intercommunautaire= NEW.tva_intercommunautaire, note_vendeur= NEW.note_vendeur,logo= new.logo WHERE num_compte=OLD.numero;
+    UPDATE sae3._adresse SET numero_rue=NEW.numero_rue, nom_rue= NEW.nom_rue, code_postal=NEW.code_postal, ville=NEW.ville WHERE id_a=OLD.id_adresse;
 
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-/*
+
 CREATE TRIGGER update_vendeur
-    INSTEAD OF UPDATE ON sae3.vendeur
+    INSTEAD OF UPDATE ON vendeur
     FOR EACH ROW
     EXECUTE PROCEDURE update_vendeur();
 
-*/
+
 
 
 CREATE OR REPLACE FUNCTION insert_sanction_temporaire() RETURNS TRIGGER AS $$

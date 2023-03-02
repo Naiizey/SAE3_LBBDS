@@ -3748,7 +3748,7 @@ a.fleche-page{
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃          Page pour lister (lstCommandesVendeur.php, lstCommandesCli.php & lstClients.php)                       ┃
+┃             Page pour lister (lstCommandesVendeur.php, lstCommandes.php & lstClients.php)                       ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
@@ -4120,14 +4120,14 @@ progress::-moz-progress-bar
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                    Page d'espace client (espaceClient.php)                      ┃
+┃                           Page de profil (profil.php)                           ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-.mainEspaceCli {
+.mainProfil {
     background-color: #f3f3f3;
 }
 
-.mainEspaceCli > svg {
+.mainProfil > svg {
     height: 10em;
 }
 
@@ -4149,7 +4149,7 @@ progress::-moz-progress-bar
     font-family: "Montserrat-Medium";
 }
 
-.divEspaceCli {
+.divProfil {
     margin: 0 20%;
 }
 
@@ -4210,7 +4210,7 @@ progress::-moz-progress-bar
 }
 
 @media screen and (max-width: 991px) {
-    .mainEspaceCli{
+    .mainProfil{
         display: flex;
         flex-direction: column;
         align-items: center;

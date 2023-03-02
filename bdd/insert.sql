@@ -1,7 +1,11 @@
 SET SCHEMA 'sae3';
 
-insert into sae3._compte ( pseudo, email, mot_de_passe) values ( 'testMotDePasseVisible', 'test@tst.de', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
+insert into sae3._compte ( pseudo,email, mot_de_passe) values ( 'testMotDePasseVisible', 'test@tst.de', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
 
+-- trois insertions d'adresses
+INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('Doe', 'John', 1, 'rue de la paix', 75000, 'Paris', 'Batiment A', 'Etage 1');
+INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('Doe', 'Jane', 2, 'rue de la paix', 75000, 'Paris', 'Batiment B', 'Etage 2');
+INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('hiller', 'adolphe', 3, 'rue de la guerre', 70000, 'lille', 'Batiment C', 'Etage 3');
 
 INSERT INTO _compte (pseudo, email, mot_de_passe) VALUES ( 'test', 'test@gmail.com', 'test152687');
 INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('nassima_illoutchine', 'nassima@gmail.com', 'test152687');
@@ -14,7 +18,7 @@ INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (2,'toast', 'de
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (3,'illoutchine', 'nassima');
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (4,'moigne', 'tania');
 
-INSERT INTO _vendeur(num_compte) VALUES (5);
+INSERT INTO _vendeur  VALUES (5, '123456789', 'FR50123456789"', 'Bonjour, nous sommes la COBREC', 3, 'https://logo-marque.com/wp-content/uploads/2021/09/Hot-Wheels-Logo.png', currval('sae3._adresse_id_a_seq'));
 
 
 INSERT INTO _tva VALUES (1,0.20);
@@ -213,9 +217,11 @@ INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'),'https://cdn.pixabay.com/photo/2016/11/20/08/22/breton-1842173_960_720.jpg' , 0);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
-VALUES (137,'Autocollant Bidouden',1,1.2,'Ce sticker à coller n''importe où, sur votre voiture ou votre ordinateur, est parfait pour partager votre passion pour la Bretagne. Provenance : Morlaix', true, 10, 4.5, 5, true, 5);
+VALUES (137,'Hameçon',1,1.2,'Parfait pour vos après midi à la pèche, ces hameçon sont prévu exprès pour les gros spécimen de poisson. Provenance : Morlaix', true, 10, 4.5, 5, true, 5);
 INSERT INTO _image_prod(id_prod, lien_image ,num_image)
-VALUES (currval('sae3._produit_id_prod_seq'), 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', 0);
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://images.pexels.com/photos/4822289/pexels-photo-4822289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 0);
+INSERT INTO _image_prod(id_prod, lien_image ,num_image)
+VALUES (currval('sae3._produit_id_prod_seq'), 'https://images.pexels.com/photos/4822295/pexels-photo-4822295.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 1);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
 VALUES (137,'Parapluie',10,12,'Indispensable pour vos séjours en Bretagne. Provenance : Rennes', true, 10, 4.5, 5, true, 5);
@@ -237,7 +243,7 @@ VALUES (142,'Strap',5,6,'Petit scotch pour tenir n''importe quel objet sur toute
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'),  'https://static.vecteezy.com/system/resources/previews/007/789/648/non_2x/white-sport-tape-isolated-on-white-background-athletic-taping-porous-adhesive-tape-medical-tape-multipurpose-porous-tape-for-wound-care-and-sprain-first-aid-medical-supplies-sport-bandage-free-photo.jpg',0);
 
-INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod, num_compte)
+INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod, publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
 VALUES (142,'Plantes carnivores attrape mouches',2,2.4,'Vous êtes ennuyé par les mouches, cet lot de plantes carnivores est fait pour vous !', true, 10, 4.5, 5, true, 5);
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
 VALUES (142,'Plante carnivore attrape mouches',2,2.4,'Vous êtes ennuyé par les mouches, cet plante est faite pour vous !', true, 10, 4.5, 5, true, 5);
@@ -333,11 +339,6 @@ INSERT INTO _liste_souhait ( id_prod, num_compte) VALUES (18, 2);
 INSERT INTO _liste_souhait (id_prod, num_compte) VALUES (17, 2);
 -- INSERT INTO _liste_souhait (etat_stock, id_prod, num_compte) VALUES (false, 18, 1);
 
--- trois insertions d'adresses
-INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('Doe', 'John', 1, 'rue de la paix', 75000, 'Paris', 'Batiment A', 'Etage 1');
-INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('Doe', 'Jane', 2, 'rue de la paix', 75000, 'Paris', 'Batiment B', 'Etage 2');
-INSERT INTO _adresse (nom_a, prenom_a, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2) VALUES ('hiller', 'adolphe', 3, 'rue de la guerre', 70000, 'lille', 'Batiment C', 'Etage 3');
-
 -- 3 insertions d'adresses de livraison
 INSERT INTO _adresse_livraison (infos_comp, id_a) VALUES ('infos complémentaires', 1);
 INSERT INTO _adresse_livraison (infos_comp, id_a) VALUES ('infos complémentaires', 2);
@@ -362,16 +363,16 @@ INSERT INTO  _recevoir_facture VALUES (3, 2);
 INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (2, 32, CURRVAL('sae3._panier_num_panier_seq'));
 
 --10 insertions dans _commande (num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a, id_adresse)
-INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a) VALUES (1,'1', '2023-02-01', null, null, null, null, 1);
+INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a, id_reduction) VALUES (1,'1', '2023-02-01', null, null, null, null, 1, 3);
 INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a,id_reduction) VALUES (1,'2', '2022-12-01', '2022-12-02', '2022-12-05', null, null, 2, 2);
-INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a, id_reduction) VALUES (1,'3', '2022-07-22', '2022-07-23', '2022-07-27', '2022-07-29', '2022-07-30', 3, 3);
+INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a) VALUES (1,'3', '2022-07-22', '2022-07-23', '2022-07-27', '2022-07-29', '2022-07-30', 3);
 INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a,id_reduction) VALUES (1,'4', '2022-05-01', '2022-05-02', '2022-05-04', '2022-05-06', '2022-05-07', 1, 1);
 
 
-INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (5, 18, '1',1500);
-INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (5, 18, '2',1500);
-INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (1, 17, '3',12);
-INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (3, 17, '4',12);
+INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (5, 18, '1',12);
+INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (5, 18, '2',12);
+INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (1, 17, '3',1.2);
+INSERT INTO _refere_commande (qte_panier, id_prod, num_commande, prix_fixeettc) VALUES (3, 17, '4',1.2);
 
 -- 2 insertions dans _duree (date_debut, heure_debut, date_fin, heure_fin)
 INSERT INTO _duree (date_debut, heure_debut, date_fin, heure_fin)

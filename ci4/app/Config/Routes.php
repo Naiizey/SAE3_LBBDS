@@ -88,9 +88,8 @@ $routes->get('/catalogue/(:num)', 'client\Home::catalogue/$1');
 
 $routes->get('/test', 'Test::test2');
 
-$routes->get('/commandes', 'client\Home::lstCommandesClient',['filter' => 'connexion']);
-
-$routes->get('/commandes/detail/(:alphanum)','client\Home::detail/$1',['filter' => 'connexion']);//['filter' => 'connexion']
+$routes->get('/commandes', 'client\Home::lstCommandes',['filter' => 'connexion']);
+$routes->get('/commandes/(:alphanum)','client\Home::lstCommandes/$1',['filter' => 'connexion']);
 
 $routes->get('/produits/page/(:num)','client\Produits::getAllProduitSelonPage/$1');
 $routes->options('/produits/page/(:num)','client\Produits::getAllProduitSelonPage/$1');
@@ -100,8 +99,8 @@ $routes->post('/livraison','client\Home::infoLivraison',['filter' => 'connexion'
 $routes->get('/facture','client\Home::facture',['filter' => 'connexion']);
 $routes->post('/facture','client\Home::facture',['filter' => 'connexion']);
 
-$routes->get('/espaceClient', 'client\Home::espaceClient' ,['filter' => 'connexion']);
-$routes->post('/espaceClient', 'client\Home::espaceClient' ,['filter' => 'connexion']);
+$routes->get('/profil', 'client\Home::profil' ,['filter' => 'connexion']);
+$routes->post('/profil', 'client\Home::profil' ,['filter' => 'connexion']);
 
 $routes->get('/validation', 'client\Home::validation' );
 $routes->post('/validation', 'client\Home::validation' );
@@ -135,8 +134,9 @@ $routes->get('/admin/signalements/(:num)', 'admin\Home::lstSignalements/$1');
 $routes->get('/admin/avis', 'admin\Home::lstAvis');
 $routes->get('/admin/avis/(:num)', 'admin\Home::lstAvis/$1');
 
-$routes->get('/(admin)/espaceClient/(:num)', 'client\Home::espaceClient/$1/$2');
-$routes->post('/(admin)/espaceClient/(:num)', 'client\Home::espaceClient/$1/$2');
+$routes->get('/admin/profil', 'admin\Home::profil');
+$routes->get('/admin/profil/(:num)', 'admin\Home::profil/$1');
+$routes->post('/admin/profil/(:num)', 'admin\Home::profil/$1');
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -144,13 +144,18 @@ $routes->post('/(admin)/espaceClient/(:num)', 'client\Home::espaceClient/$1/$2')
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-$routes->get('/vendeur/import/entetes','vendeur\Import::getentetes');
+$routes->get('/vendeur/import/entetes','vendeur\Import::getentetes',['filter' => 'vendeur']);
 
-$routes->get('vendeur/import', 'vendeur\Import::index/true');
-$routes->post('vendeur/import/upload','vendeur\Import::upload');
+$routes->get('/vendeur/import', 'vendeur\Import::index/true');
+$routes->post('/vendeur/import/upload','vendeur\Import::upload');
 
-$routes->get('vendeur/commandesCli','vendeur\Home::lstCommandesVendeur/true');
-$routes->get('vendeur/commandesCli/detail/(:alphanum)','vendeur\Home::detail/$1/true');
+$routes->get('vendeur/commandes','vendeur\Home::lstCommandes',['filter' => 'vendeur']);
+$routes->get('vendeur/commandes/(:alphanum)','vendeur\Home::lstCommandes/$1',['filter' => 'vendeur']);
+$routes->get('vendeur/import', 'vendeur\Import::index/true',['filter' => 'vendeur']);
+$routes->post('vendeur/import/upload','vendeur\Import::upload',['filter' => 'vendeur']);
+
+$routes->get('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur']);
+$routes->post('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur']);
 
 $routes->get('vendeur/connexion','vendeur\Home::connexion');
 

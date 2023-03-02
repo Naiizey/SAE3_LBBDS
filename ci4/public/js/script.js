@@ -677,7 +677,7 @@ function lstCommandes() {
         let commandeA = numCommandes.item(numLigne).textContent;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail de la commande récupérée juste avant
         ligneA.addEventListener("click", () => {
-            window.location.href = `${base_url}/commandes/detail/${commandeA}`;
+            window.location.href = `${base_url}/commandes/${commandeA}`;
         });
     }
 }
@@ -693,7 +693,7 @@ function lstCommandesVendeur() {
         let commandeA = numCommandes.item(numLigne).textContent;
         // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail de la commande récupérée juste avant, en tant que vendeur
         ligneA.addEventListener("click", () => {
-            window.location.href = `${base_url}/vendeur/commandesCli/detail/${commandeA}`;
+            window.location.href = `${base_url}/vendeur/commandes/${commandeA}`;
         });
     }
 }
@@ -784,7 +784,7 @@ function lstClients() {
     function liensLstClients(event) {
         event.cancelBubble = true;
         window.location.assign(
-            `${base_url}/admin/espaceClient/${event.currentTarget.clientA}`
+            `${base_url}/admin/profil/${event.currentTarget.clientA}`
         );
     }
 
@@ -930,11 +930,11 @@ function cgu() {
 ┃                                  Espace Client                                  ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-function espaceCli(role) {
+function profilCli(role) {
     this.form = document.forms["formClient"];
     var self = this;
     var lienModif;
-    var labelModifsCli = document.querySelectorAll(".mainEspaceCli label");
+    var labelModifsCli = document.querySelectorAll(".mainProfil label");
     var ancienMdp = document.getElementsByClassName("labelAncienMdp")[0];
     ancienMdp.innerHTML = "Votre mot de passe :";
 

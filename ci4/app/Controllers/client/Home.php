@@ -195,10 +195,6 @@ class Home extends BaseController
             $data["quantitePanier"]=model("\App\Models\ProduitPanierVisiteurModel")->getQuantiteProduitByIdProd($idProduit, get_cookie('token_panier'));
         }
 
-        //Get produituk
-        $prodModel = model("\App\Models\ProduitDetail");
-        $result = $prodModel->find($idProduit);
-
         //Autres images du produit
         $prodModelAutre = model("\App\Models\ProduitDetailAutre");
         $autresImages = $prodModelAutre->getAutresImages($idProduit);
@@ -281,6 +277,9 @@ class Home extends BaseController
         } else {
             $data["avisEnValeur"] = -1;
         }
+        
+        //Synchronisation des produits avec la base
+        $result = model("\App\Models\ProduitDetail")->find($idProduit);
 
         //Affichage selon si produit trouvé ou non
         if ($result == null) {
@@ -352,24 +351,16 @@ class Home extends BaseController
         return view("client/catalogue.php", $data);
     }
     
-    public function espaceClient($role = null, $numClient = null)
+    public function profil()
     {
-        $data["controller"] = "Espace Client";
+        $data["controller"] = "Profil Client";
         $modelFact = model("\App\Models\ClientAdresseFacturation");
         $modelLivr = model("\App\Models\ClientAdresseLivraison");
         $modelClient = model("\App\Models\Client");
         $post=$this->request->getPost();
 
+        $numClient = session()->get("numero");
         $data['numClient'] = $numClient;
-        $data['role'] = "";
-
-        //On vérifie si l'utilisateur est un admin ou un client
-        if ($role == "admin" && $numClient != null) {
-            $data['role'] = "admin";
-        } else {
-            $data['role'] = "client";
-            $numClient = session()->get("numero");
-        }
 
         $issues = [];
         $client = $modelClient->getClientById($numClient);
@@ -422,7 +413,7 @@ class Home extends BaseController
             $auth = service('authentification');
             $user=$client;
             $user->fill($post);
-            $issues=$auth->modifEspaceClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
+            $issues=$auth->modifProfilClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
 
             if (!empty($issues))
             {
@@ -435,11 +426,11 @@ class Home extends BaseController
             {
                 if ($role == "admin")
                 {
-                    return redirect()->to("/admin/espaceClient/" . $numClient);
+                    return redirect()->to("/admin/profil/" . $numClient);
                 }
                 else
                 {
-                    return redirect()->to("/espaceClient");
+                    return redirect()->to("/profil");
                 }
             }
         }
@@ -453,7 +444,7 @@ class Home extends BaseController
         $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
         $data['erreurs'] = $issues;
 
-        return view('client/espaceClient.php', $data);
+        return view('client/profil.php', $data);
     }
 
     public function facture()
@@ -574,13 +565,6 @@ class Home extends BaseController
         return view('client/commande/templLivraison.php', $data);
     }
 
-    public function lstCommandesClient()
-    {
-        $data["controller"]= "Commandes Client";
-        $data['commandesCli']=model("\App\Models\LstCommandesCli")->getCompteCommandes();
-        return view('client/commande/lstCommandesCli.php', $data);
-    }
-
     public function paiement()
     {
         $post=$this->request->getPost();
@@ -614,24 +598,33 @@ class Home extends BaseController
         return view('client/commande/paiement.php', $data);
     }
 
-    public function detail($num_commande, $estVendeur=false)
+    public function lstCommandes($num_commande = null)
     {
-        $data["controller"]= "Détail Commande";
-        $data['numCommande'] = $num_commande;
-        $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
-        $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
-        $data['estVendeur']=$estVendeur;
-
-        if (!isset($data['infosCommande'][0]->num_commande)) {
-            throw new Exception("Le numéro de commande renseigné n'existe pas.", 404);
-        } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
-            throw new Exception("Cette commande n'est pas associée à votre compte.", 404);
-        } else {
-            $data['num_compte'] = $data['infosCommande'][0]->num_compte;
+        $data["controller"]= "Commandes Client";
+        $estVendeur = false;
+        if ($num_commande == null)
+        {
+            $data['commandesCli']=model("\App\Models\LstCommandesCli")->getCompteCommandes();
+            return view('client/commande/lstCommandes.php', $data);
         }
-        $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
-      
-        return view('client/commande/details.php', $data);
+        else
+        {
+            $data['numCommande'] = $num_commande;
+            $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
+            $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
+            $data['estVendeur']=$estVendeur;
+
+            if (!isset($data['infosCommande'][0]->num_commande)) {
+                throw new Exception("Le numéro de commande renseigné n'existe pas.", 404);
+            } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
+                throw new Exception("Cette commande n'est pas associée à votre compte.", 404);
+            } else {
+                $data['num_compte'] = $data['infosCommande'][0]->num_compte;
+            }
+            $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
+        
+            return view('client/commande/details.php', $data);
+        }
     }
 
     public function validation()

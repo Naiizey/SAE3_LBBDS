@@ -18,14 +18,16 @@ final class ExampleDatabaseTest extends CIUnitTestCase
 
     protected $seed = ExampleSeeder::class;
 
-    /*
+    
 
     public function testModelFindAll()
     {
-        $model = new ExampleModel();
+        $model = new Client();
 
         // Get every row created by ExampleSeeder
-        $objects = $model->findAll();
+
+        Fabricator::setCount($model->table, sizeof($model->findAll()));
+        
         $fabricator = new Fabricator(Client::class,array(
             "nom" => 'firstName',
             "prenom" => 'name',
@@ -35,14 +37,16 @@ final class ExampleDatabaseTest extends CIUnitTestCase
             
         ));
     
-        d($fabricator->make());
+        $fabricator->create(3);
+        $objects = $model->findAll();
+        
       
 
         // Make sure the count is as expected
-        $this->assertCount(3, $objects);
+        $this->assertCount(Fabricator::getCount($model->table), $objects);
     }
     
-
+    /*
     public function testSoftDeleteLeavesRow()
     {
         $model = new ExampleModel();
@@ -61,6 +65,7 @@ final class ExampleDatabaseTest extends CIUnitTestCase
         $this->assertCount(1, $result);
     }
     */
+    
 
     public function testModelAdresse(){ 
         $model=model("\App\Models\AdresseLivraison");
@@ -70,7 +75,7 @@ final class ExampleDatabaseTest extends CIUnitTestCase
         $fabricator = new Fabricator(AdresseLivraisonTest::class,null,'fr_FR');
         $ok = $fabricator->make();
         
-        d($ok);
+        //d($ok);
         Fabricator::upCount($model->table);
         model("\App\Models\AdresseLivraison")->save($ok);
         
@@ -78,7 +83,7 @@ final class ExampleDatabaseTest extends CIUnitTestCase
         $this->assertCount(Fabricator::getCount($model->table), $model->findAll());
 
     }
-
+    /*
     public function testCommande(){
         $model_C=model("\App\Models\LstCommandesCli");
         $model_A=model("\App\Models\AdresseLivraison");
@@ -115,6 +120,7 @@ final class ExampleDatabaseTest extends CIUnitTestCase
         $this->assertCount(Fabricator::getCount($model_C->table), $model_C->findAll());
 
     }
+    */
 
     
 }

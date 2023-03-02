@@ -66,32 +66,120 @@ class Home extends BaseController
         return view('client/index.php', $data);
     }
 
-    public function lstCommandesVendeur($estVendeur=false)
+    public function lstCommandes($num_commande = null)
     {
-        $data["controller"]= "Commandes Vendeur";
-        $data['commandesVend']=model("\App\Models\LstCommandesVendeur")->findAll();
-        $data['estVendeur']=$estVendeur;
-        return view('vendeur/lstCommandesVendeur.php', $data);
+        $data["controller"] = "Commandes Client";
+        $estVendeur = true;
+        if ($num_commande == null)
+        {
+            $data['commandesCli']=model("\App\Models\LstCommandesCli")->getCompteCommandes();
+            return view('vendeur/commande/lstCommandes.php', $data);
+        }
+        else
+        {
+            $data['numCommande'] = $num_commande;
+            $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
+            $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
+            $data['estVendeur']=$estVendeur;
+
+            if (!isset($data['infosCommande'][0]->num_commande)) {
+                throw new Exception("Le numéro de commande renseigné n'existe pas.", 404);
+            } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
+                throw new Exception("Cette commande n'est pas associée à votre compte.", 404);
+            } else {
+                $data['num_compte'] = $data['infosCommande'][0]->num_compte;
+            }
+            $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
+        
+            return view('vendeur/commande/details.php', $data);
+        }
     }
 
-    public function detail($num_commande, $estVendeur=false)
+    public function profil()
     {
-        $data["controller"]= "Détail Commande";
-        $data['numCommande'] = $num_commande;
-        $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
-        $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
-        $data['estVendeur']=$estVendeur;
+        $data["controller"] = "Profil Vendeur";
+        $modelFact = model("\App\Models\ClientAdresseFacturation");
+        $modelLivr = model("\App\Models\ClientAdresseLivraison");
+        $modelClient = model("\App\Models\Client");
+        $post=$this->request->getPost();
+        
+        $numClient = session()->get("numero");
+        $data['numClient'] = $numClient;
 
-        if (!isset($data['infosCommande'][0]->num_commande)) {
-            throw new Exception("Le numéro de commande renseigné n'existe pas.", 404);
-        } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
-            throw new Exception("Cette commande n'est pas associée à votre compte.", 404);
-        } else {
-            $data['num_compte'] = $data['infosCommande'][0]->num_compte;
+        $issues = [];
+        $client = $modelClient->getClientById($numClient);
+        $clientBase = $modelClient->getClientById($numClient);
+        $data['prenomBase'] = $clientBase->prenom;
+
+        //Valeurs par défaut
+        $data['motDePasse'] = "motDePassemotDePasse";
+        $data['confirmezMotDePasse'] = "";
+        $data['nouveauMotDePasse'] = "";
+
+        //On cache par défaut les champs supplémentaires pour modifier le mdp
+        $data['classCacheDiv'] = "cacheModifMdp";
+        $data['disableInput'] = "disabled";
+        $data['requireInput'] = "";
+
+        //Si l'utilisateur a cherché à modifier des informations
+        if (!empty($post)) 
+        {
+            helper('cookie');
+            if (session()->has("numero")) {
+                $data['quant'] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+            } elseif (has_cookie("token_panier")) {
+                $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
+            } else {
+                $data['quant'] = 0;
+            }
+
+            //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
+            if (!isset($post['motDePasse'])) 
+            {
+                $post['motDePasse'] = "motDePassemotDePasse";
+            }
+
+            //Si ces deux champs ne sont pas remplis, cela veut dire que l'utilisateur n'a pas cherché à modifier le mdp
+            if (empty($post['confirmezMotDePasse']) && empty($post['nouveauMotDePasse'])) 
+            {
+                //On remplit ces variables pour informer le service que nous n'avons pas besoin d'erreurs sur ces champs
+                $post['confirmezMotDePasse'] = "";
+                $post['nouveauMotDePasse'] = "";
+            } 
+            else 
+            {
+                //Si l'utilisateur a cherché à modifier le mdp, alors on révèle les champs
+                $data['classCacheDiv'] = "";
+                $data['disableInput'] = "";
+                $data['requireInput'] = "required";
+            }
+
+            $auth = service('authentification');
+            $user=$client;
+            $user->fill($post);
+            $issues=$auth->modifProfilClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
+
+            if (!empty($issues))
+            {
+                //En cas d'erreur(s), on pré-remplit les champs avec les données déjà renseignées
+                $data['motDePasse'] = $post['motDePasse'];
+                $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
+                $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
+            }
+            else
+            {
+                return redirect()->to("/vendeur/profil/" . $numClient);
+            }
         }
-        $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
-      
-        return view('vendeur/details.php', $data);
+
+        //Pré-remplissage des champs avec les données de la base
+        $data['identifiant'] = $client->identifiant;
+        $data['email'] = $client->email;
+        $data['siret'] = $client->prenom;
+        $data['tvaIntraCom'] = $client->nom;
+        $data['erreurs'] = $issues;
+
+        return view('vendeur/profil.php', $data);
     }
 
     public function connexion()

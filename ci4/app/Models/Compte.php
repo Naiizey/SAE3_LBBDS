@@ -32,7 +32,7 @@ abstract class Compte extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
-    protected function getCompteByCredentials($comptes, $motDePasse) : \App\Entities\Client | null
+    protected function getCompteByCredentials($comptes, $motDePasse)
     {
         $comptes=$comptes->findAll();
         if(sizeof($comptes) != 0)
@@ -49,7 +49,7 @@ abstract class Compte extends Model
         else return null;
     }
 
-    protected function getCompteByPseudo($pseudo, $motDePasse) : \App\Entities\Client | null
+    protected function getCompteByPseudo($pseudo, $motDePasse) 
     {
         
         $comptes = $this->where('identifiant',$pseudo);
@@ -57,7 +57,7 @@ abstract class Compte extends Model
         return $this->getClientByCredentials($comptes, $motDePasse);
     }
 
-    protected function getCompteByEmail($email, $motDePasse) : \App\Entities\Client | null
+    protected function getCompteByEmail($email, $motDePasse)
     {
         
         $comptes = $this->where('email',$email);
@@ -80,7 +80,7 @@ abstract class Compte extends Model
         return $this->find($id);
     }
 
-    protected function saveCompte(\App\Entities\Client $client)
+    protected function saveCompte($client)
     {
         $this->save($client);
     }

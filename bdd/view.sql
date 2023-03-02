@@ -12,7 +12,7 @@ CREATE OR REPLACE VIEW soloImageProduit AS
     SELECT id_prod, lien_image, estinterne FROM _image_prod WHERE _image_prod.num_image IN (SELECT num_image FROM min_image);
 
 CREATE OR REPLACE VIEW moyenneProduit AS
-       SELECT id_prod id,avg(note_prod)::numeric(4,2) as moyenneNote FROM _produit natural join _note  group by id_prod;
+        SELECT id_prod id,avg(note_prod)::numeric(4,2) as moyenneNote FROM _produit natural join _note  group by id_prod;
 
 CREATE OR REPLACE VIEW autre_image AS
     WITH min_image AS (SELECT min(num_image) num_image, id_prod FROM _image_prod  group by id_prod )
@@ -73,6 +73,7 @@ CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_commande varchar) RE
     -PANIER
     -MODÉRATION & COMMENTAIRE
     -RÉDUCTION
+    -VENDEUR
 
 
  */
@@ -99,12 +100,15 @@ CREATE OR REPLACE VIEW client_mail AS
     SELECT num_compte, email from compte_client;
 
 
+
+
+
 --COMMANDE
 CREATE OR REPLACE VIEW commande_list_vendeur AS
     SELECT num_commande,c.num_compte,date_commande,date_arriv, sum(prix_ht*qte_panier) ht, sum(prix_ttc*qte_panier) ttc, retourneEtatLivraison(num_commande) etat FROM _commande c NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod INNER JOIN _vendeur ON _vendeur.num_compte = _produit.num_compte group by num_commande, c.num_compte,date_commande,date_arriv,etat;
 
 CREATE OR REPLACE VIEW commande_list_client AS
-    SELECT num_commande,c.num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod group by num_commande, c.num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
+    SELECT num_commande,c.num_compte,date_commande,date_arriv,round((sum(prix_ttc*qte_panier))::numeric, 2 ) prix_ttc,round((sum(prix_ht*qte_panier))::numeric, 2) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod group by num_commande, c.num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
 
 SELECT num_commande,c.num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod group by num_commande, c.num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
 
@@ -171,3 +175,9 @@ CREATE OR REPLACE VIEW code_reduction AS
 CREATE OR REPLACE VIEW reduc_panier AS SELECT * FROM _reduire;
 
 CREATE OR REPLACE VIEW signalement AS SELECT * FROM _signalement;
+
+
+ --VENDEUR
+CREATE OR REPLACE VIEW vendeur AS
+SELECT num_compte numero, email, pseudo identifiant, mot_de_passe motDePasse, numero_siret, tva_intercommunautaire, texte_presentation, note_vendeur, logo, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, id_adresse
+FROM compte_vendeur INNER JOIN _adresse ON _adresse.id_a = compte_vendeur.id_adresse;

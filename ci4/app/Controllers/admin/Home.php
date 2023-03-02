@@ -335,6 +335,8 @@ class Home extends BaseController
             $data['compA1'] = $vendeur->comp_a1;
             $data['compA2'] = $vendeur->comp_a2;
             $data['erreurs'] = $issues;
+            
+            $data['noteVendeur']=service("cardProduit")->notationEtoile($vendeur->note_vendeur);
 
             return view('admin/profilVendeur.php', $data);
         }

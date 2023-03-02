@@ -15,7 +15,8 @@
     <div class="divCredit divProfil">
         <section class="sectionCredit">
             <form name="formClient" action="<?= current_url() ?>" method="post">
-                <label class="labelRecupMail">Note : <?= $note ?>/5</label>
+                <label class="labelRecupMail noteAvis">Note : <?= $note ?>/5 </label>
+                <div class="noteAvis"><?= $noteVendeur ?></div>
                 <label class="labelRecupMail">Texte de présentation</label>
                 <div class="divInputEtLien">
                     <input type="text" name="txtPres" required="required" value="<?= $txtPres?>" disabled/>

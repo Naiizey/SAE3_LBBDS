@@ -37,8 +37,11 @@
         <main>
             <section class="sectionPresentation">
                 <div class="divVendeur">
-                    <img src="imageProfil" alt="">
-
+                    <img src="https://scontent-cdg4-1.xx.fbcdn.net/v/t39.30808-6/307883833_403081785331651_7799751542654129265_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=CZj3Vs2nH4MAX84WeqF&_nc_ht=scontent-cdg4-1.xx&oh=00_AfDapxWi81SvlzGdlShAQBxqKpqeme6jG0MiiArBEgnj4A&oe=64047352" alt="Profil">
+                    <div class="divNomNote">
+                        <h2>Guy Cotten</h2>
+                        <div class="noteAvis"><?= $cardProduit->notationEtoile(4) ?></div>
+                    </div>
                 </div>
                 <table>
                     <tbody>
@@ -60,15 +63,39 @@
                         </tr>
                         <tr>
                             <th>Contact :</th>
-                            <td>Jaimearnaquer@alizon.net</td>
+                            <td>guy.cotten@alizon.net</td>
                         </tr>
                     </tbody>
                 </table> 
-                <h2>Présentation</h2>
-                <p>Je suis un sociétée <del>très vertueuse</del> et <del>je suis neutre en carbone depuis 1899</del>, en effet on <del>ne</del> peut <del>pas</del> me critiquer car <del>je</del> ne pratique <del>pas</del> l’évasion fiscale. De plus je <del>ne</del> vire <del>jamais</del> des employés alors que je me porte bien économiquement.</p>
+                <h2 class="h2Presentation">Présentation</h2>
+                <!-- <p>Je suis un sociétée <del>très vertueuse</del> et <del>je suis neutre en carbone depuis 1899</del>, en effet on <del>ne</del> peut <del>pas</del> me critiquer car <del>je</del> ne pratique <del>pas</del> l’évasion fiscale. De plus je <del>ne</del> vire <del>jamais</del> des employés alors que je me porte bien économiquement.</p> -->
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut dolores non eum ea accusamus cupiditate voluptates quis sapiente architecto tempora? Debitis sequi dolor iure fugiat voluptas. Accusamus eius reiciendis sapiente!</p>
             </section>   
-
-
+            <section class="sectionProduits">
+                <div class="divUnProduit">
+                    <img src="https://img.cuisineaz.com/660x660/2015/01/29/i113699-photo-de-crepe-facile.webp" alt="Produit">
+                    <div class="divNomDescription">
+                        <h2>Crêpes</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, ea incidunt? Distinctio nulla placeat itaque sint non reiciendis, aperiam, minima debitis libero velit minus maiores quae officia ex.</p>
+                    </div>
+                    <div class="divPrix">
+                        <p>80€ HT</p>
+                        <p>90€ TTC</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="divUnProduit">
+                    <img src="https://img.cuisineaz.com/660x660/2015/01/29/i113699-photo-de-crepe-facile.webp" alt="Produit">
+                    <div class="divNomDescription">
+                        <h2>Crêpes</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, ea incidunt? Distinctio nulla placeat itaque sint non reiciendis, aperiam, minima debitis libero velit minus maiores quae officia ex.</p>
+                    </div>
+                    <div class="divPrix">
+                        <p>80€ HT</p>
+                        <p>90€ TTC</p>
+                    </div>
+                </div>
+            </section>
         </main>
     </body>
 </html>

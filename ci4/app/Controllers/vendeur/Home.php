@@ -223,6 +223,7 @@ class Home extends BaseController
     }
 
     public function glossaire() {
-        return view("vendeur/glossaire.php");
+        $data['cardProduit']=service("cardProduit");
+        return view("vendeur/glossaire.php", $data);
     }
 }

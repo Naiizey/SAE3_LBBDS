@@ -159,6 +159,8 @@ $routes->post('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur'])
 
 $routes->get('vendeur/connexion','vendeur\Home::connexion');
 
+$routes->get('vendeur/glossaire', 'vendeur\Home::glossaire');
+
 ##param uri (:any) et dans methode /$1
 
 /*

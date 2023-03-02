@@ -221,4 +221,8 @@ class Home extends BaseController
 
         return view('vendeur/connexion.php', $data);
     }
+
+    public function glossaire() {
+        return view("vendeur/glossaire.php");
+    }
 }

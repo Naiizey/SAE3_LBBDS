@@ -154,6 +154,8 @@ $routes->get('vendeur/commandesCli/detail/(:alphanum)','vendeur\Home::detail/$1/
 
 $routes->get('vendeur/connexion','vendeur\Home::connexion');
 
+$routes->get('/vendeur/catalogue', 'vendeur\Home::catalogue');
+
 ##param uri (:any) et dans methode /$1
 
 /*

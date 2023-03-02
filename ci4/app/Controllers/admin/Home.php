@@ -283,58 +283,65 @@ class Home extends BaseController
             $issues = [];
             $vendeur = $modelVendeur->getVendeurById($numVendeur);
 
-            //Valeurs par défaut
-            $data['motDePasse'] = "motDePassemotDePasse";
-            $data['confirmezMotDePasse'] = "";
-            $data['nouveauMotDePasse'] = "";
-
-            //On cache par défaut les champs supplémentaires pour modifier le mdp
-            $data['classCacheDiv'] = "cacheModifMdp";
-            $data['disableInput'] = "disabled";
-            $data['requireInput'] = "";
-
-            //Si l'utilisateur a cherché à modifier des informations
-            if (!empty($post)) 
+            if ($vendeur == null) 
             {
-                //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
-                if (!isset($post['motDePasse'])) 
-                {
-                    $post['motDePasse'] = "motDePassemotDePasse";
-                }
-
-                $auth = service('authentification');
-                $user=$client;
-                $user->fill($post);
-                $issues=$auth->modifProfilClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
-
-                if (!empty($issues))
-                {
-                    //En cas d'erreur(s), on pré-remplit les champs avec les données déjà renseignées
-                    $data['motDePasse'] = $post['motDePasse'];
-                    $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
-                    $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
-                }
-                else
-                {
-                    return redirect()->to("/admin/profil/vendeur/" . $numClient);
-                }
+                throw new \Exception("Cet identifiant ne correspond à aucun compte", 404);
             }
+            else
+            {
+                //Valeurs par défaut
+                $data['motDePasse'] = "motDePassemotDePasse";
+                $data['confirmezMotDePasse'] = "";
+                $data['nouveauMotDePasse'] = "";
 
-            //Pré-remplissage des champs avec les données de la base
-            $data['identifiant'] = $vendeur->identifiant;
-            $data['txtPres'] = $vendeur->texte_presentation;
-            $data['logo'] = $vendeur->logo;
-            $data['note'] = $vendeur->note_vendeur;
-            $data['email'] = $vendeur->email;
-            $data['siret'] = $vendeur->numero_siret;
-            $data['tvaIntraCom'] = $vendeur->tva_intercommunautaire;
-            $data['numRue'] = $vendeur->numero_rue;
-            $data['nomRue'] = $vendeur->nom_rue;
-            $data['ville'] = $vendeur->ville;
-            $data['codePostal'] = $vendeur->code_postal;
-            $data['compA1'] = $vendeur->comp_a1;
-            $data['compA2'] = $vendeur->comp_a2;
-            $data['erreurs'] = $issues;
+                //On cache par défaut les champs supplémentaires pour modifier le mdp
+                $data['classCacheDiv'] = "cacheModifMdp";
+                $data['disableInput'] = "disabled";
+                $data['requireInput'] = "";
+
+                //Si l'utilisateur a cherché à modifier des informations
+                if (!empty($post)) 
+                {
+                    //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
+                    if (!isset($post['motDePasse'])) 
+                    {
+                        $post['motDePasse'] = "motDePassemotDePasse";
+                    }
+
+                    $auth = service('authentification');
+                    $user=$client;
+                    $user->fill($post);
+                    $issues=$auth->modifProfilClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
+
+                    if (!empty($issues))
+                    {
+                        //En cas d'erreur(s), on pré-remplit les champs avec les données déjà renseignées
+                        $data['motDePasse'] = $post['motDePasse'];
+                        $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
+                        $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
+                    }
+                    else
+                    {
+                        return redirect()->to("/admin/profil/vendeur/" . $numClient);
+                    }
+                }
+
+                //Pré-remplissage des champs avec les données de la base
+                $data['identifiant'] = $vendeur->identifiant;
+                $data['txtPres'] = $vendeur->texte_presentation;
+                $data['logo'] = $vendeur->logo;
+                $data['note'] = $vendeur->note_vendeur;
+                $data['email'] = $vendeur->email;
+                $data['siret'] = $vendeur->numero_siret;
+                $data['tvaIntraCom'] = $vendeur->tva_intercommunautaire;
+                $data['numRue'] = $vendeur->numero_rue;
+                $data['nomRue'] = $vendeur->nom_rue;
+                $data['ville'] = $vendeur->ville;
+                $data['codePostal'] = $vendeur->code_postal;
+                $data['compA1'] = $vendeur->comp_a1;
+                $data['compA2'] = $vendeur->comp_a2;
+                $data['erreurs'] = $issues;
+            }
 
             return view('admin/profilVendeur.php', $data);
         }

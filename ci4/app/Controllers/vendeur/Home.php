@@ -100,7 +100,7 @@ class Home extends BaseController
         $modelVendeur = model("\App\Models\Vendeur");
         $post=$this->request->getPost();
         
-        $numClient = session()->get("numero");
+        $numVendeur = session()->get("numero_vendeur");
         $data['numVendeur'] = $numVendeur;
 
         $issues = [];
@@ -156,23 +156,23 @@ class Home extends BaseController
             {
                 return redirect()->to("/vendeur/profil");
             }
-        }
 
-        //Pré-remplissage des champs avec les données de la base
-        $data['identifiant'] = $vendeur->identifiant;
-        $data['txtPres'] = $vendeur->texte_presentation;
-        $data['logo'] = $vendeur->logo;
-        $data['note'] = $vendeur->note_vendeur;
-        $data['email'] = $vendeur->email;
-        $data['siret'] = $vendeur->numero_siret;
-        $data['tvaIntraCom'] = $vendeur->tva_intercommunautaire;
-        $data['numRue'] = $vendeur->numero_rue;
-        $data['nomRue'] = $vendeur->nom_rue;
-        $data['ville'] = $vendeur->ville;
-        $data['codePostal'] = $vendeur->code_postal;
-        $data['compA1'] = $vendeur->comp_a1;
-        $data['compA2'] = $vendeur->comp_a2;
-        $data['erreurs'] = $issues;
+            //Pré-remplissage des champs avec les données de la base
+            $data['identifiant'] = $vendeur->identifiant;
+            $data['txtPres'] = $vendeur->texte_presentation;
+            $data['logo'] = $vendeur->logo;
+            $data['note'] = $vendeur->note_vendeur;
+            $data['email'] = $vendeur->email;
+            $data['siret'] = $vendeur->numero_siret;
+            $data['tvaIntraCom'] = $vendeur->tva_intercommunautaire;
+            $data['numRue'] = $vendeur->numero_rue;
+            $data['nomRue'] = $vendeur->nom_rue;
+            $data['ville'] = $vendeur->ville;
+            $data['codePostal'] = $vendeur->code_postal;
+            $data['compA1'] = $vendeur->comp_a1;
+            $data['compA2'] = $vendeur->comp_a2;
+            $data['erreurs'] = $issues;
+        }
 
         return view('vendeur/profil.php', $data);
     }

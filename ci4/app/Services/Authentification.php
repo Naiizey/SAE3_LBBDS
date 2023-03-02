@@ -73,10 +73,7 @@ class Authentification
         if (empty($errors))
         {
             $session = session();
-            $session->set('numero',$user->numero);
-            $session->set('nom',$user->nom);
-            $session->set('identifiant',$user->identifiant);
-            $session->set('motDePasse',$user->motDePasse);
+            $session->set('numero_vendeur',$user->numero);
             $session->set("just_connectee",True);
         }
 

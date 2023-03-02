@@ -730,23 +730,23 @@ function lstAvisSignalements() {
 */
 
 function lstClients() {
-    // Récupération de toutes les lignes de la liste des clients
+    //Récupération de toutes les lignes de la liste des clients
     var lignes = document.getElementsByClassName("lignesClients");
-    // Récupération de tous les numéros de clients
+    //Récupération de tous les numéros de clients
     var numClients = document.getElementsByClassName("numClients");
-    // Récupération de tous les boutons de la liste des clients
+    //Récupération de tous les boutons de la liste des clients
     var buttons = document.getElementsByClassName("buttonSanction");
 
     for (let numLigne = 0; numLigne < lignes.length; numLigne++) {
         var clientA = numClients.item(numLigne).textContent;
         lignes.item(numLigne).clientA = clientA;
-        // Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
+        //Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du client récupéré juste avant
         lignes.item(numLigne).addEventListener("click", liensLstClients);
         let buttonA = buttons.item(numLigne);
-        // Ajout au bouton actuel du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
+        //Ajout au bouton actuel du parcours, d'un lien vers l'alerte de sanctions du client récupéré juste avant
         if (bannir) {
             buttonA.addEventListener("click", () => {
-                // supprime le lien de la ligne, pour ne pas cliquer dessus à la place du bouton
+                //Supprime le lien de la ligne, pour ne pas cliquer dessus à la place du bouton
                 lignes
                     .item(numLigne)
                     .removeEventListener("click", liensLstClients);
@@ -780,15 +780,15 @@ function lstClients() {
         }
     }
 
-    // fonction qui met le lien vers l'espace du client de la ligne
+    //Fonction qui met le lien vers le profil du client de la ligne
     function liensLstClients(event) {
         event.cancelBubble = true;
         window.location.assign(
-            `${base_url}/admin/profil/${event.currentTarget.clientA}`
+            `${base_url}/admin/profil/client/${event.currentTarget.clientA}`
         );
     }
 
-    // fonction qui affiche la div de choix de sanctions
+    //Fonction qui affiche la div de choix de sanctions
     function afficherSanctions() {
         let sur_alerte = document.getElementsByClassName(
             "sur-alerteSanctions"
@@ -801,7 +801,7 @@ function lstClients() {
         }
     }
 
-    // fonction qui cache la div de choix de sanctions
+    //Fonction qui cache la div de choix de sanctions
     function cacherSanctions() {
         let sur_alerte = document.getElementsByClassName("sur-alerte")[0];
         let page = document.querySelectorAll("main, header, footer");
@@ -812,7 +812,7 @@ function lstClients() {
         }
     }
 
-    // fonction qui affiche la div pour bannir temporairement un client
+    //Fonction qui affiche la div pour bannir temporairement un client
     function afficherTimeout(clientA) {
         document.getElementById("numClient").value = clientA;
         document.getElementsByClassName(
@@ -832,7 +832,7 @@ function lstClients() {
             .addEventListener("click", cacherTimeout);
     }
 
-    // fonction qui cache la div pour bannir temporairement un client
+    //Fonction qui cache la div pour bannir temporairement un client
     function cacherTimeout() {
         let sur_alerteTimeout =
             document.getElementsByClassName("sur-alerteTimeout")[0];
@@ -857,20 +857,21 @@ function lstClients() {
 ┃                         Liens aux lignes de lstVendeurs                             ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-function lstVendeurs() {
-    //Récupération de toutes les lignes de la liste des signalements
+function lstVendeurs() 
+{
+    //Récupération de toutes les lignes de la liste des vendeurs
     var lignes = document.getElementsByClassName("lignesVendeurs");
 
-    //Récupération de tous les numéros de produit associés au signalement et donc à l'avis
+    //Récupération de tous les numéros de vendeurs
     var numVendeur = document.getElementsByClassName("numVendeur");
 
     for (let numLigne = 0; numLigne < lignes.length; numLigne++) {
         let ligneA = lignes.item(numLigne);
-        let idVendeur = numProduit.item(numLigne).textContent;
+        let idVendeur = numVendeur.item(numLigne).textContent;
 
-        //Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du produit associé au signalement (ancre avis pour accéder à l'avis directement)
+        //Ajout à la ligne actuelle du parcours, d'un lien vers la page de détail du vendeur
         ligneA.addEventListener("click", () => {
-            window.location.href = `${base_url}/admin/vendeurs/${idVendeur}`;
+            window.location.href = `${base_url}/admin/profil/vendeur/${idVendeur}`;
         });
     }
 }
@@ -927,7 +928,7 @@ function cgu() {
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                  Espace Client                                  ┃
+┃                                       Profil                                    ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 function profilCli(role) {

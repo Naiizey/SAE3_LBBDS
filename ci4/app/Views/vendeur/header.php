@@ -86,9 +86,9 @@
                         include(dirname(__DIR__,3)."/public/images/header/profil.svg");
                     } ?>
                     </a>
-                    <?php if (session()->has("numero")): ?>
+                    <?php if (session()->has("numero_vendeur")): ?>
                         <div class="divHoverConnexion divConnected">
-                            <p class="pNom">Bonjour <?= (session()->get("nom")) ?></p>
+                            <p class="pNom">Bonjour <?= (session()->get("identifiant")) ?></p>
                             <a href="<?= base_url()."/vendeur/profil"?>"><p>Mon profil</p></a>
                             <a href="<?= base_url()."/vendeur/commandes"?>"><p>Mes commandes</p></a>
                             <a href="<?= base_url()."/admin/destroy"?>"><p>Se déconnecter</p></a>

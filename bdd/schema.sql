@@ -12,8 +12,6 @@ TODO: Contraintes current_panier(voir UML) à revoir (mineur)
 -                                                            -
 --------------------------------------------------------------*/
 
-
-
 CREATE TABLE _tva
 (
     cat_tva INT PRIMARY KEY,
@@ -36,13 +34,11 @@ CREATE TABLE _sous_categorie(
     CONSTRAINT _sous_categorie_pk PRIMARY KEY (code_sous_cat)
 );
 
-
-
 CREATE TABLE _compte
 (
     num_compte SERIAL PRIMARY KEY,
     --code_tarif_liv INTEGER NOT NULL,
-    pseudo VARCHAR(30) NOT NULL,
+    pseudo VARCHAR(30) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     mot_de_passe VARCHAR(60) NOT NULL
 );
@@ -108,8 +104,6 @@ CREATE TABLE _recevoir_facture(
     CONSTRAINT  fk_recevoir_commande_adresse FOREIGN KEY (id_adresse_fact) REFERENCES _adresse_facturation(id_adresse_fact)
 );
 
-
-
 CREATE TABLE _panier
 (
     num_panier SERIAL PRIMARY KEY
@@ -121,16 +115,12 @@ CREATE TABLE _panier_client
     num_compte INT NOT NULL UNIQUE
 );
 
-
-
 CREATE TABLE _panier_visiteur
 (
     num_panier INT NOT NULL,
     date_suppression DATE NOT NULL,
     token_cookie VARCHAR(60) NOT NULL
 );
-
-
 
 CREATE TABLE _commande
 (
@@ -146,8 +136,6 @@ CREATE TABLE _commande
     id_reduction INT --reduction
 
 ) ;
-
-
 
 CREATE TABLE _produit
 (
@@ -167,7 +155,6 @@ CREATE TABLE _produit
     num_compte INTEGER NOT NULL,
     CONSTRAINT produit_vendeur_fk FOREIGN KEY (num_compte) REFERENCES _vendeur(num_compte)
 );
-
 
 CREATE TABLE _avoirs
 (
@@ -251,7 +238,6 @@ CREATE TABLE _image_prod(
 
 
 );
-
 
 /* -----------------------------------------------------------
 -                  Classes association                        -

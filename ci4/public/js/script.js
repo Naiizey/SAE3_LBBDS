@@ -1298,12 +1298,13 @@ const filterUpdate = function (
         try {
             const md = await fetch(
                 base_url +
-                    "/produits/page/" +
-                    (replace ? 1 : self.currPage) +
-                    champsGetF +
-                    "&" +
-                    champsGetT
+                "/produits/page/" +
+                (replace ? 1 : self.currPage) +
+                champsGetF +
+                "&" +
+                champsGetT
             );
+            
             const result = await md.json();
             console.log(md);
             //vérifie si la réponse n'est pas une erreur
@@ -1334,6 +1335,18 @@ const filterUpdate = function (
                 "Filtres",
                 champsGetF + "&" + champsGetT
             );
+            if(window.location.href.toString().includes("vendeur")){
+                let svgs = document.getElementsByClassName("checkmark");
+                for(let svg of svgs){
+                    svg.style.display = "block";
+                }
+            }
+            else{
+                let svgs = document.getElementsByClassName("cart");
+                for(let svg of svgs){
+                    svg.style.display = "block";
+                }
+            }
         } catch (e) {
             //Les erreurs 404 ne passent pas ici, ce sont les erreurs lié à la fonction et au réseau qui sont catch ici
             console.log("Oups !, quelque chose s'est mal passé...");
@@ -1391,6 +1404,21 @@ function changeOnglet() {
                 onglets[(id + 1) % 2].classList.remove("onglet-selectionnee");
             }
         });
+    }
+}
+
+window.onload = function addSvg(){
+    if(window.location.href.toString().includes("vendeur")){
+        let svgs = document.getElementsByClassName("checkmark");
+        for(let svg of svgs){
+            svg.style.display = "block";
+        }
+    }
+    else{ 
+        let svgs = document.getElementsByClassName("cart");
+        for(let svg of svgs){
+            svg.style.display = "block";
+        }
     }
 }
 

@@ -2923,6 +2923,10 @@ div.image-card{
     width: 100%;
 }
 
+.cart, .checkmark{
+    display: none;
+}
+
 @media screen and (max-width: 480px){
     .card-produit{
         width: 10rem;

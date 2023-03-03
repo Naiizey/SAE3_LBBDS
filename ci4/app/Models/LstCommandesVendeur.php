@@ -21,7 +21,7 @@ class LstCommandesVendeur extends Model
 
     protected $useAutoIncrement = false;
 
-    protected $returnType     = CommandeVend::class;
+    protected $returnType     = CommandeCli::class;
     protected $useSoftDeletes = false;
 
     

@@ -45,11 +45,13 @@ class Services extends BaseService
       return new \App\Services\Feedback();
     }
 
-    public static function socketConnect($getShared = true)
+    public static function lbbdp($getShared = true)
      {
+      
          if ($getShared) {
-             return static::getSharedInstance('socketConnect');
+             return static::getSharedInstance('lbbdp');
          }
-              return new \App\Services\SocketConnect();
+         
+          return new \App\Services\SessionLBBDP('153','39715c8f486b05c362dd45fd2872dc03');
      }
 }

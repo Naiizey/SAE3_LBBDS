@@ -424,14 +424,7 @@ class Home extends BaseController
             }
             else
             {
-                if ($role == "admin")
-                {
-                    return redirect()->to("/admin/profil/" . $numClient);
-                }
-                else
-                {
-                    return redirect()->to("/profil");
-                }
+                return redirect()->to("/profil");
             }
         }
 

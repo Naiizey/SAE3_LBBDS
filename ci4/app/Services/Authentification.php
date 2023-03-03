@@ -53,11 +53,11 @@ class Authentification
         if(!empty($entree))
         {
             $vendeurModel = model("\App\Models\Vendeur");
-            $user = $vendeurModel->getVendeurByIdentifiant($entree -> identifiant,$entree -> motDePasse);
+            $user = $vendeurModel->getVendeurByPseudo($entree -> identifiant, $entree -> motDePasse);
             
             if($user == null) 
             {
-                $user = $vendeurModel->getVendeurByEmail($entree -> identifiant,$entree -> motDePasse);
+                $user = $vendeurModel->getVendeurByEmail($entree -> identifiant, $entree -> motDePasse);
             }
             if($user == null)
             {
@@ -73,10 +73,7 @@ class Authentification
         if (empty($errors))
         {
             $session = session();
-            $session->set('numero',$user->numero);
-            $session->set('nom',$user->nom);
-            $session->set('identifiant',$user->identifiant);
-            $session->set('motDePasse',$user->motDePasse);
+            $session->set('numero_vendeur',$user->numero);
             $session->set("just_connectee",True);
         }
 
@@ -219,6 +216,14 @@ class Authentification
             {
                 $errors[2]= "50 caractères maximum pour le nom (" . strlen($entree->prenom) . " actuellement) et/ou prénom (" . strlen($entree->nom) . " actuellement)";
             }
+            if (strlen($entree->identifiant) > 30 )
+            {
+                $errors[9]="30 caractères maximum pour le pseudo (" .strlen($entree->pseudo) . " actuellement)";
+            } 
+            if (!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) || strlen($entree->email) > 255) 
+            {
+                $errors[10]="255 caractères maximum pour l'email et caractère spéciaux interdits";
+            }
             if(strlen($entree->pseudo) > 30)
             {
                 $errors[8]="30 caractères maximum pour le pseudo (" .strlen($entree->pseudo) . " actuellement)";
@@ -267,6 +272,25 @@ class Authentification
                     {
                         $errors[5]="Le mot de passe doit faire plus de 12 caractère et doit contenir au moins une majuscule, une minuscule et un chiffre";
                     }
+                }
+            }
+            //Si l'utilisateur a cherché à modifier le pseudo (qu'il est différent de celui de la base de données)
+            if ($compteModel->find($entree -> numero)->pseudo != $entree->pseudo)
+            {
+                //Alors on vérifie si un autre utilisateur n'a pas le même pseudo
+                if ($compteModel->doesPseudoExists($entree->pseudo))
+                {
+                    $errors[12]="Un utilisateur existe déjà avec ce pseudo";
+                }
+            }
+
+            //Si l'utilisateur a cherché à modifier l'email (qu'il est différent de celui de la base de données)
+            if ($compteModel->find($entree -> numero)->email != $entree->email)
+            {
+                //Alors on vérifie si un autre utilisateur n'a pas le même email
+                if ($compteModel->doesEmailExists($entree->email))
+                {
+                    $errors[11]="Un utilisateur existe déjà avec cette adresse mail";
                 }
             }
         }

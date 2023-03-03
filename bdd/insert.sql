@@ -11,7 +11,7 @@ INSERT INTO _compte (pseudo, email, mot_de_passe) VALUES ( 'test', 'test@gmail.c
 INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('nassima_illoutchine', 'nassima@gmail.com', 'test152687');
 INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('taniamoigne666999', 'temoigne@gmail.com', 'test152687');
 
-INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('COBREC_0', 'cobrec@alizon.net', 'motDePasseComplexe7809');
+INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('COBREC_0', 'cobrec@alizon.net', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
 
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (1,'MonMDPcest', 'NEk5aHqcPYz3Ff5');
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (2,'toast', 'deburn');

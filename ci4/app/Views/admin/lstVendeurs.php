@@ -7,6 +7,7 @@
                         <tr>
                             <th>N° compte</th>
                             <th>Identifiant</th>
+                            <th>Email</th>
                             <th>Supprimer</th>
                         </tr>
                     </thead>
@@ -15,6 +16,7 @@
                             <tr class='lignesVendeurs'>
                                 <td class='numVendeur'><?= $vendeur->numero ?></td>
                                 <td><?= $vendeur->identifiant ?></td>
+                                <td><?= $vendeur->email ?></td>
                                 <td>
                                     <a href="<?= base_url() . "/admin/vendeurs/" . $vendeur->numero ?>">
                                         <svg class="svgSupr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">

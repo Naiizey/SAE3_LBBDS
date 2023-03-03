@@ -149,4 +149,5 @@
     );
     loadFiltersTris();
     changeOnglet();
+    addSvg();
 </script>

@@ -16,17 +16,6 @@ class Home extends BaseController
         //Permets d'éviter le bug de redirection.
         session();
 
-        //Affichage de la quantité panier
-        helper('cookie');
-
-        if (session()->has("numero")) {
-            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
-        } elseif (has_cookie("token_panier")) {
-            $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
-        } else {
-            $GLOBALS["quant"] = 0;
-        }
-
         //Au cas où __ci_previous_url ne marcherait plus...: session()->set("previous_url",current_url());
         $this->feedback=service("feedback");
         if (session()->has("just_connectee") && session()->get("just_connectee")==true) {
@@ -55,14 +44,6 @@ class Home extends BaseController
         $data['cardProduit']=service("cardProduit");
         $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
 
-        if (session()->has("numero")) {
-            $data['quant'] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
-        } elseif (has_cookie("token_panier")) {
-            $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
-        } else {
-            $data['quant'] = 0;
-        }
-
         return view('client/index.php', $data);
     }
 
@@ -84,9 +65,9 @@ class Home extends BaseController
 
             if (!isset($data['infosCommande'][0]->num_commande)) {
                 throw new Exception("Le numéro de commande renseigné n'existe pas.", 404);
-            } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
-                throw new Exception("Cette commande n'est pas associée à votre compte.", 404);
-            } else {
+            } 
+            else 
+            {
                 $data['num_compte'] = $data['infosCommande'][0]->num_compte;
             }
             $data['adresse']=model("\App\Models\AdresseLivraison")->getByCommande($data['numCommande']);
@@ -101,7 +82,7 @@ class Home extends BaseController
         $modelVendeur = model("\App\Models\Vendeur");
         $post=$this->request->getPost();
         
-        $numVendeur = session()->get("numero_vendeur");
+        $numVendeur = session()->get("numeroVendeur");
         $data['numVendeur'] = $numVendeur;
 
         $issues = [];

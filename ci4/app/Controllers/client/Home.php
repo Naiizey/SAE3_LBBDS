@@ -19,8 +19,8 @@ class Home extends BaseController
         //Affichage de la quantité panier
         helper('cookie');
 
-        if (session()->has("numero")) {
-            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+        if (session()->has("numeroClient")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numeroClient"));
         } elseif (has_cookie("token_panier")) {
             $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
         } else {
@@ -57,8 +57,8 @@ class Home extends BaseController
         $data['cardProduit']=service("cardProduit");
         $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
 
-        if (session()->has("numero")) {
-            $data['quant'] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+        if (session()->has("numeroClient")) {
+            $data['quant'] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numeroClient"));
         } elseif (has_cookie("token_panier")) {
             $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
         } else {
@@ -109,7 +109,6 @@ class Home extends BaseController
         if (isset($_POST['rememberMe'])) {
             dd($_POST["rememberMe"]);
         }
-
         
         //set_cookie($cookie);
         return view('client/connexion.php', $data);
@@ -189,8 +188,8 @@ class Home extends BaseController
         }
 
         //Get quantité du panier
-        if (session()->has('numero')) {
-            $data["quantitePanier"]=model("\App\Models\ProduitPanierCompteModel")->getQuantiteProduitByIdProd($idProduit, session()->get('numero'));
+        if (session()->has("numeroClient")) {
+            $data["quantitePanier"]=model("\App\Models\ProduitPanierCompteModel")->getQuantiteProduitByIdProd($idProduit, session()->get("numeroClient"));
         } elseif (has_cookie('token_panier')) {
             $data["quantitePanier"]=model("\App\Models\ProduitPanierVisiteurModel")->getQuantiteProduitByIdProd($idProduit, get_cookie('token_panier'));
         }
@@ -212,8 +211,8 @@ class Home extends BaseController
         $post=$this->request->getPost();
         $data["erreurs"] = [];
         $commandesCli = model("\App\Models\LstCommandesCli")->getCompteCommandes();
-        $articles = model("\App\Models\DetailsCommande")->getArticles(session()->get("numero"));
-        $client = model("\App\Models\Client")->getClientById(session()->get("numero"));
+        $articles = model("\App\Models\DetailsCommande")->getArticles(session()->get("numeroClient"));
+        $client = model("\App\Models\Client")->getClientById(session()->get("numeroClient"));
 
         if (!empty($post)) 
         {
@@ -224,7 +223,7 @@ class Home extends BaseController
                 $signal = new \App\Entities\Signalement();
                 $signal->raison = $post['raison'];
                 $signal->num_avis = $post['num_avis'];
-                $signal->num_compte = session()->get("numero");
+                $signal->num_compte = session()->get("numeroClient");
                 model("\App\Models\LstSignalements")->save($signal);
 
                 session()->set("just_signal", true);
@@ -234,7 +233,7 @@ class Home extends BaseController
             {
                 //Vérifie que la session (donc l'utilisateur) n'a pas déjà commenté cet article.
                 foreach ($data['avis'] as $unAvis) {
-                    if (session()->get("numero") == $unAvis->num_compte) {
+                    if (session()->get("numeroClient") == $unAvis->num_compte) {
                         $data["erreurs"][0] = "Vous avez déjà commenté ce produit.";
                     }
                 }
@@ -260,7 +259,7 @@ class Home extends BaseController
                     $avis = new \App\Entities\Avis();
                     $avis->contenu_av = $post['contenuAvis'];
                     $avis->id_prod = $idProduit;
-                    $avis->num_compte = session()->get("numero");
+                    $avis->num_compte = session()->get("numeroClient");
                     $avis->note_prod = $post['noteAvis'];
                     $avis->pseudo = $client->identifiant;
                     model("\App\Models\LstAvis")->enregAvis($avis);
@@ -359,7 +358,7 @@ class Home extends BaseController
         $modelClient = model("\App\Models\Client");
         $post=$this->request->getPost();
 
-        $numClient = session()->get("numero");
+        $numClient = session()->get("numeroClient");
         $data['numClient'] = $numClient;
 
         $issues = [];
@@ -381,8 +380,8 @@ class Home extends BaseController
         if (!empty($post)) 
         {
             helper('cookie');
-            if (session()->has("numero")) {
-                $data['quant'] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+            if (session()->has("numeroClient")) {
+                $data['quant'] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numeroClient"));
             } elseif (has_cookie("token_panier")) {
                 $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
             } else {
@@ -433,8 +432,8 @@ class Home extends BaseController
         $data['prenom'] = $client->prenom;
         $data['nom'] = $client->nom;
         $data['email'] = $client->email;
-        $data['adresseFact'] = $modelFact->getAdresse(session()->get("numero"));
-        $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
+        $data['adresseFact'] = $modelFact->getAdresse(session()->get("numeroClient"));
+        $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numeroClient"));
         $data['erreurs'] = $issues;
 
         return view('client/profil.php', $data);
@@ -447,8 +446,8 @@ class Home extends BaseController
         $data["controller"] = 'Facture';
 
         //Partie copiée de infoLivraison:
-        if(session()->has("numero")){
-            $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
+        if(session()->has("numeroClient")){
+            $client=model("\App\Models\Client")->getClientById(session()->get("numeroClient"));
         } else throw new Exception("Vous n'êtes pas connecté",401);
 
         $model = model("\App\Models\AdresseFacturation");
@@ -507,12 +506,12 @@ class Home extends BaseController
     public function infoLivraison()
     {
         //Assertion Début
-        if (!session()->has("numero")) {
+        if (!session()->has("numeroClient")) {
             throw new Exception("Erreur, vous devez être connecté ", 401);
         }
 
         $model=model("\App\Models\AdresseLivraison");
-        $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
+        $client=model("\App\Models\Client")->getClientById(session()->get("numeroClient"));
         $data["controller"] = "Livraisons";
         $post = $this->request->getPost();
         $adresse = new \App\Entities\Adresse();
@@ -565,8 +564,8 @@ class Home extends BaseController
         $data["controller"]='Paiement';
 
         //Partie copiée de infoLivraison:
-        if(session()->has("numero")){
-            $client=model("\App\Models\Client")->getClientById(session()->get("numero"));
+        if(session()->has("numeroClient")){
+            $client=model("\App\Models\Client")->getClientById(session()->get("numeroClient"));
         } else throw new Exception("Vous n'êtes pas connecté",401);
         
         $post=$this->request->getPost();
@@ -609,7 +608,7 @@ class Home extends BaseController
 
             if (!isset($data['infosCommande'][0]->num_commande)) {
                 throw new Exception("Le numéro de commande renseigné n'existe pas.", 404);
-            } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numero")){
+            } else if (!$estVendeur && $data['infosCommande'][0]->num_compte != session()->get("numeroClient")){
                 throw new Exception("Cette commande n'est pas associée à votre compte.", 404);
             } else {
                 $data['num_compte'] = $data['infosCommande'][0]->num_compte;
@@ -629,7 +628,7 @@ class Home extends BaseController
             $get=$this->request->getGet();
             if(isset($get["Confirmation"]) && $get["Confirmation"]==1)
             {
-                model("\App\Models\LstCommandesCli")->creerCommande(session()->get("numero"),session()->get("adresse_livraison"));
+                model("\App\Models\LstCommandesCli")->creerCommande(session()->get("numeroClient"),session()->get("adresse_livraison"));
                 session()->remove("adresse_livraison");
                 session()->remove("adresse_facturation");
                 return redirect()->to("/commandes");
@@ -638,8 +637,8 @@ class Home extends BaseController
             {
                 $data["adresseLivr"]=model("\App\Models\AdresseLivraison")->find(session()->get("adresse_livraison"));
                 $data["adresseFact"]=model("\App\Models\AdresseFacturation")->find(session()->get("adresse_facturation"));
-                $data['produits'] = model("\App\Models\ProduitPanierCompteModel")->getPanier(session()->get("numero"));
-                $client= model("\App\Models\Client")->find(session()->get("numero"));
+                $data['produits'] = model("\App\Models\ProduitPanierCompteModel")->getPanier(session()->get("numeroClient"));
+                $client= model("\App\Models\Client")->find(session()->get("numeroClient"));
                 $panier=model("\App\Models\ReducPanier")->getReducByPanier($client->current_panier);
                 if(!empty($panier)){
                     $codeReduc = model("\App\Models\CodeReduction")->getCodeReducById($panier[0]->id_reduction)[0];
@@ -665,12 +664,12 @@ class Home extends BaseController
 
     //Fonction qui vérifie si le compte est banni
     public function verifTimeout(){
-        if (session()->get("numero")!=NULL) {
-            if(model("\App\Models\SanctionTemp")->isTimeout(session()->get("numero"))){
-                $num=session()->get("numero");
+        if (session()->get("numeroClient")!=NULL) {
+            if(model("\App\Models\SanctionTemp")->isTimeout(session()->get("numeroClient"))){
+                $num=session()->get("numeroClient");
                 $session=session();
-                $session->remove("numero");
-                $session->remove("nom");
+                $session->remove("numeroClient");
+                $session->remove("nomClient");
                 $session->remove("ignorer");
                 $session->remove("adresse_facturation");
                 $session->remove("adresse_livraison");

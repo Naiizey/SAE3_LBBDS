@@ -15,7 +15,7 @@ class AuthVendeurFilter implements FilterInterface {
     public function before(RequestInterface $request, $arguments = null)
     {
         helper('cookie');
-        if (!session()->has("numero_vendeur")) {
+        if (!session()->has("numeroVendeur")) {
             return redirect()->to("/vendeur/connexion");
         }
     }

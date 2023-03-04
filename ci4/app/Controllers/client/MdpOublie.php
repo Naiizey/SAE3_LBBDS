@@ -14,8 +14,8 @@ class MdpOublie extends BaseController
     public function __construct()
     {
         helper('cookie');
-        if (session()->has("numero")) {
-            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+        if (session()->has("numeroClient")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numeroClient"));
         } else if (has_cookie("token_panier")) {
             $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
         } else {

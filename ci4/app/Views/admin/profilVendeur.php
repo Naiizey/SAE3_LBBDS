@@ -13,10 +13,9 @@
     <img src="<?= $logo ?>">
     <h2>Bonjour <?= $identifiant ?>!</h2>
     <div class="divCredit divProfil">
+        <label class="noteAvis centreNoteProfil"><?= $noteVendeur ?><?= $note ?>/5</label>
         <section class="sectionCredit">
             <form name="formClient" action="<?= current_url() ?>" method="post">
-                <label class="labelRecupMail noteAvis">Note : <?= $note ?>/5 </label>
-                <div class="noteAvis"><?= $noteVendeur ?></div>
                 <label class="labelRecupMail">Texte de présentation</label>
                 <div class="divInputEtLien">
                     <input type="text" name="txtPres" required="required" value="<?= $txtPres?>" disabled/>

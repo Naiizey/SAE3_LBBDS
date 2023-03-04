@@ -19,7 +19,7 @@ CREATE OR REPLACE VIEW autre_image AS
     SELECT num_image,lien_image,id_prod FROM sae3._image_prod WHERE num_image NOT IN (SELECT num_image FROM min_image);
 
 CREATE OR REPLACE VIEW compte_client AS
-    SELECT * FROM _client NATURAL JOIN _compte;
+    SELECT num_compte numero, nom_compte, prenom_compte, pseudo, email, mot_de_passe FROM _client NATURAL JOIN _compte;
 
 CREATE OR REPLACE VIEW compte_vendeur AS
     SELECT * FROM _vendeur NATURAL JOIN _compte;
@@ -94,10 +94,10 @@ CREATE OR REPLACE VIEW adresse_facturation AS
  --CLIENT
 CREATE OR REPLACE VIEW client AS
     WITH trouve_current_panier AS (select max(num_panier) current_panier,num_compte from sae3._panier_client group by num_compte)
-    SELECT num_compte numero, nom_compte nom, prenom_compte prenom, email, pseudo identifiant, mot_de_passe motDePasse, current_panier FROM compte_client NATURAL JOIN trouve_current_panier;
+    SELECT numero, nom_compte nom, prenom_compte prenom, email, pseudo identifiant, mot_de_passe motDePasse, current_panier FROM compte_client NATURAL JOIN trouve_current_panier;
 
 CREATE OR REPLACE VIEW client_mail AS
-    SELECT num_compte, email from compte_client;
+    SELECT numero, email from compte_client;
 
 
 
@@ -163,7 +163,7 @@ CREATE OR REPLACE VIEW produitCSV AS
 --MODÉRATION & COMMENTAIRES
 CREATE OR REPLACE VIEW commentaires AS
     WITH moyenne AS (SELECT id_prod id,avg(note_prod) as moyenneNote FROM _produit natural join _note  group by id_prod)
-    SELECT num_avis, contenu_av, date_av, n.id_note, id_prod, num_compte, note_prod,c.pseudo, moyenneNote moyenne FROM _avis a  natural join _note n natural join compte_client c left join moyenne on n.id_prod = moyenne.id;
+    SELECT num_avis, contenu_av, date_av, n.id_note, id_prod, numero num_compte, note_prod,c.pseudo, moyenneNote moyenne FROM _avis a  natural join _note n natural join compte_client c left join moyenne on n.id_prod = moyenne.id;
 
 CREATE OR REPLACE VIEW sanction_temporaire AS
     SELECT id_sanction, raison, num_compte, date_debut, heure_debut, date_fin, heure_fin FROM _sanction_temporaire NATURAL JOIN _duree;

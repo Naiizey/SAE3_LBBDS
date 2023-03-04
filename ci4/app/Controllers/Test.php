@@ -64,4 +64,10 @@ class Test extends BaseController{
             model("\App\Models\ProduitPanierModel")->delete(1);
             print_r($prods);
         }
+
+        public function test4()
+        {
+            $prods=model("\App\Models\Client")->getClientById(1);
+            d($prods);
+        }
 }

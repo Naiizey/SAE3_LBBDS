@@ -1,6 +1,7 @@
 -- Active: 1655031515408@@127.0.0.1@5432@postgres
 SET SCHEMA 'sae3';
 
+
 /**
   SOUS-VUES & FONCTIONS UTILISÉS DANS LES VUES
 
@@ -22,6 +23,20 @@ CREATE OR REPLACE VIEW compte_client AS
 
 CREATE OR REPLACE VIEW compte_vendeur AS
     SELECT * FROM _vendeur NATURAL JOIN _compte;
+
+CREATE OR REPLACE VIEW produit_global AS
+    SELECT id_prod,
+    intitule_prod,
+    prix_ht,
+    prix_ttc,
+    description_prod,
+    publication_prod,
+    stock_prod,
+    moyenne_note_prod,
+    seuil_alerte_prod,
+    alerte_prod,
+    code_sous_cat
+    FROM _produit;
 
 --FONCTIONS
 CREATE OR REPLACE FUNCTION retourneEtatLivraison(entree_num_commande varchar) RETURNS INT AS
@@ -90,18 +105,20 @@ CREATE OR REPLACE VIEW client_mail AS
 
 --COMMANDE
 CREATE OR REPLACE VIEW commande_list_vendeur AS
-    SELECT num_commande,num_compte,date_commande,date_arriv, sum(prix_ht*qte_panier) ht, sum(prix_ttc*qte_panier) ttc, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _refere_commande NATURAL JOIN _produit group by num_commande, num_compte,date_commande,date_arriv,etat;
+    SELECT num_commande,c.num_compte,date_commande,date_arriv, sum(prix_ht*qte_panier) ht, sum(prix_ttc*qte_panier) ttc, retourneEtatLivraison(num_commande) etat FROM _commande c NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod INNER JOIN _vendeur ON _vendeur.num_compte = _produit.num_compte group by num_commande, c.num_compte,date_commande,date_arriv,etat;
 
 CREATE OR REPLACE VIEW commande_list_client AS
-    SELECT num_commande,num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat FROM _commande  NATURAL JOIN _refere_commande NATURAL JOIN _produit group by num_commande, num_compte,date_commande,date_arriv,etat;
+    SELECT num_commande,c.num_compte,date_commande,date_arriv,round((sum(prix_ttc*qte_panier))::numeric, 2 ) prix_ttc,round((sum(prix_ht*qte_panier))::numeric, 2) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod group by num_commande, c.num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
+
+SELECT num_commande,c.num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod group by num_commande, c.num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
 
 CREATE OR REPLACE VIEW commande_list_produits_client AS
     WITH min_image AS (SELECT min(num_image) num_image, id_prod FROM _image_prod  group by id_prod )
-    SELECT num_commande,id_prod, intitule_prod, lien_image lienImage,description_prod,num_compte,date_commande,date_arriv,round(prix_fixeettc::numeric,2) prix_ttc,round((prix_fixeettc/(1+_tva.taux_tva))::numeric,2) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande) etat FROM _commande NATURAL JOIN _image_prod NATURAL JOIN _refere_commande NATURAL JOIN _produit natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva
+    SELECT num_commande,p.id_prod, intitule_prod, lien_image lienImage,description_prod,c.num_compte,date_commande,date_arriv,round(prix_fixeettc::numeric,2) prix_ttc,round((prix_fixeettc/(1+_tva.taux_tva))::numeric,2) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande), montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction  NATURAL JOIN _image_prod NATURAL JOIN _refere_commande INNER JOIN _produit p ON _refere_commande.id_prod = p.id_prod   natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva --,, etat
     WHERE num_image IN (SELECT num_image FROM min_image);
 
 CREATE OR REPLACE VIEW insert_commande AS
-    SELECT num_commande,num_compte,id_a FROM _commande NATURAL JOIN _panier_client;
+    SELECT num_commande,num_compte,id_a,id_reduction FROM _commande NATURAL JOIN _panier_client;
 
 
 
@@ -128,13 +145,13 @@ CREATE OR REPLACE VIEW sous_categorie AS
 --PANIER
 CREATE OR REPLACE VIEW produit_panier_compte AS
     SELECT concat(id_prod,'£',num_panier) id,id_prod, intitule_prod intitule,stock_prod stock, prix_ht+(prix_ht*taux_tva) prixTTC,prix_ht, lien_image lienImage, description_prod description, qte_panier quantite,num_compte num_client,num_panier current_panier
-    FROM _produit NATURAL JOIN _refere NATURAL JOIN _panier_client  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
+    FROM produit_global NATURAL JOIN _refere NATURAL JOIN _panier_client  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
     NATURAL JOIN soloimageproduit
     where num_panier IN (SELECT max(num_panier) FROM _panier_client group by num_compte)
     ORDER BY id;
 
 CREATE OR REPLACE VIEW produit_panier_visiteur AS
-    SELECT concat(id_prod,'£',num_panier) id,id_prod, intitule_prod intitule,stock_prod stock, prix_ht+(prix_ht*taux_tva) prixTTC,prix_ht, lien_image lienImage, description_prod description, qte_panier quantite,token_cookie,num_panier current_panier FROM _produit NATURAL JOIN _image_prod NATURAL JOIN _refere NATURAL JOIN _panier_visiteur  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
+    SELECT concat(id_prod,'£',num_panier) id,id_prod, intitule_prod intitule,stock_prod stock, prix_ht+(prix_ht*taux_tva) prixTTC,prix_ht, lien_image lienImage, description_prod description, qte_panier quantite,token_cookie,num_panier current_panier FROM produit_global NATURAL JOIN _image_prod NATURAL JOIN _refere NATURAL JOIN _panier_visiteur  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
     NATURAL JOIN soloimageproduit
     ORDER BY id;
 

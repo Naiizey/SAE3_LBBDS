@@ -29,10 +29,6 @@ class TestVendeur extends CIUnitTestCase{
             $vendeur->cryptMotDePasse();
             $model_Vend->saveVendeur($vendeur);
             Fabricator::upCount($model_Vend->table);
-            
-        
-
-           
         }
         
         d(sizeof($model_Vend->findAll()));

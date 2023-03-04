@@ -95,7 +95,11 @@
                         </div>
                         <div class="sous-totaux divSousTotauxDetailCommande">
                             <div>
+                                <?php if ($infosCommande[0]->montant_reduction == 0 && $infosCommande[0]->pourcentage_reduction == 0): ?>
+                                <h2>Totaux :
+                                <?php else: ?>
                                 <h2>Sous-totaux :
+                                <?php endif; ?>
                                     <span class="totalHt">
                                         <?= $infosCommande[0]->prix_ht ?>
                                     </span>€ HT
@@ -105,6 +109,19 @@
                                         <?= $infosCommande[0]->prix_ttc ?>
                                     </span>€ TTC
                                 </h2>
+                                <?php if ($infosCommande[0]->montant_reduction !=0): ?>
+                                <br>
+                                <h2>
+                                    <?="Montant réduction : ".$infosCommande[0]->montant_reduction."€"?>
+                                </h2>
+                                <h2>Prix total : <?= $infosCommande[0]->prix_ttc-$infosCommande[0]->montant_reduction ?>€</h2>
+                                <?php elseif ($infosCommande[0]->pourcentage_reduction != 0): ?>
+                                <br>
+                                <h2>
+                                    <?="Pourcentage réduction : ".$infosCommande[0]->pourcentage_reduction."%"?>
+                                </h2>
+                                <h2>Prix total : <?= $infosCommande[0]->prix_ttc*(1-($infosCommande[0]->pourcentage_reduction/100)) ?>€</h2>
+                                <?php endif ?>
                             </div>
                         </div>
                     </section>
@@ -124,8 +141,6 @@
                             <div class="divDetailLivraison">
                                 <p>Rue : <?= $adresse->numero_rue.' '.$adresse->nom_rue ?></p>
                                 <p>Ville : <?= $adresse->code_postal.' '.$adresse->ville ?></p>
-                                <p>N° de suivi : </p>
-                                <p>Lien du suivi : </p>
                             </div>
                         </div>
                     </div>

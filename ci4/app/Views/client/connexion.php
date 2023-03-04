@@ -1,4 +1,4 @@
-<?php require("header.php"); 
+<?php require("header.php");
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -23,7 +23,8 @@
                         <label>Mot de passe<span class="requis">*</span> : </label>
                         <input type="password" name="motDePasse" required="required" value="<?= $motDePasse?>"/>
                         <div class="divSouvenir">
-                            <input type="checkbox"/>
+                            <input type="checkbox" name="rememberMe"/>
+                            <!-- TODO : ajouter la features, si case cochée -> créer cookie sur le pc client, dans le header, si cookie, connecter -->
                             <label>Se souvenir de moi</label>
                         </div>
                         <?= afficheErreurs($erreurs, 0) . afficheErreurs($erreurs, 1) ?>

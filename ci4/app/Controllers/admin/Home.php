@@ -101,12 +101,14 @@ class Home extends BaseController
             $post=$this->request->getPost();
 
             if (!empty($post)){
-                $sanctions = model("\App\Models\SanctionTemp");
-                if ($sanctions->isTimeout($post["numClient"])) {
-                    $GLOBALS['invalidation'] = $this->feedback->afficheInvalidation("Cet utilisateur est déjà banni !");
-                } else {
-                    $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
-                    $GLOBALS['validation'] = $this->feedback->afficheValidation("L'utilisateur a été banni !");
+                if(isset($post["timeoutClient"])){
+                    $sanctions = model("\App\Models\SanctionTemp");
+                    if ($sanctions->isTimeout($post["numClient"])) {
+                        $GLOBALS['invalidation'] = $this->feedback->afficheInvalidation("Cet utilisateur est déjà banni !");
+                    } else {
+                        $sanctions->ajouterSanction($post["raison"],$post["numClient"],$post["duree"]);
+                        $GLOBALS['validation'] = $this->feedback->afficheValidation("L'utilisateur a été banni !");
+                    }
                 }
             }
         }

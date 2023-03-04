@@ -88,9 +88,8 @@ $routes->get('/catalogue/(:num)', 'client\Home::catalogue/$1');
 
 $routes->get('/test', 'Test::test2');
 
-$routes->get('/commandes', 'client\Home::lstCommandesClient',['filter' => 'connexion']);
-
-$routes->get('/commandes/detail/(:alphanum)','client\Home::detail/$1',['filter' => 'connexion']);//['filter' => 'connexion']
+$routes->get('/commandes', 'client\Home::lstCommandes',['filter' => 'connexion']);
+$routes->get('/commandes/(:alphanum)','client\Home::lstCommandes/$1',['filter' => 'connexion']);
 
 $routes->get('/produits/page/(:num)','client\Produits::getAllProduitSelonPage/$1');
 $routes->options('/produits/page/(:num)','client\Produits::getAllProduitSelonPage/$1');
@@ -151,11 +150,13 @@ $routes->post('/admin/profil/vendeur/(:num)', 'admin\Home::profilVendeur/$1');
 
 $routes->get('/vendeur/import/entetes','vendeur\Import::getentetes',['filter' => 'vendeur']);
 
+$routes->get('/vendeur/import', 'vendeur\Import::index/true');
+$routes->post('/vendeur/import/upload','vendeur\Import::upload');
+
+$routes->get('vendeur/commandes','vendeur\Home::lstCommandes',['filter' => 'vendeur']);
+$routes->get('vendeur/commandes/(:alphanum)','vendeur\Home::lstCommandes/$1',['filter' => 'vendeur']);
 $routes->get('vendeur/import', 'vendeur\Import::index/true',['filter' => 'vendeur']);
 $routes->post('vendeur/import/upload','vendeur\Import::upload',['filter' => 'vendeur']);
-
-$routes->get('vendeur/commandesCli','vendeur\Home::lstCommandesVendeur/true',['filter' => 'vendeur']);
-$routes->get('vendeur/commandesCli/detail/(:alphanum)','vendeur\Home::detail/$1/true',['filter' => 'vendeur']);
 
 $routes->get('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur']);
 $routes->post('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur']);

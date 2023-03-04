@@ -6,6 +6,13 @@ use \App\Entities\CommandeCli as CommandeCli;
 use CodeIgniter\Model;
 use Exception;
 
+/**
+ * Acccès aux commandes réliées à leurs clients
+ * 
+ *  Données:
+ *      * commande: **CR**-- 
+ *      * client: -**R**-- 
+ */
 class LstCommandesCli extends Model
 {
     protected $table      = 'sae3.commande_list_client';
@@ -16,7 +23,7 @@ class LstCommandesCli extends Model
     protected $returnType     = CommandeCli::class;
     protected $useSoftDeletes = false;
     
-    protected $allowedFields = ['num_commande','num_compte','date_commande','date_arriv','prix_ht','prix_ttc','etat'];
+    protected $allowedFields = ['num_commande','num_compte','date_commande','date_arriv','prix_ht','prix_ttc','etat', 'montant_reduction', 'pourcentage_reduction'];
 
     public function getCompteCommandes() : array
     { 

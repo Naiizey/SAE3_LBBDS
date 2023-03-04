@@ -7,10 +7,9 @@ use CodeIgniter\Model;
 
 /** 
  * Model de classe client qui permet de récuperer un client, ainsi qu'insérer et mettre à jour.
- * 
- * 
- * @see TutoCI/CI5_BDD
- * @return \App\Entities\Client
+ *  
+ * Données:
+ *      * client: **CRU**- 
  */
 class Client extends Compte
 {
@@ -48,5 +47,8 @@ class Client extends Compte
         parent::saveCompte($client);
     }
 
-    
+    public function doesEmailExists($email) : bool
+    {
+        return parent::doesEmailExists($email);
+    }
 }

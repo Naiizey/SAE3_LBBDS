@@ -76,12 +76,12 @@
                     </div>
                     <div class="raison">
                         <label>Raison<span class="requis">*</span> : </label>
-                        <textarea rows="3" name="raison" maxlength="50" required></textarea>
+                        <textarea id="raisonBan" rows="3" name="raison" maxlength="50" required></textarea>
                     </div>
                 </div>
                 <div class="alerte-footer"><hr>
                     <div class="espace-interraction">
-                        <button name="timeoutClient" id="Bannir" class="normal-button petit-button rouge">Bannir</button>
+                        <button type="submit" name="timeoutClient" id="Bannir" class="normal-button petit-button rouge">Bannir</button>
                         <button id="fermerTimeout" class="normal-button petit-button blanc">Fermer</button>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-<?php require("header.php"); ?>
+<?php require(dirname(__DIR__) . "/header.php"); ?>
     <main>
         <div class="divLst">
             <?php if(!empty($commandesVend)): ?>
@@ -33,7 +33,7 @@
             <?php endif; ?>
         </div>
     </main>
-<?php require("footer.php");?>
+<?php require(dirname(__DIR__) . "/footer.php"); ?>
 <script>
     lstCommandesVendeur();
 </script>

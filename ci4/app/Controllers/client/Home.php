@@ -388,7 +388,7 @@ class Home extends BaseController
                 $data['quant'] = 0;
             }
 
-            //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
+            //Ce champ ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
             if (!isset($post['motDePasse'])) 
             {
                 $post['motDePasse'] = "motDePassemotDePasse";

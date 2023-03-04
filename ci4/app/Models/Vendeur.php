@@ -25,9 +25,9 @@ class Vendeur extends Compte
 
     protected $allowedFields = ['identifiant','motdepasse','email', 'texte_presentation', 'numero_siret', 'tva_intercommunautaire', 'note_vendeur', 'logo', 'numero_rue', 'nom_rue', 'code_postal', 'ville', 'comp_a1', 'comp_a2'];
 
-    public function getVendeurByPseudo($pseudo, $motDePasse) : \App\Entities\Vendeur | null
+    public function getVendeurByPseudo($identifiant, $motDePasse) : \App\Entities\Vendeur | null
     {
-        $comptes = $this->where('identifiant',$pseudo);
+        $comptes = $this->where('identifiant',$identifiant);
 
         return parent::getCompteByCredentials($comptes, $motDePasse);
     }

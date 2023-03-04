@@ -101,7 +101,7 @@ class Home extends BaseController
         //Si l'utilisateur a cherché à modifier des informations
         if (!empty($post)) 
         {
-            //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
+            //Ce champ ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
             if (!isset($post['motDePasse'])) 
             {
                 $post['motDePasse'] = "motDePassemotDePasse";
@@ -123,9 +123,9 @@ class Home extends BaseController
             }
 
             $auth = service('authentification');
-            $user=$client;
+            $user=$vendeur;
             $user->fill($post);
-            $issues=$auth->modifProfilClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
+            $issues=$auth->modifProfilVendeur($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
 
             if (!empty($issues))
             {
@@ -177,7 +177,7 @@ class Home extends BaseController
             {
                 if (!session()->has("referer_redirection")) 
                 {
-                    return redirect()->to("/");
+                    return redirect()->to("/vendeur/profil");
                 } 
                 else 
                 {

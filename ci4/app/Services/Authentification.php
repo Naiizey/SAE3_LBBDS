@@ -88,7 +88,7 @@ class Authentification
         {
             if($entree->motDePasse == "" || $entree->pseudo == "" || $entree->nom == "" || $entree->prenom == "" || $entree->email == "") 
             {
-                $errors[1]= "Remplissez le(s) champs vide(s)";
+                $errors[1]= "Remplissez le(s) champ(s) vide(s)";
             }
             if(strlen($entree->nom) > 50 || strlen($entree->prenom) > 50)
             {
@@ -151,7 +151,7 @@ class Authentification
         {
             if ($entree->motDePasse == "" || $entree->identifiant == "" || $entree->email == "") 
             {
-                $errors[1]= "Remplissez le(s) champs vide(s)";
+                $errors[1]= "Remplissez le(s) champ(s) vide(s)";
             }
             if (preg_match_all("/^[0-9]{14}$/",$entree->siret) < 1)
             {
@@ -209,19 +209,11 @@ class Authentification
         {
             if($entree->motDePasse == "" || $entree->pseudo == "" || $entree->nom == "" || $entree->prenom == "" || $entree->email == "") 
             {
-                $errors[1]= "Remplissez le(s) champs vide(s)";
+                $errors[1]= "Remplissez le(s) champ(s) vide(s)";
             }
             if(strlen($entree->nom) > 50 || strlen($entree->prenom) > 50)
             {
                 $errors[2]= "50 caractères maximum pour le nom (" . strlen($entree->prenom) . " actuellement) et/ou prénom (" . strlen($entree->nom) . " actuellement)";
-            }
-            if (strlen($entree->identifiant) > 30 )
-            {
-                $errors[9]="30 caractères maximum pour le pseudo (" .strlen($entree->pseudo) . " actuellement)";
-            } 
-            if (!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) || strlen($entree->email) > 255) 
-            {
-                $errors[10]="255 caractères maximum pour l'email et caractère spéciaux interdits";
             }
             if(strlen($entree->pseudo) > 30)
             {
@@ -238,7 +230,7 @@ class Authentification
                 {
                     if ($verifMdp == "" || $nouveauMdp == "")
                     {
-                        $errors[1]= "Remplissez le(s) champs vide(s)";
+                        $errors[1]= "Remplissez le(s) champ(s) vide(s)";
                     }
                     if($compteModel->getClientByPseudo($entree -> pseudo, $entree -> motDePasse) == null)
                     {
@@ -317,6 +309,118 @@ class Authentification
         return $errors;
     }
 
+    public function modifProfilVendeur(\App\Entities\Vendeur $entree, $verifMdp, $nouveauMdp) : array
+    {   
+        $compteModel=model("\App\Models\Vendeur");
+        $errors=[];
+        if(!empty($entree))
+        {
+            if($entree->motDePasse == "" || $entree->tva_intercommunautaire == "" || $entree->texte_presentation == "" || $entree->identifiant == "" || $entree->email == "") 
+            {
+                $errors[1]= "Remplissez le(s) champ(s) vide(s)";
+            }
+            if(strlen($entree->tva_intercommunautaire) > 15) 
+            {
+                $errors[2]= "15 caractères maximum pour ce champ";
+            }
+            if (strlen($entree->texte_presentation) > 255)
+            {
+                $errors[8]="255 caractères maximum pour la présentation";
+            }
+            if (strlen($entree->identifiant) > 30 )
+            {
+                $errors[9]="30 caractères maximum pour l'identifiant' (" .strlen($entree->pseudo) . " actuellement)";
+            }
+            if(!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) || strlen($entree->email) > 255) 
+            {
+                $errors[7]="255 caractères maximum pour l'email et caractère spéciaux interdits";
+            }
+            if ($entree->motDePasse != "motDePassemotDePasse") 
+            {
+                //Le controlleur nous informe par ces valeurs que l'utilisateur a cherché à modifier le mdp, il faut donc tout vérifier
+                if (!empty($verifMdp) && !empty($nouveauMdp))
+                {
+                    if ($verifMdp == "" || $nouveauMdp == "")
+                    {
+                        $errors[1]= "Remplissez le(s) champ(s) vide(s)";
+                    }
+                    if($compteModel->getVendeurByPseudo($entree -> pseudo, $entree -> motDePasse) == null)
+                    {
+                        $errors[3]="Ceci n'est pas votre ancien mot de passe";
+                    }
+                    if ($entree->motDePasse == $nouveauMdp) 
+                    {
+                        $errors[4]="Le nouveau mot de passe doit être différent de l'ancien";
+                    }
+                    if (preg_match_all("/[a-z]/",$nouveauMdp) < 1 ||  
+                        preg_match_all("/[A-Z]/",$nouveauMdp) < 1 ||  
+                        preg_match_all("/[0-9]/",$nouveauMdp) < 1 ||  
+                        strlen($nouveauMdp) < 12)
+                    {
+                        $errors[5]="Le mot de passe doit faire plus de 12 caractère et doit contenir au moins une majuscule, une minuscule et un chiffre";
+                    }
+                    if($entree->motDePasse != $verifMdp) 
+                    {
+                        $errors[6]="Les mots de passes ne correspondent pas";
+                    }
+                }   
+                //Dans ce cas c'est l'admin qui a cherché à modifier le mdp
+                else
+                {
+                    $nouveauMdp = $entree->motDePasse;
+                    if (preg_match_all("/[a-z]/",$entree->motDePasse) < 1 ||  
+                        preg_match_all("/[A-Z]/",$entree->motDePasse) < 1 ||  
+                        preg_match_all("/[0-9]/",$entree->motDePasse) < 1 ||  
+                        strlen($entree->motDePasse) < 12)
+                    {
+                        $errors[5]="Le mot de passe doit faire plus de 12 caractère et doit contenir au moins une majuscule, une minuscule et un chiffre";
+                    }
+                }
+            }
+            //Si l'utilisateur a cherché à modifier le pseudo (qu'il est différent de celui de la base de données)
+            if ($compteModel->find($entree -> numero)->pseudo != $entree->pseudo)
+            {
+                //Alors on vérifie si un autre utilisateur n'a pas le même pseudo
+                if ($compteModel->doesPseudoExists($entree->identifiant))
+                {
+                    $errors[12]="Un utilisateur existe déjà avec cet identifiant";
+                }
+            }
+
+            //Si l'utilisateur a cherché à modifier l'email (qu'il est différent de celui de la base de données)
+            if ($compteModel->find($entree -> numero)->email != $entree->email)
+            {
+                //Alors on vérifie si un autre utilisateur n'a pas le même email
+                if ($compteModel->doesEmailExists($entree->email))
+                {
+                    $errors[11]="Un utilisateur existe déjà avec cette adresse mail";
+                }
+            }
+        }
+        else 
+        {
+            $errors[0] ="Pas d'entrée";
+        }
+        
+        if(empty($errors))
+        {
+            //Si l'utilisateur a cherché à modifier le mdp, on le crypte
+            if ($entree->motDePasse != "motDePassemotDePasse") 
+            {
+                $entree->motDePasse=$nouveauMdp;
+                $entree->cryptMotDePasse();
+            }
+            //Sinon on le supprime pour ne pas le modifier
+            else
+            {
+                unset($entree->motDePasse);
+            }
+            $compteModel->save($entree);
+        }
+
+        return $errors;
+    }
+
     public function paiement($entree) : array
     {
         $errors=[];
@@ -324,7 +428,7 @@ class Authentification
         {
             if (empty($entree['nomCB']) || empty($entree['numCB']) || empty($entree['dateExpiration']) || empty($entree['CVC']))
             {
-                $errors[1]="Remplissez le(s) champs vide(s)";
+                $errors[1]="Remplissez le(s) champ(s) vide(s)";
             }
 
             //https://www.ibm.com/docs/fr/order-management-sw/9.3.0?topic=cpms-handling-credit-cards 

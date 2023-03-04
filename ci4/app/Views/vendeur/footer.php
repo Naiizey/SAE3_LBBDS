@@ -157,19 +157,18 @@
             <div class="mobile">
                 <ul>
                     <li>
-                        <a class="lienConnexion" href="<?= ((session()->has("numeroVendeur")) ? base_url()."/profil" : base_url()."/connexion") ?>">
+                        <a class="lienConnexion" href="<?= ((session()->has("numeroVendeur")) ? base_url()."/vendeur/profil" : base_url()."/vendeur/connexion") ?>">
                             <?php include(dirname(__DIR__,3)."/public/images/header/profil.svg")?>
                         </a>
                         <?php if (session()->has("numeroVendeur")): ?>
                             <div class="divHoverConnexion divConnected">
                                 <p class="pNom">Bonjour <?= (session()->get("identifiantVendeur")) ?></p>
-                                <a href="<?= base_url()."/profil"?>"><p>Mon profil</p></a>
-                                <a href="<?= base_url()."/admin/destroy"?>"><p>Se déconnecter</p></a>
+                                <a href="<?= base_url()."/vendeur/profil"?>"><p>Mon profil</p></a>
+                                <a href="<?= base_url()."/admin/destroyVendeur"?>"><p>Se déconnecter</p></a>
                             </div>
                         <?php else: ?>
                             <div class="divHoverConnexion divNotConnected">
-                                <a href="<?= base_url()."/connexion"?>"><p>Se connecter</p></a>
-                                <a href="<?= base_url()."/inscription"?>"><p>S'inscrire</p></a>
+                                <a href="<?= base_url()."/vendeur/connexion"?>"><p>Se connecter</p></a>
                             </div>
                         <?php endif; ?>
                     </li>

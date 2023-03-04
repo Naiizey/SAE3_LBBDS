@@ -164,7 +164,7 @@
                             <div class="divHoverConnexion divConnected">
                                 <p class="pNom">Bonjour <?= (session()->get("nomClient")) ?></p>
                                 <a href="<?= base_url()."/profil"?>"><p>Mon profil</p></a>
-                                <a href="<?= base_url()."/admin/destroy"?>"><p>Se déconnecter</p></a>
+                                <a href="<?= base_url()."/admin/destroyClient"?>"><p>Se déconnecter</p></a>
                             </div>
                         <?php else: ?>
                             <div class="divHoverConnexion divNotConnected">

@@ -38,16 +38,24 @@ class Home extends BaseController
         return view("admin/index.php", $data);
     }
 
-    public function destroySession()
+    public function destroySessionClient()
     {
         $session=session();
-        $session->remove("numeroVendeur");
         $session->remove("numeroClient");
         $session->remove("nomClient");
-        $session->remove("identifiantVendeur");
         $session->remove("ignorer");
         $session->remove("adresse_facturation");
         $session->remove("adresse_livraison");
+        $session->set("just_deconnectee",True);
+        
+        return redirect()->to("/");
+    }
+
+    public function destroySessionVendeur()
+    {
+        $session=session();
+        $session->remove("numeroVendeur");
+        $session->remove("identifiantVendeur");
         $session->set("just_deconnectee",True);
         
         return redirect()->to("/");
@@ -220,7 +228,7 @@ class Home extends BaseController
             //Si l'utilisateur a cherché à modifier des informations
             if (!empty($post)) 
             {
-                //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
+                //Ce champ ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
                 if (!isset($post['motDePasse'])) 
                 {
                     $post['motDePasse'] = "motDePassemotDePasse";
@@ -295,16 +303,16 @@ class Home extends BaseController
                 //Si l'utilisateur a cherché à modifier des informations
                 if (!empty($post)) 
                 {
-                    //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
+                    //Ce champ ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
                     if (!isset($post['motDePasse'])) 
                     {
                         $post['motDePasse'] = "motDePassemotDePasse";
                     }
 
                     $auth = service('authentification');
-                    $user=$client;
+                    $user=$vendeur;
                     $user->fill($post);
-                    $issues=$auth->modifProfilClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
+                    $issues=$auth->modifProfilVendeur($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
 
                     if (!empty($issues))
                     {
@@ -315,7 +323,7 @@ class Home extends BaseController
                     }
                     else
                     {
-                        return redirect()->to("/admin/profil/vendeur/" . $numClient);
+                        return redirect()->to("/admin/profil/vendeur/" . $numVendeur);
                     }
                 }
 

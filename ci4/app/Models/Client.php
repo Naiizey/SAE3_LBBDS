@@ -21,18 +21,18 @@ class Client extends Compte
     protected $returnType     = \App\Entities\Client::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['numero','nom','prenom','email','identifiant','motdepasse'];
+    protected $allowedFields = ['numero','nom','prenom',"email","identifiant","motDePasse"];
 
     public function getClientByPseudo($pseudo, $motDePasse) : \App\Entities\Client | null
     {
-        $comptes = $this->where('identifiant',$pseudo);
+        $comptes = $this->where("identifiant",$pseudo);
 
         return parent::getCompteByCredentials($comptes, $motDePasse);
     }
 
     public function getClientByEmail($email, $motDePasse) : \App\Entities\Client | null
     {
-        $comptes = $this->where('email',$email);
+        $comptes = $this->where("email",$email);
 
         return parent::getCompteByCredentials($comptes, $motDePasse);
     }

@@ -53,7 +53,7 @@ class Home extends BaseController
         $estVendeur = true;
         if ($num_commande == null)
         {
-            $data['commandesCli']=model("\App\Models\LstCommandesCli")->getCompteCommandes();
+            $data['commandesVendeur']=model("\App\Models\LstCommandesVendeur")->getCompteCommandes();
             return view('vendeur/commande/lstCommandes.php', $data);
         }
         else
@@ -89,8 +89,8 @@ class Home extends BaseController
         $vendeur = $modelVendeur->getVendeurById($numVendeur);
 
         //Valeurs par défaut
-        $data['motDePasse'] = "motDePassemotDePasse";
-        $data['confirmezMotDePasse'] = "";
+        $data["motDePasse"] = "motDePassemotDePasse";
+        $data["confirmezMotDePasse"] = "";
         $data['nouveauMotDePasse'] = "";
 
         //On cache par défaut les champs supplémentaires pour modifier le mdp
@@ -102,16 +102,16 @@ class Home extends BaseController
         if (!empty($post)) 
         {
             //Ce champ ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
-            if (!isset($post['motDePasse'])) 
+            if (!isset($post["motDePasse"])) 
             {
-                $post['motDePasse'] = "motDePassemotDePasse";
+                $post["motDePasse"] = "motDePassemotDePasse";
             }
 
             //Si ces deux champs ne sont pas remplis, cela veut dire que l'utilisateur n'a pas cherché à modifier le mdp
-            if (empty($post['confirmezMotDePasse']) && empty($post['nouveauMotDePasse'])) 
+            if (empty($post["confirmezMotDePasse"]) && empty($post['nouveauMotDePasse'])) 
             {
                 //On remplit ces variables pour informer le service que nous n'avons pas besoin d'erreurs sur ces champs
-                $post['confirmezMotDePasse'] = "";
+                $post["confirmezMotDePasse"] = "";
                 $post['nouveauMotDePasse'] = "";
             } 
             else 
@@ -125,13 +125,13 @@ class Home extends BaseController
             $auth = service('authentification');
             $user=$vendeur;
             $user->fill($post);
-            $issues=$auth->modifProfilVendeur($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
+            $issues=$auth->modifProfilVendeur($user, $post["confirmezMotDePasse"], $post['nouveauMotDePasse']);
 
             if (!empty($issues))
             {
                 //En cas d'erreur(s), on pré-remplit les champs avec les données déjà renseignées
-                $data['motDePasse'] = $post['motDePasse'];
-                $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
+                $data["motDePasse"] = $post["motDePasse"];
+                $data["confirmezMotDePasse"] = $post["confirmezMotDePasse"];
                 $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
             }
             else
@@ -141,21 +141,21 @@ class Home extends BaseController
         }
 
         //Pré-remplissage des champs avec les données de la base
-        $data['identifiant'] = $vendeur->identifiant;
-        $data['txtPres'] = $vendeur->texte_presentation;
-        $data['logo'] = $vendeur->logo;
-        $data['note'] = $vendeur->note_vendeur;
-        $data['email'] = $vendeur->email;
-        $data['siret'] = $vendeur->numero_siret;
-        $data['tvaIntraCom'] = $vendeur->tva_intercommunautaire;
-        $data['numRue'] = $vendeur->numero_rue;
-        $data['nomRue'] = $vendeur->nom_rue;
-        $data['ville'] = $vendeur->ville;
-        $data['codePostal'] = $vendeur->code_postal;
-        $data['compA1'] = $vendeur->comp_a1;
-        $data['compA2'] = $vendeur->comp_a2;
-        $data['erreurs'] = $issues;
-        $data['noteVendeur']=service("cardProduit")->notationEtoile($vendeur->note_vendeur);
+        $data["identifiant"] = $vendeur->identifiant;
+        $data["txtPres"] = $vendeur->texte_presentation;
+        $data["logo"] = $vendeur->logo;
+        $data["note"] = $vendeur->note_vendeur;
+        $data["email"] = $vendeur->email;
+        $data["siret"] = $vendeur->numero_siret;
+        $data["tvaInterCom"] = $vendeur->tva_intercommunautaire;
+        $data["numRue"] = $vendeur->numero_rue;
+        $data["nomRue"] = $vendeur->nom_rue;
+        $data["ville"] = $vendeur->ville;
+        $data["codePostal"] = $vendeur->code_postal;
+        $data["compA1"] = $vendeur->comp_a1;
+        $data["compA2"] = $vendeur->comp_a2;
+        $data["erreurs"] = $issues;
+        $data["noteVendeur"]=service("cardProduit")->notationEtoile($vendeur->note_vendeur);
 
         return view('vendeur/profil.php', $data);
     }
@@ -194,11 +194,11 @@ class Home extends BaseController
         }
 
         $data["controller"]= "Connexion";
-        $data['erreurs'] = $issues;
+        $data["erreurs"] = $issues;
 
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
-        $data['identifiant'] = (isset($_POST['identifiant'])) ? $_POST['identifiant'] : "";
-        $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
+        $data["identifiant"] = (isset($_POST["identifiant"])) ? $_POST["identifiant"] : "";
+        $data["motDePasse"] = (isset($_POST["motDePasse"])) ? $_POST["motDePasse"] : "";
 
         return view('vendeur/connexion.php', $data);
     }

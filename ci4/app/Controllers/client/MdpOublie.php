@@ -39,7 +39,7 @@ class MdpOublie extends BaseController
         $data["controller"] = "mdpOublie";
 
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant de potentielles erreurs
-        $data['email'] = (isset($post['email'])) ? $post['email'] : "";
+        $data["email"] = (isset($post["email"])) ? $post["email"] : "";
         $data['code'] = (isset($post['code'])) ? $post['code'] : "";
         return view('client/mdpOublie.php', $data);
     }
@@ -58,7 +58,7 @@ class MdpOublie extends BaseController
     public function obtenirCode()
     {
         $post = $this->request->getPost();
-        $_SESSION["userMail"] = $post['email'];
+        $_SESSION["userMail"] = $post["email"];
         $clientModel = model("\App\Models\Client");
         if ($clientModel->doesEmailExists($_SESSION["userMail"])) {
             $_SESSION['code'] = $this->genererCode();
@@ -85,7 +85,7 @@ class MdpOublie extends BaseController
         if ($post['code'] == $_SESSION['code']) {
             $model = model("App\Models\Client");
             $nouveauMDP = $this->motDePasseAlea();
-            $entree = $model->where('email', $_SESSION["userMail"])->findAll()[0];
+            $entree = $model->where("email", $_SESSION["userMail"])->findAll()[0];
             $entree->motDePasse = $nouveauMDP;
             $entree->cryptMotDePasse();
             $model->save($entree);

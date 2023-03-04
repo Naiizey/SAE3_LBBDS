@@ -218,7 +218,7 @@ class Panier extends BaseController
             $data["ecraserOuFusionner"]=true;
             $data["produits"]=$modelProduitPanier->getPanier(session()->get("numeroClient"));
         }
-        $data['erreurs'] = $issues;
+        $data["erreurs"] = $issues;
         $data['retours'] = $retours;
 
         return view('client/panier.php', $data);

@@ -27,7 +27,8 @@ class LstCommandesVendeur extends Model
     
     protected $allowedFields = ['num_commande','num_compte','date_commande','date_arriv','ht','ttc','etat'];
 
-
-    
-
+    public function getCompteCommandes() : array
+    { 
+        return $this->where('num_compte',session()->get("numeroVendeur"))->findAll();
+    }
 }

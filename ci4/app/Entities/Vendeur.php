@@ -45,14 +45,14 @@ class Vendeur extends Entity
 
     public $datamap= [
         #numero
-        'motDePasse' => 'motdepasse',
-        'siret' => 'numero_siret',
+        "motDePasse" => "motDePasse",
+        "siret" => 'numero_siret',
         'tvaInter' => 'tva_intercommunautaire',
         
 
         #identifiant
-        'identifiant' => 'identifiant',
-        'pseudo' => 'identifiant'
+        "identifiant" => "identifiant",
+        'pseudo' => "identifiant"
     ];
 
     protected $attributes = [

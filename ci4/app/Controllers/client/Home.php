@@ -99,11 +99,11 @@ class Home extends BaseController
         }
 
         $data["controller"]= "Connexion";
-        $data['erreurs'] = $issues;
+        $data["erreurs"] = $issues;
 
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
-        $data['identifiant'] = (isset($_POST['identifiant'])) ? $_POST['identifiant'] : "";
-        $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
+        $data["identifiant"] = (isset($_POST["identifiant"])) ? $_POST["identifiant"] : "";
+        $data["motDePasse"] = (isset($_POST["motDePasse"])) ? $_POST["motDePasse"] : "";
 
         // Se souvenir de moi
         if (isset($_POST['rememberMe'])) {
@@ -125,7 +125,7 @@ class Home extends BaseController
             $auth = service('authentification');
             $user= new \App\Entities\Client();
             $user->fill($post);
-            $issues=$auth->inscriptionClient($user, $post['confirmezMotDePasse']);
+            $issues=$auth->inscriptionClient($user, $post["confirmezMotDePasse"]);
 
             if (empty($issues))
             {
@@ -155,15 +155,15 @@ class Home extends BaseController
             $data["controller"]= "Inscription Client";
         }
 
-        $data['erreurs'] = $issues;
+        $data["erreurs"] = $issues;
 
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
         $data['pseudo'] = (isset($_POST['pseudo'])) ? $_POST['pseudo'] : "";
         $data['nom'] = (isset($_POST['nom'])) ? $_POST['nom'] : "";
         $data['prenom'] = (isset($_POST['prenom'])) ? $_POST['prenom'] : "";
-        $data['email'] = (isset($_POST['email'])) ? $_POST['email'] : "";
-        $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
-        $data['confirmezMotDePasse'] = (isset($_POST['confirmezMotDePasse'])) ? $_POST['confirmezMotDePasse'] : "";
+        $data["email"] = (isset($_POST["email"])) ? $_POST["email"] : "";
+        $data["motDePasse"] = (isset($_POST["motDePasse"])) ? $_POST["motDePasse"] : "";
+        $data["confirmezMotDePasse"] = (isset($_POST["confirmezMotDePasse"])) ? $_POST["confirmezMotDePasse"] : "";
 
         return view('client/inscription.php', $data);
     }
@@ -367,8 +367,8 @@ class Home extends BaseController
         $data['prenomBase'] = $clientBase->prenom;
 
         //Valeurs par défaut
-        $data['motDePasse'] = "motDePassemotDePasse";
-        $data['confirmezMotDePasse'] = "";
+        $data["motDePasse"] = "motDePassemotDePasse";
+        $data["confirmezMotDePasse"] = "";
         $data['nouveauMotDePasse'] = "";
 
         //On cache par défaut les champs supplémentaires pour modifier le mdp
@@ -389,16 +389,16 @@ class Home extends BaseController
             }
 
             //Ce champ ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
-            if (!isset($post['motDePasse'])) 
+            if (!isset($post["motDePasse"])) 
             {
-                $post['motDePasse'] = "motDePassemotDePasse";
+                $post["motDePasse"] = "motDePassemotDePasse";
             }
 
             //Si ces deux champs ne sont pas remplis, cela veut dire que l'utilisateur n'a pas cherché à modifier le mdp
-            if (empty($post['confirmezMotDePasse']) && empty($post['nouveauMotDePasse'])) 
+            if (empty($post["confirmezMotDePasse"]) && empty($post['nouveauMotDePasse'])) 
             {
                 //On remplit ces variables pour informer le service que nous n'avons pas besoin d'erreurs sur ces champs
-                $post['confirmezMotDePasse'] = "";
+                $post["confirmezMotDePasse"] = "";
                 $post['nouveauMotDePasse'] = "";
             } 
             else 
@@ -412,13 +412,13 @@ class Home extends BaseController
             $auth = service('authentification');
             $user=$client;
             $user->fill($post);
-            $issues=$auth->modifProfilClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
+            $issues=$auth->modifProfilClient($user, $post["confirmezMotDePasse"], $post['nouveauMotDePasse']);
 
             if (!empty($issues))
             {
                 //En cas d'erreur(s), on pré-remplit les champs avec les données déjà renseignées
-                $data['motDePasse'] = $post['motDePasse'];
-                $data['confirmezMotDePasse'] = $post['confirmezMotDePasse'];
+                $data["motDePasse"] = $post["motDePasse"];
+                $data["confirmezMotDePasse"] = $post["confirmezMotDePasse"];
                 $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
             }
             else
@@ -431,10 +431,10 @@ class Home extends BaseController
         $data['pseudo'] = $client->identifiant;
         $data['prenom'] = $client->prenom;
         $data['nom'] = $client->nom;
-        $data['email'] = $client->email;
+        $data["email"] = $client->email;
         $data['adresseFact'] = $modelFact->getAdresse(session()->get("numeroClient"));
         $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numeroClient"));
-        $data['erreurs'] = $issues;
+        $data["erreurs"] = $issues;
 
         return view('client/profil.php', $data);
     }
@@ -580,7 +580,7 @@ class Home extends BaseController
         }
         
         //Pré-remplissage des champs avec les données du post
-        $data['erreurs'] = $issues;
+        $data["erreurs"] = $issues;
         $data['nomCB'] = (isset($_POST['nomCB'])) ? $_POST['nomCB'] : "";
         $data['numCB'] = (isset($_POST['numCB'])) ? $_POST['numCB'] : "";
         $data['dateExpiration'] = (isset($_POST['dateExpiration'])) ? $_POST['dateExpiration'] : "";

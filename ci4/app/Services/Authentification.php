@@ -149,17 +149,29 @@ class Authentification
         
         if(!empty($entree))
         {
-            if ($entree->motDePasse == "" || $entree->identifiant == "" || $entree->email == "") 
+            if($entree->motDePasse == "" || $entree->tva_intercommunautaire == "" || $entree->texte_presentation == "" || $entree->identifiant == "" || $entree->email == "") 
             {
                 $errors[1]= "Remplissez le(s) champ(s) vide(s)";
             }
+            if (strlen($entree->texte_presentation) > 255)
+            {
+                $errors[9]="255 caractères maximum pour la présentation";
+            }
+            if(strlen($entree->tva_intercommunautaire) > 15) 
+            {
+                $errors[2]= "15 caractères maximum pour ce champ";
+            }
+            if (preg_match_all("/^FR[0-9]{2}[0-9]{9}$/",$entree->tva_intercommunautaire) < 1)
+            {
+                $errors[13]="Format de TVA intercommunautaire invalide";
+            }
             if (preg_match_all("/^[0-9]{14}$/",$entree->siret) < 1)
             {
-                $errors[2]="Format de siret invalide";
+                $errors[10]="Format de siret invalide";
             }
             if (strlen($entree->identifiant) > 30 )
             {
-                $errors[3]="30 caractères maximum pour le pseudo (" .strlen($entree->pseudo) . " actuellement)";
+                $errors[3]="30 caractères maximum pour l'identifiant (" .strlen($entree->identifiant) . " actuellement)";
             } 
             if (!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) || strlen($entree->email) > 255) 
             {
@@ -180,11 +192,7 @@ class Authentification
             //TODO: vérifier si le pseudo existe déjà coté vendeur c'est sans doute différent
             if ($compteModel->doesPseudoExists($entree->identifiant))
             {
-                $errors[8]="Un utilisateur existe déjà avec ce pseudo";
-            }
-            if (preg_match_all("/^FR[0-9]{2}[0-9]{9}$/",$entree->tvaIntraCom) < 1)
-            {
-                $errors[9]="Format de TVA intracommunautaire invalide";
+                $errors[8]="Un utilisateur existe déjà avec cet identifiant";
             }
         }
         else 
@@ -323,13 +331,21 @@ class Authentification
             {
                 $errors[2]= "15 caractères maximum pour ce champ";
             }
+            if (preg_match_all("/^FR[0-9]{2}[0-9]{9}$/",$entree->tva_intercommunautaire) < 1)
+            {
+                $errors[13]="Format de TVA intercommunautaire invalide";
+            }
+            if (preg_match_all("/^[0-9]{14}$/",$entree->siret) < 1)
+            {
+                $errors[10]="Format de siret invalide";
+            }
             if (strlen($entree->texte_presentation) > 255)
             {
                 $errors[8]="255 caractères maximum pour la présentation";
             }
             if (strlen($entree->identifiant) > 30 )
             {
-                $errors[9]="30 caractères maximum pour l'identifiant' (" .strlen($entree->pseudo) . " actuellement)";
+                $errors[9]="30 caractères maximum pour l'identifiant (" .strlen($entree->identifiant) . " actuellement)";
             }
             if(!preg_match("/^[\w\-\.]+@[\w\.\-]+\.\w+$/",$entree->email) || strlen($entree->email) > 255) 
             {

@@ -35,7 +35,7 @@ class SessionLBBDP extends SocketConnect{
         $in .= json_encode(array( $bodyProtocole => $commandes), JSON_PRETTY_PRINT);
         $in .= " \r\n;\r\n";
 
-        d($in);
+       
 
         $out=explode(' ',$this->dialogueSimple($in))[0];
         if($out >= 10)
@@ -53,9 +53,12 @@ class SessionLBBDP extends SocketConnect{
 
     public function getCommandes(){
         $in = "ACT LBBDP/1.0\r\n ";
-        $in .= ";\r\n";
+        $in .= json_encode(array(), JSON_PRETTY_PRINT);
+        $in .= " \r\n;\r\n";
 
-        $out=explode(' ',$this->dialogueSimpleRepLongue($in,"LBBDP/1.0"))[0];
+        $out=$this->dialogueSimpleRepLongue($in,"LBBDP/1.0");
+        $json=substr($out,0,strlen($out)-21);
+        $rep=substr($out,strlen($json),21);
         /*
         if($out >= 10)
         {
@@ -73,7 +76,8 @@ class SessionLBBDP extends SocketConnect{
         }
         return $retour;
         */
-        d($out);
+        d($json);
+        d(json_decode($json));
         
     }
 
@@ -84,7 +88,7 @@ class SessionLBBDP extends SocketConnect{
         $in .= json_encode($commandes);
         $in .= " \r\n;\r\n";
 
-        $out=explode(' ',$this->dialogueSimpleRepLongue($in,"LBBDP/1.0"))[0];
+        $out=explode(' ',$this->dialogueSimpleRepLongue($in,"LBBDP"))[0];
         if($out >= 10)
         {
             throw new LBBDPErrors($out);

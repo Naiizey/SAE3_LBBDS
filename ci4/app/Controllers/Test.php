@@ -1,6 +1,7 @@
 <?php namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Entities\Commande;
 
 class Test extends BaseController{
 
@@ -66,6 +67,20 @@ class Test extends BaseController{
         }
 
         public function test4(){
-            $sC=service('socketConnect');
+            $sC=service('lbbdp');
+            $C=new Commande();
+            $C->fill(array("identifiant" => "2", 
+            "nombre" => 5, 
+            "time" => 0,
+            "etat" => "En charge", 
+            "retard"=> 2));
+            $C2=new Commande();
+            $C2->fill(array("identifiant" => "8", 
+            "nombre" => 5, 
+            "time" => 0,
+            "etat" => "En charge", 
+            "retard"=> 2));
+            //  d($sC->nouvelleCommande(array($C,$C2)));
+            d($sC->getCommandes());
         }
 }

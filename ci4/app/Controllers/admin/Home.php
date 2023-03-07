@@ -238,4 +238,17 @@ class Home extends BaseController
             return view('admin/profil.php', $data);
         }
     }
+
+    public function glossaire($num_catalogue) {
+        $data["controller"] = "Catalogue Vendeur";
+        if ($num_catalogue == null) {
+            throw new Exception("Le numéro de catalogue renseigné n'existe pas.", 404);
+        }
+        else
+        {
+            $data['numCatalogue'] = $num_catalogue;
+        }
+        $data['cardProduit']=service("cardProduit");
+        return view("vendeur/glossaire.php", $data);
+    }
 }

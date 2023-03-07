@@ -37,7 +37,7 @@
         <main>
             <section class="sectionPresentation">
                 <div class="divVendeur">
-                    <img src="https://scontent-cdg4-1.xx.fbcdn.net/v/t39.30808-6/307883833_403081785331651_7799751542654129265_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=CZj3Vs2nH4MAX84WeqF&_nc_ht=scontent-cdg4-1.xx&oh=00_AfDapxWi81SvlzGdlShAQBxqKpqeme6jG0MiiArBEgnj4A&oe=64047352" alt="Profil">
+                    <img src="https://imageio.forbes.com/specials-images/imageserve/5ed6636cdd5d320006caf841/The-Blackout-Tuesday-movement-is-causing-Instagram-feeds-to-turn-black-/960x0.jpg?format=jpg&width=960" alt="Profil">
                     <div class="divNomNote">
                         <h2>Guy Cotten</h2>
                         <div class="noteAvis"><?= $cardProduit->notationEtoile(4) ?></div>

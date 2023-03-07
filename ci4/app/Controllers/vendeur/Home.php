@@ -182,18 +182,6 @@ class Home extends BaseController
         return view('vendeur/profil.php', $data);
     }
 
-    public function catalogue($num_catalogue = null)
-    {
-        $data["controller"] = "Catalogue Vendeur";
-        if ($num_commande == null) {
-            throw new Exception("Le numéro de catalogue renseigné n'existe pas.", 404);
-        }
-        else
-        {
-            $data['numCatalogue'] = $num_catalogue;
-        }
-    }
-
     public function connexion()
     {
         $post=$this->request->getPost();
@@ -232,10 +220,5 @@ class Home extends BaseController
         $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
 
         return view('vendeur/connexion.php', $data);
-    }
-
-    public function glossaire() {
-        $data['cardProduit']=service("cardProduit");
-        return view("vendeur/glossaire.php", $data);
     }
 }

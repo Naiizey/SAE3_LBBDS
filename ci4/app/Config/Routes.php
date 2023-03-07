@@ -138,7 +138,7 @@ $routes->get('/admin/profil', 'admin\Home::profil');
 $routes->get('/admin/profil/(:num)', 'admin\Home::profil/$1');
 $routes->post('/admin/profil/(:num)', 'admin\Home::profil/$1');
 
-$routes->get('/admin/catalogue(:num)', 'admin\Home::catalogue/$1');
+$routes->get('/admin/glossaire/(:num)', 'admin\Home::glossaire/$1');
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                  Vendeur                                        ┃

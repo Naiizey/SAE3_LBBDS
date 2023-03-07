@@ -113,6 +113,7 @@ p {
 }
 
 .sectionPresentation table td {
+    padding-left: 1em;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }

@@ -1847,10 +1847,6 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
     height: 1rem;
 }
 
-.sectionRecommandationsPanierPC .addPanier svg{
-    position: relative;
-}
-
 .sectionRecommandationsPanierPC .notation-card{
     height: 1.25rem;
 }
@@ -2954,13 +2950,6 @@ div.image-card{
     }
 }
 
-@media screen and (max-width: 960px){
-    .sectionRecommandationsPanierMobile .addPanier svg{
-        position: relative;
-        top: -.5em;
-    }
-}
-
 @media screen and (max-width: 1280px) and (min-width: 961px){
     .card-produit{
         width: 8em;
@@ -2989,12 +2978,6 @@ div.image-card{
 
     #Catalogue .image-card{
         height: 7em;
-    }
-}
-
-@media screen and (min-width: 1281px){
-    .addPanier svg{
-        top: -.7em;
     }
 }
 

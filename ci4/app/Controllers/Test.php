@@ -80,7 +80,7 @@ class Test extends BaseController{
             "time" => 0,
             "etat" => "En charge", 
             "retard"=> 2));
-            //  d($sC->nouvelleCommande(array($C,$C2)));
+            //d($sC->nouvelleCommande(array($C,$C2)));
             d($sC->getCommandes());
         }
 }

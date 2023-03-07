@@ -59,26 +59,23 @@ class SessionLBBDP extends SocketConnect{
         $out=$this->dialogueSimpleRepLongue($in,"LBBDP/1.0");
         $json=substr($out,0,strlen($out)-21);
         $rep=substr($out,strlen($json),21);
-        /*
+        
         if($out >= 10)
         {
             throw new LBBDPErrors($out);
         }
-        else
-        {
-            return intval($out);
-        }
-        */
-        /*
+     
+        $commandes = json_decode($json);
         $retour=[];
         foreach($commandes as $commande){
-            $retour[]=$commande;
+              $retour[]=new Commande($commande);
         }
-        return $retour;
-        */
-        d($json);
-        d(json_decode($json));
         
+        
+        d($json);
+        
+
+        return array("repCode"=>$rep,"commandes"=>$commandes); 
     }
 
     private function repCommandes($commandes){

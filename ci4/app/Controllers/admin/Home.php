@@ -239,14 +239,18 @@ class Home extends BaseController
         }
     }
 
-    public function glossaire($num_catalogue) {
-        $data["controller"] = "Catalogue Vendeur";
-        if ($num_catalogue == null) {
-            throw new Exception("Le numéro de catalogue renseigné n'existe pas.", 404);
+    public function glossaire($num_glossaire) {
+        $modelGlossaire = model("\App\Models\GlossaireAdmin");
+        $data['glossaire'] = $modelGlossaire->where('num_glossaire', $num_glossaire)->findAll()[0];
+        if ($num_glossaire == null) {
+            throw new Exception("Vous devez renseigner un numéro de glossaire.", 404);
         }
         else
         {
-            $data['numCatalogue'] = $num_catalogue;
+            if ($data['glossaire'] == null) {
+                throw new Exception("Le numéro de glossaire n'existe pas.", 404);
+            }
+            $data['numCatalogue'] = $num_glossaire;
         }
         $data['cardProduit']=service("cardProduit");
         return view("vendeur/glossaire.php", $data);

@@ -4,4 +4,3 @@ ci4/.env
 vendor
 suiviLivraison/simulateur
 .history/*
-bdd/rexecBDDEmilie.sh

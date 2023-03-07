@@ -3002,6 +3002,37 @@ main#Catalogue{
     grid-column-end: 5;
 }
 
+.onglets{
+    display: flex;
+    flex-wrap: nowrap;
+    height: 53px;
+}
+.onglet{
+    background-color: #e9e3e3;
+    width: 45%;
+    padding-top: 15px;
+    padding-bottom: 7px;
+    border-top: solid #20535a 8px ;
+    z-index: 1;
+}
+
+#Catalogue .onglet{
+    height: fit-content;
+}
+
+.onglet-selectionnee{
+    border: none;
+    border-top: solid #3997A3 8px ;
+    background-color: #EFECEC;
+    width: 55%;
+}
+
+.onglet h3{
+    font-family: 'Montserrat-Bold', sans-serif;
+    font-weight: lighter;
+    margin: 0;
+}
+
 .partie-filtre, .partie-tris{
     min-width: 20%;
     min-height: 100%;  
@@ -3135,13 +3166,13 @@ main#Catalogue{
     background-color : white;
 }
 
-.categorie-catalogue summary ~ div{
+.categorie-catalogue summary ~ div, .vendeurs summary ~ div{
     width: 100%;
     gap: 7%;
     padding-left: 5%;
 }
 
-.categorie-catalogue summary ~ div label{
+.categorie-catalogue summary ~ div label, .vendeurs summary ~ div label{
     cursor: pointer;
     width: auto;
     width: 55%;
@@ -3150,11 +3181,11 @@ main#Catalogue{
     font-size: 1.25rem;
 }
 
-.categorie-catalogue summary ~ div label::first-letter{
+.categorie-catalogue summary ~ div label::first-letter, .vendeurs summary ~ div label::first-letter{
     text-transform: uppercase;
 }
 
-.categorie-catalogue summary ~ div label ~ input{
+.categorie-catalogue summary ~ div label ~ input, .vendeurs summary ~ div label ~ input{
     width: 25px;
     height: 25px;
     margin-right: 1em;
@@ -3162,7 +3193,7 @@ main#Catalogue{
 }
 
 
-.categorie-catalogue #entête hr 
+.categorie-catalogue #entête hr , .vendeurs #entête hr
 {
     width: 70%;
     color: #D1D1D1;
@@ -3172,7 +3203,7 @@ main#Catalogue{
 
 }
 
-.categorie-catalogue hr 
+.categorie-catalogue hr, .vendeurs hr
 {
     width: 60%;
     color: #E7E8E6;
@@ -3207,27 +3238,27 @@ main#Catalogue{
     margin-right: 1em;
 } */
 
-.categorie-catalogue .bouton-selectionner-tout
+.categorie-catalogue .bouton-selectionner-tout, .vendeurs .bouton-selectionner-tout
 {
     display: flex;
     align-items: center;
 }
 
-.categorie-catalogue #entête
+.categorie-catalogue #entête, .vendeurs #entête
 {
     display: flex;
     flex-direction: column;
 }
 
 
-.categorie-catalogue .sous-categorie
+.categorie-catalogue .sous-categorie, .vendeurs .sous-categorie
 {
     display: flex;
     align-items: center;
     height: 2.5rem
 }
 
-.categorie-catalogue .bouton-selectionner-tout label{
+.categorie-catalogue .bouton-selectionner-tout label, .vendeurs .bouton-selectionner-tout label{
     cursor: pointer;
     width: 15rem;
     text-align: left;
@@ -3235,7 +3266,7 @@ main#Catalogue{
     font-size: 1.5rem;
 }
 
-.categorie-catalogue .bouton-selectionner-tout label::first-letter{
+.categorie-catalogue .bouton-selectionner-tout label::first-letter, .vendeurs .bouton-selectionner-tout label::first-letter{
     text-transform: uppercase;
 }
 
@@ -3367,16 +3398,14 @@ input[type="range"]::-moz-range-thumb {
     background-color: #164F57
 }
 
-.categorie-catalogue h2{
+.categorie-catalogue h2, .vendeurs h2{
     display: inline-block;
     text-transform: capitalize;
-    width: 70%;
+    width: 80%;
     text-align: inherit;
     font-family: "Montserrat-Bold";
     font-weight: lighter;
 }
-
-
 
 .bouton-selectionner-tout
 {
@@ -3389,29 +3418,26 @@ input[type="range"]::-moz-range-thumb {
     font-size: larger;
 }
 
-.categorie-catalogue summary::after{
+.categorie-catalogue summary::after, .vendeurs summary::after{
     content: '\0025BC';
     position: relative;
     top: -5px;
 }
 
-.categorie-catalogue details[open] summary::after{
+.categorie-catalogue details[open] summary::after, .vendeurs details[open] summary::after{
     content: '\0025B2';
     position: relative;
 }
 
-.categorie-catalogue summary {
+.categorie-catalogue summary, .vendeurs summary {
     cursor: pointer;
     box-sizing: border-box;
     color: #164F57;
-}
-
-.categorie-catalogue summary{
     background-color: #EFECEC;
     list-style:none;
     width: 100%;
     padding: 20px 5% ;
-    text-align: left;    
+    text-align: left;
 }
 
 .liste-filtre details, .liste-sous-categories{

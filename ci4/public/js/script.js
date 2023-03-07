@@ -1382,12 +1382,24 @@ const filterUpdate = function (
 function changeOnglet() {
     var onglets = document.getElementsByClassName("onglet");
     //console.log(onglets);
+    var vendeurs = document.getElementsByClassName("vendeurs")[1];
+    vendeurs.style.display = "none";
     for (let id = 0; id < onglets.length; id++) {
         //console.log(onglets[id]);
         onglets[id].addEventListener("click", (event) => {
             if (!onglets[id].classList.contains("onglet-selectionnee")) {
                 onglets[id].classList.add("onglet-selectionnee");
                 onglets[(id + 1) % 2].classList.remove("onglet-selectionnee");
+                let ongletSelectionne = document.getElementsByClassName("onglet-selectionnee")[0];
+                let categorie_catalogue = document.getElementsByClassName("categorie-catalogue")[0];
+                //let vendeurs = document.getElementsByClassName("vendeurs")[1];
+                if (ongletSelectionne.classList.contains("vendeurs")){
+                    categorie_catalogue.style.display = "none";
+                    vendeurs.style.display = "block";
+                } else if (ongletSelectionne.classList.contains("categorie")){
+                    categorie_catalogue.style.display = "block";
+                    vendeurs.style.display = "none";
+                }
             }
         });
     }

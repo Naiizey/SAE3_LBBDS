@@ -25,6 +25,10 @@
                     </svg>
                 </button>
             </div>
+            <div class="onglets">
+                <div class="onglet onglet-selectionnee categorie"><h3>Catégorie</h3></div>
+                <div class="onglet vendeurs"><h3>Vendeurs</h3></div>
+            </div>
             <form name="filters" method="get">
                 <div class="categorie-catalogue">
                 <?php foreach ($categories as $categorie):?>
@@ -49,6 +53,23 @@
                     </details>
                 <?php endforeach;?>
                 </div>
+                <details class="vendeurs">
+                    <summary class="categorie"><h2>Tous les vendeurs</h2></summary>
+                    <div id="entête" class="enTete-vendeur">
+                        <div class="bouton-selectionner-tout">
+                            <label for="tout-vendeurs">Tout sélectionner</label>
+                            <input class="chk-box-tout" type="checkbox" id="tout-vendeurs" name="tout-vendeurs" value="tout-vendeurs">
+                        </div>
+                        <hr>
+                    </div>
+                    <?php foreach ($vendeurs as $vendeur):?>
+                        <div class="sous-categorie" for="<?= $vendeur->identifiant ?>">
+                            <label for="<?= $vendeur->identifiant ?>" class=".sous-categorie-catalogue"><?= $vendeur->identifiant ?></label>
+                            <input <?= ((isset($filters[$vendeur->identifiant]) && $filters[$vendeur->identifiant]=="on")?"checked":"") ?> name="<?= $vendeur->identifiant ?>" type="checkbox" id="<?= $vendeur->identifiant ?>">
+                        </div>
+                        <?php if($key != array_key_last($vendeurs)): ?> <hr> <?php endif; ?>
+                    <?php endforeach;?>
+                </details>
                 <section class="prix">
                     <label>Prix :</label>
                     <section class="price-range">

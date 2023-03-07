@@ -324,6 +324,9 @@ class Home extends BaseController
         //Chargement du modèle Categorie dans le tableau data pour l'utiliser dans la vue
         $data['categories']=model("\App\Models\CategorieModel")->findAll();
 
+        //Chargement du modèle Vendeur dans le tableau data pour l'utiliser dans la vue
+        $data['vendeurs']=model("\App\Models\Vendeur")->findAll();
+
         //Set du controller Catalogue pour la vue
         $data["controller"] = "Catalogue";
 

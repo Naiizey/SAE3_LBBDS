@@ -21,7 +21,7 @@ class Client extends Compte
     protected $returnType     = \App\Entities\Client::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['numero','nom','prenom',"email","identifiant","motDePasse"];
+    protected $allowedFields = ['numero','nom','prenom',"email","identifiant","motdepasse"];
 
     public function getClientByPseudo($pseudo, $motDePasse) : \App\Entities\Client | null
     {

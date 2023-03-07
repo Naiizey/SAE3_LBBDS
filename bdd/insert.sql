@@ -18,7 +18,7 @@ INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (2,'toast', 'de
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (3,'illoutchine', 'nassima');
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (4,'moigne', 'tania');
 
-INSERT INTO _vendeur  VALUES (5, '123456789', 'FR50123456789"', 'Bonjour, nous sommes la COBREC', 3, 'https://logo-marque.com/wp-content/uploads/2021/09/Hot-Wheels-Logo.png', currval('sae3._adresse_id_a_seq'));
+INSERT INTO _vendeur  VALUES (5, '123456789', 'FR50123456789', 'Bonjour, nous sommes la COBREC', 3, 'https://logo-marque.com/wp-content/uploads/2021/09/Hot-Wheels-Logo.png', currval('sae3._adresse_id_a_seq'));
 
 
 INSERT INTO _tva VALUES (1,0.20);

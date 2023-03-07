@@ -23,7 +23,7 @@ class Vendeur extends Compte
     protected $returnType     = \App\Entities\Vendeur::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ["identifiant","motDePasse","email", 'texte_presentation', 'numero_siret', 'tva_intercommunautaire', 'note_vendeur', 'logo', 'numero_rue', 'nom_rue', 'code_postal', 'ville', 'comp_a1', 'comp_a2'];
+    protected $allowedFields = ["identifiant","motdepasse","email", 'texte_presentation', 'numero_siret', 'tva_intercommunautaire', 'note_vendeur', 'logo', 'numero_rue', 'nom_rue', 'code_postal', 'ville', 'comp_a1', 'comp_a2'];
 
     public function getVendeurByPseudo($identifiant, $motDePasse) : \App\Entities\Vendeur | null
     {

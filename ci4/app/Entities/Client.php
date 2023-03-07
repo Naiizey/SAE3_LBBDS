@@ -38,7 +38,7 @@ class Client extends Entity
 
     public $datamap= [
         #numero
-        "motDePasse" => "motDePasse",
+        "motDePasse" => "motdepasse",
         'v_nom' => 'nom',
         'v_prenom' => 'prenom',
         'nom' => 'nom',

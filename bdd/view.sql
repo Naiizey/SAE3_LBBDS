@@ -94,7 +94,7 @@ CREATE OR REPLACE VIEW adresse_facturation AS
  --CLIENT
 CREATE OR REPLACE VIEW client AS
     WITH trouve_current_panier AS (select max(num_panier) current_panier,num_compte from sae3._panier_client group by num_compte)
-    SELECT numero, nom_compte nom, prenom_compte prenom, email, pseudo identifiant, mot_de_passe motDePasse, current_panier FROM compte_client NATURAL JOIN trouve_current_panier;
+    SELECT numero, nom_compte nom, prenom_compte prenom, email, pseudo identifiant, mot_de_passe as motDePasse, current_panier FROM compte_client NATURAL JOIN trouve_current_panier;
 
 CREATE OR REPLACE VIEW client_mail AS
     SELECT numero, email from compte_client;

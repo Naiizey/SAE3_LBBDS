@@ -132,9 +132,8 @@ class Authentification
             
             $session = session();
             $user=$compteModel->where("email",$entree->email)->findAll()[0];
-            $session->set('numero',$user->numero);
-            $session->set('nom',$user->nom);
-            
+            $session->set("numeroClient",$user->numero);
+            $session->set("nomClient",$user->nom);
 
             $session->set("just_connectee",True);
         }
@@ -204,6 +203,12 @@ class Authentification
         {
             $entree->cryptMotDePasse();
             $compteModel->save($entree);
+
+            $session = session();
+            $user=$compteModel->where("email",$entree->email)->findAll()[0];
+            $session->set("numeroVendeur",$user->numero);
+
+            $session->set("just_connectee",True);
         }
 
         return $errors;

@@ -382,7 +382,8 @@ BEGIN
             --INSERT INTO sae3._quidi (id_prod, num_compte, date_quidi, heure_quidi, contenu_quidi) VALUES (NEW.id_prod, NEW.num_compte, NEW.date_quidi, NEW.heure_quidi, NEW.contenu_quidi);
             RETURN NEW;
         ELSE
-            RAISE EXCEPTION 'Le numéro de compte ne correspond pas au vendeur du produit';
+            -- we raise an exception Le numéro de compte (NEW.num_compte) ne correspond pas au vendeur du produit (NEW.id_prod)
+            RAISE EXCEPTION 'Le numéro de compte (%) ne correspond pas au vendeur du produit (%)', NEW.num_compte,  (SELECT num_compte FROM sae3._produit WHERE id_prod = NEW.id_prod);
         END IF;
     ELSE
         RAISE NOTICE 'pas de numéro de compte';

@@ -402,3 +402,4 @@ INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis ne par
  -- jusqu'ici
 
 INSERT INTO _quidi VALUES (DEFAULT,1,5);
+INSERT INTO _quidi VALUES (DEFAULT,2,5);

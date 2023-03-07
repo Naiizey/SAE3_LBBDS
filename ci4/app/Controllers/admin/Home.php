@@ -241,7 +241,7 @@ class Home extends BaseController
 
     public function glossaire($num_glossaire) {
         $modelGlossaire = model("\App\Models\GlossaireAdmin");
-        $data['glossaire'] = $modelGlossaire->where('num_glossaire', $num_glossaire)->findAll()[0];
+        $data['glossaire'] = $modelGlossaire->where('id_quidi', $num_glossaire)->findAll()[0];
         if ($num_glossaire == null) {
             throw new Exception("Vous devez renseigner un numéro de glossaire.", 404);
         }

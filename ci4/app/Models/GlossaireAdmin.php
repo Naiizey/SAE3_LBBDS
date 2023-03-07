@@ -9,7 +9,7 @@ use Exception;
 class Glossaire extends Model
 {
     protected $table = 'sae3.glossaire_admin';
-    protected $primaryKey = 'num_glossaire';
+    protected $primaryKey = 'id_quidi';
 }
 
 ?>

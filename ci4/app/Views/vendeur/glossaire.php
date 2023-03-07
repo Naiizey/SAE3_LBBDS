@@ -37,10 +37,10 @@
         <main>
             <section class="sectionPresentation">
                 <div class="divVendeur">
-                    <img src="https://imageio.forbes.com/specials-images/imageserve/5ed6636cdd5d320006caf841/The-Blackout-Tuesday-movement-is-causing-Instagram-feeds-to-turn-black-/960x0.jpg?format=jpg&width=960" alt="Profil">
+                    <img src="<?= $glossaire['logo']; ?>" alt="Profil">
                     <div class="divNomNote">
-                        <h2>Guy Cotten</h2>
-                        <div class="noteAvis"><?= $cardProduit->notationEtoile(4) ?></div>
+                        <h2><?= $glossaire['pseudo']; ?></h2>
+                        <div class="noteAvis"><?= $cardProduit->notationEtoile($glossaire['note_vendeur']) ?></div>
                     </div>
                 </div>
                 <table>
@@ -48,30 +48,31 @@
                         <tr>
                             <th>Raison sociale :</th>
                             <td>SA</td>
+                            <!-- manque ça -->
                         </tr>
                         <tr>
                             <th>SIRET :</th>
-                            <td>ZAUKDGG23L</td>
+                            <td><?= $glossaire['numero_siret']; ?></td> 
                         </tr>
                         <tr>
                             <th>TVA Intracommunautaire :</th>
-                            <td>5679424949</td>
+                            <td><?= $glossaire['tva_intercommunautaire']; ?></td>
                         </tr>
                         <tr>
                             <th>Adresse :</th>
-                            <td>1 rue de la Renaissance <br> 22300 Lannion</td>
+                            <td><?= $glossaire['numero_rue']." ".$glossaire['nom_rue']."<br>".$glossaire['code_postal']." ".$glossaire['ville']; ?></td>
                         </tr>
                         <tr>
                             <th>Contact :</th>
-                            <td>guy.cotten@alizon.net</td>
+                            <td><?= $glossaire['email']; ?></td>
                         </tr>
                     </tbody>
                 </table> 
                 <h2 class="h2Presentation">Présentation</h2>
-                <!-- <p>Je suis un sociétée <del>très vertueuse</del> et <del>je suis neutre en carbone depuis 1899</del>, en effet on <del>ne</del> peut <del>pas</del> me critiquer car <del>je</del> ne pratique <del>pas</del> l’évasion fiscale. De plus je <del>ne</del> vire <del>jamais</del> des employés alors que je me porte bien économiquement.</p> -->
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut dolores non eum ea accusamus cupiditate voluptates quis sapiente architecto tempora? Debitis sequi dolor iure fugiat voluptas. Accusamus eius reiciendis sapiente!</p>
+                <p><?= $glossaire['texte_presentation']; ?></p>
             </section>   
             <section class="sectionProduits">
+                <!-- manque ça -->
                 <div class="divUnProduit">
                     <img src="https://img.cuisineaz.com/660x660/2015/01/29/i113699-photo-de-crepe-facile.webp" alt="Produit">
                     <div class="divNomDescription">

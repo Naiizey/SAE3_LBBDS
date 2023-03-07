@@ -55,8 +55,8 @@ class CardProduit
                 <div class="bottom-card">
                     <p class="prix-card"><?= $prod->prixttc?>€</p>
                     <a href="<?= base_url().'/panier/ajouter/'.$prod->id.'/1' ?>" class="addPanier">
-                        <?= file_get_contents(base_url() . '/images/header/addPanier.svg');?>
-                        <?= file_get_contents(base_url() . '/images/vendeur/catalogue/checkmark.svg');?>
+                        <?= file_get_contents(dirname(__DIR__, 2) . '/public/images/header/addPanier.svg');?>
+                        <?= file_get_contents(dirname(__DIR__, 2) . '/public/images/vendeur/catalogue/checkmark.svg');?>
                     </a>
                 </div>
             </div>

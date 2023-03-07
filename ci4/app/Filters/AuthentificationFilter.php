@@ -15,7 +15,7 @@ class AuthentificationFilter implements FilterInterface{
     public function before(RequestInterface $request, $arguments = null)
     {
         helper('cookie');
-        if (!session()->has("numero")) {
+        if (!session()->has("numeroClient")) {
             if (str_contains(parse_url(current_url(), PHP_URL_PATH), "/facture") && has_cookie("token_panier")){
                 session()->set("referer_redirection", base_url()."/panier");
             } else {

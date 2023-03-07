@@ -8,18 +8,6 @@ class Import extends BaseController
 {
     private $feedback;
     protected $helpers = ['form', 'filesystem'];
-    
-    public function __construct()
-    {
-        helper('cookie');
-        if (session()->has("numero")) {
-            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
-        } elseif (has_cookie("token_panier")) {
-            $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
-        } else {
-            $GLOBALS["quant"] = 0;
-        }   
-    }
 
     public function index($estVendeur=false)
     {

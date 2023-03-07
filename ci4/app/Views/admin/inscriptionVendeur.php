@@ -15,6 +15,22 @@
                     <h2>Créer un compte vendeur</h2>
                     <?= afficheErreurs($erreurs, 'redirection'); ?>
                     <form action='<?= current_url() ?>' method="post">
+                        <label>Texte de présentation<span class="requis">*</span> :</label>
+                        <input type="text" name="texte_presentation" required="required" value="<?= $txtPres?>"/>
+                        <?=
+                            afficheErreurs($erreurs, 9)
+                        ?>
+                        <label>TVA intercommunautaire<span class="requis">*</span> :</label>
+                        <input type="text" name="tva_intercommunautaire" required="required" value="<?= $tvaInterCom?>"/>
+                        <?=
+                            afficheErreurs($erreurs, 2) .
+                            afficheErreurs($erreurs, 13)
+                        ?>
+                        <label>Numéro de SIRET<span class="requis">*</span> :</label>
+                        <input type="text" name="numero_siret" required="required" value="<?= $siret?>"/>
+                        <?=
+                            afficheErreurs($erreurs, 10)
+                        ?>
                         <label>Identifiant<span class="requis">*</span> :</label>
                         <input type="text" name="identifiant" required="required" value="<?= $identifiant?>"/>
                         <?=
@@ -26,16 +42,6 @@
                         <?=
                             afficheErreurs($erreurs, 4) .
                             afficheErreurs($erreurs, 7)
-                        ?>
-                        <label>Numéro de SIRET<span class="requis">*</span> :</label>
-                        <input type="text" name="siret" required="required" value="<?= $siret?>"/>
-                        <?=
-                            afficheErreurs($erreurs, 0)
-                        ?>
-                        <label>TVA intracommunautaire<span class="requis">*</span> :</label>
-                        <input type="text" name="tvaIntraCom" required="required" value="<?= $tvaIntraCom?>"/>
-                        <?=
-                            afficheErreurs($erreurs, 0)
                         ?>
                         <label>Mot de passe<span class="requis">*</span> :</label>
                         <input type="password" name="motDePasse" required="required" value="<?= $motDePasse?>"/>

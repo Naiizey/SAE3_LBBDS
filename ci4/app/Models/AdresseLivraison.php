@@ -6,12 +6,10 @@ use App\Entities\Adresse;
 use CodeIgniter\Model;
 use Generator;
 
-/** 
- * Model de classe client qui permet de récuperer un client, ainsi qu'insérer et mettre à jour.
- * 
- * 
- * @see TutoCI/CI5_BDD
- * @return \App\Entities\Client
+/**
+ * Utile pour accéder aux adresses de livraison de manière globale
+ *  Données:
+ *      * adresse: -**R**-- 
  */
 class AdresseLivraison extends Model
 {

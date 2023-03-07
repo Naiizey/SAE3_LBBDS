@@ -1100,23 +1100,23 @@ VALUES
 
 
 INSERT  INTO _compte (nom_compte , prenom_compte , pseudo , email , mot_de_passe )
-VALUES  ('Dupond' , 'Jean' , 'jeandupond' , 'jean@dupond.fr' , 'motdepasse' ),
-        ('Dupuis' , 'Pierre' , 'pierredupuis' , 'pierre@dupuis.fr' , 'motdepasse' ),
-        ('Durand' , 'Paul' , 'pauldurand' , 'paul@durand.fr' , 'motdepasse' ),
-        ('Martin' , 'Claude' , 'claudemartin' , 'claude@martin.fr' , 'motdepasse' ),
-        ('Petit' , 'Jacques' , 'jacquespetit' , 'jacques@petit.fr' , 'motdepasse' ),
-        ('Robert' , 'Simon' , 'simonrobert' , 'simon@robert.fr' , 'motdepasse' ),
-        ('Thomas' , 'Laurent' , 'laurentthomas' , 'laurent@thomas.fr' , 'motdepasse' ),
-        ('Leroy' , 'Marie' , 'marieleroy' , 'marie@leroy.fr' , 'motdepasse' ),
-        ('David' , 'Catherine' , 'catherinedavid' , 'catherine@david.fr' , 'motdepasse' ),
-        ('Fabre' , 'Isabelle' , 'isabellefabre' , 'isabelle@fabre.fr' , 'motdepasse' ),
-        ('Girard' , 'Claire' , 'clairegirard' , 'claire@girard.fr' , 'motdepasse' ),
-        ('Lefebvre' , 'Anne' , 'annelefebvre' , 'anne@lefebvre.fr' , 'motdepasse' ),
-        ('Lambert' , 'Sophie' , 'sophielambert' , 'sophie@lambert.fr' , 'motdepasse' ),
-        ('Roux' , 'Hélène' , 'heleneroux' , 'helene@roux.fr' , 'motdepasse' ),
-        ('Vincent' , 'Nathalie' , 'nathalievincent' , 'nathalie@vincent.fr' , 'motdepasse' ),
-        ('Meyer' , 'Virginie' , 'virginiemeyer' , 'virginie@meyer.fr' , 'motdepasse' ),
-        ('Fournier' , 'Emmanuelle' , 'emmanuellefournier' , 'emmanuelle@fournier.fr' , 'motdepasse' );
+VALUES  ('Dupond' , 'Jean' , 'jeandupond' , 'jean@dupond.fr' , "motDePasse" ),
+        ('Dupuis' , 'Pierre' , 'pierredupuis' , 'pierre@dupuis.fr' , "motDePasse" ),
+        ('Durand' , 'Paul' , 'pauldurand' , 'paul@durand.fr' , "motDePasse" ),
+        ('Martin' , 'Claude' , 'claudemartin' , 'claude@martin.fr' , "motDePasse" ),
+        ('Petit' , 'Jacques' , 'jacquespetit' , 'jacques@petit.fr' , "motDePasse" ),
+        ('Robert' , 'Simon' , 'simonrobert' , 'simon@robert.fr' , "motDePasse" ),
+        ('Thomas' , 'Laurent' , 'laurentthomas' , 'laurent@thomas.fr' , "motDePasse" ),
+        ('Leroy' , 'Marie' , 'marieleroy' , 'marie@leroy.fr' , "motDePasse" ),
+        ('David' , 'Catherine' , 'catherinedavid' , 'catherine@david.fr' , "motDePasse" ),
+        ('Fabre' , 'Isabelle' , 'isabellefabre' , 'isabelle@fabre.fr' , "motDePasse" ),
+        ('Girard' , 'Claire' , 'clairegirard' , 'claire@girard.fr' , "motDePasse" ),
+        ('Lefebvre' , 'Anne' , 'annelefebvre' , 'anne@lefebvre.fr' , "motDePasse" ),
+        ('Lambert' , 'Sophie' , 'sophielambert' , 'sophie@lambert.fr' , "motDePasse" ),
+        ('Roux' , 'Hélène' , 'heleneroux' , 'helene@roux.fr' , "motDePasse" ),
+        ('Vincent' , 'Nathalie' , 'nathalievincent' , 'nathalie@vincent.fr' , "motDePasse" ),
+        ('Meyer' , 'Virginie' , 'virginiemeyer' , 'virginie@meyer.fr' , "motDePasse" ),
+        ('Fournier' , 'Emmanuelle' , 'emmanuellefournier' , 'emmanuelle@fournier.fr' , "motDePasse" );
 
 INSERT   INTO     _adresse_livraison (nom_a, prenom_a, num_rue, nom_rue, code_postal, ville, comp_a1, comp_a2,infos_comp,num_compte)
 VALUES   ( 'Dupond',  'Jean',  13,  'rue des fleurs',  13000,  'Marseille',  '',  '','balbla', 1),

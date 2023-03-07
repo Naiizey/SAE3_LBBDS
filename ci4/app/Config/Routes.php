@@ -36,6 +36,8 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
+$routes->get('/test2','Test::test4');
+
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                     Client                                      ┃
@@ -113,7 +115,8 @@ $routes->post('/validation', 'client\Home::validation' );
 
 $routes->get('/admin', 'admin\Home');
 
-$routes->get('/admin/destroy', 'admin\Home::destroySession');
+$routes->get('/admin/destroyClient', 'admin\Home::destroySessionClient');
+$routes->get('/admin/destroyVendeur', 'admin\Home::destroySessionVendeur');
 
 $routes->get('/admin/clients', 'admin\Home::lstClients/liste');
 $routes->get('/admin/clients/bannir', 'admin\Home::lstClients/bannir');

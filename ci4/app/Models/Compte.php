@@ -6,8 +6,8 @@ use CodeIgniter\Model;
 
 
 /** 
- * Model de classe compte qui permet de récuperer un compte, ainsi qu'insérer et mettre à jour.
- *  @abstract de Client et de Vendeur 
+ * Model de classe compte qui permet de récuperer un compte, ainsi qu'insérer et mettre à jour. 
+ * @abstract App\Models\Client et de App\Models\Vendeur 
  * 
  */
 abstract class Compte extends Model
@@ -21,7 +21,7 @@ abstract class Compte extends Model
     protected $returnType     = \App\Entities\Client::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['nom','prenom','email','identifiant','motdepasse'];
+    protected $allowedFields = ['nom','prenom',"email","identifiant","motDePasse"];
     */
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';
@@ -51,12 +51,12 @@ abstract class Compte extends Model
 
     public function doesPseudoExists($pseudo) : bool
     {
-        return !empty($this->where('identifiant',$pseudo)->findAll());
+        return !empty($this->where("identifiant",$pseudo)->findAll());
     }
 
     public function doesEmailExists($email) : bool
     {
-        return !empty($this->where('email',$email)->findAll());
+        return !empty($this->where("email",$email)->findAll());
     }
 
     protected function getCompteById($id)

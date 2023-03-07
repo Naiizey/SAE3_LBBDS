@@ -30,6 +30,7 @@
                         <?= afficheErreurs($erreurs, 0) . afficheErreurs($erreurs, 1) ?>
                         <input type="submit" value="Se connecter"/>
                     </form>
+                    <a href="<?= base_url() ?>/vendeur/connexion">Je suis un vendeur</a>
                     <a href="<?= base_url() ?>/inscription">Je n'ai pas de compte</a>
                 </div>
                 <a href="<?= base_url() ?>/mdpOublie">Mot de passe oublié ?</a>

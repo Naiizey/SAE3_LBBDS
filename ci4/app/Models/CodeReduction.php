@@ -8,9 +8,9 @@ use CodeIgniter\Model;
 /** 
  * Model de classe des codes réductions
  * 
- * 
- * @see TutoCI/CI5_BDD
- * @return \App\Entities\CodeReduction
+ *  Données:
+ *      * code_reduc: -**R**-- 
+ *      
  */
 class CodeReduction extends Model
 {

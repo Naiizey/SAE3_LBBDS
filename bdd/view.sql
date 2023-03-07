@@ -184,8 +184,8 @@ FROM compte_vendeur INNER JOIN _adresse ON _adresse.id_a = compte_vendeur.id_adr
 
 --CATALOGUEUR (ADMIN & VENDEUR)
 CREATE OR REPLACE VIEW catalogueur_admin AS
-SELECT id_quidi,intitule_prod, prix_ht, prix_ttc, description_prod,logo,moyenne_note_prod FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur;
+SELECT id_quidi,num_compte,intitule_prod, prix_ht, prix_ttc, description_prod,logo,moyenne_note_prod FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur;
 
 CREATE OR REPLACE VIEW catalogueur_vendeur AS 
-SELECT id_quidi,numero_rue,nom_rue,code_postal,ville,intitule_prod, prix_ht, prix_ttc, description_prod,pseudo,note_vendeur,numero_siret,tva_intercommunautaire,texte_presentation,logo,moyenne_note_prod FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur NATURAL JOIN _compte INNER JOIN _adresse  ON _vendeur.id_adresse = _adresse.id_a;
+SELECT id_quidi,num_compte,numero_rue,nom_rue,code_postal,ville,intitule_prod, prix_ht, prix_ttc, description_prod,pseudo,note_vendeur,numero_siret,tva_intercommunautaire,texte_presentation,logo,moyenne_note_prod FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur NATURAL JOIN _compte INNER JOIN _adresse  ON _vendeur.id_adresse = _adresse.id_a;
 

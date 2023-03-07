@@ -134,9 +134,13 @@ $routes->get('/admin/signalements/(:num)', 'admin\Home::lstSignalements/$1');
 $routes->get('/admin/avis', 'admin\Home::lstAvis');
 $routes->get('/admin/avis/(:num)', 'admin\Home::lstAvis/$1');
 
-$routes->get('/admin/profil', 'admin\Home::profil');
-$routes->get('/admin/profil/(:num)', 'admin\Home::profil/$1');
-$routes->post('/admin/profil/(:num)', 'admin\Home::profil/$1');
+$routes->get('/admin/profil/client', 'admin\Home::profilClient');
+$routes->get('/admin/profil/client/(:num)', 'admin\Home::profilClient/$1');
+$routes->post('/admin/profil/client/(:num)', 'admin\Home::profilClient/$1');
+
+$routes->get('/admin/profil/vendeur', 'admin\Home::profilVendeur');
+$routes->get('/admin/profil/vendeur/(:num)', 'admin\Home::profilVendeur/$1');
+$routes->post('/admin/profil/vendeur/(:num)', 'admin\Home::profilVendeur/$1');
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -158,6 +162,9 @@ $routes->get('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur']);
 $routes->post('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur']);
 
 $routes->get('vendeur/connexion','vendeur\Home::connexion');
+$routes->post('vendeur/connexion','vendeur\Home::connexion');
+
+$routes->get('/vendeur/catalogue', 'vendeur\Home::catalogue');
 
 ##param uri (:any) et dans methode /$1
 

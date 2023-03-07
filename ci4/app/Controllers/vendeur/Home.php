@@ -98,18 +98,14 @@ class Home extends BaseController
     public function profil()
     {
         $data["controller"] = "Profil Vendeur";
-        $modelFact = model("\App\Models\ClientAdresseFacturation");
-        $modelLivr = model("\App\Models\ClientAdresseLivraison");
-        $modelClient = model("\App\Models\Client");
+        $modelVendeur = model("\App\Models\Vendeur");
         $post=$this->request->getPost();
         
-        $numClient = session()->get("numero");
-        $data['numClient'] = $numClient;
+        $numVendeur = session()->get("numero_vendeur");
+        $data['numVendeur'] = $numVendeur;
 
         $issues = [];
-        $client = $modelClient->getClientById($numClient);
-        $clientBase = $modelClient->getClientById($numClient);
-        $data['prenomBase'] = $clientBase->prenom;
+        $vendeur = $modelVendeur->getVendeurById($numVendeur);
 
         //Valeurs par défaut
         $data['motDePasse'] = "motDePassemotDePasse";
@@ -124,15 +120,6 @@ class Home extends BaseController
         //Si l'utilisateur a cherché à modifier des informations
         if (!empty($post)) 
         {
-            helper('cookie');
-            if (session()->has("numero")) {
-                $data['quant'] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
-            } elseif (has_cookie("token_panier")) {
-                $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
-            } else {
-                $data['quant'] = 0;
-            }
-
             //Ce champs ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
             if (!isset($post['motDePasse'])) 
             {
@@ -168,16 +155,26 @@ class Home extends BaseController
             }
             else
             {
-                return redirect()->to("/vendeur/profil/" . $numClient);
+                return redirect()->to("/vendeur/profil");
             }
         }
 
         //Pré-remplissage des champs avec les données de la base
-        $data['identifiant'] = $client->identifiant;
-        $data['email'] = $client->email;
-        $data['siret'] = $client->prenom;
-        $data['tvaIntraCom'] = $client->nom;
+        $data['identifiant'] = $vendeur->identifiant;
+        $data['txtPres'] = $vendeur->texte_presentation;
+        $data['logo'] = $vendeur->logo;
+        $data['note'] = $vendeur->note_vendeur;
+        $data['email'] = $vendeur->email;
+        $data['siret'] = $vendeur->numero_siret;
+        $data['tvaIntraCom'] = $vendeur->tva_intercommunautaire;
+        $data['numRue'] = $vendeur->numero_rue;
+        $data['nomRue'] = $vendeur->nom_rue;
+        $data['ville'] = $vendeur->ville;
+        $data['codePostal'] = $vendeur->code_postal;
+        $data['compA1'] = $vendeur->comp_a1;
+        $data['compA2'] = $vendeur->comp_a2;
         $data['erreurs'] = $issues;
+        $data['noteVendeur']=service("cardProduit")->notationEtoile($vendeur->note_vendeur);
 
         return view('vendeur/profil.php', $data);
     }
@@ -191,15 +188,18 @@ class Home extends BaseController
         {
             //Vérification des champs du post (attributs de l'entité Client)
             $auth = service('authentification');
-            $user= new \App\Entities\Client();
+            $user= new \App\Entities\Vendeur();
             $user->fill($post);
             $issues=$auth->connexionVendeur($user);
 
             if(empty($issues))
             {
-                if (!session()->has("referer_redirection")) {
+                if (!session()->has("referer_redirection")) 
+                {
                     return redirect()->to("/");
-                } else {
+                } 
+                else 
+                {
                     $redirection=session()->get("referer_redirection");
                     session()->remove("referer_redirection");
                     return redirect()->to($redirection);
@@ -220,5 +220,58 @@ class Home extends BaseController
         $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
 
         return view('vendeur/connexion.php', $data);
+    }
+
+    //Nombre maximal de produits par page
+    private const NBPRODSPAGECATALOGUE = 20;
+    #FIXME: comportement href différent entre $page=null oe $page !=null
+    
+    public function catalogue($page=1) {
+        if (session()->has("just_ajoute") && session()->get("just_ajoute")) {
+            $this->feedback=service("feedback");
+            session()->set("just_ajoute", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Article ajouté");
+        }
+
+        //Récupération des filtres présents dans le get
+        $filters=$this->request->getGet();
+        //dd($filters);
+        //Ajout des filtres dans le tableau data pour les utiliser dans la vue
+        $data["filters"]=$filters;
+
+        //Chargement du modèle Produit Catalogue
+        $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
+
+        //Récupération des cartes produits
+        $data['cardProduit']=service("cardProduit");
+
+        //Chargement du modèle Categorie dans le tableau data pour l'utiliser dans la vue
+        $data['categories']=model("\App\Models\CategorieModel")->findAll();
+
+        //Set du controller Catalogue pour la vue
+        $data["controller"] = "Catalogue";
+
+        //Initialisation du tableau des produits à afficher
+        $data['prods'] = [];
+
+        //Initialisation de la variable indiquant si la page est vide
+        $data['vide'] = false;
+
+        //Chargement du prix maximal dans la Base de données pour utiliser dans la vue
+        $data['max_price'] = $modelProduitCatalogue->selectMax('prixttc')->find()[0]->prixttc;
+
+        //Chargement du prix minimal dans la Base de données pour utiliser dans la vue
+        $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
+        
+        //Chargement des produits selon les filtres
+        $result=(new \App\Controllers\client\Produits())->getAllProduitSelonPage($page, self::NBPRODSPAGECATALOGUE, $filters);
+        $data['prods']=$result["resultat"];
+        $data['estDernier']=$result["estDernier"];
+        
+        //Si la page est vide, on affiche un message
+        if (!isset($data['prods']) || empty($data['prods'])) {
+            $data['message'] = $result["message"];
+        }
+        return view("vendeur/catalogue.php", $data);
     }
 }

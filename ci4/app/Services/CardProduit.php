@@ -8,44 +8,36 @@
 class CardProduit
 {
     private function normalize(\App\Entities\Produit $prod){
-        if (str_contains($prod->intitule,"\n"))
-        {
-        if(str_contains($prod->intitule,"\n"))
-        {
-        $exploded=explode("\n",$prod->intitule,4);
-        if (sizeof($exploded)===4 && strlen($exploded[3])!==0){
-            
-            $prod->intitule= $exploded[0].$exploded[1].$exploded[2]."...";
+        if (str_contains($prod->intitule, "\n")) {
+            if (str_contains($prod->intitule, "\n")) {
+                $exploded=explode("\n", $prod->intitule, 4);
+                if (sizeof($exploded)===4 && strlen($exploded[3])!==0) {
+                    
+                    $prod->intitule= $exploded[0].$exploded[1].$exploded[2]."...";
+                
+                }else {
+                    $prod->intitule=implode("\n", $exploded);
+                }
+            }
 
-        }else{
-            $prod->intitule=implode("\n",$exploded);
-        }
-        }
-
-        if($prod->intitule>51){
-            $prod->intitule=str_split($prod->intitule,51)."...";  
-        }
-
+            if ($prod->intitule>51) {
+                $prod->intitule=str_split($prod->intitule, 51)."...";
+            }
         }
         $prod->prixttc
-        =sprintf("%5.2f",floor($prod->prixttc*100)/100); 
+        =sprintf("%5.2f", floor($prod->prixttc*100)/100);
 
     }
 
 
     public function notationEtoile($note){
         $retour="";
-        for($i=1;$i<6;$i++){
-            if($note >= $i)
-            {
+        for ($i=1; $i<6; $i++) {
+            if ($note >= $i) {
                 $retour.="<img class='star' src='".base_url()."/images/Star-full.svg'/>";
-            }
-            else if($note+0.5 >= $i)
-            {
+            }elseif ($note+0.5 >= $i) {
                 $retour.="<img class='star' src='".base_url()."/images/Star-half.svg'/>";
-            }
-            else
-            {
+            }else {
                 $retour.="<img class='star' src='".base_url()."/images/Star-empty.svg'/>";
             }
 
@@ -53,7 +45,7 @@ class CardProduit
         return $retour;
     }
 
-    private function cardProduit($prod){ 
+    private function cardProduit($prod){
         ob_start(); ?>
         <div class="card-produit-ext">
             <div class="card-produit" value=<?=$prod->id?>>
@@ -62,7 +54,10 @@ class CardProduit
                 <div class="contain-libelle"><p class="libelle"><?= $prod->intitule?></p></div>
                 <div class="bottom-card">
                     <p class="prix-card"><?= $prod->prixttc?>€</p>
-                    <a href="<?= base_url().'/panier/ajouter/'.$prod->id.'/1' ?>" class="addPanier"><?= file_get_contents(dirname(__DIR__,2)."/public/images/header/addPanier.svg")?></a>
+                    <a href="<?= base_url().'/panier/ajouter/'.$prod->id.'/1' ?>" class="addPanier">
+                        <?= file_get_contents(base_url() . '/images/header/addPanier.svg');?>
+                        <?= file_get_contents(base_url() . '/images/vendeur/catalogue/checkmark.svg');?>
+                    </a>
                 </div>
             </div>
         </div>
@@ -73,7 +68,5 @@ class CardProduit
         $this->normalize($prod);
         return $this->cardProduit($prod);
     }
-    
-
-
 }
+?>

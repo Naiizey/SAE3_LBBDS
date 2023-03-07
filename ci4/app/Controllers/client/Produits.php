@@ -169,9 +169,6 @@ class Produits extends BaseController {
      *
      */
     private function giveResult($result, $dernier) {
-        
-        
-        
         if(isset($this->request)){
             $retour=[];
             foreach($result as $prod){
@@ -183,11 +180,5 @@ class Produits extends BaseController {
         else{
             return array("resultat"=>$result,"estDernier"=>$dernier);
         }
-    }
-
-    
-
-    
-
-    
+    }    
 }

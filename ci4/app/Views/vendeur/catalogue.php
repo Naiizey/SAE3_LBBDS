@@ -1,5 +1,5 @@
 <?php require("header.php"); ?>
-<?php model("\App\Models\ProduitCatalogue")->selectMax('prixttc')?>
+<?php model("\App\Models\ProduitCatalogueVendeur")->where("num_compte =", session()->get("numero_vendeur"))->selectMax('prixttc')?>
 <main id=Catalogue>
     <div class="bubbles bubbles-vendeur">
         <button class="bulle-ouvrir-filtres">

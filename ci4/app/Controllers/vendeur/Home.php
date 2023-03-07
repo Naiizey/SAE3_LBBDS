@@ -53,7 +53,7 @@ class Home extends BaseController
         }
 
         $data['cardProduit']=service("cardProduit");
-        $data['prods']=model("\App\Models\ProduitCatalogue")->findAll();
+        $data['prods']=model("\App\Models\ProduitCatalogueVendeur")->findAll();
 
         if (session()->has("numero")) {
             $data['quant'] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
@@ -142,7 +142,7 @@ class Home extends BaseController
             }
 
             $auth = service('authentification');
-            $user=$client;
+            $user=$vendeur;
             $user->fill($post);
             $issues=$auth->modifProfilClient($user, $post['confirmezMotDePasse'], $post['nouveauMotDePasse']);
 
@@ -222,6 +222,135 @@ class Home extends BaseController
         return view('vendeur/connexion.php', $data);
     }
 
+    public function produit($idProduit = null, $numAvisEnValeur = null)
+    {
+        $data["idProduit"] = $idProduit;
+        $data["signalements"] = model("\App\Models\LstSignalements")->findAll();
+        $data['model'] = model("\App\Models\ProduitCatalogueVendeur");
+        $data['cardProduit']=service("cardProduit");
+        
+        //Gestion du feedback
+        if(session()->has("just_ajoute") && session()->get("just_ajoute") == true) {
+            $this->feedback=service("feedback");
+            session()->set("just_ajoute", false);
+            $GLOBALS['validation'] = $this->feedback->afficheValidation("Article ajouté");
+        }
+
+        //Assertion
+        if ($idProduit == null) {
+            return view('errors/html/error_404.php', array('message' => "Pas de produit spécifié"));
+        }
+
+        //Get quantité du panier
+        if (session()->has('numero')) {
+            $data["quantitePanier"]=model("\App\Models\ProduitPanierCompteModel")->getQuantiteProduitByIdProd($idProduit, session()->get('numero'));
+        } elseif (has_cookie('token_panier')) {
+            $data["quantitePanier"]=model("\App\Models\ProduitPanierVisiteurModel")->getQuantiteProduitByIdProd($idProduit, get_cookie('token_panier'));
+        }
+
+        //Autres images du produit
+        $prodModelAutre = model("\App\Models\ProduitDetailAutre");
+        $autresImages = $prodModelAutre->getAutresImages($idProduit);
+
+        if (!empty($autresImages))
+        {
+            $data['autresImages'] = $autresImages;
+        }
+
+        //Avis/commentaires
+        $data['cardProduit']=service("cardProduit");
+        $data['avis']=model("\App\Models\LstAvis")->getAvisByProduit($idProduit);
+
+        //Post des avis
+        $post=$this->request->getPost();
+        $data["erreurs"] = [];
+        $commandesCli = model("\App\Models\LstCommandesCli")->getCompteCommandes();
+        $articles = model("\App\Models\DetailsCommande")->getArticles(session()->get("numero"));
+        $vendeur = model("\App\Models\Vendeur")->getVendeurById(session()->get("numero_vendeur"));
+
+        if (!empty($post)) 
+        {
+            //Si la raison du reload avec post est due à un signalement
+            if (isset($post['raison']))
+            {
+                //Création du signalement
+                $signal = new \App\Entities\Signalement();
+                $signal->raison = $post['raison'];
+                $signal->num_avis = $post['num_avis'];
+                $signal->num_compte = session()->get("numero");
+                model("\App\Models\LstSignalements")->save($signal);
+
+                session()->set("just_signal", true);
+            }
+            //Sinon elle est due à un avis
+            else
+            {
+                //Vérifie que la session (donc l'utilisateur) n'a pas déjà commenté cet article.
+                foreach ($data['avis'] as $unAvis) {
+                    if (session()->get("numero") == $unAvis->num_compte) {
+                        $data["erreurs"][0] = "Vous avez déjà commenté ce produit.";
+                    }
+                }
+
+                //Vérifie que l'utilisateur a déjà acheté ce produit
+                $dejaAchete = false;
+                foreach ($commandesCli as $commande) {
+                    foreach ($articles as $article) {
+                        if ($article->id_prod == $idProduit) {
+                            $dejaAchete = true;
+                        }
+                    }
+                }
+
+                //S'il n'a jamais acheté : erreur
+                if ($dejaAchete == false) {
+                    $data["erreurs"][1] = "Vous ne pouvez pas commenter un produit que vous n'avez jamais acheté.";
+                }
+
+                //S'il n'y a pas d'erreurs, on enregistre l'avis
+                if (empty($data["erreurs"])) 
+                {
+                    $avis = new \App\Entities\Avis();
+                    $avis->contenu_av = $post['contenuAvis'];
+                    $avis->id_prod = $idProduit;
+                    $avis->num_compte = session()->get("numero");
+                    $avis->note_prod = $post['noteAvis'];
+                    $avis->pseudo = $vendeur->identifiant;
+                    model("\App\Models\LstAvis")->enregAvis($avis);
+                }
+            }
+        }
+
+        //Update des avis après un potentiel ajout
+        $data['avis'] = model("\App\Models\LstAvis")->getAvisByProduit($idProduit);
+
+        //Passage de l'id de l'avis en valeur si il y en a un à la vue
+        if ($numAvisEnValeur != null) {
+            $data['avisEnValeur'] = $numAvisEnValeur;
+        } else {
+            $data["avisEnValeur"] = -1;
+        }
+        
+        //Synchronisation des produits avec la base
+        $result = model("\App\Models\ProduitDetail")->find($idProduit);
+
+        //Affichage selon si produit trouvé ou non
+        if ($result == null) {
+            return view('errors/html/error_404.php', array('message' => "Ce produit n'existe pas"));
+        } else {
+            $data["controller"] = "Produit";
+
+            $data['prod'] = $result;
+
+            if (strstr(current_url(), "retourProduit") || isset($post['raison']))
+            {
+                return redirect()->to("/produit/$idProduit#avis");
+            } else {
+                return view('vendeur/produit.php', $data);
+            }
+        }
+    }
+
     //Nombre maximal de produits par page
     private const NBPRODSPAGECATALOGUE = 20;
     #FIXME: comportement href différent entre $page=null oe $page !=null
@@ -240,7 +369,7 @@ class Home extends BaseController
         $data["filters"]=$filters;
 
         //Chargement du modèle Produit Catalogue
-        $modelProduitCatalogue=model("\App\Models\ProduitCatalogue");
+        $modelProduitCatalogue=model("\App\Models\ProduitCatalogueVendeur");
 
         //Récupération des cartes produits
         $data['cardProduit']=service("cardProduit");
@@ -264,13 +393,13 @@ class Home extends BaseController
         $data['min_price'] = $modelProduitCatalogue->selectMin('prixttc')->find()[0]->prixttc;
         
         //Chargement des produits selon les filtres
-        $result=(new \App\Controllers\client\Produits())->getAllProduitSelonPage($page, self::NBPRODSPAGECATALOGUE, $filters);
+        $result=(new \App\Controllers\vendeur\Produits())->getAllProduitSelonPage($page, self::NBPRODSPAGECATALOGUE, $filters);
         $data['prods']=$result["resultat"];
         $data['estDernier']=$result["estDernier"];
         
         //Si la page est vide, on affiche un message
         if (!isset($data['prods']) || empty($data['prods'])) {
-            $data['message'] = $result["message"];
+            $data['message'] = "Vous n'avez pas encore de produits dans votre catalogue.";
         }
         return view("vendeur/catalogue.php", $data);
     }

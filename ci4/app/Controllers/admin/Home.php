@@ -192,7 +192,7 @@ class Home extends BaseController
         $data["motDePasse"] = (isset($_POST["motDePasse"])) ? $_POST["motDePasse"] : "";
         $data["confirmezMotDePasse"] = (isset($_POST["confirmezMotDePasse"])) ? $_POST["confirmezMotDePasse"] : "";
 
-        return view('vendeur/inscription.php', $data);
+        return view('admin/inscriptionVendeur.php', $data);
     }
 
     public function profilClient($numClient = null)

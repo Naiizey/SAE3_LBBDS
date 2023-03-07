@@ -170,7 +170,7 @@ class Home extends BaseController
             if(empty($issues))
             {
                 if (!session()->has("referer_redirection")) {
-                    return redirect()->to("/");
+                    return redirect()->to("/vendeur/profil");
                 } else {
                     $redirection=session()->get("referer_redirection");
                     session()->remove("referer_redirection");

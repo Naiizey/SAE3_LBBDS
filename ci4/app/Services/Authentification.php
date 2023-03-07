@@ -201,6 +201,13 @@ class Authentification
         
         if(empty($errors))
         {
+            $entree->note_vendeur = 0;
+            $entree->numero_rue = 666;
+            $entree->nom_rue = "lenfer";
+            $entree->code_postal = 66666;
+            $entree->ville = "lenfer";
+            $entree->logo = "http://images.clipartpanda.com/hell-clipart-k5818885.jpg";
+
             $entree->cryptMotDePasse();
             $compteModel->save($entree);
 

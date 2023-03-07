@@ -184,7 +184,25 @@ FROM compte_vendeur INNER JOIN _adresse ON _adresse.id_a = compte_vendeur.id_adr
 
 --GLOSSAIRE (ADMIN & VENDEUR)
 CREATE OR REPLACE VIEW glossaire_admin AS
-SELECT id_quidi,num_compte,intitule_prod, prix_ht, prix_ttc, description_prod,logo, note_vendeur, pseudo, numero_siret, TVA_intercommunautaire, Texte_presentation,moyenne_note_prod, email, numero_rue, nom_rue, code_postal, ville, lien_image FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur NATURAL JOIN _compte NATURAL JOIN _adresse NATURAL JOIN _image_prod;
+SELECT id_quidi,
+num_compte,
+intitule_prod, 
+prix_ht, 
+prix_ttc, 
+description_prod,logo, 
+note_vendeur, 
+pseudo, 
+numero_siret, 
+TVA_intercommunautaire, 
+Texte_presentation,
+moyenne_note_prod, 
+email, 
+numero_rue,
+nom_rue, 
+code_postal, 
+lien_image,
+num_image,
+ville  FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur NATURAL JOIN _compte LEFT JOIN _adresse ON _vendeur.id_adresse = _adresse.id_a LEFT JOIN _image_prod ON _produit.id_prod = _image_prod.id_prod  ;
 
 CREATE OR REPLACE VIEW glossaire_vendeur AS 
 SELECT id_quidi,num_compte,numero_rue,nom_rue,code_postal,ville,intitule_prod, prix_ht, prix_ttc, description_prod,pseudo,note_vendeur,numero_siret,tva_intercommunautaire,texte_presentation,logo,moyenne_note_prod FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur NATURAL JOIN _compte INNER JOIN _adresse  ON _vendeur.id_adresse = _adresse.id_a;

@@ -3016,6 +3016,10 @@ main#Catalogue{
     z-index: 1;
 }
 
+.onglet:hover{
+    cursor: pointer;
+}
+
 #Catalogue .onglet{
     height: fit-content;
 }

@@ -62,10 +62,10 @@
                         </div>
                         <hr>
                     </div>
-                    <?php foreach ($vendeurs as $vendeur):?>
+                    <?php foreach ($vendeurs as $key => $vendeur):?>
                         <div class="sous-categorie" for="<?= $vendeur->identifiant ?>">
-                            <label for="<?= $vendeur->identifiant ?>" class=".sous-categorie-catalogue"><?= $vendeur->identifiant ?></label>
-                            <input <?= ((isset($filters[$vendeur->identifiant]) && $filters[$vendeur->identifiant]=="on")?"checked":"") ?> name="<?= $vendeur->identifiant ?>" type="checkbox" id="<?= $vendeur->identifiant ?>">
+                            <label for="<?= $vendeur->numero ?>" class=".sous-categorie-catalogue"><?= $vendeur->identifiant ?></label>
+                            <input <?= ((isset($filters[$vendeur->numero]) && $filters[$vendeur->numero]=="on")?"checked":"") ?> name="<?= $vendeur->numero ?>" type="checkbox" id="<?= $vendeur->numero ?>">
                         </div>
                         <?php if($key != array_key_last($vendeurs)): ?> <hr> <?php endif; ?>
                     <?php endforeach;?>

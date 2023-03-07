@@ -118,7 +118,11 @@ class Produits extends BaseController {
         if (!empty($filters)) {
             $subQuery = db_connect()->table($query->table)->select('id');
             foreach (array_keys($filters) as $key) {
-                $subQuery->orWhere('categorie', $key);
+                if (is_int($key)) {
+                    $subQuery->where('num_compte', $key);
+                }else{
+                    $subQuery->orWhere('categorie', $key);
+                }
             }
             $query->whereIn('id',$subQuery);
             

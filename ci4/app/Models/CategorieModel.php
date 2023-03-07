@@ -5,12 +5,10 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 
-/** 
- * Model de classe client qui permet de récuperer un client, ainsi qu'insérer et mettre à jour.
- * 
- * 
- * @see TutoCI/CI5_BDD
- * @return \App\Entities\Client
+/**
+ * Utile pour accéder aux différentes catégories
+ *  Données:
+ *      * categorie: -**R**-- 
  */
 class CategorieModel extends Model
 {

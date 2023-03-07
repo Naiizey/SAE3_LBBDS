@@ -21,7 +21,7 @@ class UserModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['name', 'email'];
+    protected $allowedFields = ['name', "email"];
 
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';
@@ -125,7 +125,7 @@ On peut aussi ajouter des méthode à notre entité.
     #Permet de changer le nom d'une variable obtenu par la bdd
     #'nom_colonne' => 'nom_renomme'
     public $datamap= [
-        'motDePasse' => 'motdepasse'
+        "motDePasse" => "motDePasse"
     ];
 ```
 

@@ -13,8 +13,9 @@ class Panier extends BaseController
     public function __construct()
     {
         helper('cookie');
-        if (session()->has("numero")) {
-            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+        
+        if (session()->has("numeroClient")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numeroClient"));
         } else if (has_cookie("token_panier")) {
             $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
         } else {
@@ -94,20 +95,20 @@ class Panier extends BaseController
                 delete_cookie("token_panier");
                 $data["ecraserOuFusionner"]=true;
             } elseif (isset($get["SupprAncien"]) && $get["SupprAncien"]==1 ) {
-                model("\App\Models\ProduitPanierCompteModel")->viderPanier(session()->get("numero"));
-                model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
+                model("\App\Models\ProduitPanierCompteModel")->viderPanier(session()->get("numeroClient"));
+                model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numeroClient"),get_cookie("token_panier"));
                 delete_cookie("token_panier");
                 $data["ecraserOuFusionner"]=true;
                 // mettre à jour la quantité dans le panier
-                $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+                $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numeroClient"));
             } elseif (isset($get["Ignorer"]) && $get["Ignorer"]==1 ) {
                 session()->set("ignorer",true);
             } elseif (isset($get["Confirmer"]) && $get["Confirmer"]==1 ) {
-                model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
+                model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numeroClient"),get_cookie("token_panier"));
                 delete_cookie("token_panier");
                 $data["ecraserOuFusionner"]=true;
                 // mettre à jour la quantité dans le panier
-                $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+                $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numeroClient"));
             }
         }
         $data["controller"] = "Panier";
@@ -119,10 +120,10 @@ class Panier extends BaseController
         $modelReducPanier = model("\App\Models\ReducPanier");
 
         //Récupération des produits du panier
-        if(session()->has("numero"))
+        if(session()->has("numeroClient"))
         {
             $modelProduitPanier = model("\App\Models\ProduitPanierCompteModel");
-            $data['produits'] = $modelProduitPanier->getPanier(session()->get("numero"));
+            $data['produits'] = $modelProduitPanier->getPanier(session()->get("numeroClient"));
         }
         else if(has_cookie("token_panier"))
         {
@@ -209,25 +210,25 @@ class Panier extends BaseController
             }
         }
         //Fusion automatique du panier
-        elseif (has_cookie("token_panier") && session()->has("numero"))
+        elseif (has_cookie("token_panier") && session()->has("numeroClient"))
         {
             
-            model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numero"),get_cookie("token_panier"));
+            model("\App\Models\ProduitPanierCompteModel")->fusionPanier(session()->get("numeroClient"),get_cookie("token_panier"));
             delete_cookie("token_panier");
             $data["ecraserOuFusionner"]=true;
-            $data["produits"]=$modelProduitPanier->getPanier(session()->get("numero"));
+            $data["produits"]=$modelProduitPanier->getPanier(session()->get("numeroClient"));
         }
-        $data['erreurs'] = $issues;
+        $data["erreurs"] = $issues;
         $data['retours'] = $retours;
 
         return view('client/panier.php', $data);
     }
 
     public function viderPanier() {
-        if(session()->has("numero"))
+        if(session()->has("numeroClient"))
         {
             $panierModel = model("\App\Models\ProduitPanierCompteModel");
-            $panierModel->viderPanier(session()->get("numero"));
+            $panierModel->viderPanier(session()->get("numeroClient"));
         }
         else if(has_cookie("token_panier"))
         {
@@ -260,11 +261,11 @@ class Panier extends BaseController
         if(!is_null($idProd) && !is_null($quantite))
         {
         
-            if(session()->has("numero"))
+            if(session()->has("numeroClient"))
             {
                             
                 $panierModel = model("\App\Models\ProduitPanierCompteModel");
-                $panierModel->ajouterProduit($idProd,$quantite,session()->get("numero"),$quantite,true);
+                $panierModel->ajouterProduit($idProd,$quantite,session()->get("numeroClient"),$quantite,true);
             }
             else if(has_cookie("token_panier") && model("\App\Models\ProduitPanierVisiteurModel")->estConsigne(get_cookie("token_panier")))
             {
@@ -303,10 +304,10 @@ class Panier extends BaseController
     public function supprimerProduitPanier($idProd = null){
         if(!is_null($idProd))
         {
-            if(session()->has("numero"))
+            if(session()->has("numeroClient"))
             {
                 $panierModel = model("\App\Models\ProduitPanierCompteModel");
-                $panierModel->deleteFromPanier($idProd,session()->get("numero"));
+                $panierModel->deleteFromPanier($idProd,session()->get("numeroClient"));
             }
             else if(has_cookie("token_panier"))
             {
@@ -324,11 +325,11 @@ class Panier extends BaseController
     public function modifierProduitPanier($id = null, $newQuantite = null){
 
         
-            if (session()->has('numero'))
+            if (session()->has("numeroClient"))
             {
                 try {
-                    model("\App\Models\ProduitPanierCompteModel")->changerQuantite($id,session()->get('numero'),$newQuantite);
-                    $result = array("prodChanged" => $id,"forClientId" => session()->get('numero'));
+                    model("\App\Models\ProduitPanierCompteModel")->changerQuantite($id,session()->get("numeroClient"),$newQuantite);
+                    $result = array("prodChanged" => $id,"forClientId" => session()->get("numeroClient"));
                     $code=200;
                 } catch (\Exception $e){
                     $result = array("error" => $e);

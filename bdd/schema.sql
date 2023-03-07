@@ -253,6 +253,16 @@ CREATE TABLE _image_prod(
 );
 
 
+
+CREATE TABLE _quidi
+(
+    id_quidi SERIAL PRIMARY KEY,
+    id_prod INT NOT NULL,
+    num_compte INT ,
+    CONSTRAINT fk_quidi_prod FOREIGN KEY (id_prod) REFERENCES _produit(id_prod),
+    CONSTRAINT fk_quidi_compte FOREIGN KEY (num_compte) REFERENCES _vendeur(num_compte)
+);
+
 /* -----------------------------------------------------------
 -                  Classes association                        -
 -                                                            -

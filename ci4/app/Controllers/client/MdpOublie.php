@@ -21,14 +21,8 @@ class MdpOublie extends BaseController
         } else {
             $GLOBALS["quant"] = 0;
         }
-        $config['protocol'] = 'smtp';
-        $config['SMTPHost'] = 'in-v3.mailjet.com';
-        $config['SMTPUser'] = '7983f5de3e77c24a967b541de7646c5a';
-        $config['SMTPPass']  = '847c8ec5bdc3fa55d8ed9176fdca509b';
-        $config['SMTPPort'] = '587';
-        $config['mailType'] = 'html';
         $this->email = \Config\Services::email();
-        $this->email->initialize($config);
+        // $this->email->initialize();
         if (!isset($_SESSION['code'])) {
             $_SESSION['code'] = $this->genererCode();
         }
@@ -65,7 +59,7 @@ class MdpOublie extends BaseController
             $contenu = 'Voici le code de récupération pour votre compte :<br><span style="display: block;text-align: center;font-size:x-large">' . $_SESSION['code'] . '</span><br>Si vous n\'êtes pas l\'auteur de cette demande, ignorez ce mail ou contactez le support : support@alizon.net';
             $message = $this->genererMail("Réinitialiser votre mot de passe", $contenu);
             $this->email->setTo($_SESSION["userMail"]);
-            $this->email->setSubject('Récupération de mot de passe');
+            $this->email->setSubject('Récupération de mot de passe  ');
             $this->email->setMessage($message);
             $this->email->send();
         }
@@ -90,7 +84,7 @@ class MdpOublie extends BaseController
             $entree->cryptMotDePasse();
             $model->save($entree);
             $contenu = 'Voici le nouveau mot de passe de votre compte :<br><span style="display: block;text-align: center;font-size:x-large">' . $nouveauMDP . '</span>Ceci est un mot de passe temporaire, vous pouvez le changer dans les paramètres de votre compte.<br>Si vous n\'êtes pas l\'auteur de cette demande, ignorez ce mail ou contactez le support : support@alizon.net';
-            $message = $this->genererMail("Nouveau   mot de passe", $contenu);
+            $message = $this->genererMail("Nouveau mot de passe", $contenu);
             $this->email->setFrom('admin@alizon.net', 'Administrateur - Alizon.net');
             $this->email->setTo($_SESSION["userMail"]);
             $this->email->setSubject('Nouveau mot de passe');

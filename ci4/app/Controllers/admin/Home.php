@@ -241,7 +241,10 @@ class Home extends BaseController
 
     public function glossaire($num_glossaire) {
         $modelGlossaire = model("\App\Models\GlossaireAdmin");
+
         $data['glossaire'] = $modelGlossaire->where('id_quidi', $num_glossaire)->findAll()[0];
+        $data['articles'] = $modelGlossaire->where('num_compte', $data['glossaire']['num_compte'])->findAll();
+
         if ($num_glossaire == null) {
             throw new Exception("Vous devez renseigner un numéro de glossaire.", 404);
         }
@@ -252,6 +255,7 @@ class Home extends BaseController
             }
             $data['numCatalogue'] = $num_glossaire;
         }
+
         $data['cardProduit']=service("cardProduit");
         return view("vendeur/glossaire.php", $data);
     }

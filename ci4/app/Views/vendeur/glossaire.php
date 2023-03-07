@@ -72,30 +72,20 @@
                 <p><?= $glossaire['texte_presentation']; ?></p>
             </section>   
             <section class="sectionProduits">
-                <!-- manque ça -->
+            <?php foreach ($articles as $article): ?>
                 <div class="divUnProduit">
-                    <img src="https://img.cuisineaz.com/660x660/2015/01/29/i113699-photo-de-crepe-facile.webp" alt="Produit">
+                    <img src="<?= $article['lien_image']; ?>">
                     <div class="divNomDescription">
-                        <h2>Crêpes</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, ea incidunt? Distinctio nulla placeat itaque sint non reiciendis, aperiam, minima debitis libero velit minus maiores quae officia ex.</p>
+                        <h2><?= $article['intitule_prod']; ?></h2>
+                        <p><?= $article['description_prod']; ?></p>
                     </div>
                     <div class="divPrix">
-                        <p>80€ HT</p>
-                        <p>90€ TTC</p>
+                        <p><?= $article['prix_ht']; ?>€ HT</p>
+                        <p><?= $article['prix_ttc']; ?>€ TTC</p>
                     </div>
                 </div>
                 <hr>
-                <div class="divUnProduit">
-                    <img src="https://img.cuisineaz.com/660x660/2015/01/29/i113699-photo-de-crepe-facile.webp" alt="Produit">
-                    <div class="divNomDescription">
-                        <h2>Crêpes</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, ea incidunt? Distinctio nulla placeat itaque sint non reiciendis, aperiam, minima debitis libero velit minus maiores quae officia ex.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>80€ HT</p>
-                        <p>90€ TTC</p>
-                    </div>
-                </div>
+            <?php endforeach;?>
             </section>
         </main>
     </body>

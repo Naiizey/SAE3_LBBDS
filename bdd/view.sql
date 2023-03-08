@@ -189,9 +189,27 @@ CREATE OR REPLACE VIEW vendeur AS
 SELECT num_compte numero, email, pseudo identifiant, mot_de_passe motDePasse, numero_siret, tva_intercommunautaire, texte_presentation, note_vendeur, logo, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, id_adresse
 FROM compte_vendeur INNER JOIN _adresse ON _adresse.id_a = compte_vendeur.id_adresse;
 
---CATALOGUEUR (ADMIN & VENDEUR)
-CREATE OR REPLACE VIEW catalogueur_admin AS
-SELECT intitule_prod, prix_ht, prix_ttc, description_prod,logo,moyenne_note_prod FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur;
+--GLOSSAIRE (ADMIN & VENDEUR)
+CREATE OR REPLACE VIEW glossaire_admin AS
+SELECT id_quidi,
+num_compte,
+intitule_prod, 
+prix_ht, 
+prix_ttc, 
+description_prod,logo, 
+note_vendeur, 
+pseudo, 
+numero_siret, 
+TVA_intercommunautaire, 
+Texte_presentation,
+moyenne_note_prod, 
+email, 
+numero_rue,
+nom_rue, 
+code_postal, 
+lien_image,
+num_image,
+ville  FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur NATURAL JOIN _compte LEFT JOIN _adresse ON _vendeur.id_adresse = _adresse.id_a LEFT JOIN _image_prod ON _produit.id_prod = _image_prod.id_prod  ;
 
 CREATE OR REPLACE VIEW catalogueur_vendeur AS 
 SELECT numero_rue,nom_rue,code_postal,ville,intitule_prod, prix_ht, prix_ttc, description_prod,pseudo,note_vendeur,numero_siret,tva_intercommunautaire,texte_presentation,logo,moyenne_note_prod FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur NATURAL JOIN _compte INNER JOIN _adresse  ON _vendeur.id_adresse = _adresse.id_a;
@@ -200,3 +218,6 @@ CREATE OR REPLACE VIEW produit_catalogue_vendeur AS
 SELECT num_compte, id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*_tva.taux_tva) prixTTC,lien_image lienImage,publication_prod, description_prod, _sous_categorie.libelle_cat categorie, moyenneNote
 FROM _vendeur NATURAL JOIN _produit NATURAL JOIN _image_prod  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
 LEFT JOIN moyenneProduit on _produit.id_prod = moyenneProduit.id NATURAL JOIN soloimageproduit;
+
+CREATE OR REPLACE VIEW glossaire_vendeur AS 
+SELECT id_quidi,num_compte,numero_rue,nom_rue,code_postal,ville,intitule_prod, prix_ht, prix_ttc, description_prod,pseudo,note_vendeur,numero_siret,tva_intercommunautaire,texte_presentation,logo,moyenne_note_prod FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur NATURAL JOIN _compte INNER JOIN _adresse  ON _vendeur.id_adresse = _adresse.id_a;

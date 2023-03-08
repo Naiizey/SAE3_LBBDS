@@ -11,17 +11,16 @@ INSERT INTO _compte (pseudo, email, mot_de_passe) VALUES ( 'test', 'test@gmail.c
 INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('nassima_illoutchine', 'nassima@gmail.com', 'test152687');
 INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('taniamoigne666999', 'temoigne@gmail.com', 'test152687');
 
-INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('COBREC_0', 'cobrec@alizon.net', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
+INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('COBREC_1', 'cobrec1@alizon.net', 'motDePasseComplexe7809');
+INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('COBREC_2', 'cobrec2@alizon.net', 'motDePasseComplexe7809');
 
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (1,'MonMDPcest', 'NEk5aHqcPYz3Ff5');
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (2,'toast', 'deburn');
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (3,'illoutchine', 'nassima');
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (4,'moigne', 'tania');
 
-INSERT INTO _vendeur  VALUES (5, '123456789', 'FR50123456789"', 'Bonjour, nous sommes la COBREC', 3, 'https://webstockreview.net/images/sample-png-images-8.png', currval('sae3._adresse_id_a_seq'));
-INSERT INTO vendeur (numero, email, identifiant, motdepasse, numero_siret, tva_intercommunautaire, texte_presentation, note_vendeur, logo, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, id_adresse) VALUES (6, 'talesit@talesit.com', 'talesit', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y', '124563895', 'FR5A124563895', 'TalesIt pour vendre des livres', 5, 'https://webstockreview.net/images/sample-png-images-8.png', 12, 'hent maengwenn', 22300, 'lannion', 'Batiment A', 'Etage 5', 2) ;
-INSERT INTO _vendeur  VALUES (5, '123456789', 'FR50123456789', 'Bonjour, nous sommes la COBREC', 3, 'https://webstockreview.net/images/sample-png-images-8.png', currval('sae3._adresse_id_a_seq'));
-
+INSERT INTO _vendeur  VALUES (5, '123456789', 'FR50123456789', 'Bonjour, nous sommes la COBREC', 3, 'https://logo-marque.com/wp-content/uploads/2021/09/Hot-Wheels-Logo.png', currval('sae3._adresse_id_a_seq'));
+INSERT INTO _vendeur  VALUES (6, '123459719', 'FR50123411129"', 'Bonjour, nous sommes la COBREC2', 4, 'https://logo-marque.com/wp-content/uploads/2021/09/Hot-Wheels-Logo.png', currval('sae3._adresse_id_a_seq'));
 
 INSERT INTO _tva VALUES (1,0.20);
 INSERT INTO _tva VALUES (2,0.50);
@@ -148,7 +147,7 @@ INSERT INTO _image_prod(id_prod, lien_image, num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://fotomelia.com/wp-content/uploads/edd/2015/08/photo-libre-de-droit33-1560x1050.jpg',2);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
-VALUES (134,'Herbe à chat',10,12,'Issue de nos cultures locales, ce produit rendra fou votre chat. Chat non fourni.', true, 10, 4.5, 5, true, 5);
+VALUES (134,'Herbe à chat',10,12,'Issue de nos cultures locales, ce produit rendra fou votre chat. Chat non fourni.', true, 10, 4.5, 5, true, 6);
 INSERT INTO _image_prod(id_prod, lien_image, num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://static.vecteezy.com/system/resources/previews/008/118/057/non_2x/beautiful-adorable-leopard-color-cat-sleeping-on-the-grass-free-photo.jpg',0);
 INSERT INTO _image_prod(id_prod, lien_image, num_image)
@@ -157,12 +156,12 @@ INSERT INTO _image_prod(id_prod, lien_image, num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://fotomelia.com/wp-content/uploads/edd/2016/02/banque-d-images-et-photos-gratuites-libres-de-droits-t%C3%A9l%C3%A9chargement-gratuits-85-1560x1040.jpg',2);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
-VALUES (135,'Néo balances',60,72,'Chaussures de sport et de villes parfaites pour toutes les situations. Imppecable pour se balader.', true, 10, 4.5, 5, true, 5);
+VALUES (135,'Néo balances',60,72,'Chaussures de sport et de villes parfaites pour toutes les situations. Imppecable pour se balader.', true, 10, 4.5, 5, true, 6);
 INSERT INTO _image_prod(id_prod, lien_image, num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://cdn.pixabay.com/photo/2020/01/06/13/24/womens-shoes-4745347_960_720.jpg',0);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
-VALUES (137,'Canard',10,12,'Statue de jardin pour tous les adeptes de la collection des nains de jardin, agrémente efficacement tout type de jardin.', true, 10, 4.5, 5, true, 5);
+VALUES (137,'Canard',10,12,'Statue de jardin pour tous les adeptes de la collection des nains de jardin, agrémente efficacement tout type de jardin.', true, 10, 4.5, 5, true, 6);
 INSERT INTO _image_prod(id_prod, lien_image, num_image)
 VALUES (currval('sae3._produit_id_prod_seq'),'https://static.vecteezy.com/system/resources/previews/005/543/922/non_2x/decorative-decoration-in-the-form-of-a-duck-and-duckling-in-our-garden-free-photo.jpeg',0 );
 
@@ -197,7 +196,7 @@ INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'),'https://images.pexels.com/photos/10059111/pexels-photo-10059111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',0);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
-VALUES (134,'Palet breton',10,15,'Biscuits traditionnels bretons, des gâteaux parfaits pour vos pauses café. Provenance : Pont-Aven',  true, 10, 4.5, 5, true, 5);
+VALUES (134,'Palet breton',10,15,'Biscuits traditionnels bretons, des gâteaux parfaits pour vos pauses café. Provenance : Pont-Aven',  true, 10, 4.5, 5, true, 6);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg',0);
 
@@ -404,3 +403,11 @@ INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis ne par
  -- jusqu'ici
 
 INSERT INTO _quidi VALUES (DEFAULT,1,5);
+INSERT INTO _quidi VALUES (DEFAULT,2,5);
+INSERT INTO _quidi VALUES (DEFAULT,3,5);
+INSERT INTO _quidi VALUES (DEFAULT,4,5);
+INSERT INTO _quidi VALUES (DEFAULT,5,6);
+INSERT INTO _quidi VALUES (DEFAULT,6,6);
+INSERT INTO _quidi VALUES (DEFAULT,7,6);
+INSERT INTO _quidi VALUES (DEFAULT,8,5);
+INSERT INTO _quidi VALUES (DEFAULT,9,5);

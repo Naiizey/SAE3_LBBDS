@@ -145,6 +145,7 @@ $routes->get('/admin/profil/vendeur', 'admin\Home::profilVendeur');
 $routes->get('/admin/profil/vendeur/(:num)', 'admin\Home::profilVendeur/$1');
 $routes->post('/admin/profil/vendeur/(:num)', 'admin\Home::profilVendeur/$1');
 
+$routes->get('/admin/glossaire/(:num)', 'admin\Home::glossaire/$1');
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                  Vendeur                                        ┃
@@ -168,6 +169,8 @@ $routes->get('vendeur/connexion','vendeur\Home::connexion');
 $routes->post('vendeur/connexion','vendeur\Home::connexion');
 
 $routes->get('/vendeur/catalogue', 'vendeur\Home::catalogue');
+
+$routes->get('vendeur/catalogue(:num)', 'vendeur\Home::catalogue/$1',['filter' => 'vendeur']);
 
 ##param uri (:any) et dans methode /$1
 

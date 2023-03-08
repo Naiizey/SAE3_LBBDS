@@ -2576,11 +2576,20 @@ h3 > .lienPasArticlePanier {
     flex-basis : 76%
 }
 
-.moyennesAvis progress::-moz-progress-bar 
-{ 
+.moyennesAvis progress::-moz-progress-bar {
     background: #FFCA28;
     height: 10px;
     border-radius: 4px;
+}
+
+.moyennesAvis progress::-webkit-progress-bar, progress::-webkit-progress-value {
+    height: 10px;
+    border-radius: 4px;
+    background-color: var(--secondary-light);
+}
+
+.moyennesAvis progress::-webkit-progress-value {
+    background-color: #FFCA28;
 }
 
 @media screen and (max-width: 960px){

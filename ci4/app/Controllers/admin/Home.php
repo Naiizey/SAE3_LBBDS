@@ -349,4 +349,25 @@ class Home extends BaseController
             return view('admin/profilVendeur.php', $data);
         }
     }
+
+    public function glossaire($num_glossaire) {
+        $modelGlossaire = model("\App\Models\GlossaireAdmin");
+
+        $data['glossaire'] = $modelGlossaire->where('id_quidi', $num_glossaire)->findAll()[0];
+        $data['articles'] = $modelGlossaire->where('num_compte', $data['glossaire']['num_compte'])->findAll();
+
+        if ($num_glossaire == null) {
+            throw new Exception("Vous devez renseigner un numéro de glossaire.", 404);
+        }
+        else
+        {
+            if ($data['glossaire'] == null) {
+                throw new Exception("Le numéro de glossaire n'existe pas.", 404);
+            }
+            $data['numCatalogue'] = $num_glossaire;
+        }
+
+        $data['cardProduit']=service("cardProduit");
+        return view("vendeur/glossaire.php", $data);
+    }
 }

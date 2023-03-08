@@ -19,7 +19,7 @@ INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (3,'illoutchine
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (4,'moigne', 'tania');
 
 INSERT INTO _vendeur  VALUES (5, '123456789', 'FR50123456789"', 'Bonjour, nous sommes la COBREC', 3, 'https://webstockreview.net/images/sample-png-images-8.png', currval('sae3._adresse_id_a_seq'));
-INSERT INTO vendeur (numero, email, identifiant, motdepasse, numero_siret, tva_intercommunautaire, texte_presentation, note_vendeur, logo, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, id_adresse) VALUES (6, 'talesit@talesit.com', 'talesit', 'tquzKfik7ri8Ka9', '124563895', 'FR5A124563895', 'TalesIt pour vendre des livres', 5, 'https://webstockreview.net/images/sample-png-images-8.png', 12, 'hent maengwenn', 22300, 'lannion', 'Batiment A', 'Etage 5', 2) ;
+INSERT INTO vendeur (numero, email, identifiant, motdepasse, numero_siret, tva_intercommunautaire, texte_presentation, note_vendeur, logo, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, id_adresse) VALUES (6, 'talesit@talesit.com', 'talesit', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y', '124563895', 'FR5A124563895', 'TalesIt pour vendre des livres', 5, 'https://webstockreview.net/images/sample-png-images-8.png', 12, 'hent maengwenn', 22300, 'lannion', 'Batiment A', 'Etage 5', 2) ;
 INSERT INTO _vendeur  VALUES (5, '123456789', 'FR50123456789', 'Bonjour, nous sommes la COBREC', 3, 'https://webstockreview.net/images/sample-png-images-8.png', currval('sae3._adresse_id_a_seq'));
 
 

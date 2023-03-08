@@ -26,7 +26,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $userAgent = 'Alizon Server';
+    public $userAgent;
 
     /**
      * The mail sending protocol: mail, sendmail, smtp
@@ -47,21 +47,21 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPHost = 'in-v3.mailjet.com';
+    public $SMTPHost = 'smtp.relai-smtp.net';
 
     /**
      * SMTP Username
      *
      * @var string
      */
-    public $SMTPUser = '7983f5de3e77c24a967b541de7646c5a';
+    public $SMTPUser = 'admin@alizon.net';
 
     /**
      * SMTP Password
      *
      * @var string
      */
-    public $SMTPPass = '847c8ec5bdc3fa55d8ed9176fdca509b';
+    public $SMTPPass = 'JeanPierre';
 
     /**
      * SMTP Port

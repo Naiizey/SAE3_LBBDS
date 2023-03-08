@@ -7,10 +7,9 @@ use CodeIgniter\Model;
 
 /** 
  * Model de classe client qui permet de récuperer un client, ainsi qu'insérer et mettre à jour.
- * 
- * 
- * @see TutoCI/CI5_BDD
- * @return \App\Entities\Client
+ *  
+ * Données:
+ *      * client: **CRU**- 
  */
 class Client extends Compte
 {
@@ -22,26 +21,21 @@ class Client extends Compte
     protected $returnType     = \App\Entities\Client::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['nom','prenom','email','identifiant','motdepasse'];
-
-
-    public function getClientByCredentials($comptes, $motDePasse) : \App\Entities\Client | null
-    {
-        return parent::getCompteByCredentials($comptes, $motDePasse);
-    }
+    protected $allowedFields = ['numero','nom','prenom',"email","identifiant","motdepasse"];
 
     public function getClientByPseudo($pseudo, $motDePasse) : \App\Entities\Client | null
     {
-        
-        return parent::getCompteByPseudo($pseudo, $motDePasse);
+        $comptes = $this->where("identifiant",$pseudo);
+
+        return parent::getCompteByCredentials($comptes, $motDePasse);
     }
 
     public function getClientByEmail($email, $motDePasse) : \App\Entities\Client | null
     {
-        
-        return parent::getCompteByEmail($email, $motDePasse);
-    }
+        $comptes = $this->where("email",$email);
 
+        return parent::getCompteByCredentials($comptes, $motDePasse);
+    }
 
     public function getClientById($id)
     {

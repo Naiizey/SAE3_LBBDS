@@ -6,18 +6,21 @@ use CodeIgniter\Model;
 
 
 /**
- * Utile pour accéder aux différentes catégories
- *  Données:
- *      * categorie: -**R**-- 
+ * Model de classe produit
+ * En Read-Only
+ *
+ * @see TutoCI/CI5_BDD
+ * @return \App\Entities\Vendeur
  */
-class CategorieModel extends Model
+
+class ProduitCatalogueVendeur extends Model
 {
-    protected $table      = 'sae3.categorie';
-    protected $primaryKey = 'code_cat';
+    protected $table      = 'sae3.produit_catalogue_vendeur';
+    protected $primaryKey = 'id';
 
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
 
-    protected $returnType     = \App\Entities\Categorie::class;
+    protected $returnType     = \App\Entities\Produit::class;
     protected $useSoftDeletes = false;
 
     protected $allowedFields = [];
@@ -30,6 +33,4 @@ class CategorieModel extends Model
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
-
-    
 }

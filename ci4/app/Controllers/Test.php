@@ -8,8 +8,8 @@ class Test extends BaseController{
         {
             $data['cardProduit']=service("cardProduit");
             helper('cookie');
-            if (session()->has("numero")) {
-                $data['quant'] = model("\App\Model\ProduitPanieCompteModel")->compteurDansPanier(session()->get("numero"));
+            if (session()->has("numeroClient")) {
+                $data['quant'] = model("\App\Model\ProduitPanieCompteModel")->compteurDansPanier(session()->get("numeroClient"));
             } else if (has_cookie("token_panier")) {
                 $data['quant'] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token"));
             } else {
@@ -63,5 +63,11 @@ class Test extends BaseController{
             $prods=model("\App\Models\ProduitPanierModel")->getPanierFromClient(1);
             model("\App\Models\ProduitPanierModel")->delete(1);
             print_r($prods);
+        }
+
+        public function test4()
+        {
+            $prods=model("\App\Models\Client")->getClientById(1);
+            d($prods);
         }
 }

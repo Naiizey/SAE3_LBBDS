@@ -6,6 +6,14 @@ use \App\Entities\CommandeCli as CommandeCli;
 use CodeIgniter\Model;
 use Exception;
 
+/**
+ * Permet d'accéder au détail d'une commande
+ * 
+ *  Données:
+ *      * commande: -**R**-- 
+ *     
+ */
+ 
 class DetailsCommande extends Model
 {
     protected $table      = 'sae3.commande_list_produits_client';

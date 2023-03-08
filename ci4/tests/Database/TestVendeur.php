@@ -65,14 +65,14 @@ class TestVendeur extends CIUnitTestCase{
 
        
 
-        $reLeVendeur=$model_Vend->where('identifiant', $identifiant)->findAll()[0];
+        $reLeVendeur=$model_Vend->where("identifiant", $identifiant)->findAll()[0];
     
         $this->assertEquals($email1->email,$reLeVendeur->email,"L'insertion pout tester la modif n'a pas fonctionné");
         $reLeVendeur->email=$email2->email;
         $model_Vend->saveVendeur($reLeVendeur);
         
 
-        $rereLeVendeur=$model_Vend->where('identifiant', $identifiant)->findAll()[0];
+        $rereLeVendeur=$model_Vend->where("identifiant", $identifiant)->findAll()[0];
        
         $this->assertEquals($email2->email, $rereLeVendeur->email,"La modification ne fonctionne pas");
     }

@@ -11,16 +11,18 @@ INSERT INTO _compte (pseudo, email, mot_de_passe) VALUES ( 'test', 'test@gmail.c
 INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('nassima_illoutchine', 'nassima@gmail.com', 'test152687');
 INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('taniamoigne666999', 'temoigne@gmail.com', 'test152687');
 
-INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('COBREC_0', 'cobrec@alizon.net', 'motDePasseComplexe7809');
-INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('COBREC_2', 'cobrec2@alizon.net', 'motDePasseComplexe7809');
+INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('COBREC_0', 'cobrec@alizon.net', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
+INSERT INTO _compte ( pseudo, email, mot_de_passe) VALUES ('TalesIt', 'talesit@talesit.com', '$2y$12$B.A15SakaoA9qzAV8bIHwefQyJ0LOQrH2HfJX0cT712w7jkxfkI6y');
 
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (1,'MonMDPcest', 'NEk5aHqcPYz3Ff5');
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (2,'toast', 'deburn');
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (3,'illoutchine', 'nassima');
 INSERT INTO _client(num_compte,nom_compte, prenom_compte) VALUES (4,'moigne', 'tania');
 
-INSERT INTO _vendeur  VALUES (5, '123456789', 'FR50123456789"', 'Bonjour, nous sommes la COBREC', 3, 'https://logo-marque.com/wp-content/uploads/2021/09/Hot-Wheels-Logo.png', currval('sae3._adresse_id_a_seq'));
-INSERT INTO _vendeur  VALUES (6, '123456788', 'FR50123456789"', 'Bonjour, nous sommes la COBREC2', 3, 'https://logo-marque.com/wp-content/uploads/2021/09/Hot-Wheels-Logo.png', currval('sae3._adresse_id_a_seq'));
+INSERT INTO _vendeur  VALUES (5, '123456789', 'FR50123456789"', 'Bonjour, nous sommes la COBREC', 3, 'https://webstockreview.net/images/sample-png-images-8.png', currval('sae3._adresse_id_a_seq'));
+INSERT INTO vendeur (numero, email, identifiant, motdepasse, numero_siret, tva_intercommunautaire, texte_presentation, note_vendeur, logo, numero_rue, nom_rue, code_postal, ville, comp_a1, comp_a2, id_adresse) VALUES (6, 'talesit@talesit.com', 'talesit', 'tquzKfik7ri8Ka9', '124563895', 'FR5A124563895', 'TalesIt pour vendre des livres', 5, 'MV5BZDJkN2U3MjYtMjgzMi00NWFkLTg3ODQtYWYyM2YwY2FlYjBhXkEyXkFqcGdeQXVyODQ1NTk5OQ@@._V1_.jpg', 12, 'hent maengwenn', 22300, 'lannion', 'Batiment A', 'Etage 5', 2) ;
+INSERT INTO _vendeur  VALUES (6, '123456789', 'FR50123456789', 'Bonjour, nous sommes la COBREC', 3, 'https://webstockreview.net/images/sample-png-images-8.png', currval('sae3._adresse_id_a_seq'));
+
 
 INSERT INTO _tva VALUES (1,0.20);
 INSERT INTO _tva VALUES (2,0.50);
@@ -401,3 +403,5 @@ INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis n''app
 INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis ne parle pas du produit', 5, 2);
     
  -- jusqu'ici
+
+INSERT INTO _quidi VALUES (DEFAULT,1,5);

@@ -113,20 +113,29 @@ class Produits extends BaseController {
             unset($filters["prix_max"]);
             
         }
-
-        
+        //TODO: Séparation des filtres catégories et vendeurs
+     
+        $keyVend=[];
+        $keyCat=[];
+        foreach (array_keys($filters) as $key) {
+            if (is_int($key)) {
+                $keyVend[]=$key;
+            }else{
+                $keyCat[]=$key;
+            }
+        }
         if (!empty($filters)) {
-            $boolVendeur=false;
+          
             $subQuery = db_connect()->table($query->table)->select('id');
-            foreach (array_keys($filters) as $key) {
-                if (is_int($key) && !$boolVendeur) {
-                    $subQuery->where('num_compte', $key);
-                    $boolVendeur=true;
-                }elseif(is_int($key) && $boolVendeur){
-                    $subQuery->orWhere('num_compte', $key);
-                }else{
-                    $subQuery->orWhere('categorie', $key);
-                }
+            foreach ($keyCat as $key) {
+                $subQuery->orWhere('categorie', $key);
+                
+            }
+            $query->whereIn('id',$subQuery);
+            $subQuery = db_connect()->table($query->table)->select('id');
+            foreach ($keyVend as $key) {
+                $subQuery->orWhere('num_compte', $key);
+                
             }
             $query->whereIn('id',$subQuery);
             

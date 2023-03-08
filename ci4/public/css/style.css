@@ -4225,6 +4225,10 @@ progress::-moz-progress-bar
     padding: 0;
 }
 
+.divAdressesCli h3 {
+    font-family: "Montserrat-Medium";
+}
+
 .cacheModifMdp {
     display: none;
 }

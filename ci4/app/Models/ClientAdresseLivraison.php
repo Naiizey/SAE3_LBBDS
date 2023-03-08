@@ -4,6 +4,14 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+
+/**
+ * Accéder aux adresses de livraison reliés à leurs client
+ *  
+ * Données:
+ *      * adresse: -**R**-- 
+ *      * client: -**R**-- 
+ */
 class ClientAdresseLivraison extends Model{
     protected $table = "sae3.adresse_livraison_client";
     protected $primaryKey = "num_compte";

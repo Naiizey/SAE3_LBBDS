@@ -129,21 +129,21 @@
                         </div>
                         <?php endif ?>
                         <div class="divListeAvis">
-                            <?php if (!empty($avis) && (session()->has("numero"))): ?>
+                            <?php if (!empty($avis) && (session()->has("numeroClient"))): ?>
                             <div class="divAjoutComment">
-                            <?php elseif ((!empty($avis)) && (!session()->has("numero"))): ?>
+                            <?php elseif ((!empty($avis)) && (!session()->has("numeroClient"))): ?>
                             <div class="divAjoutCommentConnect divConnectPetit">
                                 <p>Vous devez vous connecter pour commenter</p>
                                 <a href="<?= base_url() ?>/connexion/retourProduit/<?= $idProduit ?>">Se connecter</a>
                             </div>
                             <div class="divAjoutComment divAjoutCommentBlur">
-                            <?php elseif ((empty($avis)) && (!session()->has("numero"))): ?>
+                            <?php elseif ((empty($avis)) && (!session()->has("numeroClient"))): ?>
                             <div class="divAjoutCommentConnect divConnectGrand">
                                 <p>Vous devez vous connecter pour commenter</p>
                                 <a href="<?= base_url() ?>/connexion/retourProduit/<?= $idProduit ?>">Se connecter</a>
                             </div>
                             <div class="divAjoutComment divAjoutCommentBlur divAjoutCommentVide">
-                            <?php elseif ((empty($avis)) && (session()->has("numero"))): ?>
+                            <?php elseif ((empty($avis)) && (session()->has("numeroClient"))): ?>
                             <div class="divAjoutComment divAjoutCommentVide">
                             <?php endif ?>
                                 <form action="<?= current_url()."#avis" ?>" method="post">
@@ -186,7 +186,7 @@
                                                     <p><?= $unAvis->note_prod ?>/5</p>
                                                 </div>
                                             </section>
-                                            <?php if (session()->has("numero")): ?>
+                                            <?php if (session()->has("numeroClient")): ?>
                                                 <div class="divAvisContenuEtSignal">
                                                     <p><?= $unAvis->contenu_av ?></p>
                                                     <a class="drapeau<?= $unAvis->num_avis ?>">

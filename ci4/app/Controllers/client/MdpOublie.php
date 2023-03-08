@@ -14,21 +14,15 @@ class MdpOublie extends BaseController
     public function __construct()
     {
         helper('cookie');
-        if (session()->has("numero")) {
-            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
+        if (session()->has("numeroClient")) {
+            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numeroClient"));
         } else if (has_cookie("token_panier")) {
             $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
         } else {
             $GLOBALS["quant"] = 0;
         }
-        $config['protocol'] = 'smtp';
-        $config['SMTPHost'] = 'in-v3.mailjet.com';
-        $config['SMTPUser'] = '7983f5de3e77c24a967b541de7646c5a';
-        $config['SMTPPass']  = '847c8ec5bdc3fa55d8ed9176fdca509b';
-        $config['SMTPPort'] = '587';
-        $config['mailType'] = 'html';
         $this->email = \Config\Services::email();
-        $this->email->initialize($config);
+        // $this->email->initialize();
         if (!isset($_SESSION['code'])) {
             $_SESSION['code'] = $this->genererCode();
         }
@@ -39,7 +33,7 @@ class MdpOublie extends BaseController
         $data["controller"] = "mdpOublie";
 
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant de potentielles erreurs
-        $data['email'] = (isset($post['email'])) ? $post['email'] : "";
+        $data["email"] = (isset($post["email"])) ? $post["email"] : "";
         $data['code'] = (isset($post['code'])) ? $post['code'] : "";
         return view('client/mdpOublie.php', $data);
     }
@@ -58,14 +52,14 @@ class MdpOublie extends BaseController
     public function obtenirCode()
     {
         $post = $this->request->getPost();
-        $_SESSION["userMail"] = $post['email'];
+        $_SESSION["userMail"] = $post["email"];
         $clientModel = model("\App\Models\Client");
         if ($clientModel->doesEmailExists($_SESSION["userMail"])) {
             $_SESSION['code'] = $this->genererCode();
             $contenu = 'Voici le code de récupération pour votre compte :<br><span style="display: block;text-align: center;font-size:x-large">' . $_SESSION['code'] . '</span><br>Si vous n\'êtes pas l\'auteur de cette demande, ignorez ce mail ou contactez le support : support@alizon.net';
             $message = $this->genererMail("Réinitialiser votre mot de passe", $contenu);
             $this->email->setTo($_SESSION["userMail"]);
-            $this->email->setSubject('Récupération de mot de passe');
+            $this->email->setSubject('Récupération de mot de passe  ');
             $this->email->setMessage($message);
             $this->email->send();
         }
@@ -85,12 +79,12 @@ class MdpOublie extends BaseController
         if ($post['code'] == $_SESSION['code']) {
             $model = model("App\Models\Client");
             $nouveauMDP = $this->motDePasseAlea();
-            $entree = $model->where('email', $_SESSION["userMail"])->findAll()[0];
+            $entree = $model->where("email", $_SESSION["userMail"])->findAll()[0];
             $entree->motDePasse = $nouveauMDP;
             $entree->cryptMotDePasse();
             $model->save($entree);
             $contenu = 'Voici le nouveau mot de passe de votre compte :<br><span style="display: block;text-align: center;font-size:x-large">' . $nouveauMDP . '</span>Ceci est un mot de passe temporaire, vous pouvez le changer dans les paramètres de votre compte.<br>Si vous n\'êtes pas l\'auteur de cette demande, ignorez ce mail ou contactez le support : support@alizon.net';
-            $message = $this->genererMail("Nouveau   mot de passe", $contenu);
+            $message = $this->genererMail("Nouveau mot de passe", $contenu);
             $this->email->setFrom('admin@alizon.net', 'Administrateur - Alizon.net');
             $this->email->setTo($_SESSION["userMail"]);
             $this->email->setSubject('Nouveau mot de passe');

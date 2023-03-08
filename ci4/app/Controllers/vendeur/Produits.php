@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\client;
+namespace App\Controllers\vendeur;
 
 use Exception;
 use App\Controllers\BaseController;
@@ -46,7 +46,7 @@ class Produits extends BaseController {
         }
 
         try {
-            $query = model("\App\Models\ProduitCatalogue");
+            $query = model("\App\Models\ProduitCatalogueVendeur")->where("num_compte =", session()->get("numero_vendeur"));
             if ($sorts == null) {
                 $query->orderBy("intitule", "ASC");
             } else {
@@ -91,7 +91,7 @@ class Produits extends BaseController {
      * @param $filters array
      * @param $data $data
      *
-     * @return \App\Models\ProduitCatalogue
+     * @return \App\Models\ProduitVendeurCatalogue
      */
     private function casFilter($filters, $sorts) : object{
         
@@ -101,10 +101,8 @@ class Produits extends BaseController {
             unset($filters["search"]);
         }
 
-        $query = model("\App\Models\ProduitCatalogue", false);
-
-        
-
+        $query = model("\App\Models\ProduitCatalogueVendeur", false)->where("num_compte =", session()->get("numero_vendeur"));
+        dd($query);
 
         if (isset($filters["prix_min"]) && isset($filters["prix_max"])) {
             

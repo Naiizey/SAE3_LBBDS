@@ -1,7 +1,7 @@
 <?php require(dirname(__DIR__) . "/header.php"); ?>
     <main>
         <div class="divLst">
-            <?php if(!empty($commandesVend)): ?>
+            <?php if(!empty($commandesVendeur)): ?>
                 <table class="tableLst">
                     <thead>
                         <tr>
@@ -15,7 +15,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($commandesVend as $commandeVend): ?>
+                        <?php foreach ($commandesVendeur as $commandeVend): ?>
                             <tr class='lignesCommandes'>
                             <td class='numCommandes'><?= $commandeVend->num_commande ?></td>
                             <td><?= $commandeVend->num_compte ?></td>

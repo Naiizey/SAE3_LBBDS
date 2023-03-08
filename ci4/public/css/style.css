@@ -4,6 +4,13 @@
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+:root{
+    --client-color: #164F57;
+    --secondary-light: #D9D9D9;
+    --vendor-color: #3997a3;
+    --admin-color: #000000;
+}
+
 html {
     height : 100%;
     scroll-behavior: smooth;
@@ -11,24 +18,24 @@ html {
 
 body {
     margin: 0;
-    background-color: rgb(22, 79, 87);
+    background-color: var(--client-color);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
 .bodyAdmin {
-    background-color: black;
+    background-color: var(--admin-color);
 }
 
 .bodyVendeur {
-    background-color: #3997a3;
+    background-color: var(--vendor-color);
 }
 
 /* Firefox */
 * {
     scrollbar-width: auto;
-    scrollbar-color: rgb(22, 79, 87);
+    scrollbar-color: var(--client-color);
 }
 
 /* Chrome, Edge, and Safari */
@@ -37,16 +44,16 @@ body {
 }
 
 *::-webkit-scrollbar-track {
-    background: rgb(22, 79, 87);
+    background: var(--client-color);
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: #3997a3;
+    background-color: var(--vendor-color);
     border-radius: 10px;
 }
 
 h1 {
-    color: #D9D9D9;
+    color: var(--secondary-light);
     font-family: "Expletus Sans";
     margin: 0;
 }
@@ -65,7 +72,7 @@ header{
 }
 
 .divHeaderAlizon {
-    background-color: #164F57;
+    background-color: var(--client-color);
     display: flex;
     padding-left: 1%;
     padding-right: 1%;
@@ -76,11 +83,11 @@ header{
 }
 
 .divHeaderAdmin {
-    background-color: black;
+    background-color: var(--admin-color);
 }
 
 .divHeaderVendeur {
-    background-color: #3997a3;
+    background-color: var(--vendor-color);
 }
 
 header h2:hover {
@@ -88,7 +95,7 @@ header h2:hover {
 }
 
 header a:link, header a:hover, header a:active, header a:visited {
-    color: #D9D9D9;
+    color: var(--secondary-light);
     text-decoration: none;
 }
 
@@ -114,7 +121,7 @@ header h2, header nav {
 }
 
 .formRecherche {
-    background-color: #D9D9D9;
+    background-color: var(--secondary-light);
     padding: 0.3em 0.5em;
     border-radius: 1.5ex;
     display: flex;
@@ -179,19 +186,23 @@ header h2, header nav {
     left: 3.3rem;
     bottom: .5rem;
     border-radius: 50%;
-    border: black;
+    border: var(--admin-color);
     width: 1.5rem;
     height: 1.5rem;
     text-align: center;
-    background-color: #3997a3;
+    background-color: var(--vendor-color);
 }
 
 path{
-    fill: #d9d9d9;
+    fill: var(--secondary-light);
 }
 
 .logoLoupe path{
-    fill: black;
+    fill: var(--admin-color);
+}
+
+.checkmark path{
+    fill: transparent
 }
 
 /*.logoProfil:hover path, .logoPanier:hover path, .logoContact:hover path{
@@ -242,7 +253,7 @@ path{
 }
 
 .divNotConnected a, .divConnected a {
-    background-color: #3997A3;
+    background-color: var(--vendor-color);
     margin: .5em;
     padding: .2em;
     border-radius: 5px;
@@ -250,7 +261,7 @@ path{
 }
 
 .divNotConnected a:hover, .divConnected a:hover {
-    background-color: #164F57;
+    background-color: var(--client-color);
 }
 
 .divNotConnected a + a, .divConnected a + a {
@@ -271,7 +282,7 @@ path{
 }
 
 .pNom {
-    color: #164F57;
+    color: var(--client-color);
 }
 
 hr {
@@ -284,7 +295,7 @@ hr {
 }
 
 nav {
-    background-color: #3997A3;
+    background-color: var(--vendor-color);
 }
 
 p {
@@ -305,7 +316,7 @@ main {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    color: #D9D9D9;
+    color: var(--secondary-light);
     width: 40rem;
     height: 80%;
 }
@@ -333,7 +344,7 @@ main {
 .divSuivi hr {
     height: 3px;
     width: 12%;
-    background-color: #D9D9D9;
+    background-color: var(--secondary-light);
 }
 
 .requis{
@@ -416,11 +427,11 @@ main {
     }
 
     .footerAdmin .mobile {
-        background-color: black;
+        background-color: var(--admin-color);
     }
 
     .footerVendeur .mobile {
-        background-color: #3997a3;
+        background-color: var(--vendor-color);
     }
 }
 
@@ -438,17 +449,17 @@ button.hidden{
 footer {
     position: relative;
     top: 2em;
-    background-color: #164F57;
+    background-color: var(--client-color);
     text-align: center;
     z-index: 100;
 }
 
 .footerAdmin {
-    background-color: black;
+    background-color: var(--admin-color);
 }
 
 .footerVendeur {
-    background-color: #3997a3;
+    background-color: var(--vendor-color);
 }
 
 footer .pc {
@@ -461,11 +472,11 @@ footer .mobile{
 }
 
 footer > p {
-    color: #D9D9D9;
+    color: var(--secondary-light);
 }
 
 footer a{
-    color: #D9D9D9;
+    color: var(--secondary-light);
 }
 
 .mentionsLegales + div{
@@ -485,7 +496,7 @@ footer a{
     footer .mobile{
         position: fixed;
         bottom: 0;
-        background-color: #164f57;
+        background-color: var(--client-color);
         width: 100%;
         height: 3.5rem;
         display: flex;
@@ -523,7 +534,7 @@ footer a{
     }
 
     footer .mobile li div{
-        background-color: #D9D9D9;
+        background-color: var(--secondary-light);
         width: 75%;
         height: .1rem;
         border-radius: 15ex;
@@ -539,7 +550,7 @@ footer a{
         width: 100%;
         top: 6rem;
         left: 0;
-        background-color: #D9D9D9;
+        background-color: var(--secondary-light);
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
@@ -551,7 +562,7 @@ footer a{
 
     .menu p{
         font-size: 1.5em;
-        color: #164f57;
+        color: var(--client-color);
     }
 
     .alizonCPY{
@@ -593,7 +604,7 @@ footer a{
 }
 
 .alerte-validation.valide{
-    background-color: #3997a3;
+    background-color: var(--vendor-color);
 }
 .alerte-validation.invalide{
     background-color: rgb(199, 54, 0);
@@ -734,7 +745,7 @@ div.bloc-erreur-liste-produit  {
     width: 55%;
     max-width: 700px;
     /*height: 35%;*/
-    border: #3997A3 solid 2px;    
+    border: var(--vendor-color) solid 2px;    
 }
 
 .alerte h2, .alerte p{
@@ -827,7 +838,7 @@ header ul {
 }
 
 .liCategorie:before {
-    color: #164F57;
+    color: var(--client-color);
     position: absolute;
     left: 0;
     top: 0;
@@ -844,7 +855,7 @@ header ul {
 }
 
 .liCategorie:hover .categorie {
-    color: #164F57;
+    color: var(--client-color);
 }
 
 .liCategorie:hover:before {
@@ -943,13 +954,13 @@ header ul {
 
 .titreAccueil hr {
     width: 28em;
-    background-color: #3997A3;
+    background-color: var(--vendor-color);
     height: 6px;
 }
 
 .titreAccueil h1 {
     font-size: xx-large;
-    color: #164F57;
+    color: var(--client-color);
     padding-right: .2em;
 }
 
@@ -970,7 +981,7 @@ header ul {
 .mainAccueil section p {
     text-align:justify;
     margin: 1em 6em;
-    color: #164F57;
+    color: var(--client-color);
 }
 
 .mainAccueil section div p {
@@ -987,14 +998,14 @@ header ul {
     background-color: white;
     padding: .5em 2em;
     text-decoration: none;
-    color: #164F57;
+    color: var(--client-color);
     transition: background-color .4s;
     border: solid 2px;
     border-color: #C6C6C6;
 }
 
 .mainAccueil section .seeMoreBtn:hover {
-    background-color: #164F57;
+    background-color: var(--client-color);
     color: #F3F3F3;
     border: none;
 }
@@ -1004,7 +1015,7 @@ header ul {
     justify-content: space-around;
     font-family: "Montserrat-Regular";
     font-size: x-large;
-    color: #164F57;
+    color: var(--client-color);
 }
 
 .iconesAccueil figure path {
@@ -1126,7 +1137,7 @@ header ul {
     border: solid 2px;
     border-color: #C6C6C6;
     background-color: white;
-    color: #164F57;
+    color: var(--client-color);
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -1157,7 +1168,7 @@ header ul {
 }
 
 .sectionCredit input[type="submit"]:hover, .gros-bouton:hover {
-    background-color: #164F57;
+    background-color: var(--client-color);
     color: white;
 }
 
@@ -1184,7 +1195,7 @@ header ul {
 }
 
 .divCredit a, .divFormAdresse a {
-    color: #164F57;
+    color: var(--client-color);
     text-decoration: none;
     margin-left: 2px;
 }
@@ -1305,8 +1316,8 @@ header ul {
    
 }
 .sectionCredit a.deja-rempli-lien:hover{
-    color: #164F57;
-    fill: #164F57;
+    color: var(--client-color);
+    fill: var(--client-color);
 }
 .sectionCredit a.deja-rempli-lien span{
     vertical-align: bottom; ;
@@ -1487,7 +1498,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
     display: flex;
     flex-direction: column;
     background-color: #f3f3f3;
-    color: #164F57;
+    color: var(--client-color);
     font-family: "Montserrat-Medium";
     text-align: left;
 }
@@ -1501,13 +1512,13 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 }
 
 .mainPanier hr {
-    background-color: #164F57;
+    background-color: var(--client-color);
     margin: 1em 0;
 }
 
 .mainPanier img {
     border: solid 2px;
-    border-color: #164F57;
+    border-color: var(--client-color);
     border-radius: 3px;
     width: 10em;
     height: 10em;
@@ -1547,7 +1558,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 }
 
 .mainPanier .divCodeReduc input[type="submit"]:hover {
-    background-color: #164F57;
+    background-color: var(--client-color);
 }
 
 .mainPanier .divCodeReduc {
@@ -1568,7 +1579,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 
 .mainPanier aside .lienPanierVide {
     background-color: #BDBFBB;
-    color: #164F57;
+    color: var(--client-color);
     border-radius: 10px;
     padding: 0.5em 1em 0.5em 1em;
     margin-top: 0.5em;
@@ -1580,7 +1591,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 
 .mainPanier aside .lienPanierVide:hover {
     background-color: #BDBFBB;
-    color: #164F57;
+    color: var(--client-color);
 }
 
 .divPanierEtAside {
@@ -1596,7 +1607,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
     flex-direction: column;
     justify-content: space-between;
     background-color: white;
-    color: #164F57;
+    color: var(--client-color);
     width: 70%;
     padding: 1em;
     border: solid 2px;
@@ -1606,14 +1617,14 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 .sectionPanier h2{
     font-family: "Montserrat-Regular";
     font-size: 1.4em;
-    color: #164F57;
+    color: var(--client-color);
     text-align: left;
 }
 
 .sectionPanier h3,.recap h3 {
     font-family: "Montserrat-Medium";
     font-size: 1.1em;
-    color: #164F57;
+    color: var(--client-color);
     margin: 0;
 }
 
@@ -1625,7 +1636,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 }
 
 .sectionPanier a {
-    color: #164F57;
+    color: var(--client-color);
     font-family: "Montserrat-Medium";
     font-size: 1em;
 }
@@ -1650,7 +1661,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 
 .divPanierHeader {
     font-family: "Montserrat-Medium";
-    color: #164F57;
+    color: var(--client-color);
     display: flex;
     font-size: 1.4em;
     justify-content: space-between;
@@ -1687,7 +1698,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 }
 
 .panierDescription {
-    color: #164F57;
+    color: var(--client-color);
     margin-bottom: 0;
 }
 
@@ -1727,7 +1738,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 }
 
 .lienViderPanier {
-    color: #164F57;
+    color: var(--client-color);
     border-radius: 10px;
     padding: 0.5em 1em;
     margin-top: 0.5em;
@@ -1745,7 +1756,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 }
 
 .desactive:hover {
-    color: #164F57;
+    color: var(--client-color);
     background-color: white;
 }
 
@@ -1761,14 +1772,14 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 }
 
 .lienPanier:hover {
-    background-color: #164F57;
+    background-color: var(--client-color);
     color: white;
 }
 
 .sectionRecommandationsPanierPC, .sectionRecommandationsPanierMobile, .divAvis {
     border: solid 2px;
     border-color: #C6C6C6;  
-    color: #164F57;
+    color: var(--client-color);
     background-color: white;
     margin-top: 2em;
     padding: 1em;
@@ -1793,7 +1804,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 }
 
 .sectionRecommandationsPanierPC hr, .sectionRecommandationsPanierMobile hr {
-    background-color: #164F57;
+    background-color: var(--client-color);
     margin: 1em 0;
 }
 
@@ -1834,10 +1845,6 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 .sectionRecommandationsPanierPC .addPanier{
     width: 1rem;
     height: 1rem;
-}
-
-.sectionRecommandationsPanierPC .addPanier svg{
-    position: relative;
 }
 
 .sectionRecommandationsPanierPC .notation-card{
@@ -1922,7 +1929,7 @@ h3 > .lienPasArticlePanier {
     }
 
     .lienAlizonPanier svg path{
-        fill: black;
+        fill: var(--admin-color);
     }
 
     .divPanierEtAside{
@@ -2056,7 +2063,7 @@ h3 > .lienPasArticlePanier {
 
 .mainProduit a, .aucunAvis {
     text-decoration: none;
-    color: #164F57;
+    color: var(--client-color);
 }
 
 .divGauche a {
@@ -2141,7 +2148,7 @@ h3 > .lienPasArticlePanier {
 
 .divDroite h2 {
     text-align: left;
-    color: #164F57;
+    color: var(--client-color);
 }
 
 .sectionAvis {
@@ -2165,7 +2172,7 @@ h3 > .lienPasArticlePanier {
 }
 
 .divAvisContenuEtSignal svg {
-    fill: #164F57;
+    fill: var(--client-color);
     height: 1.5em;
     width: 1.5em;
 }
@@ -2199,7 +2206,7 @@ h3 > .lienPasArticlePanier {
 }
 
 .divAcheterProduit button:hover {
-    background-color: #164F57;
+    background-color: var(--client-color);
 }
 
 .divQuantiteProduit {
@@ -2234,10 +2241,10 @@ h3 > .lienPasArticlePanier {
     left: 30%;
     right: 30%;
     z-index: 99;
-    border: #3997A3 solid 2px;
+    border: var(--vendor-color) solid 2px;
     padding: 1em;
     text-align: justify;
-    color: #164F57;
+    color: var(--client-color);
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -2351,7 +2358,7 @@ h3 > .lienPasArticlePanier {
     border-left: none;
     border-right: none;
     outline: none;
-    border-bottom: #d9d9d9 solid 2px;
+    border-bottom: var(--secondary-light) solid 2px;
     font-family: "Montserrat-Regular";
     font-size: medium;
 }
@@ -2516,16 +2523,16 @@ h3 > .lienPasArticlePanier {
 }
 
 .divUnAvis hr {
-    background-color: #164F57;
+    background-color: var(--client-color);
     margin: 1em 0;
 }
 
 .sectionUnAvis + p {
-    color: black;
+    color: var(--admin-color);
 }
 
 .divAvis hr {
-    background-color: #164F57;
+    background-color: var(--client-color);
     margin: 1em 0;
 }
 
@@ -2560,7 +2567,7 @@ h3 > .lienPasArticlePanier {
 }
 
 .moyennesAvis progress {
-    background-color: #D9D9D9;
+    background-color: var(--secondary-light);
     height: 10px;
     width: 75%;
     border: none;
@@ -2844,7 +2851,7 @@ main div.card-produit-ext:hover{
     font-size: 1.4rem ;
     position: relative;
     background-color: white;
-    color: #164F57;
+    color: var(--client-color);
     cursor: pointer;
     border: solid 2px;
     border-color: #C6C6C6;
@@ -2863,7 +2870,7 @@ main div.card-produit-ext:hover{
 }
 
 .notation-card{
-    background-color: #164F57;
+    background-color: var(--client-color);
     width: 100%;
     height: 1.75rem;
     display: flex;
@@ -2902,7 +2909,7 @@ div.image-card{
 .addPanier {
     width: 2rem;
     height: 2rem;
-    background-color: #3997A3;
+    background-color: var(--vendor-color);
     border-radius: 0.2em;
     padding: 0.3rem;
 }
@@ -2910,6 +2917,10 @@ div.image-card{
 .addPanier svg {
     margin: 0;
     width: 100%;
+}
+
+.cart, .checkmark{
+    display: none;
 }
 
 @media screen and (max-width: 480px){
@@ -2936,13 +2947,6 @@ div.image-card{
         width: 1.5rem;
         height: 1.5rem;
         padding: 0.2rem;
-    }
-}
-
-@media screen and (max-width: 960px){
-    .sectionRecommandationsPanierMobile .addPanier svg{
-        position: relative;
-        top: -.5em;
     }
 }
 
@@ -2974,12 +2978,6 @@ div.image-card{
 
     #Catalogue .image-card{
         height: 7em;
-    }
-}
-
-@media screen and (min-width: 1281px){
-    .addPanier svg{
-        top: -.7em;
     }
 }
 
@@ -3052,8 +3050,8 @@ main#Catalogue{
     border-radius: 50%;
     transform: scale(0);
     transition: transform 120ms ease-in-out;
-    box-shadow: inset .75rem .75rem #164F57;
-    background-color: #164f57;
+    box-shadow: inset .75rem .75rem var(--client-color);
+    background-color: var(--client-color);
 }
 
 .partie-tris form div input[type="radio"]:checked::before{
@@ -3063,7 +3061,7 @@ main#Catalogue{
 #ordre {
     cursor: pointer;
     width: 75%; 
-    background-color: #3997a3;
+    background-color: var(--vendor-color);
     color: white;
     height: 3rem;
     border: transparent;
@@ -3079,7 +3077,7 @@ main#Catalogue{
 }
 
 .normal-button.blanc{
-    color: #164F57;
+    color: var(--client-color);
     background-color: white;
     border: #404E58 solid 1px;
 }
@@ -3097,7 +3095,7 @@ main#Catalogue{
 }
 
 .normal-button.vert:hover{
-    background-color: #164F57;
+    background-color: var(--client-color);
 }
 .normal-button.rouge:hover{
     background-color: #571616;
@@ -3120,6 +3118,14 @@ main#Catalogue{
 .liste-produits{
     display: flex;
     flex-wrap: wrap;    
+}
+
+.liste-prod-vendeur .notation-card{
+    background-color: var(--vendor-color);
+}
+
+.liste-prod-vendeur .addPanier{
+    background-color: var(--client-color);
 }
 
 .liste-filtre, .liste-tris{
@@ -3146,7 +3152,7 @@ main#Catalogue{
     width: auto;
     width: 55%;
     text-align: left;
-    color: #164F57;
+    color: var(--client-color);
     font-size: 1.25rem;
 }
 
@@ -3231,7 +3237,7 @@ main#Catalogue{
     cursor: pointer;
     width: 15rem;
     text-align: left;
-    color: #164F57;
+    color: var(--client-color);
     font-size: 1.5rem;
 }
 
@@ -3263,7 +3269,7 @@ main#Catalogue{
     text-align: center;
     -webkit-appearance: none;
     -moz-appearance: textfield;
-    border: 1px solid #164F57;
+    border: 1px solid var(--client-color);
     border-radius: .5em;
 }
 
@@ -3343,13 +3349,17 @@ input[type="range"]::-moz-range-thumb {
     width: 100%;
     height: 4.5rem;
     border-radius: 35px;
-    background-color: #164F57;
+    background-color: var(--client-color);
     z-index: 5;
     border: none;
-    color: #D9D9D9;
+    color: var(--secondary-light);
     justify-content: center;
     align-items: center;
     gap: 5px;
+}
+
+.bubbles-vendeur .bulle-ouvrir-filtres, .bubbles-vendeur .bulle-ouvrir-tris{
+    background-color: var(--vendor-color);
 }
 
 .bulle-ouvrir-tris {
@@ -3364,7 +3374,11 @@ input[type="range"]::-moz-range-thumb {
 .titre-filtre, .titre-tris, .categorie-catalogue summary{
     padding: 15px 0 ;
     min-width: 100%;
-    background-color: #164F57
+    background-color: var(--client-color)
+}
+
+.bodyVendeur .titre-filtre, .bodyVendeur .titre-tris{
+    background-color: var(--vendor-color);
 }
 
 .categorie-catalogue h2{
@@ -3385,7 +3399,7 @@ input[type="range"]::-moz-range-thumb {
     color: inherit;
     padding: 15px 0;
     margin: 0;
-    color : #164F57;
+    color : var(--client-color);
     font-size: larger;
 }
 
@@ -3403,7 +3417,7 @@ input[type="range"]::-moz-range-thumb {
 .categorie-catalogue summary {
     cursor: pointer;
     box-sizing: border-box;
-    color: #164F57;
+    color: var(--client-color);
 }
 
 .categorie-catalogue summary{
@@ -3415,7 +3429,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .liste-filtre details, .liste-sous-categories{
-    background-color: #3997a377;
+    background-color: var(--vendor-color)77;
     margin: 0;
     list-style: none;
 }
@@ -3435,12 +3449,12 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .liste-sous-categories option{
-    color: #164F57; 
+    color: var(--client-color); 
     
 }
 
 .liste-sous-categories option::before{
-    color: #164F57;
+    color: var(--client-color);
 }
 
 
@@ -3472,7 +3486,7 @@ a.fleche-page{
 }
 
 .fleche-page.disponible svg path, .fleche-page.disponible img path{
-    fill:#164F57;
+    fill:var(--client-color);
 }
 
 .current-page{
@@ -3484,7 +3498,7 @@ a.fleche-page{
 .current-page span, .apres-current-page a, .avant-current-page a{
     font-family: 'Montserrat-Bold';
     
-    color: #164F57;
+    color: var(--client-color);
 }
 
 .apres-current-page a, .avant-current-page a{
@@ -3716,7 +3730,7 @@ a.fleche-page{
     padding: 0;
     height: auto;
     border-radius: 0;
-    background-color: #3997A3;
+    background-color: var(--vendor-color);
 }
 
 /*
@@ -3741,7 +3755,7 @@ a.fleche-page{
 }
 
 .tableLst thead{
-    background-color: #D9D9D9;
+    background-color: var(--secondary-light);
 }
 
 .tableLst tr{
@@ -3814,7 +3828,7 @@ a.fleche-page{
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 .divPrincipaleDetail {
-    color: #164F57;
+    color: var(--client-color);
 }
 
 .divDetail, .divDroiteDetail > div {
@@ -3911,7 +3925,7 @@ progress::-moz-progress-bar
 }
 
 .divDetail hr, .divDroiteDetail hr {
-    background-color: #164F57;
+    background-color: var(--client-color);
 }
 
 .divDroiteDetail > div {
@@ -3932,7 +3946,7 @@ progress::-moz-progress-bar
 }
 
 .btnTelecharger a {
-    background-color: #164F57;
+    background-color: var(--client-color);
     margin: .4em 0;
     padding: .3em 0;
     text-decoration: none;
@@ -4029,7 +4043,7 @@ progress::-moz-progress-bar
     z-index: 100;
     position: absolute;
     margin: 6em 18em 1em 18em;
-    border: #3997A3 solid 2px;
+    border: var(--vendor-color) solid 2px;
     padding: 2em;
     background-color: white;
     overflow-y: scroll;
@@ -4082,7 +4096,7 @@ progress::-moz-progress-bar
 }
 
 .mentionsLegales svg path {
-    fill: #164F57;
+    fill: var(--client-color);
 }
 
 @media screen and (max-width: 480px){
@@ -4100,30 +4114,33 @@ progress::-moz-progress-bar
     background-color: #f3f3f3;
 }
 
-.mainProfil > svg {
+.mainProfil > svg, .mainProfil > img {
     height: 10em;
 }
 
-.mainProfil > svg path {
-    fill: black;
+.mainEspaceCli > svg path {
+    fill: var(--admin-color);
 }
 
-.mainProfil > svg:hover path {
-    fill: black;
+.mainEspaceCli > svg:hover path {
+    fill: var(--admin-color);
 }
 
-.mainProfil h2 {
-    color: #164F57;
+.mainEspaceCli h2 {
+    color: var(--client-color);
     margin: 1em 0;
 }
 
-.mainProfil h3 {
-    color: #164F57;
+.mainEspaceCli h3 {
+    color: var(--client-color);
     font-family: "Montserrat-Medium";
 }
 
 .divProfil {
     margin: 0 20%;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
 }
 
 .divInputEtLien {
@@ -4148,7 +4165,7 @@ progress::-moz-progress-bar
 
 .divInputEtLien input:disabled {
     opacity: 1;
-    color: black;
+    color: var(--admin-color);
 }
 
 .sectionCredit svg {
@@ -4156,7 +4173,7 @@ progress::-moz-progress-bar
 }
 
 .sectionCredit svg path {
-    fill: #164F57;
+    fill: var(--client-color);
 }
 
 .divModifier input[type="email"] input[type="text"] {
@@ -4178,8 +4195,16 @@ progress::-moz-progress-bar
     padding: 0;
 }
 
+.divAdressesCli h3 {
+    font-family: "Montserrat-Medium";
+}
+
 .cacheModifMdp {
     display: none;
+}
+
+.centreNoteProfil {
+    align-self: center;
 }
 
 @media screen and (max-width: 991px) {
@@ -4275,7 +4300,7 @@ progress::-moz-progress-bar
     align-items: center;
     display: flex;
     justify-content: center;
-    color: #d9d9d9;
+    color: var(--secondary-light);
     text-align: center;
     font-size: 1.5em;
 }
@@ -4299,7 +4324,7 @@ progress::-moz-progress-bar
 }
 
 #details p span a {
-    color: #3997A3;
+    color: var(--vendor-color);
 }
 
 /*
@@ -4361,7 +4386,7 @@ progress::-moz-progress-bar
 }
 
 .sectionAdmin a {
-    background-color: #3997A3;
+    background-color: var(--vendor-color);
     border-radius: 7px;
     color: white;
     padding: 0.5em 1em;
@@ -4369,7 +4394,7 @@ progress::-moz-progress-bar
 }
 
 .sectionAdmin a:hover {
-    background-color: #164F57;
+    background-color: var(--client-color);
     color: white;
 }
 

@@ -191,7 +191,7 @@ DECLARE
         SELECT id_reduction fROM sae3._reduire WHERE num_panier = (SELECT num_panier FROM sae3._panier_client WHERE  num_compte = new.num_compte) into id_reduction_temp;
         
     
-        INSERT INTO sae3._commande(num_commande, date_commande, id_a,num_compte,id_reduction) VALUES (new.num_commande, current_date,new.id_a,new.num_compte,id_reduction_temp); -- changer new.id_reduction (trouver le client puis l'id de réduction qui est associé au panier)
+        INSERT INTO sae3._commande(num_commande, date_commande,date_expedition, id_a,num_compte,id_reduction) VALUES (new.num_commande, current_date,current_date ,new.id_a,new.num_compte,id_reduction_temp); -- changer new.id_reduction (trouver le client puis l'id de réduction qui est associé au panier)
 
 
         PERFORM num_panier FROM sae3._panier_client natural join sae3._refere where num_compte=new.num_compte;

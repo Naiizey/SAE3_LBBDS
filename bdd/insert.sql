@@ -363,7 +363,7 @@ INSERT INTO  _recevoir_facture VALUES (3, 2);
 INSERT INTO _refere (qte_panier, id_prod, num_panier) VALUES (2, 32, CURRVAL('sae3._panier_num_panier_seq'));
 
 --10 insertions dans _commande (num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a, id_adresse)
-INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a, id_reduction) VALUES (1,'1', '2023-02-01', null, null, null, null, 1, 3);
+INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a, id_reduction) VALUES (1,'1', '2023-02-01', '2023-02-01', null, null, null, 1, 3);
 INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a,id_reduction) VALUES (1,'2', '2022-12-01', '2022-12-02', '2022-12-05', null, null, 2, 2);
 INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a) VALUES (1,'3', '2022-07-22', '2022-07-23', '2022-07-27', '2022-07-29', '2022-07-30', 3);
 INSERT INTO _commande(num_compte, num_commande, date_commande, date_expedition, date_plateformereg, date_plateformeloc, date_arriv, id_a,id_reduction) VALUES (1,'4', '2022-05-01', '2022-05-02', '2022-05-04', '2022-05-06', '2022-05-07', 1, 1);

@@ -120,6 +120,8 @@ CREATE OR REPLACE VIEW commande_list_produits_client AS
 CREATE OR REPLACE VIEW insert_commande AS
     SELECT num_commande,num_compte,id_a,id_reduction FROM _commande NATURAL JOIN _panier_client;
 
+CREATE OR REPLACE VIEW commande AS
+    SELECT * FROM _commande;
 
 
 

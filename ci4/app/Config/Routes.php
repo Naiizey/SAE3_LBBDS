@@ -37,6 +37,7 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 
 $routes->get('/test', 'Test::test4');
+$routes->get('/test2', 'Test::test5');
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

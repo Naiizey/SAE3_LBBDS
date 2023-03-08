@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Entities\Commande;
 use \App\Entities\CommandeCli as CommandeCli;
+use App\Models\Commande as ModelsCommande;
+use App\Services\SessionLBBDP;
 use CodeIgniter\Model;
 use Exception;
 
@@ -13,14 +16,17 @@ use Exception;
  *      * commande: **CR**-- 
  *      * client: -**R**-- 
  */
-class LstCommandesCli extends Commande
+class LstCommandesCli extends ModelsCommande
 {
     protected $table      = 'sae3.commande_list_client';
-    protected $allowedFields = ['num_commande','num_compte','date_commande','date_arriv','prix_ht','prix_ttc','etat', 'montant_reduction', 'pourcentage_reduction'];
+    protected $allowedFields = ['num_commande','num_compte','date_commande','date_expedition','date_arriv','prix_ht','prix_ttc','etat', 'montant_reduction', 'pourcentage_reduction'];
     protected $returnType     = CommandeCli::class;
+    
+    protected $primaryKey = 'num_commande';
     
     public function getCompteCommandes() : array
     { 
+        (new ModelsCommande())->majCommandes();
         return $this->where('num_compte',session()->get("numero"))->findAll();
     }
 
@@ -42,10 +48,21 @@ class LstCommandesCli extends Commande
                 "num_commande"=>$numCommande,
                 "num_compte"=>$numClient,
                 "id_a"=>$id_adresse_livr
-        ));            
+        ));  
+
+     
+        $this->livreurs->nouvelleCommande(new Commande(array(
+            "identifiant"=>$numCommande,
+            "time"=>0,
+            "etat" => "En charge"
+        )));
+    
     }
 
     public function getCommandeById($num_commande){
+        (new ModelsCommande())->majCommandes();
         return $this->where('num_commande',$num_commande)->findAll();
     }
+
+
 }

@@ -68,19 +68,28 @@ class Test extends BaseController{
 
         public function test4(){
             $sC=service('lbbdp');
+            $rep="02";
+            d(intval($rep),$rep);
+            
             $C=new Commande();
-            $C->fill(array("identifiant" => "2", 
+            $C->fill(array("identifiant" => "1", 
             "nombre" => 5, 
             "time" => 0,
             "etat" => "En charge", 
             "retard"=> 2));
             $C2=new Commande();
-            $C2->fill(array("identifiant" => "8", 
+            $C2->fill(array("identifiant" => "4", 
             "nombre" => 5, 
             "time" => 0,
             "etat" => "En charge", 
             "retard"=> 2));
-            //d($sC->nouvelleCommande(array($C,$C2)));
-            d($sC->getCommandes());
+            d($sC->nouvelleCommande(array($C,$C2)));
+            
+            d($sC->getAndRepCommandes());
+        }
+
+        public function test5(){
+            $C=new \App\Models\Commande();
+            $C->majCommandes();
         }
 }

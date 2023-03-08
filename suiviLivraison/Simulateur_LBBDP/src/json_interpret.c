@@ -323,8 +323,8 @@ cJSON * prepLivraison(Livraison e){
     
 
     cJSON * livraison = cJSON_CreateObject();
-    cJSON_AddItemToObject(livraison,"identfiant",cJSON_CreateString(e.identifiant));
-    cJSON_AddItemToObject(livraison,"jour",cJSON_CreateNumber(e.jours));
+    cJSON_AddItemToObject(livraison,"identifiant",cJSON_CreateString(e.identifiant));
+    cJSON_AddItemToObject(livraison,"time",cJSON_CreateNumber(e.jours));
     cJSON_AddItemToObject(livraison,"etat",cJSON_CreateString(e.etat));
     return livraison;
     

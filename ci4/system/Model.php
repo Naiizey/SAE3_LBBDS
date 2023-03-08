@@ -482,7 +482,9 @@ class Model extends BaseModel
      */
     public function getIdValue($data)
     {
-        if (is_object($data) && isset($data->{$this->primaryKey})) {
+     
+        if (is_object($data) && !is_null($data->{$this->primaryKey})) {
+            
             return $data->{$this->primaryKey};
         }
 

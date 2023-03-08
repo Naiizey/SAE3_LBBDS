@@ -70,9 +70,10 @@
                 </table> 
                 <h2 class="h2Presentation">Présentation</h2>
                 <p><?= $glossaire['texte_presentation']; ?></p>
-            </section>   
+            </section>
             <section class="sectionProduits">
             <?php foreach ($articles as $article): ?>
+            <?php if ($article['num_image'] == 0): ?>
                 <div class="divUnProduit">
                     <img src="<?= $article['lien_image']; ?>">
                     <div class="divNomDescription">
@@ -85,6 +86,7 @@
                     </div>
                 </div>
                 <hr>
+            <?php endif;?>
             <?php endforeach;?>
             </section>
         </main>

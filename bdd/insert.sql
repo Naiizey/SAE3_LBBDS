@@ -297,12 +297,12 @@ INSERT INTO _image_prod(id_prod, lien_image, estinterne,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg', true,0);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
-VALUES (148,'Tarte campagnarde',8,9.6,'Carrotes, fromage, jambon, champigons. Produit incroyablement bon qui fond très bien en bouche.',  true, 10, 4.5, 5, true, 5);
+VALUES (148,'Tarte campagnarde',8,9.6,'Carrotes, fromage, jambon, champigons. Produit incroyablement bon qui fond très bien en bouche.',  true, 10, 4.5, 5, true, 6);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg',0);
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
-VALUES (149,'Galets bretons',1000,1200,'Galets de fabrique bretonne, configuration : quartz 12%, calcaire 5%, granite 83%; galet certifié de provenance d''une plage de Perros-Guirec.',  true, 10, 4.5, 5, true, 5);
+VALUES (149,'Galets bretons',1000,1200,'Galets de fabrique bretonne, configuration : quartz 12%, calcaire 5%, granite 83%; galet certifié de provenance d''une plage de Perros-Guirec.',  true, 10, 4.5, 5, true, 6);
 INSERT INTO _image_prod(id_prod, lien_image,num_image)
 VALUES (currval('sae3._produit_id_prod_seq'),'https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg',0 );
 

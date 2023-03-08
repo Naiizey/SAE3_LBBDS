@@ -116,9 +116,17 @@ class Produits extends BaseController {
 
         
         if (!empty($filters)) {
+            $boolVendeur=false;
             $subQuery = db_connect()->table($query->table)->select('id');
             foreach (array_keys($filters) as $key) {
-                $subQuery->orWhere('categorie', $key);
+                if (is_int($key) && !$boolVendeur) {
+                    $subQuery->where('num_compte', $key);
+                    $boolVendeur=true;
+                }elseif(is_int($key) && $boolVendeur){
+                    $subQuery->orWhere('num_compte', $key);
+                }else{
+                    $subQuery->orWhere('categorie', $key);
+                }
             }
             $query->whereIn('id',$subQuery);
             

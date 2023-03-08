@@ -46,7 +46,7 @@ class Produits extends BaseController {
         }
 
         try {
-            $query = model("\App\Models\ProduitCatalogueVendeur")->where("num_compte =", session()->get("numero_vendeur"));
+            $query = model("\App\Models\ProduitCatalogueVendeur")->where("num_compte =", session()->get("numeroVendeur"));
             if ($sorts == null) {
                 $query->orderBy("intitule", "ASC");
             } else {
@@ -101,7 +101,7 @@ class Produits extends BaseController {
             unset($filters["search"]);
         }
 
-        $query = model("\App\Models\ProduitCatalogueVendeur", false)->where("num_compte =", session()->get("numero_vendeur"));
+        $query = model("\App\Models\ProduitCatalogueVendeur", false)->where("num_compte =", session()->get("numeroVendeur"));
         dd($query);
 
         if (isset($filters["prix_min"]) && isset($filters["prix_max"])) {

@@ -206,7 +206,7 @@ class Authentification
             $entree->nom_rue = "Nom";
             $entree->code_postal = 22222;
             $entree->ville = "Ville";
-            $entree->logo = NULL;
+            $entree->logo = "https://webstockreview.net/images/sample-png-images-8.png";
 
             $entree->cryptMotDePasse();
             $compteModel->save($entree);
@@ -214,7 +214,7 @@ class Authentification
             $session = session();
             $user=$compteModel->where("email",$entree->email)->findAll()[0];
             $session->set("numeroVendeur",$user->numero);
-
+            $session->set("identifiantVendeur",$user->identifiant);
             $session->set("just_connectee",True);
         }
 

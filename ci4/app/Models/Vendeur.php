@@ -48,4 +48,14 @@ class Vendeur extends Compte
     {
         parent::saveCompte($vendeur);
     }
+
+    public function doesEmailExists($email) : bool
+    {
+        return model("\App\Model\Compte")->doesEmailExists($email);
+    }
+
+    public function doesPseudoExists($pseudo) : bool
+    {
+        return model("\App\Model\Compte")->doesPseudoExists($pseudo);
+    }
 }

@@ -15,7 +15,7 @@ use CodeIgniter\Model;
 
 class ProduitCatalogueVendeur extends Model
 {
-    protected $table      = 'sae3.glossaire_vendeur';
+    protected $table      = 'sae3.produit_catalogue_vendeur';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = false;

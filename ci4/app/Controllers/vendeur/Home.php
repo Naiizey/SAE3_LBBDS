@@ -247,7 +247,7 @@ class Home extends BaseController
         $data["erreurs"] = [];
         $commandesCli = model("\App\Models\LstCommandesCli")->getCompteCommandes();
         $articles = model("\App\Models\DetailsCommande")->getArticles(session()->get("numero"));
-        $vendeur = model("\App\Models\Vendeur")->getVendeurById(session()->get("numero_vendeur"));
+        $vendeur = model("\App\Models\Vendeur")->getVendeurById(session()->get("numeroVendeur"));
 
         if (!empty($post)) 
         {

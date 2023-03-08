@@ -149,7 +149,7 @@ p {
     align-items: center;
 }
 
-.divUnProduit img {
+.divUnProduit > img {
     object-fit: cover;
     height: 8em;
     width: 8em;

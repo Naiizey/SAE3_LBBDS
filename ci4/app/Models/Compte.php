@@ -10,19 +10,16 @@ use CodeIgniter\Model;
  * @abstract App\Models\Client et de App\Models\Vendeur 
  * 
  */
-abstract class Compte extends Model
+class Compte extends Model
 {
-    /*
-    protected $table      = 'sae3.client';
+    protected $table      = 'sae3.compte';
     protected $primaryKey = 'numero';
 
     protected $useAutoIncrement = true;
-
-    protected $returnType     = \App\Entities\Client::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['nom','prenom',"email","identifiant","motDePasse"];
-    */
+    protected $allowedFields = ["email","pseudo"];
+    
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
@@ -51,7 +48,7 @@ abstract class Compte extends Model
 
     public function doesPseudoExists($pseudo) : bool
     {
-        return !empty($this->where("identifiant",$pseudo)->findAll());
+        return !empty($this->where("pseudo",$pseudo)->findAll());
     }
 
     public function doesEmailExists($email) : bool

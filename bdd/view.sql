@@ -23,6 +23,9 @@ CREATE OR REPLACE VIEW compte_client AS
 CREATE OR REPLACE VIEW compte_vendeur AS
     SELECT * FROM _vendeur NATURAL JOIN _compte;
 
+CREATE OR REPLACE VIEW compte AS
+    SELECT * FROM _compte;
+
 CREATE OR REPLACE VIEW produit_global AS
     SELECT id_prod,
     intitule_prod,

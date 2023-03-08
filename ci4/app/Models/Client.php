@@ -49,6 +49,11 @@ class Client extends Compte
 
     public function doesEmailExists($email) : bool
     {
-        return parent::doesEmailExists($email);
+        return model("\App\Model\Compte")->doesEmailExists($email);
+    }
+
+    public function doesPseudoExists($pseudo) : bool
+    {
+        return model("\App\Model\Compte")->doesPseudoExists($pseudo);
     }
 }

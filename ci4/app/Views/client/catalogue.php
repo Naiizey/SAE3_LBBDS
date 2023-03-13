@@ -57,8 +57,8 @@
                     <summary class="categorie"><h2>Tous les vendeurs</h2></summary>
                     <div id="entête" class="enTete-vendeur">
                         <div class="bouton-selectionner-tout">
-                            <label for="tout-vendeurs">Tout sélectionner</label>
-                            <input class="chk-box-tout" type="checkbox" id="tout-vendeurs" name="tout-vendeurs" value="tout-vendeurs">
+                            <label for="tout-vend">Tout sélectionner</label>
+                            <input class="chk-box-tout" type="checkbox" id="tout-vend" name="tout-vend" value="tout-vend">
                         </div>
                         <hr>
                     </div>

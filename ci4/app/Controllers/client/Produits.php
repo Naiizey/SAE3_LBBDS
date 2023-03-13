@@ -6,12 +6,15 @@ use Exception;
 use App\Controllers\BaseController;
 use function PHPUnit\Framework\isNull;
 use function PHPUnit\Framework\throwException;
+//use the file Common to make logs
+use App\Controllers\Common;
 
 /**
  * @method getAllProduitSelonPage($page=null,$filters=null)
  */
 
 class Produits extends BaseController {
+    
 
     private const NBPRODSPAGEDEFAULT = 20;
     
@@ -114,18 +117,26 @@ class Produits extends BaseController {
             
         }
 
-        
+        $logger = service('logger');
         if (!empty($filters)) {
-            $boolVendeur=false;
+            $boolMultipleVendeur=false;
             $subQuery = db_connect()->table($query->table)->select('id');
+            
             foreach (array_keys($filters) as $key) {
-                if (is_int($key) && !$boolVendeur) {
+                $logger->info($key);
+                if (is_int($key) && !$boolMultipleVendeur) {
                     $subQuery->where('num_compte', $key);
-                    $boolVendeur=true;
-                }elseif(is_int($key) && $boolVendeur){
+                    $boolMultipleVendeur=true;
+                    //do a log
+                    
+                    $logger->info('Single vendeur');
+                }elseif(is_int($key) && $boolMultipleVendeur){
                     $subQuery->orWhere('num_compte', $key);
+                    $logger->info('Multiple vendeur');
+                   
                 }else{
                     $subQuery->orWhere('categorie', $key);
+                    $logger->info('categorie');
                 }
             }
             $query->whereIn('id',$subQuery);
@@ -147,7 +158,6 @@ class Produits extends BaseController {
         return $query;
     }
 
-        
     /**
      * @method throwError
      * Throw l'erreur en fonction de si on la fonction a été appelé apr une autre fonction ou si elle a été appelle par une requête

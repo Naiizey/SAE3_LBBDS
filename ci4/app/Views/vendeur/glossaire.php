@@ -37,10 +37,10 @@
         <main>
             <section class="sectionPresentation">
                 <div class="divVendeur">
-                    <img src="<?= $glossaire['logo']; ?>" alt="Profil">
+                    <img src="<?= $glossaire->logo; ?>" alt="Profil">
                     <div class="divNomNote">
-                        <h2><?= $glossaire['pseudo']; ?></h2>
-                        <div class="noteAvis"><?= $cardProduit->notationEtoile($glossaire['note_vendeur']) ?></div>
+                        <h2><?= $glossaire->pseudo; ?></h2>
+                        <div class="noteAvis"><?= $cardProduit->notationEtoile($glossaire->note_vendeur) ?></div>
                     </div>
                 </div>
                 <table>
@@ -52,42 +52,44 @@
                         </tr>
                         <tr>
                             <th>SIRET :</th>
-                            <td><?= $glossaire['numero_siret']; ?></td> 
+                            <td><?= $glossaire->numero_siret; ?></td> 
                         </tr>
                         <tr>
                             <th>TVA Intracommunautaire :</th>
-                            <td><?= $glossaire['tva_intercommunautaire']; ?></td>
+                            <td><?= $glossaire->tva_intercommunautaire; ?></td>
                         </tr>
                         <tr>
                             <th>Adresse :</th>
-                            <td><?= $glossaire['numero_rue']." ".$glossaire['nom_rue']."<br>".$glossaire['code_postal']." ".$glossaire['ville']; ?></td>
+                            <td><?= $glossaire->numero_rue." ".$glossaire->nom_rue."<br>".$glossaire->code_postal." ".$glossaire->ville; ?></td>
                         </tr>
                         <tr>
                             <th>Contact :</th>
-                            <td><?= $glossaire['email']; ?></td>
+                            <td><?= $glossaire->email; ?></td>
                         </tr>
                     </tbody>
                 </table> 
                 <h2 class="h2Presentation">Présentation</h2>
-                <p><?= $glossaire['texte_presentation']; ?></p>
+                <p><?= $glossaire->texte_presentation; ?></p>
             </section>
             <section class="sectionProduits">
-            <?php foreach ($articles as $article): ?>
-            <?php if ($article['num_image'] == 0): ?>
-                <div class="divUnProduit">
-                    <img src="<?= $article['lien_image']; ?>">
-                    <div class="divNomDescription">
-                        <h2><?= $article['intitule_prod']; ?></h2>
-                        <p><?= $article['description_prod']; ?></p>
+            <?php for ($i = 0; $i < sizeof($articles); $i++): ?>
+                <?php if ($articles[$i]->num_image == 0): ?>
+                    <div class="divUnProduit">
+                        <img src="<?= $articles[$i]->lien_image; ?>">
+                        <div class="divNomDescription">
+                            <h2><?= $articles[$i]->intitule_prod; ?></h2>
+                            <p><?= $articles[$i]->description_prod; ?></p>
+                        </div>
+                        <div class="divPrix">
+                            <p><?= $articles[$i]->prix_ht; ?>€ HT</p>
+                            <p><?= $articles[$i]->prix_ttc; ?>€ TTC</p>
+                        </div>
                     </div>
-                    <div class="divPrix">
-                        <p><?= $article['prix_ht']; ?>€ HT</p>
-                        <p><?= $article['prix_ttc']; ?>€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-            <?php endif;?>
-            <?php endforeach;?>
+                    <?php if ($i+3 != sizeof($articles)): ?>
+                        <hr>
+                    <?php endif;?>
+                <?php endif;?>
+            <?php endfor;?>
             </section>
         </main>
     </body>

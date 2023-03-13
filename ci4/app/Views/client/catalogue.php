@@ -55,7 +55,7 @@
                     <div id="entête" class="enTete-vendeur">
                         <div class="bouton-selectionner-tout">
                             <label for="tout-vend">Tout sélectionner</label>
-                            <input class="chk-box-tout" type="checkbox" id="tout-vend" name="tout-vend" value="tout-vend">
+                            <input class="chk-box-tout" type="checkbox" > <!-- id="tout-vend" name="tout-vend" value="tout-vend"-->
                         </div>
                         <hr>
                     </div>

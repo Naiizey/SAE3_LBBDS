@@ -131,7 +131,9 @@ class Produits extends BaseController {
                 $subQuery->orWhere('categorie', $key);
                 
             }
-            $query->whereIn('id',$subQuery);
+            if(sizeOf($keyCat)>0){
+                $query->whereIn('id',$subQuery);
+            }
             $subQuery = db_connect()->table($query->table)->select('id');
             foreach ($keyVend as $key) {
                 $subQuery->orWhere('num_compte', $key);

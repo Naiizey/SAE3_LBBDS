@@ -154,8 +154,8 @@ $routes->get('/admin/glossaire/(:num)', 'admin\Home::glossaire/$1');
 
 $routes->get('/vendeur/import/entetes','vendeur\Import::getentetes',['filter' => 'vendeur']);
 
-$routes->get('/vendeur/import', 'vendeur\Import::index/true');
-$routes->post('/vendeur/import/upload','vendeur\Import::upload');
+$routes->get('/vendeur/import', 'vendeur\Import::index/true', ['filter' => 'vendeur']);
+$routes->post('/vendeur/import/upload','vendeur\Import::upload', ['filter' => 'vendeur']);
 
 $routes->get('vendeur/commandes','vendeur\Home::lstCommandes',['filter' => 'vendeur']);
 $routes->get('vendeur/commandes/(:alphanum)','vendeur\Home::lstCommandes/$1',['filter' => 'vendeur']);
@@ -168,7 +168,7 @@ $routes->post('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur'])
 $routes->get('vendeur/connexion','vendeur\Home::connexion');
 $routes->post('vendeur/connexion','vendeur\Home::connexion');
 
-$routes->get('/vendeur/catalogue', 'vendeur\Home::catalogue');
+$routes->get('/vendeur/catalogue', 'vendeur\Home::catalogue', ['filter' => 'vendeur']);
 
 $routes->get('vendeur/catalogue(:num)', 'vendeur\Home::catalogue/$1',['filter' => 'vendeur']);
 

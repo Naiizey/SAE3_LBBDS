@@ -1172,12 +1172,14 @@ function loadFiltersTris() {
             document.querySelector(".partie-produits").style.gridColumn = "4";
             document.querySelector(".bulle-ouvrir-filtres").style.display =
                 "none";
+            console.log("Load filtre")
             document.querySelector(".bulle-ouvrir-tris").style.display = "none";
         } else if (localStorage.getItem("openT") === "true") {
             document.querySelector(".partie-tris").style.display = "flex";
             document.querySelector(".partie-produits").style.gridColumn = "4";
             document.querySelector(".bulle-ouvrir-filtres").style.display =
                 "none";
+            console.log("Load tris")
             document.querySelector(".bulle-ouvrir-tris").style.display = "none";
         }
     });

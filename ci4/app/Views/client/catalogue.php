@@ -25,10 +25,6 @@
                     </svg>
                 </button>
             </div>
-            <div class="onglets">
-                <div class="onglet onglet-selectionnee categorie"><h3>Catégorie</h3></div>
-                <div class="onglet vendeurs"><h3>Vendeurs</h3></div>
-            </div>
             <form name="filters" method="get">
                 <div class="categorie-catalogue">
                 <?php foreach ($categories as $categorie):?>
@@ -53,8 +49,9 @@
                     </details>
                 <?php endforeach;?>
                 </div>
-                <details class="vendeurs">
-                    <summary class="categorie"><h2>Tous les vendeurs</h2></summary>
+                <hr class="separationCatalog"/>
+                <details class="categorie-catalogue">
+                    <summary class="categorie"><h2>Vendeurs</h2></summary>
                     <div id="entête" class="enTete-vendeur">
                         <div class="bouton-selectionner-tout">
                             <label for="tout-vend">Tout sélectionner</label>
@@ -70,6 +67,7 @@
                         <?php if($key != array_key_last($vendeurs)): ?> <hr> <?php endif; ?>
                     <?php endforeach;?>
                 </details>
+                <hr class="separationCatalog"/>
                 <section class="prix">
                     <label>Prix :</label>
                     <section class="price-range">

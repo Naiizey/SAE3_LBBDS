@@ -2582,7 +2582,7 @@ h3 > .lienPasArticlePanier {
     border-radius: 4px;
 }
 
-.moyennesAvis progress::-webkit-progress-bar, progress::-webkit-progress-value {
+.moyennesAvis progress::-webkit-progress-bar, .moyennesAvis progress::-webkit-progress-value {
     height: 10px;
     border-radius: 4px;
     background-color: var(--secondary-light);
@@ -3930,7 +3930,7 @@ a.fleche-page{
     height: 2em;
 }
 
-progress {
+progress, progress::-webkit-progress-bar {
     background-color: #C04444;
     height: 10px;
     width: 100%;
@@ -3941,6 +3941,10 @@ progress::-moz-progress-bar
 { 
     background: #55C044;
     height: 10px;
+}
+
+progress::-webkit-progress-value {
+    background-color: #55C044;
 }
 
 .divDetailLivraison {

@@ -89,6 +89,13 @@
             <?php endif;?>
             <?php endforeach;?>
             </section>
+            <!-- boutton pour télécharger le json (accessible via la variable $json)-->
+            <?php 
+                //create a json file with the content of the variable $json
+                $file = fopen("json.json", "w");
+                fwrite($file, $json);
+                fclose($file);
+            ?>
         </main>
     </body>
 </html>

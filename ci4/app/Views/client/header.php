@@ -35,7 +35,7 @@
             }
 
             :root {
-                --slide-count: 3;
+                --slide-count: 4;
             }
             
             main {

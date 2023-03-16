@@ -19,7 +19,7 @@ class LstAvis extends Model
     protected $primaryKey = 'num_avis';
     protected $useAutoIncrement = true;
 
-    protected $returnType     = LstAvis::class;
+    protected $returnType     = Avis::class;
     protected $useSoftDeletes = false;
     
     protected $allowedFields = ['num_avis', 'contenu_av', 'date_av', 'id_note', 'id_prod', 'num_compte', 'note_prod','pseudo'];

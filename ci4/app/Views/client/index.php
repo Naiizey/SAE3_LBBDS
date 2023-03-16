@@ -7,6 +7,9 @@
                 <div id="carousel">
                     <ul id="carousel-elem"> <!-- Menu ./images -->
                         <a href="" class="slide">
+                            <img src="<?=base_url()?>/images/banner.png" alt="banniere" title="Article 3">
+                        </a>
+                        <a href="" class="slide">
                             <img src="<?=base_url()?>/images/art1.webp" alt="article 1" title="Article 1">
                         </a>
                         <a href="" class="slide">

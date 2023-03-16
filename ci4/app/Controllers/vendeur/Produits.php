@@ -102,7 +102,6 @@ class Produits extends BaseController {
         }
 
         $query = model("\App\Models\ProduitCatalogueVendeur", false)->where("num_compte =", session()->get("numeroVendeur"));
-        dd($query);
 
         if (isset($filters["prix_min"]) && isset($filters["prix_max"])) {
             

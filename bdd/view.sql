@@ -108,7 +108,7 @@ CREATE OR REPLACE VIEW client_mail AS
 
 --COMMANDE
 CREATE OR REPLACE VIEW commande_list_vendeur AS
-    SELECT p.num_compte as num_vendeur,num_commande,c.num_compte,date_commande,date_arriv, round((sum(prix_ht*qte_panier))::numeric, 2 ) ht, round((sum(prix_ttc*qte_panier))::numeric, 2 ) ttc, retourneEtatLivraison(num_commande) etat FROM _commande c NATURAL JOIN _refere_commande INNER JOIN _produit p ON _refere_commande.id_prod = p.id_prod INNER JOIN _vendeur ON _vendeur.num_compte = p.num_compte group by num_vendeur, num_commande, c.num_compte,date_commande,date_arriv,etat;
+    SELECT p.num_compte as num_vendeur,num_commande,c.num_compte,date_commande,date_arriv, round((sum(prix_ht*qte_panier))::numeric, 2 ) prix_ht, round((sum(prix_ttc*qte_panier))::numeric, 2 ) prix_ttc, retourneEtatLivraison(num_commande) etat FROM _commande c NATURAL JOIN _refere_commande INNER JOIN _produit p ON _refere_commande.id_prod = p.id_prod INNER JOIN _vendeur ON _vendeur.num_compte = p.num_compte group by num_vendeur, num_commande, c.num_compte,date_commande,date_arriv,etat;
 
 CREATE OR REPLACE VIEW commande_list_client AS
     SELECT num_commande,c.num_compte,date_commande,date_arriv,round((sum(prix_ttc*qte_panier))::numeric, 2 ) prix_ttc,round((sum(prix_ht*qte_panier))::numeric, 2) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod group by num_commande, c.num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
@@ -118,6 +118,11 @@ SELECT num_commande,c.num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panie
 CREATE OR REPLACE VIEW commande_list_produits_client AS
     WITH min_image AS (SELECT min(num_image) num_image, id_prod FROM _image_prod  group by id_prod )
     SELECT num_commande,p.id_prod, intitule_prod, lien_image lienImage,description_prod,c.num_compte,date_commande,date_arriv,round(prix_fixeettc::numeric,2) prix_ttc,round((prix_fixeettc/(1+_tva.taux_tva))::numeric,2) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande), montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction  NATURAL JOIN _image_prod NATURAL JOIN _refere_commande INNER JOIN _produit p ON _refere_commande.id_prod = p.id_prod   natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva --,, etat
+    WHERE num_image IN (SELECT num_image FROM min_image);
+
+CREATE OR REPLACE VIEW commande_list_produits_vendeur AS
+    WITH min_image AS (SELECT min(num_image) num_image, id_prod FROM _image_prod  group by id_prod )
+    SELECT num_commande,p.id_prod, intitule_prod, lien_image lienImage,description_prod,c.num_compte,date_commande,date_arriv,round(prix_fixeettc::numeric,2) prix_ttc,round((prix_fixeettc/(1+_tva.taux_tva))::numeric,2) prix_ht,qte_panier qte, retourneEtatLivraison(num_commande), montant_reduction, pourcentage_reduction, p.num_compte as num_vendeur FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction  NATURAL JOIN _image_prod NATURAL JOIN _refere_commande INNER JOIN _produit p ON _refere_commande.id_prod = p.id_prod   natural join sae3._sous_categorie inner join sae3._categorie on _categorie.code_cat=_sous_categorie.code_cat natural join sae3._tva --,, etat
     WHERE num_image IN (SELECT num_image FROM min_image);
 
 CREATE OR REPLACE VIEW insert_commande AS

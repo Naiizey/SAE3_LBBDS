@@ -59,8 +59,8 @@ class Home extends BaseController
         else
         {
             $data['numCommande'] = $num_commande;
-            $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
-            $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
+            $data['infosCommande']=model("\App\Models\LstCommandesVendeur")->getCommandeByIdAndVendeur($num_commande,session()->get("numeroVendeur"));
+            $data['articles']=model("\App\Models\DetailsCommandeVendeur")->getArticles($num_commande,session()->get("numeroVendeur"));
             $data['estVendeur']=$estVendeur;
 
             if (!isset($data['infosCommande'][0]->num_commande)) {

@@ -35,6 +35,9 @@
             </a>
         </header>
         <main>
+            <div class="buttonsPDF">
+                <button onclick="window.print();return false;">Imprimer</button>
+            </div>
             <section class="sectionPresentation">
                 <div class="divVendeur">
                     <img src="<?= $glossaire->logo; ?>" alt="Profil">

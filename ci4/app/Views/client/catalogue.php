@@ -116,9 +116,9 @@
     <section class="partie-produits">
         <div class="liste-produits">
         <?php if(isset($prods) && !empty($prods)): ?>
-            <?php foreach($prods as $prod): ?>
-                <?= $cardProduit->display($prod)?>
-            <?php endforeach; ?>
+            <?php //foreach($prods as $prod): ?>
+                <?=""//$cardProduit->display($prod)?>
+            <?php //endforeach; ?>
         <?php endif; ?>
         </div>
         <div class="nav-page">
@@ -133,6 +133,7 @@
 </main>
 <?php require("footer.php"); ?>
 <script>
+   
     cataloguePrice();
     boutonCliquable(
         document.querySelector(".bulle-ouvrir-filtres"),
@@ -159,13 +160,15 @@
         () => switchEtatFiltre(document.querySelectorAll(".bulle-ouvrir-filtres, .partie-filtre"))
         );
     selectAll();
-    var upFilter = new filterUpdate(document.forms["filters"],
+    var gestCartes = FilterUpdate(document.forms["filters"],
         document.querySelector(".champsRecherche"),
         document.querySelector(".liste-produits"),
         document.querySelector(".supprimer-filtre"),
         document.querySelector(".voir-plus"),
         document.forms["tris"]
     );
+    gestCartes.generer(undefined    );
     loadFiltersTris();
-    changeOnglet();
+    //changeOnglet();
+    
 </script>

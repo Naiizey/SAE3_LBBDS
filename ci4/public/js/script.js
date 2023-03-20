@@ -1327,6 +1327,12 @@ const FilterUpdate = function (
         
     }
 
+    var urlToUse = (arrayChamps) => {
+        return arrayChamps
+        .filter(arr => arr.toString()!="")//Suppression d'un champs vide
+        .reduce((acc, champs, index, arr) => acc+champs+((index<arr.length-1)?"&":""), "?");
+    }
+
     var send = async () => {
         //Récupère les valeurs des filtres et transformation en string de type url à laquelle ajoute la recherche
         let champsGetF = new URLSearchParams(new FormData(self.formF));
@@ -1348,10 +1354,7 @@ const FilterUpdate = function (
             champsGetF.delete("prix_max");
         }
 
-        champsGetF = champsGetF.toString();
-        if (champsGetF.length != 0) {
-            champsGetF = "?" + champsGetF;
-        }
+   
         self.voirPlus.disabled=true;
         //fetch avec un await pour récuperer la réponse asynchrones (de manière procédurale)
         try {
@@ -1360,9 +1363,7 @@ const FilterUpdate = function (
                 base_url +
                 "/produits/page/" +
                 (self.currPage) +
-                champsGetF +
-                "&" +
-                champsGetT
+                urlToUse([champsGetF, champsGetT])
             );
 
             
@@ -1392,7 +1393,7 @@ const FilterUpdate = function (
             window.history.pushState(
                 { page: 1 },
                 "Filtres",
-                champsGetF + "&" + champsGetT
+                urlToUse([champsGetF, champsGetT])
             );
             
             //Svg défini en fonction de si on est vendeur ou client
@@ -1411,8 +1412,8 @@ const FilterUpdate = function (
 
         } catch (e) {
             //Les erreurs 404 ne passent pas ici, ce sont les erreurs lié à la fonction et au réseau qui sont catch ici
-            console.log("Oups !, quelque chose s'est mal passé...");
-            console.log(e);
+            console.error("Erreur de récupération des données:", e);
+    
         }
     };
 
@@ -1487,7 +1488,7 @@ window.onload = function addSvg(){
 
 //Closure / Classe
 function CarteEnChargement(
-    temps = .3, 
+    temps = .24, 
     tempsDisp=.7,
     select = document.querySelector(".liste-produits")
     ){

@@ -1333,6 +1333,8 @@ const FilterUpdate = function (
         .reduce((acc, champs, index, arr) => acc+champs+((index<arr.length-1)?"&":""), "?");
     }
 
+    var pluckCartes = (produits) => produits.map(prod => prod.carte)
+
     var send = async () => {
         //Récupère les valeurs des filtres et transformation en string de type url à laquelle ajoute la recherche
         let champsGetF = new URLSearchParams(new FormData(self.formF));
@@ -1357,7 +1359,7 @@ const FilterUpdate = function (
    
         self.voirPlus.disabled=true;
         //fetch avec un await pour récuperer la réponse asynchrones (de manière procédurale)
-        try {
+        //try {
             
             const md = await fetch(
                 base_url +
@@ -1378,7 +1380,7 @@ const FilterUpdate = function (
                     self.voirPlus.classList.remove("hidden");
                     self.voirPlus.disabled=false;
                 }
-                self.replace(result["resultat"]);
+                self.replace(pluckCartes(result["resultat"]));
                
                 self.erroBloc.classList.add("hidden");
                 //reexe, afin que le listener revienne sur les cartes
@@ -1410,11 +1412,11 @@ const FilterUpdate = function (
                 }
             }
 
-        } catch (e) {
+        /*} catch (e) {
             //Les erreurs 404 ne passent pas ici, ce sont les erreurs lié à la fonction et au réseau qui sont catch ici
             console.error("Erreur de récupération des données:", e);
     
-        }
+        }*/
     };
 
     
@@ -1530,7 +1532,7 @@ function CarteEnChargement(
             enCh.classList.add("killed");
             setTimeout(()=>{
                 enCh.remove();
-            },tempsDisp*1000)
+            },(tempsDisp*1000)-800)
         })
     }
 

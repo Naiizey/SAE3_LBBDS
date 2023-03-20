@@ -1344,7 +1344,7 @@ const FilterUpdate = function (
         formChampsGetT.append("Ordre", document.querySelector("#ordre").value);
         let champsGetT = new URLSearchParams(formChampsGetT);
 
-        if (!self.champRecherche.value == "") {
+        if (self.champRecherche && !self.champRecherche.value == "") {
             champsGetF.append("search", self.champRecherche.value);
         }
         //FIXME: problème de précison avec min et max. arrondir pour éviter les problèmes ?

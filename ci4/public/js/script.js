@@ -1252,7 +1252,57 @@ function switchContent(button) {
     }
 }
 
-const filterUpdate = function (
+
+//Closure / Classe
+function CarteEnChargement(
+    temps = .3, 
+    tempsDisp=.7,
+    nbCartes = 12,
+    select = document.querySelector(".liste-produits")
+    ){
+
+    const MAX_PARCOURS_CARTE = 14;
+    const modelDiv='<div class="card-produit-ext">'+'<div class="card-produit">'+'</div>'+'</div>'
+    
+
+    //Permet de génére les cartes en-chargements
+    this.generer = () => {
+        //On se fait une div pour pouvoir travailler sur le modèle ensuite
+        let work = document.createElement("div");
+        let tempsTotal = Math.min(temps*nbCartes,temps*MAX_PARCOURS_CARTE);
+        for(i=0;i<nbCartes;i++){
+            work.innerHTML=modelDiv;
+            work.children[0].classList.add("en-chargement")
+            work.children[0].style.animationDelay = (temps*i)+"s";
+            work.children[0].style.animationDuration = tempsTotal+"s";
+            select.innerHTML = select.innerHTML + work.innerHTML;
+        }
+        work.remove();
+    }
+   
+    //Permet de supprimer des cartes avec l'effet d'animation associé à .killed
+    this.kill= (getEnChargement= document.querySelectorAll(".en-chargement")) => {  
+        //On veut un array
+        if(!(getEnChargement instanceof Array)){
+            getEnChargement=(getEnChargement instanceof NodeList)?[...getEnChargement]:[getEnChargement]
+        }
+        getEnChargement.forEach((enCh) => {
+            enCh.removeAttribute("style");
+            enCh.style.animationDuration = tempsDisp+"s"
+
+            enCh.classList.add("killed");
+            setTimeout(()=>{
+                enCh.remove();
+            },tempsDisp*1000)
+        })
+    }
+
+    return this;
+    
+
+}
+
+const FilterUpdate = function (
     formFilter,
     champRecherche,
     listeProduit,
@@ -1268,9 +1318,26 @@ const filterUpdate = function (
     this.suppressionFiltre = suppressionFiltre;
     this.voirPlus = voirPlus;
     this.currPage = 1; //parseInt(document.querySelector("#catalogue-current-page").textContent);
-    //Permet d'éviter les problèmes de scope
-    const self = this;
-    this.send = async (replace = true) => {
+    
+    //Permet d'éviter les problèmes de scope + héritage;
+    var parent = new CarteEnChargement()
+    const self = Object.assign(this, parent);
+
+    function reset(){
+        self.currPage = 1;
+        self.listeProduit.innerHTML = "";
+        
+    }
+
+    var urlToUse = (arrayChamps) => {
+        return arrayChamps
+        .filter(arr => arr.toString()!="")//Suppression d'un champs vide
+        .reduce((acc, champs, index, arr) => acc+champs+((index<arr.length-1)?"&":""), "?");
+    }
+
+    var pluckCartes = (produits) => produits.map(prod => prod.carte)
+
+    var send = async () => {
         //Récupère les valeurs des filtres et transformation en string de type url à laquelle ajoute la recherche
         let champsGetF = new URLSearchParams(new FormData(self.formF));
         let formChampsGetT = new FormData(self.formT);
@@ -1291,42 +1358,37 @@ const filterUpdate = function (
             champsGetF.delete("prix_max");
         }
 
-        champsGetF = champsGetF.toString();
-        if (champsGetF.length != 0) {
-            champsGetF = "?" + champsGetF;
-        }
-
+   
+        self.voirPlus.disabled=true;
         //fetch avec un await pour récuperer la réponse asynchrones (de manière procédurale)
-        try {
+        //try {
+            
             const md = await fetch(
                 base_url +
                 "/produits/page/" +
-                (replace ? 1 : self.currPage) +
-                champsGetF +
-                "&" +
-                champsGetT
+                (self.currPage) +
+                urlToUse([champsGetF, champsGetT])
             );
+
             
             const result = await md.json();
             console.log(md);
             //vérifie si la réponse n'est pas une erreur
             if (md.ok) {
-                if (replace) {
-                    self.currPage = 1;
-                    self.listeProduit.innerHTML = "";
-                }
+                
                 if (result["estDernier"]) {
                     self.voirPlus.classList.add("hidden");
                 } else {
                     self.voirPlus.classList.remove("hidden");
+                    self.voirPlus.disabled=false;
                 }
-                result["resultat"].forEach(
-                    (produit) => (self.listeProduit.innerHTML += produit)
-                );
+                self.replace(pluckCartes(result["resultat"]));
+               
                 self.erroBloc.classList.add("hidden");
                 //reexe, afin que le listener revienne sur les cartes
                 clickProduit();
             } else {
+                //Ici les erreurs 404
                 self.erroBloc.classList.remove("hidden");
                 self.voirPlus.classList.add("hidden");
                 self.listeProduit.innerHTML = "";
@@ -1335,8 +1397,10 @@ const filterUpdate = function (
             window.history.pushState(
                 { page: 1 },
                 "Filtres",
-                champsGetF + "&" + champsGetT
+                urlToUse([champsGetF, champsGetT])
             );
+            
+            //Svg défini en fonction de si on est vendeur ou client
             if(window.location.href.toString().includes("vendeur")){
                 let svgs = document.getElementsByClassName("checkmark");
                 for(let svg of svgs){
@@ -1349,50 +1413,64 @@ const filterUpdate = function (
                     svg.style.display = "block";
                 }
             }
-        } catch (e) {
+
+        /*} catch (e) {
             //Les erreurs 404 ne passent pas ici, ce sont les erreurs lié à la fonction et au réseau qui sont catch ici
-            console.log("Oups !, quelque chose s'est mal passé...");
-            console.log(e);
-        }
+            console.error("Erreur de récupération des données:", e);
+    
+        }*/
     };
+
+    
+    self.generer = (nbCartes= 15, isReset = true) => {
+        if(isReset){
+            reset();
+        }
+        parent.generer(nbCartes);
+        send(reset);
+    }
+    
+    
 
     let switchButt = document.querySelector(".partie-tris form #ordre");
     function switchButtonListener(button) {
         switchContent(button);
-        self.send();
+        self.generer();
     }
 
-    Array.from(this.formF.elements).forEach((el) => {
-        el.addEventListener("change", () => this.send());
+    Array.from(self.formF.elements).forEach((el) => {
+        el.addEventListener("change", () => self.generer());
     });
 
-    Array.from(this.formT.elements).forEach((el) => {
+    Array.from(self.formT.elements).forEach((el) => {
         if (el.type == "radio")
-            el.addEventListener("change", () => this.send());
+            el.addEventListener("change", () => self.generer());
         else if (el.type == "button")
             el.addEventListener("click", () =>
                 switchButtonListener(switchButt)
             );
     });
 
-    this.suppressionFiltre.addEventListener("click", (event) => {
+    self.suppressionFiltre.addEventListener("click", (event) => {
         event.preventDefault();
-        this.formF.reset();
-        this.formF.elements["prix_min"].value =
-            this.formF.elements["prix_min"].min;
-        this.formF.elements["prix_max"].value =
-            this.formF.elements["prix_max"].max;
+        self.formF.reset();
+        self.formF.elements["prix_min"].value =
+            self.formF.elements["prix_min"].min;
+        self.formF.elements["prix_max"].value =
+            self.formF.elements["prix_max"].max;
         document.querySelector(".range-min").value =
-            this.formF.elements["prix_min"].min;
+            self.formF.elements["prix_min"].min;
         document.querySelector(".range-max").value =
-            this.formF.elements["prix_max"].max;
-        this.send();
+            self.formF.elements["prix_max"].max;
+        self.generer();
     });
 
-    this.voirPlus.addEventListener("click", (event) => {
-        this.currPage++;
-        this.send(false);
+    self.voirPlus.addEventListener("click", (event) => {
+        self.currPage++;
+        self.generer(undefined, false);
     });
+
+    return self;
 };
 
 window.onload = function addSvg(){
@@ -1408,6 +1486,77 @@ window.onload = function addSvg(){
             svg.style.display = "block";
         }
     }
+
+  
+}
+
+//Closure / Classe
+function CarteEnChargement(
+    temps = .24, 
+    tempsDisp=.7,
+    select = document.querySelector(".liste-produits")
+    ){
+
+    const MAX_PARCOURS_CARTE = 14;
+    const modelDiv='<div class="card-produit-ext">'+'<div class="card-produit">'+'</div>'+'</div>'
+    
+    //On veut un array
+    function doitEtreArray(element_s){
+        if(!(element_s instanceof Array)){
+            element_s=(element_s instanceof NodeList)?[...element_s]:[element_s]
+        }
+        return element_s;
+    }
+
+    //Permet de génére les cartes en-chargements
+    this.generer = (nbCartes = 12) => {
+        //On se fait une div pour pouvoir travailler sur le modèle ensuite
+        let work = document.createElement("div");
+        let tempsTotal = Math.min(temps*nbCartes,temps*MAX_PARCOURS_CARTE);
+        for(i=0;i<nbCartes;i++){
+            work.innerHTML=modelDiv;
+            work.children[0].classList.add("en-chargement")
+            work.children[0].style.animationDelay = (temps*i)+"s";
+            work.children[0].style.animationDuration = tempsTotal+"s";
+            select.innerHTML = select.innerHTML + work.innerHTML;
+        }
+        work.remove();
+    }
+   
+    //Permet de supprimer des cartes avec l'effet d'animation associé à .killed
+    this.stop= (getEnChargement= document.querySelectorAll(".en-chargement")) => {  
+        
+        getEnChargement=doitEtreArray(getEnChargement);
+        getEnChargement.forEach((enCh) => {
+            enCh.removeAttribute("style");
+            enCh.style.animationDuration = tempsDisp+"s"
+
+            enCh.classList.add("killed");
+            setTimeout(()=>{
+                enCh.remove();
+            },(tempsDisp*1000)-800)
+        })
+    }
+
+    this.replace= (nouveauContenu, elements  = document.querySelectorAll(".en-chargement")) => {
+        nouveauContenu = doitEtreArray(nouveauContenu);
+        elements = doitEtreArray(elements);
+        
+        
+        elements
+        .slice(0, nouveauContenu.length)//Pour les élément de 0 au nombre de nouveauContenu...
+        .forEach((element,index) => { //...On remplace leurs ancien contenu par le nouveau 
+            element.outerHTML = nouveauContenu[index];
+        });
+        
+        this.stop(elements.slice(nouveauContenu.length, elements.length));
+
+
+    } 
+
+    return this;
+    
+
 }
 
 /*  

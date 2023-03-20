@@ -64,7 +64,7 @@ class CardProduit
         <?php return ob_get_clean();
     }
 
-    public function display($prod){
+    public function display(\App\Entities\Produit $prod){
         $this->normalize($prod);
         return $this->cardProduit($prod);
     }

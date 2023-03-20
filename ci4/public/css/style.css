@@ -2837,7 +2837,7 @@ main div.card-produit-ext{
     transition: scale .3s ease;
 }
 
-main div.card-produit-ext:hover{
+main div.card-produit-ext:hover:not(.en-chargement){
     background-color: transparent;
     scale: 1.05;
 }
@@ -3716,6 +3716,54 @@ a.fleche-page{
 #aucunResultat {
     padding-block: 5rem;
 }
+@keyframes chargement {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: .2;
+    }
+}
+
+@keyframes stop {
+    from{
+        display: block;
+    }
+
+    to {
+      
+        scale: 1.05;
+        opacity: 0;
+        display: none;
+    }   
+}
+
+.en-chargement .card-produit{
+    background-color: gray; 
+}
+
+.en-chargement {
+    /*animation:  1s ease-out 1 mort;*/
+    animation: ease-in-out alternate infinite chargement;
+}
+
+.en-chargement{
+    border: none;
+}
+
+.en-chargement .card-produit *{
+    visibility: hidden;
+}
+
+.en-chargement.killed {
+    animation:  ease-out 1 0s stop;
+    
+}
+
+
+
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

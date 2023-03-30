@@ -23,7 +23,17 @@
                 font-family: "Montserrat-Bold";
                 src: url("dependances/fonts/Montserrat-Bold.ttf") format("truetype");
             }
-            
+
+            @media print {
+                .pagebreak { 
+                    page-break-before: always; 
+                } 
+
+                .divUnProduit {
+                    break-inside: avoid;
+                }
+            }
+
             main {
     color: #164F57;
 }
@@ -313,394 +323,782 @@ c-170 -72 -289 -213 -336 -397 -21 -84 -19 -225 5 -320 53 -207 216 -370 404
             </a>
         </header>
         <main>
-            <section class="sectionPresentation">
-                <div class="divVendeur">
-                    <img src="https://webstockreview.net/images/sample-png-images-8.png" alt="Profil">
-                    <div class="divNomNote">
-                        <h2>COBREC_1</h2>
-                                            </div>
-                </div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Raison sociale :</th>
-                            <td>SA</td>
-                        </tr>
-                        <tr>
-                            <th>SIRET :</th>
-                            <td>123456789</td> 
-                        </tr>
-                        <tr>
-                            <th>TVA Intracommunautaire :</th>
-                            <td>FR50123456789</td>
-                        </tr>
-                        <tr>
-                            <th>Adresse :</th>
-                            <td>3 rue de la guerre<br>70000 lille</td>
-                        </tr>
-                        <tr>
-                            <th>Contact :</th>
-                            <td>cobrec1@alizon.net</td>
-                        </tr>
-                    </tbody>
-                </table> 
-                <h2 class="h2Presentation">Présentation</h2>
-                <p>Bonjour, nous sommes la COBREC</p>
-            </section>   
-            <section class="sectionProduits">
-                            <div class="divUnProduit">
-                    <img src="https://images.pexels.com/photos/8879617/pexels-photo-8879617.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-                    <div class="divNomDescription">
-                        <h2>Cola x6</h2>
-                        <p>Nouvelle boisson bretonne au cola, issue de d'une agrigulture bio éthique, bio responsable, bio consciente.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>7.5€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://images.pexels.com/photos/5086617/pexels-photo-5086617.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-                    <div class="divNomDescription">
-                        <h2>Vin rouge</h2>
-                        <p>Ensemble de vins dans une boite en bois qui agrémentera vos soirées ou repas.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>15€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://images.pexels.com/photos/1123260/pexels-photo-1123260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-                    <div class="divNomDescription">
-                        <h2>Vin blanc</h2>
-                        <p>Elaboré à partir de nos raisons blancs bretons, ce vin blanc est idéal pour vos dîner.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>15€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://images.pexels.com/photos/105863/pexels-photo-105863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-                    <div class="divNomDescription">
-                        <h2>Fines herbes</h2>
-                        <p>Herbes pour aggrémenter les plats comestibles. Accompagne très bien une côte de boeuf avec un verre de rouge.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>7.5€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://static.vecteezy.com/system/resources/previews/008/118/057/non_2x/beautiful-adorable-leopard-color-cat-sleeping-on-the-grass-free-photo.jpg">
-                    <div class="divNomDescription">
-                        <h2>Herbe à chat</h2>
-                        <p>Issue de nos cultures locales, ce produit rendra fou votre chat. Chat non fourni.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>15€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://cdn.pixabay.com/photo/2020/01/06/13/24/womens-shoes-4745347_960_720.jpg">
-                    <div class="divNomDescription">
-                        <h2>Néo balances</h2>
-                        <p>Chaussures de sport et de villes parfaites pour toutes les situations. Imppecable pour se balader.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>72€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://static.vecteezy.com/system/resources/previews/005/543/922/non_2x/decorative-decoration-in-the-form-of-a-duck-and-duckling-in-our-garden-free-photo.jpeg">
-                    <div class="divNomDescription">
-                        <h2>Canard</h2>
-                        <p>Statue de jardin pour tous les adeptes de la collection des nains de jardin, agrémente efficacement tout type de jardin.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>12€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://static.vecteezy.com/system/resources/previews/002/078/414/non_2x/blank-phone-on-orange-free-photo.jpg">
-                    <div class="divNomDescription">
-                        <h2>Breizhphone 1</h2>
-                        <p>Tout premier téléphone breton tactile, attention produit assez fragile et disposant d'une batterie limitée</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>300€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://images.pexels.com/photos/10248807/pexels-photo-10248807.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-                    <div class="divNomDescription">
-                        <h2>Crêpes froment artisanales x12</h2>
-                        <p>Lot de 12 crêpes froment artisanales, sans conservateurs. Provenance : Douarnenez</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>4.5€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Kouignamann.JPG/1067px-Kouignamann.JPG?20080104141720">
-                    <div class="divNomDescription">
-                        <h2>Kouign-amann</h2>
-                        <p>Plât emblématique de la bretagne, Kouign-amann 100% beurre idéal pour toute la famille. Provenance : Douarnenez</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>7.5€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://images.pexels.com/photos/10059111/pexels-photo-10059111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-                    <div class="divNomDescription">
-                        <h2>T-shirt marinière</h2>
-                        <p>Classique et intemporel, ce t-shirt toujours à la mode s'accordera avec toutes vos tenues. Provenance : Brest</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>12€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
-                    <div class="divNomDescription">
-                        <h2>Palet breton</h2>
-                        <p>Biscuits traditionnels bretons, des gâteaux parfaits pour vos pauses café. Provenance : Pont-Aven</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>15€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
-                    <div class="divNomDescription">
-                        <h2>Vareuse</h2>
-                        <p>Veste bretonne issue de voiles de bateau. Provenance: Ouessant</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>48€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://images.pexels.com/photos/11421665/pexels-photo-11421665.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-                    <div class="divNomDescription">
-                        <h2>Ciré jaune</h2>
-                        <p>Parfait pour vous protéger du vent et de la pluie en bretagne, ce ciret sera votre meilleur compagnon pour vos jours en Bretagne. Provenance : Trégunc</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>120€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://cdn.pixabay.com/photo/2016/11/20/08/22/breton-1842173_960_720.jpg">
-                    <div class="divNomDescription">
-                        <h2>Drapeau Breton</h2>
-                        <p>Cet indispensable que vous pourrez le porter fièrement à n'importe quel évènement. Provenance : Pontivy</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>6€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://images.pexels.com/photos/4822289/pexels-photo-4822289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-                    <div class="divNomDescription">
-                        <h2>Hameçon</h2>
-                        <p>Parfait pour vos après midi à la pèche, ces hameçon sont prévu exprès pour les gros spécimen de poisson. Provenance : Morlaix</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>1.2€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://cdn.pixabay.com/photo/2015/07/15/13/42/umbrella-846185_960_720.jpg">
-                    <div class="divNomDescription">
-                        <h2>Parapluie</h2>
-                        <p>Indispensable pour vos séjours en Bretagne. Provenance : Rennes</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>12€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://images.pexels.com/photos/7513421/pexels-photo-7513421.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-                    <div class="divNomDescription">
-                        <h2>Ecran de cinéma</h2>
-                        <p>Ecran géant cathodique qui permet de faire des diffusions de cassettes vhs.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>1500€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://cdn.pixabay.com/photo/2014/05/12/17/36/sandals-342672_960_720.jpg">
-                    <div class="divNomDescription">
-                        <h2>Tongues bretonnes</h2>
-                        <p>Idéal pour la plage, ces tongues 100% bretonnes vous permettront d'éviter le sable dans les chaussures.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>60€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://static.vecteezy.com/system/resources/previews/007/789/648/non_2x/white-sport-tape-isolated-on-white-background-athletic-taping-porous-adhesive-tape-medical-tape-multipurpose-porous-tape-for-wound-care-and-sprain-first-aid-medical-supplies-sport-bandage-free-photo.jpg">
-                    <div class="divNomDescription">
-                        <h2>Strap</h2>
-                        <p>Petit scotch pour tenir n'importe quel objet sur toutes les surfaces</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>6€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://images.pexels.com/photos/2483389/pexels-photo-2483389.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-                    <div class="divNomDescription">
-                        <h2>Plante carnivore attrape mouches</h2>
-                        <p>Vous êtes ennuyé par les mouches, cet plante est faite pour vous !</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>2.4€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://static.vecteezy.com/system/resources/previews/006/588/373/non_2x/field-with-dry-grass-reeds-and-power-line-burns-with-a-strong-fire-free-photo.jpg">
-                    <div class="divNomDescription">
-                        <h2>Anti nuisible</h2>
-                        <p>Outil fumigène écologique pour se débarrasser des insectes qui attaquent les légumes du jardin.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>15€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://static.vecteezy.com/system/resources/previews/008/200/211/non_2x/black-plastic-leaf-rake-on-green-grass-or-lawn-free-photo.jpg">
-                    <div class="divNomDescription">
-                        <h2>Rateau</h2>
-                        <p>Outil de jardinage pour permettre de récolter les feuilles du jardin.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>15€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://greensquare.fr/1160-large_default/fourche-beche-kent-and-stowe.jpge.jpg">
-                    <div class="divNomDescription">
-                        <h2>Bêche</h2>
-                        <p>Outil de jardinage qui va permettre de labourer son potager d'une manière efficace.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>15€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://static.vecteezy.com/system/resources/previews/008/820/294/non_2x/cnc-milling-machine-with-metallic-end-mill-carbide-in-industrial-manufacture-factory-professional-cutting-tools-cutting-metal-technology-lathe-workshop-of-automotive-industry-for-auto-parts-free-photo.jpg">
-                    <div class="divNomDescription">
-                        <h2>Fraiseuse</h2>
-                        <p>Outil breton parfait pour enlever tige d'une fraise qui rappelons le, n'est pas comestible.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>15€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://static.vecteezy.com/system/resources/previews/011/041/405/non_2x/rock-mortar-and-pestle-on-white-background-free-photo.jpg">
-                    <div class="divNomDescription">
-                        <h2>Pilon</h2>
-                        <p>Petit outil efficace pour faire de la cuisine ou des tisanes, parfait pour écraser soi-même ses feuilles de thé. Issu de granite de Perros-Guirec</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>11.5€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
-                    <div class="divNomDescription">
-                        <h2>Chadior</h2>
-                        <p>Produit plutôt inconnu du grand public mais qui en fait est incroyable.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>11.5€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
-                    <div class="divNomDescription">
-                        <h2>Oréa</h2>
-                        <p>Produit dérivé et revisité du célèbre biscuit oréo mais revisité à la bretonne.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>4.6€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
-                    <div class="divNomDescription">
-                        <h2>Saut à pied non joint</h2>
-                        <p>Manuel sportif traditionnel de bretagne. Déja 12000 ventes dans le finistère à Quimper.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>12€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
-                    <div class="divNomDescription">
-                        <h2>Piquets de jardin</h2>
-                        <p>Très bon piquet pour arrêter des lapins, attention à usage unique, provenance : Bretagne.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>120€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
-                    <div class="divNomDescription">
-                        <h2>Tarte campagnarde</h2>
-                        <p>Carrotes, fromage, jambon, champigons. Produit incroyablement bon qui fond très bien en bouche.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>9.6€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                            <div class="divUnProduit">
-                    <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
-                    <div class="divNomDescription">
-                        <h2>Galets bretons</h2>
-                        <p>Galets de fabrique bretonne, configuration : quartz 12%, calcaire 5%, granite 83%; galet certifié de provenance d'une plage de Perros-Guirec.</p>
-                    </div>
-                    <div class="divPrix">
-                        <p>1150€ TTC</p>
-                    </div>
-                </div>
-                <hr>
-                        </section>
-        </main>
+                            <section class="sectionPresentation ">
+                                        <div class="divVendeur">
+                        <img src="https://webstockreview.net/images/sample-png-images-8.png" alt="Profil">
+                        <div class="divNomNote">
+                            <h2>COBREC_1</h2>
+                                                    </div>
+                    </div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Raison sociale :</th>
+                                <td>SA</td>
+                            </tr>
+                            <tr>
+                                <th>SIRET :</th>
+                                <td>123456789</td> 
+                            </tr>
+                            <tr>
+                                <th>TVA Intracommunautaire :</th>
+                                <td>FR50123456789</td>
+                            </tr>
+                            <tr>
+                                <th>Adresse :</th>
+                                <td>3 rue de la guerre<br>70000 lille</td>
+                            </tr>
+                            <tr>
+                                <th>Contact :</th>
+                                <td>cobrec1@alizon.net</td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                    <h2 class="h2Presentation">Présentation</h2>
+                    <p>Bonjour, nous sommes la COBREC</p>
+                </section>   
+                <section class="sectionProduits">
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/8879617/pexels-photo-8879617.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Cola x6</h2>
+                            <p>Nouvelle boisson bretonne au cola, issue de d'une agrigulture bio éthique, bio responsable, bio consciente.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>7.5€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/5086617/pexels-photo-5086617.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Vin rouge</h2>
+                            <p>Ensemble de vins dans une boite en bois qui agrémentera vos soirées ou repas.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/1123260/pexels-photo-1123260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Vin blanc</h2>
+                            <p>Elaboré à partir de nos raisons blancs bretons, ce vin blanc est idéal pour vos dîner.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/105863/pexels-photo-105863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Fines herbes</h2>
+                            <p>Herbes pour aggrémenter les plats comestibles. Accompagne très bien une côte de boeuf avec un verre de rouge.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>7.5€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/008/118/057/non_2x/beautiful-adorable-leopard-color-cat-sleeping-on-the-grass-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Herbe à chat</h2>
+                            <p>Issue de nos cultures locales, ce produit rendra fou votre chat. Chat non fourni.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://cdn.pixabay.com/photo/2020/01/06/13/24/womens-shoes-4745347_960_720.jpg">
+                        <div class="divNomDescription">
+                            <h2>Néo balances</h2>
+                            <p>Chaussures de sport et de villes parfaites pour toutes les situations. Imppecable pour se balader.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>72€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/005/543/922/non_2x/decorative-decoration-in-the-form-of-a-duck-and-duckling-in-our-garden-free-photo.jpeg">
+                        <div class="divNomDescription">
+                            <h2>Canard</h2>
+                            <p>Statue de jardin pour tous les adeptes de la collection des nains de jardin, agrémente efficacement tout type de jardin.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>12€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/002/078/414/non_2x/blank-phone-on-orange-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Breizhphone 1</h2>
+                            <p>Tout premier téléphone breton tactile, attention produit assez fragile et disposant d'une batterie limitée</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>300€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/10248807/pexels-photo-10248807.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Crêpes froment artisanales x12</h2>
+                            <p>Lot de 12 crêpes froment artisanales, sans conservateurs. Provenance : Douarnenez</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>4.5€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Kouignamann.JPG/1067px-Kouignamann.JPG?20080104141720">
+                        <div class="divNomDescription">
+                            <h2>Kouign-amann</h2>
+                            <p>Plât emblématique de la bretagne, Kouign-amann 100% beurre idéal pour toute la famille. Provenance : Douarnenez</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>7.5€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/10059111/pexels-photo-10059111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>T-shirt marinière</h2>
+                            <p>Classique et intemporel, ce t-shirt toujours à la mode s'accordera avec toutes vos tenues. Provenance : Brest</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>12€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Palet breton</h2>
+                            <p>Biscuits traditionnels bretons, des gâteaux parfaits pour vos pauses café. Provenance : Pont-Aven</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Vareuse</h2>
+                            <p>Veste bretonne issue de voiles de bateau. Provenance: Ouessant</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>48€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/11421665/pexels-photo-11421665.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Ciré jaune</h2>
+                            <p>Parfait pour vous protéger du vent et de la pluie en bretagne, ce ciret sera votre meilleur compagnon pour vos jours en Bretagne. Provenance : Trégunc</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>120€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://cdn.pixabay.com/photo/2016/11/20/08/22/breton-1842173_960_720.jpg">
+                        <div class="divNomDescription">
+                            <h2>Drapeau Breton</h2>
+                            <p>Cet indispensable que vous pourrez le porter fièrement à n'importe quel évènement. Provenance : Pontivy</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>6€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/4822289/pexels-photo-4822289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Hameçon</h2>
+                            <p>Parfait pour vos après midi à la pèche, ces hameçon sont prévu exprès pour les gros spécimen de poisson. Provenance : Morlaix</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>1.2€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://cdn.pixabay.com/photo/2015/07/15/13/42/umbrella-846185_960_720.jpg">
+                        <div class="divNomDescription">
+                            <h2>Parapluie</h2>
+                            <p>Indispensable pour vos séjours en Bretagne. Provenance : Rennes</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>12€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/7513421/pexels-photo-7513421.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Ecran de cinéma</h2>
+                            <p>Ecran géant cathodique qui permet de faire des diffusions de cassettes vhs.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>1500€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://cdn.pixabay.com/photo/2014/05/12/17/36/sandals-342672_960_720.jpg">
+                        <div class="divNomDescription">
+                            <h2>Tongues bretonnes</h2>
+                            <p>Idéal pour la plage, ces tongues 100% bretonnes vous permettront d'éviter le sable dans les chaussures.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>60€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/007/789/648/non_2x/white-sport-tape-isolated-on-white-background-athletic-taping-porous-adhesive-tape-medical-tape-multipurpose-porous-tape-for-wound-care-and-sprain-first-aid-medical-supplies-sport-bandage-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Strap</h2>
+                            <p>Petit scotch pour tenir n'importe quel objet sur toutes les surfaces</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>6€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/2483389/pexels-photo-2483389.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Plante carnivore attrape mouches</h2>
+                            <p>Vous êtes ennuyé par les mouches, cet plante est faite pour vous !</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>2.4€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/006/588/373/non_2x/field-with-dry-grass-reeds-and-power-line-burns-with-a-strong-fire-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Anti nuisible</h2>
+                            <p>Outil fumigène écologique pour se débarrasser des insectes qui attaquent les légumes du jardin.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/008/200/211/non_2x/black-plastic-leaf-rake-on-green-grass-or-lawn-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Rateau</h2>
+                            <p>Outil de jardinage pour permettre de récolter les feuilles du jardin.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://greensquare.fr/1160-large_default/fourche-beche-kent-and-stowe.jpge.jpg">
+                        <div class="divNomDescription">
+                            <h2>Bêche</h2>
+                            <p>Outil de jardinage qui va permettre de labourer son potager d'une manière efficace.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/008/820/294/non_2x/cnc-milling-machine-with-metallic-end-mill-carbide-in-industrial-manufacture-factory-professional-cutting-tools-cutting-metal-technology-lathe-workshop-of-automotive-industry-for-auto-parts-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Fraiseuse</h2>
+                            <p>Outil breton parfait pour enlever tige d'une fraise qui rappelons le, n'est pas comestible.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/011/041/405/non_2x/rock-mortar-and-pestle-on-white-background-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Pilon</h2>
+                            <p>Petit outil efficace pour faire de la cuisine ou des tisanes, parfait pour écraser soi-même ses feuilles de thé. Issu de granite de Perros-Guirec</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>11.5€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Chadior</h2>
+                            <p>Produit plutôt inconnu du grand public mais qui en fait est incroyable.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>11.5€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Oréa</h2>
+                            <p>Produit dérivé et revisité du célèbre biscuit oréo mais revisité à la bretonne.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>4.6€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Saut à pied non joint</h2>
+                            <p>Manuel sportif traditionnel de bretagne. Déja 12000 ventes dans le finistère à Quimper.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>12€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Piquets de jardin</h2>
+                            <p>Très bon piquet pour arrêter des lapins, attention à usage unique, provenance : Bretagne.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>120€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Tarte campagnarde</h2>
+                            <p>Carrotes, fromage, jambon, champigons. Produit incroyablement bon qui fond très bien en bouche.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>9.6€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Galets bretons</h2>
+                            <p>Galets de fabrique bretonne, configuration : quartz 12%, calcaire 5%, granite 83%; galet certifié de provenance d'une plage de Perros-Guirec.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>1150€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                </section>
+                            <section class="sectionPresentation pagebreak">
+                                        <div class="divVendeur">
+                        <img src="https://webstockreview.net/images/sample-png-images-8.png" alt="Profil">
+                        <div class="divNomNote">
+                            <h2>COBREC_1</h2>
+                                                    </div>
+                    </div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Raison sociale :</th>
+                                <td>SA</td>
+                            </tr>
+                            <tr>
+                                <th>SIRET :</th>
+                                <td>123456789</td> 
+                            </tr>
+                            <tr>
+                                <th>TVA Intracommunautaire :</th>
+                                <td>FR50123456789</td>
+                            </tr>
+                            <tr>
+                                <th>Adresse :</th>
+                                <td>3 rue de la guerre<br>70000 lille</td>
+                            </tr>
+                            <tr>
+                                <th>Contact :</th>
+                                <td>cobrec1@alizon.net</td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                    <h2 class="h2Presentation">Présentation</h2>
+                    <p>Bonjour, nous sommes la COBREC</p>
+                </section>   
+                <section class="sectionProduits">
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/8879617/pexels-photo-8879617.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Cola x6</h2>
+                            <p>Nouvelle boisson bretonne au cola, issue de d'une agrigulture bio éthique, bio responsable, bio consciente.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>7.5€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/5086617/pexels-photo-5086617.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Vin rouge</h2>
+                            <p>Ensemble de vins dans une boite en bois qui agrémentera vos soirées ou repas.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/1123260/pexels-photo-1123260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Vin blanc</h2>
+                            <p>Elaboré à partir de nos raisons blancs bretons, ce vin blanc est idéal pour vos dîner.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/105863/pexels-photo-105863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Fines herbes</h2>
+                            <p>Herbes pour aggrémenter les plats comestibles. Accompagne très bien une côte de boeuf avec un verre de rouge.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>7.5€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/008/118/057/non_2x/beautiful-adorable-leopard-color-cat-sleeping-on-the-grass-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Herbe à chat</h2>
+                            <p>Issue de nos cultures locales, ce produit rendra fou votre chat. Chat non fourni.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://cdn.pixabay.com/photo/2020/01/06/13/24/womens-shoes-4745347_960_720.jpg">
+                        <div class="divNomDescription">
+                            <h2>Néo balances</h2>
+                            <p>Chaussures de sport et de villes parfaites pour toutes les situations. Imppecable pour se balader.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>72€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/005/543/922/non_2x/decorative-decoration-in-the-form-of-a-duck-and-duckling-in-our-garden-free-photo.jpeg">
+                        <div class="divNomDescription">
+                            <h2>Canard</h2>
+                            <p>Statue de jardin pour tous les adeptes de la collection des nains de jardin, agrémente efficacement tout type de jardin.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>12€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/002/078/414/non_2x/blank-phone-on-orange-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Breizhphone 1</h2>
+                            <p>Tout premier téléphone breton tactile, attention produit assez fragile et disposant d'une batterie limitée</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>300€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/10248807/pexels-photo-10248807.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Crêpes froment artisanales x12</h2>
+                            <p>Lot de 12 crêpes froment artisanales, sans conservateurs. Provenance : Douarnenez</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>4.5€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Kouignamann.JPG/1067px-Kouignamann.JPG?20080104141720">
+                        <div class="divNomDescription">
+                            <h2>Kouign-amann</h2>
+                            <p>Plât emblématique de la bretagne, Kouign-amann 100% beurre idéal pour toute la famille. Provenance : Douarnenez</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>7.5€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/10059111/pexels-photo-10059111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>T-shirt marinière</h2>
+                            <p>Classique et intemporel, ce t-shirt toujours à la mode s'accordera avec toutes vos tenues. Provenance : Brest</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>12€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Palet breton</h2>
+                            <p>Biscuits traditionnels bretons, des gâteaux parfaits pour vos pauses café. Provenance : Pont-Aven</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Vareuse</h2>
+                            <p>Veste bretonne issue de voiles de bateau. Provenance: Ouessant</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>48€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/11421665/pexels-photo-11421665.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Ciré jaune</h2>
+                            <p>Parfait pour vous protéger du vent et de la pluie en bretagne, ce ciret sera votre meilleur compagnon pour vos jours en Bretagne. Provenance : Trégunc</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>120€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://cdn.pixabay.com/photo/2016/11/20/08/22/breton-1842173_960_720.jpg">
+                        <div class="divNomDescription">
+                            <h2>Drapeau Breton</h2>
+                            <p>Cet indispensable que vous pourrez le porter fièrement à n'importe quel évènement. Provenance : Pontivy</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>6€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/4822289/pexels-photo-4822289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Hameçon</h2>
+                            <p>Parfait pour vos après midi à la pèche, ces hameçon sont prévu exprès pour les gros spécimen de poisson. Provenance : Morlaix</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>1.2€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://cdn.pixabay.com/photo/2015/07/15/13/42/umbrella-846185_960_720.jpg">
+                        <div class="divNomDescription">
+                            <h2>Parapluie</h2>
+                            <p>Indispensable pour vos séjours en Bretagne. Provenance : Rennes</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>12€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/7513421/pexels-photo-7513421.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Ecran de cinéma</h2>
+                            <p>Ecran géant cathodique qui permet de faire des diffusions de cassettes vhs.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>1500€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://cdn.pixabay.com/photo/2014/05/12/17/36/sandals-342672_960_720.jpg">
+                        <div class="divNomDescription">
+                            <h2>Tongues bretonnes</h2>
+                            <p>Idéal pour la plage, ces tongues 100% bretonnes vous permettront d'éviter le sable dans les chaussures.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>60€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/007/789/648/non_2x/white-sport-tape-isolated-on-white-background-athletic-taping-porous-adhesive-tape-medical-tape-multipurpose-porous-tape-for-wound-care-and-sprain-first-aid-medical-supplies-sport-bandage-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Strap</h2>
+                            <p>Petit scotch pour tenir n'importe quel objet sur toutes les surfaces</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>6€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://images.pexels.com/photos/2483389/pexels-photo-2483389.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        <div class="divNomDescription">
+                            <h2>Plante carnivore attrape mouches</h2>
+                            <p>Vous êtes ennuyé par les mouches, cet plante est faite pour vous !</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>2.4€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/006/588/373/non_2x/field-with-dry-grass-reeds-and-power-line-burns-with-a-strong-fire-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Anti nuisible</h2>
+                            <p>Outil fumigène écologique pour se débarrasser des insectes qui attaquent les légumes du jardin.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/008/200/211/non_2x/black-plastic-leaf-rake-on-green-grass-or-lawn-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Rateau</h2>
+                            <p>Outil de jardinage pour permettre de récolter les feuilles du jardin.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://greensquare.fr/1160-large_default/fourche-beche-kent-and-stowe.jpge.jpg">
+                        <div class="divNomDescription">
+                            <h2>Bêche</h2>
+                            <p>Outil de jardinage qui va permettre de labourer son potager d'une manière efficace.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/008/820/294/non_2x/cnc-milling-machine-with-metallic-end-mill-carbide-in-industrial-manufacture-factory-professional-cutting-tools-cutting-metal-technology-lathe-workshop-of-automotive-industry-for-auto-parts-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Fraiseuse</h2>
+                            <p>Outil breton parfait pour enlever tige d'une fraise qui rappelons le, n'est pas comestible.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>15€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/011/041/405/non_2x/rock-mortar-and-pestle-on-white-background-free-photo.jpg">
+                        <div class="divNomDescription">
+                            <h2>Pilon</h2>
+                            <p>Petit outil efficace pour faire de la cuisine ou des tisanes, parfait pour écraser soi-même ses feuilles de thé. Issu de granite de Perros-Guirec</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>11.5€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Chadior</h2>
+                            <p>Produit plutôt inconnu du grand public mais qui en fait est incroyable.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>11.5€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Oréa</h2>
+                            <p>Produit dérivé et revisité du célèbre biscuit oréo mais revisité à la bretonne.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>4.6€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Saut à pied non joint</h2>
+                            <p>Manuel sportif traditionnel de bretagne. Déja 12000 ventes dans le finistère à Quimper.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>12€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Piquets de jardin</h2>
+                            <p>Très bon piquet pour arrêter des lapins, attention à usage unique, provenance : Bretagne.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>120€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Tarte campagnarde</h2>
+                            <p>Carrotes, fromage, jambon, champigons. Produit incroyablement bon qui fond très bien en bouche.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>9.6€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                    <div class="divUnProduit">
+                        <img src="https://www.cdiscount.com/pdt2/3/0/1/1/700x700/auc1280000011013/rw/fraise.jpg">
+                        <div class="divNomDescription">
+                            <h2>Galets bretons</h2>
+                            <p>Galets de fabrique bretonne, configuration : quartz 12%, calcaire 5%, granite 83%; galet certifié de provenance d'une plage de Perros-Guirec.</p>
+                        </div>
+                        <div class="divPrix">
+                            <p>1150€ TTC</p>
+                        </div>
+                    </div>
+                    <hr>
+                                </section>
+                    </main>
     </body>
 </html>

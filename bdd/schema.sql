@@ -245,9 +245,18 @@ CREATE TABLE _quidi
 (
     id_quidi SERIAL PRIMARY KEY,
     id_prod INT NOT NULL,
-    num_compte INT ,
+    num_compte INT NOT NULL,
     CONSTRAINT fk_quidi_prod FOREIGN KEY (id_prod) REFERENCES _produit(id_prod),
     CONSTRAINT fk_quidi_compte FOREIGN KEY (num_compte) REFERENCES _vendeur(num_compte)
+);
+
+CREATE TABLE _quidi_vendeur
+(
+    id_quidi INT NOT NULL,
+    num_compte INT NOT NULL,
+    CONSTRAINT fk_quidivendeur_quidi FOREIGN KEY (id_quidi) REFERENCES _quidi(id_quidi),
+    CONSTRAINT fk_quidivendeur_compte FOREIGN KEY (num_compte) REFERENCES _vendeur(num_compte),
+    PRIMARY KEY (id_quidi, num_compte)
 );
 
 /* -----------------------------------------------------------

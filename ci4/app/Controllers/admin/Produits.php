@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Controllers\client;
+namespace App\Controllers\admin;
 
 use Exception;
 use App\Controllers\BaseController;
-use ErrorException;
-
 use function PHPUnit\Framework\isNull;
 use function PHPUnit\Framework\throwException;
 
@@ -42,24 +40,25 @@ class Produits extends BaseController {
         } else {
             $sorts = null;
         }
-  
+        
+        if ($filters==null && isset($this->request) && !empty($this->request->getVar())) {
+            $filters=$this->request->getVar();
+        }
 
         try {
             $query = model("\App\Models\ProduitCatalogue");
-
             if ($sorts == null) {
                 $query->orderBy("intitule", "ASC");
             } else {
                 $query->orderBy($sorts[0], $sorts[1]);
             }
-
             if (is_null($filters) || empty($filters)) {
                 $result = $query->findAll(($nombreProd*$page)+1, $nombreProd*($page-1));
             } else {
-                $query = $this->casFilter($filters);
+                $query = $this->casFilter($filters, $sorts);
                 $result = $query->findAll(($nombreProd*$page)+1, $nombreProd*($page-1));
                 if (empty($result)) {
-                    return $this->throwError(new Exception("Aucun produit disponible avec les critères sélectionnés", 404), null);
+                    return $this->throwError(new Exception("Aucun produit disponible avec les critères sélectionnés", 404));
                 }
             }
             if (sizeof($result) < $nombreProd + 1) {
@@ -69,10 +68,8 @@ class Produits extends BaseController {
                 unset($result[$nombreProd]);
             }
         } catch (\CodeIgniter\Database\Exceptions\DataException $e) {
-            return $this->throwError($e, null);
-        } catch (ErrorException $e) {
-            return $this->throwError($e, 400);
-        }   
+            $this->throwError($e);
+        }
 
         //Commentaires
         return $this->giveResult($result, $dernier);
@@ -96,8 +93,8 @@ class Produits extends BaseController {
      *
      * @return \App\Models\ProduitCatalogue
      */
-    private function casFilter($filters) : object{
-       
+    private function casFilter($filters, $sorts) : object{
+        
         
         if (isset($filters["search"])) {
             $search = $filters["search"];
@@ -152,7 +149,11 @@ class Produits extends BaseController {
             $query->whereIn('id',$subQuery);
         }
 
-
+        if ($sorts == null) {
+            $query->orderBy("intitule", "ASC");
+        } else {
+            $query->orderBy($sorts[0], $sorts[1]);
+        }
 
         return $query;
     }
@@ -166,11 +167,10 @@ class Produits extends BaseController {
      *
      *
      */
-    private function throwError(Exception $e, $code) {
-        $code=($code)?$code:$e->getCode();
+    private function throwError(Exception $e) {
         if (isset($this->request)) {
             return $this->response->setHeader('Access-Control-Allow-Methods', 'PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
-            ->setStatusCode($code)->setJSON(array("message"=>$e->getMessage()));
+            ->setStatusCode($e->getCode())->setJSON(array("message"=>$e->getMessage()));
         } else {
             return array("resultat"=>[],"estDernier"=>true,"message"=>$e->getMessage());
         }
@@ -191,10 +191,10 @@ class Produits extends BaseController {
         if(isset($this->request)){
             $retour=[];
             foreach($result as $prod){
-                $prod->carte=service("cardProduit")->display($prod);
+                $retour[]=service("cardProduit")->display($prod);
             }
             return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
-            ->setStatusCode(200)->setJSON(array("resultat"=>$result,"estDernier"=>$dernier));
+            ->setStatusCode(200)->setJSON(array("resultat"=>$retour,"estDernier"=>$dernier));
         }
         else{
             return array("resultat"=>$result,"estDernier"=>$dernier);

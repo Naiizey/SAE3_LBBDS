@@ -114,12 +114,7 @@
             </div>
     </section>
     <section class="partie-produits">
-        <div class="liste-produits">
-        <?php if(isset($prods) && !empty($prods)): ?>
-            <?php //foreach($prods as $prod): ?>
-                <?=""//$cardProduit->display($prod)?>
-            <?php //endforeach; ?>
-        <?php endif; ?>
+        <div class="liste-produits">    
         </div>
         <div class="nav-page">
             <button class="normal-button voir-plus  <?= ($estDernier)?"hidden":"" ?>">Voir plus</button>
@@ -133,7 +128,6 @@
 </main>
 <?php require("footer.php"); ?>
 <script>
-   
     cataloguePrice();
     boutonCliquable(
         document.querySelector(".bulle-ouvrir-filtres"),
@@ -169,6 +163,4 @@
     );
     gestCartes.generer(undefined    );
     loadFiltersTris();
-    //changeOnglet();
-    
 </script>

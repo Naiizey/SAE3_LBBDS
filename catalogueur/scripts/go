@@ -1,6 +1,6 @@
 #!/bin/bash
 docker image pull bigpapoo/sae4-php
-docker container run --rm -ti -v ${PWD}/../:/work bigpapoo/sae4-php php scripts/builder.php > ../modele/modele.html
+docker container run --rm -ti -p 9090:8080 -v ${PWD}/../:/work bigpapoo/sae4-php php scripts/builder.php > ../modele/modele.html
 echo "Conversion terminée, fichier modele.html disponible dans le dossier modele"
 
 docker image pull bigpapoo/sae4-html2pdf

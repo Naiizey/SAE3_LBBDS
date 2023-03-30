@@ -32,6 +32,10 @@
                 .divUnProduit {
                     break-inside: avoid;
                 }
+
+                body {
+                    -webkit-print-color-adjust: exact;
+                }
             }
 
             <?php include("modele/modele.css") ?>

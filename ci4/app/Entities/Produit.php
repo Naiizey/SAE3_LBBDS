@@ -12,6 +12,7 @@ class Produit extends Entity
       'lienImage' => 'lienimage',
       #categorie
       'moyenneNote' => 'moyennenote',
+      'vendeur' => 
   ];
 
    public function __toString()

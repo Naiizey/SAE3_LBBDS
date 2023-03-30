@@ -40,6 +40,7 @@
                     <div class="divDroite">
                         <div>
                             <h2><?= ucfirst($prod -> intitule)?></h2>
+                            <p><?= $prod->vendeur ?></p>
                             <p class="ParaDescProduit"><?= ucfirst($prod->description) ?></p>
                             <section class="sectionAvis">
                                 <a href="#avis"><h4>Avis clients :</h4></a>

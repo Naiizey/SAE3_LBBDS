@@ -3728,15 +3728,26 @@ a.fleche-page{
 
 @keyframes stop {
     from{
+        visibility: visible;
         display: block;
+        opacity: 0.5;
     }
 
     to {
-      
-        scale: 1.05;
+        
         opacity: 0;
         display: none;
     }   
+}
+
+@keyframes fill {
+    from{
+        scale: 0.80;
+    }
+
+    to{
+        scale: 1;
+    }
 }
 
 .en-chargement .card-produit{
@@ -3758,8 +3769,14 @@ a.fleche-page{
 
 .en-chargement.killed {
     animation:  ease-out 1 0s stop;
+    visibility: hidden;
     
 }
+
+.filled{
+    animation: fill ease-in 1;
+}
+
 
 
 

@@ -1380,7 +1380,7 @@ const FilterUpdate = function (
                     self.voirPlus.classList.remove("hidden");
                     self.voirPlus.disabled=false;
                 }
-                self.replace(pluckCartes(result["resultat"]));
+                await self.replace(pluckCartes(result["resultat"]));
                
                 self.erroBloc.classList.add("hidden");
                 //reexe, afin que le listener revienne sur les cartes
@@ -1490,8 +1490,10 @@ window.onload = function addSvg(){
 
 //Closure / Classe
 function CarteEnChargement(
-    temps = .24, 
-    tempsDisp=.7,
+    tempsApparition = .25,
+    ecartApparition = .15,
+    temps = .08, 
+    tempsDisp=0.15,
     select = document.querySelector(".liste-produits")
     ){
 
@@ -1507,45 +1509,51 @@ function CarteEnChargement(
     }
 
     //Permet de génére les cartes en-chargements
-    this.generer = (nbCartes = 12) => {
+    this.generer =  (nbCartes = 12) => {
         //On se fait une div pour pouvoir travailler sur le modèle ensuite
         let work = document.createElement("div");
         let tempsTotal = Math.min(temps*nbCartes,temps*MAX_PARCOURS_CARTE);
         for(i=0;i<nbCartes;i++){
             work.innerHTML=modelDiv;
             work.children[0].classList.add("en-chargement")
-            work.children[0].style.animationDelay = (temps*i)+"s";
+            work.children[0].style.animationDelay = (i*temps)+"s";
             work.children[0].style.animationDuration = tempsTotal+"s";
             select.innerHTML = select.innerHTML + work.innerHTML;
+       
         }
         work.remove();
     }
    
     //Permet de supprimer des cartes avec l'effet d'animation associé à .killed
-    this.stop= (getEnChargement= document.querySelectorAll(".en-chargement")) => {  
+    this.stop= async (getEnChargement= document.querySelectorAll(".en-chargement")) => {  
         
         getEnChargement=doitEtreArray(getEnChargement);
-        getEnChargement.forEach((enCh) => {
+        for (let enCh of getEnChargement.reverse()){
             enCh.removeAttribute("style");
             enCh.style.animationDuration = tempsDisp+"s"
 
             enCh.classList.add("killed");
-            setTimeout(()=>{
-                enCh.remove();
-            },(tempsDisp*1000)-800)
-        })
+            await (new Promise(resolve => setTimeout(resolve, tempsDisp*1000)));
+            
+        }
+        getEnChargement.forEach(enCh => enCh.remove());
     }
 
-    this.replace= (nouveauContenu, elements  = document.querySelectorAll(".en-chargement")) => {
+    this.replace = async (nouveauContenu, elements  = document.querySelectorAll(".en-chargement")) => {
         nouveauContenu = doitEtreArray(nouveauContenu);
         elements = doitEtreArray(elements);
-        
-        
-        elements
-        .slice(0, nouveauContenu.length)//Pour les élément de 0 au nombre de nouveauContenu...
-        .forEach((element,index) => { //...On remplace leurs ancien contenu par le nouveau 
-            element.outerHTML = nouveauContenu[index];
-        });
+        console.log(nouveauContenu.length);
+        let work = document.createElement("div");
+        for(index=0;index<nouveauContenu.length && index<elements.length;index++){
+            element=elements[index]
+            work.innerHTML = nouveauContenu[index];           
+            work.children[0].style.animationDuration = tempsApparition+"s";
+
+            element.outerHTML = work.innerHTML;
+            await (new Promise(resolve => setTimeout(resolve, ecartApparition*1000)));
+            console.log("oui")
+        }
+        work.remove();
         
         this.stop(elements.slice(nouveauContenu.length, elements.length));
 

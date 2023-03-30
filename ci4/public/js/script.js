@@ -1493,7 +1493,7 @@ function CarteEnChargement(
     tempsApparition = .25,
     ecartApparition = .15,
     temps = .08, 
-    tempsDisp=0.15,
+    tempsDisp=0.7,
     select = document.querySelector(".liste-produits")
     ){
 
@@ -1525,7 +1525,7 @@ function CarteEnChargement(
     }
    
     //Permet de supprimer des cartes avec l'effet d'animation associé à .killed
-    this.stop= async (getEnChargement= document.querySelectorAll(".en-chargement")) => {  
+    this.stop= async (getEnChargement= document.querySelectorAll(".en-chargement"), tempsDisp= this.tempsDisp) => {  
         
         getEnChargement=doitEtreArray(getEnChargement);
         for (let enCh of getEnChargement.reverse()){
@@ -1533,10 +1533,12 @@ function CarteEnChargement(
             enCh.style.animationDuration = tempsDisp+"s"
 
             enCh.classList.add("killed");
-            await (new Promise(resolve => setTimeout(resolve, tempsDisp*1000)));
+            setTimeout(() => {
+                enCh.remove()
+            }, (tempsDisp*1000));
             
         }
-        getEnChargement.forEach(enCh => enCh.remove());
+        
     }
 
     this.replace = async (nouveauContenu, elements  = document.querySelectorAll(".en-chargement")) => {
@@ -1544,6 +1546,8 @@ function CarteEnChargement(
         elements = doitEtreArray(elements);
         console.log(nouveauContenu.length);
         let work = document.createElement("div");
+        toStop = elements.slice(nouveauContenu.length, elements.length);
+        this.stop(toStop, toStop.length*tempsApparition);
         for(index=0;index<nouveauContenu.length && index<elements.length;index++){
             element=elements[index]
             work.innerHTML = nouveauContenu[index];           
@@ -1555,7 +1559,7 @@ function CarteEnChargement(
         }
         work.remove();
         
-        this.stop(elements.slice(nouveauContenu.length, elements.length));
+        
 
 
     } 

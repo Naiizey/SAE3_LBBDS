@@ -3730,7 +3730,7 @@ a.fleche-page{
     from{
         visibility: visible;
         display: block;
-        opacity: 0.5;
+        opacity: 1;
     }
 
     to {

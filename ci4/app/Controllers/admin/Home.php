@@ -423,4 +423,9 @@ class Home extends BaseController
         }
         return view("admin/catalogue.php", $data);
     }
+
+    public function quidi() {
+        $data["controller"] = "Quidi";
+        return view('admin/quidi.php', $data);
+    }
 }

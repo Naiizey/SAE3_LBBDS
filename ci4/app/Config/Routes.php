@@ -149,6 +149,9 @@ $routes->get('/admin/glossaire/(:num)', 'admin\Home::glossaire/$1');
 
 $routes->get('/admin/catalogue', 'admin\Home::catalogue');
 $routes->get('/admin/catalogue/(:num)', 'admin\Home::catalogue/$1');
+
+$routes->get('/admin/quidi', 'admin\Home::quidi');
+$routes->get('/admin/quidi/(:num)', 'admin\Home::quidi/$1');
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                  Vendeur                                        ┃

@@ -250,6 +250,15 @@ CREATE TABLE _quidi
     CONSTRAINT fk_quidi_compte FOREIGN KEY (num_compte) REFERENCES _vendeur(num_compte)
 );
 
+CREATE TABLE _quidi_vendeur
+(
+    id_quidi INT NOT NULL,
+    num_compte INT NOT NULL,
+    CONSTRAINT fk_quidivendeur_quidi FOREIGN KEY (id_quidi) REFERENCES _quidi(id_quidi),
+    CONSTRAINT fk_quidivendeur_compte FOREIGN KEY (num_compte) REFERENCES _vendeur(num_compte),
+    PRIMARY KEY (id_quidi, num_compte)
+);
+
 /* -----------------------------------------------------------
 -                  Classes association                        -
 -                                                            -

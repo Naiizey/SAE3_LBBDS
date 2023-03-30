@@ -397,3 +397,19 @@ CREATE TRIGGER insert_quidi
     BEFORE INSERT ON sae3._quidi
     FOR EACH ROW
     EXECUTE PROCEDURE insert_quidi();
+
+
+    CREATE OR REPLACE FUNCTION insert_quidi_vendeur() RETURNS TRIGGER AS $$
+BEGIN
+    -- verify if there is a new.num_compte in the insert
+    IF NEW.num_compte IS NOT NULL THEN
+        INSERT INTO sae3._quidi_vendeur (id_quidi, num_compte) VALUES (NEW.id_quidi, NEW.num_compte);
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_quidi_vendeur
+    AFTER INSERT ON sae3._quidi
+    FOR EACH ROW
+    EXECUTE PROCEDURE insert_quidi_vendeur();

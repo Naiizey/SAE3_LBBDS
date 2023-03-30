@@ -47,6 +47,14 @@ class Home extends BaseController
         return view('client/index.php', $data);
     }
 
+    public function indexVend()
+    {
+        $data["estVendeur"] = true;
+        $data["controller"] = "Fonctionnalités vendeur";
+
+        return view("vendeur/index.php", $data);
+    }
+
     public function lstCommandes($num_commande = null)
     {
         $data["controller"] = "Commandes Client";
@@ -177,7 +185,7 @@ class Home extends BaseController
             {
                 if (!session()->has("referer_redirection")) 
                 {
-                    return redirect()->to("/vendeur/profil");
+                    return redirect()->to("/vendeur");
                 } 
                 else 
                 {

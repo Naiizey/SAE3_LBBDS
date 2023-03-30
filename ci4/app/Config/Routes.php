@@ -152,6 +152,8 @@ $routes->get('/admin/glossaire/(:num)', 'admin\Home::glossaire/$1');
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+$routes->get('/vendeur', 'vendeur\Home::indexVend', ['filter' => 'vendeur']);
+
 $routes->get('/vendeur/import/entetes','vendeur\Import::getentetes',['filter' => 'vendeur']);
 
 $routes->get('/vendeur/import', 'vendeur\Import::index/true', ['filter' => 'vendeur']);

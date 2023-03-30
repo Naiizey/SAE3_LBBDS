@@ -4412,27 +4412,27 @@ progress::-webkit-progress-value {
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                             Page admin (admin.php)                              ┃
+┃             Page admin (admin/index.php) et page vendeur (vendeur/index)        ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-.sectionAdmin div {
+.sectionAdmin div, .sectionVendeur div {
     display: flex;
     justify-content: space-between;
     gap: 1em;
 }
 
-.sectionAdmin div + div {
+.sectionAdmin div + div, .sectionVendeur div + div {
     margin-top: 1em;
 }
 
-.sectionAdmin h3 {
+.sectionAdmin h3, .sectionVendeur h3 {
     text-align: left;
     margin: 0.5em 0;
     font-family: 'Montserrat-Medium';
 }
 
-.sectionAdmin a {
+.sectionAdmin a, .sectionVendeur a {
     background-color: var(--vendor-color);
     border-radius: 7px;
     color: white;
@@ -4440,7 +4440,7 @@ progress::-webkit-progress-value {
     flex-grow: 1;
 }
 
-.sectionAdmin a:hover {
+.sectionAdmin a:hover, .sectionVendeur a:hover {
     background-color: var(--client-color);
     color: white;
 }

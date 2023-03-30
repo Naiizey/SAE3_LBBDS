@@ -23,7 +23,7 @@
                 font-family: "Montserrat-Bold";
                 src: url("dependances/fonts/Montserrat-Bold.ttf") format("truetype");
             }
-
+            
             <?php include("modele/modele.css") ?>
         </style>
         <?php

@@ -201,10 +201,6 @@ path{
     fill: var(--admin-color);
 }
 
-.checkmark path{
-    fill: transparent
-}
-
 /*.logoProfil:hover path, .logoPanier:hover path, .logoContact:hover path{
     fill: #6f98bd;
 }
@@ -2928,8 +2924,21 @@ div.image-card{
     width: 100%;
 }
 
-.cart, .checkmark{
+.cart, .plus, .minus{
     display: none;
+}
+
+.plus, .minus{
+    stroke: white;
+}
+
+.plus path, .minus path{
+    fill: white;
+    stroke: white;
+}
+
+.logoLoupe:hover{
+    transform: matrix3d(1.1, 0, 0, 0, 0, 1.1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 }
 
 @media screen and (max-width: 480px){

@@ -1,21 +1,20 @@
-main {
-    color: #164F57;
-}
-
 /* header */
-
+/* section presentation */
+/* Section produits */
+main {
+    color: #164f57;
+}
 header {
-    background-color: #164F57;
+    background-color: #164f57;
     width: 15em;
     height: 5em;
     border-bottom-right-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: -.5em;
-    margin-left: -.5em;
+    margin-top: -0.5em;
+    margin-left: -0.5em;
 }
-
 .lienAlizon {
     display: flex;
     align-items: center;
@@ -23,157 +22,124 @@ header {
     width: 13em;
     text-decoration: none;
 }
-
 .logoAlizon {
     height: 4em;
     width: auto;
 }
-
 .logoAlizon path {
-    fill: #D9D9D9;
+    fill: #d9d9d9;
 }
-
 h1 {
-    color: #D9D9D9;
+    color: #d9d9d9;
     font-family: "Expletus Sans";
     margin: 0;
 }
-
 h2 {
     font-family: "Montserrat-Regular";
 }
-
 p {
     font-family: "Montserrat-Medium";
 }
-
-
-
-/* section presentation */
-
 .sectionPresentation {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50%; /* pour imprimer 100% */
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
     font-family: "Montserrat-Medium";
 }
-
-.divVendeur {
-    width: 40%;
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 2em;
-}
-
-.divVendeur img {
-    height: 7em;
-    width: 7em;
-    border-radius: 20px;
-}
-
-.divNomNote {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.divVendeur h2 {
-    margin-bottom: .2em;
-}
-
-.noteAvis {
-    display: flex;
-    align-items: center;
-}
-
-.noteAvis img {
-    width: 1.5em;
-    height: auto;
-}
-
 .sectionPresentation table {
     border-collapse: collapse;
     width: 100%;
 }
-
 .sectionPresentation table tr:nth-child(odd) {
-    background-color: #E8E8E8;
+    background-color: #e8e8e8;
 }
-
 .sectionPresentation table th {
     text-align: left;
     padding-left: 1em;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
-
 .sectionPresentation table td {
     padding-left: 1em;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-
+.divVendeur {
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2em;
+}
+.divVendeur img {
+    height: 7em;
+    width: 7em;
+    border-radius: 20px;
+}
+.divVendeur h2 {
+    margin-bottom: 0.2em;
+}
+.divNomNote {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.noteAvis {
+    display: flex;
+    align-items: center;
+}
+.noteAvis img {
+    width: 1.5em;
+    height: auto;
+}
 .h2Presentation {
     margin-top: 1.5em;
-    margin-bottom: .2em;
+    margin-bottom: 0.2em;
 }
-
 .h2Presentation + p {
     margin-top: 0;
     margin-bottom: 2em;
     text-align: justify;
 }
-
-
-
-/* Section produits */
-
 .sectionProduits {
-    width: 48%; /* pour imprimer 98% */
+    width: 88%;
     margin-left: auto;
     margin-right: auto;
     border-radius: 20px;
-    background-color: #E8E8E8;
+    background-color: #e8e8e8;
     padding: 1em;
 }
-
 .divUnProduit {
     display: flex;
     height: 8em;
     justify-content: space-between;
     align-items: center;
 }
-
 .divUnProduit img {
     object-fit: cover;
     height: 8em;
     width: 8em;
     border-radius: 5px;
-    border: 1px solid #164F57;
+    border: 1px solid #164f57;
 }
-
 .divNomDescription {
     width: 60%;
     height: 8em;
 }
-
 .divNomDescription h2 {
     margin-top: 0;
-    margin-bottom: .2em;
+    margin-bottom: 0.2em;
 }
-
 .divNomDescription p {
     margin: 0;
     text-align: justify;
 }
-
 hr {
-    background-color: #C0C0C0;
+    background-color: #c0c0c0;
     height: 3px;
     border: none;
     width: 95%;

@@ -113,12 +113,31 @@ class Produits extends BaseController {
             unset($filters["prix_max"]);
             
         }
-
-        
+        //TODO: Séparation des filtres catégories et vendeurs
+     
+        $keyVend=[];
+        $keyCat=[];
+        foreach (array_keys($filters) as $key) {
+            if (is_int($key)) {
+                $keyVend[]=$key;
+            }else{
+                $keyCat[]=$key;
+            }
+        }
         if (!empty($filters)) {
+          
             $subQuery = db_connect()->table($query->table)->select('id');
-            foreach (array_keys($filters) as $key) {
+            foreach ($keyCat as $key) {
                 $subQuery->orWhere('categorie', $key);
+                
+            }
+            if(sizeOf($keyCat)>0){
+                $query->whereIn('id',$subQuery);
+            }
+            $subQuery = db_connect()->table($query->table)->select('id');
+            foreach ($keyVend as $key) {
+                $subQuery->orWhere('num_compte', $key);
+                
             }
             $query->whereIn('id',$subQuery);
             
@@ -169,9 +188,6 @@ class Produits extends BaseController {
      *
      */
     private function giveResult($result, $dernier) {
-        
-        
-        
         if(isset($this->request)){
             $retour=[];
             foreach($result as $prod){
@@ -183,11 +199,5 @@ class Produits extends BaseController {
         else{
             return array("resultat"=>$result,"estDernier"=>$dernier);
         }
-    }
-
-    
-
-    
-
-    
+    }    
 }

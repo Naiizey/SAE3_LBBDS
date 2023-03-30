@@ -10,19 +10,16 @@ use CodeIgniter\Model;
  * @abstract App\Models\Client et de App\Models\Vendeur 
  * 
  */
-abstract class Compte extends Model
+class Compte extends Model
 {
-    /*
-    protected $table      = 'sae3.client';
+    protected $table      = 'sae3.compte';
     protected $primaryKey = 'numero';
 
     protected $useAutoIncrement = true;
-
-    protected $returnType     = \App\Entities\Client::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['nom','prenom','email','identifiant','motdepasse'];
-    */
+    protected $allowedFields = ["email","pseudo"];
+    
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
@@ -49,30 +46,14 @@ abstract class Compte extends Model
         else return null;
     }
 
-    protected function getCompteByPseudo($pseudo, $motDePasse) 
-    {
-        
-        $comptes = $this->where('identifiant',$pseudo);
-        
-        return $this->getClientByCredentials($comptes, $motDePasse);
-    }
-
-    protected function getCompteByEmail($email, $motDePasse)
-    {
-        
-        $comptes = $this->where('email',$email);
-        
-        return $this->getCompteByCredentials($comptes, $motDePasse);
-    }
-
     public function doesPseudoExists($pseudo) : bool
     {
-        return !empty($this->where('identifiant',$pseudo)->findAll());
+        return !empty($this->where("pseudo",$pseudo)->findAll());
     }
 
-    protected function doesEmailExists($email) : bool
+    public function doesEmailExists($email) : bool
     {
-        return !empty($this->where('email',$email)->findAll());
+        return !empty($this->where("email",$email)->findAll());
     }
 
     protected function getCompteById($id)
@@ -84,8 +65,4 @@ abstract class Compte extends Model
     {
         $this->save($client);
     }
-
- 
-
-    
 }

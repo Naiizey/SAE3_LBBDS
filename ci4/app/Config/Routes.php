@@ -36,7 +36,7 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-$routes->get('/test', 'Test::test4');
+$routes->get('/test2','Test::test4');
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -114,7 +114,8 @@ $routes->post('/validation', 'client\Home::validation' );
 
 $routes->get('/admin', 'admin\Home');
 
-$routes->get('/admin/destroy', 'admin\Home::destroySession');
+$routes->get('/admin/destroyClient', 'admin\Home::destroySessionClient');
+$routes->get('/admin/destroyVendeur', 'admin\Home::destroySessionVendeur');
 
 $routes->get('/admin/clients', 'admin\Home::lstClients/liste');
 $routes->get('/admin/clients/bannir', 'admin\Home::lstClients/bannir');
@@ -135,20 +136,27 @@ $routes->get('/admin/signalements/(:num)', 'admin\Home::lstSignalements/$1');
 $routes->get('/admin/avis', 'admin\Home::lstAvis');
 $routes->get('/admin/avis/(:num)', 'admin\Home::lstAvis/$1');
 
-$routes->get('/admin/profil', 'admin\Home::profil');
-$routes->get('/admin/profil/(:num)', 'admin\Home::profil/$1');
-$routes->post('/admin/profil/(:num)', 'admin\Home::profil/$1');
+$routes->get('/admin/profil/client', 'admin\Home::profilClient');
+$routes->get('/admin/profil/client/(:num)', 'admin\Home::profilClient/$1');
+$routes->post('/admin/profil/client/(:num)', 'admin\Home::profilClient/$1');
 
+$routes->get('/admin/profil/vendeur', 'admin\Home::profilVendeur');
+$routes->get('/admin/profil/vendeur/(:num)', 'admin\Home::profilVendeur/$1');
+$routes->post('/admin/profil/vendeur/(:num)', 'admin\Home::profilVendeur/$1');
+
+$routes->get('/admin/glossaire/(:num)', 'admin\Home::glossaire/$1');
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                  Vendeur                                        ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+$routes->get('/vendeur', 'vendeur\Home::indexVend', ['filter' => 'vendeur']);
+
 $routes->get('/vendeur/import/entetes','vendeur\Import::getentetes',['filter' => 'vendeur']);
 
-$routes->get('/vendeur/import', 'vendeur\Import::index/true');
-$routes->post('/vendeur/import/upload','vendeur\Import::upload');
+$routes->get('/vendeur/import', 'vendeur\Import::index/true', ['filter' => 'vendeur']);
+$routes->post('/vendeur/import/upload','vendeur\Import::upload', ['filter' => 'vendeur']);
 
 $routes->get('vendeur/commandes','vendeur\Home::lstCommandes',['filter' => 'vendeur']);
 $routes->get('vendeur/commandes/(:alphanum)','vendeur\Home::lstCommandes/$1',['filter' => 'vendeur']);
@@ -159,6 +167,11 @@ $routes->get('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur']);
 $routes->post('/vendeur/profil', 'vendeur\Home::profil',['filter' => 'vendeur']);
 
 $routes->get('vendeur/connexion','vendeur\Home::connexion');
+$routes->post('vendeur/connexion','vendeur\Home::connexion');
+
+$routes->get('/vendeur/catalogue', 'vendeur\Home::catalogue', ['filter' => 'vendeur']);
+
+$routes->get('vendeur/catalogue(:num)', 'vendeur\Home::catalogue/$1',['filter' => 'vendeur']);
 
 ##param uri (:any) et dans methode /$1
 

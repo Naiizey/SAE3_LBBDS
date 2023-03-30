@@ -21,26 +21,21 @@ class Client extends Compte
     protected $returnType     = \App\Entities\Client::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['nom','prenom','email','identifiant','motdepasse'];
-
-
-    public function getClientByCredentials($comptes, $motDePasse) : \App\Entities\Client | null
-    {
-        return parent::getCompteByCredentials($comptes, $motDePasse);
-    }
+    protected $allowedFields = ['numero','nom','prenom',"email","identifiant","motdepasse"];
 
     public function getClientByPseudo($pseudo, $motDePasse) : \App\Entities\Client | null
     {
-        
-        return parent::getCompteByPseudo($pseudo, $motDePasse);
+        $comptes = $this->where("identifiant",$pseudo);
+
+        return parent::getCompteByCredentials($comptes, $motDePasse);
     }
 
     public function getClientByEmail($email, $motDePasse) : \App\Entities\Client | null
     {
-        
-        return parent::getCompteByEmail($email, $motDePasse);
-    }
+        $comptes = $this->where("email",$email);
 
+        return parent::getCompteByCredentials($comptes, $motDePasse);
+    }
 
     public function getClientById($id)
     {
@@ -54,6 +49,11 @@ class Client extends Compte
 
     public function doesEmailExists($email) : bool
     {
-        return parent::doesEmailExists($email);
+        return model("\App\Model\Compte")->doesEmailExists($email);
+    }
+
+    public function doesPseudoExists($pseudo) : bool
+    {
+        return model("\App\Model\Compte")->doesPseudoExists($pseudo);
     }
 }

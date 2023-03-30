@@ -371,3 +371,29 @@ $$ language plpgsql;
 
 CREATE TRIGGER when_delete_commentaire INSTEAD OF DELETE ON commentaires FOR EACH ROW EXECUTE PROCEDURE delete_commentaire();
 
+--Trigger insertion quidi
+
+CREATE OR REPLACE FUNCTION insert_quidi() RETURNS TRIGGER AS $$
+BEGIN
+    -- verify if there is a new.num_compte in the insert
+    IF NEW.num_compte IS NOT NULL THEN
+        -- verify if new.num_compte is the same as the one in new.id_prod in _produit
+        IF (SELECT num_compte FROM sae3._produit WHERE id_prod = NEW.id_prod) = NEW.num_compte THEN
+            --INSERT INTO sae3._quidi (id_prod, num_compte, date_quidi, heure_quidi, contenu_quidi) VALUES (NEW.id_prod, NEW.num_compte, NEW.date_quidi, NEW.heure_quidi, NEW.contenu_quidi);
+            RETURN NEW;
+        ELSE
+            -- we raise an exception Le numéro de compte (NEW.num_compte) ne correspond pas au vendeur du produit (NEW.id_prod)
+            RAISE EXCEPTION 'Le numéro de compte (%) ne correspond pas au vendeur du produit (%)', NEW.num_compte,  (SELECT num_compte FROM sae3._produit WHERE id_prod = NEW.id_prod);
+        END IF;
+    ELSE
+        RAISE NOTICE 'pas de numéro de compte';
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER insert_quidi
+    BEFORE INSERT ON sae3._quidi
+    FOR EACH ROW
+    EXECUTE PROCEDURE insert_quidi();

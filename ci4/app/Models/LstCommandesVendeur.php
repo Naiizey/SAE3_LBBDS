@@ -25,9 +25,14 @@ class LstCommandesVendeur extends Model
     protected $useSoftDeletes = false;
 
     
-    protected $allowedFields = ['num_commande','num_compte','date_commande','date_arriv','ht','ttc','etat'];
+    protected $allowedFields = ['num_commande','num_compte','date_commande','date_arriv','prix_ht','prix_ttc','etat', 'montant_reduction', 'pourcentage_reduction','num_vendeur'];
 
+    public function getCompteCommandes() : array
+    { 
+        return $this->where('num_vendeur',session()->get("numeroVendeur"))->findAll();
+    }
 
-    
-
+    public function getCommandeByIdAndVendeur($num_commande,$num_vendeur){
+        return $this->where('num_commande',$num_commande)->where('num_vendeur',$num_vendeur)->findAll();
+    }
 }

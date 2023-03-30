@@ -38,7 +38,7 @@
                                 <h3>Vous n’avez aucun article dans votre panier.</h3>
                                 <h3><a href="<?= base_url() ?>/catalogue" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>
                             </div>
-                            <?php if (!session()->has("numero")): ?>
+                            <?php if (!session()->has("numeroClient")): ?>
                                 <h3 class="h3PasArticlePanier">Connectez-vous pour récupérer votre panier.</h3>
                                 <a href="<?= base_url() ?>/connexion/retourPanier" class="lienPanier">Se connecter</a>
                             <?php endif; ?>
@@ -204,7 +204,7 @@
     updatePricePanier();
     updatePriceTotal();
     <?php endif; ?>
-    <?php if(session()->has("numero") && has_cookie("token_panier")
+    <?php if(session()->has("numeroClient") && has_cookie("token_panier")
     && !(session()->has("ignorer") && session()->get("ignorer"))
     && !(isset($ecraserOuFusionner) && $ecraserOuFusionner)): ?>
         var oui = new AlerteAlizon("Récupération panier","<?= current_url() ?>","Il y a déjà un panier associé à votre compte, voulez vous garder le panier que vous venez de faire, garder le panier enregistré sur votre compte ou fusionner les 2 ?");

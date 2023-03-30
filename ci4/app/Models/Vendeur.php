@@ -23,26 +23,21 @@ class Vendeur extends Compte
     protected $returnType     = \App\Entities\Vendeur::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['identifiant','motdepasse','email', 'texte_presentation', 'numero_siret', 'tva_intercommunautaire', 'note_vendeur', 'logo', 'numero_rue', 'nom_rue', 'code_postal', 'ville', 'comp_a1', 'comp_a2'];
+    protected $allowedFields = ["identifiant","motdepasse","email", 'texte_presentation', 'numero_siret', 'tva_intercommunautaire', 'note_vendeur', 'logo', 'numero_rue', 'nom_rue', 'code_postal', 'ville', 'comp_a1', 'comp_a2'];
 
-
-    public function getVendeurByCredentials($comptes, $motDePasse) : \App\Entities\Vendeur | null
+    public function getVendeurByPseudo($identifiant, $motDePasse) : \App\Entities\Vendeur | null
     {
+        $comptes = $this->where("identifiant",$identifiant);
+
         return parent::getCompteByCredentials($comptes, $motDePasse);
-    }
-
-    public function getVendeurByPseudo($pseudo, $motDePasse) : \App\Entities\Vendeur | null
-    {
-        
-        return parent::getCompteByPseudo($pseudo, $motDePasse);
     }
 
     public function getVendeurByEmail($email, $motDePasse) : \App\Entities\Vendeur | null
     {
-        
-        return parent::getCompteByEmail($email, $motDePasse);
-    }
+        $comptes = $this->where("email",$email);
 
+        return parent::getCompteByCredentials($comptes, $motDePasse);
+    }
 
     public function getVendeurById($id)
     {
@@ -54,5 +49,13 @@ class Vendeur extends Compte
         parent::saveCompte($vendeur);
     }
 
-    
+    public function doesEmailExists($email) : bool
+    {
+        return model("\App\Model\Compte")->doesEmailExists($email);
+    }
+
+    public function doesPseudoExists($pseudo) : bool
+    {
+        return model("\App\Model\Compte")->doesPseudoExists($pseudo);
+    }
 }

@@ -16,17 +16,6 @@ class Home extends BaseController
         //Permets d'éviter le bug de redirection.
         session();
 
-        //Affichage de la quantité panier
-        helper('cookie');
-
-        if (session()->has("numero")) {
-            $GLOBALS["quant"] = model("\App\Model\ProduitPanierCompteModel")->compteurDansPanier(session()->get("numero"));
-        } elseif (has_cookie("token_panier")) {
-            $GLOBALS["quant"] = model("\App\Model\ProduitPanierVisiteurModel")->compteurDansPanier(get_cookie("token_panier"));
-        } else {
-            $GLOBALS["quant"] = 0;
-        }
-
         //Au cas où __ci_previous_url ne marcherait plus...: session()->set("previous_url",current_url());
         $this->feedback=service("feedback");
         if (session()->has("just_connectee") && session()->get("just_connectee")==true) {
@@ -49,14 +38,24 @@ class Home extends BaseController
         return view("admin/index.php", $data);
     }
 
-    public function destroySession()
+    public function destroySessionClient()
     {
         $session=session();
-        $session->remove("numero");
-        $session->remove("nom");
+        $session->remove("numeroClient");
+        $session->remove("nomClient");
         $session->remove("ignorer");
         $session->remove("adresse_facturation");
         $session->remove("adresse_livraison");
+        $session->set("just_deconnectee",True);
+        
+        return redirect()->to("/");
+    }
+
+    public function destroySessionVendeur()
+    {
+        $session=session();
+        $session->remove("numeroVendeur");
+        $session->remove("identifiantVendeur");
         $session->set("just_deconnectee",True);
         
         return redirect()->to("/");
@@ -133,7 +132,7 @@ class Home extends BaseController
     {
         $data["controller"]="Liste des vendeurs";
         $data["role"]="admin";
-        $data["vendeurs"]= array(); //model("\App\Models\Vendeur")->findAll();
+        $data["vendeurs"]= model("\App\Models\Vendeur")->findAll();
 
         return view("admin/lstVendeurs.php", $data);
     }
@@ -166,12 +165,12 @@ class Home extends BaseController
             $auth = service('authentification');
             $user= new \App\Entities\Vendeur();
             $user->fill($post);
-            $issues=$auth->inscriptionVendeur($user, $post['confirmezMotDePasse']);
+            $issues=$auth->inscriptionVendeur($user, $post["confirmezMotDePasse"]);
 
             if(empty($issues))
             {
                 if (!session()->has("referer_redirection")) {
-                    return redirect()->to("/");
+                    return redirect()->to("/vendeur/profil");
                 } else {
                     $redirection=session()->get("referer_redirection");
                     session()->remove("referer_redirection");
@@ -180,22 +179,23 @@ class Home extends BaseController
             }
         }
         
-        $data['role'] = "admin";
+        $data["role"] = "admin";
         $data["controller"]= "Inscription Vendeur";
-        $data['erreurs'] = $issues;
+        $data["erreurs"] = $issues;
 
         //Pré-remplit les champs s'ils ont déjà été renseignés juste avant des potentielles erreurs
-        $data['identifiant'] = (isset($_POST['identifiant'])) ? $_POST['identifiant'] : "";
-        $data['email'] = (isset($_POST['email'])) ? $_POST['email'] : "";
-        $data['siret'] = (isset($_POST['siret'])) ? $_POST['siret'] : "";
-        $data['tvaIntraCom'] = (isset($_POST['tvaIntraCom'])) ? $_POST['tvaIntraCom'] : "";
-        $data['motDePasse'] = (isset($_POST['motDePasse'])) ? $_POST['motDePasse'] : "";
-        $data['confirmezMotDePasse'] = (isset($_POST['confirmezMotDePasse'])) ? $_POST['confirmezMotDePasse'] : "";
+        $data["identifiant"] = (isset($_POST["identifiant"])) ? $_POST["identifiant"] : "";
+        $data["email"] = (isset($_POST["email"])) ? $_POST["email"] : "";
+        $data["siret"] = (isset($_POST["numero_siret"])) ? $_POST["numero_siret"] : "";
+        $data["txtPres"] = (isset($_POST["texte_presentation"])) ? $_POST["texte_presentation"] : "";
+        $data["tvaInterCom"] = (isset($_POST["tva_intercommunautaire"])) ? $_POST["tva_intercommunautaire"] : "";
+        $data["motDePasse"] = (isset($_POST["motDePasse"])) ? $_POST["motDePasse"] : "";
+        $data["confirmezMotDePasse"] = (isset($_POST["confirmezMotDePasse"])) ? $_POST["confirmezMotDePasse"] : "";
 
-        return view('vendeur/inscription.php', $data);
+        return view('admin/inscriptionVendeur.php', $data);
     }
 
-    public function profil($numClient = null)
+    public function profilClient($numClient = null)
     {
         if ($numClient == null) 
         {
@@ -217,8 +217,8 @@ class Home extends BaseController
             $data['prenomBase'] = $clientBase->prenom;
 
             //Valeurs par défaut
-            $data['motDePasse'] = "motDePassemotDePasse";
-            $data['confirmezMotDePasse'] = "";
+            $data["motDePasse"] = "motDePassemotDePasse";
+            $data["confirmezMotDePasse"] = "";
             $data['nouveauMotDePasse'] = "";
 
             //On cache par défaut les champs supplémentaires pour modifier le mdp
@@ -226,16 +226,152 @@ class Home extends BaseController
             $data['disableInput'] = "disabled";
             $data['requireInput'] = "";
 
+            //Si l'utilisateur a cherché à modifier des informations
+            if (!empty($post)) 
+            {
+                //Ce champ ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
+                if (!isset($post["motDePasse"])) 
+                {
+                    $post["motDePasse"] = "motDePassemotDePasse";
+                }
+
+                $auth = service('authentification');
+                $user=$client;
+                $user->fill($post);
+                $issues=$auth->modifProfilClient($user, $post["confirmezMotDePasse"], $post['nouveauMotDePasse']);
+
+                if (!empty($issues))
+                {
+                    //En cas d'erreur(s), on pré-remplit les champs avec les données déjà renseignées
+                    $data["motDePasse"] = $post["motDePasse"];
+                    $data["confirmezMotDePasse"] = $post["confirmezMotDePasse"];
+                    $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
+                }
+                else
+                {
+                    return redirect()->to("/admin/profil/client/" . $numClient);
+                }
+            }
+
             //Pré-remplissage des champs avec les données de la base
             $data['pseudo'] = $client->identifiant;
             $data['prenom'] = $client->prenom;
             $data['nom'] = $client->nom;
-            $data['email'] = $client->email;
-            $data['adresseFact'] = $modelFact->getAdresse(session()->get("numero"));
-            $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numero"));
-            $data['erreurs'] = $issues;
+            $data["email"] = $client->email;
+            $data['adresseFact'] = $modelFact->getAdresse(session()->get("numeroClient"));
+            $data['adresseLivr'] = $modelLivr->getAdresse(session()->get("numeroClient"));
+            $data["erreurs"] = $issues;
 
-            return view('admin/profil.php', $data);
+            return view('admin/profilClient.php', $data);
         }
+    }
+
+    public function profilVendeur($numVendeur = null)
+    {
+        if ($numVendeur == null) 
+        {
+            throw new \Exception("Vous devez spécifier un numéro de compte", 404);
+        }
+        else //TODO
+        {
+            $data["controller"] = "Profil Vendeur";
+            $modelFact = model("\App\Models\ClientAdresseFacturation");
+            $modelLivr = model("\App\Models\ClientAdresseLivraison");
+            $modelVendeur = model("\App\Models\Vendeur");
+            $post=$this->request->getPost();
+
+            $data['numVendeur'] = $numVendeur;
+
+            $issues = [];
+            $vendeur = $modelVendeur->getVendeurById($numVendeur);
+
+            if ($vendeur == null) 
+            {
+                throw new \Exception("Cet identifiant ne correspond à aucun compte", 404);
+            }
+            else
+            {
+                //Valeurs par défaut
+                $data["motDePasse"] = "motDePassemotDePasse";
+                $data["confirmezMotDePasse"] = "";
+                $data['nouveauMotDePasse'] = "";
+
+                //On cache par défaut les champs supplémentaires pour modifier le mdp
+                $data['classCacheDiv'] = "cacheModifMdp";
+                $data['disableInput'] = "disabled";
+                $data['requireInput'] = "";
+
+                //Si l'utilisateur a cherché à modifier des informations
+                if (!empty($post)) 
+                {
+                    //Ce champ ne semble pas être défini si l'utilisateur n'y touche pas, on en informe le service
+                    if (!isset($post["motDePasse"])) 
+                    {
+                        $post["motDePasse"] = "motDePassemotDePasse";
+                    }
+
+                    $auth = service('authentification');
+                    $user=$vendeur;
+                    $user->fill($post);
+                    $issues=$auth->modifProfilVendeur($user, $post["confirmezMotDePasse"], $post['nouveauMotDePasse']);
+
+                    if (!empty($issues))
+                    {
+                        //En cas d'erreur(s), on pré-remplit les champs avec les données déjà renseignées
+                        $data["motDePasse"] = $post["motDePasse"];
+                        $data["confirmezMotDePasse"] = $post["confirmezMotDePasse"];
+                        $data['nouveauMotDePasse'] = $post['nouveauMotDePasse'];
+                    }
+                    else
+                    {
+                        return redirect()->to("/admin/profil/vendeur/" . $numVendeur);
+                    }
+                }
+
+                //Pré-remplissage des champs avec les données de la base
+                $data["identifiant"] = $vendeur->identifiant;
+                $data["txtPres"] = $vendeur->texte_presentation;
+                $data['logo'] = $vendeur->logo;
+                $data['note'] = $vendeur->note_vendeur;
+                $data["email"] = $vendeur->email;
+                $data["siret"] = $vendeur->numero_siret;
+                $data["tvaInterCom"] = $vendeur->tva_intercommunautaire;
+                $data['numRue'] = $vendeur->numero_rue;
+                $data['nomRue'] = $vendeur->nom_rue;
+                $data['ville'] = $vendeur->ville;
+                $data['codePostal'] = $vendeur->code_postal;
+                $data['compA1'] = $vendeur->comp_a1;
+                $data['compA2'] = $vendeur->comp_a2;
+                $data["erreurs"] = $issues;
+                $data['noteVendeur']=service("cardProduit")->notationEtoile($vendeur->note_vendeur);
+            }
+
+            return view('admin/profilVendeur.php', $data);
+        }
+    }
+
+    public function glossaire($num_glossaire) {
+        $modelGlossaire = model("\App\Models\GlossaireAdmin");
+
+        $data['glossaire'] = $modelGlossaire->where('id_quidi', $num_glossaire)->findAll()[0];
+        $data['articles'] = $modelGlossaire->where('num_compte', $data['glossaire']->num_compte)->findAll();
+
+        //exporter les données dans un fichier json
+        $data['json'] = json_encode($data['articles']);
+
+
+        if ($num_glossaire == null) {
+            throw new Exception("Vous devez renseigner un numéro de glossaire.", 404);
+        }
+        else
+        {
+            if ($data['glossaire'] == null) {
+                throw new Exception("Le numéro de glossaire n'existe pas.", 404);
+            }
+            $data['numCatalogue'] = $num_glossaire;
+        }
+
+        $data['cardProduit']=service("cardProduit");
+        return view("vendeur/glossaire.php", $data);
     }
 }

@@ -49,6 +49,25 @@
                     </details>
                 <?php endforeach;?>
                 </div>
+                <hr class="separationCatalog"/>
+                <details class="categorie-catalogue">
+                    <summary class="categorie"><h2>Vendeurs</h2></summary>
+                    <div id="entête" class="enTete-vendeur">
+                        <div class="bouton-selectionner-tout">
+                            <label for="tout-vend">Tout sélectionner</label>
+                            <input class="chk-box-tout" type="checkbox" > <!-- id="tout-vend" name="tout-vend" value="tout-vend"-->
+                        </div>
+                        <hr>
+                    </div>
+                    <?php foreach ($vendeurs as $key => $vendeur):?>
+                        <div class="sous-categorie" for="<?= $vendeur->identifiant ?>">
+                            <label for="<?= $vendeur->numero ?>" class=".sous-categorie-catalogue"><?= $vendeur->identifiant ?></label>
+                            <input <?= ((isset($filters[$vendeur->numero]) && $filters[$vendeur->numero]=="on")?"checked":"") ?> name="<?= $vendeur->numero ?>" type="checkbox" id="<?= $vendeur->numero ?>">
+                        </div>
+                        <?php if($key != array_key_last($vendeurs)): ?> <hr> <?php endif; ?>
+                    <?php endforeach;?>
+                </details>
+                <hr class="separationCatalog"/>
                 <section class="prix">
                     <label>Prix :</label>
                     <section class="price-range">

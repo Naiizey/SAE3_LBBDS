@@ -35,7 +35,7 @@
             }
 
             :root {
-                --slide-count: 3;
+                --slide-count: 4;
             }
             
             main {
@@ -111,19 +111,19 @@
                             <span class="quantPanier">+9</span>
                         <?php endif; ?>
                     </a>
-                    <a class="lienConnexion" href="<?= ((session()->has("numero")) ? base_url()."/profil" : base_url()."/connexion") ?>">
-                    <?php if (session()->has("numero")) {
+                    <a class="lienConnexion" href="<?= ((session()->has("numeroClient")) ? base_url()."/profil" : base_url()."/connexion") ?>">
+                    <?php if (session()->has("numeroClient")) {
                         include(dirname(__DIR__,3)."/public/images/header/profilCon.svg");
                     } else {
                         include(dirname(__DIR__,3)."/public/images/header/profil.svg");
                     } ?>
                     </a>
-                    <?php if (session()->has("numero")): ?>
+                    <?php if (session()->has("numeroClient")): ?>
                         <div class="divHoverConnexion divConnected">
-                            <p class="pNom">Bonjour <?= (session()->get("nom")) ?></p>
+                            <p class="pNom">Bonjour <?= (session()->get("nomClient")) ?></p>
                             <a href="<?= base_url()."/profil"?>"><p>Mon profil</p></a>
                             <a href="<?= base_url()."/commandes"?>"><p>Mes commandes</p></a>
-                            <a href="<?= base_url()."/admin/destroy"?>"><p>Se déconnecter</p></a>
+                            <a href="<?= base_url()."/admin/destroyClient"?>"><p>Se déconnecter</p></a>
                         </div>
                     <?php else: ?>
                         <div class="divHoverConnexion divNotConnected">

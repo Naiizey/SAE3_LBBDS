@@ -38,14 +38,14 @@ class Client extends Entity
 
     public $datamap= [
         #numero
-        'motDePasse' => 'motdepasse',
+        "motDePasse" => "motdepasse",
         'v_nom' => 'nom',
         'v_prenom' => 'prenom',
         'nom' => 'nom',
         'prenom' => 'prenom',
         #identifiant
-        'identifiant' => 'identifiant',
-        'pseudo' => 'identifiant'
+        "identifiant" => "identifiant",
+        'pseudo' => "identifiant"
     ];
 
     protected $attributes = [

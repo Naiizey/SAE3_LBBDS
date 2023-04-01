@@ -222,3 +222,7 @@ LEFT JOIN moyenneProduit on _produit.id_prod = moyenneProduit.id NATURAL JOIN so
 
 CREATE OR REPLACE VIEW glossaire_vendeur AS 
 SELECT id_quidi,num_compte,numero_rue,nom_rue,code_postal,ville,intitule_prod, prix_ht, prix_ttc, description_prod,pseudo,note_vendeur,numero_siret,tva_intercommunautaire,texte_presentation,logo,moyenne_note_prod FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur NATURAL JOIN _compte INNER JOIN _adresse  ON _vendeur.id_adresse = _adresse.id_a;
+
+CREATE OR REPLACE VIEW produit_quidi AS
+SELECT concat(id_prod, '£', id_quidi) id, id_prod, intitule_prod, stock_prod, prix_ttc, prix_ht, lien_image,  description_prod, num_compte num_vendeur,id_quidi
+FROM _produit NATURAL JOIN soloimageproduit NATURAL JOIN _quidi NATURAL JOIN _vendeur;

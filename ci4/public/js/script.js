@@ -1382,7 +1382,7 @@ const FilterUpdate = function (
                     self.voirPlus.classList.remove("hidden");
                     self.voirPlus.disabled=false;
                 }
-                self.replace(pluckCartes(result["resultat"]));
+                await self.replace(pluckCartes(result["resultat"]));
                
                 self.erroBloc.classList.add("hidden");
                 //reexe, afin que le listener revienne sur les cartes
@@ -1520,6 +1520,89 @@ window.onload = function addSvg(){
             svg.style.display = "block";
         }
     }
+
+  
+}
+
+//Closure / Classe
+function CarteEnChargement(
+    tempsApparition = .25,
+    ecartApparition = .15,
+    temps = .08, 
+    tempsDisp=0.7,
+    select = document.querySelector(".liste-produits")
+    ){
+
+    const MAX_PARCOURS_CARTE = 14;
+    const modelDiv='<div class="card-produit-ext">'+'<div class="card-produit">'+'</div>'+'</div>'
+    
+    //On veut un array
+    function doitEtreArray(element_s){
+        if(!(element_s instanceof Array)){
+            element_s=(element_s instanceof NodeList)?[...element_s]:[element_s]
+        }
+        return element_s;
+    }
+
+    //Permet de génére les cartes en-chargements
+    this.generer =  (nbCartes = 12) => {
+        //On se fait une div pour pouvoir travailler sur le modèle ensuite
+        let work = document.createElement("div");
+        let tempsTotal = Math.min(temps*nbCartes,temps*MAX_PARCOURS_CARTE);
+        for(i=0;i<nbCartes;i++){
+            work.innerHTML=modelDiv;
+            work.children[0].classList.add("en-chargement")
+            work.children[0].style.animationDelay = (i*temps)+"s";
+            work.children[0].style.animationDuration = tempsTotal+"s";
+            select.innerHTML = select.innerHTML + work.innerHTML;
+       
+        }
+        work.remove();
+    }
+   
+    //Permet de supprimer des cartes avec l'effet d'animation associé à .killed
+    this.stop= async (getEnChargement= document.querySelectorAll(".en-chargement"), tempsDisp= this.tempsDisp) => {  
+        
+        getEnChargement=doitEtreArray(getEnChargement);
+        for (let enCh of getEnChargement.reverse()){
+            enCh.removeAttribute("style");
+            enCh.style.animationDuration = tempsDisp+"s"
+
+            enCh.classList.add("killed");
+            setTimeout(() => {
+                enCh.remove()
+            }, (tempsDisp*1000));
+            
+        }
+        
+    }
+
+    this.replace = async (nouveauContenu, elements  = document.querySelectorAll(".en-chargement")) => {
+        nouveauContenu = doitEtreArray(nouveauContenu);
+        elements = doitEtreArray(elements);
+        console.log(nouveauContenu.length);
+        let work = document.createElement("div");
+        toStop = elements.slice(nouveauContenu.length, elements.length);
+        this.stop(toStop, toStop.length*tempsApparition);
+        for(index=0;index<nouveauContenu.length && index<elements.length;index++){
+            element=elements[index]
+            work.innerHTML = nouveauContenu[index];           
+            work.children[0].style.animationDuration = tempsApparition+"s";
+
+            element.outerHTML = work.innerHTML;
+            await (new Promise(resolve => setTimeout(resolve, ecartApparition*1000)));
+            console.log("oui")
+        }
+        work.remove();
+        
+        
+
+
+    } 
+
+    return this;
+    
+
 }
 
 /*  

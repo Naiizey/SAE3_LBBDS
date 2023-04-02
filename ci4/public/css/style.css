@@ -3737,18 +3737,29 @@ a.fleche-page{
 
 @keyframes stop {
     from{
+        visibility: visible;
         display: block;
+        opacity: 1;
     }
 
     to {
-      
-        scale: 1.05;
+        
         opacity: 0;
         display: none;
     }   
 }
 
-.en-chargement .card-produit,.en-chargement::after, .en-chargement::before {
+@keyframes fill {
+    from{
+        scale: 0.80;
+    }
+
+    to{
+        scale: 1;
+    }
+}
+
+.en-chargement .card-produit{
     background-color: gray; 
 }
 
@@ -3789,8 +3800,14 @@ a.fleche-page{
 
 .en-chargement.not-filled {
     animation:  ease-out 1 0s stop;
+    visibility: hidden;
     
 }
+
+.filled{
+    animation: fill ease-in 1;
+}
+
 
 
 

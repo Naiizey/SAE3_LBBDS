@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use \App\Entities\ProduitPanier as Produit;
-use \App\Models\ProduitPanierModel;
+use \App\Entities\ProduitQuidi as Produit;
+use \App\Models\ProduitQuidiModel;
 use CodeIgniter\Model;
 use Exception;
 
-class ProduitPanierCompteModel extends ProduitPanierModel
+class ProduitQuidiVendeur extends ProduitQuidiModel
 {
-    protected $table      = 'sae3.produit_panier_vendeur';
+    protected $table      = 'sae3.produit_quidi';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = false;
@@ -18,14 +18,14 @@ class ProduitPanierCompteModel extends ProduitPanierModel
     protected $useSoftDeletes = false;
 
     
-    protected $allowedFields = ['id','id_prod','quantite','num_vendeur'];
+    protected $allowedFields = ['id','id_prod','num_vendeur'];
 
 
-    protected function getIdUser() : string{
+    protected function getIdVendeur() : string{
         return (string)"num_vendeur";
     }
 
-    protected function getColonneProduitIdUser(){
+    protected function getColonneProduitIdVendeur(){
         return (string)'numVnd';
     }
 }

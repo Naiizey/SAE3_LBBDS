@@ -1399,6 +1399,8 @@ const FilterUpdate = function (
                 "Filtres",
                 urlToUse([champsGetF, champsGetT])
             );
+
+            console.log("test");
             
             //Svg défini en fonction de si on est vendeur ou client
             if(window.location.href.toString().includes("vendeur")){
@@ -1418,9 +1420,9 @@ const FilterUpdate = function (
                     svg.style.display = "block";
                 }
 
-                let aList = document.getElementsByClassName("addPanier");
+                aList = document.getElementsByClassName("addPanier");
                 for(let a of aList){
-                    a.setAttribute("href", base_url + "/vendeur/quidi/delete/" + a.classList[1]);
+                    a.setAttribute("href", base_url + "/vendeur/quidi/supprimer/" + a.classList[1]);
                 }
             }
             else{
@@ -1490,10 +1492,26 @@ const FilterUpdate = function (
 };
 
 window.onload = function addSvg(){
-    if(window.location.href.toString().includes("vendeur")){
-        let svgs = document.getElementsByClassName("checkmark");
+    if(window.location.href.toString().includes("/vendeur/catalogue")){
+        let svgs = document.getElementsByClassName("plus");
         for(let svg of svgs){
             svg.style.display = "block";
+        }
+
+        let aList = document.getElementsByClassName("addPanier");
+        for(let a of aList){
+            a.setAttribute("href", base_url + "/vendeur/quidi/ajouter/" + a.classList[1]);
+        }
+    }
+    else if(window.location.href.toString().includes("/vendeur/quidi")){
+        let svgs = document.getElementsByClassName("minus");
+        for(let svg of svgs){
+            svg.style.display = "block";
+        }
+
+        aList = document.getElementsByClassName("addPanier");
+        for(let a of aList){
+            a.setAttribute("href", base_url + "/vendeur/quidi/supprimer/" + a.classList[1]);
         }
     }
     else{ 

@@ -2,7 +2,7 @@
 
 use CodeIgniter\Entity\Entity;
 
-class ProduitPanier extends Entity
+class ProduitQuidi extends Entity
 {
 
    public $datamap= [
@@ -13,9 +13,7 @@ class ProduitPanier extends Entity
       'prixHt' => 'prix_ht',
       'lienImage' => 'lienimage',
 
-      
-      'tokenId' => 'token_cookie',
-      'numCli'=> "num_client"
+      'numVnd'=> "num_vendeur"
   ];
 
    public function __toString()

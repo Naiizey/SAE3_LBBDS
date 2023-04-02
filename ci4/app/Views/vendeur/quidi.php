@@ -35,17 +35,16 @@
                         <hr>
                         <div>
                             <div class="h3PasArticlePanier">
-                                <h3>Vous n’avez aucun article dans votre panier.</h3>
-                                <h3><a href="<?= base_url() ?>/catalogue" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>
+                                <h3>Vous n’avez aucun article dans votre quidi.</h3>
+                                <h3><a href="<?= base_url() ?>/vendeur/catalogue" class="lienPasArticlePanier">Cliquez ici</a>, pour continuer vos recherches.</h3>
                             </div>
                         </div>
                     </div>
                 </section>
                 <aside>
                     <div class="divValiderVider">
-                        <h2>Total TTC (0 article.s) : 0,00€</h2>
-                        <a class="lienPanierVide">Valider le panier</a>
-                        <a class="lienViderPanier desactive">Vider le panier</a>
+                        <a class="lienPanierVide">Valider le quidi</a>
+                        <a class="lienViderPanier desactive">Vider le quidi</a>
                     </div>
                 </aside>
             <?php else: ?>
@@ -79,7 +78,7 @@
                                     <div class="divQuantite">
                                         <p>Quantité</p>
                                             <input class="" type="number" name="quantite" min=1 max=<?= $produit->stock ?> value=<?=$produit->quantite ?>>
-                                        <a href="<?= base_url() ?>/panier/supprimer/<?= $produit->idProd ?>">Supprimer</a>
+                                        <a href="<?= base_url() ?>/vendeur/quidi/supprimer/<?= $produit->idProd ?>">Supprimer</a>
                                     </div>
                                     <h3>
                                         <span class="prixHt" prix="<?= $produit -> prixHt ?>">
@@ -97,7 +96,7 @@
                         <hr>
                     </div>
                     <div class="sous-totaux">
-                        <a class="lienViderPanier" href="<?= base_url() ?>/panier/vider">Vider le panier</a>
+                        <a class="lienViderPanier" href="<?= base_url() ?>/vendeur/quidi/vider">Vider le panier</a>
                         <div>
                             <h2>Sous-totaux :
                                 <span class="totalHt">
@@ -113,34 +112,20 @@
                     </div>
                 </section>
                 <aside>
-                    <div class="divCodeReduc">
-                        <h2>Code de réduction</h2>
-                        <form action="<?= current_url() ?>" method="post" name="codeReduc">
-                            <input type="text" name="code" value="<?= $code ?>" required="required"/>
-                            <?=
-                                afficheErreurs($erreurs, 0) .
-                                afficheErreurs($erreurs, 1) .
-                                afficheRetours($retours, 0) .
-                                afficheRetours($retours, 1) .
-                                afficheRetours($retours, 2)
-                            ?>
-                            <input type="submit" value="Valider"/>
-                        </form>
-                    </div>
                     <div class="divValiderVider">
                         <h2>Total
                             (<span class="nbArt">
                                 <?= $sommeNbArticle ?>
                             </span> article.s) :
-                            <span class="totalTtc <?= $classCacheDiv ?>">
+                            <span class="totalTtc">
                                 <?= $sommePrix ?>
                             </span>
                             <span class="totalTtc">
                                 <?= $sommePrix ?>
                             </span>€ TTC
                         </h2>
-                        <a href="<?= base_url() ?>/facture" class="lienPanier">Valider le panier</a>
-                        <a class="lienViderPanier" href="<?= base_url() ?>/panier/vider">Vider le panier</a>
+                        <a href="<?= base_url() ?>/glossaire" class="lienPanier">Valider le quidi</a>
+                        <a class="lienViderPanier" href="<?= base_url() ?>/vendeur/quidi/vider">Vider le quidi</a>
                     </div>
                 </aside>
             <?php endif; ?>

@@ -167,7 +167,7 @@
         document.querySelector(".voir-plus"),
         document.forms["tris"]
     );
-    gestCartes.generer(undefined    );
+    gestCartes.generer(15);
     loadFiltersTris();
     //changeOnglet();
     

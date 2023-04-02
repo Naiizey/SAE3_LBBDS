@@ -179,10 +179,10 @@ $routes->get('/vendeur/catalogue', 'vendeur\Home::catalogue', ['filter' => 'vend
 $routes->get('vendeur/catalogue(:num)', 'vendeur\Home::catalogue/$1',['filter' => 'vendeur']);
 
 $routes->get('vendeur/quidi', 'vendeur\Quidi::getProduitPanierVendeur',['filter' => 'vendeur']);
-$routes->get('/vendeur/quidi/vider', 'vendeur\Quidier::viderQuidi');
+$routes->get('/vendeur/quidi/vider', 'vendeur\Quidi::viderQuidi');
 $routes->get('/vendeur/quidi/supprimer/(:num)', 'vendeur\Quidi::supprimerProduitQuidi/$1');
 $routes->post('/vendeur/quidi/ajouter/(:num)', 'vendeur\Quidi::ajouterQuidi/$1/');
-$routes->get('/vendeur/quidi/ajouter/(:num)/(:num)', 'vendeur\Quidi::ajouterQuidi/$1/$2');
+$routes->get('/vendeur/quidi/ajouter/(:num)/', 'vendeur\Quidi::ajouterQuidi/$1/');
 
 ##param uri (:any) et dans methode /$1
 

@@ -10,6 +10,7 @@ use Exception;
 class Home extends BaseController
 {
     public $feedback;
+    public $context;
 
     public function __construct()
     {
@@ -28,6 +29,7 @@ class Home extends BaseController
             session()->set("just_signal", false);
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Avis signalé !");
         }
+        $this->context="admin";
     }
 
     public function index()
@@ -421,11 +423,13 @@ class Home extends BaseController
         if (!isset($data['prods']) || empty($data['prods'])) {
             $data['message'] = $result["message"];
         }
-        return view("admin/catalogue.php", $data);
+        $data["context"]=$this->context;
+        return view("catalogue.php", $data);
     }
 
     public function quidi() {
         $data["controller"] = "Quidi";
+        $data["model"] = model("App\Models\ProduitQuidiAdmin");
         return view('admin/quidi.php', $data);
     }
 }

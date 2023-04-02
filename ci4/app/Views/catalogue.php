@@ -1,4 +1,7 @@
-<?php require("header.php"); ?>
+<?php 
+
+require("$context/header.php"); 
+?>
 <?php model("\App\Models\ProduitCatalogue")->selectMax('prixttc')?>
 <main id=Catalogue>
     <div class="bubbles">
@@ -49,6 +52,7 @@
                     </details>
                 <?php endforeach;?>
                 </div>
+                <?php if ($context!= "vendeur"): ?>
                 <hr class="separationCatalog"/>
                 <details class="categorie-catalogue">
                     <summary class="categorie"><h2>Vendeurs</h2></summary>
@@ -59,6 +63,7 @@
                         </div>
                         <hr>
                     </div>
+                   
                     <?php foreach ($vendeurs as $key => $vendeur):?>
                         <div class="sous-categorie" for="<?= $vendeur->identifiant ?>">
                             <label for="<?= $vendeur->numero ?>" class=".sous-categorie-catalogue"><?= $vendeur->identifiant ?></label>
@@ -66,6 +71,7 @@
                         </div>
                         <?php if($key != array_key_last($vendeurs)): ?> <hr> <?php endif; ?>
                     <?php endforeach;?>
+                    <?php endif;?>
                 </details>
                 <hr class="separationCatalog"/>
                 <section class="prix">
@@ -115,11 +121,7 @@
     </section>
     <section class="partie-produits">
         <div class="liste-produits">
-        <?php if(isset($prods) && !empty($prods)): ?>
-            <?php //foreach($prods as $prod): ?>
-                <?=""//$cardProduit->display($prod)?>
-            <?php //endforeach; ?>
-        <?php endif; ?>
+    
         </div>
         <div class="nav-page">
             <button class="normal-button voir-plus  <?= ($estDernier)?"hidden":"" ?>">Voir plus</button>
@@ -131,7 +133,7 @@
         <div class="erreur-liste-produit">
     </section>
 </main>
-<?php require("footer.php"); ?>
+<?php require("$context/footer.php"); ?>
 <script>
    
     cataloguePrice();
@@ -160,15 +162,17 @@
         () => switchEtatFiltre(document.querySelectorAll(".bulle-ouvrir-filtres, .partie-filtre"))
         );
     selectAll();
-    var gestCartes = new CarteEnChargement(); /*FilterUpdate(document.forms["filters"],
+    var gestCartes = FilterUpdate(document.forms["filters"],
         document.querySelector(".champsRecherche"),
         document.querySelector(".liste-produits"),
         document.querySelector(".supprimer-filtre"),
         document.querySelector(".voir-plus"),
         document.forms["tris"]
     );
-    gestCartes.generer(15);
+    
     loadFiltersTris();
     //changeOnglet();*/
+
+    gestCartes.generer(15);
     
 </script>

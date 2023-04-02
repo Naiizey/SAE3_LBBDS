@@ -38,6 +38,11 @@ abstract class ProduitQuidiModel extends Model
         
     }
 
+    public function hasQuidi($idProd,$idVendeur=null){
+       
+        return !empty($this->whereSiVendeur($idVendeur)->where('id_prod',$idProd)->find());
+    }
+
 
     public function ajouterProduit($idProd,$idVendeur, $siDejaLaAjoute=false)
     {

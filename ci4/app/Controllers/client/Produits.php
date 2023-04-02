@@ -16,6 +16,13 @@ use function PHPUnit\Framework\throwException;
 class Produits extends BaseController {
 
     private const NBPRODSPAGEDEFAULT = 20;
+    const CLIENT = "client";
+    const ADMIN = "admin";
+    const VENDEUR = "vendeur";
+
+    public function getAllProduitSelonPageChoixQuantite($page=1,$nombreProd=self::NBPRODSPAGEDEFAULT, $filters=null){
+        $this->getAllProduitSelonPage($page,null,$nombreProd);
+    }
     
     /**
      * @method getAllProduitSelonPage
@@ -28,8 +35,10 @@ class Produits extends BaseController {
      * Pour return:
      * @see giveResult();
      */
-    public function getAllProduitSelonPage($page=1, $nombreProd=self::NBPRODSPAGEDEFAULT, $filters=null)
-    {
+    public function getAllProduitSelonPage($page=1,$context=self::CLIENT, $filters=null)
+    {   
+        $nombreProd=self::NBPRODSPAGEDEFAULT;
+     
         if ($filters==null && isset($this->request) && !empty($this->request->getVar())) {
             $filters=$this->request->getVar();
         }
@@ -52,7 +61,7 @@ class Produits extends BaseController {
             } else {
                 $query->orderBy($sorts[0], $sorts[1]);
             }
-
+      
             if (is_null($filters) || empty($filters)) {
                 $result = $query->findAll(($nombreProd*$page)+1, $nombreProd*($page-1));
             } else {
@@ -75,7 +84,7 @@ class Produits extends BaseController {
         }   
 
         //Commentaires
-        return $this->giveResult($result, $dernier);
+        return $this->giveResult($result, $dernier, $context);
     }
 
     public function sendCors()
@@ -175,6 +184,16 @@ class Produits extends BaseController {
             return array("resultat"=>[],"estDernier"=>true,"message"=>$e->getMessage());
         }
     }
+    /**
+     * Créer ou non une fonction de vérification
+     */
+    private function verifForAjout($doitVerif)
+    {
+        if($doitVerif)
+            return function(\App\Entities\Produit $prod,$model,$vendeur){  return !$model->hasQuidi($prod->id,$vendeur);};
+        else
+            return function(\App\Entities\Produit $prod,$model,$vendeur){ return false; };
+    }
 
         
     /**
@@ -187,12 +206,28 @@ class Produits extends BaseController {
      *
      *
      */
-    private function giveResult($result, $dernier) {
+    private function giveResult($result, $dernier, $context=self::CLIENT) {
         if(isset($this->request)){
-            $retour=[];
-            foreach($result as $prod){
-                $prod->carte=service("cardProduit")->display($prod);
+            if($context==self::VENDEUR){
+                $model=model("\App\Models\ProduitQuidiVendeur");
+                $fnVerif=$this->verifForAjout(true);
+                $vendeur=session()->get("numeroVendeur");
+            }elseif($context==self::ADMIN){
+                $model=model("\App\Models\ProduitQuidiAdmin");
+                $fnVerif=$this->verifForAjout(true);
+                $vendeur=null;
+            }else{
+                $model=null;
+                $fnVerif=$this->verifForAjout(false);
+                $vendeur=null;
             }
+            
+            
+            foreach($result as $prod){
+                $prod->carte=service("cardProduit")->display($prod, $context ,$fnVerif($prod, $model, $vendeur));
+                
+            }
+          
             return $this->response->setHeader('Access-Control-Allow-Methods','PUT, OPTIONS')->setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')->setHeader('Access-Control-Allow-Origin', '*')
             ->setStatusCode(200)->setJSON(array("resultat"=>$result,"estDernier"=>$dernier));
         }

@@ -155,10 +155,10 @@ function has_empty_cell(row) {
  * @returns {list}
  **/
 function too_much_items(csv) {
-    //console.log("too_much_items");
+    //////console.log("too_much_items");
     line = [];
     entete = getentete();
-    //console.log(entete);
+    //////console.log(entete);
     //on prend la taille de la map entête
     let entete_lenght = entete.size;
     lines = csv.split("\n");
@@ -176,7 +176,7 @@ function too_much_items(csv) {
             }
         }
         if (actual_line.length > entete_lenght) {
-            //console.log("ligne " + i + " : trop d'éléments");
+            //////console.log("ligne " + i + " : trop d'éléments");
             line.push(i + 1);
         }
     }
@@ -188,7 +188,7 @@ function too_much_items(csv) {
  * @returns {void}
  **/
 function checkCSV() {
-    console.log("checkCSV");
+    ////console.log("checkCSV");
     let preview = document.getElementById("preview");
     let correct = 0;
     //ajout d'un event listener sur le changement de fichier
@@ -216,20 +216,20 @@ function checkCSV() {
             let entete_missing = [];
             //si dans le csv il y a plus de lignes que dans l'entete
             if (csv.split("\n")[0].split(";").length > entete.size) {
-                console.log(csv.split("\n")[0].split(";").length);
-                console.log(entete.size);
+                ////console.log(csv.split("\n")[0].split(";").length);
+                ////console.log(entete.size);
                 //on compare les deux et on trouve le ou les entête de trop
                 let en_trop = [];
                 let lines = csv.split("\n");
                 let cells = lines[0].split(";");
                 for (let i = 0; i < cells.length; i++) {
                     if (!entete.has(cells[i].trim()) && cells[i].trim() != "") {
-                        console.log(i + " " + cells[i].trim());
+                        ////console.log(i + " " + cells[i].trim());
                         en_trop.push(cells[i].trim());
                     }
                 }
                 if (en_trop.length > 0) {
-                    console.log(en_trop);
+                    ////console.log(en_trop);
                     preview.innerHTML = "entête(s) en trop : " + en_trop;
                     preview.style.color = "red";
                     //on centre le texte
@@ -241,10 +241,10 @@ function checkCSV() {
                     preview.style.color = "red";
                     //on centre le texte
                     preview.style.textAlign = "center";
-                    console.log("trop d'items");
+                    ////console.log("trop d'items");
                 }
             } else if (csv.split("\n")[0].split(";").length < entete.size) {
-                console.log("manquants");
+                ////console.log("manquants");
                 //on compare les deux et on trouve les manquants
                 let manquant = [];
                 let lines = csv.split("\n");
@@ -262,7 +262,7 @@ function checkCSV() {
                 //on copie lst_entête dans manquants
                 manquant = lst_entete;
                 if (manquant.length > 0) {
-                    console.log(manquant);
+                    ////console.log(manquant);
                     preview.innerHTML = "entête(s) manquante(s) : " + manquant;
                     preview.style.color = "red";
                     //on centre le texte
@@ -278,11 +278,11 @@ function checkCSV() {
                         //on ajoute à cells i au début pour avoir l'index de la ligne
                         let index = i + 1;
                         cells.unshift("" + index + "");
-                        console.log(cells);
+                        ////console.log(cells);
                     }
                     if (entete.size > cells.length) {
                         //on ajoute une ligne en rouge
-                        console.log("ligne non valide");
+                        ////console.log("ligne non valide");
                         preview.innerHTML = "nombre de colonnes invalide";
                         preview.style.color = "red";
                         //on centre le texte
@@ -290,9 +290,9 @@ function checkCSV() {
                     } else {
                         if (i == 0) {
                             //on ajoute une 1ère ligne fusionnée
-                            console.log("ligne valide");
+                            ////console.log("ligne valide");
                             preview.innerHTML = "nombre de colonnes valide :";
-                            console.log(cells);
+                            ////console.log(cells);
                             preview.style.color = "green";
                             //on centre le texte
                             preview.style.textAlign = "center";
@@ -325,11 +325,11 @@ function checkCSV() {
                         let is_empty = false;
                         //si la ligne contient des cellules vides
                         if (has_empty_cell(cells) > 0) {
-                            console.log("erreur cellule vide");
+                            //console.log("erreur cellule vide");
                             for (let j = 0; j < cells.length; j++) {
                                 //si la cells[j] est vide et que l'entête correspondant n'est pas vide
                                 if (cells[j].trim() === "") {
-                                    // console.log(lines[0].split(";")[j - 1].trim());
+                                    // //console.log(lines[0].split(";")[j - 1].trim());
                                     if (
                                         lines[0].split(";")[j - 1].trim() == ""
                                     ) {
@@ -378,8 +378,8 @@ function checkCSV() {
                 }
                 preview.appendChild(table);
                 if (correct == 0) {
-                    console.log("on delete la table");
-                    console.log(correct);
+                    //console.log("on delete la table");
+                    //console.log(correct);
                     //on delete la table
                     preview.innerHTML = "";
                     previewCSV();
@@ -394,7 +394,7 @@ function checkCSV() {
  * @returns {void}
  */
 function previewCSV() {
-    console.log("PreviewCSV");
+    //console.log("PreviewCSV");
     let preview = document.getElementById("preview");
     preview.innerHTML = "PreviewCSV";
 
@@ -458,7 +458,7 @@ var tabQuant = document.querySelector("#tabQuant");
 if (tabQuant) {
     tabQuant.addEventListener("change", (event) => {
         if (event.target.value == "10+") {
-            console.log(event.target);
+            //console.log(event.target);
             event.target.parentNode.classList.toggle("plus-10");
             document
                 .querySelector(".input-option-plus-10")
@@ -633,7 +633,7 @@ function updatePriceTotal() {
 
             prixTotTab[2].textContent = sommeTot - reduc;
         }
-        console.log(prixTotTab[1]);
+        //console.log(prixTotTab[1]);
         prixTotTab[0].textContent = sommeTot;
         prixTotTab[1].textContent = sommeTot;
         prixTotTabHt[0].textContent = sommeTotHt;
@@ -1066,7 +1066,7 @@ function cataloguePrice() {
             if (e.target.id === "prix_min") {
                 rangeInput[0].value = minPrice;
                 range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
-                console.log(minPrice + " | " + maxPrice);
+                //console.log(minPrice + " | " + maxPrice);
             }
             //Si la target a pour ID prix_max alors on modifie la valeur de l'input du maximum du slider
             else if (e.target.id === "prix_max") {
@@ -1172,14 +1172,14 @@ function loadFiltersTris() {
             document.querySelector(".partie-produits").style.gridColumn = "4";
             document.querySelector(".bulle-ouvrir-filtres").style.display =
                 "none";
-            console.log("Load filtre")
+            //console.log("Load filtre")
             document.querySelector(".bulle-ouvrir-tris").style.display = "none";
         } else if (localStorage.getItem("openT") === "true") {
             document.querySelector(".partie-tris").style.display = "flex";
             document.querySelector(".partie-produits").style.gridColumn = "4";
             document.querySelector(".bulle-ouvrir-filtres").style.display =
                 "none";
-            console.log("Load tris")
+            ////console.log("Load tris")
             document.querySelector(".bulle-ouvrir-tris").style.display = "none";
         }
     });
@@ -1308,7 +1308,8 @@ const FilterUpdate = function (
     listeProduit,
     suppressionFiltre,
     voirPlus,
-    formTris
+    formTris,
+    context = "client"
 ) {
     this.formF = formFilter;
     this.formT = formTris;
@@ -1322,6 +1323,7 @@ const FilterUpdate = function (
     //Permet d'éviter les problèmes de scope + héritage;
     var parent = new CarteEnChargement()
     const self = Object.assign(this, parent);
+    const URL_PRODUIT = "/produits/page/"
 
     function reset(){
         self.currPage = 1;
@@ -1365,14 +1367,15 @@ const FilterUpdate = function (
             
             const md = await fetch(
                 base_url +
-                "/produits/page/" +
+                `/${context}`+
+                URL_PRODUIT +
                 (self.currPage) +
                 urlToUse([champsGetF, champsGetT])
             );
 
             
             const result = await md.json();
-            console.log(md);
+            
             //vérifie si la réponse n'est pas une erreur
             if (md.ok) {
                 
@@ -1386,7 +1389,7 @@ const FilterUpdate = function (
                
                 self.erroBloc.classList.add("hidden");
                 //reexe, afin que le listener revienne sur les cartes
-                clickProduit();
+                
             } else {
                 //Ici les erreurs 404
                 self.erroBloc.classList.remove("hidden");
@@ -1400,38 +1403,32 @@ const FilterUpdate = function (
                 urlToUse([champsGetF, champsGetT])
             );
 
-            console.log("test");
-            
-            //Svg défini en fonction de si on est vendeur ou client
-            if(window.location.href.toString().includes("vendeur")){
-                let svgs = document.getElementsByClassName("checkmark");
-                for(let svg of svgs){
-                    svg.style.display = "block";
-                }
-
-                let aList = document.getElementsByClassName("addPanier");
-                for(let a of aList){
-                    a.setAttribute("href", base_url + "/vendeur/quidi/ajouter/" + a.classList[1]);
-                }
-            }
-            else if(window.location.href.toString().includes("vendeur/quidi")){
-                let svgs = document.getElementsByClassName("minus");
-                for(let svg of svgs){
-                    svg.style.display = "block";
-                }
-
-                aList = document.getElementsByClassName("addPanier");
-                for(let a of aList){
-                    a.setAttribute("href", base_url + "/vendeur/quidi/supprimer/" + a.classList[1]);
-                }
-            }
-            else{
-                let svgs = document.getElementsByClassName("cart");
-                for(let svg of svgs){
-                    svg.style.display = "block";
-                }
+            allContexts= {
+                admin: ".context-admin",
+                vendeur: ".context-vendeur"
             }
 
+         
+                console.log(allContexts[context]);
+               
+                                 
+            let cardListSuppression = document.querySelectorAll(allContexts[context]+" .addPanier:not(.est-ajout)");
+            for(let card of cardListSuppression){
+                card.setAttribute("href", base_url + "/"+context+"/quidi/supprimer/" + card.classList[1]);
+                let svg = card.getElementsByClassName("minus")[0];
+                console.log(svg);
+                svg.style.display = "block";
+                
+            }
+            let cardListAjout = document.querySelectorAll(allContexts[context]+" .addPanier.est-ajout");
+            for(let card of cardListAjout){
+                card.setAttribute("href", base_url + "/"+context+"/quidi/ajouter/" + card.classList[1]);
+                let svg = card.getElementsByClassName("plus")[0];
+                console.log(svg);
+                svg.style.display = "block";
+                
+            }
+            clickProduit(context);
         /*} catch (e) {
             //Les erreurs 404 ne passent pas ici, ce sont les erreurs lié à la fonction et au réseau qui sont catch ici
             console.error("Erreur de récupération des données:", e);
@@ -1580,7 +1577,7 @@ function CarteEnChargement(
     this.replace = async (nouveauContenu, elements  = document.querySelectorAll(".en-chargement")) => {
         nouveauContenu = doitEtreArray(nouveauContenu);
         elements = doitEtreArray(elements);
-        console.log(nouveauContenu.length);
+        ////console.log(nouveauContenu.length);
         let work = document.createElement("div");
         toStop = elements.slice(nouveauContenu.length, elements.length);
         this.stop(toStop, toStop.length*tempsApparition);
@@ -1591,7 +1588,7 @@ function CarteEnChargement(
 
             element.outerHTML = work.innerHTML;
             await (new Promise(resolve => setTimeout(resolve, ecartApparition*1000)));
-            console.log("oui")
+            ////console.log("oui")
         }
         work.remove();
         
@@ -1769,7 +1766,7 @@ var formAdresseConstructor = function () {
         let datalist = document.getElementById("ville_trouvee");
         datalist.innerHTML = "";
         response.features.forEach((feature) => {
-            console.log(feature.properties.city);
+            ////console.log(feature.properties.city);
             let option = document.createElement("option");
             option.value = feature.properties.city;
             datalist.appendChild(option);
@@ -1917,7 +1914,8 @@ function parentTilCard(element) {
     }
     return card;
 }
-function clickProduit() {
+function clickProduit(context="client") {
+    
     //Select all cards
     let cards = document.querySelectorAll(".card-produit");
     for (let card of cards) {
@@ -1925,7 +1923,7 @@ function clickProduit() {
         card.addEventListener("click", (e) => {
             window.location.href =
                 base_url +
-                "/produit/" +
+                `${(context=="client")?"":"/"+context}/produit/` +
                 parentTilCard(e.target).getAttribute("value");
         });
     }
@@ -2001,7 +1999,7 @@ function setUpPaiment() {
             theForm.action = base_url + "/paiement";
             theForm.style.display = "none";
             document.body.appendChild(theForm);
-            console.log(theForm);
+            ////console.log(theForm);
             theForm.submit();
         }
     });
@@ -2124,7 +2122,7 @@ function avisProduit() {
 
     bgfade();
     //printing the current url
-    //console.log(window.location.href);
+    //////console.log(window.location.href);
 
     let tabAvis = document.querySelectorAll(".divAvisCommentaire p"); // séléctionne les avis
 

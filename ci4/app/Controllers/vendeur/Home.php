@@ -10,6 +10,7 @@ use Exception;
 class Home extends BaseController
 {
     public $feedback;
+    public $context;
 
     public function __construct()
     {
@@ -28,6 +29,7 @@ class Home extends BaseController
             session()->set("just_signal", false);
             $GLOBALS['validation'] = $this->feedback->afficheValidation("Avis signalé !");
         }
+        $this->context="vendeur";
     }
 
     public function index()
@@ -382,6 +384,7 @@ class Home extends BaseController
         if (!isset($data['prods']) || empty($data['prods'])) {
             $data['message'] = "Vous n'avez pas encore de produits dans votre catalogue.";
         }
-        return view("vendeur/catalogue.php", $data);
+        $data["context"]=$this->context;
+        return view("catalogue.php", $data);
     }
 }

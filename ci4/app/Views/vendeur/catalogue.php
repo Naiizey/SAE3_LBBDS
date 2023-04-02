@@ -140,13 +140,13 @@
         () => switchEtatFiltre(document.querySelectorAll(".bulle-ouvrir-filtres, .partie-filtre"))
         );
     selectAll();
-    // var gestCartes = FilterUpdate(document.forms["filters"],
-    //     document.querySelector(".champsRecherche"),
-    //     document.querySelector(".liste-produits"),
-    //     document.querySelector(".supprimer-filtre"),
-    //     document.querySelector(".voir-plus"),
-    //     document.forms["tris"]
-    // );
+    var gestCartes = FilterUpdate(document.forms["filters"],
+         document.querySelector(".champsRecherche"),
+         document.querySelector(".liste-produits"),
+         document.querySelector(".supprimer-filtre"),
+         document.querySelector(".voir-plus"),
+         document.forms["tris"]
+     );
     // gestCartes.generer();
     loadFiltersTris();
     //changeOnglet();

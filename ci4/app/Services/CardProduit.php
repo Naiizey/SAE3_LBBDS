@@ -1,5 +1,7 @@
 <?php namespace App\Services;
 
+use PhpParser\Node\Expr\FuncCall;
+
 /**
  * Cette classe permet d'afficher une carte d'un produit
  * @method display
@@ -7,6 +9,13 @@
  */
 class CardProduit
 {
+    const CLIENT = "client";
+    const ADMIN = "client";
+    const VENDEUR = "vendeur";
+    const AJOUT_OU_SUPPRIMER = [
+        true => "plus",
+        false => "minus"
+    ];
     private function normalize(\App\Entities\Produit $prod){
         if (str_contains($prod->intitule, "\n")) {
             if (str_contains($prod->intitule, "\n")) {
@@ -45,19 +54,22 @@ class CardProduit
         return $retour;
     }
 
-    private function cardProduit($prod){
+
+
+    private function cardProduit($prod, $context=self::CLIENT, $siAjout=false){
         ob_start(); ?>
         <div class="card-produit-ext filled">
-            <div class="card-produit" value=<?=$prod->id?>>
+            <div class="card-produit context-<?= $context;?>" value=<?=$prod->id?>>
                 <div class="image-card" style="background-image: url(<?= /*base_url().'/'.*/$prod->lienimage?>);"></div>
                 <div class="notation-card"><?= $this->notationEtoile($prod->moyenneNote) ?></div>
                 <div class="contain-libelle"><p class="libelle"><?= $prod->intitule?></p></div>
                 <div class="bottom-card">
-                    <p class="prix-card"><?= $prod->prixttc?>€</p>
-                    <a href="<?= base_url().'/panier/ajouter/'.$prod->id.'/1' ?>" class="addPanier <?=$prod->id?>">
+                    <p class="prix-card"><?= $prod->prixttc?>€</p>  
+                    <a href="<?= base_url().'/panier/ajouter/'.$prod->id.'/1' ?>" class="addPanier <?=$prod->id?> <?=($siAjout)?"est-ajout":""?>">
                         <?= file_get_contents(dirname(__DIR__, 2) . '/public/images/header/addPanier.svg');?>
-                        <?= file_get_contents(dirname(__DIR__, 2) . '/public/images/vendeur/catalogue/plus.svg');?>
-                        <?= file_get_contents(dirname(__DIR__, 2) . '/public/images/vendeur/catalogue/minus.svg');?>
+                        <?= file_get_contents(dirname(__DIR__, 2) . "/public/images/vendeur/catalogue/".self::AJOUT_OU_SUPPRIMER[$siAjout].".svg");?>
+
+                    
                     </a>
                 </div>
             </div>
@@ -65,9 +77,9 @@ class CardProduit
         <?php return ob_get_clean();
     }
 
-    public function display(\App\Entities\Produit $prod){
+    public function display(\App\Entities\Produit $prod, $context=self::CLIENT, $estAjout=false){
         $this->normalize($prod);
-        return $this->cardProduit($prod);
+        return $this->cardProduit($prod, $context, $estAjout);
     }
 }
 ?>

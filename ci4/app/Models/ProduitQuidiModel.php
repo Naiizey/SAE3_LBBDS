@@ -7,33 +7,27 @@ use \App\Entities\ProduirtQuidi as Produit;
 use CodeIgniter\Model;
 use Exception;
 
+use function PHPUnit\Framework\isNull;
+
 abstract class ProduitQuidiModel extends Model
 {
-    /*
-    protected $table      = 'sae3.produit_panier_compte';
-    protected $primaryKey = 'id';
 
-    protected $useAutoIncrement = false;
-
-    
-    protected $useSoftDeletes = false;
-
-    protected $allowedFields = ['id','id_prod','quantite','num_client'];
-    */
     protected $returnType     = Produit::class;
 
 
-    abstract protected function getIdVendeur();
-    abstract protected function getColonneProduitIdVendeur();
+
+
+    //Ajout de l'id vendeur dans la requête si celui-ci est indiqué en paramètres
+    abstract protected function whereSiVendeur($idVendeur);
 
     public function getQuidi($idVendeur)
     {
-        return $this->where($this->getIdVendeur(),$idVendeur)->findAll();
+        return $this->whereSiVendeur($idVendeur)->findAll();
     }
 
     public function deleteFromQuidi($idProd,$numVnd)
     {
-        return $this->where($this->getIdVendeur(),$numVnd)->where('id_prod',$idProd)->delete();
+        return $this->whereSiVendeur($numVnd)->where('id_prod',$idProd)->delete();
     }
 
     public function viderQuidi($idVendeur)
@@ -50,7 +44,7 @@ abstract class ProduitQuidiModel extends Model
       
      
         $prod=model("\App\Models\ProduitDetail")->find($idProd)->convertForQuidi();
-        $trouve=$this->where($this->getIdVendeur(),$idVendeur)->where("id_prod",$prod->idProd)->findAll();
+        $trouve=$this->whereSiVendeur($idVendeur)->where("id_prod",$prod->idProd)->findAll();
         if(!empty($trouve) && $siDejaLaAjoute)
             throw new Exception("Produit déjà présent dans le quidi, ajout ignoré",400);
      
@@ -59,7 +53,7 @@ abstract class ProduitQuidiModel extends Model
       
         
         #FIXME: La vue MVC peut créer cette exception
-        $prod->id="&";
+        $prod->id="&";//Juste pour indiqué l'insertion au framework"
         $this->save($prod);
        
     }

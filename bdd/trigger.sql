@@ -413,7 +413,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER delete_quidi
-    INSTEAD OF DELETE ON sae3.produit_quidi
+    INSTEAD OF DELETE ON sae3.produit_quidi_vendeur
     FOR EACH ROW
     EXECUTE PROCEDURE delete_quidi();
 
@@ -428,7 +428,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_quidi
-    INSTEAD OF INSERT ON sae3.produit_quidi
+    INSTEAD OF INSERT ON sae3.produit_quidi_vendeur
     FOR EACH ROW
     EXECUTE PROCEDURE insert_quidi();
 

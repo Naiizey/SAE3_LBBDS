@@ -7,9 +7,10 @@ use \App\Models\ProduitQuidiModel;
 use CodeIgniter\Model;
 use Exception;
 
+
 class ProduitQuidiVendeur extends ProduitQuidiModel
 {
-    protected $table      = 'sae3.produit_quidi';
+    protected $table      = 'sae3.produit_quidi_vendeur';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = false;
@@ -21,11 +22,10 @@ class ProduitQuidiVendeur extends ProduitQuidiModel
     protected $allowedFields = ['id','id_prod','num_vendeur'];
 
 
-    protected function getIdVendeur() : string{
-        return (string)"num_vendeur";
-    }
-
-    protected function getColonneProduitIdVendeur(){
-        return (string)'numVnd';
+    protected function whereSiVendeur($idVendeur)
+    {
+        if(is_null($idVendeur))
+            throw new Exception("Ne devrais pas avoir un id Vendeur null");
+        return $this->where("num_vendeur",$idVendeur);
     }
 }

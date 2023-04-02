@@ -160,7 +160,7 @@
         () => switchEtatFiltre(document.querySelectorAll(".bulle-ouvrir-filtres, .partie-filtre"))
         );
     selectAll();
-    var gestCartes = FilterUpdate(document.forms["filters"],
+    var gestCartes = new CarteEnChargement(); /*FilterUpdate(document.forms["filters"],
         document.querySelector(".champsRecherche"),
         document.querySelector(".liste-produits"),
         document.querySelector(".supprimer-filtre"),
@@ -169,6 +169,6 @@
     );
     gestCartes.generer(15);
     loadFiltersTris();
-    //changeOnglet();
+    //changeOnglet();*/
     
 </script>

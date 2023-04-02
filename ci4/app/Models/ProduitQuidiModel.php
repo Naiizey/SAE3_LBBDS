@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use \App\Entities\ProduitQuidi as Produit;
+use \App\Entities\ProduirtQuidi as Produit;
 
 use CodeIgniter\Model;
 use Exception;
@@ -47,20 +47,20 @@ abstract class ProduitQuidiModel extends Model
 
     public function ajouterProduit($idProd,$idVendeur, $siDejaLaAjoute=false)
     {
-        $colonne=$this->getColonneProduitIdVendeur();
-        $prod=model("\App\Models\ProduitDetail")->find($idProd)->convertForPanier();
-        $prod->$colonne=$idVendeur;
-        $trouve=$this->where($this->getIdVendeur(),$prod->$colonne)->where("id_prod",$prod->idProd)->findAll();
-        if(empty($trouve))
-        {
-            $prod->id="£";
-            #FIXME: La vue MVC peut créer cette exception
-            dd($this->save($prod));
-            $this->save($prod);
-        }
-        else if ($siDejaLaAjoute)
-        {
+      
+     
+        $prod=model("\App\Models\ProduitDetail")->find($idProd)->convertForQuidi();
+        $trouve=$this->where($this->getIdVendeur(),$idVendeur)->where("id_prod",$prod->idProd)->findAll();
+        if(!empty($trouve) && $siDejaLaAjoute)
             throw new Exception("Produit déjà présent dans le quidi, ajout ignoré",400);
-        }
+     
+        if($prod->numVnd != $idVendeur)
+            throw new Exception("Vous n'êtes pas autorisé a catalogué un produit qui appartient à un autre vendeur",401);
+      
+        
+        #FIXME: La vue MVC peut créer cette exception
+        $prod->id="&";
+        $this->save($prod);
+       
     }
 }

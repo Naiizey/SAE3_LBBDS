@@ -113,7 +113,7 @@ CREATE OR REPLACE VIEW commande_list_vendeur AS
 CREATE OR REPLACE VIEW commande_list_client AS
     SELECT num_commande,c.num_compte,date_commande,date_arriv,round((sum(prix_ttc*qte_panier))::numeric, 2 ) prix_ttc,round((sum(prix_ht*qte_panier))::numeric, 2) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod group by num_commande, c.num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
 
-SELECT num_commande,c.num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod group by num_commande, c.num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
+--SELECT num_commande,c.num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod group by num_commande, c.num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
 
 CREATE OR REPLACE VIEW commande_list_produits_client AS
     WITH min_image AS (SELECT min(num_image) num_image, id_prod FROM _image_prod  group by id_prod )
@@ -138,7 +138,7 @@ CREATE OR REPLACE VIEW produit_catalogue AS
     LEFT JOIN moyenneProduit on _produit.id_prod = moyenneProduit.id NATURAL JOIN soloimageproduit;
 
 CREATE OR REPLACE VIEW produit_detail AS
-    SELECT id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*taux_tva) prixTTC, prix_ht prixHT, lien_image lienImage,publication_prod  isAffiche, _sous_categorie.libelle_cat categorie, _sous_categorie.code_sous_cat codeCategorie,description_prod description, stock_prod stock,moyenneNote moyenne
+    SELECT id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*taux_tva) prixTTC, prix_ht prixHT, lien_image lienImage,publication_prod  isAffiche, _sous_categorie.libelle_cat categorie, _sous_categorie.code_sous_cat codeCategorie,description_prod description, stock_prod stock,moyenneNote moyenne, _produit.num_compte num_vendeur
     FROM _produit NATURAL JOIN _image_prod  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
     LEFT JOIN moyenneProduit on _produit.id_prod = moyenneProduit.id NATURAL JOIN soloimageproduit;
 

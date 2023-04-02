@@ -3748,24 +3748,46 @@ a.fleche-page{
     }   
 }
 
-.en-chargement .card-produit{
+.en-chargement .card-produit,.en-chargement::after, .en-chargement::before {
     background-color: gray; 
 }
 
 .en-chargement {
     /*animation:  1s ease-out 1 mort;*/
     animation: ease-in-out alternate infinite chargement;
+
+
 }
 
-.en-chargement{
-    border: none;
+.en-chargement:content{
+    visibility: hidden;
 }
+.en-chargement:after, .en-chargement:before{
+    content:  "";
+    display: block;
+    width: 100%;
+    height: 100%;
+
+}
+
+.en-chargement::after{
+ 
+    clip-path: polygon(0 75%, 100% 25%, 100% 100%, 0% 100%);
+}
+
+.en-chargement::before{
+
+    clip-path: polygon(0 0, 100% 0%, 100% 25%, 0% 75%);
+}
+
+
+
 
 .en-chargement .card-produit *{
     visibility: hidden;
 }
 
-.en-chargement.killed {
+.en-chargement.not-filled {
     animation:  ease-out 1 0s stop;
     
 }

@@ -24,7 +24,7 @@ class ProduitDetail extends Model
     protected $returnType     = \App\Entities\ProduitDetail::class;
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['intitule', 'prixttc', 'prixht', 'lienimage','isaffiche','description','stock','num_compte'];
+    protected $allowedFields = ['intitule', 'prixttc', 'prixht', 'lienimage','isaffiche','description','stock','num_compte','num_vendeur'];
 
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';

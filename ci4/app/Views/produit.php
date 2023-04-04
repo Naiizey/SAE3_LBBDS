@@ -1,4 +1,5 @@
-<?php require("header.php"); 
+<?php require("$context/header.php"); 
+    $estClient=(!isset($context) || $context=="client");
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))
@@ -52,11 +53,15 @@
                             </section>
                         </div>
                         <div class="divAcheterProduit">
-                            <?php if ($prod -> stock <= 10): ?>
+                           
+                            <?php if ($prod -> stock <= 10 && $estClient): ?>
                             <?= "<p>Faites vite, il n'en reste que " . $prod -> stock . '</p>' ?>
                             <?= (isset($quantitePanier) && $quantitePanier<0)?"<p>Vous avez déjà le produit en $quantitePanier fois dans votre panier</p>":"" ?>
                             <?php endif; ?>
-                            <form action= <?= base_url()."/panier/ajouter/$prod->id" ?> method="post">
+
+                           
+                            <form action= <?= ($estClient)?(base_url()."/panier/ajouter/$prod->id"):(base_url()."/quidi/ajouter/$prod->id") ?> method="post">
+                                <?php if($estClient): ?>
                                 <div class="divQuantiteProduit">
                                     <p>Quantité :</p>
                                     <select name="quantite" id="tabQuant">
@@ -77,15 +82,18 @@
                                     }
                                     ?>">
                                 </div>
+                                <?php endif; ?>
+                            
                                 <div>
                                     <h3><?= "Prix : " . $prod -> prixht . "€ HT"?></h3>
                                     <h3><?= $prod -> prixttc . "€ TTC"?></h3>
                                 </div>
-                                <button type="submit">Ajouter au panier</button>
+                                <button type="submit"><?= ($estClient)?"Ajouter au panier":"Ajouter au quidi" ?> </button>
                             </form>
                         </div>
                     </div>
                 </article>
+                <?php if($estClient): ?>
                 <section class="sectionRecommandationsPanierPC">
                     <h2>Recommandations</h2>
                     <hr>
@@ -110,11 +118,15 @@
                         <?php endforeach; ?>
                     </ul>
                 </section>
+                <?php endif; ?>
                 <div class="divAvis" id="avis">
                     <h2>Avis</h2>
                     <hr>
-                    <?php if (empty($avis)): ?>
+                   
+                    <?php if (empty($avis) && $estClient): ?>
                     <p>Soyez le premier à commenter ce produit.</p>
+                    <?php elseif(!$estClient): ?>
+                    <p>Personne n'a encore commenté ce produit</p>
                     <?php endif ?>
                     <div class="divLesAvis">
                         <?php if (!empty($avis)): ?>
@@ -137,19 +149,20 @@
                                 <a href="<?= base_url() ?>/connexion/retourProduit/<?= $idProduit ?>">Se connecter</a>
                             </div>
                             <div class="divAjoutComment divAjoutCommentBlur">
-                            <?php elseif ((empty($avis)) && (!session()->has("numeroClient"))): ?>
+                            <?php elseif ((empty($avis)) && (!session()->has("numeroClient")) && $estClient): ?>
                             <div class="divAjoutCommentConnect divConnectGrand">
                                 <p>Vous devez vous connecter pour commenter</p>
                                 <a href="<?= base_url() ?>/connexion/retourProduit/<?= $idProduit ?>">Se connecter</a>
                             </div>
                             <div class="divAjoutComment divAjoutCommentBlur divAjoutCommentVide">
-                            <?php elseif ((empty($avis)) && (session()->has("numeroClient"))): ?>
+                            <?php elseif ((empty($avis)) && (session()->has("numeroClient")) ): ?>
                             <div class="divAjoutComment divAjoutCommentVide">
                             <?php endif ?>
+                            <?php if ($estClient):?>
                                 <form action="<?= current_url()."#avis" ?>" method="post">
                                     <div class="divEtoilesComment">
                                         <?php for ($i=0; $i < 5 ; $i++) : ?>
-                                        <?= file_get_contents(dirname(__DIR__, 3)."/public/images/Star-empty.svg")?>
+                                        <?= file_get_contents(dirname(__DIR__, 2)."/public/images/Star-empty.svg")?>
                                         <?php endfor; ?>
                                         <p>_/5</p>
                                         <input type="text" class="inputInvisible" name="noteAvis">
@@ -166,6 +179,7 @@
                                         </div>
                                     </div>
                                 </form>
+                                <?php endif; ?>
                             </div>
                             <?php if (!empty($avis)): ?>
                                 <?php
@@ -244,7 +258,7 @@
                 </div>
             </section>
         </main>
-<?php require("footer.php"); ?>
+<?php require("$context/footer.php"); ?>
 <script>
     <?php foreach ($avis as $cle => $unAvis): ?>
         drapeauSignal(<?= $unAvis->num_avis ?>);

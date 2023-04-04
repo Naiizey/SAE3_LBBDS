@@ -67,7 +67,8 @@ class CardProduit
                     <p class="prix-card"><?= $prod->prixttc?>€</p>  
                     <a href="<?= base_url().'/panier/ajouter/'.$prod->id.'/1' ?>" class="addPanier <?=$prod->id?> <?=($siAjout)?"est-ajout":""?>">
                         <?= file_get_contents(dirname(__DIR__, 2) . '/public/images/header/addPanier.svg');?>
-                        <?= file_get_contents(dirname(__DIR__, 2) . "/public/images/vendeur/catalogue/".self::AJOUT_OU_SUPPRIMER[$siAjout].".svg");?>
+                        <?= file_get_contents(dirname(__DIR__, 2) . "/public/images/vendeur/catalogue/plus.svg");?>
+                        <?= file_get_contents(dirname(__DIR__, 2) . "/public/images/vendeur/catalogue/minus.svg");?>
 
                     
                     </a>

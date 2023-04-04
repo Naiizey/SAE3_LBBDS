@@ -21,6 +21,11 @@
                         <a href="<?= base_url() ?>/admin/signalements">Voir les signalements</a>
                         <a href="<?= base_url() ?>/admin/avis">Voir les avis</a>
                     </div>
+                    <h3>Catalogueur</h3>
+                    <div>
+                        <a href="<?= base_url() ?>/admin/catalogue">Visualiser le catalogue</a>
+                        <a href="<?= base_url() ?>/admin/quidi">Voir les produits dans catalogueur</a>
+                    </div>
                     <h3>Avertissements</h3>
                     <div>
                         <a>Avertir un utilisateur</a>

@@ -20,15 +20,24 @@ class ProduitPanierCompteModel extends ProduitPanierModel
     
     protected $allowedFields = ['id','id_prod','quantite','num_client'];
 
-
+        
     protected function getIdUser() : string{
         return (string)"num_client";
     }
+    
 
-    protected function getColonneProduitIdUser(){
+    protected function getColonneProduitIdUser() : string{
         return (string)'numCli';
     }
-
+    
+    /**
+     * Fusion d'un panier visiteur avec un panier client
+     *
+     * @param $numPanier $numPanier numero panier client
+     * @param $token $token token reliant à un panier visiteur
+     *
+     * @return void
+     */
     public function fusionPanier($numPanier,$token){
         $this->db->query("SELECT * FROM sae3.transvasagePanier('$token' ,$numPanier)");
     }

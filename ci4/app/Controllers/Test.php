@@ -1,6 +1,16 @@
-<?php namespace App\Controllers;
+━━━━━━━┛
+*/
+$routes->get('/', 'client\Home');
+$routes->get('/index', 'client\Home::index');
+
+$routes->get('/connexion', 'client\Home::connexion');
+$routes->post('/connexion', 'client\Home::connexion');
+$routes->get('/connexion/(401)', 'client\Home::connexion/$1');
+$routes->post('/connexion/(401)', 'client\Home::connexion/$1');
+$routes->get('/connexion/retourProduit/(:num)', 'client\Home::produit/$1' ,['filter' => 'connexion'])<?php namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Entities\Commande;
 
 class Test extends BaseController{
 
@@ -65,9 +75,21 @@ class Test extends BaseController{
             print_r($prods);
         }
 
-        public function test4()
-        {
-            $prods=model("\App\Models\Client")->getClientById(1);
-            d($prods);
+        public function test4(){
+            $sC=service('lbbdp');
+            $C=new Commande();
+            $C->fill(array("identifiant" => "2", 
+            "nombre" => 5, 
+            "time" => 0,
+            "etat" => "En charge", 
+            "retard"=> 2));
+            $C2=new Commande();
+            $C2->fill(array("identifiant" => "8", 
+            "nombre" => 5, 
+            "time" => 0,
+            "etat" => "En charge", 
+            "retard"=> 2));
+            //d($sC->nouvelleCommande(array($C,$C2)));
+            d($sC->getCommandes());
         }
 }

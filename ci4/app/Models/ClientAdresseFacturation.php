@@ -6,10 +6,9 @@ use CodeIgniter\Model;
 
 /**
  * Accéder aux adresses de facturation reliés à leurs client
- *  || | | | |
- *  | - | - | - | - | - |
- *  | **actions** | **Create** | **Read** | **Update** | **Delete** |
- *  |**possible**||X|||
+ *  Données:
+ *      * adresse: -**R**-- 
+ *      * client: -**R**-- 
  */
 class ClientAdresseFacturation extends Model{
     protected $table = "sae3.adresse_facturation_client";

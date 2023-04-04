@@ -90,7 +90,8 @@
                         <div class="divHoverConnexion divConnected">
                             <p class="pNom">Bonjour <?= (session()->get("identifiantVendeur")) ?></p>
                             <a href="<?= base_url()."/vendeur/profil"?>"><p>Mon profil</p></a>
-                            <a href="<?= base_url()."/vendeur/commandes"?>"><p>Mes commandes</p></a>
+                            <a href="<?= base_url()."/vendeur/quidi"?>"><p>Mon quidi</p></a>
+                            <a href="<?= base_url()."/vendeur/catalogue"?>"><p>Mon catalogue</p></a>
                             <a href="<?= base_url()."/admin/destroyVendeur"?>"><p>Se déconnecter</p></a>
                         </div>
                     <?php else: ?>

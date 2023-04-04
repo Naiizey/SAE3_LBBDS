@@ -403,18 +403,19 @@ INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis ne par
  -- jusqu'ici
 
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,1);
-INSERT INTO _quidi_vendeur (num_compte) VALUES (5);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,2);
-INSERT INTO _quidi_vendeur (num_compte) VALUES (5);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,3);
-INSERT INTO _quidi_vendeur ( num_compte) VALUES ( 5);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,4);
-INSERT INTO _quidi_vendeur (num_compte) VALUES (5);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,5);
-INSERT INTO _quidi_vendeur (num_compte) VALUES (6);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,6);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,7);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,8);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,9);
 
-INSERT INTO _quidi_vendeur (id_quidi, num_compte) VALUES (6, 6);
+
+INSERT INTO _quidi_vendeur (id_quidi,num_compte) VALUES (1,6);
+INSERT INTO _quidi_vendeur (id_quidi,num_compte) VALUES (2,5);
+INSERT INTO _quidi_vendeur (id_quidi,num_compte) VALUES (3,5);
+INSERT INTO _quidi_vendeur (id_quidi, num_compte) VALUES (4,5);
+INSERT INTO _quidi_vendeur (id_quidi,num_compte) VALUES (5,5);
+INSERT INTO _quidi_vendeur (id_quidi, num_compte) VALUES (6,6);

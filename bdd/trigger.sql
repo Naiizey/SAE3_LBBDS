@@ -387,6 +387,7 @@ BEGIN
         ELSE
             -- we raise an exception Le numéro de compte (NEW.num_compte) ne correspond pas au vendeur du produit (NEW.id_prod)
             RAISE EXCEPTION 'Le numéro de compte (%) ne correspond pas au vendeur du produit (%) qui à pour id (%)', NEW.num_compte,  (SELECT num_compte FROM sae3._produit WHERE id_prod = (SELECT id_prod FROM sae3._quidi WHERE id_quidi = NEW.id_quidi)), (SELECT id_prod FROM sae3._quidi WHERE id_quidi = NEW.id_quidi);
+            --RAISE EXCEPTION 'Le numéro de compte (%) ne correspond pas au vendeur du produit (%) qui à pour id (%)', NEW.num_compte,  (SELECT num_compte FROM sae3._produit ), (SELECT id_prod FROM sae3._quidi WHERE id_quidi = NEW.id_quidi);
         END IF;
     ELSE
         RAISE EXCEPTION 'Le numéro de compte ne peut pas être NULL';

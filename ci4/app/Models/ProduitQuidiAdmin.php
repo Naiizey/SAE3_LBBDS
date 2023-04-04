@@ -23,6 +23,7 @@ class ProduitQuidiAdmin extends ProduitQuidiModel
     protected function whereSiVendeur($idVendeur){
         if(!is_null($idVendeur))
             throw new Exception("Ne devrais pas être utilisé avec un id Vendeur");
+          
         return $this;
     }
 

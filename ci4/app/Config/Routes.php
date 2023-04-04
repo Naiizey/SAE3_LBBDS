@@ -153,8 +153,12 @@ $routes->get('/admin/glossaire/(:num)', 'admin\Home::glossaire/$1');
 $routes->get('/admin/catalogue', 'admin\Home::catalogue');
 $routes->get('/admin/catalogue/(:num)', 'admin\Home::catalogue/$1');
 
-$routes->get('/admin/quidi', 'admin\Home::quidi');
-$routes->get('/admin/quidi/(:num)', 'admin\Home::quidi/$1');
+
+$routes->get('admin/quidi', 'admin\Quidi::getProduitPanierVendeur');
+$routes->get('/admin/quidi/vider', 'admin\Quidi::viderQuidi');
+$routes->get('/admin/quidi/supprimer/(:num)', 'admin\Quidi::supprimerProduitQuidi/$1');
+$routes->post('/admin/quidi/ajouter/(:num)', 'admin\Quidi::ajouterQuidi/$1/');
+$routes->get('/admin/quidi/ajouter/(:num)/', 'admin\Quidi::ajouterQuidi/$1/');
 
 $routes->get('admin/produit/(:num)', 'admin\Home::produit/$1/$2');
 $routes->post('admin/produit/(:num)/(:num)', 'admin\Home::produit/$1/$2');

@@ -113,7 +113,7 @@ CREATE OR REPLACE VIEW commande_list_vendeur AS
 CREATE OR REPLACE VIEW commande_list_client AS
     SELECT num_commande,c.num_compte,date_commande,date_arriv,round((sum(prix_ttc*qte_panier))::numeric, 2 ) prix_ttc,round((sum(prix_ht*qte_panier))::numeric, 2) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod group by num_commande, c.num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
 
-SELECT num_commande,c.num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod group by num_commande, c.num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
+--SELECT num_commande,c.num_compte,date_commande,date_arriv,sum(prix_ttc*qte_panier) prix_ttc,sum(prix_ht*qte_panier) prix_ht, retourneEtatLivraison(num_commande) etat, montant_reduction, pourcentage_reduction FROM _commande c LEFT JOIN _code_reduction ON c.id_reduction = _code_reduction.id_reduction NATURAL JOIN _refere_commande INNER JOIN _produit ON _refere_commande.id_prod = _produit.id_prod group by num_commande, c.num_compte,date_commande,date_arriv,etat, montant_reduction, pourcentage_reduction;
 
 CREATE OR REPLACE VIEW commande_list_produits_client AS
     WITH min_image AS (SELECT min(num_image) num_image, id_prod FROM _image_prod  group by id_prod )
@@ -143,7 +143,7 @@ CREATE OR REPLACE VIEW produit_catalogue AS
     LEFT JOIN moyenneProduit on _produit.id_prod = moyenneProduit.id NATURAL JOIN soloimageproduit;
 
 CREATE OR REPLACE VIEW produit_detail AS
-    SELECT id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*taux_tva) prixTTC, prix_ht prixHT, lien_image lienImage,publication_prod  isAffiche, _sous_categorie.libelle_cat categorie, _sous_categorie.code_sous_cat codeCategorie,description_prod description, stock_prod stock,moyenneNote moyenne
+    SELECT id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*taux_tva) prixTTC, prix_ht prixHT, lien_image lienImage,publication_prod  isAffiche, _sous_categorie.libelle_cat categorie, _sous_categorie.code_sous_cat codeCategorie,description_prod description, stock_prod stock,moyenneNote moyenne, _produit.num_compte num_vendeur
     FROM _produit NATURAL JOIN _image_prod  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
     LEFT JOIN moyenneProduit on _produit.id_prod = moyenneProduit.id NATURAL JOIN soloimageproduit;
 
@@ -227,3 +227,14 @@ LEFT JOIN moyenneProduit on _produit.id_prod = moyenneProduit.id NATURAL JOIN so
 
 CREATE OR REPLACE VIEW glossaire_vendeur AS 
 SELECT id_quidi,num_compte,numero_rue,nom_rue,code_postal,ville,intitule_prod, prix_ht, prix_ttc, description_prod,pseudo,note_vendeur,numero_siret,tva_intercommunautaire,texte_presentation,logo,moyenne_note_prod FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur NATURAL JOIN _compte INNER JOIN _adresse  ON _vendeur.id_adresse = _adresse.id_a;
+
+CREATE OR REPLACE VIEW produit_quidi_vendeur AS
+SELECT concat(id_prod, '£', id_quidi) id, id_prod, intitule_prod, stock_prod, prix_ttc, prix_ht, lien_image,  description_prod, num_compte num_vendeur,id_quidi
+FROM _produit NATURAL JOIN soloimageproduit NATURAL JOIN _quidi NATURAL JOIN _vendeur;
+
+CREATE OR REPLACE VIEW produit_quidi_vendeur_json AS
+SELECT concat(id_prod, '£', id_quidi) id, intitule_prod, prix_ttc, lien_image,  description_prod, num_compte num_vendeur,publication_prod,libelle_cat,moyenne_note_prod
+FROM _produit NATURAL JOIN soloimageproduit NATURAL JOIN _quidi NATURAL JOIN _vendeur NATURAL JOIN _sous_categorie;
+
+CREATE OR REPLACE VIEW produit_quidi_admin AS
+SELECT * FROM produit_quidi_vendeur WHERE id_quidi NOT IN (SELECT id_quidi from _quidi_vendeur);

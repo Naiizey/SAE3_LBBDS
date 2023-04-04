@@ -1,7 +1,10 @@
-<?php require("header.php"); ?>
-<?php model("\App\Models\ProduitCatalogueVendeur")->where("num_compte =", session()->get("numeroVendeur"))->selectMax('prixttc')?>
+<?php 
+
+require("$context/header.php"); 
+?>
+<?php model("\App\Models\ProduitCatalogue")->selectMax('prixttc')?>
 <main id=Catalogue>
-    <div class="bubbles bubbles-vendeur">
+    <div class="bubbles">
         <button class="bulle-ouvrir-filtres">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"/></svg>
             <h2>
@@ -49,6 +52,28 @@
                     </details>
                 <?php endforeach;?>
                 </div>
+                <?php if ($context!= "vendeur"): ?>
+                <hr class="separationCatalog"/>
+                <details class="categorie-catalogue">
+                    <summary class="categorie"><h2>Vendeurs</h2></summary>
+                    <div id="entête" class="enTete-vendeur">
+                        <div class="bouton-selectionner-tout">
+                            <label for="tout-vend">Tout sélectionner</label>
+                            <input class="chk-box-tout" type="checkbox" > <!-- id="tout-vend" name="tout-vend" value="tout-vend"-->
+                        </div>
+                        <hr>
+                    </div>
+                   
+                    <?php foreach ($vendeurs as $key => $vendeur):?>
+                        <div class="sous-categorie" for="<?= $vendeur->identifiant ?>">
+                            <label for="<?= $vendeur->numero ?>" class=".sous-categorie-catalogue"><?= $vendeur->identifiant ?></label>
+                            <input <?= ((isset($filters[$vendeur->numero]) && $filters[$vendeur->numero]=="on")?"checked":"") ?> name="<?= $vendeur->numero ?>" type="checkbox" id="<?= $vendeur->numero ?>">
+                        </div>
+                        <?php if($key != array_key_last($vendeurs)): ?> <hr> <?php endif; ?>
+                    <?php endforeach;?>
+                    <?php endif;?>
+                </details>
+                <hr class="separationCatalog"/>
                 <section class="prix">
                     <label>Prix :</label>
                     <section class="price-range">
@@ -95,12 +120,8 @@
             </div>
     </section>
     <section class="partie-produits">
-        <div class="liste-produits liste-prod-vendeur">
-        <?php if(isset($prods) && !empty($prods)): ?>
-            <?php foreach($prods as $prod): ?>
-                <?= $cardProduit->display($prod)?>
-            <?php endforeach; ?>
-        <?php endif; ?>
+        <div class="liste-produits">
+    
         </div>
         <div class="nav-page">
             <button class="normal-button voir-plus  <?= ($estDernier)?"hidden":"" ?>">Voir plus</button>
@@ -112,8 +133,9 @@
         <div class="erreur-liste-produit">
     </section>
 </main>
-<?php require("footer.php"); ?>
+<?php require("$context/footer.php"); ?>
 <script>
+   
     cataloguePrice();
     boutonCliquable(
         document.querySelector(".bulle-ouvrir-filtres"),
@@ -141,13 +163,17 @@
         );
     selectAll();
     var gestCartes = FilterUpdate(document.forms["filters"],
-         document.querySelector(".champsRecherche"),
-         document.querySelector(".liste-produits"),
-         document.querySelector(".supprimer-filtre"),
-         document.querySelector(".voir-plus"),
-         document.forms["tris"]
-     );
-    // gestCartes.generer();
+        document.querySelector(".champsRecherche"),
+        document.querySelector(".liste-produits"),
+        document.querySelector(".supprimer-filtre"),
+        document.querySelector(".voir-plus"),
+        document.forms["tris"]
+        <?= (isset($context))?", '$context'":"" ?>
+    );
+    
     loadFiltersTris();
-    //changeOnglet();
+    //changeOnglet();*/
+
+    gestCartes.generer(15);
+    
 </script>

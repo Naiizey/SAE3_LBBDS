@@ -1,0 +1,90 @@
+diff --git a/ci4/public/js/script.js b/ci4/public/js/script.js
+index cc78ef7..5fdef1a 100644
+--- a/ci4/public/js/script.js
++++ b/ci4/public/js/script.js
+@@ -1172,14 +1172,12 @@ function loadFiltersTris() {
+             document.querySelector(".partie-produits").style.gridColumn = "4";
+             document.querySelector(".bulle-ouvrir-filtres").style.display =
+                 "none";
+-            console.log("Load filtre")
+             document.querySelector(".bulle-ouvrir-tris").style.display = "none";
+         } else if (localStorage.getItem("openT") === "true") {
+             document.querySelector(".partie-tris").style.display = "flex";
+             document.querySelector(".partie-produits").style.gridColumn = "4";
+             document.querySelector(".bulle-ouvrir-filtres").style.display =
+                 "none";
+-            console.log("Load tris")
+             document.querySelector(".bulle-ouvrir-tris").style.display = "none";
+         }
+     });
+@@ -1344,7 +1342,7 @@ const FilterUpdate = function (
+         formChampsGetT.append("Ordre", document.querySelector("#ordre").value);
+         let champsGetT = new URLSearchParams(formChampsGetT);
+ 
+-        if (self.champRecherche && !self.champRecherche.value == "") {
++        if (!self.champRecherche.value == "") {
+             champsGetF.append("search", self.champRecherche.value);
+         }
+         //FIXME: problème de précison avec min et max. arrondir pour éviter les problèmes ?
+@@ -1399,8 +1397,6 @@ const FilterUpdate = function (
+                 "Filtres",
+                 urlToUse([champsGetF, champsGetT])
+             );
+-
+-            console.log("test");
+             
+             //Svg défini en fonction de si on est vendeur ou client
+             if(window.location.href.toString().includes("vendeur")){
+@@ -1408,22 +1404,6 @@ const FilterUpdate = function (
+                 for(let svg of svgs){
+                     svg.style.display = "block";
+                 }
+-
+-                let aList = document.getElementsByClassName("addPanier");
+-                for(let a of aList){
+-                    a.setAttribute("href", base_url + "/vendeur/quidi/ajouter/" + a.classList[1]);
+-                }
+-            }
+-            else if(window.location.href.toString().includes("vendeur/quidi")){
+-                let svgs = document.getElementsByClassName("minus");
+-                for(let svg of svgs){
+-                    svg.style.display = "block";
+-                }
+-
+-                aList = document.getElementsByClassName("addPanier");
+-                for(let a of aList){
+-                    a.setAttribute("href", base_url + "/vendeur/quidi/supprimer/" + a.classList[1]);
+-                }
+             }
+             else{
+                 let svgs = document.getElementsByClassName("cart");
+@@ -1492,27 +1472,11 @@ const FilterUpdate = function (
+ };
+ 
+ window.onload = function addSvg(){
+-    if(window.location.href.toString().includes("/vendeur/catalogue")){
+-        let svgs = document.getElementsByClassName("plus");
++    if(window.location.href.toString().includes("vendeur")){
++        let svgs = document.getElementsByClassName("checkmark");
+         for(let svg of svgs){
+             svg.style.display = "block";
+         }
+-
+-        let aList = document.getElementsByClassName("addPanier");
+-        for(let a of aList){
+-            a.setAttribute("href", base_url + "/vendeur/quidi/ajouter/" + a.classList[1]);
+-        }
+-    }
+-    else if(window.location.href.toString().includes("/vendeur/quidi")){
+-        let svgs = document.getElementsByClassName("minus");
+-        for(let svg of svgs){
+-            svg.style.display = "block";
+-        }
+-
+-        aList = document.getElementsByClassName("addPanier");
+-        for(let a of aList){
+-            a.setAttribute("href", base_url + "/vendeur/quidi/supprimer/" + a.classList[1]);
+-        }
+     }
+     else{ 
+         let svgs = document.getElementsByClassName("cart");

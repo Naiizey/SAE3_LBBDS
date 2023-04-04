@@ -114,12 +114,7 @@
             </div>
     </section>
     <section class="partie-produits">
-        <div class="liste-produits">
-        <?php if(isset($prods) && !empty($prods)): ?>
-            <?php foreach($prods as $prod): ?>
-                <?= $cardProduit->display($prod)?>
-            <?php endforeach; ?>
-        <?php endif; ?>
+        <div class="liste-produits">    
         </div>
         <div class="nav-page">
             <button class="normal-button voir-plus  <?= ($estDernier)?"hidden":"" ?>">Voir plus</button>
@@ -159,13 +154,13 @@
         () => switchEtatFiltre(document.querySelectorAll(".bulle-ouvrir-filtres, .partie-filtre"))
         );
     selectAll();
-    var upFilter = new filterUpdate(document.forms["filters"],
+    var gestCartes = FilterUpdate(document.forms["filters"],
         document.querySelector(".champsRecherche"),
         document.querySelector(".liste-produits"),
         document.querySelector(".supprimer-filtre"),
         document.querySelector(".voir-plus"),
         document.forms["tris"]
     );
+    gestCartes.generer(undefined    );
     loadFiltersTris();
-    changeOnglet();
 </script>

@@ -201,10 +201,6 @@ path{
     fill: var(--admin-color);
 }
 
-.checkmark path{
-    fill: transparent
-}
-
 /*.logoProfil:hover path, .logoPanier:hover path, .logoContact:hover path{
     fill: #6f98bd;
 }
@@ -2837,7 +2833,7 @@ main div.card-produit-ext{
     transition: scale .3s ease;
 }
 
-main div.card-produit-ext:hover{
+main div.card-produit-ext:hover:not(.en-chargement){
     background-color: transparent;
     scale: 1.05;
 }
@@ -2928,8 +2924,21 @@ div.image-card{
     width: 100%;
 }
 
-.cart, .checkmark{
+.cart, .plus, .minus{
     display: none;
+}
+
+.plus, .minus{
+    stroke: white;
+}
+
+.plus path, .minus path{
+    fill: white;
+    stroke: white;
+}
+
+.logoLoupe:hover{
+    transform: matrix3d(1.1, 0, 0, 0, 0, 1.1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 }
 
 @media screen and (max-width: 480px){
@@ -3716,6 +3725,73 @@ a.fleche-page{
 #aucunResultat {
     padding-block: 5rem;
 }
+@keyframes chargement {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: .2;
+    }
+}
+
+@keyframes stop {
+    from{
+        visibility: visible;
+        display: block;
+        opacity: 1;
+    }
+
+    to {
+        
+        opacity: 0;
+        display: none;
+    }   
+}
+
+@keyframes fill {
+    from{
+        scale: 0.80;
+    }
+
+    to{
+        scale: 1;
+    }
+}
+
+.en-chargement .card-produit{
+    background-color: gray; 
+}
+
+.en-chargement {
+    /*animation:  1s ease-out 1 mort;*/
+    animation: ease-in-out alternate infinite chargement;
+
+
+}
+
+
+
+
+
+.en-chargement .card-produit *{
+    visibility: hidden;
+}
+
+.en-chargement.not-filled {
+    animation:  ease-out 1 0s stop;
+    visibility: hidden;
+    
+}
+
+.filled{
+    animation: fill ease-in 1;
+}
+
+
+
+
+
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

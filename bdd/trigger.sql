@@ -371,12 +371,16 @@ $$ language plpgsql;
 
 CREATE TRIGGER when_delete_commentaire INSTEAD OF DELETE ON commentaires FOR EACH ROW EXECUTE PROCEDURE delete_commentaire();
 
---Trigger insertion quidi
+--Trigger insertion quidi_vendeur
 
 CREATE OR REPLACE FUNCTION insert_quidi_vendeur() RETURNS TRIGGER AS $$
 BEGIN
+    IF NEW.id_quidi IS NULL THEN
+        NEW.id_quidi = currval('sae3._quidi_id_quidi_seq');
+    end if;
     -- verify if there is a new.num_compte in the insert
     IF NEW.num_compte IS NOT NULL THEN
+
         -- verify if new.num_compte is the same as the one in new.id_prod in _produit
         IF (SELECT num_compte FROM sae3._produit WHERE id_prod = (SELECT id_prod FROM sae3._quidi WHERE id_quidi = NEW.id_quidi)) = NEW.num_compte THEN
             RETURN NEW;
@@ -386,9 +390,10 @@ BEGIN
         END IF;
     ELSE
         RAISE EXCEPTION 'Le numéro de compte ne peut pas être NULL';
+        RAISE EXCEPTION 'Le numéro de compte ne peut pas être NULL';
         RETURN NEW;
     END IF;
-END;
+END
 $$ LANGUAGE plpgsql;
 
 
@@ -398,17 +403,31 @@ CREATE TRIGGER insert_quidi_vendeur
     EXECUTE PROCEDURE insert_quidi_vendeur();
 
 
---     CREATE OR REPLACE FUNCTION insert_quidi_vendeur() RETURNS TRIGGER AS $$
--- BEGIN
---     -- verify if there is a new.num_compte in the insert
---     IF NEW.num_compte IS NOT NULL THEN
---         INSERT INTO sae3._quidi_vendeur (id_quidi, num_compte) VALUES (NEW.id_quidi, NEW.num_compte);
---     END IF;
---     RETURN NEW;
--- END;
--- $$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION delete_quidi() RETURNS TRIGGER AS
+$$
+BEGIN
+    DELETE FROM sae3._quidi_vendeur WHERE id_quidi = old.id_quidi;
+    DELETE FROM sae3._quidi WHERE id_prod = old.id_prod and id_quidi = old.id_quidi;
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
 
--- CREATE TRIGGER insert_quidi_vendeur
---     AFTER INSERT ON sae3._quidi
---     FOR EACH ROW
---     EXECUTE PROCEDURE insert_quidi_vendeur();
+CREATE TRIGGER delete_quidi
+    INSTEAD OF DELETE ON sae3.produit_quidi_vendeur
+    FOR EACH ROW
+    EXECUTE PROCEDURE delete_quidi();
+
+
+CREATE OR REPLACE FUNCTION insert_quidi() RETURNS TRIGGER AS
+$$
+BEGIN
+    INSERT INTO sae3._quidi (id_prod) VALUES (NEW.id_prod);
+    INSERT INTO sae3._quidi_vendeur (id_quidi, num_compte) VALUES (NEW.id_quidi, NEW.num_vendeur);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_quidi
+    BEFORE INSERT ON sae3._quidi
+    FOR EACH ROW
+    EXECUTE PROCEDURE insert_quidi();

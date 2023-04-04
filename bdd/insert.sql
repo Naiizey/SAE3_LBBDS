@@ -138,7 +138,7 @@ VALUES (currval('sae3._produit_id_prod_seq'), 'https://cdn.pixabay.com/photo/201
 
 INSERT INTO _produit (code_sous_cat, intitule_prod, prix_ht, prix_ttc, description_prod,  publication_prod, stock_prod,moyenne_note_prod,seuil_alerte_prod,alerte_prod,num_compte)
 VALUES (134,'Fines herbes',5,6,'Herbes pour aggrémenter les plats comestibles. Accompagne très bien une côte de boeuf avec un verre de rouge.',  true, 17, 4.5, 5, true,5);
-VALUES (133,'Vin blanc',10,15,'Elaboré à partir de nos raisons blancs bretons, ce vin blanc est idéal pour vos dîner.', true, 10, 4.5, 5, true, 5);
+--VALUES (133,'Vin blanc',10,15,'Elaboré à partir de nos raisons blancs bretons, ce vin blanc est idéal pour vos dîner.', true, 10, 4.5, 5, true, 5);
 INSERT INTO _image_prod(id_prod, lien_image, num_image)
 VALUES (currval('sae3._produit_id_prod_seq'), 'https://images.pexels.com/photos/105863/pexels-photo-105863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',0);
 INSERT INTO _image_prod(id_prod, lien_image, num_image)
@@ -403,18 +403,18 @@ INSERT INTO _signalement (raison, num_avis, num_compte) VALUES ('Cet avis ne par
  -- jusqu'ici
 
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,1);
+INSERT INTO _quidi_vendeur (num_compte) VALUES (5);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,2);
+INSERT INTO _quidi_vendeur (num_compte) VALUES (5);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,3);
+INSERT INTO _quidi_vendeur ( num_compte) VALUES ( 5);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,4);
+INSERT INTO _quidi_vendeur (num_compte) VALUES (5);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,5);
+INSERT INTO _quidi_vendeur (num_compte) VALUES (6);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,6);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,7);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,8);
 INSERT INTO _quidi(id_quidi,id_prod) VALUES (DEFAULT,9);
 
-INSERT INTO _quidi_vendeur (id_quidi, num_compte) VALUES (1, 5);
-INSERT INTO _quidi_vendeur (id_quidi, num_compte) VALUES (2, 5);
-INSERT INTO _quidi_vendeur (id_quidi, num_compte) VALUES (3, 5);
-INSERT INTO _quidi_vendeur (id_quidi, num_compte) VALUES (4, 5);
-INSERT INTO _quidi_vendeur (id_quidi, num_compte) VALUES (5, 6);
 INSERT INTO _quidi_vendeur (id_quidi, num_compte) VALUES (6, 6);

@@ -12,6 +12,9 @@ class Quidi extends BaseQuidi
     {
         parent::__construct();
         $this->context="admin";
+        $this->session=null;
+        $this->model=model("\App\Models\ProduitQuidiAdmin");
+        $this->modelJson=model("\App\Models\ProduitQuidiAdminJson");
     }
 
 

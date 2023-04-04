@@ -10,6 +10,9 @@ class BaseQuidi extends BaseController
 {
     protected $feedback;
     protected $context;
+    protected $session;
+    protected $model;
+    protected $modelJson;
     public function __construct()
     {
         helper('cookie');
@@ -57,15 +60,10 @@ class BaseQuidi extends BaseController
 
         //Récupération des produits du panier
 
-        if($this->context=="admin")
+        if(session()->has("numeroVendeur") || $this->context=="admin")
         {
-            $modelProduitPanier = model("\App\Models\ProduitQuidiAdmin");
-            $data['produits'] = $modelProduitPanier->getQuidi(null);
-        }
-        else if(session()->has("numeroVendeur") && $this->context=="vendeur")
-        {
-            $modelProduitPanier = model("\App\Models\ProduitQuidiVendeur");
-            $data['produits'] = $modelProduitPanier->getQuidi(session()->get("numeroVendeur"));
+            $modelProduitPanier = $this->model;
+            $data['produits'] = $modelProduitPanier->getQuidi($this->session);
         }
         else
         {
@@ -80,17 +78,11 @@ class BaseQuidi extends BaseController
     }
 
     public function viderQuidi() {
-        if($this->context="admin")
+        
+        if(session()->has("numeroVendeur") || $this->context="admin")
         {
-               
-                $quidiModel = model("\App\Models\ProduitQuidiAdmin");
-                $quidiModel->viderQuidi(null);
-                
-        }
-        else if(session()->has("numeroVendeur") && $this->context="vendeur")
-        {
-            $quidiModel = model("\App\Models\ProduitQuidiVendeur");
-            $quidiModel->viderQuidi(session()->get("numeroVendeur"));
+            $quidiModel = $this->model;;
+            $quidiModel->viderQuidi($this->session);
         }
         else throw new \Exception("Le quidi n'existe pas !");
         
@@ -105,18 +97,11 @@ class BaseQuidi extends BaseController
         
         if(!is_null($idProd))
         {
-            if($this->context="admin")
-            {
-               
-                $quidiModel = model("\App\Models\ProduitQuidiAdmin");
-                $quidiModel->ajouterProduit($idProd,null,true); 
-                
-            }
-            else if(session()->has("numeroVendeur") && $this->context="vendeur")
+            if(session()->has("numeroVendeur") || $this->context="vendeur")
             {
                       
-                $quidiModel = model("\App\Models\ProduitQuidiVendeur");
-                $quidiModel->ajouterProduit($idProd,session()->get("numeroVendeur"),true);
+                $quidiModel = $this->model;;
+                $quidiModel->ajouterProduit($idProd,$this->session,true);
             }
         }
         
@@ -134,17 +119,10 @@ class BaseQuidi extends BaseController
     public function supprimerProduitQuidi($idProd = null){
         if(!is_null($idProd))
         {
-            if($this->context="admin")
+           if(session()->has("numeroVendeur") || $this->context="vendeur")
             {
-               
-                $quidiModel = model("\App\Models\ProduitQuidiAdmin");
-                $quidiModel->deleteFromQuidi($idProd,null); 
-                
-            }
-            else if(session()->has("numeroVendeur") && $this->context="vendeur")
-            {
-                $quidiModel = model("\App\Models\ProduitQuidiVendeur");
-                $quidiModel->deleteFromQuidi($idProd,session()->get("numeroVendeur"));
+                $quidiModel = $this->model;
+                $quidiModel->deleteFromQuidi($idProd,$this->session);
             }
             else throw new \Exception("Le quidi n'existe pas !");
         }
@@ -152,6 +130,45 @@ class BaseQuidi extends BaseController
             return redirect()->to(session()->get("_ci_previous_url"));
         }
     }
+
+    public function validationQuidi()
+    {
+        //on pick le numéro vendeur
+        if(session()->has("numeroVendeur") || $this->context="admin")
+        {
+            //on pick le model
+            $quidiModel = $this->modelJson;
+            //on get le quidi
+            $quidi = $quidiModel->getQuidi($this->session);
+
+            //on get les vendeurs
+            $vendeurModel = model("\App\Models\Vendeur");
+            $vendeur = $vendeurModel->getVendeurById($this->session);
+            //on ajoute un champ à l'objet vendeur
+            
+            $vendeur->setArticles($quidi);
+            $catalogueur = array();
+            $catalogueur["entreprises"] = $vendeur;
+            $catalogueur["articles"] = $quidi;
+
+            // Convertir le tableau en JSON
+            $json = json_encode($catalogueur);
+
+            // Enregistrer le JSON dans un fichier en local
+            try {
+                $file = fopen("quidi.json", "w");
+                fwrite($file, $json);
+                fclose($file);
+                echo "JSON GENERE : ";
+            } catch (\Throwable $th) {
+                //log in the console
+                echo "Erreur lors de la création du fichier";
+            }
+            
+        }
+        else throw new \Exception("Le quidi n'existe pas !");
+    }
+
 
     public function sendCors($idProd = null, $newQuantite = null){
         

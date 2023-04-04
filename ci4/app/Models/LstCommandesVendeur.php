@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Entities\CommandeCli;
 use \App\Entities\CommandeVend as CommandeVend;
 use CodeIgniter\Model;
 use Exception;

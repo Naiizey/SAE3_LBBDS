@@ -12,6 +12,9 @@ class Quidi extends BaseQuidi
     {
         parent::__construct();
         $this->context="vendeur";
+        $this->session=session()->get("numeroVendeur");
+        $this->model=model("\App\Models\ProduitQuidiVendeur");
+        $this->modelJson=model("\App\Models\ProduitQuidiVendeurJson");
     }
     
     public function verification(){

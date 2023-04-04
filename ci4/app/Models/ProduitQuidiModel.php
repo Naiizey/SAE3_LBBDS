@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use \App\Entities\ProduirtQuidi as Produit;
+use \App\Entities\ProduitQuidi as Produit;
 
 use CodeIgniter\Model;
 use Exception;

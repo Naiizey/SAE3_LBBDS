@@ -193,6 +193,7 @@ $routes->get('/vendeur/quidi/vider', 'vendeur\Quidi::viderQuidi');
 $routes->get('/vendeur/quidi/supprimer/(:num)', 'vendeur\Quidi::supprimerProduitQuidi/$1');
 $routes->post('/vendeur/quidi/ajouter/(:num)', 'vendeur\Quidi::ajouterQuidi/$1/');
 $routes->get('/vendeur/quidi/ajouter/(:num)/', 'vendeur\Quidi::ajouterQuidi/$1/');
+$routes->get('/vendeur/quidi/validation', 'vendeur\Quidi::validationQuidi');
 
 $routes->get('vendeur/produit/(:num)', 'vendeur\Home::produit/$1/$2', ['filter' => 'vendeur']);
 $routes->post('vendeur/produit/(:num)/(:num)', 'vendeur\Home::produit/$1/$2', ['filter' => 'vendeur']);

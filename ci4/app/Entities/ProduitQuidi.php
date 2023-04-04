@@ -20,4 +20,14 @@ class ProduitQuidi extends Entity
    {
     return "Id: $this->id, Intitule: $this->intitule";
    }
+
+   public function convertForQuidi(){
+      $this->idProd=$this->id;
+      $this->prixTtc=$this->prixTtc;
+      $this->prixHt=$this->prixHt;
+      $this->lienImage=$this->lienImage;
+      $this->numVnd=$this->numVnd;
+      return $this;
+   }
+
 }

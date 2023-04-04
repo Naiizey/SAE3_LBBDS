@@ -124,7 +124,7 @@
                                 <?= $sommePrix ?>
                             </span>€ TTC
                         </h2>
-                        <a href="<?= base_url() ?>/glossaire" class="lienPanier">Valider le quidi</a>
+                        <a href="<?= base_url() ?>/vendeur/quidi/validation" class="lienPanier">Valider le quidi</a>
                         <a class="lienViderPanier" href="<?= base_url() ?>/vendeur/quidi/vider">Vider le quidi</a>
                     </div>
                 </aside>

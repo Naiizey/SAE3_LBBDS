@@ -59,5 +59,21 @@ class Vendeur extends Entity
         'comp_a1' => '',
         'comp_a2' => ''
     ];
+
+    protected $articles = [];
     //les variable en commentaires n'ont aucune utilité à part pour simplifier utilisation au dev
+
+    public function getArticles(){
+        return $this->articles;
+    }
+
+    public function setArticles($articles){
+        $this->articles=$articles;
+    }
+
+    public function addArticle($article){
+        $this->articles[]=$article;
+    }
+
+    
 }

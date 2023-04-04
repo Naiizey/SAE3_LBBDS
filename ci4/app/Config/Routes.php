@@ -186,6 +186,7 @@ $routes->get('/vendeur/quidi/vider', 'vendeur\Quidi::viderQuidi');
 $routes->get('/vendeur/quidi/supprimer/(:num)', 'vendeur\Quidi::supprimerProduitQuidi/$1');
 $routes->post('/vendeur/quidi/ajouter/(:num)', 'vendeur\Quidi::ajouterQuidi/$1/');
 $routes->get('/vendeur/quidi/ajouter/(:num)/', 'vendeur\Quidi::ajouterQuidi/$1/');
+$routes->get('/vendeur/quidi/validation', 'vendeur\Quidi::validationQuidi');
 
 ##param uri (:any) et dans methode /$1
 

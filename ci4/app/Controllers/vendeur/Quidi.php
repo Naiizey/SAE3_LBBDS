@@ -137,6 +137,44 @@ class Quidi extends BaseController
     
     }
 
+    public function validationQuidi()
+    {
+        //on pick le numéro vendeur
+        if(session()->has("numeroVendeur"))
+        {
+            //on pick le model
+            $quidiModel = model("\App\Models\ProduitQuidiVendeurJson");
+            //on get le quidi
+            $quidi = $quidiModel->getQuidi(session()->get("numeroVendeur"));
+
+            //on get les vendeurs
+            $vendeurModel = model("\App\Models\Vendeur");
+            $vendeur = $vendeurModel->getVendeurById(session()->get("numeroVendeur"));
+            //on ajoute un champ à l'objet vendeur
+            
+            $vendeur->setArticles($quidi);
+            $catalogueur = array();
+            $catalogueur["entreprises"] = $vendeur;
+            $catalogueur["articles"] = $quidi;
+
+            // Convertir le tableau en JSON
+            $json = json_encode($catalogueur);
+
+            // Enregistrer le JSON dans un fichier en local
+            try {
+                $file = fopen("quidi.json", "w");
+                fwrite($file, $json);
+                fclose($file);
+                echo "JSON GENERE : ";
+            } catch (\Throwable $th) {
+                //log in the console
+                echo "Erreur lors de la création du fichier";
+            }
+            
+        }
+        else throw new \Exception("Le quidi n'existe pas !");
+    }
+
     public function supprimerProduitQuidi($idProd = null){
         if(!is_null($idProd))
         {

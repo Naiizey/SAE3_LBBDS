@@ -1521,6 +1521,7 @@ window.onload = function addSvg(){
   
 }
 
+
 //Closure / Classe
 function CarteEnChargement(
     tempsApparition = .25,
@@ -2288,3 +2289,4 @@ function drapeauSignal(numAvis) {
             });
     }
 }
+

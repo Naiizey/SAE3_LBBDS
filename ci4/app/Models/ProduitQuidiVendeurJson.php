@@ -7,10 +7,9 @@ use \App\Models\ProduitQuidiModel;
 use CodeIgniter\Model;
 use Exception;
 
-
-class ProduitQuidiVendeur extends ProduitQuidiModel
+class ProduitQuidiVendeurJson Extends ProduitQuidiVendeur
 {
-    protected $table      = 'sae3.produit_quidi_vendeur';
+    protected $table      = 'sae3.produit_quidi_vendeur_json';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = false;
@@ -19,7 +18,7 @@ class ProduitQuidiVendeur extends ProduitQuidiModel
     protected $useSoftDeletes = false;
 
     
-    protected $allowedFields = ['id','id_prod','num_vendeur'];
+    protected $allowedFields = ['id','id_prod','num_vendeur','intitule_prod','publication_prod','description_prod','libelle_cat','prix_ttc','lien_image','moyenne_note_prod'];
 
 
     protected function whereSiVendeur($idVendeur)
@@ -29,4 +28,3 @@ class ProduitQuidiVendeur extends ProduitQuidiModel
         return $this->where("num_vendeur",$idVendeur);
     }
 }
-?>

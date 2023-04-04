@@ -227,5 +227,9 @@ CREATE OR REPLACE VIEW produit_quidi_vendeur AS
 SELECT concat(id_prod, '£', id_quidi) id, id_prod, intitule_prod, stock_prod, prix_ttc, prix_ht, lien_image,  description_prod, num_compte num_vendeur,id_quidi
 FROM _produit NATURAL JOIN soloimageproduit NATURAL JOIN _quidi NATURAL JOIN _vendeur;
 
+CREATE OR REPLACE VIEW produit_quidi_vendeur_json AS
+SELECT concat(id_prod, '£', id_quidi) id, id_prod, intitule_prod, stock_prod, prix_ttc, prix_ht, lien_image,  description_prod, num_compte num_vendeur,id_quidi,publication_prod,libelle_cat,moyenne_note_prod
+FROM _produit NATURAL JOIN soloimageproduit NATURAL JOIN _quidi NATURAL JOIN _vendeur NATURAL JOIN _sous_categorie;
+
 CREATE OR REPLACE VIEW produit_quidi_admin AS
 SELECT * FROM produit_quidi_vendeur WHERE id_quidi NOT IN (SELECT id_quidi from _quidi_vendeur);

@@ -155,6 +155,9 @@ $routes->get('/admin/catalogue/(:num)', 'admin\Home::catalogue/$1');
 
 $routes->get('/admin/quidi', 'admin\Home::quidi');
 $routes->get('/admin/quidi/(:num)', 'admin\Home::quidi/$1');
+
+$routes->get('admin/produit/(:num)', 'admin\Home::produit/$1/$2');
+$routes->post('admin/produit/(:num)/(:num)', 'admin\Home::produit/$1/$2');
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                                  Vendeur                                        ┃
@@ -187,6 +190,9 @@ $routes->get('/vendeur/quidi/supprimer/(:num)', 'vendeur\Quidi::supprimerProduit
 $routes->post('/vendeur/quidi/ajouter/(:num)', 'vendeur\Quidi::ajouterQuidi/$1/');
 $routes->get('/vendeur/quidi/ajouter/(:num)/', 'vendeur\Quidi::ajouterQuidi/$1/');
 $routes->get('/vendeur/quidi/validation', 'vendeur\Quidi::validationQuidi');
+
+$routes->get('vendeur/produit/(:num)', 'vendeur\Home::produit/$1/$2', ['filter' => 'vendeur']);
+$routes->post('vendeur/produit/(:num)/(:num)', 'vendeur\Home::produit/$1/$2', ['filter' => 'vendeur']);
 
 ##param uri (:any) et dans methode /$1
 

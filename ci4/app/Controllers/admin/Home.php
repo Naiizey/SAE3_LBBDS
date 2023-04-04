@@ -5,9 +5,10 @@ namespace App\Controllers\admin;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Validation\Validation;
 use App\Controllers\BaseController;
+use App\Controllers\HomeGlobal;
 use Exception;
 
-class Home extends BaseController
+class Home extends HomeGlobal
 {
     public $feedback;
     public $context;
@@ -431,5 +432,16 @@ class Home extends BaseController
         $data["controller"] = "Quidi";
         $data["model"] = model("App\Models\ProduitQuidiAdmin");
         return view('admin/quidi.php', $data);
+    }
+
+    public function produit($idProduit = null, $numAvisEnValeur = null)
+    {
+        return parent::_produit(
+        null,
+        null,
+        'produit.php',
+        null,
+        $idProduit, $numAvisEnValeur
+        );
     }
 }

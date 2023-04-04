@@ -168,6 +168,7 @@ require("$context/header.php");
         document.querySelector(".supprimer-filtre"),
         document.querySelector(".voir-plus"),
         document.forms["tris"]
+        <?= (isset($context))?", '$context'":"" ?>
     );
     
     loadFiltersTris();

@@ -1386,6 +1386,7 @@ const FilterUpdate = function (
                     self.voirPlus.disabled=false;
                 }
                 await self.replace(pluckCartes(result["resultat"]));
+
                
                 self.erroBloc.classList.add("hidden");
                 //reexe, afin que le listener revienne sur les cartes
@@ -1409,12 +1410,14 @@ const FilterUpdate = function (
             }
 
          
-                console.log(allContexts[context]);
+               
                
                                  
             let cardListSuppression = document.querySelectorAll(allContexts[context]+" .addPanier:not(.est-ajout)");
+            
             for(let card of cardListSuppression){
                 card.setAttribute("href", base_url + "/"+context+"/quidi/supprimer/" + card.classList[1]);
+                
                 let svg = card.getElementsByClassName("minus")[0];
                 console.log(svg);
                 svg.style.display = "block";
@@ -1428,7 +1431,18 @@ const FilterUpdate = function (
                 svg.style.display = "block";
                 
             }
+
+            let cardListClient = document.querySelectorAll(".context-client");
+            for (let card of cardListClient) {
+                let svg = card.getElementsByClassName("cart")[0];
+                console.log(svg);
+                svg.style.display = "block";
+            }
+
             clickProduit(context);
+            console.log(cardListSuppression.length);
+            console.log(cardListAjout.length);
+            
         /*} catch (e) {
             //Les erreurs 404 ne passent pas ici, ce sont les erreurs lié à la fonction et au réseau qui sont catch ici
             console.error("Erreur de récupération des données:", e);
@@ -1488,7 +1502,7 @@ const FilterUpdate = function (
     return self;
 };
 
-window.onload = function addSvg(){
+function addSvg(){
     if(window.location.href.toString().includes("/vendeur/catalogue")){
         let svgs = document.getElementsByClassName("plus");
         for(let svg of svgs){

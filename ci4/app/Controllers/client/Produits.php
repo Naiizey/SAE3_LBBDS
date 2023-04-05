@@ -4,6 +4,7 @@ namespace App\Controllers\client;
 
 use Exception;
 use App\Controllers\BaseController;
+use App\Entities\ProduitQuidi;
 use ErrorException;
 
 use function PHPUnit\Framework\isNull;
@@ -17,10 +18,11 @@ class Produits extends BaseController {
 
     protected const NBPRODSPAGEDEFAULT = 20;
     protected $model;
+    protected $nom_intitule = "intitule";
     const CLIENT = "client";
     const ADMIN = "admin";
     const VENDEUR = "vendeur";
-
+    
     public function __construct()
     {
         $this->model= model("\App\Models\ProduitCatalogue");
@@ -57,17 +59,19 @@ class Produits extends BaseController {
         } else {
             $sorts = null;
         }
-        
 
         try {
             $query = $this->model;
 
             if ($sorts == null) {
-                $query->orderBy("intitule", "ASC");
+                $query->orderBy($this->nom_intitule, "ASC");
             } else {
                 $query->orderBy($sorts[0], $sorts[1]);
-            }
+            }     
             
+            if($page == null){
+                $result = $query->findAll();
+            }
       
             if (is_null($filters) || empty($filters)) {
                 $result = $query->findAll(($nombreProd*$page)+1, $nombreProd*($page-1));
@@ -197,9 +201,9 @@ class Produits extends BaseController {
     private function verifForAjout($doitVerif)
     {
         if($doitVerif)
-            return function(\App\Entities\Produit $prod,$model,$vendeur){  return !$model->hasQuidi($prod->id,$vendeur);};
+            return function(\App\Entities\Produit | ProduitQuidi $prod,$model,$vendeur){  return !$model->hasQuidi($prod->id,$vendeur);};
         else
-            return function(\App\Entities\Produit $prod,$model,$vendeur){ return false; };
+            return function(\App\Entities\Produit | ProduitQuidi $prod,$model,$vendeur){ return false; };
     }
 
         

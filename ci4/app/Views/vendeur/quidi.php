@@ -62,7 +62,7 @@
                                 $sommePrix += $produit -> prixTtc;
                         ?>
                             <div class="liste-produits">
-    
+                                
                             </div>
                         <?php endforeach; ?>
                         <div class="bloc-erreur-liste-produit <?= (isset($message))?"":"hidden"; ?>">
@@ -95,27 +95,6 @@
 <?php require("footer.php"); ?>
 
 <script>
-    <?php if (!empty($produits)): ?>
-    reqUpdateQuantite(
-        "<?php echo  base_url()  .  '/panier/modifier/quantite'?>",
-        () => document.querySelectorAll(".divQuantite input"),
-        (node) => {
-            while(!node.classList.contains("articlePanier")){
-                node=node.parentNode;
-                
-                if(node.nodeName=="MAIN"){
-                    throw new Error("Le parent cherché n'as pas été atteint");
-                }
-            }
-            return node.id;
-        },
-        (err, resp) => {
-            if(!err){
-                updateQuantite();
-            }
-        }
-    );
-    <?php endif; ?>
     var gestCards = QuidiUpdate(document.querySelector(".liste-produits"));
 
     gestCards.generer(<?= sizeof($produits) ?>);    

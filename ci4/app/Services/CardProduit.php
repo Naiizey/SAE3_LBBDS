@@ -1,5 +1,6 @@
 <?php namespace App\Services;
 
+use App\Entities\ProduitQuidi;
 use PhpParser\Node\Expr\FuncCall;
 
 /**
@@ -16,7 +17,7 @@ class CardProduit
         true => "plus",
         false => "minus"
     ];
-    private function normalize(\App\Entities\Produit $prod){
+    private function normalize(\App\Entities\Produit | ProduitQuidi $prod){
         if (str_contains($prod->intitule, "\n")) {
             if (str_contains($prod->intitule, "\n")) {
                 $exploded=explode("\n", $prod->intitule, 4);
@@ -78,7 +79,7 @@ class CardProduit
         <?php return ob_get_clean();
     }
 
-    public function display(\App\Entities\Produit $prod, $context=self::CLIENT, $estAjout=false){
+    public function display(\App\Entities\Produit | ProduitQuidi $prod, $context=self::CLIENT, $estAjout=false){
         $this->normalize($prod);
         return $this->cardProduit($prod, $context, $estAjout);
     }

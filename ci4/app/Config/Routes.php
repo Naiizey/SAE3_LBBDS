@@ -97,10 +97,6 @@ $routes->options('/produits/page/(:num)','client\Produits::getAllProduitSelonPag
 $routes->get('(client|admin)/produits/page/(:num)','client\Produits::getAllProduitSelonPage/$2/$1');
 $routes->options('(client|admin)/produits/page/(:num)','client\Produits::getAllProduitSelonPage/$2/$1');
 
-$routes->get('vendeur/produits/page/(:num)','vendeur\Produits::getAllProduitSelonPage/$1');
-$routes->options('vendeur/produits/page/(:num)','vendeurd\Produits::getAllProduitSelonPage/$1');
-
-
 $routes->get('/livraison','client\Home::infoLivraison',['filter' => 'connexion']);
 $routes->post('/livraison','client\Home::infoLivraison',['filter' => 'connexion']);
 $routes->get('/facture','client\Home::facture',['filter' => 'connexion']);
@@ -203,6 +199,14 @@ $routes->get('/vendeur/quidi/validation', 'vendeur\Quidi::validationQuidi');
 $routes->get('vendeur/produit/(:num)', 'vendeur\Home::produit/$1/$2', ['filter' => 'vendeur']);
 $routes->post('vendeur/produit/(:num)/(:num)', 'vendeur\Home::produit/$1/$2', ['filter' => 'vendeur']);
 
+$routes->get('vendeur/produits/page/(:num)','vendeur\Produits::getAllProduitSelonPage/$1');
+$routes->options('vendeur/produits/page/(:num)','vendeurd\Produits::getAllProduitSelonPage/$1');
+
+$routes->get('vendeur/quidi/produits/page/(:num)','vendeur\ProduitsQuidi::getAllProduitSelonPage/$1');
+$routes->options('vendeur/quidi/produits/page/(:num)','vendeurd\ProduitsQuidi::getAllProduitSelonPage/$1');
+
+$routes->get('vendeur/quidi/produits/page','vendeur\ProduitsQuidi::getAllProduitSelonPage');
+$routes->options('vendeur/quidi/produits/page','vendeurd\ProduitsQuidi::getAllProduitSelonPage');
 ##param uri (:any) et dans methode /$1
 
 /*

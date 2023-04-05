@@ -1604,7 +1604,7 @@ function CarteEnChargement(
 
 const QuidiUpdate = function (
     listeProduit,
-    context = "vendeur"
+    context = "vendeur/quidi"
 ) {
     this.erroBloc = document.querySelector("div.bloc-erreur-liste-produit");
     this.listeProduit = listeProduit;
@@ -1625,13 +1625,10 @@ const QuidiUpdate = function (
             const md = await fetch(
                 base_url +
                 `/${context}` +
-                URL_PRODUIT +
-                "1"
+                URL_PRODUIT
             );
 
-            console.log(md);
             const result = await md.json();
-            console.log(result);
             
             //vérifie si la réponse n'est pas une erreur
             if (md.ok) {
@@ -1659,7 +1656,6 @@ const QuidiUpdate = function (
                 card.setAttribute("href", base_url + "/"+context+"/quidi/supprimer/" + card.classList[1]);
                 
                 let svg = card.getElementsByClassName("minus")[0];
-                console.log(svg);
                 svg.style.display = "block";
                 
             }
@@ -1668,7 +1664,6 @@ const QuidiUpdate = function (
             for(let card of cardListAjout){
                 card.setAttribute("href", base_url + "/"+context+"/quidi/ajouter/" + card.classList[1]);
                 let svg = card.getElementsByClassName("plus")[0];
-                console.log(svg);
                 svg.style.display = "block";
                 
             }
@@ -1676,7 +1671,6 @@ const QuidiUpdate = function (
             let cardListClient = document.querySelectorAll(".context-client");
             for (let card of cardListClient) {
                 let svg = card.getElementsByClassName("cart")[0];
-                console.log(svg);
                 svg.style.display = "block";
             }
 

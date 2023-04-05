@@ -119,7 +119,7 @@
                             </span> article.s) :
                           
                         </h2>
-                        <a href="<?= base_url() ?>/glossaire" class="lienPanier">Valider le quidi</a>
+                        <a href="<?= base_url()."/$context" ?>/quidi/validation" class="lienPanier">Valider le quidi</a>
                         <a class="lienViderPanier" href="<?= base_url()."/$context" ?>/quidi/vider">Vider le quidi</a>
                     </div>
                 </aside>

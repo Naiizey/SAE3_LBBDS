@@ -29,6 +29,13 @@ class Quidi extends BaseQuidi
         
     }
 
+    protected function trouverVendeur_sEtSetQuidi($quidi){
+        $vendeurModel = model("\App\Models\Vendeur");
+        $vendeur=$vendeurModel->getVendeurById($this->session);
+        $vendeur->serArticles=$quidi;
+        return array($vendeur);
+    }
+
 
 
 

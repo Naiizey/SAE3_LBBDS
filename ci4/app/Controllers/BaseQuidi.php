@@ -6,7 +6,7 @@ use Config\Services;
 use App\Controllers\BaseController;
 use Exception;
 
-class BaseQuidi extends BaseController
+abstract class BaseQuidi extends BaseController
 {
     protected $feedback;
     protected $context;
@@ -131,8 +131,15 @@ class BaseQuidi extends BaseController
         }
     }
 
+   
+
+    protected abstract function trouverVendeur_sEtSetQuidi($quidi);
+
+
+
     public function validationQuidi()
     {
+        $this->response->setHeader("Content-Type","application/json");
         //on pick le numéro vendeur
         if(session()->has("numeroVendeur") || $this->context="admin")
         {
@@ -142,27 +149,28 @@ class BaseQuidi extends BaseController
             $quidi = $quidiModel->getQuidi($this->session);
 
             //on get les vendeurs
-            $vendeurModel = model("\App\Models\Vendeur");
-            $vendeur = $vendeurModel->getVendeurById($this->session);
+    
+            $vendeurs = $this->trouverVendeur_sEtSetQuidi($quidi);
             //on ajoute un champ à l'objet vendeur
             
-            $vendeur->setArticles($quidi);
+            
             $catalogueur = array();
-            $catalogueur["entreprises"] = $vendeur;
+            $catalogueur["entreprises"] = $vendeurs;
             $catalogueur["articles"] = $quidi;
 
             // Convertir le tableau en JSON
             $json = json_encode($catalogueur);
+            $reponse = json_encode(array('message'=>"Génération avec succès",'contenu'=>$catalogueur));
 
             // Enregistrer le JSON dans un fichier en local
             try {
                 $file = fopen("quidi.json", "w");
                 fwrite($file, $json);
                 fclose($file);
-                echo "JSON GENERE : ";
+                echo $reponse;
             } catch (\Throwable $th) {
                 //log in the console
-                echo "Erreur lors de la création du fichier";
+                echo json_encode( array("erreur","Erreur lors de la création du fichier"));
             }
             
         }

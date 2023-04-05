@@ -159,6 +159,7 @@ $routes->get('/admin/quidi/vider', 'admin\Quidi::viderQuidi');
 $routes->get('/admin/quidi/supprimer/(:num)', 'admin\Quidi::supprimerProduitQuidi/$1');
 $routes->post('/admin/quidi/ajouter/(:num)', 'admin\Quidi::ajouterQuidi/$1/');
 $routes->get('/admin/quidi/ajouter/(:num)/', 'admin\Quidi::ajouterQuidi/$1/');
+$routes->get('/admin/quidi/validation', 'admin\Quidi::validationQuidi');
 
 $routes->get('admin/produit/(:num)', 'admin\Home::produit/$1/$2');
 $routes->post('admin/produit/(:num)/(:num)', 'admin\Home::produit/$1/$2');

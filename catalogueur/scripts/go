@@ -4,7 +4,7 @@ docker container run --rm -ti -p 9090:8080 -v ${PWD}/../:/work bigpapoo/sae4-php
 echo "Conversion terminée, fichier modele.html disponible dans le dossier modele"
 echo $PWD;
 docker image pull bigpapoo/sae4-html2pdf
-docker container run --rm -ti -v ${PWD}/../:/work bigpapoo/sae4-html2pdf "html2pdf modele/modele.html modele/fichier.pdf"
+docker container run --rm -ti -v ${PWD}/../:/work bigpapoo/sae4-html2pdf "html2pdf modele/modele.html catalogue.pdf"
 
 #Pour que les dockers restent actifs et regarder ce qu'il y a dedans (par exemple : docker exec [id] ls) fait ça :
 #Docker 1 (sae4-php) : rajoute "php -S localhost:6666" à la place de php scripts/builder.php > ../modele/modele.html

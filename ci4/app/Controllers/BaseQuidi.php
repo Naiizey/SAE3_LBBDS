@@ -171,9 +171,9 @@ abstract class BaseQuidi extends BaseController
                 //print_r($log);
 
                 //On ouvre le pdf dans le navigateur
-                $file = dirname(__DIR__,3) . "/catalogueur/modele/fichier.pdf";
+                $file = dirname(__DIR__,3) . "/catalogueur/catalogue.pdf";
                 $this->response->setHeader("Content-type", "application/pdf");
-                $this->response->setHeader("Content-Disposition", "inline; filename=filename.pdf");
+                $this->response->setHeader("Content-Disposition", "inline; filename=catalogue.pdf");
                 @readfile($file);
             } 
             catch (\Throwable $th) 

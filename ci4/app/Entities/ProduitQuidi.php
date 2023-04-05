@@ -8,11 +8,13 @@ class ProduitQuidi extends Entity
    public $datamap= [
       #id,
       'idProd' => 'id_prod',
-    
+      'prixTtc' => 'prix_ttc',
       'prixTtc' => 'prixttc',
+      'intitule' => 'intitule_prod',
       'prixHt' => 'prix_ht',
       'lienImage' => 'lienimage',
-
+      'categorie' => 'libelle_cat',
+      'moyenneNote' => 'moyenne_note_prod',
       'numVnd'=> "num_vendeur"
   ];
 
@@ -27,7 +29,9 @@ class ProduitQuidi extends Entity
       $this->prixHt=$this->prixHt;
       $this->lienImage=$this->lienImage;
       $this->numVnd=$this->numVnd;
+      $this->categorie=$this->categorie;
+      $this->moyenneNote=$this->moyenneNote;
+      $this->intitule=$this->intitule;
       return $this;
    }
-
 }

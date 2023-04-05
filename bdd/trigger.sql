@@ -371,37 +371,11 @@ $$ language plpgsql;
 
 CREATE TRIGGER when_delete_commentaire INSTEAD OF DELETE ON commentaires FOR EACH ROW EXECUTE PROCEDURE delete_commentaire();
 
---Trigger insertion quidi_vendeur
-
--- CREATE OR REPLACE FUNCTION insert_quidi_vendeur() RETURNS TRIGGER AS $$
--- BEGIN
---     IF NEW.id_quidi IS NULL THEN
---         NEW.id_quidi = currval('sae3._quidi_id_quidi_seq');
---     end if;
---     -- verify if there is a new.num_compte in the insert
---     IF NEW.num_compte IS NOT NULL THEN
-
---         -- verify if new.num_compte is the same as the one in new.id_prod in _produit
---         IF (SELECT num_compte FROM sae3._produit WHERE id_prod = (SELECT id_prod FROM sae3._quidi WHERE id_quidi = NEW.id_quidi)) = NEW.num_compte THEN
---             RETURN NEW;
---         ELSE
---             -- we raise an exception Le numéro de compte (NEW.num_compte) ne correspond pas au vendeur du produit (NEW.id_prod)
---             RAISE EXCEPTION 'Le numéro de compte (%) ne correspond pas au vendeur du produit (%) qui à pour id (%)', NEW.num_compte,  (SELECT num_compte FROM sae3._produit WHERE id_prod = (SELECT id_prod FROM sae3._quidi WHERE id_quidi = NEW.id_quidi)), (SELECT id_prod FROM sae3._quidi WHERE id_quidi = NEW.id_quidi);
---             --RAISE EXCEPTION 'Le numéro de compte (%) ne correspond pas au vendeur du produit (%) qui à pour id (%)', NEW.num_compte,  (SELECT num_compte FROM sae3._produit ), (SELECT id_prod FROM sae3._quidi WHERE id_quidi = NEW.id_quidi);
---         END IF;
---     ELSE
---         RAISE EXCEPTION 'Le numéro de compte ne peut pas être NULL';
---         RAISE EXCEPTION 'Le numéro de compte ne peut pas être NULL';
---         RETURN NEW;
---     END IF;
--- END
--- $$ LANGUAGE plpgsql;
-
 CREATE OR REPLACE FUNCTION insert_quidi_vendeur() RETURNS TRIGGER AS $$
 BEGIN
-    IF NEW.id_quidi IS NULL THEN
-        NEW.id_quidi = currval('sae3._quidi_id_quidi_seq');
-    end if;
+    -- IF NEW.id_quidi IS NULL THEN
+    --     NEW.id_quidi = currval('sae3._quidi_id_quidi_seq');
+    -- end if;
     -- verify if there is a new.num_compte in the insert
     IF NEW.num_compte IS NOT NULL THEN
 
@@ -411,7 +385,7 @@ BEGIN
             RETURN NEW;
         ELSE
             -- we raise an exception Le numéro de compte (NEW.num_compte) ne correspond pas au vendeur du produit (NEW.id_prod)
-            RAISE EXCEPTION 'Le numéro de compte (%) ne correspond pas au vendeur du produit (%) qui à pour id (%)', NEW.num_compte,  (SELECT num_compte FROM sae3._produit ), (SELECT id_prod FROM sae3._quidi WHERE id_quidi = NEW.id_quidi);
+            RAISE EXCEPTION 'Le numéro de compte (%) ne correspond pas au vendeur du produit (%) qui à pour id (%)', NEW.num_compte,  (SELECT num_compte FROM sae3._produit WHERE id_prod = (SELECT id_prod FROM sae3._quidi WHERE id_quidi = NEW.id_quidi)), (SELECT id_prod FROM sae3._quidi WHERE id_quidi = NEW.id_quidi);
         END IF;
     ELSE
         RAISE EXCEPTION 'Le numéro de compte ne peut pas être NULL';
@@ -419,7 +393,6 @@ BEGIN
     END IF;
 END
 $$ LANGUAGE plpgsql;
-
 
 CREATE TRIGGER insert_quidi_vendeur
     BEFORE INSERT ON sae3._quidi_vendeur
@@ -452,6 +425,6 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_quidi
-    BEFORE INSERT ON sae3._quidi
+    INSTEAD OF INSERT ON sae3.produit_quidi_vendeur
     FOR EACH ROW
     EXECUTE PROCEDURE insert_quidi();

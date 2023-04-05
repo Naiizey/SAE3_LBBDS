@@ -1417,27 +1417,13 @@ const FilterUpdate = function (
             
             for(let card of cardListSuppression){
                 card.setAttribute("href", base_url + "/"+context+"/quidi/supprimer/" + card.classList[1]);
-                
-                let svg = card.getElementsByClassName("minus")[0];
-                console.log(svg);
-                svg.style.display = "block";
-                
             }
             let cardListAjout = document.querySelectorAll(allContexts[context]+" .addPanier.est-ajout");
             for(let card of cardListAjout){
                 card.setAttribute("href", base_url + "/"+context+"/quidi/ajouter/" + card.classList[1]);
-                let svg = card.getElementsByClassName("plus")[0];
-                console.log(svg);
-                svg.style.display = "block";
-                
             }
 
-            let cardListClient = document.querySelectorAll(".context-client");
-            for (let card of cardListClient) {
-                let svg = card.getElementsByClassName("cart")[0];
-                console.log(svg);
-                svg.style.display = "block";
-            }
+            
 
             clickProduit(context);
             console.log(cardListSuppression.length);
@@ -1929,6 +1915,42 @@ function parentTilCard(element) {
     }
     return card;
 }
+
+function parentTilType(element,type) {
+    type=type.toUpperCase();
+    while (element.nodeName  != type) {
+        element = element.parentNode;
+    }
+    return element;
+}
+
+function reactionClick(context="client"){
+    if(context=="client"){
+        return (target) => {
+            createConfirm("Ajout dans le panier");
+            let panier=document.querySelector(".quantPanier");
+            if(panier){
+                panier.innerText=parseInt(panier.innerHTML)+1
+            }
+        }
+    }
+    else{
+        return (a) => {
+            console.log(a);
+            if(a.classList.contains("est-ajout")){
+                createConfirm("Ajout dans la liste");
+                a.classList.remove("est-ajout");
+                a.setAttribute('href',base_url + "/"+context+"/quidi/supprimer/" + parentTilCard(a).getAttribute("value"));
+            }
+            else{
+                createConfirm("Suppression dans la liste");
+                (a.classList.add("est-ajout"));
+                a.setAttribute('href',base_url + "/"+context+"/quidi/ajouter/" + parentTilCard(a).getAttribute("value"));
+            }
+        }
+    }
+}
+
 function clickProduit(context="client") {
     
     //Select all cards
@@ -1941,6 +1963,24 @@ function clickProduit(context="client") {
                 `${(context=="client")?"":"/"+context}/produit/` +
                 parentTilCard(e.target).getAttribute("value");
         });
+        var reacting=reactionClick(context);
+        card.querySelector(".addPanier").addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            var a = parentTilType(e.target, "a");
+
+            fetch(a.getAttribute("href"))
+            .then(response => {
+                if(response.ok){
+                    reacting(a)
+                }
+                else{
+                    throw new Error(response.status)
+                }
+            })
+            .catch(err => createConfirm(err, false));
+            
+        })
     }
 }
 //Only if at least one card in the page
@@ -2304,3 +2344,43 @@ function drapeauSignal(numAvis) {
     }
 }
 
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                Feedback                                         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+console.log(confirm);
+const confirmTemplate = "<div class='alerte-validation valide'>"
+        +' <p>'
+        +'<span class="logo-validation">'
+        +'<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="" class="bi bi-check-circle" viewBox="0 0 16 16">'
+        +' <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/> <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>'   
+        +'</svg>'
+        +'</span>'
+        +'<span class="message"></span>'
+        +'</p>'
+        +'</div>';
+
+const errorTemplate = '<div class="alerte-validation invalide">'
+    +'<p>'
+    +'<span class="logo-validation">'
+    +'<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">'
+    +'<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>'
+    +'<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>'
+    +'</svg>'
+    +'</span>'
+    +'<span class="message"></span>'
+    +'</p>'
+    +'</div>'
+
+function createConfirm(message, bool=true){
+    document.querySelector(".alerte-validation")?.remove()
+    var div = document.createElement('DIV');
+    div.innerHTML=bool?confirmTemplate:errorTemplate;
+    div.firstChild.style.zIndex=0;
+    console.log(div.firstChild);
+    div.querySelector(".message").innerText=message;
+    document.querySelector("header").innerHTML+=div.innerHTML;
+    
+
+}

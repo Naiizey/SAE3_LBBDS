@@ -4585,3 +4585,22 @@ div.zoom img {
 .footerVendeur {
     display: none;
 }
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                   Cohérence Quidi Panier                                  ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.context-client .cart{
+    display: block;
+}
+
+.card-produit:not(.context-client) a.est-ajout .plus{
+    display: block;
+}
+
+
+.card-produit:not(.context-client) a:not(.est-ajout) .minus{
+    display: block;
+}

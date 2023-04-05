@@ -3324,6 +3324,7 @@ main#Catalogue{
     width: 15%;
     border: none;
     text-align: center;
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: textfield;
     border: 1px solid var(--client-color);
@@ -3359,6 +3360,7 @@ main#Catalogue{
     top: -.5em;
     background: none;
     pointer-events: none;
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
 }

@@ -1,4 +1,4 @@
-<?php require("header.php"); 
+    <?php require("header.php"); 
     function afficheErreurs($e, $codeE)
     {
         if (isset($e[$codeE]))

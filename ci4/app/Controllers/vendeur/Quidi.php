@@ -35,10 +35,4 @@ class Quidi extends BaseQuidi
         $vendeur->setArticles($quidi);
         return array($vendeur);
     }
-
-
-
-
-
-
 }

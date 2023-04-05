@@ -74,7 +74,7 @@ abstract class BaseQuidi extends BaseController
         $data["erreurs"] = $issues;
         $data['retours'] = $retours;
 
-        return view('quidi.php', $data);
+        return view('vendeur/quidi.php', $data);
     }
 
     public function viderQuidi() {

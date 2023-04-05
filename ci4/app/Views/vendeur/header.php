@@ -68,7 +68,7 @@
         <!-- End Google Tag Manager (noscript) -->
         <header>
             <div class="divHeaderAlizon divHeaderVendeur">
-                <a class="lienAlizon" href="<?= base_url() ?>/vendeur/import"> <!-- Lien accueil -->
+                <a class="lienAlizon" href="<?= base_url() ?>/vendeur"> <!-- Lien accueil -->
                     <?php include(dirname(__DIR__,3)."/public/images/header/logo.svg")?>
                     <h1>Alizon</h1>
                 </a>

@@ -1829,8 +1829,8 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 }
 
 .sectionRecommandationsPanierPC .contain-libelle{
-    min-height: 2rem;
-    max-height: 2rem;
+    min-height: 1.65rem;
+    max-height: 1.65rem;
     font-size: 1rem;
 }
 
@@ -1850,6 +1850,15 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 .sectionRecommandationsPanierPC .card-produit img{
     border: none;
     width: 1rem;
+}
+
+.sectionRecommandationsPanierPC .contain-vendeur {
+    max-height: 1rem;
+    min-height: 1rem;
+}
+
+.sectionRecommandationsPanierPC .vendeur {
+    font-size: 0.7rem;
 }
 
 .divPanierArticles + h2 {
@@ -2045,6 +2054,11 @@ h3 > .lienPasArticlePanier {
     .sectionRecommandationsPanierMobile li{
         width: 25%;
     }
+
+    .sectionRecommandationsPanierMobile .contain-vendeur {
+        display: none;
+    }
+    
 }
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -2142,7 +2156,7 @@ h3 > .lienPasArticlePanier {
 
 }
 
-.divDroite h2 {
+.divDroite h2, h4 {
     text-align: left;
     color: var(--client-color);
 }
@@ -2885,8 +2899,15 @@ main div.card-produit-ext:hover:not(.en-chargement){
 }
 
 .contain-libelle{
-    min-height: 5rem;
-    max-height: 5rem;
+    min-height: 3rem;
+    max-height: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.contain-vendeur{
+    min-height: 2rem;
+    max-height: 2rem;
     display: flex;
     align-items: center;
 }
@@ -2895,6 +2916,14 @@ p.libelle{
     margin-top: 10px;
     width: 100%;
     
+    margin-bottom: 0;
+    word-wrap: break-word;
+}
+
+p.vendeur {
+    width: 100%;
+    margin-top: 0;
+    font-size: small;
     margin-bottom: 0;
     word-wrap: break-word;
 }

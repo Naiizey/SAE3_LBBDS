@@ -6,11 +6,12 @@
                     <h3>Gestion de produits</h3>
                     <div>
                         <a href="<?= base_url() ?>/vendeur/import">Importer des produits</a>
-                        <a href="<?= base_url() ?>/vendeur/catalogue">Catalogue</a>
+                        <a href="<?= base_url() ?>/vendeur/commandes">Voir les commandes client</a>
                     </div>
                     <h3>Gestion des commandes</h3>
                     <div>
-                        <a href="<?= base_url() ?>/vendeur/commandes">Voir les commandes client</a>
+                        <a href="<?= base_url() ?>/vendeur/catalogue">Visualiser le catalogue</a>
+                        <a href="<?= base_url() ?>/vendeur/quidi">Voir les produits dans catalogueur</a>
                     </div>
                 </section>
             </div>

@@ -59,7 +59,7 @@ class Vendeur extends Compte
         return model("\App\Model\Compte")->doesPseudoExists($pseudo);
     }
 
-    public function getVendeurByIds(array $numeros){
+    public function getVendeurByIds(array $numeros){   
         return $this->find($numeros);
     }
 }

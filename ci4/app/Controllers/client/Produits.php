@@ -15,10 +15,16 @@ use function PHPUnit\Framework\throwException;
 
 class Produits extends BaseController {
 
-    private const NBPRODSPAGEDEFAULT = 20;
+    protected const NBPRODSPAGEDEFAULT = 20;
+    protected $model;
     const CLIENT = "client";
     const ADMIN = "admin";
     const VENDEUR = "vendeur";
+
+    public function __construct()
+    {
+        $this->model= model("\App\Models\ProduitCatalogue");
+    }
 
     public function getAllProduitSelonPageChoixQuantite($page=1,$nombreProd=self::NBPRODSPAGEDEFAULT, $filters=null){
         $this->getAllProduitSelonPage($page,null,$nombreProd);
@@ -51,16 +57,17 @@ class Produits extends BaseController {
         } else {
             $sorts = null;
         }
-  
+        
 
         try {
-            $query = model("\App\Models\ProduitCatalogue");
+            $query = $this->model;
 
             if ($sorts == null) {
                 $query->orderBy("intitule", "ASC");
             } else {
                 $query->orderBy($sorts[0], $sorts[1]);
             }
+            
       
             if (is_null($filters) || empty($filters)) {
                 $result = $query->findAll(($nombreProd*$page)+1, $nombreProd*($page-1));

@@ -51,9 +51,9 @@
                 <section class="sectionPanier">
                     <div class="divPanierArticles">
                         <div class="divPanierHeader">
-                                <h2>Votre panier (<span class="nbArt"> <?= sizeof($produits)?> </span> article.s) :</h2>
-                                <h3>Prix</h3>
+                                <h2>Votre quidi (<span class="nbArt"> <?= sizeof($produits)?> </span> article.s) : </h2>
                         </div>
+                        <hr>
                         <?php
                             $sommePrix = 0;
                             $sommeNbArticle = 0;
@@ -61,54 +61,21 @@
                                 $sommeNbArticle += 1;
                                 $sommePrix += $produit -> prixTtc;
                         ?>
-                            <hr>
-                            <article id="<?= $produit->id ?>" class="articlePanier">
-                                <a href="<?= base_url() ?>/produit/<?= $produit->idProd ?>">
-                                    <img src="<?= $produit -> lienimage ?>" alt="article 1" title="Article 1">
-                                    <div>
-                                        <h2>
-                                            <?= $produit -> intitule ?>
-                                        </h2>
-                                        <p class="panierDescription">
-                                            <?= $produit -> description ?>
-                                        </p>
-                                    </div>
-                                </a>
-                                <div>
-                                    <div class="divQuantite">
-                                        <p>Quantité</p>
-                                            <input class="" type="number" name="quantite" min=1 max=<?= $produit->stock ?> value=<?=$produit->quantite ?>>
-                                        <a href="<?= base_url() ?>/vendeur/quidi/supprimer/<?= $produit->idProd ?>">Supprimer</a>
-                                    </div>
-                                    <h3>
-                                        <span class="prixHt" prix="<?= $produit -> prixHt ?>">
-                                            <?= $produit -> prixHt ?>€
-                                        </span> HT
-                                    </h3>
-                                    <h3>
-                                        <span class="prixTtc" prix="<?= $produit -> prixTtc ?>">
-                                            <?= $produit -> prixTtc ?>€
-                                        </span> TTC
-                                    </h3>
-                                </div>
-                            </article>
+                            <div class="liste-produits">
+    
+                            </div>
                         <?php endforeach; ?>
+                        <div class="bloc-erreur-liste-produit <?= (isset($message))?"":"hidden"; ?>">
+                            <p class="paragraphe-erreur">
+                                <?= (isset($message))?$message:"" ?>
+                            </p>
+                            <div class="erreur-liste-produit">
+                            </div>
+                        </div>
                         <hr>
                     </div>
                     <div class="sous-totaux">
-                        <a class="lienViderPanier" href="<?= base_url() ?>/vendeur/quidi/vider">Vider le panier</a>
-                        <div>
-                            <h2>Sous-totaux :
-                                <span class="totalHt">
-                                    <?= $sommePrix ?>
-                                </span>€ HT
-                            </h2>
-                            <h2>
-                                <span class="totalTtc">
-                                    <?= $sommePrix ?>
-                                </span>€ TTC
-                            </h2>
-                        </div>
+                        <a class="lienViderPanier" href="<?= base_url() ?>/vendeur/quidi/vider">Vider le quidi</a>
                     </div>
                 </section>
                 <aside>
@@ -117,12 +84,6 @@
                             (<span class="nbArt">
                                 <?= $sommeNbArticle ?>
                             </span> article.s) :
-                            <span class="totalTtc">
-                                <?= $sommePrix ?>
-                            </span>
-                            <span class="totalTtc">
-                                <?= $sommePrix ?>
-                            </span>€ TTC
                         </h2>
                         <a href="<?= base_url() ?>/vendeur/quidi/validation" class="lienPanier">Valider le quidi</a>
                         <a class="lienViderPanier" href="<?= base_url() ?>/vendeur/quidi/vider">Vider le quidi</a>
@@ -130,32 +91,6 @@
                 </aside>
             <?php endif; ?>
         </div>
-        <?php if (empty($produits)): ?>
-            <section class="sectionRecommandationsPanierPC">
-                <h2>Recommandations</h2>
-                <hr>
-                <ul>
-                    <?php $prodsPC = $model->findAll(5);?>
-                    <?php foreach($prodsPC as $prod): ?>
-                        <li>
-                            <?= $cardProduit->display($prod)?>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </section>
-            <section class="sectionRecommandationsPanierMobile">
-                <h2>Recommandations</h2>
-                <hr>
-                <ul>
-                    <?php $prodsMobile = $model->findAll(3);?>
-                    <?php foreach($prodsMobile as $prod): ?>
-                        <li>
-                            <?= $cardProduit->display($prod)?>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </section>
-        <?php endif; ?>
     </main>
 <?php require("footer.php"); ?>
 
@@ -176,23 +111,12 @@
         },
         (err, resp) => {
             if(!err){
-                updatePricePanier();
-                updatePriceTotal();
                 updateQuantite();
             }
         }
     );
-    updatePricePanier();
-    updatePriceTotal();
     <?php endif; ?>
-    <?php if(session()->has("numeroClient") && has_cookie("token_panier")
-    && !(session()->has("ignorer") && session()->get("ignorer"))
-    && !(isset($ecraserOuFusionner) && $ecraserOuFusionner)): ?>
-        var oui = new AlerteAlizon("Récupération panier","<?= current_url() ?>","Il y a déjà un panier associé à votre compte, voulez vous garder le panier que vous venez de faire, garder le panier enregistré sur votre compte ou fusionner les 2 ?");
-        oui.ajouterBouton("Garder le nouveau",'normal-button petit-button supprimer-filtre rouge',"SupprAncien");
-        oui.ajouterBouton("Garder celui du compte",'normal-button petit-button supprimer-filtre rouge',"SupprActuel");
-        oui.ajouterBouton("Plus tard",'normal-button petit-button supprimer-filtre',"Ignorer");
-        oui.ajouterBouton("Fusionner",'normal-button petit-button vert',"Confirmer");
-        oui.affichage();
-    <?php endif; ?>
+    var gestCards = QuidiUpdate(document.querySelector(".liste-produits"));
+
+    gestCards.generer(<?= sizeof($produits) ?>);    
 </script>

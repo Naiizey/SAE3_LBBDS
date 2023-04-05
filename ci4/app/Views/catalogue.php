@@ -127,10 +127,12 @@ require("$context/header.php");
             <button class="normal-button voir-plus  <?= ($estDernier)?"hidden":"" ?>">Voir plus</button>
         </div>
         <div class="bloc-erreur-liste-produit <?= (isset($message))?"":"hidden"; ?>">
-                    <p class="paragraphe-erreur">
-                        <?= (isset($message))?$message:"" ?>
-                    </p>
-        <div class="erreur-liste-produit">
+            <p class="paragraphe-erreur">
+                <?= (isset($message))?$message:"" ?>
+            </p>
+            <div class="erreur-liste-produit">
+            </div>
+        </div>
     </section>
 </main>
 <?php require("$context/footer.php"); ?>

@@ -1512,7 +1512,7 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
     margin: 1em 0;
 }
 
-.mainPanier img {
+.mainPanier img:not(.star) {
     border: solid 2px;
     border-color: var(--client-color);
     border-radius: 3px;

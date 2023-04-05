@@ -95,8 +95,11 @@ $routes->get('/commandes/(:alphanum)','client\Home::lstCommandes/$1',['filter' =
 
 $routes->get('/produits/page/(:num)','client\Produits::getAllProduitSelonPage/$1');
 $routes->options('/produits/page/(:num)','client\Produits::getAllProduitSelonPage/$1');
-$routes->get('(client|vendeur|admin)/produits/page/(:num)','client\Produits::getAllProduitSelonPage/$2/$1');
-$routes->options('(client|vendeur|admin)/produits/page/(:num)','client\Produits::getAllProduitSelonPage/$2/$1');
+$routes->get('(client|admin)/produits/page/(:num)','client\Produits::getAllProduitSelonPage/$2/$1');
+$routes->options('(client|admin)/produits/page/(:num)','client\Produits::getAllProduitSelonPage/$2/$1');
+
+$routes->get('vendeur/produits/page/(:num)','vendeur\Produits::getAllProduitSelonPage/$1');
+$routes->options('vendeur/produits/page/(:num)','vendeurd\Produits::getAllProduitSelonPage/$1');
 
 
 $routes->get('/livraison','client\Home::infoLivraison',['filter' => 'connexion']);

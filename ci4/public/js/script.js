@@ -1327,8 +1327,7 @@ const FilterUpdate = function (
 
     function reset(){
         self.currPage = 1;
-        self.listeProduit.innerHTML = "";
-        
+        self.listeProduit.innerHTML = "";    
     }
 
     var urlToUse = (arrayChamps) => {
@@ -1372,9 +1371,9 @@ const FilterUpdate = function (
                 (self.currPage) +
                 urlToUse([champsGetF, champsGetT])
             );
-
             
             const result = await md.json();
+            console.log(md);
             
             //vérifie si la réponse n'est pas une erreur
             if (md.ok) {
@@ -1616,6 +1615,107 @@ function CarteEnChargement(
     
 
 }
+
+const QuidiUpdate = function (
+    listeProduit,
+    context = "vendeur"
+) {
+    this.erroBloc = document.querySelector("div.bloc-erreur-liste-produit");
+    this.listeProduit = listeProduit;
+    
+    //Permet d'éviter les problèmes de scope + héritage;
+    var parent = new CarteEnChargement()
+    const self = Object.assign(this, parent);
+    const URL_PRODUIT = "/produits/page/"
+
+    function reset(){
+        self.listeProduit.innerHTML = "";
+    }
+    var pluckCartes = (produits) => produits.map(prod => prod.carte)
+
+
+    var send = async () => {   
+            
+            const md = await fetch(
+                base_url +
+                `/${context}` +
+                URL_PRODUIT +
+                "1"
+            );
+
+            console.log(md);
+            const result = await md.json();
+            console.log(result);
+            
+            //vérifie si la réponse n'est pas une erreur
+            if (md.ok) {
+                await self.replace(pluckCartes(result["resultat"]));
+
+               
+                self.erroBloc.classList.add("hidden");
+                //reexe, afin que le listener revienne sur les cartes
+                
+            } else {
+                //Ici les erreurs 404
+                self.erroBloc.classList.remove("hidden");
+                self.listeProduit.innerHTML = "";
+                self.erroBloc.children[0].innerHTML = result["message"];
+            }
+
+            allContexts= {
+                admin: ".context-admin",
+                vendeur: ".context-vendeur"
+            }    
+                                 
+            let cardListSuppression = document.querySelectorAll(allContexts[context]+" .addPanier:not(.est-ajout)");
+            
+            for(let card of cardListSuppression){
+                card.setAttribute("href", base_url + "/"+context+"/quidi/supprimer/" + card.classList[1]);
+                
+                let svg = card.getElementsByClassName("minus")[0];
+                console.log(svg);
+                svg.style.display = "block";
+                
+            }
+
+            let cardListAjout = document.querySelectorAll(allContexts[context]+" .addPanier.est-ajout");
+            for(let card of cardListAjout){
+                card.setAttribute("href", base_url + "/"+context+"/quidi/ajouter/" + card.classList[1]);
+                let svg = card.getElementsByClassName("plus")[0];
+                console.log(svg);
+                svg.style.display = "block";
+                
+            }
+
+            let cardListClient = document.querySelectorAll(".context-client");
+            for (let card of cardListClient) {
+                let svg = card.getElementsByClassName("cart")[0];
+                console.log(svg);
+                svg.style.display = "block";
+            }
+
+            clickProduit(context);
+            console.log(cardListSuppression.length);
+            console.log(cardListAjout.length);
+            
+        /*} catch (e) {
+            //Les erreurs 404 ne passent pas ici, ce sont les erreurs lié à la fonction et au réseau qui sont catch ici
+            console.error("Erreur de récupération des données:", e);
+    
+        }*/
+    };
+
+    
+    self.generer = (nbCartes= 15, isReset = true) => {
+        if(isReset){
+            reset();
+        }
+        parent.generer(nbCartes);
+        send(reset);
+    }
+    
+    return self;
+};
 
 /*  
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

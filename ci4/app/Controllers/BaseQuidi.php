@@ -139,40 +139,47 @@ abstract class BaseQuidi extends BaseController
 
     public function validationQuidi()
     {
-        $this->response->setHeader("Content-Type","application/json");
         //on pick le numéro vendeur
         if(session()->has("numeroVendeur") || $this->context="admin")
         {
-            //on pick le model
             $quidiModel = $this->modelJson;
-            //on get le quidi
+
+            //On récupère le quidi
             $quidi = $quidiModel->getQuidi($this->session);
 
-            //on get les vendeurs
-    
+            //On récupère les vendeurs
             $vendeurs = $this->trouverVendeur_sEtSetQuidi($quidi);
-            //on ajoute un champ à l'objet vendeur
-            
-            
+
+            //On ajoute un champ à l'objet vendeur
             $catalogueur = array();
             $catalogueur["entreprises"] = $vendeurs;
             $catalogueur["articles"] = $quidi;
 
             // Convertir le tableau en JSON
             $json = json_encode($catalogueur);
-            $reponse = json_encode(array('message'=>"Génération avec succès",'contenu'=>$catalogueur));
 
             // Enregistrer le JSON dans un fichier en local
-            try {
-                $file = fopen("quidi.json", "w");
+            try 
+            {
+                $file = fopen(dirname(__DIR__,3) . "/catalogueur/samples/mono.json", "w");
                 fwrite($file, $json);
                 fclose($file);
-                echo $reponse;
-            } catch (\Throwable $th) {
-                //log in the console
-                echo json_encode( array("erreur","Erreur lors de la création du fichier"));
+
+                //On éxécute le script shell qui va convertir le json en pdf
+                $log = null;
+                exec("cd " . dirname(__DIR__,3) . "/catalogueur/scripts && /bin/bash go", $log);
+                //print_r($log);
+
+                //On ouvre le pdf dans le navigateur
+                $file = dirname(__DIR__,3) . "/catalogueur/modele/fichier.pdf";
+                $this->response->setHeader("Content-type", "application/pdf");
+                $this->response->setHeader("Content-Disposition", "inline; filename=filename.pdf");
+                @readfile($file);
+            } 
+            catch (\Throwable $th) 
+            {
+                throw new \Exception("Erreur lors de la création du fichier");
             }
-            
         }
         else throw new \Exception("Le quidi n'existe pas !");
     }

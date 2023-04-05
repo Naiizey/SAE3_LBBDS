@@ -48,7 +48,7 @@ class Vendeur extends Entity
         "motDePasse" => "motdepasse",
         "siret" => 'numero_siret',
         'tvaInter' => 'tva_intercommunautaire',
-        
+        'articles' => 'articles',
 
         #identifiant
         "identifiant" => "identifiant",
@@ -57,10 +57,11 @@ class Vendeur extends Entity
 
     protected $attributes = [
         'comp_a1' => '',
-        'comp_a2' => ''
+        'comp_a2' => '',
+        'articles' => [],
     ];
 
-    protected $articles = [];
+  
     //les variable en commentaires n'ont aucune utilité à part pour simplifier utilisation au dev
 
     public function getArticles(){
@@ -68,6 +69,7 @@ class Vendeur extends Entity
     }
 
     public function setArticles($articles){
+        
         $this->articles=$articles;
     }
 

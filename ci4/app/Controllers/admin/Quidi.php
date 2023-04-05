@@ -20,7 +20,6 @@ class Quidi extends BaseQuidi
     private function trouverVendeurParQuidi($quidis){
         $vendeurModel = model("\App\Models\Vendeur");
         $vendeursInclus=array_map(fn($prod) => $prod->numVnd,$quidis);
-      
         return $vendeurModel->getVendeurByIds(array_unique($vendeursInclus));
     }
 

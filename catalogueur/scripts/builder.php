@@ -74,11 +74,11 @@
                             </tr>
                             <tr>
                                 <th>SIRET :</th>
-                                <td><?= $glossaire['numero_siret']; ?></td> 
+                                <td><?= $glossaire['siret']; ?></td> 
                             </tr>
                             <tr>
                                 <th>TVA Intracommunautaire :</th>
-                                <td><?= $glossaire['tva_intercommunautaire']; ?></td>
+                                <td><?= $glossaire['tvaInter']; ?></td>
                             </tr>
                             <tr>
                                 <th>Adresse :</th>
@@ -96,13 +96,13 @@
                 <section class="sectionProduits">
                 <?php foreach ($glossaire["articles"] as $article): ?>
                     <div class="divUnProduit">
-                        <img src="<?= $article['lienImage']; ?>">
+                        <img src="<?= $article['lien_image']; ?>">
                         <div class="divNomDescription">
                             <h2><?= $article['intitule']; ?></h2>
                             <p><?= $article['description_prod']; ?></p>
                         </div>
                         <div class="divPrix">
-                            <p><?= $article['prixTtc']; ?>€ TTC</p>
+                            <p><?= $article['prix_ttc']; ?>€ TTC</p>
                         </div>
                     </div>
                     <hr>

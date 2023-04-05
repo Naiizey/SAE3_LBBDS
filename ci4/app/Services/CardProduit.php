@@ -52,6 +52,7 @@ class CardProduit
                 <div class="image-card" style="background-image: url(<?= /*base_url().'/'.*/$prod->lienimage?>);"></div>
                 <div class="notation-card"><?= $this->notationEtoile($prod->moyenneNote) ?></div>
                 <div class="contain-libelle"><p class="libelle"><?= $prod->intitule?></p></div>
+                <div class="contain-vendeur"><p class="vendeur"><a href="<?=base_url() . "/catalogue?" . $prod->num_compte . "=on"?>"><?= $prod->intitule_vendeur ?></a></p></div>
                 <div class="bottom-card">
                     <p class="prix-card"><?= $prod->prixttc?>€</p>
                     <a href="<?= base_url().'/panier/ajouter/'.$prod->id.'/1' ?>" class="addPanier">

@@ -2146,7 +2146,7 @@ h3 > .lienPasArticlePanier {
 
 }
 
-.divDroite h2 {
+.divDroite h2, h4 {
     text-align: left;
     color: var(--client-color);
 }
@@ -2889,8 +2889,15 @@ main div.card-produit-ext:hover{
 }
 
 .contain-libelle{
-    min-height: 5rem;
-    max-height: 5rem;
+    min-height: 3rem;
+    max-height: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.contain-vendeur{
+    min-height: 2rem;
+    max-height: 2rem;
     display: flex;
     align-items: center;
 }
@@ -2899,6 +2906,14 @@ p.libelle{
     margin-top: 10px;
     width: 100%;
     
+    margin-bottom: 0;
+    word-wrap: break-word;
+}
+
+p.vendeur {
+    width: 100%;
+    margin-top: 0;
+    font-size: small;
     margin-bottom: 0;
     word-wrap: break-word;
 }

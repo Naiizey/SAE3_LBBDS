@@ -1829,8 +1829,8 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 }
 
 .sectionRecommandationsPanierPC .contain-libelle{
-    min-height: 2rem;
-    max-height: 2rem;
+    min-height: 1.65rem;
+    max-height: 1.65rem;
     font-size: 1rem;
 }
 
@@ -1850,6 +1850,15 @@ div .sectionCredit .infoRue input, div .sectionCredit .infoVille input {
 .sectionRecommandationsPanierPC .card-produit img{
     border: none;
     width: 1rem;
+}
+
+.sectionRecommandationsPanierPC .contain-vendeur {
+    max-height: 1rem;
+    min-height: 1rem;
+}
+
+.sectionRecommandationsPanierPC .vendeur {
+    font-size: 0.7rem;
 }
 
 .divPanierArticles + h2 {

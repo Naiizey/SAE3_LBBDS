@@ -27,6 +27,7 @@ CREATE OR REPLACE VIEW compte AS
 CREATE OR REPLACE VIEW produit_global AS
     SELECT id_prod,
     intitule_prod,
+    pseudo AS intitule_vendeur,
     prix_ht,
     prix_ttc,
     description_prod,
@@ -36,7 +37,8 @@ CREATE OR REPLACE VIEW produit_global AS
     seuil_alerte_prod,
     alerte_prod,
     code_sous_cat
-    FROM _produit;
+    FROM _produit
+    NATURAL JOIN _vendeur NATURAL JOIN _compte;
 
 CREATE OR REPLACE VIEW moyenneProduit AS
         SELECT id_prod id,avg(note_prod)::numeric(4,2) as moyenneNote FROM produit_global natural join _note group by id_prod;
@@ -138,8 +140,8 @@ CREATE OR REPLACE VIEW insert_commande AS
     LEFT JOIN moyenneProduit on _produit.id_prod = moyenneProduit.id NATURAL JOIN soloimageproduit;
 */
 CREATE OR REPLACE VIEW produit_catalogue AS
-    SELECT id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*_tva.taux_tva) prixTTC,lien_image lienImage,publication_prod, description_prod, _sous_categorie.libelle_cat categorie, moyenneNote
-    FROM _produit NATURAL JOIN _image_prod  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
+    SELECT id_prod  id, intitule_prod intitule, _compte.pseudo intitule_vendeur, prix_ht+(prix_ht*_tva.taux_tva) prixTTC,lien_image lienImage,publication_prod, description_prod, _sous_categorie.libelle_cat categorie, moyenneNote, pseudo
+    FROM _produit NATURAL JOIN _image_prod  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva INNER JOIN _vendeur ON _produit.num_compte = _vendeur.num_compte INNER JOIN _compte on _produit.num_compte = _compte.num_compte
     LEFT JOIN moyenneProduit on _produit.id_prod = moyenneProduit.id NATURAL JOIN soloimageproduit;
 
 CREATE OR REPLACE VIEW produit_detail AS
@@ -152,6 +154,7 @@ CREATE OR REPLACE VIEW categorie AS
 
 CREATE OR REPLACE VIEW sous_categorie AS
     SELECT code_cat code_sur_cat ,libelle_cat libelle FROM _sous_categorie;
+
 
 
 
@@ -221,8 +224,8 @@ CREATE OR REPLACE VIEW catalogueur_vendeur AS
 SELECT numero_rue,nom_rue,code_postal,ville,intitule_prod, prix_ht, prix_ttc, description_prod,pseudo,note_vendeur,numero_siret,tva_intercommunautaire,texte_presentation,logo,moyenne_note_prod FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur NATURAL JOIN _compte INNER JOIN _adresse  ON _vendeur.id_adresse = _adresse.id_a;
 
 CREATE OR REPLACE VIEW produit_catalogue_vendeur AS
-SELECT num_compte, id_prod  id, intitule_prod intitule, prix_ht+(prix_ht*_tva.taux_tva) prixTTC,lien_image lienImage,publication_prod, description_prod, _sous_categorie.libelle_cat categorie, moyenneNote
-FROM _vendeur NATURAL JOIN _produit NATURAL JOIN _image_prod  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva
+SELECT _vendeur.num_compte, id_prod  id, intitule_prod intitule, _compte.pseudo intitule_vendeur ,prix_ht+(prix_ht*_tva.taux_tva) prixTTC,lien_image lienImage,publication_prod, description_prod, _sous_categorie.libelle_cat categorie, moyenneNote
+FROM _vendeur NATURAL JOIN _produit NATURAL JOIN _image_prod  NATURAL JOIN _sous_categorie INNER JOIN _categorie on _sous_categorie.code_cat = _categorie.code_cat NATURAL JOIN _tva NATURAL JOIN _compte
 LEFT JOIN moyenneProduit on _produit.id_prod = moyenneProduit.id NATURAL JOIN soloimageproduit;
 
 CREATE OR REPLACE VIEW glossaire_vendeur AS 

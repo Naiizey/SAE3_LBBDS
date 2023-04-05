@@ -96,7 +96,7 @@
                 <section class="sectionProduits">
                 <?php foreach ($glossaire["articles"] as $article): ?>
                     <div class="divUnProduit">
-                        <img src="<?= $article['lien_image']; ?>">
+                        <img src="<?= $article['lienimage']; ?>">
                         <div class="divNomDescription">
                             <h2><?= $article['intitule']; ?></h2>
                             <p><?= $article['description_prod']; ?></p>

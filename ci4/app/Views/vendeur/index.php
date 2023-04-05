@@ -11,6 +11,7 @@
                     <h3>Gestion des commandes</h3>
                     <div>
                         <a href="<?= base_url() ?>/vendeur/commandes">Voir les commandes client</a>
+                        <a href="<?= base_url() ?>/vendeur/quidi">Voir les produits dans catalogueur</a>
                     </div>
                 </section>
             </div>

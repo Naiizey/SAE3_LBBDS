@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use \App\Entities\CommandeVend as CommandeVend;
+use \App\Entities\Commande as Commande;
 use CodeIgniter\Model;
 use Exception;
 
@@ -20,7 +20,7 @@ class DetailsCommandeVendeur extends Model
 
     protected $useAutoIncrement = false;
 
-    protected $returnType     = CommandeVend::class;
+    protected $returnType     = Commande::class;
     protected $useSoftDeletes = false;
     
     protected $allowedFields = ['num_commande', 'id_prod','intitule_prod', 'lien_image_prod', 'description_prod','num_compte','date_commande','date_arriv','prix_ttc','prix_ht','qte','etat', 'montant_reduction', 'pourcentage_reduction', 'num_vendeur'];

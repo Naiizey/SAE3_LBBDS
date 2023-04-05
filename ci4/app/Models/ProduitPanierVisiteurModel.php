@@ -20,11 +20,11 @@ class ProduitPanierVisiteurModel extends ProduitPanierModel
     protected $allowedFields = ['id','id_prod','quantite','token_cookie'];
 
 
-    protected function getIdUser(){
+    protected function getIdUser() : string{
         return 'token_cookie';
     }
 
-    protected function getColonneProduitIdUser(){
+    protected function getColonneProduitIdUser() :  string{
         return 'tokenId';
     }
 

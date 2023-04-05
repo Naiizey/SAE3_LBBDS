@@ -1,0 +1,202 @@
+/* header */
+/* section presentation */
+/* Section produits */
+/* Lors de l'impression */
+body {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+main {
+  color: #164F57;
+}
+
+header {
+  background-color: #164F57;
+  width: 15em;
+  height: 5em;
+  border-bottom-right-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -0.5em;
+  margin-left: -0.5em;
+}
+
+.lienAlizon {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 13em;
+  text-decoration: none;
+}
+
+.logoAlizon {
+  height: 4em;
+  width: auto;
+}
+.logoAlizon path {
+  fill: #D9D9D9;
+}
+
+h1 {
+  color: #D9D9D9;
+  font-family: "Expletus Sans";
+  margin: 0;
+}
+
+h2 {
+  font-family: "Montserrat-Regular";
+}
+
+p {
+  font-family: "Montserrat-Medium";
+}
+
+.buttonsPDF {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1em;
+}
+.buttonsPDF button {
+  margin-bottom: 0.5em;
+  width: 30vh;
+  background-color: #164F57;
+  color: white;
+  font-size: large;
+  padding: 0.2em 1em;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.sectionPresentation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Montserrat-Medium";
+}
+.sectionPresentation table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.sectionPresentation table tr:nth-child(odd) {
+  background-color: #E8E8E8;
+}
+.sectionPresentation table th {
+  text-align: left;
+  padding-left: 1em;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.sectionPresentation table td {
+  padding-left: 1em;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.divVendeur {
+  width: 40%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 2em;
+}
+.divVendeur img {
+  height: 7em;
+  width: 7em;
+  border-radius: 20px;
+}
+.divVendeur h2 {
+  margin-bottom: 0.2em;
+}
+
+.divNomNote {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.noteAvis {
+  display: flex;
+  align-items: center;
+}
+.noteAvis img {
+  width: 1.5em;
+  height: auto;
+}
+
+.h2Presentation {
+  margin-top: 1.5em;
+  margin-bottom: 0.2em;
+}
+
+.h2Presentation + p {
+  margin-top: 0;
+  margin-bottom: 2em;
+  text-align: justify;
+}
+
+.sectionProduits {
+  width: 48%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+  background-color: #E8E8E8;
+  padding: 1em;
+}
+
+.divUnProduit {
+  display: flex;
+  height: 8em;
+  justify-content: space-between;
+  align-items: center;
+}
+.divUnProduit > img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 8em;
+  width: 8em;
+  border-radius: 5px;
+  border: 1px solid #164F57;
+}
+
+.divNomDescription {
+  width: 60%;
+  height: 8em;
+}
+.divNomDescription h2 {
+  margin-top: 0;
+  margin-bottom: 0.2em;
+}
+.divNomDescription p {
+  margin: 0;
+  text-align: justify;
+}
+
+hr {
+  background-color: #C0C0C0;
+  height: 3px;
+  border: none;
+  width: 95%;
+  border-radius: 2px;
+}
+
+@media print {
+  .sectionProduits {
+    width: 98%;
+  }
+  .sectionPresentation {
+    width: 100%;
+  }
+  header {
+    border-radius: 20px 0;
+  }
+  button {
+    display: none;
+  }
+}/*# sourceMappingURL=style.css.map */

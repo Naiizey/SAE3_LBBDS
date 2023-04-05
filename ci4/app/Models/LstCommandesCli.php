@@ -13,18 +13,12 @@ use Exception;
  *      * commande: **CR**-- 
  *      * client: -**R**-- 
  */
-class LstCommandesCli extends Model
+class LstCommandesCli extends Commande
 {
     protected $table      = 'sae3.commande_list_client';
-    protected $primaryKey = 'num_panier';
-
-    protected $useAutoIncrement = false;
-
-    protected $returnType     = CommandeCli::class;
-    protected $useSoftDeletes = false;
-    
     protected $allowedFields = ['num_commande','num_compte','date_commande','date_arriv','prix_ht','prix_ttc','etat', 'montant_reduction', 'pourcentage_reduction'];
-
+    protected $returnType     = CommandeCli::class;
+    
     public function getCompteCommandes() : array
     { 
         return $this->where('num_compte',session()->get("numeroClient"))->findAll();

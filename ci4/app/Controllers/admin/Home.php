@@ -357,7 +357,11 @@ class Home extends HomeGlobal
         $modelGlossaire = model("\App\Models\GlossaireAdmin");
 
         $data['glossaire'] = $modelGlossaire->where('id_quidi', $num_glossaire)->findAll()[0];
-        $data['articles'] = $modelGlossaire->where('num_compte', $data['glossaire']['num_compte'])->findAll();
+        $data['articles'] = $modelGlossaire->where('num_compte', $data['glossaire']->num_compte)->findAll();
+
+        //exporter les données dans un fichier json
+        $data['json'] = json_encode($data['articles']);
+
 
         if ($num_glossaire == null) {
             throw new Exception("Vous devez renseigner un numéro de glossaire.", 404);

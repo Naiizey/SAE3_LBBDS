@@ -50,6 +50,14 @@ class Home extends HomeGlobal
         return view('client/index.php', $data);
     }
 
+    public function indexVend()
+    {
+        $data["estVendeur"] = true;
+        $data["controller"] = "Fonctionnalités vendeur";
+
+        return view("vendeur/index.php", $data);
+    }
+
     public function lstCommandes($num_commande = null)
     {
         $data["controller"] = "Commandes Client";
@@ -62,8 +70,8 @@ class Home extends HomeGlobal
         else
         {
             $data['numCommande'] = $num_commande;
-            $data['infosCommande']=model("\App\Models\LstCommandesCli")->getCommandeById($num_commande);
-            $data['articles']=model("\App\Models\DetailsCommande")->getArticles($num_commande);
+            $data['infosCommande']=model("\App\Models\LstCommandesVendeur")->getCommandeByIdAndVendeur($num_commande,session()->get("numeroVendeur"));
+            $data['articles']=model("\App\Models\DetailsCommandeVendeur")->getArticles($num_commande,session()->get("numeroVendeur"));
             $data['estVendeur']=$estVendeur;
 
             if (!isset($data['infosCommande'][0]->num_commande)) {
@@ -180,7 +188,7 @@ class Home extends HomeGlobal
             {
                 if (!session()->has("referer_redirection")) 
                 {
-                    return redirect()->to("/vendeur/profil");
+                    return redirect()->to("/vendeur");
                 } 
                 else 
                 {

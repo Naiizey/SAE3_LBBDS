@@ -2578,7 +2578,7 @@ h3 > .lienPasArticlePanier {
     border-radius: 4px;
 }
 
-.moyennesAvis progress::-webkit-progress-bar, progress::-webkit-progress-value {
+.moyennesAvis progress::-webkit-progress-bar, .moyennesAvis progress::-webkit-progress-value {
     height: 10px;
     border-radius: 4px;
     background-color: var(--secondary-light);
@@ -4008,7 +4008,7 @@ a.fleche-page{
     height: 2em;
 }
 
-progress {
+progress, progress::-webkit-progress-bar {
     background-color: #C04444;
     height: 10px;
     width: 100%;
@@ -4019,6 +4019,10 @@ progress::-moz-progress-bar
 { 
     background: #55C044;
     height: 10px;
+}
+
+progress::-webkit-progress-value {
+    background-color: #55C044;
 }
 
 .divDetailLivraison {
@@ -4486,27 +4490,27 @@ progress::-moz-progress-bar
 
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                             Page admin (admin.php)                              ┃
+┃             Page admin (admin/index.php) et page vendeur (vendeur/index)        ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-.sectionAdmin div {
+.sectionAdmin div, .sectionVendeur div {
     display: flex;
     justify-content: space-between;
     gap: 1em;
 }
 
-.sectionAdmin div + div {
+.sectionAdmin div + div, .sectionVendeur div + div {
     margin-top: 1em;
 }
 
-.sectionAdmin h3 {
+.sectionAdmin h3, .sectionVendeur h3 {
     text-align: left;
     margin: 0.5em 0;
     font-family: 'Montserrat-Medium';
 }
 
-.sectionAdmin a {
+.sectionAdmin a, .sectionVendeur a {
     background-color: var(--vendor-color);
     border-radius: 7px;
     color: white;
@@ -4514,7 +4518,7 @@ progress::-moz-progress-bar
     flex-grow: 1;
 }
 
-.sectionAdmin a:hover {
+.sectionAdmin a:hover, .sectionVendeur a:hover {
     background-color: var(--client-color);
     color: white;
 }
@@ -4582,4 +4586,23 @@ div.zoom img {
 
 .footerVendeur {
     display: none;
+}
+
+/*
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                   Cohérence Quidi Panier                                  ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+.context-client .cart{
+    display: block;
+}
+
+.card-produit:not(.context-client) a.est-ajout .plus{
+    display: block;
+}
+
+
+.card-produit:not(.context-client) a:not(.est-ajout) .minus{
+    display: block;
 }

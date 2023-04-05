@@ -21,8 +21,8 @@
                             <td><?= $commandeVend->num_compte ?></td>
                             <td><?= $commandeVend->date_commande ?></td>
                             <td><?= $commandeVend->date_arriv ?></td>
-                            <td><?= $commandeVend->ht ?></td>
-                            <td><?= $commandeVend->ttc ?></td>
+                            <td><?= $commandeVend->prix_ht ?></td>
+                            <td><?= $commandeVend->prix_ttc ?></td>
                             <td><?= $commandeVend->etatString() ?></td>
                             </tr>
                         <?php endforeach; ?>

@@ -102,7 +102,7 @@
                             <p><?= $article['description_prod']; ?></p>
                         </div>
                         <div class="divPrix">
-                            <p><?= $article['prix_ttc']; ?>€ TTC</p>
+                            <p><?= $article['prixttc']; ?>€ TTC</p>
                         </div>
                     </div>
                     <hr>

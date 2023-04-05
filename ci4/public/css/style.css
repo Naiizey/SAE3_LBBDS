@@ -2054,6 +2054,11 @@ h3 > .lienPasArticlePanier {
     .sectionRecommandationsPanierMobile li{
         width: 25%;
     }
+
+    .sectionRecommandationsPanierMobile .contain-vendeur {
+        display: none;
+    }
+    
 }
 /*
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

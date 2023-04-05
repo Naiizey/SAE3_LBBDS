@@ -53,7 +53,7 @@ abstract class ProduitQuidiModel extends Model
         if(!empty($trouve) && $siDejaLaAjoute)
             throw new Exception("Produit déjà présent dans le quidi, ajout ignoré",400);
      
-        if($prod->numVnd != $idVendeur)
+        if(!is_null($idVendeur) && $prod->numVnd != $idVendeur)
             throw new Exception("Vous n'êtes pas autorisé a catalogué un produit qui appartient à un autre vendeur",401);
       
         

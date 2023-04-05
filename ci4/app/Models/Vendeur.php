@@ -39,7 +39,7 @@ class Vendeur extends Compte
         return parent::getCompteByCredentials($comptes, $motDePasse);
     }
 
-    public function getVendeurById($id)
+    public function getVendeurById(int|string $id)
     {
         return parent::getCompteById($id);
     }
@@ -57,5 +57,9 @@ class Vendeur extends Compte
     public function doesPseudoExists($pseudo) : bool
     {
         return model("\App\Model\Compte")->doesPseudoExists($pseudo);
+    }
+
+    public function getVendeurByIds(array $numeros){
+        return $this->find($numeros);
     }
 }

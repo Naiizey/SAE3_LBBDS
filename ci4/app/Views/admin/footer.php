@@ -2,7 +2,7 @@
     </body>
 </html>
 <script>
-    footer();
-    cgu();
-    menuCredit();
+    
+
 </script>
+</footer>

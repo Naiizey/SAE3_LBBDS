@@ -400,19 +400,24 @@ CREATE TRIGGER insert_quidi_vendeur
     EXECUTE PROCEDURE insert_quidi_vendeur();
 
 
+
+
 CREATE OR REPLACE FUNCTION delete_quidi() RETURNS TRIGGER AS
 $$
 BEGIN
+
     DELETE FROM sae3._quidi_vendeur WHERE id_quidi = old.id_quidi;
     DELETE FROM sae3._quidi WHERE id_prod = old.id_prod and id_quidi = old.id_quidi;
+
     RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER delete_quidi
-    INSTEAD OF DELETE ON sae3.produit_quidi_vendeur
+    INSTEAD OF DELETE ON sae3.produit_quidi
     FOR EACH ROW
     EXECUTE PROCEDURE delete_quidi();
+
 
 
 CREATE OR REPLACE FUNCTION insert_quidi() RETURNS TRIGGER AS
@@ -428,3 +433,18 @@ CREATE TRIGGER insert_quidi
     INSTEAD OF INSERT ON sae3.produit_quidi_vendeur
     FOR EACH ROW
     EXECUTE PROCEDURE insert_quidi();
+
+CREATE OR REPLACE FUNCTION insert_quidi_admin() RETURNS TRIGGER AS
+$$
+BEGIN
+    INSERT INTO sae3._quidi (id_prod) VALUES (NEW.id_prod);
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_quidi_admin
+    INSTEAD OF INSERT ON sae3.produit_quidi_admin
+    FOR EACH ROW
+    EXECUTE PROCEDURE insert_quidi_admin();
+

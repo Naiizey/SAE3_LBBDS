@@ -228,13 +228,22 @@ LEFT JOIN moyenneProduit on _produit.id_prod = moyenneProduit.id NATURAL JOIN so
 CREATE OR REPLACE VIEW glossaire_vendeur AS 
 SELECT id_quidi,num_compte,numero_rue,nom_rue,code_postal,ville,intitule_prod, prix_ht, prix_ttc, description_prod,pseudo,note_vendeur,numero_siret,tva_intercommunautaire,texte_presentation,logo,moyenne_note_prod FROM _quidi NATURAL JOIN _produit NATURAL JOIN _vendeur NATURAL JOIN _compte INNER JOIN _adresse  ON _vendeur.id_adresse = _adresse.id_a;
 
-CREATE OR REPLACE VIEW produit_quidi_vendeur AS
-SELECT concat(id_prod, '£', id_quidi) id, id_prod, intitule_prod, stock_prod, prix_ttc, prix_ht, lien_image,  description_prod, num_compte num_vendeur,id_quidi
+CREATE OR REPLACE VIEW produit_quidi AS
+SELECT concat(id_prod, '£', id_quidi) id, id_prod, intitule_prod, stock_prod, prix_ttc, prix_ht, lien_image,  description_prod, id_quidi, num_compte num_vendeur
 FROM _produit NATURAL JOIN soloimageproduit NATURAL JOIN _quidi NATURAL JOIN _vendeur;
 
+CREATE OR REPLACE VIEW produit_quidi_vendeur AS
+SELECT * FROM produit_quidi  WHERE id_quidi IN (SELECT id_quidi from _quidi_vendeur);
+
 CREATE OR REPLACE VIEW produit_quidi_vendeur_json AS
-SELECT concat(id_prod, '£', id_quidi) id, intitule_prod, prix_ttc, lien_image,  description_prod, num_compte num_vendeur,publication_prod,libelle_cat,moyenne_note_prod
-FROM _produit NATURAL JOIN soloimageproduit NATURAL JOIN _quidi NATURAL JOIN _vendeur NATURAL JOIN _sous_categorie;
+SELECT concat(id_prod, '£', id_quidi) id, id_prod, intitule_prod, stock_prod, prix_ttc, prix_ht, lien_image,  description_prod, num_compte num_vendeur,id_quidi,publication_prod,libelle_cat,moyenne_note_prod
+FROM produit_quidi_vendeur NATURAL JOIN _produit NATURAL JOIN soloimageproduit  NATURAL JOIN _sous_categorie ;
 
 CREATE OR REPLACE VIEW produit_quidi_admin AS
-SELECT * FROM produit_quidi_vendeur WHERE id_quidi NOT IN (SELECT id_quidi from _quidi_vendeur);
+SELECT * FROM produit_quidi WHERE id_quidi NOT IN (SELECT id_quidi from _quidi_vendeur);
+
+CREATE OR REPLACE VIEW produit_quidi_admin_json AS
+SELECT concat(id_prod, '£', id_quidi) id, id_prod, intitule_prod, stock_prod, prix_ttc, prix_ht, lien_image,  description_prod, num_compte num_vendeur,id_quidi,publication_prod,libelle_cat,moyenne_note_prod
+FROM produit_quidi_admin NATURAL JOIN _produit NATURAL JOIN soloimageproduit  NATURAL JOIN _sous_categorie;
+
+

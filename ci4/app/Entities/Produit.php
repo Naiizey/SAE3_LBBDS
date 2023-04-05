@@ -11,7 +11,7 @@ class Produit extends Entity
       'prixTtc' => 'prixttc',
       'lienImage' => 'lienimage',
       #categorie
-      'moyenneNote' => 'moyennenote',
+      'moyenneNote' => 'moyennenote'
   ];
 
    public function __toString()

@@ -1,3 +1,23 @@
+<?php 
+    #On récupère l'option -f ou --file pour récupérer le nom du fichier json (on affiche un message d'erreur si l'option n'est pas renseignée)
+    $options = getopt("f:", ["file:"]);
+
+    if (!isset($options["f"]) && !isset($options["file"])) 
+    {
+        echo "Veuillez renseigner le nom du fichier json à traiter avec l'option -f ou --file";
+        exit;
+    }
+
+    #On récupère le nom du fichier json
+    $file = (isset($options["f"])) ? $options["f"] : $options["file"];
+
+    #On vérifie que le fichier json existe
+    if (!file_exists($file)) 
+    {
+        throw new Exception("Le fichier json n'existe pas\n");
+        exit;
+    }
+?>
 <!DOCTYPE html>
 <html lang=fr>
     <head>
@@ -41,7 +61,8 @@
             <?php include("modele/modele.css") ?>
         </style>
         <?php
-            $json = json_decode(file_get_contents("samples/mono.json"), true);
+            #On récupère les données du fichier json
+            $json = json_decode(file_get_contents($file), true);
             $break = true;
             $entreprises = $json["entreprises"];
         ?>
@@ -54,15 +75,16 @@
             </a>
         </header>
         <main>
-            <?php foreach ($entreprises as $glossaire): ?>
-                <section class="sectionPresentation <?= (!$break) ? "pagebreak" : "" ?>">
+            <?php foreach ($entreprises as $entreprise): ?>
+                <!-- Si c'est le premier vendeur de la page on ne break pas à la page suivante -->
+                <section class="sectionPresentation <?= (!$break) ? "pagebreak" : "" ?>"> 
                     <?php $break = false; ?>
                     <div class="divVendeur">
-                        <img src="<?= $glossaire['logo']; ?>" alt="Profil">
+                        <img src="<?= $entreprise['logo']; ?>" alt="Profil">
                         <div class="divNomNote">
-                            <h2><?= $glossaire['pseudo']; ?></h2>
+                            <h2><?= $entreprise['pseudo']; ?></h2>
                             <?php if (false): ?>
-                                <div class="noteAvis"><?= $cardProduit->notationEtoile($glossaire['note_vendeur']) ?></div>
+                                <div class="noteAvis"><?= $cardProduit->notationEtoile($entreprise['note_vendeur']) ?></div>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -74,27 +96,27 @@
                             </tr>
                             <tr>
                                 <th>SIRET :</th>
-                                <td><?= $glossaire['siret']; ?></td> 
+                                <td><?= $entreprise['siret']; ?></td> 
                             </tr>
                             <tr>
                                 <th>TVA Intracommunautaire :</th>
-                                <td><?= $glossaire['tvaInter']; ?></td>
+                                <td><?= $entreprise['tvaInter']; ?></td>
                             </tr>
                             <tr>
                                 <th>Adresse :</th>
-                                <td><?= $glossaire['numero_rue']." ".$glossaire['nom_rue']."<br>".$glossaire['code_postal']." ".$glossaire['ville']; ?></td>
+                                <td><?= $entreprise['numero_rue']." ".$entreprise['nom_rue']."<br>".$entreprise['code_postal']." ".$entreprise['ville']; ?></td>
                             </tr>
                             <tr>
                                 <th>Contact :</th>
-                                <td><?= $glossaire['email']; ?></td>
+                                <td><?= $entreprise['email']; ?></td>
                             </tr>
                         </tbody>
                     </table> 
                     <h2 class="h2Presentation">Présentation</h2>
-                    <p><?= $glossaire['texte_presentation']; ?></p>
+                    <p><?= $entreprise['texte_presentation']; ?></p>
                 </section>   
                 <section class="sectionProduits">
-                <?php foreach ($glossaire["articles"] as $article): ?>
+                <?php foreach ($entreprise["articles"] as $article): ?>
                     <div class="divUnProduit">
                         <img src="<?= $article['lienimage']; ?>">
                         <div class="divNomDescription">

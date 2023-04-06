@@ -153,7 +153,7 @@ abstract class BaseQuidi extends BaseController
             //On ajoute un champ à l'objet vendeur
             $catalogueur = array();
             $catalogueur["entreprises"] = $vendeurs;
-            $catalogueur["articles"] = $quidi;
+           
 
             // Convertir le tableau en JSON
             $json = json_encode($catalogueur);
